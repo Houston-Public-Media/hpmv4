@@ -1,0 +1,80 @@
+/* IE9 Specific Styling */
+nav.pagination {
+	display: block;
+	width: 50%;
+	margin: 1em auto;
+	text-align: center;
+}
+.page-header .search-results-form .search-form {
+	display: block;
+	margin: 0.25em 0;
+}
+.page-header .search-results-form .search-form label {
+	width: 75%;
+}
+.jp-gui.jp-interface {
+	display: block;
+}
+.jp-gui.jp-interface .jp-controls button {
+	float: left;
+	width: 33%;
+}
+.jp-gui.jp-interface .jp-progress-wrapper {
+	width: 67%;
+	float: left;
+}
+
+
+footer#colophon nav#secondary-navigation ul {
+	margin: 0 auto;
+	width: 67%;
+	display: block;
+}
+footer#colophon nav#secondary-navigation ul li {
+	float: left;
+	width: 33%;
+	text-align: center;
+	padding: 0.5em;
+}
+body.single-shows #shows-youtube #youtube-main #youtube-player {
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	margin: 0 0 1em 0;
+	display: block;
+}
+body.single-shows #shows-youtube #youtube-main #youtube-player .fa {
+	color: white;
+	font-size: 5em;
+	position: absolute;
+	top: 45%;
+	left: 45%;
+}
+
+@media screen and (min-width: 30.0625em) {
+	.grid article.felix-type-d {
+		display: block;
+		overflow: hidden;
+	}
+	.grid article.felix-type-d header {
+		float: left;
+		width: 75%;
+	}
+	.grid article.felix-type-d a.post-thumbnail {
+		float: left;
+		width: 25%;
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	.grid article.felix-type-b {
+		display: block;
+		overflow: hidden;
+	}
+	.grid article.felix-type-b header {
+		float: left;
+	}
+	.grid article.felix-type-b a.post-thumbnail {
+		float: left;
+	}
+}

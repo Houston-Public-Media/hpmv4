@@ -1,0 +1,33 @@
+# Application
+web/app/plugins/*
+!web/app/plugins/.gitkeep
+!web/app/plugins/batcache/
+!web/app/plugins/galleria/
+!web/app/plugins/kera-passport-tools/
+!web/app/plugins/ludicrousdb/
+!web/app/plugins/pbs-media-manager-wp/
+web/app/mu-plugins/*/
+web/app/debug.log
+web/app/upgrade
+web/app/uploads/*
+!web/app/uploads/.gitkeep
+
+# WordPress
+web/wp
+web/.htaccess
+
+# Dotenv
+.env
+.env.*
+!.env.example
+env.production
+
+# Composer
+vendor/*
+!vendor/.gitkeep
+/composer.lock
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

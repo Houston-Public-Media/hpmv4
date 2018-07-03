@@ -1,0 +1,5 @@
+version: 1
+cron:
+ - name: "wpcron"
+   url: "/wp/wp-cron.php?doing_wp_cron"
+   schedule: "*/1 * * * *"
