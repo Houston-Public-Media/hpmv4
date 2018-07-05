@@ -31,7 +31,7 @@
 						<div class="clear"></div>
 					</nav>
 					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="http://www.uh.edu" target="_blank" style="color: #cc0000;">University of Houston</a></p>
-					<p>Copyright &copy; <?php echo date('Y'); ?> | <a href="/about/privacy-policy">Privacy Policy</a></p>
+					<p>Copyright &copy; <?php echo date('Y'); ?> | <a href="http://www.uhsystem.edu/privacy-notice/">Privacy Policy</a></p>
 				</div><!-- .site-info -->
 			</footer><!-- .site-footer -->
 		</div><!-- .site -->

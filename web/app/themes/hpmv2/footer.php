@@ -33,7 +33,7 @@
 						<div class="clear"></div>
 					</nav>
 					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="http://www.uh.edu" target="_blank" style="color: #cc0000;">University of Houston</a></p>
-					<p>Copyright &copy; <?php echo date('Y'); ?> | <a href="/about/privacy-policy">Privacy
+					<p>Copyright &copy; <?php echo date('Y'); ?> | <a href="http://www.uhsystem.edu/privacy-notice/">Privacy
 							Policy</a></p>
 				</div><!-- .site-info -->
 			</footer><!-- .site-footer -->
@@ -91,18 +91,6 @@
 					var gridItem = document.querySelectorAll('.grid-item');
 					for ( i = 0; i < gridItem.length; ++i ) {
 						gridItem[i].removeAttribute('style');
-					}
-				}
-<?php
-	/*
-		Firefox cannot properly calculate a bottom padding on an element that is floated using flexbox, so this pulls the actual pixel width and calculates the bottom padding
-	*/
-?>
-				if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-					var wraps = document.querySelectorAll('.felix-type-b .thumbnail-wrap');
-					for (i = 0; i < wraps.length; ++i) {
-						var wrapWide = wraps[i].getBoundingClientRect().width;
-						wraps[i].style.cssText += "padding-bottom: "+wrapWide/1.5+"px";
 					}
 				}
 			}
