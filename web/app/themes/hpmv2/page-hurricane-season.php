@@ -97,7 +97,7 @@ Template Name: Harvey Hurricane Season
 									</div>
 									<div class="hah-split stfs-interviews-info">
 										<h3 id="sfts-yt-title"><?php echo $first->post_title; ?></h3>
-										<p id="sfts-yt-desc"><?php echo $first->post_excerpt; ?></p>
+										<p id="sfts-yt-desc"><?php echo wp_strip_all_tags( strip_shortcodes( $first->post_content ) ); ?></p>
 										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
  											More episodes</a>
 									</div>
@@ -123,7 +123,8 @@ Template Name: Harvey Hurricane Season
 				$later = "<br /><em>Coming on ".get_the_date( 'F j, Y' )."</em>";
 			else :
 				$ytid = $enclose['url'];
-			endif; ?>
+			endif;
+			$text = wp_strip_all_tags( strip_shortcodes( get_the_content() ) ); ?>
 										<li <?php echo ( $c == 0 ? 'class="current"' : '' ); ?>id="<?php echo $id; ?>" data-ytid="<?php echo $ytid; ?>" data-yttitle="<?php the_title(); ?>" data-ytdesc="<?php the_excerpt(); ?>">
 											<div class="videos-thumbnail"><img src="https://cdn.hpm.io/wp-content/uploads/2018/06/21110952/Hurricane-Season-podcast-550x550.png" alt="Hurricane Season podcast" /></div>
 											<div class="videos-info"><?php the_title(); ?><?php echo $later; ?></div>
