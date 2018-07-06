@@ -8,6 +8,7 @@ Template Name: Harvey SFTS Podcast
 		'orderby' => 'date',
 		'order'   => 'ASC',
 		'posts_per_page' => -1,
+		'post__not_in' => [ 292849 ],
 		'post_status' => [ 'publish', 'future' ],
 		'ignore_sticky_posts' => 1
 	]);
@@ -118,15 +119,10 @@ Template Name: Harvey SFTS Podcast
 			$id = get_the_ID();
 			$enclose = get_post_meta( $id, 'hpm_podcast_enclosure', true );
 			$later = '';
-			if ( $post->post_status != 'publish' ) :
-				$ytid = 'null';
-				$later = "<br /><em>Coming on ".get_the_date( 'F j, Y' )."</em>";
-			else :
-				$ytid = $enclose['url'];
-			endif; ?>
+			$ytid = $enclose['url']; ?>
 										<li <?php echo ( $c == 0 ? 'class="current"' : '' ); ?>id="<?php echo $id; ?>" data-ytid="<?php echo $ytid; ?>" data-yttitle="<?php the_title(); ?>" data-ytdesc="<?php the_excerpt(); ?>">
 											<div class="videos-thumbnail"><img src="https://cdn.hpm.io/wp-content/uploads/2018/06/21110913/Stories-from-the-storm-podcast-550x550.png" alt="Stories from the Storm podcast" /></div>
-											<div class="videos-info"><?php the_title(); ?><?php echo $later; ?></div>
+											<div class="videos-info"><?php the_title(); ?></div>
 										</li>
 <?php
 			$c++;
