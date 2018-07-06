@@ -275,7 +275,7 @@ Template Name: Harvey Main
 								</div>
 							</section>
 							<section id="support" class="hah-support">
-								<p>Support comes from</p>
+								<p><em>Houston After Harvey</em> is a project of the Houston Flood Museum in partnership with Houston Public Media and is supported by Houston Endowment. Visit <a href="https://www.houstonfloodmuseum.org" target="_blank">Houston Flood Museum.org</a></p>
 								<div class="hah-support-hfm">
 									<a href="https://www.houstonfloodmuseum.org" title="Houston Flood Museum" target="_blank"><img src="https://cdn.hpm.io/assets/images/harvey/houston_flood_museum@2x.png" alt="Houston Flood Museum" /></a>
 								</div>

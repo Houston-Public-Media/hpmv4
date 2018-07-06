@@ -151,24 +151,9 @@ Template Name: Harvey SFTS Podcast
 							jQuery('#sfts-yt-title').html(yttitle);
 							jQuery('#sfts-yt-desc').html(ytdesc);
 							$("#jquery_jplayer_1").jPlayer('stop');
-							$("#jquery_jplayer_1").jPlayer({
-								ready: function () {
-									$(this).jPlayer("setMedia", {
-										title: yttitle,
-										mp3: ytid+"?source=jplayer-article"
-									});
-								},
-								swfPath: "https://cdn.hpm.io/assets/js/jplayer",
-								supplied: "mp3",
-								preload: "metadata",
-								cssSelectorAncestor: "#jp_container_1",
-								wmode: "window",
-								useStateClassSkin: true,
-								autoBlur: false,
-								smoothPlayBar: true,
-								keyEnabled: true,
-								remainingDuration: false,
-								toggleDuration: true
+							$("#jquery_jplayer_1").jPlayer("setMedia", {
+								title: yttitle,
+								mp3: ytid+"?source=jplayer-article"
 							});
 							$("#jquery_jplayer_1").jPlayer('play');
 							$('#videos-nav').removeClass('nav-active');

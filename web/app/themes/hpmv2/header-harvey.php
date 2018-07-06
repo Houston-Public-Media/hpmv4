@@ -99,10 +99,10 @@
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 		<header id="masthead" class="site-header<?php echo ( $postscript['class_body'] == 'hah-sub' ? ' active' : '' ); ?>" role="banner">
 			<div class="site-branding">
-				<a href="/" rel="home" title="Houston Public Media"><img src="https://cdn.hpm.io/assets/images/HPM_Horiz_W.png" alt="Houston Public Media" /></a>
+				<a href="/" rel="home" title="Houston Public Media"><img src="https://cdn.hpm.io/assets/images/hpm_service_line@2x.png" alt="Houston Public Media" /></a>
 			</div><!-- .site-branding -->
 			<div class="site-title">
-				<h1>Houston <span class="hah-title">After Harvey</span></h1>
+				<h1><a href="/harvey/">Houston <span class="hah-title">After Harvey</span></a></h1>
 			</div>
 			<div class="site-nav">
 				<div id="mobile-nav"></div>
@@ -116,7 +116,7 @@
 								</ul>
 							</li>
 							<li><a href="/harvey/hurricane-season/" class="scrollto">Hurricane Season</a></li>
-							<li><a href="/harvey/news/" class="scrollto">News</a></li>
+							<li><a href="/harvey/#news" class="scrollto">News</a></li>
 						</ul>
 					</div>
 					<div class="clear"></div>
