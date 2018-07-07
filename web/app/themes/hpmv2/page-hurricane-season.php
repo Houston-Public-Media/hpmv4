@@ -20,7 +20,7 @@ Template Name: Harvey Hurricane Season
 						<div class="page-content" id="main-content">
 							<section id="stories-from-the-storm" class="sfts">
 								<div class="sfts-info">
-									<h2>Hurricane Season</h2>
+									<h2><span class="sfts-title" style="padding: 0;">Hurricane Season</span></h2>
 									<div>Podcasts</div>
 									<div class="underline"></div>
 								</div>
@@ -98,8 +98,8 @@ Template Name: Harvey Hurricane Season
 									<div class="hah-split stfs-interviews-info">
 										<h3 id="sfts-yt-title"><?php echo $first->post_title; ?></h3>
 										<p id="sfts-yt-desc"><?php echo wp_strip_all_tags( strip_shortcodes( $first->post_content ) ); ?></p>
-										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
- 											More episodes</a>
+										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i> More episodes</a>
+										<h4><a href="/harvey/credits/#hs-credits">Series Credits</a></h4>
 									</div>
 								</div>
 							</section>

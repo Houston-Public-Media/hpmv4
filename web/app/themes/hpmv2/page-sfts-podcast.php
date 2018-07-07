@@ -99,8 +99,8 @@ Template Name: Harvey SFTS Podcast
 									<div class="hah-split stfs-interviews-info">
 										<h3 id="sfts-yt-title"><?php echo $first->post_title; ?></h3>
 										<p id="sfts-yt-desc"><?php echo wp_strip_all_tags( strip_shortcodes( $first->post_content ) ); ?></p>
-										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
- 											More episodes</a>
+										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i> More episodes</a>
+										<h4><a href="/harvey/credits/">Series Credits</a></h4>
 									</div>
 								</div>
 							</section>

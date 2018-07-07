@@ -39,7 +39,8 @@ Template Name: Harvey SFTS Videos
 										<h3 id="sfts-yt-title">Ep 1: <?php echo htmlentities( $json[0]['snippet']['title'], ENT_COMPAT ); ?></h3>
 										<p id="sfts-yt-desc"><?php echo htmlentities( $json[0]['snippet']['description'] ); ?></p>
 										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
- 											More stories</a>
+											 More stories</a>
+										<h4><a href="/harvey/credits/#sfts-youtube-credits">Series Credits</a></h4>
 									</div>
 								</div>
 							</section>
