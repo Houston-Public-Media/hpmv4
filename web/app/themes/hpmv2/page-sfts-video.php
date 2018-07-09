@@ -33,7 +33,6 @@ Template Name: Harvey SFTS Videos
 								</div>
 								<div class="sfts-interviews">
 									<div class="hah-split stfs-interviews-video">
-										<?php /* ?><p class="youtube-wrap"><iframe id="youtube-player" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>?rel=0&showinfo=0&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p><?php */ ?>
 										<div id="youtube-player" style="background-image: url( '<?php echo $json[0]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
 											<span class="fa fa-play" id="play-button"></span>
 										</div>
@@ -43,7 +42,6 @@ Template Name: Harvey SFTS Videos
 										<p id="sfts-yt-desc"><?php echo htmlentities( $json[0]['snippet']['description'] ); ?></p>
 										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
 											 More stories</a>
-										<h4><a href="/harvey/credits/#sfts-youtube-credits">Series Credits</a></h4>
 									</div>
 								</div>
 							</section>
@@ -62,6 +60,7 @@ Template Name: Harvey SFTS Videos
 <?php endforeach; ?>
 										
 									</ul>
+									<h4 style="text-align: center;"><a href="/harvey/credits/#sfts-youtube-credits">Series Credits</a></h4>
 								</nav>
 							</aside>
 						</div><!-- .entry-content -->

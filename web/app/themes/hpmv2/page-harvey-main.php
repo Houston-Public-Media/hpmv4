@@ -207,7 +207,7 @@ Template Name: Harvey Main
 							</section>
 <?php
 	$news = new WP_Query([
-		'category_name' => 'hurricane',
+		'category_name' => 'hurricane,hurricane-harvey',
 		'orderby' => 'date',
 		'order'   => 'DESC',
 		'posts_per_page' => 3,
