@@ -29,7 +29,7 @@ Template Name: Harvey Hurricane Season
 										<div class="hah-podcast-image">
 											<img src="https://cdn.hpm.io/wp-content/uploads/2018/06/21110952/Hurricane-Season-podcast-550x550.png" alt="Hurricane Season podcast" />
 										</div>
-										<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+										<div id="jquery_jplayer_1" class="jp-jplayer" data-next-id="<?php echo $audio->posts[1]->ID; ?>"></div>
 										<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
 											<div class="jp-type-single">
 												<div class="jp-gui jp-interface">
@@ -152,19 +152,49 @@ Template Name: Harvey Hurricane Season
 						if ( ytid === 'null' ) {
 							return false;
 						} else {
-							jQuery('#sfts-yt-title').html(yttitle);
-							jQuery('#sfts-yt-desc').html(ytdesc);
-							$("#jquery_jplayer_1").jPlayer('stop');
-							$("#jquery_jplayer_1").jPlayer("setMedia", {
+							$('#sfts-yt-title').html(yttitle);
+							$('#sfts-yt-desc').html(ytdesc);
+							if ( $(this).next('li').length ) {
+								var next = $(this).next('li').attr('id');
+							} else {
+								var next = $('#videos > ul li:first-child').attr('id');
+							}
+							$("#jquery_jplayer_1").jPlayer('stop').jPlayer("setMedia", {
 								title: yttitle,
 								mp3: ytid+"?source=jplayer-article"
-							});
-							$("#jquery_jplayer_1").jPlayer('play');
+							}).attr('data-next-id', next).jPlayer('play');
 							$('#videos-nav').removeClass('nav-active');
 							$('#videos-nav ul li').removeClass('current');
 							$(this).addClass('current');
 						}
 					});
+					$("#jquery_jplayer_1").bind(
+						$.jPlayer.event.ended, function(event) {
+							var nextId = $('#jquery_jplayer_1').attr('data-next-id');
+							var nextEp = $('#'+nextId);
+							var ytid = nextEp.attr('data-ytid');
+							if ( ytid === 'null' ) {
+								return false;
+							} else {
+								var yttitle = nextEp.attr('data-yttitle');
+								var ytdesc = nextEp.attr('data-ytdesc');
+								var next = nextEp.next('li').attr('id');
+								if ( $(this).next('li').length ) {
+									var next = nextEp.next('li').attr('id');
+								} else {
+									var next = $('#videos > ul li:first-child').attr('id');
+								}
+								$('#sfts-yt-title').html(yttitle);
+								$('#sfts-yt-desc').html(ytdesc);
+								$("#jquery_jplayer_1").jPlayer("setMedia", {
+									title: yttitle,
+									mp3: ytid+"?source=jplayer-article"
+								}).attr('data-next-id', next).jPlayer('play');
+								$('#videos-nav ul li').removeClass('current');
+								nextEp.addClass('current');
+							}
+						}
+					);
 				});
 			</script>
 <?php get_footer( 'harvey' ); ?>

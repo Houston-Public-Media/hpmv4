@@ -1,0 +1,9 @@
+# robotstxt.org/
+
+User-agent: *
+Disallow: /ProdStage
+Disallow: /wp-admin/
+Disallow: /videos/
+Disallow: /pages/
+Disallow: /news/awards/
+Disallow: /support/studio-society/members/
