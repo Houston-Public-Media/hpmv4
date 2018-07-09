@@ -33,10 +33,13 @@ Template Name: Harvey SFTS Videos
 								</div>
 								<div class="sfts-interviews">
 									<div class="hah-split stfs-interviews-video">
-										<p class="youtube-wrap"><iframe id="youtube-player" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>?rel=0&showinfo=0&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>
+										<?php /* ?><p class="youtube-wrap"><iframe id="youtube-player" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>?rel=0&showinfo=0&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p><?php */ ?>
+										<div id="youtube-player" style="background-image: url( '<?php echo $json[0]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
+											<span class="fa fa-play" id="play-button"></span>
+										</div>
 									</div>
 									<div class="hah-split stfs-interviews-info">
-										<h3 id="sfts-yt-title">Ep 1: <?php echo htmlentities( $json[0]['snippet']['title'], ENT_COMPAT ); ?></h3>
+										<h3 id="sfts-yt-title"><?php echo htmlentities( $json[0]['snippet']['title'], ENT_COMPAT ); ?></h3>
 										<p id="sfts-yt-desc"><?php echo htmlentities( $json[0]['snippet']['description'] ); ?></p>
 										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
 											 More stories</a>
@@ -51,10 +54,10 @@ Template Name: Harvey SFTS Videos
 										<div id="videos-close"><span class="fa fa-close"></span></div>
 									</div>
 									<ul>
-<?php foreach ( $json as $k => $tubes ) : ?>
-										<li <?php echo ( $k == 0 ? 'class="current"' : '' ); ?>id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
+<?php foreach ( $json as $tubes ) : ?>
+										<li id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
 											<div class="videos-thumbnail"><img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $tubes['snippet']['title']; ?>" /></div>
-											<div class="videos-info">Ep <?php echo $k+1; ?>: <?php echo $tubes['snippet']['title']; ?></div>
+											<div class="videos-info"><?php echo $tubes['snippet']['title']; ?></div>
 										</li>
 <?php endforeach; ?>
 										
@@ -71,6 +74,11 @@ Template Name: Harvey SFTS Videos
 				tag.src = "//www.youtube.com/player_api";
 				var firstScriptTag = document.getElementsByTagName('script')[0];
 				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+				function ytdimensions($) {
+					window.ytwide = $('#youtube-player').width();
+					window.ythigh = ytwide/1.77777777777778;
+					$('#youtube-player').height(ythigh);
+				}
 				function parseURL(url) {
 					var parser = document.createElement('a'),
 						searchObject = {},
@@ -117,25 +125,57 @@ Template Name: Harvey SFTS Videos
 							});
 							jQuery('#sfts-yt-title').html(yttitle);
 							jQuery('#sfts-yt-desc').html(ytdesc);
+							jQuery('#videos-nav').removeClass('nav-active');
+							jQuery('#videos-nav ul li').removeClass('current');
+							jQuery('#'+ytid).addClass('current');
 						}
 						else
 						{
 							return false;
 						}
-					}	
+					}
 				}
 				jQuery(document).ready(function($){
-					$('#videos-nav ul li').click(function() {
+					ytdimensions($);
+					$(window).resize(function(){
+						ytdimensions($);
+					});
+					$('#play-button').click(function(){
+						window.ytid = $(this).parent().attr('data-ytid');
+						window.player;
+						player = new YT.Player('youtube-player', {
+							height: ythigh,
+							width: ytwide,
+							videoId: ytid,
+							events: {
+								'onReady': onPlayerReady,
+								'onStateChange': onPlayerStateChange
+							}
+						});
+						var yttitle = $(this).parent().attr('data-yttitle');
+						var ytdesc = $(this).parent().attr('data-ytdesc');
+						$('#sfts-yt-title').html(yttitle);
+						$('#sfts-yt-desc').html(ytdesc);
+						$('#videos-nav').removeClass('nav-active');
+						$('#videos-nav ul li').removeClass('current');
+						$('#'+ytid).addClass('current');
+					});
+					$('#videos-nav ul li').click(function(){
 						var newYtid = $(this).attr('data-ytid');
 						var yttitle = $(this).attr('data-yttitle');
 						var ytdesc = $(this).attr('data-ytdesc');
 						if ( typeof ytid === typeof undefined ) {
-							jQuery('#sfts-yt-title').html(yttitle);
-							jQuery('#sfts-yt-desc').html(ytdesc);
-							$('#yt-nowplay').remove();
+							ytid = newYtid;
+							$('#sfts-yt-title').html(yttitle);
+							$('#sfts-yt-desc').html(ytdesc);
+							$('#videos-nav').removeClass('nav-active');
+							$('#videos-nav ul li').removeClass('current');
+							$('#'+ytid).addClass('current');
 							window.ytid = newYtid;
 							window.player;
 							player = new YT.Player('youtube-player', {
+								height: ythigh,
+								width: ytwide,
 								videoId: ytid,
 								events: {
 									'onReady': onPlayerReady,
@@ -152,9 +192,11 @@ Template Name: Harvey SFTS Videos
 								player.loadVideoById({
 									videoId: ytid
 								});
-								jQuery('#sfts-yt-title').html(yttitle);
-								jQuery('#sfts-yt-desc').html(ytdesc);
-								$('#yt-nowplay').remove();
+								$('#sfts-yt-title').html(yttitle);
+								$('#sfts-yt-desc').html(ytdesc);
+								$('#videos-nav').removeClass('nav-active');
+								$('#videos-nav ul li').removeClass('current');
+								$('#'+ytid).addClass('current');
 							}
 							else
 							{
@@ -165,9 +207,6 @@ Template Name: Harvey SFTS Videos
 						{
 							return false;
 						}
-						$('#videos-nav').removeClass('nav-active');
-						$('#videos-nav ul li').removeClass('current');
-						$(this).addClass('current');
 					});
 				});
 			</script>
