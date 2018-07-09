@@ -207,7 +207,7 @@ Template Name: Harvey Main
 							</section>
 <?php
 	$news = new WP_Query([
-		'category_name' => 'hurricane-harvey',
+		'category_name' => 'hurricane',
 		'orderby' => 'date',
 		'order'   => 'DESC',
 		'posts_per_page' => 3,
@@ -262,7 +262,7 @@ Template Name: Harvey Main
 <?php
 			$c++;
 		endwhile; ?>
-								<div class="readmore-wrap"><a href="/harvey/news/" class="readmore">Read more <span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></div>
+								<div class="readmore-wrap"><a href="/topics/hurricane/" class="readmore">Read more <span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></div>
 							</section>
 <?php
 		wp_reset_postdata();
