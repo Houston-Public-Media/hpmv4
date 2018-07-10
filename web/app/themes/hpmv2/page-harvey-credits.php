@@ -218,6 +218,19 @@ Template Name: Harvey Credits
 										<li>Davis Land</li>
 										<li>Todd Hulslander</li>
 									</ul>
+									<h3>Special Thanks</h3>
+									<ul class="credits">
+										<li>Edel Howlin</li>
+										<li>Sidney Knight</li>
+										<li>Mark DiClaudio</li>
+										<li>KHOU</li>
+										<li>Jim Beeler</li>
+										<li>John Steel</li>
+										<li>Antonio Lasanta</li>
+										<li>Avery Dillon</li>
+										<li>Muhammad Yunus</li>
+										<li>Laura Isensee </li>
+									</ul>
 								</div>
 							</section>
 						</div><!-- .entry-content -->
