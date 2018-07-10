@@ -24,7 +24,6 @@ env.production
 # Composer
 vendor/*
 !vendor/.gitkeep
-/composer.lock
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
