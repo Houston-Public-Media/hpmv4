@@ -10,6 +10,8 @@ get_header(); ?>
 					<header class="page-header">
 						<h1 class="page-title"><?php the_title(); ?></h1>
 						<?php echo get_the_excerpt(); ?>
+						<h5><a href="https://www.texaschildrens.org/" target="_blank">Presented By<br />
+							<img src="https://cdn.hpm.io/assets/images/ghr/TCH-logo.png" alt="Texas Children's Hospital" class="tch-logo" /></a></h5>
 						<a class="down scrollto" href="#main-content">
 							Start Reading<br />
 							<i class="fa fa-chevron-down" aria-hidden="true"></i>

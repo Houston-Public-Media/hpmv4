@@ -6706,6 +6706,19 @@ body.page.page-template-page-ghr #main {
 	padding: 0 1em;
 	font-weight: 700;
 }
+.page-template-page-ghr .page-header h5 {
+	text-align: center;
+	font: normal 1em/1.25em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+	width: 100%;
+	padding: 1em 0 0 0;
+}
+.page-template-page-ghr .page-header h5 a {
+	color: white;
+}
+.page-template-page-ghr .page-header h5 img {
+	width: 8em;
+	padding: 0.5em 0 0 0;
+}
 .page-template-page-ghr .page-header a.down {
 	position: absolute;
 	bottom: 0.125em;
