@@ -1,14 +1,14 @@
 <?php
 /**
  * @link 			https://github.com/jwcounts
- * @since  			20170906
+ * @since  			20180710
  * @package  		HPM-Priority
  *
  * @wordpress-plugin
  * Plugin Name: 	HPM Priority
  * Plugin URI: 		https://github.com/jwcounts
  * Description: 	Setup for priority slots on the homepage
- * Version: 		20170906
+ * Version: 		20180710
  * Author: 			Jared Counts
  * Author URI: 		http://www.houstonpublicmedia.org/staff/jared-counts/
  * License: 		GPL-2.0+
@@ -101,45 +101,6 @@ function hpm_priority_settings_page() {
 													</select>
 												</td>
 												<td><label for="hpm_priority[homepage][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv2' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
-											</tr>
-									<?php
-										endforeach; ?>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div class="meta-box-sortables ui-sortable">
-							<div class="postbox">
-								<div class="handlediv" title="Click to toggle"><br></div>
-								<h2 class="hndle"><span><?php _e('Arts &amp; Culture', 'hpmv2' ); ?></span></h2>
-								<div class="inside">
-									<table class="wp-list-table widefat fixed striped posts">
-										<thead>
-											<tr>
-												<th scope="col" class="manage-column column-author">Position</th>
-												<th scope="col" class="manage-column">Current Post</th>
-												<th scope="col" class="manage-column column-tags">Change to ID?</th>
-											</tr>
-										</thead>
-										<tbody>
-									<?php
-										foreach ( $priority['arts'] as $kp => $vp ) : ?>
-											<tr valign="top">
-												<th scope="row"><?PHP echo ucwords( $kp ); ?></th>
-												<td>
-													<label class="screen-reader-text"><?php _e( "Current Article in Arts ".ucwords( $kp ).":", 'hpmv2' ); ?></label>
-													<select id="hpm_priority-arts-<?php echo $kp; ?>" class="hpm-priority-select arts-select">
-														<option value=""></option>
-														<?php
-														foreach( $recents as $k => $v ) : ?>
-															<option value="<?php echo $k; ?>"<?php selected( $vp, $k, TRUE ); ?>><?php echo
-																$v; ?></option>
-															<?php
-														endforeach; ?>
-													</select>
-												</td>
-												<td><label for="hpm_priority[arts][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv2' ); ?></label><input type="number" name="hpm_priority[arts][<?php echo $kp; ?>]" id="arts-<?php echo $kp; ?>" class="arts-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
 											</tr>
 									<?php
 										endforeach; ?>

@@ -46,63 +46,6 @@ get_header(); ?>
 				endif;
 				if ( $main_cat == 'education' ) :
 					$main_cat .= '-news';
-				endif;
-				if ( $main_cat == 'arts-culture' ) :
-					$hpm_priority = get_option( 'hpm_priority' );
-					$stickies = array(
-		                'ids' => array(),
-		                'spaces' => array()
-		            );
-					if ( !empty( $hpm_priority['arts']['top'] ) ) :
-						$stickies['ids'][] = $hpm_priority['arts']['top'];
-					    $stickies['spaces'][$hpm_priority['arts']['top']] = 'felix-type-a';
-					endif;
-					if ( !empty( $hpm_priority['arts']['bottom'] ) ) :
-						$stickies['ids'][] = $hpm_priority['arts']['bottom'];
-						$stickies['spaces'][$hpm_priority['arts']['bottom']] = 'felix-type-b';
-					endif;
-					if ( !empty( $stickies['ids'] ) ) :
-						$sticky_args = array(
-							'posts_per_page' => 2,
-							'post__in'  => $stickies['ids'],
-							'orderby' => 'post__in',
-							'ignore_sticky_posts' => 1
-						);
-						$sticky_query = new WP_Query( $sticky_args );
-						if ( $sticky_query->have_posts() ) :
-							while ( $sticky_query->have_posts() ) :
-								$sticky_query->the_post();
-						        $sticky_id = get_the_ID();
-								$exclude[] = $sticky_id;
-								$postClass = get_post_class();
-								$postClass[] = 'pinned';
-								$postClass[] = 'grid-item';
-								$postClass[] = 'grid-item--width2';
-								$fl_array = preg_grep("/felix-type-/", $postClass);
-		                        $fl_arr = array_keys( $fl_array );
-								$postClass[$fl_arr[0]] = $stickies['spaces'][$sticky_id];
-
-								if ( $stickies['spaces'][$sticky_id] == 'felix-type-a' ) :
-									$thumbnail_type = 'large';
-		                        elseif ( $stickies['spaces'][$sticky_id] == 'felix-type-b' ) :
-									$thumbnail_type = 'thumbnail';
-								endif; ?>
-		                        <article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-		                            <div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
-		                                <a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-		                            </div>
-		                            <header class="entry-header">
-		                                <h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-										<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-		                                <div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-		                            </header><!-- .entry-header -->
-		                        </article>
-								<?PHP
-								$c++;
-							endwhile;
-							wp_reset_postdata();
-						endif;
-					endif;
 				endif; ?>
 			<div id="top-schedule-wrap" class="column-right stamp grid-item">
 				<nav id="category-navigation" class="category-navigation" role="navigation">
@@ -223,7 +166,7 @@ get_header(); ?>
 			?>
 			</div><!-- #float-wrap -->
 			<div class="readmore">
-				<a href="//www.houstonpublicmedia.org/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
+				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
 			</div>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
