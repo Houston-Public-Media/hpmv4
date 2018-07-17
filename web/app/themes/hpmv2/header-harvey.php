@@ -79,7 +79,14 @@
 		<meta name="twitter:partner" content="tfwp">
 		<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
 		<title><?php echo $head_title; ?> | Houston Public Media</title>
+<?php 
+	if ( WP_ENV == 'development' ) : ?>
+		<link rel="stylesheet" id="harvey-css" href="https://local.hpm.io/harvey/css/harvey.css" type="text/css" media="all" />
+<?php
+	else : ?>
 		<link rel="stylesheet" id="harvey-css" href="https://cdn.hpm.io/assets/css/harvey.css" type="text/css" media="all" />
+<?php
+	endif; ?>
 		<!--[if lt IE 10]>
 			<link rel="stylesheet" id="ie9-css-css" href="https://cdn.hpm.io/assets/css/ie9.css" type="text/css" media="all" />
 		<![endif]-->
@@ -87,7 +94,14 @@
 			<script type="text/javascript" src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 			<script type="text/javascript" src="https://cdn.hpm.io/assets/js/respond.min.js"></script>
 		<![endif]-->
+<?php 
+	if ( WP_ENV == 'development' ) : ?>
+		<script type="text/javascript" src="https://local.hpm.io/harvey/js/harvey.js"></script>
+<?php
+	else : ?>
 		<script type="text/javascript" src="https://cdn.hpm.io/assets/js/harvey.js"></script>
+<?php
+	endif; ?>
 		<?php hpm_google_tracker(); ?>
 	</head>
 	<?php

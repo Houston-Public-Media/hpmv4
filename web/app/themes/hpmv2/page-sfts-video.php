@@ -32,37 +32,37 @@ Template Name: Harvey SFTS Videos
 									<div class="underline"></div>
 								</div>
 								<div class="sfts-interviews">
-									<div class="hah-split stfs-interviews-video">
+									<div class="hah-split sfts-interviews-video">
+										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
+											 See all stories</a>
 										<div id="youtube-player" style="background-image: url( '<?php echo $json[0]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
 											<span class="fa fa-play" id="play-button"></span>
 										</div>
 									</div>
-									<div class="hah-split stfs-interviews-info">
+									<div class="hah-split sfts-interviews-info">
 										<h3 id="sfts-yt-title"><?php echo htmlentities( $json[0]['snippet']['title'], ENT_COMPAT ); ?></h3>
 										<p id="sfts-yt-desc"><?php echo htmlentities( $json[0]['snippet']['description'] ); ?></p>
-										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i>
-											 More stories</a>
 									</div>
 								</div>
-							</section>
-							<aside id="videos-nav">
-								<nav id="videos">
-									<div class="videos-playlist">
-										<p>Stories from the Storm Videos</p>
-										<div id="videos-close"><span class="fa fa-close"></span></div>
-									</div>
-									<ul>
+								<aside id="videos-nav" class="nav-active">
+									<nav id="videos">
+										<div class="videos-playlist">
+											<p>Stories from the Storm Videos</p>
+											<div id="videos-close"><span class="fa fa-close"></span></div>
+										</div>
+										<ul>
 <?php foreach ( $json as $tubes ) : ?>
-										<li id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
-											<div class="videos-thumbnail"><img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $tubes['snippet']['title']; ?>" /></div>
-											<div class="videos-info"><?php echo $tubes['snippet']['title']; ?></div>
-										</li>
+											<li id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
+												<div class="videos-thumbnail"><img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $tubes['snippet']['title']; ?>" /></div>
+												<div class="videos-info"><?php echo $tubes['snippet']['title']; ?></div>
+											</li>
 <?php endforeach; ?>
 										
-									</ul>
-									<h4 style="text-align: center;"><a href="/harvey/credits/#sfts-youtube-credits">Series Credits</a></h4>
-								</nav>
-							</aside>
+										</ul>
+										<h4 style="text-align: center;"><a href="/harvey/credits/#sfts-youtube-credits">Series Credits</a></h4>
+									</nav>
+								</aside>
+							</section>
 						</div><!-- .entry-content -->
 						<footer class="page-footer"></footer><!-- .entry-footer -->
 					</main><!-- .site-main -->

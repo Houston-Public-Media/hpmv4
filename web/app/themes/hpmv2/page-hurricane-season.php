@@ -25,7 +25,8 @@ Template Name: Harvey Hurricane Season
 									<div class="underline"></div>
 								</div>
 								<div class="sfts-interviews">
-									<div class="hah-split stfs-interviews-video">
+									<div class="hah-split sfts-interviews-video">
+										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i> All episodes</a>
 										<div class="hah-podcast-image">
 											<img src="https://cdn.hpm.io/wp-content/uploads/2018/06/21110952/Hurricane-Season-podcast-550x550.png" alt="Hurricane Season podcast" />
 										</div>
@@ -95,20 +96,18 @@ Template Name: Harvey Hurricane Season
 											</script>
 										</div>
 									</div>
-									<div class="hah-split stfs-interviews-info">
+									<div class="hah-split sfts-interviews-info">
 										<h3 id="sfts-yt-title"><?php echo $first->post_title; ?></h3>
 										<p id="sfts-yt-desc"><?php echo wp_strip_all_tags( strip_shortcodes( $first->post_content ) ); ?></p>
-										<a href="#" class="readmore"><i class="fa fa-indent" aria-hidden="true"></i> More episodes</a>
 									</div>
 								</div>
-							</section>
-							<aside id="videos-nav">
-								<nav id="videos">
-									<div class="videos-playlist">
-										<p>Hurricane Season Episodes</p>
-										<div id="videos-close"><span class="fa fa-close"></span></div>
-									</div>
-									<ul>
+								<aside id="videos-nav" class="nav-active">
+									<nav id="videos">
+										<div class="videos-playlist">
+											<p>Hurricane Season Episodes</p>
+											<div id="videos-close"><span class="fa fa-close"></span></div>
+										</div>
+										<ul>
 <?php
 	$c = 0;
 	if ( $audio->have_posts() ) :
@@ -124,20 +123,20 @@ Template Name: Harvey Hurricane Season
 				$ytid = $enclose['url'];
 			endif;
 			$text = wp_strip_all_tags( strip_shortcodes( get_the_content() ) ); ?>
-										<li <?php echo ( $c == 0 ? 'class="current"' : '' ); ?>id="<?php echo $id; ?>" data-ytid="<?php echo $ytid; ?>" data-yttitle="<?php the_title(); ?>" data-ytdesc="<?php the_excerpt(); ?>">
-											<div class="videos-thumbnail"><img src="https://cdn.hpm.io/wp-content/uploads/2018/06/21110952/Hurricane-Season-podcast-550x550.png" alt="Hurricane Season podcast" /></div>
-											<div class="videos-info"><?php the_title(); ?><?php echo $later; ?></div>
-										</li>
+											<li <?php echo ( $c == 0 ? 'class="current"' : '' ); ?>id="<?php echo $id; ?>" data-ytid="<?php echo $ytid; ?>" data-yttitle="<?php the_title(); ?>" data-ytdesc="<?php the_excerpt(); ?>">
+												<div class="videos-thumbnail"><img src="https://cdn.hpm.io/wp-content/uploads/2018/06/21110952/Hurricane-Season-podcast-550x550.png" alt="Hurricane Season podcast" /></div>
+												<div class="videos-info"><?php the_title(); ?><?php echo $later; ?></div>
+											</li>
 <?php
 			$c++;
 		endwhile;
 		wp_reset_postdata();
 	endif; ?>
-										
-									</ul>
-									<h4 style="text-align: center;"><a href="/harvey/credits/#hs-credits">Series Credits</a></h4>
-								</nav>
-							</aside>
+										</ul>
+										<h4 style="text-align: center;"><a href="/harvey/credits/#hs-credits">Series Credits</a></h4>
+									</nav>
+								</aside>
+							</section>
 						</div><!-- .entry-content -->
 						<footer class="page-footer"></footer><!-- .entry-footer -->
 					</main><!-- .site-main -->
