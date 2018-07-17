@@ -30,7 +30,9 @@ Template Name: Harvey Main
 										<a href="/harvey/stories-from-the-storm/" class="readmore">Watch the stories</a>
 									</div>
 									<div class="hah-split stfs-interviews-video">
-										<p class="youtube-wrap"><a href="/harvey/stories-from-the-storm/"><img src="https://cdn.hpm.io/assets/images/harvey/StfS_vid@2x.jpg" alt="Watch Stories from the Storm" /></a></p>
+										<div id="youtube-player" style="background-image: url( 'https://cdn.hpm.io/assets/images/harvey/hqdefault.jpg' );" class="youtube-wrap">
+											<a href="/harvey/stories-from-the-storm/"><span class="fa fa-play" id="play-button"></span></a>
+										</div>
 									</div>
 								</div>
 								<div class="sfts-podcast">
