@@ -61,10 +61,10 @@ Template Name: Harvey Hurricane Season
 										<p class="subscribe">Subscribe</p>
 										<ul>
 											<li>
-												<a href="https://itunes.apple.com/us/podcast/hurricane-season/id1406912452" target="_blank" title="Subscribe on Apple Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/apple@2x.png" alt="Subscribe on Apple Podcasts" /></a>
+												<a href="https://itunes.apple.com/us/podcast/hurricane-season/id1406912452" target="_blank" title="Subscribe on Apple Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/apple_pod.png" alt="Subscribe on Apple Podcasts" /></a>
 											</li>
 											<li>
-												<a href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&isi=691797987&ius=googleplaymusic&apn=com.google.android.music&link=https://play.google.com/music/m/I6es3pguso2wjj4ynom5wzpkw2a?t%3DHurricane_Season%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16" target="_blank" title="Subscribe on Google Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/google@2x.png" alt="Subscribe on Google Podcasts" /></a>
+												<a href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&isi=691797987&ius=googleplaymusic&apn=com.google.android.music&link=https://play.google.com/music/m/I6es3pguso2wjj4ynom5wzpkw2a?t%3DHurricane_Season%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16" target="_blank" title="Subscribe on Google Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/google_pod.png" alt="Subscribe on Google Podcasts" /></a>
 											</li>
 											<li>
 												<a href="https://www.houstonpublicmedia.org/podcasts/hurricane-season/" target="_blank" title="Subscribe via RSS"><img src="https://cdn.hpm.io/assets/images/harvey/podcast@2x.png" alt="Subscribe via RSS" /></a>

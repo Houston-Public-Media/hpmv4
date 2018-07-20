@@ -68,10 +68,10 @@ Template Name: Harvey SFTS Podcast
 										<p class="subscribe">Subscribe</p>
 										<ul>
 											<li>
-												<a href="https://itunes.apple.com/us/podcast/stories-from-the-storm/id1406912537" target="_blank" title="Subscribe on Apple Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/apple@2x.png" alt="Subscribe on Apple Podcasts" /></a>
+												<a href="https://itunes.apple.com/us/podcast/stories-from-the-storm/id1406912537" target="_blank" title="Subscribe on Apple Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/apple_pod.png" alt="Subscribe on Apple Podcasts" /></a>
 											</li>
 											<li>
-												<a href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&isi=691797987&ius=googleplaymusic&apn=com.google.android.music&link=https://play.google.com/music/m/Iewfxybo66acwbsqei5lqe3zncy?t%3DStories_from_the_Storm%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16" target="_blank" title="Subscribe on Google Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/google@2x.png" alt="Subscribe on Google Podcasts" /></a>
+												<a href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&isi=691797987&ius=googleplaymusic&apn=com.google.android.music&link=https://play.google.com/music/m/Iewfxybo66acwbsqei5lqe3zncy?t%3DStories_from_the_Storm%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16" target="_blank" title="Subscribe on Google Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/google_pod.png" alt="Subscribe on Google Podcasts" /></a>
 											</li>
 											<li>
 												<a href="https://www.houstonpublicmedia.org/podcasts/stories-from-the-storm/" target="_blank" title="Subscribe via RSS"><img src="https://cdn.hpm.io/assets/images/harvey/podcast@2x.png" alt="Subscribe via RSS" /></a>
