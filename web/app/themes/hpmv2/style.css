@@ -3678,7 +3678,6 @@ body.page.page-template-page-kids .kids-schedule {
 		-ms-flex-order: 5;
 		-webkit-order: 5;
 		order: 5;
-		display: none;
 	}
 	#top-schedule-wrap #twitter-home {
 		-webkit-box-ordinal-group: 4;
@@ -7019,7 +7018,8 @@ body.page.page-template-page-ghr #main {
 		width: 60%;
 		float: left;
 	}
-	#ghr-gar .ghr-content {
+	#ghr-gar .ghr-content,
+	#ghr-ernie .ghr-content {
 		-webkit-flex-flow: row wrap;
 		-webkit-justify-content: center;
 		-webkit-align-content: center;
@@ -7037,20 +7037,16 @@ body.page.page-template-page-ghr #main {
 		display: -ms-flexbox;
 		display: -webkit-flex;
 		display: flex;
+		overflow: hidden;
 	}
 	#ghr-gar img {
 		width: 70%;
 		margin: 0 15%;
 	}
-	#ghr-ernie .ghr-content {
-		background-image: url('https://cdn.hpm.io/assets/images/ghr/ernie_full_color.jpg');
-		background-repeat: no-repeat;
-		background-position: bottom left;
-		background-size: contain;
-	}
 	#ghr-ernie .ghr-ernie-wrap {
-		margin-left: 55%;
-		width: 45%;
+		float: left;
+		width: 50%;
+		padding: 1em;
 	}
 	.ghr-credit-popup .ghr-credit-popup-wrap {
 		width: 90%;
@@ -7136,7 +7132,7 @@ body.page.page-template-page-ghr #main {
 		margin-top: 0;
 	}
 	#ghr-ernie .ghr-ernie-wrap {
-		padding: 2em 0;
+		padding: 2em;
 	}
 	#ghr-gar .ghr-gar-right {
 		width: 50%;
@@ -7205,7 +7201,6 @@ body.page.page-template-page-ghr #main {
 		margin: 0 auto;
 	}
 	#ghr-ernie .ghr-ernie-wrap {
-		padding: 3.5em 0;
-		width: 40%;
+		padding: 3em;
 	}
 }

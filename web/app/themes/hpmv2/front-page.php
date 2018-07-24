@@ -16,7 +16,7 @@ if ( !empty( $_GET['testtime'] ) ) :
 	$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) );
 endif; ?>
 	<div id="primary" class="content-area">
-		<?php
+<?php /*
 		$election_args = array(
 			'p' => 248126,
 			'post_type'  => 'page',
@@ -29,14 +29,42 @@ endif; ?>
 				the_content();
 			endwhile;
 			wp_reset_postdata();
-		endif; ?>
+		endif; */ ?>
 		<main id="main" class="site-main" role="main">
 			<div id="float-wrap">
 				<div class="grid-sizer"></div>
+				
+		<?php
+			// Sticky Posts
+			$hpm_priority = get_option( 'hpm_priority' );
+			$stickies = array(
+				'ids' => array(),
+				'spaces' => array()
+			);
+			$sticky = 'homepage';
+			foreach ( $hpm_priority[$sticky] as $ks => $vs ) :
+				if ( $ks == 0 ) :
+					$stickies['spaces'][$vs] = 'felix-type-a';
+				elseif ( $ks == 1 ) :
+					$stickies['spaces'][$vs] = 'felix-type-b';
+				else :
+					$stickies['spaces'][$vs] = 'felix-type-d';
+				endif;
+				$stickies['ids'][] = $vs;
+			endforeach;
+			if ( !empty( $stickies['ids'] ) ) :
+				$sticknum = count( $stickies['ids'] );
+				$sticky_args = array(
+					'posts_per_page' => $sticknum,
+					'post__in'  => $stickies['ids'],
+					'orderby' => 'post__in',
+					'ignore_sticky_posts' => 1
+				);
+				$sticky_query = new WP_Query( $sticky_args );
+				if ( $sticky_query->have_posts() ) :
+					while ( $sticky_query->have_posts() ) :
+						if ( $c == 4 ) : ?>
 				<div id="top-schedule-wrap" class="column-right grid-item stamp">
-				<?php /* if ( $now[0] < mktime( 0, 0, 0, 2, 1, 2018 ) ) : ?>
-					<div style="width: 100%; background-color: white; padding: 0.5em; height: 745px;" id="hjllm" class="curiosity-module" data-pym-src="//modules.wearehearken.com/kut/curiosity_modules/605"></div><script src="//assets.wearehearken.com/production/thirdparty/p.m.js"></script>
-				<?php endif; */ ?>
 					<?php hpm_top_posts(); ?>
 					<div id="station-schedules">
 						<h4>ON AIR</h4>
@@ -160,7 +188,7 @@ endif; ?>
 							wp_reset_query();
 						?>
 					</div>
-					<?php echo get_option( 'hpm_houstonpubmedia_tweets' ); ?>
+					<?php //echo get_option( 'hpm_houstonpubmedia_tweets' ); ?>
 					<div class="sidebar-ad">
 						<div id="div-gpt-ad-1394579228932-1">
 							<h4>Support Comes From</h4>
@@ -170,69 +198,42 @@ endif; ?>
 						</div>
 					</div>
 				</div>
-		<?php
-			// Sticky Posts
-            $hpm_priority = get_option( 'hpm_priority' );
-            $stickies = array(
-                'ids' => array(),
-                'spaces' => array()
-            );
-            $sticky = 'homepage';
-            foreach ( $hpm_priority[$sticky] as $ks => $vs ) :
-	            if ( $ks == 0 ) :
-					$stickies['spaces'][$vs] = 'felix-type-a';
-	            elseif ( $ks == 1 ) :
-		            $stickies['spaces'][$vs] = 'felix-type-b';
-	            else :
-		            $stickies['spaces'][$vs] = 'felix-type-d';
-	            endif;
-                $stickies['ids'][] = $vs;
-            endforeach;
-            if ( !empty( $stickies['ids'] ) ) :
-	            $sticknum = count( $stickies['ids'] );
-                $sticky_args = array(
-                    'posts_per_page' => $sticknum,
-                    'post__in'  => $stickies['ids'],
-                    'orderby' => 'post__in',
-                    'ignore_sticky_posts' => 1
-                );
-                $sticky_query = new WP_Query( $sticky_args );
-                if ( $sticky_query->have_posts() ) :
-                    while ( $sticky_query->have_posts() ) :
-                        $sticky_query->the_post();
-                        $sticky_id = get_the_ID();
-                        $exclude[] = $sticky_id;
-                        $postClass = get_post_class();
-                        $postClass[] = 'pinned';
-                        $postClass[] = 'grid-item';
-                        $postClass[] = 'grid-item--width2';
-                        $fl_array = preg_grep("/felix-type-/", $postClass);
-                        $fl_arr = array_keys( $fl_array );
-                        $postClass[$fl_arr[0]] = $stickies['spaces'][$sticky_id];
+<?php
+						endif;
+						$sticky_query->the_post();
+						$sticky_id = get_the_ID();
+						$exclude[] = $sticky_id;
+						$postClass = get_post_class();
+						$postClass[] = 'pinned';
+						$postClass[] = 'grid-item';
+						$postClass[] = 'grid-item--width2';
+						$fl_array = preg_grep("/felix-type-/", $postClass);
+						$fl_arr = array_keys( $fl_array );
+						$postClass[$fl_arr[0]] = $stickies['spaces'][$sticky_id];
 
-                        if ( $stickies['spaces'][$sticky_id] == 'felix-type-a' ) :
-                            $thumbnail_type = 'large';
-                        else :
-                            $thumbnail_type = 'thumbnail';
-                        endif; ?>
-                        <article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-                            <div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
-                                <a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-                            </div>
-                            <header class="entry-header">
-                                <h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-                                <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-                                <div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-                            </header><!-- .entry-header -->
-                        </article>
-                        <?PHP
-                        $c++;
-                    endwhile;
-                    wp_reset_postdata();
-                endif;
-            endif;
+						if ( $stickies['spaces'][$sticky_id] == 'felix-type-a' ) :
+							$thumbnail_type = 'large';
+						else :
+							$thumbnail_type = 'thumbnail';
+						endif; ?>
+						<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
+							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
+								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
+							</div>
+							<header class="entry-header">
+								<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
+								<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+								<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
+							</header><!-- .entry-header -->
+						</article>
+						<?PHP
+						$c++;
+					endwhile;
+					wp_reset_postdata();
+				endif;
+			endif;
 			while ( have_posts() ) :
-				if ($c == 11) : ?>
+				if ($c == 12) : ?>
 				<div id="npr-side" class="column-right grid-item stamp">
 					<div id="national-news">
 						<h4>News from NPR</h4>
@@ -275,8 +276,8 @@ endif; ?>
 					<header class="entry-header">
 						<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 						<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-                        <div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-                    </header><!-- .entry-header -->
+						<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
+					</header><!-- .entry-header -->
 				</article>
 			<?PHP
 				endif;

@@ -117,7 +117,7 @@ function homepage_meta_query( $query ) {
 		$query->set( 'category__not_in', array(0,1,7636,28) );
 		//$query->set( 'category__in', array(26881,26989,27123) );
 		$query->set( 'ignore_sticky_posts', 1 );
-		$query->set( 'posts_per_page', 21 );
+		$query->set( 'posts_per_page', 22 );
 	endif;
 }
 add_action( 'pre_get_posts', 'homepage_meta_query' );
