@@ -3665,26 +3665,7 @@ body.page.page-template-page-kids .kids-schedule {
 		float: left;
 		width: 50%;
 	}
-	#top-schedule-wrap #in-depth {
-		-webkit-box-ordinal-group: 2;
-		-moz-box-ordinal-group: 2;
-		-ms-flex-order: 2;
-		-webkit-order: 2;
-		order: 2;
-	}
-	#top-schedule-wrap .sidebar-ad {
-		-webkit-box-ordinal-group: 5;
-		-moz-box-ordinal-group: 5;
-		-ms-flex-order: 5;
-		-webkit-order: 5;
-		order: 5;
-	}
 	#top-schedule-wrap #twitter-home {
-		-webkit-box-ordinal-group: 4;
-		-moz-box-ordinal-group: 4;
-		-ms-flex-order: 4;
-		-webkit-order: 4;
-		order: 4;
 		float: left;
 		width: 47.5%;
 		margin: 0 0 2em 2.5%;
@@ -3714,27 +3695,6 @@ body.page.page-template-page-kids .kids-schedule {
 		display: -webkit-flex;
 		display: flex;
 		margin: 1em 0;
-	}
-	#float-wrap #breaking {
-		-webkit-box-ordinal-group: -3;
-		-moz-box-ordinal-group: -3;
-		-ms-flex-order: -3;
-		-webkit-order: -3;
-		order: -3;
-	}
-	#float-wrap .pinned {
-		-webkit-box-ordinal-group: -2;
-		-moz-box-ordinal-group: -2;
-		-ms-flex-order: -2;
-		-webkit-order: -2;
-		order: -2;
-	}
-	#float-wrap #top-schedule-wrap {
-		-webkit-box-ordinal-group: -1;
-		-moz-box-ordinal-group: -1;
-		-ms-flex-order: -1;
-		-webkit-order: -1;
-		order: -1;
 	}
 	.column-left, .column-right, .column-span, .column-third {
 		width: 95%;
@@ -3925,29 +3885,14 @@ body.page.page-template-page-kids .kids-schedule {
 		background-color: white;
 	}
 	#top-schedule-wrap #station-schedules {
-		-webkit-box-ordinal-group: 1;
-		-moz-box-ordinal-group: 1;
-		-ms-flex-order: 1;
-		-webkit-order: 1;
-		order: 1;
 		width: 100%;
 		padding: 0;
 	}
 	#top-schedule-wrap #top-posts {
-		-webkit-box-ordinal-group: 3;
-		-moz-box-ordinal-group: 3;
-		-ms-flex-order: 3;
-		-webkit-order: 3;
-		order: 3;
 		background-color: white;
 		padding: 2em;
 	}
 	#national-news {
-		-webkit-box-ordinal-group: 3;
-		-moz-box-ordinal-group: 3;
-		-ms-flex-order: 3;
-		-webkit-order: 3;
-		order: 3;
 		display: block;
 		padding: 2em;
 	}
@@ -4883,11 +4828,6 @@ body.page.page-template-page-kids .kids-schedule {
 		width: 100%;
 	}
 	#top-schedule-wrap #twitter-home {
-		-webkit-box-ordinal-group: 5;
-		-moz-box-ordinal-group: 5;
-		-ms-flex-order: 5;
-		-webkit-order: 5;
-		order: 5;
 		float: none;
 		width: 100%;
 		margin: 0 0 2em 0;
@@ -4896,21 +4836,11 @@ body.page.page-template-page-kids .kids-schedule {
 		font-size: 1.5em;
 	}
 	#top-schedule-wrap #top-posts {
-		-webkit-box-ordinal-group: 3;
-		-moz-box-ordinal-group: 3;
-		-ms-flex-order: 3;
-		-webkit-order: 3;
-		order: 3;
 		float: none;
 		width: 100%;
 	}
 	#top-schedule-wrap .sidebar-ad,
 	.column-right .sidebar-ad {
-		-webkit-box-ordinal-group: 4;
-		-moz-box-ordinal-group: 4;
-		-ms-flex-order: 4;
-		-webkit-order: 4;
-		order: 4;
 		display: block;
 		float: none;
 		width: 100%;
@@ -6664,10 +6594,10 @@ body.page.page-template-page-ghr #main {
 	text-indent: -9999px;
 	background-image: url('https://cdn.hpm.io/assets/images/ghr/the_greatHoustonread_logo@2x.png');
 	height: 0;
-	width: 55%;
-	margin: 0 12.5% 0.5em;
+	width: 40%;
+	margin: 0 12.5%;
 	padding: 0;
-	padding-bottom: calc(55%/1.33462);
+	padding-bottom: calc(40%/1.33462);
 	background-size: contain;
 	background-repeat: no-repeat;
 	color: white;
@@ -6708,13 +6638,13 @@ body.page.page-template-page-ghr #main {
 	text-align: center;
 	font: normal 1em/1.25em 'acumin-pro-condensed',arial,helvetica,sans-serif;
 	width: 100%;
-	padding: 1em 0 0 0;
+	padding: 0 0 1em 0;
 }
 .page-template-page-ghr .page-header h5 a {
 	color: white;
 }
 .page-template-page-ghr .page-header h5 img {
-	width: 8em;
+	width: 6.5em;
 	padding: 0.5em 0 0 0;
 }
 .page-template-page-ghr .page-header a.down {
@@ -6820,7 +6750,7 @@ body.page.page-template-page-ghr #main {
 	border-radius: 5px;
 }
 #ghr-ernie .ghr-content {
-	background-color: rgb(38,42,57);
+	background-color: rgb(82,52,117);
 }
 #ghr-ernie h2 {
 	font-family: 'acumin-pro-condensed',arial,helvetica,sans-serif;
@@ -6977,9 +6907,7 @@ body.page.page-template-page-ghr #main {
 		border: 0;
 	}
 	.page-template-page-ghr .page-header .page-title {
-		width: 40%;
 		margin: 0 30% 0.5em;
-		padding-bottom: calc(40%/1.33462);
 	}
 	.page-template-page-ghr.ghr-vote .page-header .page-title {
 		background-size: 12%;
@@ -6993,6 +6921,13 @@ body.page.page-template-page-ghr #main {
 	}
 	.page-template-page-ghr .page-header h4 {
 		font-size: 1.125em;
+	}
+	.page-template-page-ghr .page-header h5 {
+		padding: 1em 0;
+	}
+	.page-template-page-ghr .page-header h5 img {
+		width: 8em;
+		padding: 0.5em 0 0 0;
 	}
 	.ghr-story-wrap .ghr-story {
 		width: 40%;

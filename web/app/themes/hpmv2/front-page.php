@@ -65,7 +65,6 @@ endif; ?>
 					while ( $sticky_query->have_posts() ) :
 						if ( $c == 4 ) : ?>
 				<div id="top-schedule-wrap" class="column-right grid-item stamp">
-					<?php hpm_top_posts(); ?>
 					<div id="station-schedules">
 						<h4>ON AIR</h4>
 						<div class="station-now-play-wrap">
@@ -188,6 +187,7 @@ endif; ?>
 							wp_reset_query();
 						?>
 					</div>
+					<?php hpm_top_posts(); ?>
 					<?php //echo get_option( 'hpm_houstonpubmedia_tweets' ); ?>
 					<div class="sidebar-ad">
 						<div id="div-gpt-ad-1394579228932-1">

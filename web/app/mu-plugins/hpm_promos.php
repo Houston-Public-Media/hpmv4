@@ -117,7 +117,11 @@ class HPM_Promos {
 				'location' => 'homepage',
 				'type' => 'sidebar',
 				'options' => array(
-					'sidebar' => array(),
+					'sidebar' => array(
+						'mobile' => '',
+						'tablet' => '',
+						'desktop' => ''
+					),
 					'fullwidth' => array(
 						'mobile' => '',
 						'tablet' => '',
@@ -155,6 +159,16 @@ class HPM_Promos {
 			</select>
 		</p>
 		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>>
+			<h3><?php _e( "Sidebar Banner Options", 'hpmv2' ); ?></h3>
+			<p><?php _e( "The Sidebar banner allows for alternate image versions for mobile, tablet, and desktop, if
+				desired. If you only wish to use a single image size, you can just include it in the HTML. If you
+				want to use multiple versions, paste the image URLs in the boxes below, and place [[image]] in the
+				image source in your HTML.", 'hpmv2' ); ?></p>
+			<ul>
+				<li><label for="hpm_promo[options][sidebar][mobile]"><?php _e('Mobile: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][mobile]" value="<?php echo $hpm_promo['options']['sidebar']['mobile']; ?>" style="max-width: 100%; width: 800px;" /></li>
+				<li><label for="hpm_promo[options][sidebar][tablet]"><?php _e('Tablet: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][tablet]" value="<?php echo $hpm_promo['options']['sidebar']['tablet']; ?>" style="max-width: 100%; width: 800px;" /></li>
+				<li><label for="hpm_promo[options][sidebar][desktop]"><?php _e('Desktop: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][desktop]" value="<?php echo $hpm_promo['options']['sidebar']['desktop']; ?>" style="max-width: 100%; width: 800px;" /></li>
+			</ul>
 		</div>
 		<div id="hpm-fullwidth" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'fullwidth' ? '' : ' style="display: none;"' ); ?>>
 			<h3><?php _e( "Full-Width Banner Options", 'hpmv2' ); ?></h3>
