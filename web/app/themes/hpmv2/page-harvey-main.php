@@ -207,6 +207,9 @@ Template Name: Harvey Main
 									</div>
 								</div>
 							</section>
+							<section id="support" class="hah-support">
+								<p><em>Houston After Harvey</em> is a project of the Houston Flood Museum in partnership with Houston Public Media and is supported by Houston Endowment. Visit <a href="https://www.houstonfloodmuseum.org" target="_blank">Houston Flood Museum</a></p>
+							</section>
 <?php
 	$news = new WP_Query([
 		'category_name' => 'hurricane,hurricane-harvey',
@@ -275,9 +278,6 @@ Template Name: Harvey Main
 								<div class="hah-social-instagram">
 									<script id="twine-script" src="//apps.twinesocial.com/embed?app=houstonafterharveyhpm&showLoadMore=yes&autoload=no"></script>
 								</div>
-							</section>
-							<section id="support" class="hah-support">
-								<p><em>Houston After Harvey</em> is a project of the Houston Flood Museum in partnership with Houston Public Media and is supported by Houston Endowment. Visit <a href="https://www.houstonfloodmuseum.org" target="_blank">Houston Flood Museum.org</a></p>
 							</section>
 						</div><!-- .entry-content -->
 						<footer class="page-footer">
