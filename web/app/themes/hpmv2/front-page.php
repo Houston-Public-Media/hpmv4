@@ -63,7 +63,7 @@ endif; ?>
 				$sticky_query = new WP_Query( $sticky_args );
 				if ( $sticky_query->have_posts() ) :
 					while ( $sticky_query->have_posts() ) :
-						if ( $c == 4 ) : ?>
+						if ( $c == 2 ) : ?>
 				<div id="top-schedule-wrap" class="column-right grid-item stamp">
 					<div id="station-schedules">
 						<h4>ON AIR</h4>
