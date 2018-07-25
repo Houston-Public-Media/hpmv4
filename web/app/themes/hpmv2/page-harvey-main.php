@@ -206,9 +206,9 @@ Template Name: Harvey Main
 										<p class="hs-broadcasts-time">7:30pm</p>
 									</div>
 								</div>
-							</section>
-							<section id="support" class="hah-support">
-								<p><em>Houston After Harvey</em> is a project of the Houston Flood Museum in partnership with Houston Public Media and is supported by Houston Endowment. Visit <a href="https://www.houstonfloodmuseum.org" target="_blank">Houston Flood Museum</a></p>
+								<section id="support" class="hah-support">
+									<p><em>Houston After Harvey</em> is a project of the Houston Flood Museum in partnership with Houston Public Media and is supported by Houston Endowment. Visit <a href="https://www.houstonfloodmuseum.org" target="_blank">Houston Flood Museum</a></p>
+								</section>
 							</section>
 <?php
 	$news = new WP_Query([
