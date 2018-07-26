@@ -279,6 +279,9 @@ Template Name: Harvey Main
 									<script id="twine-script" src="//apps.twinesocial.com/embed?app=houstonafterharveyhpm&showLoadMore=yes&autoload=no"></script>
 								</div>
 							</section>
+							<section id="support" class="hah-support">
+								<p><em>Houston After Harvey</em> is a project of the Houston Flood Museum in partnership with Houston Public Media and is supported by Houston Endowment. Visit <a href="https://www.houstonfloodmuseum.org" target="_blank">Houston Flood Museum</a></p>
+							</section>
 						</div><!-- .entry-content -->
 						<footer class="page-footer">
 							<a href="/harvey/credits/" class="page-credits">Credits</a>
