@@ -99,6 +99,7 @@ Template Name: Harvey Hurricane Season
 									<div class="hah-split sfts-interviews-info">
 										<h3 id="sfts-yt-title"><?php echo $first->post_title; ?></h3>
 										<p id="sfts-yt-desc"><?php echo wp_strip_all_tags( strip_shortcodes( $first->post_content ) ); ?></p>
+										<p><a href="<?php the_permalink( $first->ID ); ?>" id="sfts-yt-url">Learn More About This Episode</a></p>
 									</div>
 								</div>
 								<aside id="videos-nav" class="nav-active">
@@ -123,7 +124,7 @@ Template Name: Harvey Hurricane Season
 				$ytid = $enclose['url'];
 			endif;
 			$text = wp_strip_all_tags( strip_shortcodes( get_the_content() ) ); ?>
-											<li <?php echo ( $c == 0 ? 'class="current"' : '' ); ?>id="<?php echo $id; ?>" data-ytid="<?php echo $ytid; ?>" data-yttitle="<?php the_title(); ?>" data-ytdesc="<?php the_excerpt(); ?>">
+											<li <?php echo ( $c == 0 ? 'class="current"' : '' ); ?>id="<?php echo $id; ?>" data-ytid="<?php echo $ytid; ?>" data-yttitle="<?php the_title(); ?>" data-ytdesc="<?php the_excerpt(); ?>" data-yturl="<?php the_permalink(); ?>">
 												<div class="videos-thumbnail"><img src="https://cdn.hpm.io/wp-content/uploads/2018/06/21110952/Hurricane-Season-podcast-550x550.png" alt="Hurricane Season podcast" /></div>
 												<div class="videos-info"><?php the_title(); ?><?php echo $later; ?></div>
 											</li>
@@ -148,11 +149,13 @@ Template Name: Harvey Hurricane Season
 						var ytid = $(this).attr('data-ytid');
 						var yttitle = $(this).attr('data-yttitle');
 						var ytdesc = $(this).attr('data-ytdesc');
+						var yturl = $(this).attr('data-yturl');
 						if ( ytid === 'null' ) {
 							return false;
 						} else {
 							$('#sfts-yt-title').html(yttitle);
 							$('#sfts-yt-desc').html(ytdesc);
+							$('#sfts-yt-url').attr('href', yturl);
 							if ( $(this).next('li').length ) {
 								var next = $(this).next('li').attr('id');
 							} else {
@@ -177,6 +180,7 @@ Template Name: Harvey Hurricane Season
 							} else {
 								var yttitle = nextEp.attr('data-yttitle');
 								var ytdesc = nextEp.attr('data-ytdesc');
+								var yturl = $(this).attr('data-yturl');
 								var next = nextEp.next('li').attr('id');
 								if ( $(this).next('li').length ) {
 									var next = nextEp.next('li').attr('id');
@@ -185,6 +189,7 @@ Template Name: Harvey Hurricane Season
 								}
 								$('#sfts-yt-title').html(yttitle);
 								$('#sfts-yt-desc').html(ytdesc);
+								$('#sfts-yt-url').attr('href', yturl);
 								$("#jquery_jplayer_1").jPlayer("setMedia", {
 									title: yttitle,
 									mp3: ytid+"?source=jplayer-article"
