@@ -119,7 +119,7 @@ Template Name: Harvey Main
 									<div class="hah-split hs-podcast-info">
 										<h3>Hurricane Season</h3>
 										<p><em>Hurricane Season</em> is an eight-episode podcast that explores how major storms going back to 1900 greatly impacted Greater Houston people and policies.</p>
-										<a href="/harvey/hurricane-season/" class="readmore">Coming August 1st</a>
+										<a href="/harvey/hurricane-season/" class="readmore">Listen to the podcast here</a>
 										<p class="subscribe">Subscribe</p>
 										<ul>
 											<li>

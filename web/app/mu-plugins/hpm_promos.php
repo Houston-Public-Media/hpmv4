@@ -496,6 +496,20 @@ class HPM_Promos {
 						echo $content;
 						continue;
 					endif;
+					$sizing = array();
+					if ( !empty( $meta['options']['sidebar']['mobile'] ) ) :
+						$sizing[] = "if ( wide <= 480 ) { var image = '".$meta['options']['sidebar']['mobile']."'; }";
+					endif;
+					if ( !empty( $meta['options']['sidebar']['tablet'] ) ) :
+						$sizing[] = "if ( wide > 480 && wide <= 800 ) { var image = '".$meta['options']['sidebar']['tablet']."'; }";
+					endif;
+					if ( !empty( $meta['options']['sidebar']['desktop'] ) ) :
+						$sizing[] = "if ( wide > 800 ) { var image = '".$meta['options']['sidebar']['desktop']."'; }";
+					endif;
+					if ( !empty( $sizing ) ) :
+						$output .= implode( ' else ', $sizing );
+					endif;
+					$content_esc = str_replace( "[[image]]", "'+image+'", $content_esc  );
 					if ( $wp_global->is_home || ( !empty( $page_id ) && get_page_template_slug( $page_id ) == 'page-main-categories.php' ) ) :
 						$output .= "if ( document.getElementById('top-schedule-wrap') !== null ) { document.getElementById('top-schedule-wrap').insertAdjacentHTML('afterbegin', '".$content_esc."'); masonLoad(); }";
 					else :
