@@ -38,7 +38,9 @@ get_header(); ?>
 	</div><!-- .content-area -->
 	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick.min.css" />
 	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
+	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/lightbox/css/lightbox.min.css" />
 	<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
+	<script src="https://cdn.hpm.io/assets/js/lightbox/js/lightbox.min.js"></script>
 	<script src="https://cdn.hpm.io/assets/js/hoverintent.min.js"></script>
 <?php
 	$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
@@ -94,6 +96,17 @@ get_header(); ?>
 					},
 					timeout: 500
 				});
+				$('#c2c-love div').slick({ slidesToShow: 3, rows: 2, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 2, slidesToScroll: 2 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }] });
+
+				$('#c2c-other-worlds div').slick({ slidesToShow: 3, rows: 2, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 2, slidesToScroll: 2 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }] });
+				
+				$('#c2c-heroes div').slick({ slidesToShow: 3, rows: 2, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 2, slidesToScroll: 2 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }] });
+				
+				$('#c2c-who-am-i div').slick({ slidesToShow: 3, rows: 2, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 2, slidesToScroll: 2 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }] });
+				
+				$('#c2c-villains div').slick({ slidesToShow: 3, rows: 2, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 2, slidesToScroll: 2 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }] });
+				
+				$('#c2c-texas div').slick({ slidesToShow: 3, rows: 2, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 2, slidesToScroll: 2 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }] });
 			}
 		});
 		var tag = document.createElement('script');

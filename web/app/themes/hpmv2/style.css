@@ -10,53 +10,53 @@ Text Domain: hpmv2
 */
 
 /**
- * Table of Contents
- *
- * 1.0 - Reset
- * 2.0 - Typography
- * 3.0 - Elements
- * 4.0 - Navigation
- * 5.0 - Article Styles
- *	 5.1 - General Styles
- *   5.2 - Search Result/Category/Tag
- * 6.0 - Sidebar, Metadata and YouTube
- * 7.0 - jPlayer Styling
- * 8.0 - Station Schedule Styling
- * 9.0 - Author/Staff Bio Styling
- * 10.0 - Exploded Rotator/Feature Tile
- * 11.0 - Site Footer
- * 12.0 - Listen Live
- * 13.0 - Membership
- * 14.0 - Kids
- * 15.0 - Accessibility
- * 16.0 - Media Queries
- *	16.1 Tablet 481px-800px
- *	  16.1.1 - Navigation
- *	  16.1.2 - General Article Styles
- *	  16.1.3 - Grid-Based Article Styles
- *	  16.1.4 - Search Results/Category/Tag Articles
- *	  16.1.5 - Sidebar and Metadata
- *	  16.1.6 - Station Schedule Styling
- *	  16.1.7 - Exploded Rotator/Feature Tiles
- *	  16.1.8 - Kids
- *	16.2 Desktop Small 801px-1024px
- *	  16.2.1 - Navigation
- *	  16.2.2 - General Article Styles
- *	  16.2.3 - Grid-Based Article Styles
- *	  16.2.4 - Search Results/Category/Tag Articles
- *	  16.2.5 - Sidebar and Metadata
- *	  16.2.6 - jPlayer Styling
- *	  16.2.7 - Author/Staff Bio
- *	  16.2.8 - Site Footer
- *	  16.2.9 - Listen Live
- *	  16.2.10 - Membership
- *	  16.2.11 - Kids
- *	16.3 Desktop Large 1025px-1200px+
- *	  16.3.1 - Header and Nav
- *	  16.3.2 - Kids
- *	  16.3.3 - Miscellaneous
- * 17.0 - Print
- */
+* Table of Contents
+*
+* 1.0 - Reset
+* 2.0 - Typography
+* 3.0 - Elements
+* 4.0 - Navigation
+* 5.0 - Article Styles
+*	5.1 - General Styles
+*   5.2 - Search Result/Category/Tag
+* 6.0 - Sidebar, Metadata and YouTube
+* 7.0 - jPlayer Styling
+* 8.0 - Station Schedule Styling
+* 9.0 - Author/Staff Bio Styling
+* 10.0 - Exploded Rotator/Feature Tile
+* 11.0 - Site Footer
+* 12.0 - Listen Live
+* 13.0 - Membership
+* 14.0 - Kids
+* 15.0 - Accessibility
+* 16.0 - Media Queries
+*	16.1 Tablet 481px-800px
+*	 16.1.1 - Navigation
+*	 16.1.2 - General Article Styles
+*	 16.1.3 - Grid-Based Article Styles
+*	 16.1.4 - Search Results/Category/Tag Articles
+*	 16.1.5 - Sidebar and Metadata
+*	 16.1.6 - Station Schedule Styling
+*	 16.1.7 - Exploded Rotator/Feature Tiles
+*	 16.1.8 - Kids
+*	16.2 Desktop Small 801px-1024px
+*	 16.2.1 - Navigation
+*	 16.2.2 - General Article Styles
+*	 16.2.3 - Grid-Based Article Styles
+*	 16.2.4 - Search Results/Category/Tag Articles
+*	 16.2.5 - Sidebar and Metadata
+*	 16.2.6 - jPlayer Styling
+*	 16.2.7 - Author/Staff Bio
+*	 16.2.8 - Site Footer
+*	 16.2.9 - Listen Live
+*	 16.2.10 - Membership
+*	 16.2.11 - Kids
+*	16.3 Desktop Large 1025px-1200px+
+*	 16.3.1 - Header and Nav
+*	 16.3.2 - Kids
+*	 16.3.3 - Miscellaneous
+* 17.0 - Print
+*/
 
 @import url("https://use.typekit.net/rss8xfx.css");
 
@@ -6603,7 +6603,7 @@ body.page.page-template-page-ghr #main {
 	color: white;
 	font-family: 'acumin-pro-condensed',arial,helvetica,sans-serif;
 	text-align: left;
- }
+}
 .page-template-page-ghr.ghr-vote .page-header .page-title {
 	padding: 0.5em 0;
 	background-size: 15%;
@@ -6732,6 +6732,7 @@ body.page.page-template-page-ghr #main {
 }
 #ghr-gar .ghr-content {
 	overflow: hidden;
+	padding: 1em 1.5em 3em;
 }
 #ghr-gar .ghr-button {
 	width: 50%;
@@ -6749,22 +6750,42 @@ body.page.page-template-page-ghr #main {
 	margin: 0 25%;
 	border-radius: 5px;
 }
+#ghr-ernie .ghr-ernie-head {
+	position: relative;
+	padding-bottom: calc(100%/1.6);
+	width: 100%;
+}
 #ghr-ernie .ghr-content {
 	background-color: rgb(82,52,117);
+	background: -moz-radial-gradient(center, ellipse cover, rgba(128,86,176,1) 0%, rgba(89,57,126,1) 50%, rgba(82,52,117,1) 100%);
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(128,86,176,1) 0%,rgba(89,57,126,1) 50%,rgba(82,52,117,1) 100%);
+	background: radial-gradient(ellipse at center, rgba(128,86,176,1) 0%,rgba(89,57,126,1) 50%,rgba(82,52,117,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8056b0', endColorstr='#523475',GradientType=1 );
+	background-attachment: fixed;
 }
-#ghr-ernie h2 {
-	font-family: 'acumin-pro-condensed',arial,helvetica,sans-serif;
-	text-align: center;
-	font-size: 2.5em;
-	color: white;
-	padding: 0 0 0.25em;
+#ghr-ernie .ghr-content .ghr-ernie-head .ghr-ernie-photo {
+	position: absolute;
+	top: -1.5em;
+	width: 100%;
 	margin: 0;
+	z-index: 1000;
+}
+#ghr-ernie .ghr-content .ghr-ernie-head .ghr-c2c-logo {
+	position: absolute;
+	width: 100%;
+	z-index: 1001;
+	bottom: 0;
+}
+#ghr-ernie .ghr-content .ghr-ernie-head .ghr-c2c-logo img {
+	width: 60%;
+	margin: 0 20%;
 }
 #ghr-ernie h3 {
 	font-family: 'acumin-pro-condensed',arial,helvetica,sans-serif;
 	text-align: center;
-	font-size: 1.25em;
+	font-size: 1.75em;
 	color: white;
+	font-weight: bolder;
 }
 #ghr-ernie p {
 	font-family: 'acumin-pro-condensed',arial,helvetica,sans-serif;
@@ -6887,6 +6908,103 @@ body.page.page-template-page-ghr #main {
 #ghr-story-tag:first-line {
 	font-weight: 700;
 }
+.page-template-page-ghr .page-content #ghr-c2c.ghr-wrap .ghr-content {
+	padding: 1em 0;
+	background-color: #312A6C;
+}
+#c2c-galleries {
+	-webkit-flex-flow: row wrap;
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	-ms-flex-flow: row wrap;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid #C55391;
+}
+#c2c-galleries li {
+	width: 33.33333%;
+	padding: 0.5em 1em;
+	opacity: 0.9;
+	margin: 0;
+	position: relative;
+	bottom: -2px;
+	font-size: 90%;
+	text-align: center;
+	-webkit-flex-flow: row wrap;
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	-ms-flex-flow: row wrap;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	color: #C55391;
+	border-bottom: 3px solid transparent;
+	font: bolder 1em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+}
+#c2c-galleries li:hover {
+	opacity: 1;
+	-webkit-transition: opacity .2s ease-out;
+	-moz-transition: opacity .2s ease-out;
+	-o-transition: opacity .2s ease-out;
+	transition: opacity .2s ease-out;
+	cursor: pointer;
+}
+#c2c-galleries li.c2c-active {
+	opacity: 1;
+	color: white;
+	border-bottom: 3px solid white;
+	}
+.c2c-gallery {
+	padding: 1em 1.5em;
+	width: 100%;
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+}
+.c2c-gallery.c2c-gallery-active {
+	visibility: visible;
+}
+#c2c-gallery-wrap {
+	position: relative;
+	height: 0;
+	padding-bottom: calc(100%/0.75);
+}
+#ghr-c2c h2 {
+	color: #FAF8F8;
+	text-align: center;
+	font: bolder 2.5em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+	margin: 0 0 0.25em;
+}
+#ghr-c2c p {
+	color: #FAF8F8;
+	text-align: center;
+	font: bolder 1em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+	margin: 0 0 1em;
+}
 @media screen and (min-width: 30.0625em) {
 	.page-template-page-ghr #content {
 		width: 100%;
@@ -6953,8 +7071,7 @@ body.page.page-template-page-ghr #main {
 		width: 60%;
 		float: left;
 	}
-	#ghr-gar .ghr-content,
-	#ghr-ernie .ghr-content {
+	#ghr-gar .ghr-content {
 		-webkit-flex-flow: row wrap;
 		-webkit-justify-content: center;
 		-webkit-align-content: center;
@@ -7001,6 +7118,34 @@ body.page.page-template-page-ghr #main {
 	#ghr-story-tag {
 		width: 40%;
 		margin: 0 30%;
+	}
+	.c2c-gallery {
+		width: 90%;
+		margin: 0 5%;
+	}
+	#c2c-galleries {
+		margin: 0 5%;
+		padding: 0 1em;
+	}
+	#c2c-galleries li {
+		padding: 0.5em 1em;
+		width: 16.666666%;
+	}
+	#ghr-ernie .ghr-ernie-head {
+		padding-bottom: calc(100%/1.7);
+	}
+	#ghr-ernie .ghr-content .ghr-ernie-head .ghr-ernie-photo {
+		top: -2em;
+	}
+	#ghr-ernie .ghr-content .ghr-ernie-head .ghr-c2c-logo img {
+		width: 50%;
+		margin: 0 25%;
+	}
+	.c2c-gallery .slick-slide div {
+		padding: 0.5em;
+	}
+	#c2c-gallery-wrap {
+		padding-bottom: calc(100%/1.5);
 	}
 }
 @media screen and (min-width: 50.0625em) {
@@ -7084,6 +7229,34 @@ body.page.page-template-page-ghr #main {
 		width: 30%;
 		margin: 0 35%;
 	}
+	.c2c-gallery {
+		width: 90%;
+		margin: 0 5%;
+	}
+	#c2c-galleries {
+		margin: 0 5%;
+		padding: 0 2em;
+	}
+	#c2c-galleries li {
+		padding: 0.5em;
+		font-size: 110%;
+	}
+	#ghr-ernie .ghr-ernie-head {
+		padding-bottom: calc(100%/1.7);
+	}
+	#ghr-ernie .ghr-content .ghr-ernie-head .ghr-ernie-photo {
+		top: -3em;
+	}
+	#ghr-ernie .ghr-content .ghr-ernie-head .ghr-c2c-logo img {
+		width: 45%;
+		margin: 0 27.5%;
+	}
+	.page-template-page-ghr .page-content #ghr-ernie.ghr-wrap .ghr-content {
+		padding: 2em 4em;
+	}
+	#c2c-gallery-wrap {
+		padding-bottom: calc(100%/2);
+	}
 }
 @media screen and (min-width: 64.0625em) {
 	.page-template-page-ghr #content {
@@ -7137,5 +7310,24 @@ body.page.page-template-page-ghr #main {
 	}
 	#ghr-ernie .ghr-ernie-wrap {
 		padding: 3em;
+	}
+	.page-template-page-ghr .page-content #ghr-ernie.ghr-wrap .ghr-content {
+		padding: 3em 6em;
+	}
+	#ghr-ernie .ghr-content .ghr-ernie-head .ghr-ernie-photo {
+		top: -4em;
+	}
+	#ghr-ernie .ghr-content .ghr-ernie-head .ghr-c2c-logo img {
+		width: 40%;
+		margin: 0 30%;
+	}
+	#ghr-ernie .ghr-ernie-head {
+		padding-bottom: calc(100%/1.8);
+	}
+	#ghr-ernie p {
+		padding: 0 2em;
+	}
+	#c2c-galleries li {
+		font-size: 125%;
 	}
 }

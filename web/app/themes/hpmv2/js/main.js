@@ -219,4 +219,15 @@ jQuery(document).ready(function($){
 			$('#'+dat).fadeIn();
 		}
 	});
+	$('#c2c-galleries li').click(function(){
+		var dat = $(this).attr('data-device');
+		if ( $(this).hasClass( 'c2c-active' ) ) {
+			return false;
+		} else {
+			$('#c2c-galleries li').removeClass('c2c-active');
+			$('.c2c-gallery').removeClass('c2c-gallery-active');
+			$(this).addClass('c2c-active');
+			$('#'+dat).addClass('c2c-gallery-active');
+		}
+	});
 });

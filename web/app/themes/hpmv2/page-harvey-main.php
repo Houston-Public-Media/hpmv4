@@ -202,7 +202,7 @@ Template Name: Harvey Main
 									</div>
 									<div class="hah-split hs-broadcasts-info">
 										<img src="https://cdn.hpm.io/assets/images/harvey/TV8_icon@2x.png" alt="Watch on Houston Matters" />
-										<p>Watch Stories from the Storm 1-hour special on TV 8 at</p>
+										<p>Watch Stories from the Storm half-hour special on TV 8 at</p>
 										<p class="hs-broadcasts-time">7:30pm</p>
 									</div>
 								</div>
