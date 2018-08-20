@@ -555,7 +555,7 @@ class HPM_Promos {
 		} else {
 			lbtext = '".$meta['options']['lightbox']['b']['text']."';
 			lblink = '".$meta['options']['lightbox']['b']['link']."';
-			lbimage = '".$meta['options']['lightbox']['a']['image']."';
+			lbimage = '".$meta['options']['lightbox']['b']['image']."';
 		}";
 						endif;
 						if ( !empty( $meta['options']['lightbox']['total'] ) ) :
