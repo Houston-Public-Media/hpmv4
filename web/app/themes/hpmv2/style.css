@@ -6735,20 +6735,33 @@ body.page.page-template-page-ghr #main {
 	padding: 1em 1.5em 3em;
 }
 #ghr-gar .ghr-button {
-	width: 50%;
+	width: 33.333333%;
 	float: left;
 }
-#ghr-gar .ghr-button a {
+#ghr-ernie .ghr-button {
+	width: 50%;
+	margin: 0 25%;
+}
+#ghr-gar .ghr-button a,
+#ghr-ernie .ghr-button a {
 	font-family: 'acumin-pro-condensed',arial,helvetica,sans-serif;
 	text-align: center;
 	font-size: 1.25em;
 	color: #C55391;
 	border: 1px solid #C55391;
 	display: block;
-	width: 50%;
+	width: 75%;
 	padding: 0.25em;
 	margin: 0 25%;
 	border-radius: 5px;
+}
+#ghr-gar .ghr-button.ghr-button-schedule a,
+#ghr-ernie .ghr-button.ghr-button-schedule a {
+	color: #04B0A2;
+	border: 1px solid #04B0A2;
+}
+#ghr-ernie .ghr-button.ghr-button-schedule a {
+	width: 50%;
 }
 #ghr-ernie .ghr-ernie-head {
 	position: relative;
@@ -6991,7 +7004,7 @@ body.page.page-template-page-ghr #main {
 #c2c-gallery-wrap {
 	position: relative;
 	height: 0;
-	padding-bottom: calc(100%/0.75);
+	padding-bottom: calc(100%/0.29);
 }
 #ghr-c2c h2 {
 	color: #FAF8F8;
@@ -7004,6 +7017,53 @@ body.page.page-template-page-ghr #main {
 	text-align: center;
 	font: bolder 1em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
 	margin: 0 0 1em;
+}
+.c2c-episode-info {
+	width: 100%;
+	padding: 2em 0;
+	overflow: hidden;
+	position: static;
+}
+.c2c-episode-info h3 {
+	padding: 1em 0;
+	width: 85%;
+	margin: 0 7.5%;
+	border-top: 1px solid white;
+	text-align: center;
+	color: white;
+	font: bolder 1.75em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+}
+#ghr-c2c .c2c-episode-info p {
+	text-align: center;
+	color: white;
+	font: normal 1.125em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+	width: 100%;
+	margin: 0 0 1em;
+}
+.c2c-episode-info .c2c-episode-features {
+	text-align: center;
+	padding: 1em;
+}
+.c2c-episode-info .c2c-episode-features h4 {
+	text-decoration: underline;
+	color: white;
+	font: normal 1.25em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+}
+.c2c-episode-info .c2c-episode-features ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.c2c-episode-info .c2c-episode-features ul li {
+	color: white;
+	font: normal 1.25em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
+}
+.c2c-episode-info .c2c-episode-features.c2c-panelists .c2c-title {
+	font-weight: bolder;
+}
+.c2c-episode-info .c2c-episode-features.c2c-books .c2c-title {
+	font-style: italic;
+	font-weight: bolder;
 }
 @media screen and (min-width: 30.0625em) {
 	.page-template-page-ghr #content {
@@ -7145,7 +7205,23 @@ body.page.page-template-page-ghr #main {
 		padding: 0.5em;
 	}
 	#c2c-gallery-wrap {
-		padding-bottom: calc(100%/1.5);
+		padding-bottom: calc(100%/0.8);
+	}
+	.c2c-episode-info .c2c-episode-features {
+		float: left;
+		width: 50%;
+	}
+	.c2c-episode-info {
+		padding: 2em;
+	}
+	.c2c-episode-info h3 {
+		padding: 1em 0;
+		width: 65%;
+		margin: 0 17.5%;
+		border-top: 1px solid white;
+		text-align: center;
+		color: white;
+		font: bolder 1.75em/1em 'acumin-pro-condensed',arial,helvetica,sans-serif;
 	}
 }
 @media screen and (min-width: 50.0625em) {
@@ -7255,7 +7331,11 @@ body.page.page-template-page-ghr #main {
 		padding: 2em 4em;
 	}
 	#c2c-gallery-wrap {
-		padding-bottom: calc(100%/2);
+		padding-bottom: calc(100%/1.1);
+	}
+	#ghr-c2c .c2c-episode-info p {
+		width: 80%;
+		margin: 0 10% 2em;
 	}
 }
 @media screen and (min-width: 64.0625em) {
@@ -7329,5 +7409,8 @@ body.page.page-template-page-ghr #main {
 	}
 	#c2c-galleries li {
 		font-size: 125%;
+	}
+	#c2c-gallery-wrap {
+		padding-bottom: calc(100%/1.2);
 	}
 }
