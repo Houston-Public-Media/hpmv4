@@ -22,8 +22,7 @@ web/.htaccess
 env.production
 
 # Composer
-vendor/*
-!vendor/.gitkeep
+/vendor
 /composer.lock
 
 # Elastic Beanstalk Files
