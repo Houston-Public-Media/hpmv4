@@ -6626,6 +6626,7 @@ body.page.page-template-page-ghr #main {
 	text-align: center;
 	font-family: 'acumin-pro-condensed',arial,helvetica,sans-serif;
 	padding: 0 1em;
+	display: none;
 }
 .page-template-page-ghr .page-header h4 {
 	color: white;
@@ -7064,6 +7065,15 @@ body.page.page-template-page-ghr #main {
 .c2c-episode-info .c2c-episode-features.c2c-books .c2c-title {
 	font-style: italic;
 	font-weight: bolder;
+}
+.c2c-gallery .slick-prev:before,
+.c2c-gallery .slick-next:before {
+	color: white;
+}
+@media screen and (min-width: 21em) {
+	.page-template-page-ghr .page-header h3 {
+		display: inline-block;
+	}
 }
 @media screen and (min-width: 30.0625em) {
 	.page-template-page-ghr #content {
