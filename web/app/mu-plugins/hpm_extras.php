@@ -1309,41 +1309,23 @@ function hpm_segments( $name, $date ) {
 
 add_filter( 'xmlrpc_enabled', '__return_false' );
 
-//function hpm_npr_stories_update() {
-//	$nprs = new WP_Query([
-//		'post_type' => 'post',
-//		'post_status' => 'publish',
-//		'posts_per_page' => -1,
-//		'meta_query' => [[
-//			'key' => 'npr_retrieved_story',
-//			'value' => 1
-//		]],
-//		'date_query' => [[
-//			'after' => '3 days ago',
-//			'inclusive' => true
-//		]]
-//	]);
-//
-//	if ( $nprs->have_posts() ) :
-//		foreach ( $nprs->posts as $npr ) :
-//			$api_id = get_post_meta( $npr->ID, NPR_STORY_ID_META_KEY, TRUE );
-//			$api = new NPRAPIWordpress();
-//			$params = [ 'id' => $api_id, 'apiKey' => get_option( 'ds_npr_api_key' ) ];
-//			$api->request( $params, 'query', get_option( 'ds_npr_api_pull_url' ) );
-//			$api->parse();
-//			if ( empty( $api->message ) || $api->message->level != 'warning' ) :
-//				nprstory_error_log( 'updating story for API ID='.$api_id );
-//				$story = $api->update_posts_from_stories( true );
-//			endif;
-//		endforeach;
-//	endif;
-//	wp_reset_query();
-//	return true;
-//}
-//
-//add_action( 'hpm_npr_stories', 'hpm_npr_stories_update' );
-//$timestamp = wp_next_scheduled( 'hpm_npr_stories' );
-//if ( empty( $timestamp ) ) :
-//	wp_schedule_event( time(), 'hpm_2hours', 'hpm_npr_stories' );
-//endif;
-wp_clear_scheduled_hook('hpm_npr_stories');
+function hpm_reset_password_message( $message, $key ) {
+	if ( strpos( $_POST['user_login'], '@' ) ) :
+		$user_data = get_user_by( 'email', trim( $_POST['user_login'] ) );
+	else :
+		$login = trim( $_POST['user_login'] );
+		$user_data = get_user_by( 'login', $login );
+	endif;
+	
+	$user_login = $user_data->user_login;
+	
+	$msg = __( 'The password for the following account has been requested to be reset:' ). "\r\n\r\n";
+	$msg .= network_site_url() . "\r\n\r\n";
+	$msg .= sprintf( __( 'Username: %s' ), $user_login ) . "\r\n\r\n";
+	$msg .= __( 'If this message was sent in error, please ignore this email.' ) . "\r\n\r\n";
+	$msg .= __( 'To reset your password, visit the following address:' );
+	$msg .= network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
+	return $msg;
+
+}
+add_filter( 'retrieve_password_message', 'hpm_reset_password_message', null, 2 );
