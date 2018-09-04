@@ -330,6 +330,7 @@ if ( in_array(
 		'wp-app.php',
 		'xmlrpc.php',
 		'wp-cron.php',
+		'wp-login.php'
 	) ) )
 	return;
 
@@ -412,7 +413,7 @@ if ( $batcache->is_ssl() )
 	$batcache->keys['ssl'] = true;
 
 // Recreate the permalink from the URL
-$batcache->permalink = 'http://' . $batcache->keys['host'] . $batcache->keys['path'] . ( isset($batcache->keys['query']['p']) ? "?p=" . $batcache->keys['query']['p'] : '' );
+$batcache->permalink = 'https://' . $batcache->keys['host'] . $batcache->keys['path'] . ( isset($batcache->keys['query']['p']) ? "?p=" . $batcache->keys['query']['p'] : '' );
 $batcache->url_key = md5($batcache->permalink);
 $batcache->configure_groups();
 $batcache->url_version = (int) wp_cache_get("{$batcache->url_key}_version", $batcache->group);
