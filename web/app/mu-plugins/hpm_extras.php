@@ -1323,7 +1323,7 @@ function hpm_reset_password_message( $message, $key ) {
 	$msg .= network_site_url() . "\r\n\r\n";
 	$msg .= sprintf( __( 'Username: %s' ), $user_login ) . "\r\n\r\n";
 	$msg .= __( 'If this message was sent in error, please ignore this email.' ) . "\r\n\r\n";
-	$msg .= __( 'To reset your password, visit the following address:' );
+	$msg .= __( 'To reset your password, visit the following address:' ) . "\r\n\r\n";
 	$msg .= network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
 	return $msg;
 
