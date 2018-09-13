@@ -78,10 +78,11 @@ do_action( 'rss_tag_pre', 'rss2' );
 	do_action( 'rss2_head');
 
 	while( have_posts()) : the_post();
+		$topcat = sanitize_title( hpm_top_cat( get_the_ID() ) );
 	?>
 	<item>
 		<title><?php the_title_rss() ?></title>
-		<link><?php the_permalink_rss() ?></link>
+		<link><?php the_permalink_rss() ?>?utm_source=rss-<?php echo $topcat; ?>-article&amp;utm_medium=link&amp;utm_campaign=hpm-rss-link</link>
 <?php if ( get_comments_number() || comments_open() ) : ?>
 		<comments><?php comments_link_feed(); ?></comments>
 <?php endif; ?>
