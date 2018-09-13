@@ -117,7 +117,7 @@ function homepage_meta_query( $query ) {
 		$query->set( 'category__not_in', array(0,1,7636,28) );
 		//$query->set( 'category__in', array(26881,26989,27123) );
 		$query->set( 'ignore_sticky_posts', 1 );
-		$query->set( 'posts_per_page', 22 );
+		$query->set( 'posts_per_page', 18 );
 	endif;
 }
 add_action( 'pre_get_posts', 'homepage_meta_query' );
@@ -793,7 +793,7 @@ function hpm_site_header() {
 					</div>
 					<div id="top-schedule">
 						<div class="top-schedule-label">Schedules</div>
-						<div class="top-schedule-links"><a href="/tv8">TV 8</a></div>
+						<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
 						<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
 						<div class="top-schedule-links"><a href="/classical">Classical</a></div>
 						<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
@@ -1036,6 +1036,12 @@ function hpm_google_tracker() { ?>
 		}
 	</script>
 	<script async src='https://www.google-analytics.com/analytics.js'></script>
+<?php
+}
+
+function hpm_fb_sdk() { ?>
+	<div id="fb-root"></div>
+	<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v3.1' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
 <?php
 }
 

@@ -437,10 +437,12 @@ class HPM_Promos {
 		if ( $wp_global->is_page || $wp_global->is_single ) :
 			$page_id = $wp_global->get_queried_object_id();
 			$anc = get_post_ancestors( $page_id );
-			if ( in_array( 61383, $anc ) || $page_id == 61263 || $page_id == 135762 || $page_id == 135920 || $page_id == 290722 ) :
+			$bans = [ 61263, 135762, 135920, 290722 ];
+			$pt_slug = [ 'page-blank.php', 'page-ghr.php', 'page-elevator.php' ];
+			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
 				echo $output;
 				die;
-			elseif ( get_page_template_slug( $page_id ) == 'page-blank.php' || get_page_template_slug( $page_id ) == 'page-ghr.php' ) :
+			elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
 				echo $output;
 				die;
 			endif;

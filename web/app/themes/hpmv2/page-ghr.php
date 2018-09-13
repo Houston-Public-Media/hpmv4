@@ -129,5 +129,166 @@ get_header(); ?>
 				}))
 			});
 		}
+		function ytdimensions($) {
+			window.ytwide = $('#youtube-player').width();
+			window.ythigh = ytwide/1.77777777777778;
+			$('#youtube-player').height(ythigh);
+		}
+		function parseURL(url) {
+			var parser = document.createElement('a'),
+				searchObject = {},
+				queries, split, i;
+			// Let the browser do the work
+			parser.href = url;
+			// Convert query string to object
+			queries = parser.search.replace(/^\?/, '').split('&');
+			for( i = 0; i < queries.length; i++ ) {
+				split = queries[i].split('=');
+				searchObject[split[0]] = split[1];
+			}
+			return {
+				protocol: parser.protocol,
+				host: parser.host,
+				hostname: parser.hostname,
+				port: parser.port,
+				pathname: parser.pathname,
+				search: parser.search,
+				searchObject: searchObject,
+				hash: parser.hash
+			};
+		}
+		function onPlayerReady(event) {
+			if (navigator.userAgent.match(/(iPad|iPhone|iPod touch)/i) == null)
+			{
+				event.target.playVideo();
+			}
+		}
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.ENDED)
+			{
+				var current = parseURL(player.getVideoUrl());
+				var nextVid = jQuery('#'+current.searchObject.v).next();
+				var newYtid = nextVid.attr('data-ytid');
+				if ( newYtid !== undefined || nextVid.hasClass('pending') )
+				{
+					var yttitle = nextVid.attr('data-yttitle');
+					var ytdesc = nextVid.attr('data-ytdesc');
+					ytid = newYtid;
+					player.stopVideo();
+					player.loadVideoById({
+						videoId: ytid
+					});
+					jQuery('#hpm-yt-title').html(yttitle);
+					jQuery('#hpm-yt-desc').html(ytdesc);
+					jQuery('#videos-nav').removeClass('nav-active');
+					jQuery('#videos-nav ul li').removeClass('current');
+					jQuery('#'+ytid).addClass('current');
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		jQuery(document).ready(function($){
+			ytdimensions($);
+			$(window).resize(function(){
+				ytdimensions($);
+			});
+			window.eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
+			$('a.readmore').on(eventType, function(event) {
+				event.preventDefault();
+				if ($('#videos-nav').hasClass('nav-active'))
+				{
+					$('#videos-nav').removeClass('nav-active');
+				}
+				else
+				{
+					$('#videos-nav').addClass('nav-active');
+				}
+			});
+			$('#videos-close').on(eventType, function(event) {
+				event.preventDefault();
+				if ($('#videos-nav').hasClass('nav-active'))
+				{
+					$('#videos-nav').removeClass('nav-active');
+				}
+				else
+				{
+					$('#videos-nav').addClass('nav-active');
+				}
+			});
+			$('#play-button').click(function(){
+				window.ytid = $(this).parent().attr('data-ytid');
+				window.player;
+				player = new YT.Player('youtube-player', {
+					height: ythigh,
+					width: ytwide,
+					videoId: ytid,
+					events: {
+						'onReady': onPlayerReady,
+						'onStateChange': onPlayerStateChange
+					}
+				});
+				var yttitle = $(this).parent().attr('data-yttitle');
+				var ytdesc = $(this).parent().attr('data-ytdesc');
+				$('#hpm-yt-title').html(yttitle);
+				$('#hpm-yt-desc').html(ytdesc);
+				$('#videos-nav').removeClass('nav-active');
+				$('#videos-nav ul li').removeClass('current');
+				$('#'+ytid).addClass('current');
+			});
+			$('#videos-nav ul li').click(function(){
+				var newYtid = $(this).attr('data-ytid');
+				var yttitle = $(this).attr('data-yttitle');
+				var ytdesc = $(this).attr('data-ytdesc');
+				if ( $(this).hasClass('pending') ) {
+					return false;
+				}
+				if ( typeof ytid === typeof undefined ) {
+					ytid = newYtid;
+					$('#hpm-yt-title').html(yttitle);
+					$('#hpm-yt-desc').html(ytdesc);
+					$('#videos-nav').removeClass('nav-active');
+					$('#videos-nav ul li').removeClass('current');
+					$('#'+ytid).addClass('current');
+					window.ytid = newYtid;
+					window.player;
+					player = new YT.Player('youtube-player', {
+						height: ythigh,
+						width: ytwide,
+						videoId: ytid,
+						events: {
+							'onReady': onPlayerReady,
+							'onStateChange': onPlayerStateChange
+						}
+					});
+				}
+				else if ( typeof ytid !== typeof undefined )
+				{
+					if ( ytid !== newYtid )
+					{
+						ytid = newYtid;
+						player.stopVideo();
+						player.loadVideoById({
+							videoId: ytid
+						});
+						$('#hpm-yt-title').html(yttitle);
+						$('#hpm-yt-desc').html(ytdesc);
+						$('#videos-nav').removeClass('nav-active');
+						$('#videos-nav ul li').removeClass('current');
+						$('#'+ytid).addClass('current');
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			});
+		});
 	</script>
 <?php get_footer(); ?>

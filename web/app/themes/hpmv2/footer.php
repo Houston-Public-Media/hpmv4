@@ -32,7 +32,7 @@
 ?>
 						<div class="clear"></div>
 					</nav>
-					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="http://www.uh.edu" target="_blank" style="color: #cc0000;">University of Houston</a></p>
+					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" target="_blank" style="color: #cc0000;">University of Houston</a></p>
 					<p>Copyright &copy; <?php echo date('Y'); ?> | <a href="http://www.uhsystem.edu/privacy-notice/">Privacy
 							Policy</a></p>
 				</div><!-- .site-info -->
@@ -116,7 +116,8 @@
 	Insert banners for when Houston Matters is airing
 	*/
 	$anc = get_post_ancestors( get_the_ID() );
-	if ( get_the_ID() != 135762 && !in_array( 135762, $anc ) && get_the_ID() != 290722 ) :
+	$bans = [ 135762, 290722, 303436, 303018 ];
+	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) ) :
 		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 12 || $now['hours'] == 19 ) ) :
 			$alt = ($now['hours'] == 19 ? 'This Is an Encore Broadcast, But You Can Still Get in Touch: talk@houstonmatters.org | @HoustonMatters | facebook.com/houstonmatters': 'Listening Now? Join the Conversation: Call (713) 440-8870 | Email talk@houstonmatters.org | Tweet @HoustonMatters');
 
@@ -176,7 +177,6 @@
 <?php
 	endif;
 	wp_footer(); ?>
-		<script>try{Typekit.load({ async: true });}catch(e){}</script>
 	</body>
 </html>
 

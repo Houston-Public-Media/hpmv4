@@ -8,53 +8,53 @@
  * @subpackage HPMv2
  * @since HPMv2 1.0
  */
- 	global $wp_query;
- 	if ( is_front_page() || is_404() ) :
- 		$head_excerpt = 'Houston Public Media provides informative, thought-provoking and entertaining content through a multi-media platform that includes TV 8, News 88.7 and HPM Classical and reaches a combined weekly audience of more than 1.5 million.';
- 		$head_perma = 'https://www.houstonpublicmedia.org';
- 		$head_title = 'Houston Public Media';
- 		$thumb = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
+	global $wp_query;
+	if ( is_front_page() || is_404() ) :
+		$head_excerpt = 'Houston Public Media provides informative, thought-provoking and entertaining content through a multi-media platform that includes TV 8, News 88.7 and HPM Classical and reaches a combined weekly audience of more than 1.5 million.';
+		$head_perma = 'https://www.houstonpublicmedia.org';
+		$head_title = 'Houston Public Media';
+		$thumb = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
 		$thumb_meta = array(
 			'width' => 1200,
 			'height' => 800,
 			'mime-type' => 'image/jpeg'
 		);
- 	else :
-	    if ( !empty( $wp_query ) && !empty( $wp_query->queried_object->ID ) ) :
-		    $ID = $wp_query->queried_object->ID;
-	        $head_excerpt = htmlentities( strip_tags( get_excerpt_by_id( $ID ) ), ENT_QUOTES );
-	        $head_title = $wp_query->queried_object->post_title.' | Houston Public Media';
-	        $head_perma = get_permalink();
-		    $attach_id = get_post_thumbnail_id( $ID );
-		    if ( !empty( $attach_id ) ) :
-			    $feature_img = wp_get_attachment_image_src( $attach_id, 'large' );
-			    $thumb_meta = array(
-				    'width' => $feature_img[1],
-				    'height' => $feature_img[2],
-				    'mime-type' => get_post_mime_type( $attach_id )
-			    );
-			    $thumb = $feature_img[0];
-		    else :
-			    $thumb = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
-			    $thumb_meta = array(
-				    'width' => 1200,
-				    'height' => 800,
-				    'mime-type' => 'image/png'
-			    );
-		    endif;
-	    else :
-		    $head_excerpt = 'Houston Public Media provides informative, thought-provoking and entertaining content through a multi-media platform that includes TV 8, News 88.7 and HPM Classical and reaches a combined weekly audience of more than 1.5 million.';
-		    $head_perma = 'https://www.houstonpublicmedia.org';
-		    $head_title = 'Houston Public Media';
-		    $thumb = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
-		    $thumb_meta = array(
-			    'width' => 1200,
-			    'height' => 800,
-			    'mime-type' => 'image/jpeg'
-		    );
-	    endif;
- 	endif;
- 	$thumb = str_replace( 'http://', 'https://', $thumb );
+	else :
+		if ( !empty( $wp_query ) && !empty( $wp_query->queried_object->ID ) ) :
+			$ID = $wp_query->queried_object->ID;
+			$head_excerpt = htmlentities( strip_tags( get_excerpt_by_id( $ID ) ), ENT_QUOTES );
+			$head_title = $wp_query->queried_object->post_title.' | Houston Public Media';
+			$head_perma = get_permalink();
+			$attach_id = get_post_thumbnail_id( $ID );
+			if ( !empty( $attach_id ) ) :
+				$feature_img = wp_get_attachment_image_src( $attach_id, 'large' );
+				$thumb_meta = array(
+					'width' => $feature_img[1],
+					'height' => $feature_img[2],
+					'mime-type' => get_post_mime_type( $attach_id )
+				);
+				$thumb = $feature_img[0];
+			else :
+				$thumb = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
+				$thumb_meta = array(
+					'width' => 1200,
+					'height' => 800,
+					'mime-type' => 'image/png'
+				);
+			endif;
+		else :
+			$head_excerpt = 'Houston Public Media provides informative, thought-provoking and entertaining content through a multi-media platform that includes TV 8, News 88.7 and HPM Classical and reaches a combined weekly audience of more than 1.5 million.';
+			$head_perma = 'https://www.houstonpublicmedia.org';
+			$head_title = 'Houston Public Media';
+			$thumb = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
+			$thumb_meta = array(
+				'width' => 1200,
+				'height' => 800,
+				'mime-type' => 'image/jpeg'
+			);
+		endif;
+	endif;
+	$thumb = str_replace( 'http://', 'https://', $thumb );
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" dir="ltr" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<head>
@@ -73,10 +73,10 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS 2.0 Feed" href="<?php bloginfo('rss2_url'); ?>" />
 		<meta name="apple-itunes-app" content="app-id=530216229" />
 		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />
-        <meta property="fb:app_id" content="523938487799321" />
-        <meta property="fb:admins" content="37511993" />
-        <meta property="fb:pages" content="27589213702" />
-        <meta property="fb:pages" content="183418875085596" />
+		<meta property="fb:app_id" content="523938487799321" />
+		<meta property="fb:admins" content="37511993" />
+		<meta property="fb:pages" content="27589213702" />
+		<meta property="fb:pages" content="183418875085596" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?php echo $head_title; ?>" />
 		<meta property="og:url" content="<?php echo $head_perma; ?>"/>
@@ -88,16 +88,16 @@
 		<meta property="og:image:width" content="<?php echo $thumb_meta['width']; ?>" />
 		<meta property="og:image:type" content="<?php echo $thumb_meta['mime-type']; ?>" />
 		<meta property="og:image:secure_url" content="<?php echo $thumb; ?>" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@houstonpubmedia" />
-        <meta name="twitter:creator" content="@houstonpubmedia" />
-        <meta name="twitter:title" content="<?php echo $head_title; ?> | Houston Public Media" />
-        <meta name="twitter:image" content="<?php echo $thumb; ?>" />
-        <meta name="twitter:url" content="<?php echo $head_perma; ?>" />
-        <meta name="twitter:description" content="<?php echo $head_excerpt; ?>">
-        <meta name="twitter:widgets:link-color" content="#000000">
-        <meta name="twitter:widgets:border-color" content="#000000">
-        <meta name="twitter:partner" content="tfwp">
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@houstonpubmedia" />
+		<meta name="twitter:creator" content="@houstonpubmedia" />
+		<meta name="twitter:title" content="<?php echo $head_title; ?> | Houston Public Media" />
+		<meta name="twitter:image" content="<?php echo $thumb; ?>" />
+		<meta name="twitter:url" content="<?php echo $head_perma; ?>" />
+		<meta name="twitter:description" content="<?php echo $head_excerpt; ?>">
+		<meta name="twitter:widgets:link-color" content="#000000">
+		<meta name="twitter:widgets:border-color" content="#000000">
+		<meta name="twitter:partner" content="tfwp">
 <?php
 	wp_head();
 	if ( !is_page_template( 'page-listen.php' ) ) : ?>
@@ -107,9 +107,9 @@
 			googletag.cmd = googletag.cmd || [];
 		</script>
 <?php
-        $post_type = get_post_type();
-        if ( is_page_template( 'page-kids.php' ) ) : ?>
-        <script>
+		$post_type = get_post_type();
+		if ( is_page_template( 'page-kids.php' ) ) : ?>
+		<script>
 			googletag.cmd.push(function() {
 				googletag.defineSlot('/9147267/HPM_Kids_Sidebar', [300, 250], 'div-gpt-ad-1467299583216-0').addService(googletag.pubads());
 				googletag.defineSlot('/9147267/HPM_Kids_Sidebar', [300, 250], 'div-gpt-ad-1467299583216-1').addService(googletag.pubads());
@@ -118,53 +118,53 @@
 			});
 		</script>
 <?php
-	    elseif ( $post_type == 'shows' ) : ?>
-        <script>
+		elseif ( $post_type == 'shows' ) : ?>
+		<script>
 			googletag.cmd.push(function() {
-                var dfpWide = window.innerWidth;
-                if ( dfpWide > 1000 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [970, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-                    document.getElementById('div-gpt-ad-1488818411584-0').style.width = '970px';
-                }
-                else if ( dfpWide <= 1000 && dfpWide > 730 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [728, 90], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-	                document.getElementById('div-gpt-ad-1488818411584-0').style.width = '728px';
-                }
-                else if ( dfpWide <= 730 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [320, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-	                document.getElementById('div-gpt-ad-1488818411584-0').style.width = '320px';
-                }
+				var dfpWide = window.innerWidth;
+				if ( dfpWide > 1000 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [970, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '970px';
+				}
+				else if ( dfpWide <= 1000 && dfpWide > 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [728, 90], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '728px';
+				}
+				else if ( dfpWide <= 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [320, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '320px';
+				}
 <?php
-		    if ( $wp_query->post->post_name == 'skyline-sessions' || $wp_query->post->post_name == 'music-in-the-making' ) : ?>
+			if ( $wp_query->post->post_name == 'skyline-sessions' || $wp_query->post->post_name == 'music-in-the-making' ) : ?>
 				googletag.defineSlot('/9147267/HPM_Music_Sidebar', [300, 250], 'div-gpt-ad-1470409396951-0').addService(googletag.pubads());
 <?php
-		    else : ?>
+			else : ?>
 				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').addService(googletag.pubads());
-                googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
+				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
 <?php
-		    endif; ?>
+			endif; ?>
 				googletag.pubads().collapseEmptyDivs();
 				googletag.enableServices();
 			});
 		</script>
 
 <?php
-	    else : ?>
-        <script>
+		else : ?>
+		<script>
 			googletag.cmd.push(function() {
-			    var dfpWide = window.innerWidth;
-			    if ( dfpWide > 1000 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [970, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-				    document.getElementById('div-gpt-ad-1488818411584-0').style.width = '970px';
-                }
-                else if ( dfpWide <= 1000 && dfpWide > 730 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [728, 90], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-				    document.getElementById('div-gpt-ad-1488818411584-0').style.width = '728px';
-                }
-                else if ( dfpWide <= 730 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [320, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-				    document.getElementById('div-gpt-ad-1488818411584-0').style.width = '320px';
-                }
+				var dfpWide = window.innerWidth;
+				if ( dfpWide > 1000 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [970, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '970px';
+				}
+				else if ( dfpWide <= 1000 && dfpWide > 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [728, 90], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '728px';
+				}
+				else if ( dfpWide <= 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [320, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '320px';
+				}
 				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').addService(googletag.pubads());
 				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
 				googletag.pubads().collapseEmptyDivs();
@@ -172,13 +172,13 @@
 			});
 		</script>
 <?php
-	    endif;
-    endif;
-    hpm_google_tracker(); ?>
+		endif;
+	endif;
+	hpm_google_tracker(); ?>
 	</head>
 	<body <?php body_class(); ?>>
 		<?php do_action( 'body_open' ); ?>
-		<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v2.6' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+		<?php hpm_fb_sdk(); ?>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
 		<?php echo hpm_emergency(); ?>
 		<div class="container">
@@ -186,9 +186,9 @@
 		</div>
 		<div id="page" class="hfeed site">
 			<div id="content" class="site-content">
-                <!-- /9147267/HPM_Under_Nav -->
-                <div id='div-gpt-ad-1488818411584-0'>
-                    <script>
-                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
-                    </script>
-                </div>
+				<!-- /9147267/HPM_Under_Nav -->
+				<div id='div-gpt-ad-1488818411584-0'>
+					<script>
+						googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
+					</script>
+				</div>

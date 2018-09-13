@@ -29,11 +29,11 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS 2.0 Feed" href="<?php bloginfo('rss2_url'); ?>" />
 		<meta name="apple-itunes-app" content="app-id=530216229" />
 		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />
-        <meta property="fb:app_id" content="523938487799321" />
-        <meta property="fb:admins" content="37511993" />
-        <meta property="fb:pages" content="27589213702" />
-        <meta property="fb:pages" content="183418875085596" />
-        <meta property="og:type" content="article" />
+		<meta property="fb:app_id" content="523938487799321" />
+		<meta property="fb:admins" content="37511993" />
+		<meta property="fb:pages" content="27589213702" />
+		<meta property="fb:pages" content="183418875085596" />
+		<meta property="og:type" content="article" />
 		<meta property="og:title" content="<?php echo $head_title; ?> | Houston Public Media" />
 		<meta property="og:url" content="<?php echo $head_perma; ?>"/>
 		<meta property="og:site_name" content="Houston Public Media" />
@@ -46,16 +46,16 @@
 		<meta property="og:image:secure_url" content="<?php echo str_replace( 'http://','https://', $thumb ); ?>" />
 		<meta property="article:published_time" content="<?php echo $publish_date; ?>" />
 		<meta property="article:publisher" content="https://www.facebook.com/houstonpublicmedia/" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@houstonpubmedia" />
-        <meta name="twitter:creator" content="@houstonpubmedia" />
-        <meta name="twitter:title" content="<?php echo $head_title; ?> | Houston Public Media" />
-        <meta name="twitter:image" content="<?php echo $thumb; ?>" />
-        <meta name="twitter:url" content="<?php echo $head_perma; ?>" />
-        <meta name="twitter:description" content="<?php echo $head_excerpt; ?>">
-        <meta name="twitter:widgets:link-color" content="#000000">
-        <meta name="twitter:widgets:border-color" content="#000000">
-        <meta name="twitter:partner" content="tfwp">
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@houstonpubmedia" />
+		<meta name="twitter:creator" content="@houstonpubmedia" />
+		<meta name="twitter:title" content="<?php echo $head_title; ?> | Houston Public Media" />
+		<meta name="twitter:image" content="<?php echo $thumb; ?>" />
+		<meta name="twitter:url" content="<?php echo $head_perma; ?>" />
+		<meta name="twitter:description" content="<?php echo $head_excerpt; ?>">
+		<meta name="twitter:widgets:link-color" content="#000000">
+		<meta name="twitter:widgets:border-color" content="#000000">
+		<meta name="twitter:partner" content="tfwp">
 <?php
 	foreach( $nprdata['keywords'] as $keys ) : ?>
 		<meta property="article:tag" content="<?php echo $keys; ?>" />
@@ -68,21 +68,21 @@
 			var googletag = googletag || {};
 			googletag.cmd = googletag.cmd || [];
 			googletag.cmd.push(function() {
-                var dfpWide = window.innerWidth;
-                if ( dfpWide > 1000 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [970, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-	                document.getElementById('div-gpt-ad-1488818411584-0').style.width ='970px';
-                }
-                else if ( dfpWide <= 1000 && dfpWide > 730 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [728, 90], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-	                document.getElementById('div-gpt-ad-1488818411584-0').style.width = '728px';
-                }
-                else if ( dfpWide <= 730 ) {
-                    googletag.defineSlot('/9147267/HPM_Under_Nav', [320, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
-	                document.getElementById('div-gpt-ad-1488818411584-0').style.width = '320px';
-                }
-                googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').setCategoryExclusion('External').addService(googletag.pubads());
-                googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').setCategoryExclusion('External').addService(googletag.pubads());
+				var dfpWide = window.innerWidth;
+				if ( dfpWide > 1000 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [970, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width ='970px';
+				}
+				else if ( dfpWide <= 1000 && dfpWide > 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [728, 90], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '728px';
+				}
+				else if ( dfpWide <= 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [320, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '320px';
+				}
+				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').setCategoryExclusion('External').addService(googletag.pubads());
+				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').setCategoryExclusion('External').addService(googletag.pubads());
 				googletag.pubads().collapseEmptyDivs(); 
 				googletag.enableServices();
 			});
@@ -91,7 +91,7 @@
 	</head>
 	<body <?php body_class(); ?>>
 		<?php do_action( 'body_open' ); ?>
-		<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v2.6' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+		<?php hpm_fb_sdk(); ?>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
 		<?php echo hpm_emergency(); ?>
 		<div class="container">
@@ -99,9 +99,9 @@
 		</div>
 		<div id="page" class="hfeed site">
 			<div id="content" class="site-content">
-                <!-- /9147267/HPM_Under_Nav -->
-                <div id='div-gpt-ad-1488818411584-0'>
-                    <script>
-                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
-                    </script>
-                </div>
+				<!-- /9147267/HPM_Under_Nav -->
+				<div id='div-gpt-ad-1488818411584-0'>
+					<script>
+						googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
+					</script>
+				</div>

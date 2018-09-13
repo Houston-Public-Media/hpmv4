@@ -45,12 +45,14 @@ endif; ?>
 			foreach ( $hpm_priority[$sticky] as $ks => $vs ) :
 				if ( $ks == 0 ) :
 					$stickies['spaces'][$vs] = 'felix-type-a';
+					$stickies['ids'][] = $vs;
 				elseif ( $ks == 1 ) :
 					$stickies['spaces'][$vs] = 'felix-type-b';
-				else :
-					$stickies['spaces'][$vs] = 'felix-type-d';
+					$stickies['ids'][] = $vs;
+				/* else :
+					$stickies['spaces'][$vs] = 'felix-type-d'; */
 				endif;
-				$stickies['ids'][] = $vs;
+				// $stickies['ids'][] = $vs;
 			endforeach;
 			if ( !empty( $stickies['ids'] ) ) :
 				$sticknum = count( $stickies['ids'] );
@@ -63,7 +65,39 @@ endif; ?>
 				$sticky_query = new WP_Query( $sticky_args );
 				if ( $sticky_query->have_posts() ) :
 					while ( $sticky_query->have_posts() ) :
-						if ( $c == 2 ) : ?>
+						$sticky_query->the_post();
+						$sticky_id = get_the_ID();
+						$exclude[] = $sticky_id;
+						$postClass = get_post_class();
+						$postClass[] = 'pinned';
+						$postClass[] = 'grid-item';
+						$postClass[] = 'grid-item--width2';
+						$fl_array = preg_grep("/felix-type-/", $postClass);
+						$fl_arr = array_keys( $fl_array );
+						$postClass[$fl_arr[0]] = $stickies['spaces'][$sticky_id];
+
+						if ( $stickies['spaces'][$sticky_id] == 'felix-type-a' ) :
+							$thumbnail_type = 'large';
+						else :
+							$thumbnail_type = 'thumbnail';
+						endif; ?>
+						<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
+							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
+								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
+							</div>
+							<header class="entry-header">
+								<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
+								<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+								<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
+								<?php the_excerpt(); ?>
+							</header><!-- .entry-header -->
+						</article>
+						<?PHP
+						$c++;
+					endwhile;
+					wp_reset_postdata();
+				endif;
+			endif; ?>
 				<div id="top-schedule-wrap" class="column-right grid-item stamp">
 					<div id="station-schedules">
 						<h4>ON AIR</h4>
@@ -184,11 +218,9 @@ endif; ?>
 						<?php
 								endwhile;
 							endif;
-							wp_reset_query();
-						?>
+							wp_reset_query(); ?>
 					</div>
 					<?php hpm_top_posts(); ?>
-					<?php //echo get_option( 'hpm_houstonpubmedia_tweets' ); ?>
 					<div class="sidebar-ad">
 						<div id="div-gpt-ad-1394579228932-1">
 							<h4>Support Comes From</h4>
@@ -199,41 +231,8 @@ endif; ?>
 					</div>
 				</div>
 <?php
-						endif;
-						$sticky_query->the_post();
-						$sticky_id = get_the_ID();
-						$exclude[] = $sticky_id;
-						$postClass = get_post_class();
-						$postClass[] = 'pinned';
-						$postClass[] = 'grid-item';
-						$postClass[] = 'grid-item--width2';
-						$fl_array = preg_grep("/felix-type-/", $postClass);
-						$fl_arr = array_keys( $fl_array );
-						$postClass[$fl_arr[0]] = $stickies['spaces'][$sticky_id];
-
-						if ( $stickies['spaces'][$sticky_id] == 'felix-type-a' ) :
-							$thumbnail_type = 'large';
-						else :
-							$thumbnail_type = 'thumbnail';
-						endif; ?>
-						<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
-								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-							</div>
-							<header class="entry-header">
-								<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-								<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-								<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-							</header><!-- .entry-header -->
-						</article>
-						<?PHP
-						$c++;
-					endwhile;
-					wp_reset_postdata();
-				endif;
-			endif;
 			while ( have_posts() ) :
-				if ($c == 12) : ?>
+				if ($c == 10) : ?>
 				<div id="npr-side" class="column-right grid-item stamp">
 					<div id="national-news">
 						<h4>News from NPR</h4>
