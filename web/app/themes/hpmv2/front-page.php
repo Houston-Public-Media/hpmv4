@@ -49,10 +49,10 @@ endif; ?>
 				elseif ( $ks == 1 ) :
 					$stickies['spaces'][$vs] = 'felix-type-b';
 					$stickies['ids'][] = $vs;
-				/* else :
-					$stickies['spaces'][$vs] = 'felix-type-d'; */
+				else :
+					$stickies['spaces'][$vs] = 'felix-type-d';
 				endif;
-				// $stickies['ids'][] = $vs;
+				$stickies['ids'][] = $vs;
 			endforeach;
 			if ( !empty( $stickies['ids'] ) ) :
 				$sticknum = count( $stickies['ids'] );
@@ -89,7 +89,7 @@ endif; ?>
 								<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 								<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 								<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-								<?php the_excerpt(); ?>
+								<?php //the_excerpt(); ?>
 							</header><!-- .entry-header -->
 						</article>
 						<?PHP
