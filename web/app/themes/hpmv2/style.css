@@ -7736,14 +7736,12 @@ body.page.page-template-page-ghr #main {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	position: relative;
 	background-color: white;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
-	background-image: url('https://cdn.hpm.io/assets/images/elevator/Elevator_landingpage_top-mobile.jpg');
-	background-attachment: fixed;
-	z-index: 10000;
+	background-image: url('https://cdn.hpm.io/assets/images/elevator/Elevator_landingpage_top-tablet.jpg');
+	padding: 2em;
 }
 .page-template-page-elevator .page-content {
 	padding: 2em 0;
@@ -7754,12 +7752,12 @@ body.page.page-template-page-ghr #main {
 }
 .page-template-page-elevator .page-header .page-title {
 	text-indent: -9999px;
-	background-image: url('https://cdn.hpm.io/assets/images/elevator/ep_logo@2x.png');
+	background-image: url('https://cdn.hpm.io/assets/images/elevator/ep_logo_stacked@2x.png');
 	height: 0;
-	width: 90%;
-	margin: 0 5% 1em;
+	width: 80%;
+	margin: 0 10% 1em;
 	padding: 0;
-	padding-bottom: calc(90%/7.77835);
+	padding-bottom: calc(80%/1.92592);
 	background-size: contain;
 	background-repeat: no-repeat;
 }
@@ -7771,6 +7769,10 @@ body.page.page-template-page-ghr #main {
 	width: 100%;
 	margin-bottom: 1em;
 	text-transform: uppercase;
+}
+.page-template-page-elevator .page-header p:first-of-type {
+	font-size: 3em;
+	margin-bottom: 0.5em;
 }
 .elevator-foot {
 	position: fixed;
@@ -7808,12 +7810,17 @@ body.page.page-template-page-ghr #main {
 	-webkit-flex-basis: auto;
 	flex-grow: 2;
 	flex-basis: auto;
+	padding: 0.5em 0;
+	margin: 0 2px;
 }
-.elevator-foot .foot-party.rep {
-	color: #E01E39;
+.elevator-foot .foot-party:hover {
+	background-color: #808080;
+	color: rgb(238,236,232);
+	cursor: pointer;
 }
-.elevator-foot .foot-party.dem {
-	color: #01397F;
+.elevator-foot .foot-party.foot-active {
+	background-color: #808080;
+	color: rgb(238,236,232);
 }
 .elevator-foot .foot-logo {
 	max-width: 12%;
@@ -7849,10 +7856,28 @@ body.page.page-template-page-ghr #main {
 	margin: 0 7.5% 1em;
 	text-align: center;
 }
+.ep-race .ep-candidate-wrap {
+	-webkit-flex-flow: row wrap;
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	-ms-flex-flow: row wrap;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
 .ep-race .ep-race-candidate {
 	padding: 0.5em;
 	width: 50%;
-	float: left;
 }
 .ep-race .ep-race-candidate img {
 	margin: 0 12.5% 1em;
@@ -7868,6 +7893,9 @@ body.page.page-template-page-ghr #main {
 }
 .ep-race .ep-race-candidate.rep h3 {
 	color: #E01E39;
+}
+.ep-race .ep-race-candidate.third h3 {
+	color: #383838;
 }
 .ep-race .ep-race-candidate .ep-candidate-social {
 	margin: 0 0 1em;
@@ -7922,12 +7950,17 @@ body.page.page-template-page-ghr #main {
 .ep-race .ep-race-candidate.rep .ep-pitch {
 	background-color: #E01E39;
 }
+.ep-race .ep-race-candidate.third .ep-pitch {
+	background-color: #383838;
+}
 .ep-race .ep-race-candidate.dem .ep-pitch.ep-inactive,
-.ep-race .ep-race-candidate.rep .ep-pitch.ep-inactive {
+.ep-race .ep-race-candidate.rep .ep-pitch.ep-inactive,
+.ep-race .ep-race-candidate.third .ep-pitch.ep-inactive {
 	background-color: #969695;
 }
 .ep-race .ep-race-candidate.dem .ep-pitch.ep-inactive:hover,
-.ep-race .ep-race-candidate.rep .ep-pitch.ep-inactive:hover {
+.ep-race .ep-race-candidate.rep .ep-pitch.ep-inactive:hover,
+.ep-race .ep-race-candidate.third .ep-pitch.ep-inactive:hover {
 	cursor: not-allowed;
 }
 #ep-yt-overlay {
@@ -7949,15 +7982,16 @@ body.page.page-template-page-ghr #main {
 	-ms-justify-content: center;
 	-ms-align-content: center;
 	-ms-align-items: center;
-	display: none;
-	background-color: rgba(0,0,0,0.5);
-}
-#ep-yt-overlay.ep-yt-active {
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
+	visibility: hidden;
+	background-color: rgba(0,0,0,0.5);
+}
+#ep-yt-overlay.ep-yt-active {
+	visibility: visible;
 }
 #ep-yt-overlay #ep-yt-wrap {
 	position: relative;
@@ -7969,6 +8003,16 @@ body.page.page-template-page-ghr #main {
 	padding-bottom: calc(100%/1.777778);
 	width: 100%;
 	height: 0;
+	position: relative;
+}
+#ep-yt-overlay #ep-yt-wrap #ep-yt-player iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 100% !important;
+	width: 100% !important;
 }
 #ep-yt-overlay #ep-yt-wrap #ep-yt-close {
 	position: absolute;
@@ -7984,4 +8028,82 @@ body.page.page-template-page-ghr #main {
 	text-align: center;
 	line-height: 1.125em;
 }
-
+.ep-hide {
+	display: none;
+}
+@media screen and (min-width: 30.0625em) {
+	.ep-race .ep-race-candidate {
+		width: 33.3%;
+	}
+	.page-template-page-elevator .page-header .header-logo {
+		width: 30%;
+		margin: 0 35% 2em;
+	}
+	.page-template-page-elevator .page-header .page-title {
+		width: 70%;
+		margin: 0 15% 1em;
+		padding-bottom: calc(70%/7.77835);
+		background-image: url('https://cdn.hpm.io/assets/images/elevator/ep_logo@2x.png');
+	}
+	.elevator-foot .foot-logo {
+		max-width: 10%;
+	}
+	.elevator-foot .foot-party {
+		margin: 0 1em;
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	.ep-race .ep-race-candidate {
+		width: 25%;
+	}
+	.page-template-page-elevator .page-header {
+		background-image: url('https://cdn.hpm.io/assets/images/elevator/Elevator_landingpage_top-desktop.jpg');
+	}
+	.elevator-foot .foot-logo {
+		max-width: 8%;
+	}
+	.page-template-page-elevator .page-content {
+		max-width: 64em;
+		min-width: 51.25em;
+		margin: 0 auto;
+	}
+	.ep-race h2 {
+		width: 60%;
+		margin: 0 20% 1em;
+	}
+	.ep-race p {
+		width: 70%;
+		margin: 0 15% 1em;
+	}
+	.ep-race .ep-race-candidate .ep-pitch {
+		width: 75%;
+		margin: 0 12.5% 1em;
+		font-size: 1em;
+	}
+	.elevator-foot .foot-party {
+		margin: 0 2em;
+	}
+}
+@media screen and (min-width: 64.0625em) {
+	.page-template-page-elevator .page-content {
+		max-width: 75em;
+	}
+	.elevator-foot .foot-logo {
+		max-width: 5%;
+	}
+	.page-template-page-elevator .page-header .header-logo {
+		width: 20%;
+		margin: 0 40% 2em;
+	}
+	.page-template-page-elevator .page-header .page-title {
+		width: 50%;
+		margin: 0 25% 1em;
+		padding-bottom: calc(50%/7.77835);
+	}
+	.page-template-page-elevator .page-header p {
+		font-size: 200%;
+	}
+	.elevator-foot .foot-party {
+		margin: 0 3em;
+	}
+}

@@ -616,7 +616,7 @@ function overwrite_audio_shortcode() {
 			$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'?source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'?source=amp-article"></amp-audio></div>';
 		else :
 			if ( is_admin() ) :
-				$html .= '<link rel="stylesheet" id="fontawesome-css" href="'.get_stylesheet_directory_uri().'/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hpmv2-css" href="'.get_stylesheet_directory_uri().'/style.css" type="text/css" media="all"><script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.12.4"></script><script type="text/javascript" src="'.get_stylesheet_directory_uri().'/js/jplayer/jquery.jplayer.min.js"></script>';
+				$html .= '<link rel="stylesheet" id="fontawesome-css" href="https://cdn.hpm.io/assets/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hpmv2-css" href="https://cdn.hpm.io/assets/css/style.css" type="text/css" media="all"><script type="text/javascript" src="/wp/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js"></script>';
 			else :
 				wp_enqueue_script( 'jplayer' );
 			endif;
@@ -652,7 +652,9 @@ function overwrite_audio_shortcode() {
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>";
+	if ( !is_admin() ) :
+		$html .= "
 	<a href=\"#\" class=\"jp-audio-embed\"><span class=\"fa fa-code\"></span></a>
 	<div class=\"jp-audio-embed-popup\" id=\"jp_container_{$audio_id}-popup\">
 		<div class=\"jp-audio-embed-wrap\">
@@ -662,7 +664,9 @@ function overwrite_audio_shortcode() {
 			</div>
 			<div class=\"jp-audio-embed-close\">X</div>
 		</div>
-	</div>
+	</div>";
+	endif;
+	$html .= "
 </div>
 <div class=\"screen-reader-text\">
 	<script type=\"text/javascript\">
@@ -685,7 +689,9 @@ function overwrite_audio_shortcode() {
 				keyEnabled: true,
 				remainingDuration: false,
 				toggleDuration: true
-			});
+			});";
+		if ( !is_admin() ) :
+			$html .= "
 			$(\"#jquery_jplayer_{$audio_id}\").bind(
 				$.jPlayer.event.play, function(event) {
 					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
@@ -732,7 +738,9 @@ function overwrite_audio_shortcode() {
 					ga('send', 'event', 'jPlayer', 'Ended', mediaName, playerTime);
 					ga('hpmRollup.send', 'event', 'jPlayer', 'Ended', mediaName, playerTime);
 				}
-			);
+			);";
+		endif;
+		$html .= "
 		});
 	</script>
 </div>";

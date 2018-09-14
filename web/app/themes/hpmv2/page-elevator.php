@@ -19,7 +19,9 @@ get_header('elevator'); ?>
 					</div><!-- .entry-content -->
 					<div id="ep-yt-overlay">
 						<div id="ep-yt-wrap">
-							<div id="ep-yt-player"></div>
+							<div id="ep-yt-player">
+								<div id="ep-youtube"></div>
+							</div>
 							<div id="ep-yt-close"><span class="fa fa-close"></span></div>
 						</div>
 					</div>
@@ -28,8 +30,9 @@ get_header('elevator'); ?>
 							<div class="foot-logo">
 								<img src="https://cdn.hpm.io/assets/images/elevator/ep_small_logo@2x.png" alt="Houston Public Media's Elevator Pitch" />
 							</div>
-							<div class="foot-party dem">Democrat</div>
-							<div class="foot-party rep">Republican</div>
+							<div class="foot-party" id="national">National</div>
+							<div class="foot-party" id="state">State</div>
+							<div class="foot-party" id="local">Local</div>
 							<div class="foot-logo">
 								<a href="/"><img src="https://cdn.hpm.io/assets/images/elevator/hpm_logo_red@2x.png" alt="Houston Public Media, a service of the University of Houston" /></a>
 							</div>
@@ -49,40 +52,121 @@ get_header('elevator'); ?>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 	<script>
-		jQuery(document).ready(function($){
-			var main = $('#main').offset();
-			window.winhigh = $(window).height();
-			var header_height = winhigh - main.top;
-			$('header.page-header').height(header_height);
-		});
 		var tag = document.createElement('script');
 		tag.src = "//www.youtube.com/iframe_api";
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-		function onYouTubeIframeAPIReady() {
-			var $ = jQuery;
-			var players = [];
-			var $allVideos = $("iframe[src*='youtube.com'], iframe[src*='youtube-nocookie.com']");
-			$allVideos.each( function () {
-				players.push(new YT.Player($(this).attr('id'), {
-					events: {
-						'onStateChange': function(event) {
-							if (event.data === YT.PlayerState.PLAYING) {
-								$('.ghr-story-videos').slick('slickPause');
-								$.each(players, function() {
-									if ( this.getPlayerState() === YT.PlayerState.PLAYING && this.getIframe()
-										.id !== event.target.getIframe().id) {
-										this.pauseVideo();
-									}
-								});
-							} else {
-								$('.ghr-story-videos').slick('slickPlay');
-							}
-						}
-					}
-				}))
-			});
+		function ytdimensions($) {
+			window.ytwide = $('#ep-youtube').width();
+			window.ythigh = ytwide/1.77777777777778;
+			$('#ep-youtube').height(ythigh);
 		}
+		function parseURL(url) {
+			var parser = document.createElement('a'),
+				searchObject = {},
+				queries, split, i;
+			// Let the browser do the work
+			parser.href = url;
+			// Convert query string to object
+			queries = parser.search.replace(/^\?/, '').split('&');
+			for( i = 0; i < queries.length; i++ ) {
+				split = queries[i].split('=');
+				searchObject[split[0]] = split[1];
+			}
+			return {
+				protocol: parser.protocol,
+				host: parser.host,
+				hostname: parser.hostname,
+				port: parser.port,
+				pathname: parser.pathname,
+				search: parser.search,
+				searchObject: searchObject,
+				hash: parser.hash
+			};
+		}
+		function onPlayerReady(event) {
+			if (navigator.userAgent.match(/(iPad|iPhone|iPod touch)/i) == null)
+			{
+				event.target.playVideo();
+			}
+		}
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.ENDED)
+			{
+				player.stopVideo();
+				jQuery('#ep-yt-overlay').addClass('ep-yt-active');
+			}
+		}
+		jQuery(document).ready(function($){
+			ytdimensions($);
+			$(window).resize(function(){
+				ytdimensions($);
+			});
+			window.eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
+
+			$('#ep-yt-close, #ep-yt-overlay').on(eventType, function(event) {
+				event.preventDefault();
+				$('#ep-yt-overlay').removeClass('ep-yt-active');
+				player.pauseVideo();
+			});
+			$('.foot-party').on(eventType, function(event) {
+				event.preventDefault();
+				if ( $(this).hasClass('foot-active') ) {
+					$('.ep-race').show();
+					$('.foot-party').removeClass('foot-active');
+				} else {
+					var race = $(this).attr('id');
+					$('.ep-race').hide();
+					$('.ep-'+race).show();
+					$('.foot-party').removeClass('foot-active');
+					$(this).addClass('foot-active');
+				}
+				$('html, body').animate({scrollTop: $('.page-content').offset().top}, 500);
+			});
+			$('.ep-pitch').on(eventType, function(event) {
+				event.preventDefault();
+				if ( $(this).hasClass('ep-inactive') ) {
+					return false;
+				}
+				var newYtid = $(this).attr('data-ytid');
+				if ( typeof ytid === typeof undefined ) {
+					ytid = newYtid;
+					$('#ep-yt-overlay').addClass('ep-yt-active');
+					window.ytid = newYtid;
+					window.player;
+					player = new YT.Player('ep-youtube', {
+						height: ythigh,
+						width: ytwide,
+						videoId: ytid,
+						events: {
+							'onReady': onPlayerReady,
+							'onStateChange': onPlayerStateChange
+						}
+					});
+				}
+				else if ( typeof ytid !== typeof undefined )
+				{
+					if ( ytid !== newYtid )
+					{
+						ytid = newYtid;
+						player.stopVideo();
+						player.loadVideoById({
+							videoId: ytid
+						});
+						$('#ep-yt-overlay').addClass('ep-yt-active');
+					}
+					else
+					{
+						$('#ep-yt-overlay').addClass('ep-yt-active');
+						player.playVideo();
+					}
+				}
+				else
+				{
+					return false;
+				}
+			});
+		});
 	</script>
 <?php get_footer(); ?>
