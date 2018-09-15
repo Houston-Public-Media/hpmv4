@@ -543,7 +543,7 @@ body #masthead #top-mobile-menu .fa {
 }
 li.nav-top.menu-item-has-children div.nav-top:after {
 	content: '\f0da';
-	display: inline-block;
+	display: block;
 	-webkit-font-smoothing: antialiased;
 	font: normal .75em/1 'FontAwesome';
 	float: right;
@@ -1011,12 +1011,6 @@ figure.wp-caption {
 figure.wp-caption img, figure iframe {
 	max-width: 100%;
 }
-.alignnone,
-.alignleft,
-.alignright,
-.aligncenter {
-
-}
 #embeds {
 	margin: 0 0 2em 0;
 }
@@ -1299,6 +1293,7 @@ nav.pagination a.page-numbers.next {
 	-ms-flex: 1;
 	-webkit-flex-grow: 2;
 	-webkit-flex-basis: auto;
+	flex: 1;
 	flex-grow: 2;
 	flex-basis: auto;
 }
@@ -1585,7 +1580,7 @@ body.single #author-wrap .author-other-stories h2 a,
 	border-bottom: 0.125em solid #f5f5f5;
 }
 #station-schedules .station-now-play h5 {
-	display: inline-block;
+	display: block;
 	float: left;
 	padding: 0.5em 0.5em 0 0;
 }
@@ -1622,7 +1617,7 @@ body.single #author-wrap .author-other-stories h2 a,
 }
 #twitter-home h1:after {
 	content: '\f099';
-	display: inline-block;
+	display: block;
 	-webkit-font-smoothing: antialiased;
 	font: normal .75em/1 'FontAwesome';
 	float: right;
@@ -1754,6 +1749,7 @@ body.single #author-wrap .author-other-stories h2 a,
 	-ms-flex: 1;
 	-webkit-flex-grow: 2;
 	flex-grow: 2;
+	flex: 1;
 }
 #twitter-home .tweet .tweet-head .tweet-time-full {
 	color: #8e9090;
@@ -1977,7 +1973,7 @@ body.page-template-page-series-tiles.series-header-center .page-header {
 }
 body.single-shows .page-header .page-title,
 body.page-template-page-series-tiles .page-header .page-title {
-	display: inline-block;
+	display: block;
 	float: left;
 	padding: 2em 1em;
 }
@@ -2351,6 +2347,7 @@ body.parent-pageid-119396 .table-striped tr.out td {
 	-ms-flex: 1;
 	-webkit-flex-grow: 2;
 	-webkit-flex-basis: auto;
+	flex: 1;
 	flex-grow: 2;
 	flex-basis: auto;
 	padding: 1em;
@@ -4288,6 +4285,7 @@ body.page.page-template-page-kids .kids-schedule {
 		-ms-flex: 1;
 		-webkit-flex-grow: 1;
 		-webkit-flex-basis: initial;
+		flex: 1;
 		flex-grow: 1;
 		flex-basis: initial;
 	}
@@ -5212,7 +5210,7 @@ body.page.page-template-page-kids .kids-schedule {
 	}
 	body.page-template-page-listen li.nav-top.menu-item-has-children div.nav-top:after {
 		content: '\f0da';
-		display: inline-block;
+		display: block;
 		-webkit-font-smoothing: antialiased;
 		font: normal .75em/1 'FontAwesome';
 		float: right;
@@ -7808,6 +7806,7 @@ body.page.page-template-page-ghr #main {
 	-ms-flex: 1;
 	-webkit-flex-grow: 2;
 	-webkit-flex-basis: auto;
+	flex: 1;
 	flex-grow: 2;
 	flex-basis: auto;
 	padding: 0.5em 0;
