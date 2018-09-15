@@ -79,7 +79,7 @@
 		"wpackagist-plugin/wp-updates-notifier": "1.4.4",
 		"deliciousbrains-plugin/wp-offload-s3": "1.7",
 		"deliciousbrains-plugin/wp-offload-s3-assets-pull": "1.0.2",
-		"jwcounts/hpm-podcasts": "1.5.3",
+		"jwcounts/hpm-podcasts": "1.5.3.1",
 		"jwcounts/wp-missed-schedule": "1.0"
 	},
 	"require-dev": {
