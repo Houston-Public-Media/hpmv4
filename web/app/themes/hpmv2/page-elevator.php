@@ -13,6 +13,9 @@ get_header('elevator'); ?>
 						</div>
 						<h1 class="page-title"><?php the_title(); ?></h1>
 						<?php echo get_the_excerpt(); ?>
+						<a class="down scrollto" href="#">
+							<i class="fa fa-chevron-down" aria-hidden="true"></i>
+						</a>
 					</header><!-- .entry-header -->
 					<div class="page-content">
 						<?php echo get_the_content(); ?>
@@ -34,7 +37,7 @@ get_header('elevator'); ?>
 							<div class="foot-party" id="state">State</div>
 							<div class="foot-party" id="local">Local</div>
 							<div class="foot-logo">
-								<a href="/"><img src="https://cdn.hpm.io/assets/images/elevator/hpm_logo_red@2x.png" alt="Houston Public Media, a service of the University of Houston" /></a>
+								<a href="/"><img src="https://cdn.hpm.io/assets/images/elevator/hpm_logo_gray@2x.png" alt="Houston Public Media, a service of the University of Houston" /></a>
 							</div>
 						</div>
 						<?PHP
@@ -61,6 +64,12 @@ get_header('elevator'); ?>
 			window.ytwide = $('#ep-youtube').width();
 			window.ythigh = ytwide/1.77777777777778;
 			$('#ep-youtube').height(ythigh);
+			if ( $(window).width() > 800 ) {
+				window.winhigh = $(window).height();
+				$('.page-template-page-elevator .page-header').css('height', winhigh+'px');
+			} else {
+				$('.page-template-page-elevator .page-header').removeAttr('style');
+			}
 		}
 		function parseURL(url) {
 			var parser = document.createElement('a'),
@@ -104,11 +113,14 @@ get_header('elevator'); ?>
 				ytdimensions($);
 			});
 			window.eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
-
 			$('#ep-yt-close, #ep-yt-overlay').on(eventType, function(event) {
 				event.preventDefault();
 				$('#ep-yt-overlay').removeClass('ep-yt-active');
 				player.pauseVideo();
+			});
+			$('a.down').on(eventType, function (event) {
+				event.preventDefault();
+				$('html, body').animate({scrollTop: $('.page-content').offset().top}, 500);
 			});
 			$('.foot-party').on(eventType, function(event) {
 				event.preventDefault();
