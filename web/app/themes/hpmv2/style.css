@@ -543,7 +543,7 @@ body #masthead #top-mobile-menu .fa {
 }
 li.nav-top.menu-item-has-children div.nav-top:after {
 	content: '\f0da';
-	display: block;
+	display: inline-block;
 	-webkit-font-smoothing: antialiased;
 	font: normal .75em/1 'FontAwesome';
 	float: right;
@@ -1617,7 +1617,7 @@ body.single #author-wrap .author-other-stories h2 a,
 }
 #twitter-home h1:after {
 	content: '\f099';
-	display: block;
+	display: inline-block;
 	-webkit-font-smoothing: antialiased;
 	font: normal .75em/1 'FontAwesome';
 	float: right;
@@ -5210,7 +5210,7 @@ body.page.page-template-page-kids .kids-schedule {
 	}
 	body.page-template-page-listen li.nav-top.menu-item-has-children div.nav-top:after {
 		content: '\f0da';
-		display: block;
+		display: inline-block;
 		-webkit-font-smoothing: antialiased;
 		font: normal .75em/1 'FontAwesome';
 		float: right;

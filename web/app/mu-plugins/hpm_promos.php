@@ -1,16 +1,16 @@
 <?php
 /**
  * @link 			https://github.com/jwcounts
- * @since  			20170906
+ * @since  			20180919
  * @package  		HPM-Promos
  *
  * @wordpress-plugin
  * Plugin Name: 	HPM Promo Banners
  * Plugin URI: 		https://github.com/jwcounts
  * Description: 	Promotional banners for use in the HPMv2 Theme
- * Version: 		20170906
+ * Version: 		20180919
  * Author: 			Jared Counts
- * Author URI: 		http://www.houstonpublicmedia.org/staff/jared-counts/
+ * Author URI: 		https://www.houstonpublicmedia.org/staff/jared-counts/
  * License: 		GPL-2.0+
  * License URI: 	http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: 	hpmv2
@@ -142,7 +142,12 @@ class HPM_Promos {
 					)
 				)
 			);
-		endif; ?>
+		endif;
+		$editor_opts = [
+			'editor_height' => 150,
+			'media_buttons' => false,
+			'teeny' => true
+		]; ?>
 		<h3><?PHP _e( "Where do you want your element to show up?", 'hpmv2' ); ?></h3>
 		<p><label for="hpm_promo[location]"><?php _e( "Location:", 'hpmv2' ); ?></label>
 			<select id="hpm_promo[location]" name="hpm_promo[location]">
@@ -191,8 +196,7 @@ class HPM_Promos {
 			<ul style="margin-bottom: 2em;">
 				<li><label for="hpm_promo[options][lightbox][a][link]"><?php _e('Link: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][lightbox][a][link]" value="<?php echo $hpm_promo['options']['lightbox']['a']['link']; ?>" style="max-width: 100%; width: 800px;" /></li>
 				<li><label for="hpm_promo[options][lightbox][a][text]"><?php _e('Text: ', 'hpmv2' ); ?></label>
-					<textarea name="hpm_promo[options][lightbox][a][text]" style="max-width: 100%; width: 800px;
-					height: 125px;"><?php echo $hpm_promo['options']['lightbox']['a']['text']; ?></textarea>
+					<?php wp_editor( $hpm_promo['options']['lightbox']['a']['text'], 'hpm_promo[options][lightbox][a][text]', $editor_opts ); ?>
 				</li>
 				<li><label for="hpm_promo[options][lightbox][a][image]"><?php _e('Image: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][lightbox][a][image]" value="<?php echo $hpm_promo['options']['lightbox']['a']['image']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
@@ -200,8 +204,7 @@ class HPM_Promos {
 			<ul style="margin-bottom: 2em;">
 				<li><label for="hpm_promo[options][lightbox][b][link]"><?php _e('Link: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][lightbox][b][link]" value="<?php echo $hpm_promo['options']['lightbox']['b']['link']; ?>" style="max-width: 100%; width: 800px;" /></li>
 				<li><label for="hpm_promo[options][lightbox][b][text]"><?php _e('Text: ', 'hpmv2' ); ?></label>
-					<textarea name="hpm_promo[options][lightbox][b][text]" style="max-width: 100%; width: 800px;
-					height: 125px;"><?php echo $hpm_promo['options']['lightbox']['b']['text']; ?></textarea>
+				<?php wp_editor( $hpm_promo['options']['lightbox']['b']['text'], 'hpm_promo[options][lightbox][b][text]', $editor_opts ); ?>
 				</li>
 				<li><label for="hpm_promo[options][lightbox][b][image]"><?php _e('Image: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][lightbox][b][image]" value="<?php echo $hpm_promo['options']['lightbox']['b']['image']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
@@ -280,14 +283,12 @@ class HPM_Promos {
 		endif;
 	}
 
-
 	public function disable_wysiwyg( $default ) {
 		if ( get_post_type() === 'promos' ) :
 			return false;
 		endif;
 		return $default;
 	}
-
 
 	public function unpub_date() {
 		global $post;
