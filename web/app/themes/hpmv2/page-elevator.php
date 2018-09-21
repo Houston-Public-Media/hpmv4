@@ -21,11 +21,17 @@ get_header('elevator'); ?>
 						<?php echo get_the_content(); ?>
 					</div><!-- .entry-content -->
 					<div id="ep-yt-overlay">
-						<div id="ep-yt-wrap">
+						<div id="ep-yt-play-wrap">
 							<div id="ep-yt-player">
 								<div id="ep-youtube"></div>
 							</div>
-							<div id="ep-yt-close"><span class="fa fa-close"></span></div>
+							<div class="ep-yt-close"><span class="fa fa-close"></span></div>
+						</div>
+					</div>
+					<div id="ep-msg-overlay">
+						<div id="ep-msg-wrap">
+							<div id="ep-msg"></div>
+							<div class="ep-yt-close"><span class="fa fa-close"></span></div>
 						</div>
 					</div>
 					<footer class="page-footer">
@@ -113,9 +119,9 @@ get_header('elevator'); ?>
 				ytdimensions($);
 			});
 			window.eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
-			$('#ep-yt-close, #ep-yt-overlay').on(eventType, function(event) {
+			$('.ep-yt-close, #ep-yt-overlay, #ep-msg-overlay').on(eventType, function(event) {
 				event.preventDefault();
-				$('#ep-yt-overlay').removeClass('ep-yt-active');
+				$('#ep-yt-overlay, #ep-msg-overlay').removeClass('ep-yt-active');
 				player.pauseVideo();
 			});
 			$('a.down').on(eventType, function (event) {
@@ -138,45 +144,52 @@ get_header('elevator'); ?>
 			});
 			$('.ep-pitch').on(eventType, function(event) {
 				event.preventDefault();
-				if ( $(this).hasClass('ep-inactive') ) {
-					return false;
-				}
 				var newYtid = $(this).attr('data-ytid');
-				if ( typeof ytid === typeof undefined ) {
-					ytid = newYtid;
-					$('#ep-yt-overlay').addClass('ep-yt-active');
-					window.ytid = newYtid;
-					window.player;
-					player = new YT.Player('ep-youtube', {
-						height: ythigh,
-						width: ytwide,
-						videoId: ytid,
-						events: {
-							'onReady': onPlayerReady,
-							'onStateChange': onPlayerStateChange
-						}
-					});
-				}
-				else if ( typeof ytid !== typeof undefined )
-				{
-					if ( ytid !== newYtid )
-					{
+				if ( newYtid.length == 0 ) {
+					var message = $(this).attr('data-message');
+					$('#ep-yt-overlay').removeClass('ep-yt-active');
+					$('#ep-msg-overlay').addClass('ep-yt-active');
+					$('#ep-msg').html('<p>'+message+'</p>');
+				} else {
+					if ( typeof ytid === typeof undefined ) {
 						ytid = newYtid;
-						player.stopVideo();
-						player.loadVideoById({
-							videoId: ytid
-						});
+						$('#ep-msg-overlay').removeClass('ep-yt-active');
 						$('#ep-yt-overlay').addClass('ep-yt-active');
+						window.ytid = newYtid;
+						window.player;
+						player = new YT.Player('ep-youtube', {
+							height: ythigh,
+							width: ytwide,
+							videoId: ytid,
+							events: {
+								'onReady': onPlayerReady,
+								'onStateChange': onPlayerStateChange
+							}
+						});
+					}
+					else if ( typeof ytid !== typeof undefined )
+					{
+						if ( ytid !== newYtid )
+						{
+							ytid = newYtid;
+							player.stopVideo();
+							player.loadVideoById({
+								videoId: ytid
+							});
+							$('#ep-msg-overlay').removeClass('ep-yt-active');
+							$('#ep-yt-overlay').addClass('ep-yt-active');
+						}
+						else
+						{
+							$('#ep-msg-overlay').removeClass('ep-yt-active');
+							$('#ep-yt-overlay').addClass('ep-yt-active');
+							player.playVideo();
+						}
 					}
 					else
 					{
-						$('#ep-yt-overlay').addClass('ep-yt-active');
-						player.playVideo();
+						return false;
 					}
-				}
-				else
-				{
-					return false;
 				}
 			});
 		});
