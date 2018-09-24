@@ -147,9 +147,10 @@ get_header('elevator'); ?>
 				var newYtid = $(this).attr('data-ytid');
 				if ( newYtid.length == 0 ) {
 					var message = $(this).attr('data-message');
+					var mFilter = message.replace(/\|/g, '<br /><br />');
 					$('#ep-yt-overlay').removeClass('ep-yt-active');
 					$('#ep-msg-overlay').addClass('ep-yt-active');
-					$('#ep-msg').html('<p>'+message+'</p>');
+					$('#ep-msg').html('<p>'+mFilter+'</p>');
 				} else {
 					if ( typeof ytid === typeof undefined ) {
 						ytid = newYtid;
