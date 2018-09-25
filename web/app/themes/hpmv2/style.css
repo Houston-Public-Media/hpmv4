@@ -7807,34 +7807,28 @@ body.page.page-template-page-ghr #main {
 	padding: 0.25em;
 	background-color: rgb(238,236,232);
 }
-.elevator-foot .foot-party {
-	font: 300 1.125em/1em 'museo-sans',arial,helvetica,sans-serif;
-	text-align: center;
-	text-transform: uppercase;
-	-ms-flex: 1;
-	-webkit-flex-grow: 2;
-	-webkit-flex-basis: auto;
-	flex: 1;
-	flex-grow: 2;
-	flex-basis: auto;
-	padding: 1em 0;
-	margin: 0 2px;
-}
-.elevator-foot .foot-party:hover {
-	background-color: #808080;
-	color: rgb(238,236,232);
-	cursor: pointer;
-}
-.elevator-foot .foot-party.foot-active {
-	background-color: #808080;
-	color: rgb(238,236,232);
-}
 .elevator-foot .foot-logo {
-	max-width: 12%;
-	display: none;
+	-webkit-flex-flow: row nowrap;
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	-ms-flex-flow: row nowrap;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding: 0.25em 1em;
 }
 .elevator-foot .foot-logo img {
-	max-width: 100%;
+	max-width: 66.6666%;
 }
 .page-template-page-elevator footer#colophon {
 	margin-bottom: 2.5em;
@@ -8067,16 +8061,8 @@ body.page.page-template-page-ghr #main {
 		padding-bottom: calc(70%/7.77835);
 		background-image: url('https://cdn.hpm.io/assets/images/elevator/ep_logo@2x.png');
 	}
-	.elevator-foot .foot-logo {
-		max-width: 10%;
-		display: block;
-		margin: 0 0.5em 0 0;
-	}
-	.elevator-foot .foot-logo:first-of-type {
-		margin: 0 0 0 0.5em;
-	}
-	.elevator-foot .foot-party {
-		margin: 0 1em;
+	.elevator-foot .foot-logo img {
+		max-width: 40%;
 	}
 	.page-template-page-elevator footer#colophon {
 		margin-bottom: 3.25em;
@@ -8096,8 +8082,8 @@ body.page.page-template-page-ghr #main {
 		background-size: cover;
 		background-image: url('https://cdn.hpm.io/assets/images/elevator/Elevator_landingpage_top-desktop.jpg');
 	}
-	.elevator-foot .foot-logo {
-		max-width: 8%;
+	.elevator-foot .foot-logo img {
+		max-width: 25%;
 	}
 	.page-template-page-elevator .page-content {
 		max-width: 64em;
@@ -8117,9 +8103,6 @@ body.page.page-template-page-ghr #main {
 		margin: 0 12.5% 1em;
 		font-size: 1em;
 	}
-	.elevator-foot .foot-party {
-		margin: 0 2em;
-	}
 	.page-template-page-elevator footer#colophon {
 		margin-bottom: 3.5em;
 	}
@@ -8132,19 +8115,13 @@ body.page.page-template-page-ghr #main {
 	.page-template-page-elevator .page-header a.down {
 		display: block;
 	}
-	.elevator-foot .foot-logo {
-		margin: 0 1em 0 0;
-	}
-	.elevator-foot .foot-logo:first-of-type {
-		margin: 0 0 0 1em;
-	}
 }
 @media screen and (min-width: 64.0625em) {
 	.page-template-page-elevator .page-content {
 		max-width: 75em;
 	}
-	.elevator-foot .foot-logo {
-		max-width: 5%;
+	.elevator-foot .foot-logo img {
+		max-width: 20%;
 	}
 	.page-template-page-elevator .page-header .header-logo {
 		width: 20%;

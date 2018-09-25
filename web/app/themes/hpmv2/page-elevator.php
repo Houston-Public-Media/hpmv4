@@ -37,13 +37,7 @@ get_header('elevator'); ?>
 					<footer class="page-footer">
 						<div class="elevator-foot">
 							<div class="foot-logo">
-								<img src="https://cdn.hpm.io/assets/images/elevator/ep_small_logo@2x.png" alt="Houston Public Media's Elevator Pitch" />
-							</div>
-							<div class="foot-party" id="national">National</div>
-							<div class="foot-party" id="state">State</div>
-							<div class="foot-party" id="local">Local</div>
-							<div class="foot-logo">
-								<a href="/"><img src="https://cdn.hpm.io/assets/images/elevator/hpm_logo_gray@2x.png" alt="Houston Public Media, a service of the University of Houston" /></a>
+								<img src="https://cdn.hpm.io/assets/images/elevator/ep_horizontal@2x.png" alt="Houston Public Media's Elevator Pitch" />
 							</div>
 						</div>
 						<?PHP
@@ -126,20 +120,6 @@ get_header('elevator'); ?>
 			});
 			$('a.down').on(eventType, function (event) {
 				event.preventDefault();
-				$('html, body').animate({scrollTop: $('.page-content').offset().top}, 500);
-			});
-			$('.foot-party').on(eventType, function(event) {
-				event.preventDefault();
-				if ( $(this).hasClass('foot-active') ) {
-					$('.ep-race').show();
-					$('.foot-party').removeClass('foot-active');
-				} else {
-					var race = $(this).attr('id');
-					$('.ep-race').hide();
-					$('.ep-'+race).show();
-					$('.foot-party').removeClass('foot-active');
-					$(this).addClass('foot-active');
-				}
 				$('html, body').animate({scrollTop: $('.page-content').offset().top}, 500);
 			});
 			$('.ep-pitch').on(eventType, function(event) {
