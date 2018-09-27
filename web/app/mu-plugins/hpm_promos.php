@@ -36,7 +36,9 @@ class HPM_Promos {
 		add_action( 'hpm_promo_cleanup', array( $this, 'cleanup' ) );
 		add_filter( 'manage_edit-promos_columns', array( $this, 'edit_columns' ) );
 		add_action( 'manage_promos_posts_custom_column', array( $this, 'manage_columns' ), 10, 2 );
-		add_action( 'wp_footer', array( $this, 'generate' ), 100 );
+		add_action( 'wp_footer', function() {
+			echo $this->generate();
+		}, 100 );
 
 		// Make sure that the proper cron job is scheduled
 		if ( ! wp_next_scheduled( 'hpm_promo_cleanup' ) ) :
@@ -441,11 +443,9 @@ class HPM_Promos {
 			$bans = [ 61263, 135762, 135920, 290722 ];
 			$pt_slug = [ 'page-blank.php', 'page-ghr.php', 'page-elevator.php' ];
 			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
-				echo $output;
-				die;
+				return $output;
 			elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
-				echo $output;
-				die;
+				return $output;
 			endif;
 		endif;
 		$args = [
@@ -617,7 +617,7 @@ class HPM_Promos {
 	}());
 </script>";
 		endif;
-		echo $output;
+		return $output;
 	}
 
 	

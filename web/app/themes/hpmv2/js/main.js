@@ -113,7 +113,7 @@ jQuery(document).ready(function($){
 			" iframe[src*='youtube-nocookie.com'],iframe[src*='ustream.tv'], iframe[src*='google.com/maps']," +
 			" iframe[src*='drive.google.com'], iframe[src*='vuhaus.com'], object, embed, .videoarchive," +
 			" iframe[src*='googleusercontent.com'], iframe[src*='player.pbs.org']," +
-			" iframe[src*='facebook.com/plugins/video.php'], iframe[src*='houstontranstar.org']");
+			" iframe[src*='facebook.com/plugins/video.php'], iframe[src*='houstontranstar.org'], iframe[src*='archive.org/embed']");
 		$allVideos.each(function() {
 			var iframeClass;
 			var vidHigh = $(this).attr('height');
