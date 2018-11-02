@@ -849,21 +849,21 @@ add_filter( 'hpm_filter_text', 'do_shortcode'      );
 function article_display_shortcode( $atts ) {
 	global $hpm_constants;
 	if ( empty( $hpm_constants ) ) :
-		$hpm_constants = array();
+		$hpm_constants = [];
 	endif;
-	$article = array();
-	extract( shortcode_atts( array(
+	$article = [];
+	extract( shortcode_atts( [
 		'num' => 1,
 		'tag' => '',
 		'category' => '',
 		'type' => 'd',
 		'overline' => '',
-        'post_id' => ''
-	), $atts, 'multilink' ) );
-	$args = array(
+		'post_id' => ''
+	], $atts, 'multilink' ) );
+	$args = [
 		'posts_per_page' => $num,
-        'ignore_sticky_posts' => 1
-	);
+		'ignore_sticky_posts' => 1
+	];
 	if ( !empty( $hpm_constants ) ) :
 		$args['post__not_in'] = $hpm_constants;
 	endif;
@@ -899,29 +899,31 @@ function article_display_shortcode( $atts ) {
 	$article[] = new WP_query( $args );
 	$output = '<div class="grid-sizer"></div>';
 	foreach ( $article as $art ) :
-		echo '<div class="screen-reader-text">';
-		print_r( $art );
-		echo "</div>";
 		if ( $art->have_posts() ) :
 			while ( $art->have_posts() ) : $art->the_post();
-				$postClass = get_post_class();
-				$fl_array = preg_grep("/felix-type-/", $postClass);
-				$fl_arr = array_keys( $fl_array );
-				$postClass[$fl_arr[0]] = 'felix-type-'.$type;
-				$postClass[] = 'grid-item';
-				if ( $type == 'a' ) :
-					$thumbnail_type = 'large';
-					$postClass[] = 'grid-item--width2';
-				elseif ( $type == 'b' ) :
-					$thumbnail_type = 'thumbnail';
-					$postClass[] = 'grid-item--width2';
-				else :
-					$thumbnail_type = 'thumbnail';
-				endif;
-				if ( empty( $overline ) ) :
-					$overline = hpm_top_cat( get_the_ID() );
-				endif;
-				$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+				// $postClass = get_post_class();
+				// $fl_array = preg_grep("/felix-type-/", $postClass);
+				// $fl_arr = array_keys( $fl_array );
+				// $postClass[$fl_arr[0]] = 'felix-type-'.$type;
+				// $postClass[] = 'grid-item';
+				// if ( $type == 'a' ) :
+				// 	$thumbnail_type = 'large';
+				// 	$postClass[] = 'grid-item--width2';
+				// elseif ( $type == 'b' ) :
+				// 	$thumbnail_type = 'thumbnail';
+				// 	$postClass[] = 'grid-item--width2';
+				// else :
+				// 	$thumbnail_type = 'thumbnail';
+				// endif;
+				// if ( empty( $overline ) ) :
+				// 	$overline = hpm_top_cat( get_the_ID() );
+				// endif;
+				// $output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+				ob_start();
+				get_template_part( 'content', get_post_format() );
+				$var = ob_get_contents();
+				ob_end_clean();
+				$output .= $var;
 				$hpm_constants[] = get_the_ID();
 			endwhile;
 		endif;

@@ -30,7 +30,7 @@ class HPM_Promos {
 	 */
 	public function init() {
 		add_action( 'admin_init', array( $this, 'add_role_caps' ), 999 );
-		add_filter( 'user_can_richedit', array( $this, 'disable_wysiwyg' ) );
+		// add_filter( 'user_can_richedit', array( $this, 'disable_wysiwyg' ) );
 		add_action( 'save_post', array( $this, 'save_meta' ), 10, 2 );
 		add_action( 'post_submitbox_misc_actions', array( $this, 'unpub_date' ) );
 		add_action( 'hpm_promo_cleanup', array( $this, 'cleanup' ) );
@@ -285,12 +285,12 @@ class HPM_Promos {
 		endif;
 	}
 
-	public function disable_wysiwyg( $default ) {
-		if ( get_post_type() === 'promos' ) :
-			return false;
-		endif;
-		return $default;
-	}
+	// public function disable_wysiwyg( $default ) {
+	// 	if ( get_post_type() === 'promos' ) :
+	// 		return false;
+	// 	endif;
+	// 	return $default;
+	// }
 
 	public function unpub_date() {
 		global $post;
@@ -440,7 +440,7 @@ class HPM_Promos {
 		if ( $wp_global->is_page || $wp_global->is_single ) :
 			$page_id = $wp_global->get_queried_object_id();
 			$anc = get_post_ancestors( $page_id );
-			$bans = [ 61263, 135762, 135920, 290722 ];
+			$bans = [ 61263, 135762, 135920, 290722, 309689 ];
 			$pt_slug = [ 'page-blank.php', 'page-ghr.php', 'page-elevator.php' ];
 			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
 				return $output;
@@ -490,7 +490,7 @@ class HPM_Promos {
 				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) :
 					continue;
 				endif;
-				$content = get_the_content();
+				$content = do_shortcode( get_the_content(), false );
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
 				if ( $meta['type'] == 'sidebar' ) :

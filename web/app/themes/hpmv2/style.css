@@ -2308,6 +2308,9 @@ body.parent-pageid-119396 .table-striped tr.out td {
 	padding: 0.125em 0.5em;
 	background-color: #10b0bc;
 }
+.top-banner ul {
+	list-style: disc;
+}
 
 /**
  * 7.0 jPlayer Styling
@@ -4718,11 +4721,15 @@ body.page.page-template-page-kids .kids-schedule {
 	#article-share .article-share-icon .fa {
 		font-size: 3em;
 	}
-	.alignleft,
-	figure.wp-caption.alignleft {
+	.alignleft {
 		float: left;
 		width: 45% !important;
 		margin: 0 2.5% 1em;
+	}
+	figure.wp-caption.alignleft {
+		float: left;
+		width: 45% !important;
+		margin: 0 1em 1em 0;
 	}
 	.alignright,
 	figure.wp-caption.alignright {
@@ -4879,7 +4886,7 @@ body.page.page-template-page-kids .kids-schedule {
 	 */
 
 	#search-results {
-		width: 67%;
+		width: 66%;
 		float: left;
 		background-color: white;
 		padding: 1em 0;

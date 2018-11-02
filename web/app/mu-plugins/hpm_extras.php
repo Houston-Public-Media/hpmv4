@@ -945,7 +945,8 @@ function hpm_tweets( $account, $num ) {
 		$num = 20;
 	endif;
 	$output = '';
-	$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name='.$account.'&count='.$num.'&include_rts=true&tweet_mode=extended';
+	// $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name='.$account.'&count='.$num.'&include_rts=true&tweet_mode=extended';
+	$url = 'https://api.twitter.com/1.1/search/tweets.json?q=%23txdecides%20-RT&result_type=recent&count=25&include_entities=true&tweet_mode=extended';
 	$opts = array( 'headers' => array( "Authorization" => "Bearer AAAAAAAAAAAAAAAAAAAAAHC03AAAAAAAZo5NNz4NqlK6%2FjlJjcnhScYP3FQ%3DLR2gnzwqO2dn1SUGolipkUULalisg6DOpRfKlEVqzvYw7XtKfs" ) );
 	$remote = wp_remote_get( esc_url_raw( $url ), $opts );
 	if ( is_wp_error( $remote ) ) :
@@ -953,8 +954,9 @@ function hpm_tweets( $account, $num ) {
 	else :
 		$raw = wp_remote_retrieve_body( $remote );
 		$json = json_decode( $raw, true );
-		$output .= '<aside id="twitter-home"><h1>Tweets by <a href="https://twitter.com/'.$account.'">@'.$account.'</a></h1><div id="twitter-wrap">';
-		foreach ( $json as $j ) :
+		// $output .= '<aside id="twitter-home"><h1>Tweets by <a href="https://twitter.com/'.$account.'">@'.$account.'</a></h1><div id="twitter-wrap">';
+		$output .= '<aside id="twitter-home"><h1><a href="https://twitter.com/search?f=tweets&q=%23txdecides&src=typd">#TXDecides</a></h1><div id="twitter-wrap">';
+		foreach ( $json['statuses'] as $j ) :
 			if ( !empty( $j['retweeted_status'] ) ) :
 				$r = $j['retweeted_status'];
 				if ( $r['is_quote_status'] ) :
@@ -970,7 +972,8 @@ target="_blank">'.$j['user']['name'].'</a></p></div>';
 				$output .= '<div class="tweet">'.hpm_render_tweet( $j ).'</div>';
 			endif;
 		endforeach;
-		$output .= '</div><p style="text-align:center;"><a href="https://twitter.com/'.$account.'" class="readmorelarge">Read More</a></p></aside>';
+		// $output .= '</div><p style="text-align:center;"><a href="https://twitter.com/'.$account.'" class="readmorelarge">Read More</a></p></aside>';
+		$output .= '</div><p style="text-align:center;padding-top:0.5em;"><a href="https://twitter.com/search?f=tweets&q=%23txdecides&src=typd" class="readmorelarge">Read More</a></p></aside>';
 	endif;
 	update_option( 'hpm_'.$account.'_tweets', $output, false );
 }
@@ -984,6 +987,22 @@ $timestamp = wp_next_scheduled( 'hpm_tweets' );
 if ( empty( $timestamp ) ) :
 	wp_schedule_event( time(), 'hpm_1min', 'hpm_tweets' );
 endif;
+
+function tx_decides_twitter() {
+	return get_option( 'hpm_houstonpubmedia_tweets' );
+}
+add_shortcode( 'tx_decides', 'tx_decides_twitter' );
+
+function hpm_election_night() {
+	$args = [
+		'p' => 248126,
+		'post_type'  => 'page',
+		'post_status' => 'publish'
+	];
+	$election = new WP_Query( $args );
+	return $election->post->post_content;
+}
+add_shortcode( 'election_night', 'hpm_election_night' );
 
 function wpdocs_set_html_mail_content_type() {
     return 'text/html';
@@ -1068,6 +1087,8 @@ endif;
 
 add_action( 'admin_footer-post-new.php', 'hpm_https_check' );
 add_action( 'admin_footer-post.php', 'hpm_https_check' );
+add_action( 'admin_footer-post-new.php', 'hpm_npr_api_contributor' );
+add_action( 'admin_footer-post.php', 'hpm_npr_api_contributor' );
 
 function hpm_https_check() {
 	if ( 'post' !== $GLOBALS['post_type'] ) :
@@ -1085,6 +1106,22 @@ function hpm_https_check() {
 					return true;
 				}
 			});
+		});
+	</script>
+	<?php
+}
+
+function hpm_npr_api_contributor() {
+	if ( 'post' !== $GLOBALS['post_type'] ) :
+		return;
+	endif;
+	$user = wp_get_current_user();
+	if ( !in_array( 'contributor', $user->roles ) ) :
+		return;
+	endif; ?>
+	<script>
+		jQuery(document).ready(function($){
+			$('#send_to_api').prop('checked', false);
 		});
 	</script>
 	<?php
