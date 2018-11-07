@@ -901,24 +901,86 @@ function article_display_shortcode( $atts ) {
 	foreach ( $article as $art ) :
 		if ( $art->have_posts() ) :
 			while ( $art->have_posts() ) : $art->the_post();
-				// $postClass = get_post_class();
-				// $fl_array = preg_grep("/felix-type-/", $postClass);
-				// $fl_arr = array_keys( $fl_array );
-				// $postClass[$fl_arr[0]] = 'felix-type-'.$type;
-				// $postClass[] = 'grid-item';
-				// if ( $type == 'a' ) :
-				// 	$thumbnail_type = 'large';
-				// 	$postClass[] = 'grid-item--width2';
-				// elseif ( $type == 'b' ) :
-				// 	$thumbnail_type = 'thumbnail';
-				// 	$postClass[] = 'grid-item--width2';
-				// else :
-				// 	$thumbnail_type = 'thumbnail';
-				// endif;
-				// if ( empty( $overline ) ) :
-				// 	$overline = hpm_top_cat( get_the_ID() );
-				// endif;
-				// $output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+				$postClass = get_post_class();
+				$fl_array = preg_grep("/felix-type-/", $postClass);
+				$fl_arr = array_keys( $fl_array );
+				$postClass[$fl_arr[0]] = 'felix-type-'.$type;
+				$postClass[] = 'grid-item';
+				if ( $type == 'a' ) :
+					$thumbnail_type = 'large';
+					$postClass[] = 'grid-item--width2';
+				elseif ( $type == 'b' ) :
+					$thumbnail_type = 'thumbnail';
+					$postClass[] = 'grid-item--width2';
+				else :
+					$thumbnail_type = 'thumbnail';
+				endif;
+				if ( empty( $overline ) ) :
+					$overline = hpm_top_cat( get_the_ID() );
+				endif;
+				$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+			endwhile;
+		endif;
+	endforeach;
+	return $output;
+}
+add_shortcode( 'hpm_articles', 'article_display_shortcode' );
+
+function article_display_shortcode_temp( $atts ) {
+	global $hpm_constants;
+	if ( empty( $hpm_constants ) ) :
+		$hpm_constants = [];
+	endif;
+	$article = [];
+	extract( shortcode_atts( [
+		'num' => 1,
+		'tag' => '',
+		'category' => '',
+		'type' => 'd',
+		'overline' => '',
+		'post_id' => ''
+	], $atts, 'multilink' ) );
+	$args = [
+		'posts_per_page' => $num,
+		'ignore_sticky_posts' => 1
+	];
+	if ( !empty( $hpm_constants ) ) :
+		$args['post__not_in'] = $hpm_constants;
+	endif;
+	if ( !empty( $category ) ) :
+		$args['category_name'] = $category;
+	endif;
+	if ( !empty( $tag ) ) :
+		$args['tag_slug__in'][] = $tag;
+	endif;
+	if ( !empty( $post_id ) ) :
+		$i_exp = explode( ',', $post_id );
+		foreach ( $i_exp as $ik => $iv ) :
+			$i_exp[$ik] = trim( $iv );
+		endforeach;
+		$args['post__in'] = $i_exp;
+		$args['orderby'] = 'post__in';
+		$c = count( $i_exp );
+		if ( $c != $args['posts_per_page'] ) :
+			$diff = $args['posts_per_page'] - $c;
+			$args['posts_per_page'] = $c;
+			unset( $args['category_name'] );
+			$article[] = new WP_Query( $args );
+			unset( $args['post__in'] );
+			$args['orderby'] = 'date';
+			$args['order'] = 'DESC';
+			$args['post__not_in'] = array_merge( $hpm_constants, $i_exp );
+			$args['posts_per_page'] = $diff;
+			if ( !empty( $category ) ) :
+				$args['category_name'] = $category;
+			endif;
+		endif;
+	endif;
+	$article[] = new WP_query( $args );
+	$output = '<div class="grid-sizer"></div>';
+	foreach ( $article as $art ) :
+		if ( $art->have_posts() ) :
+			while ( $art->have_posts() ) : $art->the_post();
 				ob_start();
 				get_template_part( 'content', get_post_format() );
 				$var = ob_get_contents();
@@ -930,7 +992,7 @@ function article_display_shortcode( $atts ) {
 	endforeach;
 	return $output;
 }
-add_shortcode( 'hpm_articles', 'article_display_shortcode' );
+add_shortcode( 'hpm_articles_temp', 'article_display_shortcode_temp' );
 
 function article_list_shortcode( $atts ) {
 	extract( shortcode_atts( array(
