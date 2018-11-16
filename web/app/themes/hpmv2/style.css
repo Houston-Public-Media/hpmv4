@@ -6576,7 +6576,7 @@ div.kimbiaDiv.two_col select.k_select {
 	margin: 1em 0 2em;
 	padding: 0 0.5em;
 	color: #292929;
-	font: normal 0.9em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
+	font: normal 1.125em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
 }
 .page-template-page-support-sub .page-content .support-sub-block {
 	padding: 1em;
@@ -6713,6 +6713,9 @@ div.kimbiaDiv.two_col select.k_select {
 	color: #52C2DD;
 	text-transform: uppercase;
 }
+.page-template-page-support-sub.matching-info .alignleft {
+	overflow: hidden;
+}
 .page-template-page-support-sub.matching-info .alignleft img {
 	width: 25%;
 	padding: 1em 1em 0 0;
@@ -6723,7 +6726,8 @@ div.kimbiaDiv.two_col select.k_select {
 }
 .page-template-page-support-sub.matching-info .page-content #vehicle-donation-main .vehicle-contact h2 {
 	background-position-y: 26px;
-	margin-bottom: 0.5em;
+	margin: 0 0 0.5em 0;
+	color: #52C2DD;
 }
 .page-template-page-support-sub.matching-info .vehicle-contact .contact-email {
 	border: 0;
@@ -6899,6 +6903,10 @@ div.kimbiaDiv.two_col select.k_select {
 	.page-template-page-support-sub.matching-info .page-content #vehicle-donation-main h2 {
 		width: 80%;
 		margin: 0 10% 1em;
+	}
+	.page-template-page-support-sub.matching-info .page-content #vehicle-donation-main .vehicle-contact h2 {
+		margin: 0 0 1em 0;
+		width: 100%;
 	}
 }
 @media screen and (min-width: 64.0625em) {
