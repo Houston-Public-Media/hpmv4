@@ -158,6 +158,9 @@ jQuery(document).ready(function($){
 			ga('send', 'event', 'External', 'Click-Exit Link', aHref);
 		}
 	});
+	$("a").filter(function() {
+		return this.hostname && this.hostname.replace('www.','') !== location.hostname.replace('www.','');
+	}).attr('target', '_blank');
 	$('#top-search .fa-search').click(function(){
 		if ( wide > 800 ) {
 			$('#top-search .search-form').slideToggle();

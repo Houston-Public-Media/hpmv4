@@ -58,7 +58,7 @@ if ( is_preview() ) : ?>
 					?>
 					<div id="article-share">
 					<?php
-						$uri_title = rawurlencode( get_the_title() );
+						$uri_title = rawurlencode( html_entity_decode( get_the_title() ) );
 						$facebook_link = rawurlencode( get_the_permalink().'?utm_source=facebook-share-article&utm_medium=button&utm_campaign=hpm-share-link' );
 						$twitter_link = rawurlencode( get_the_permalink().'?utm_source=twitter-share-article&utm_medium=button&utm_campaign=hpm-share-link' );
 						$linkedin_link = rawurlencode( get_the_permalink().'?utm_source=linked-share-article&utm_medium=button&utm_campaign=hpm-share-link' );

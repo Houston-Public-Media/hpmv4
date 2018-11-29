@@ -174,11 +174,18 @@ class AMWGalleria {
 			$big   = wp_get_attachment_image_src($attachmentId, 'large');
 			$credit = get_post_meta( $attachmentId, '_wp_attachment_source_name', true );
 			if ( !empty( $credit ) ) :
-				$mcredit = " // Photo Credit: ".$credit;
+				$mcredit = " (Photo Credit: ".$credit.")";
 			else :
 				$mcredit = '';
 			endif;
-			$images_full .= '<a href="'.$big[0].'"><img src="'.$thumb[0].'" data-big="'.$big[0].'" data-title="'.$attachment->post_title.'" data-description="'.wptexturize($attachment->post_excerpt.$mcredit).'"></a>';
+			if ( !empty( $attachment->post_excerpt ) ) :
+				$description = $attachment->post_excerpt . $mcredit;
+			elseif ( !empty( $attachment->post_title ) ) :
+				$description = $attachment->post_title . $mcredit;
+			else :
+				$description = $mcredit;
+			endif;
+			$images_full .= '<a href="'.$big[0].'"><img src="'.$thumb[0].'" data-big="'.$big[0].'" data-title="'.$description.'" data-description=""></a>';
 		}
 
 		// encode the Galleria options as JSON
