@@ -128,6 +128,7 @@ function add_rewrite_rules($aRules) {
 		'^(news887|classical)/schedule/(week)/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_enpoint=$matches[2]&sched_year=$matches[3]&sched_month=$matches[4]&sched_day=$matches[5]',
 		'^(tv8)/schedule/(search|episode|program)/([^/]+)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=$matches[2]&sched_tv_query=$matches[3]',
 		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]{9})/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]',
+		'^news/([0-9]+)/?' => 'index.php?pagename=redirect&hpm_slug=$matches[1]',
 		'^diversecity/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]+)/([a-z0-9\-]+)/?' => 'index.php?p=$matches[4]',
 		'^hm-old/([0-9]+)/?$' => 'index.php?pagename=redirect&hm_old_id=$matches[1]'
 	);

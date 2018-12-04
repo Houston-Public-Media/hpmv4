@@ -2,9 +2,9 @@
 /*
 Template Name: Redirect
 */
-//	$old_id = get_query_var('hpm_slug', '');
-//	$media = get_query_var('hpm_slug_extra', '');
-//	$epno = get_query_var('hpm_epno', '');
+	$old_id = get_query_var('hpm_slug', '');
+	// $media = get_query_var('hpm_slug_extra', '');
+	$epno = get_query_var('hpm_epno', '');
 	$hm_old_id = get_query_var('hm_old_id', '');
 	if ( !empty( $_GET ) ) :
 		if ( !empty( $_GET['q'] ) ) :
@@ -33,69 +33,40 @@ Template Name: Redirect
 				exit;
 			endif;
 		endif;
-//	elseif ( !empty( $old_id ) ) :
-//		if ( strlen($old_id) < 5 && is_numeric( $old_id ) ) :
-//			header("HTTP/1.1 301 Moved Permanently");
-//			header('Location: http://www.houstonpublicmedia.org/topics/news/page/'.$old_id);
-//			exit;
-//		endif;
-//		if ( $old_id == 1360860053 ) :
-//			header("HTTP/1.1 301 Moved Permanently");
-//			header('Location: http://www.houstonpublicmedia.org/preview/');
-//			exit;
-//		endif;
-//		$tendenci = $wpdb->get_results("SELECT `post_id` FROM `wp_postmeta` WHERE `meta_key` = 'old_id' && `meta_value` = '$old_id'",OBJECT);
-//		if ( !empty( $tendenci ) ) :
-//			$new_id = get_permalink( $tendenci[0]->post_id );
-//			header("HTTP/1.1 301 Moved Permanently");
-//			header('Location: '.$new_id);
-//			exit;
-//		else :
-//			header("HTTP/1.0 404 Not Found - Archive Empty");
-//			require TEMPLATEPATH.'/404.php';
-//			exit;
-//		endif;
-//	elseif ( !empty( $media ) ) :
-//		if ( preg_match( '/^_images/', $media ) || preg_match( '/^media/', $media ) ) :
-//			$path = pathinfo( '/'.$media );
-//			echo $filename = $path['filename'].'.'.$path['extension'];
-//			$s3 = $wpdb->get_results("SELECT `ID` FROM `wp_posts` WHERE `guid` like '%$filename' && `post_type` = 'attachment'",OBJECT);
-//			if ( !empty( $s3 ) ) :
-//				$new_id = get_permalink( $s3[0]->ID );
-//				header("HTTP/1.1 301 Moved Permanently");
-//				header('Location: '.$new_id);
-//				exit;
-//			else :
-//				header("HTTP/1.0 404 Not Found - Archive Empty");
-//				require TEMPLATEPATH.'/404.php';
-//				exit;
-//			endif;
-//		elseif ( preg_match( '/^files/', $media ) ) :
-//			$media = str_replace( 'download/', '', $media );
-//			$tendenci = $wpdb->get_results("SELECT `post_id` FROM `wp_postmeta` WHERE `meta_key` = 'tendenci_file_id' && `meta_value` = '/$media/'",OBJECT);
-//			if ( !empty( $tendenci ) ) :
-//				$new_id = get_permalink( $tendenci[0]->post_id );
-//				header("HTTP/1.1 301 Moved Permanently");
-//				header('Location: '.$new_id);
-//				exit;
-//			else :
-//				header("HTTP/1.0 404 Not Found - Archive Empty");
-//				require TEMPLATEPATH.'/404.php';
-//				exit;
-//			endif;
-//		endif;
-//	elseif ( !empty( $epno ) ) :
-//		$engines = $wpdb->get_results("SELECT `post_id` FROM `wp_postmeta` WHERE `meta_key` = 'epno' && `meta_value` = '$epno'",OBJECT);
-//		if ( !empty( $engines ) ) :
-//			$new_id = get_permalink( $engines[0]->post_id );
-//			header("HTTP/1.1 301 Moved Permanently");
-//			header('Location: '.$new_id);
-//			exit;
-//		else :
-//			header("HTTP/1.0 404 Not Found - Archive Empty");
-//			require TEMPLATEPATH.'/404.php';
-//			exit;
-//		endif;
+	elseif ( !empty( $old_id ) ) :
+		if ( strlen($old_id) < 5 && is_numeric( $old_id ) ) :
+			header("HTTP/1.1 301 Moved Permanently");
+			header('Location: http://www.houstonpublicmedia.org/topics/news/page/'.$old_id);
+			exit;
+		endif;
+		if ( $old_id == 1360860053 ) :
+			header("HTTP/1.1 301 Moved Permanently");
+			header('Location: http://www.houstonpublicmedia.org/preview/');
+			exit;
+		endif;
+		$tendenci = $wpdb->get_results("SELECT `post_id` FROM `wp_postmeta` WHERE `meta_key` = 'old_id' && `meta_value` = '$old_id'",OBJECT);
+		if ( !empty( $tendenci ) ) :
+			$new_id = get_permalink( $tendenci[0]->post_id );
+			header("HTTP/1.1 301 Moved Permanently");
+			header('Location: '.$new_id);
+			exit;
+		else :
+			header("HTTP/1.0 404 Not Found - Archive Empty");
+			require TEMPLATEPATH.'/404.php';
+			exit;
+		endif;
+	elseif ( !empty( $epno ) ) :
+		$engines = $wpdb->get_results("SELECT `post_id` FROM `wp_postmeta` WHERE `meta_key` = 'epno' && `meta_value` = '$epno'",OBJECT);
+		if ( !empty( $engines ) ) :
+			$new_id = get_permalink( $engines[0]->post_id );
+			header("HTTP/1.1 301 Moved Permanently");
+			header('Location: '.$new_id);
+			exit;
+		else :
+			header("HTTP/1.0 404 Not Found - Archive Empty");
+			require TEMPLATEPATH.'/404.php';
+			exit;
+		endif;
 	elseif ( !empty( $hm_old_id ) ) :
 		$hm = $wpdb->get_results("SELECT `post_id` FROM `wp_postmeta` WHERE `meta_key` = 'hm_old_id' && `meta_value` = '$hm_old_id' LIMIT 1",OBJECT);
 		if ( !empty( $hm ) ) :
