@@ -13,19 +13,19 @@ Template Name: Redirect
 				$q_a = str_replace( array('source:','by','+'),array('','',' '),$q );
 				$q_a = sanitize_title($q_a);
 				header("HTTP/1.1 301 Moved Permanently");
-				header('Location: http://www.houstonpublicmedia.org/articles/author/'.$q_a);
+				header('Location: https://www.houstonpublicmedia.org/articles/author/'.$q_a . "?utm_source=tendenci-redirect&utm_medium=link&utm_campaign=hpm-legacy-redirect");
 				exit;
 			elseif ( preg_match( '/^tag/', $q ) ) :
 				$tag = str_replace( array('tag:',' '),array('','-'),$q );
 				$tag = sanitize_title($tag);
 				header("HTTP/1.1 301 Moved Permanently");
-				header('Location: http://www.houstonpublicmedia.org/tag/'.$tag);
+				header('Location: https://www.houstonpublicmedia.org/tag/'.$tag . "?utm_source=tendenci-redirect&utm_medium=link&utm_campaign=hpm-legacy-redirect");
 				exit;
 			elseif ( preg_match( '/^category/', $q ) ) :
 				$tag = str_replace( array('category:',' '),array('','-'),$q );
 				$tag = sanitize_title($tag);
 				header("HTTP/1.1 301 Moved Permanently");
-				header('Location: http://www.houstonpublicmedia.org/tag/'.$tag);
+				header('Location: https://www.houstonpublicmedia.org/tag/'.$tag . "?utm_source=tendenci-redirect&utm_medium=link&utm_campaign=hpm-legacy-redirect");
 				exit;
 			else :
 				header("HTTP/1.0 404 Not Found - Archive Empty");
@@ -36,19 +36,19 @@ Template Name: Redirect
 	elseif ( !empty( $old_id ) ) :
 		if ( strlen($old_id) < 5 && is_numeric( $old_id ) ) :
 			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: http://www.houstonpublicmedia.org/topics/news/page/'.$old_id);
+			header('Location: https://www.houstonpublicmedia.org/topics/news/page/'.$old_id . "?utm_source=legacy-site-redirect&utm_medium=link&utm_campaign=hpm-legacy-redirect");
 			exit;
 		endif;
 		if ( $old_id == 1360860053 ) :
 			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: http://www.houstonpublicmedia.org/preview/');
+			header('Location: https://www.houstonpublicmedia.org/preview/');
 			exit;
 		endif;
 		$tendenci = $wpdb->get_results("SELECT `post_id` FROM `wp_postmeta` WHERE `meta_key` = 'old_id' && `meta_value` = '$old_id'",OBJECT);
 		if ( !empty( $tendenci ) ) :
 			$new_id = get_permalink( $tendenci[0]->post_id );
 			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: '.$new_id);
+			header('Location: '.$new_id . "?utm_source=tendenci-redirect&utm_medium=link&utm_campaign=hpm-legacy-redirect");
 			exit;
 		else :
 			header("HTTP/1.0 404 Not Found - Archive Empty");
@@ -60,7 +60,7 @@ Template Name: Redirect
 		if ( !empty( $engines ) ) :
 			$new_id = get_permalink( $engines[0]->post_id );
 			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: '.$new_id);
+			header('Location: '.$new_id . "?utm_source=engines-redirect&utm_medium=link&utm_campaign=hpm-legacy-redirect");
 			exit;
 		else :
 			header("HTTP/1.0 404 Not Found - Archive Empty");
@@ -72,7 +72,7 @@ Template Name: Redirect
 		if ( !empty( $hm ) ) :
 			$new_id = get_permalink( $hm[0]->post_id );
 			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: '.$new_id);
+			header('Location: '.$new_id . "?utm_source=houston-matters-redirect&utm_medium=link&utm_campaign=hpm-legacy-redirect");
 			exit;
 		else :
 			header("HTTP/1.0 404 Not Found - Archive Empty");
