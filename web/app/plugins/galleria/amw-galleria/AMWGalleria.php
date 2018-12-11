@@ -185,6 +185,7 @@ class AMWGalleria {
 			else :
 				$description = $mcredit;
 			endif;
+			$description = str_replace( '"', '&quot;', $description );
 			$images_full .= '<a href="'.$big[0].'"><img src="'.$thumb[0].'" data-big="'.$big[0].'" data-title="'.$description.'" data-description=""></a>';
 		}
 

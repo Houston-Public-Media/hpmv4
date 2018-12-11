@@ -6194,6 +6194,9 @@ div.kimbiaDiv.two_col input.k_money,
 div.kimbiaDiv.two_col select.k_select {
 	font-family: arial,helvetica,sans-serif !important;
 }
+body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
+	max-width: 80% !important;
+}
 .page-template-page-passport.passport-donation .page-content form button {
 	color: #cc0000;
 	background-color: white;
