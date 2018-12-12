@@ -3,7 +3,9 @@
 Template Name: Wide with Articles &amp; Poll
 */
 
-get_header(); ?>
+get_header();
+$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
+echo $embeds['bottom']; ?>
 	<style>
 		#harriscounty {
 			padding: 1em;

@@ -2,7 +2,9 @@
 /*
 Template Name: Full-Width Page
 */
-	get_header(); ?>
+	get_header();
+	$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
+	echo $embeds['bottom']; ?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
