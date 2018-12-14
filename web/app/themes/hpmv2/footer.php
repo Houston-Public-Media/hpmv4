@@ -157,9 +157,9 @@
 			_sf_async_config.uid = 33583;
 			_sf_async_config.domain = 'houstonpublicmedia.org';
 			_sf_async_config.useCanonical = true;
-			_sf_async_config.sections = '<?php echo str_replace( '&amp;', '&', wp_strip_all_tags( get_the_category_list( ', ', 'multiple', get_the_ID()	) ) );
-			?>';
-			_sf_async_config.authors = '<?php coauthors( ',', ',', '', '', true ); ?>';
+			_sf_async_config.sections = "<?php echo str_replace( '&amp;', '&', wp_strip_all_tags( get_the_category_list( ', ', 'multiple', get_the_ID()	) ) );
+			?>";
+			_sf_async_config.authors = "<?php coauthors( ',', ',', '', '', true ); ?>";
 			(function(){
 				function loadChartbeat() {
 					window._sf_endpt=(new Date()).getTime();
