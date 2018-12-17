@@ -758,6 +758,7 @@ function hpm_nprapi_audio_shortcode ( $text ) {
 	preg_match_all( '/' . get_shortcode_regex() . '/', $text, $matches );
 	
 	$tags = $matches[2];
+	$args = $matches[3];
 	foreach( $tags as $i => $tag ) :
 		if ( $tag == "audio" ) :
 			$atts = shortcode_parse_atts( $args[$i] );
