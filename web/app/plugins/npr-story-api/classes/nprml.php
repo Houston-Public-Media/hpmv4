@@ -300,11 +300,14 @@ function nprstory_post_to_nprml_story( $post ) {
 		// Is the image in the content?  If so, tell the API with a flag that CorePublisher knows.
 		// WordPress may add something like "-150X150" to the end of the filename, before the extension.
 		// Isn't that nice? Let's remove that.
-		$image_name_parts = explode( ".", $image_guid );
-		$image_regex = "/" . $image_name_parts[0] . "\-[a-zA-Z0-9]*" . $image_name_parts[1] . "/"; 
+		$image_guid = wp_get_attachment_url( $image->ID );
+		$image_url = parse_url( $image_guid );
+		$image_name_parts = pathinfo( $image_url['path'] );
+
+		$image_regex = "/" . $image_name_parts['filename'] . "\-[a-zA-Z0-9]*" . $image_name_parts['extension'] . "/"; 
 		$in_body = "";
 		if ( preg_match( $image_regex, $content ) ) {
-			if ( strstr( $image->guid, '?') ) {
+			if ( strstr( $image_guid, '?') ) {
 				$in_body = "&origin=body";
 			} else {
 				$in_body = "?origin=body";
@@ -312,7 +315,7 @@ function nprstory_post_to_nprml_story( $post ) {
 		}
 		$story[] = array(
 			'tag' => 'image',
-			'attr' => array( 'src' => $image->guid . $in_body, 'type' => $image_type ),
+			'attr' => array( 'src' => $image_guid . $in_body, 'type' => $image_type ),
 			'children' => array(
 				array(
 					'tag' => 'title',
@@ -364,7 +367,7 @@ function nprstory_post_to_nprml_story( $post ) {
 					'children' => array (
 						array(
 							'tag' => 'mp3',
-							'text' => wp_get_attachment_url(),
+							'text' => wp_get_attachment_url( $audio->ID ),
 						)
 					),
 				),

@@ -754,6 +754,24 @@ function overwrite_audio_shortcode() {
 }
 add_action( 'wp_loaded', 'overwrite_audio_shortcode' );
 
+function hpm_nprapi_audio_shortcode ( $text ) {
+	preg_match_all( '/' . get_shortcode_regex() . '/', $text, $matches );
+	
+	$tags = $matches[2];
+	foreach( $tags as $i => $tag ) :
+		if ( $tag == "audio" ) :
+			$atts = shortcode_parse_atts( $args[$i] );
+			if ( !empty( $atts['mp3'] ) ) :
+				$a_tag = '<figure><figcaption>Listen to the story audio:</figcaption><audio controls src="' . $atts['mp3'] . '">Your browser does not support the <code>audio</code> element.</audio></figure>';
+				$text = str_replace( '<p>'.$matches[0][$i].'</p>', $a_tag, $text );
+				$text = str_replace( $matches[0][$i], $a_tag, $text );
+			endif;
+		endif;
+	endforeach;
+	return $text;
+}
+add_filter( 'npr_ds_shortcode_filter', 'hpm_nprapi_audio_shortcode', 10, 1 );
+
 function hpm_emergency() {
 	// Emergency Notifications
 	$t = getdate();
