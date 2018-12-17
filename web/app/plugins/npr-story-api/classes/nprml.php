@@ -350,6 +350,7 @@ function nprstory_post_to_nprml_story( $post ) {
 		'post_type' => 'attachment'
 	);
 	$audios = get_children( $args );
+	$audio_files = [];
 
 	foreach ( $audios as $audio ) {
 		$audio_meta = wp_get_attachment_metadata( $audio->ID );
@@ -358,6 +359,10 @@ function nprstory_post_to_nprml_story( $post ) {
 		if ( empty( $caption ) ) {
 			$caption = $audio->post_content;
 		}
+		$audio_guid = wp_get_attachment_url( $audio->ID );
+		$audio_url = parse_url( $audio_guid );
+		$audio_name_parts = pathinfo( $audio_url['path'] );
+		$audio_files[] = $audio_name_parts['basename'];
 
 		$story[] = array(
 			'tag' => 'audio',
@@ -367,7 +372,7 @@ function nprstory_post_to_nprml_story( $post ) {
 					'children' => array (
 						array(
 							'tag' => 'mp3',
-							'text' => wp_get_attachment_url( $audio->ID ),
+							'text' => $audio_guid,
 						)
 					),
 				),
@@ -397,24 +402,31 @@ function nprstory_post_to_nprml_story( $post ) {
 				$metadata = unserialize( $pieces[3] );
 				$duration = ( ! empty($metadata['duration'] ) ) ? nprstory_convert_duration_to_seconds( $metadata['duration'] ) : NULL;
 			}
-			$story[] = array(
-				'tag' => 'audio',
-				'children' => array(
-					array(
-						'tag' => 'duration',
-						'text' => ( !empty($duration) ) ? $duration : 0,
-					),
-					array(
-						'tag' => 'format',
-						'children' => array(
-							array(
-							'tag' => 'mp3',
-							'text' => $pieces[0],
+
+			$audio_guid = wp_get_attachment_url( $pieces[0] );
+			$audio_url = parse_url( $audio_guid );
+			$audio_name_parts = pathinfo( $audio_url['path'] );
+			if ( !in_array( $audio_name_parts['basename'], $audio_files ) ) :
+				$audio_files[] = $audio_name_parts['basename'];
+				$story[] = array(
+					'tag' => 'audio',
+					'children' => array(
+						array(
+							'tag' => 'duration',
+							'text' => ( !empty($duration) ) ? $duration : 0,
+						),
+						array(
+							'tag' => 'format',
+							'children' => array(
+								array(
+								'tag' => 'mp3',
+								'text' => $audio_guid,
+								),
 							),
 						),
 					),
-				),
-			);
+				);
+			endif;
 		}
 	}
 
