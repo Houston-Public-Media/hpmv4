@@ -8569,3 +8569,171 @@ body.page.page-template-page-ghr #main {
 		width: 35%;
 	}
 }
+
+body.single-shows.hah-sub .page-header {
+	margin-bottom: 2em;
+}
+.hah-sub #videos-nav {
+	margin: 0;
+	width: 100%;
+	padding: 1em 0;
+	position: static;
+	top: auto;
+	left: auto;
+	right: auto;
+	bottom: auto;
+	transform: none;
+}
+.hah-sub #videos-nav nav {
+	color: white;
+	height: 100%;
+	overflow: scroll;
+}
+.hah-sub #videos-nav .videos-playlist {
+	padding: 1em;
+	overflow: hidden;
+	border-bottom: 1px solid white;
+}
+.hah-sub section#stories-from-the-storm #videos-nav .videos-playlist p {
+	color: white;
+	font: normal 1.25em/1em 'MiloOT-Light', arial, helvetica, sans-serif;
+	display: inline-block;
+	width: auto;
+	padding: 0;
+	margin: 0;
+}
+.hah-sub #sfts-yt-title {
+	text-align: center;
+}
+.hah-sub section #videos-nav ul {
+	margin: 0 0 1em 0;
+	padding: 0;
+	max-height: 28em;
+	overflow-y: scroll;
+	margin-bottom: 0;
+	border-bottom: 1px solid white;
+}
+.hah-sub section #videos-nav ul li {
+	border-bottom: 1px solid white;
+	padding: 1em;
+	font: normal 1em/1em 'MiloOT-Light', arial, helvetica, sans-serif;
+	overflow: hidden;
+	width: 100%;
+	height: auto;
+	float: none;
+	text-align: left;
+	color: white;
+}
+.hah-sub section #videos-nav ul li:nth-child(3) img {
+	max-width: 100%;
+}
+.hah-sub #videos-nav ul li:hover {
+	cursor: pointer;
+}
+.hah-sub #videos-nav ul li.current {
+	background-color: #cc0000;
+	color: white;
+	font: normal 1em/1em 'MiloOT-Bold', arial, helvetica, sans-serif;
+}
+.hah-sub #videos-nav ul li .videos-info {
+	width: 100%;
+	padding: 0.5em 0;
+}
+.hah-split {
+	padding: 1em;
+}
+.hah-sub .jp-audio {
+	padding: 0.5em 0 0 0;
+	margin: 0 0 1em 0;
+	position: relative;
+	width: 100%;
+}
+.hah-sub .jp-type-single {
+	background-color: transparent;
+}
+.hah-sub .jp-gui.jp-interface {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	position: relative;
+}
+.hah-sub .jp-gui.jp-interface .jp-controls button {
+	width: 4em;
+	height: 4em;
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	border: 0;
+	background-color: transparent;
+	text-align: center;
+}
+.hah-sub .jp-gui.jp-interface .jp-controls button .fa {
+	font-size: 3.5em;
+	line-height: 1em;
+}
+.hah-sub .jp-gui.jp-interface .jp-progress-wrapper {
+	-ms-flex: 1;
+	-webkit-flex-grow: 2;
+	-webkit-flex-basis: auto;
+	flex-grow: 2;
+	flex-basis: auto;
+	padding: 1em;
+	overflow: hidden;
+}
+.hah-sub .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
+	width: 100%;
+	height: 2em;
+	margin-bottom: 0.25em;
+}
+.hah-sub .jp-gui.jp-interface .jp-time-holder {
+	width: 100%;
+	text-align: center;
+	padding: 0.875em 0 0;
+	font: normal 1em/1.125em 'MiloOT-Medi', georgia, serif;
+}
+.hah-sub .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
+	height: 100%;
+	cursor: pointer;
+	width: 100%;
+}
+.hah-sub .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-play-bar {
+	background: rgb(131, 133, 133);
+	height: 100%;
+}
+.hah-sub .jp-gui.jp-interface .jp-details {
+	display: none;
+}
+@media screen and (min-width: 30.0625em) {
+	.single.hah-sub #main aside#videos-nav,
+	body.single-shows.hah-sub aside#videos-nav {
+		padding: 1em;
+		background-color: transparent;
+		margin-bottom: 1em;
+	}
+	.hah-sub #videos-nav {
+		padding: 0;
+	}
+	.hah-sub section #videos-nav ul li {
+		padding: 1em;
+	}
+	.hah-sub section #videos-nav ul li:last-child {
+		border-bottom: 0;
+	}
+	.hah-sub #videos-nav .videos-playlist {
+		display: block;
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	.hah-split {
+		padding: 0;
+	}
+	.hah-sub section #videos-nav ul {
+		float: none;
+		width: 100%;
+	}
+	.hah-sub section #videos-nav ul li {
+		padding: 1em;
+	}
+}

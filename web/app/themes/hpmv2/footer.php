@@ -56,7 +56,7 @@
 	*/
 	$post_type = get_post_type();
 	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || $post_type == 'shows' || is_page_template( 'page-series-tiles.php' ) || is_page_template( 'page-vietnam.php' ) ) :
-		if ( get_the_ID() != 61247 ) : ?>
+		if ( get_the_ID() != 61247 || get_the_ID() != 315974 ) : ?>
 		<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 		<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
 		<script>
@@ -116,7 +116,7 @@
 	Insert banners for when Houston Matters is airing
 	*/
 	$anc = get_post_ancestors( get_the_ID() );
-	$bans = [ 135762, 290722, 303436, 303018 ];
+	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
 	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) ) :
 		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 12 || $now['hours'] == 19 ) ) :
 			$alt = ($now['hours'] == 19 ? 'This Is an Encore Broadcast, But You Can Still Get in Touch: talk@houstonmatters.org | @HoustonMatters | facebook.com/houstonmatters': 'Listening Now? Join the Conversation: Call (713) 440-8870 | Email talk@houstonmatters.org | Tweet @HoustonMatters');
