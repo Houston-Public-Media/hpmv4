@@ -27,12 +27,12 @@ get_header(); ?>
 			<?php
 				$no = $sp = $c = 0;
 				foreach( $show as $sh ) :
-					if ( empty( $sh ) ) :
+					if ( !empty( $sh ) ) :
 						$no++;
 					endif;
 				endforeach;
 				foreach( $social as $soc ) :
-					if ( empty( $soc ) ) :
+					if ( !empty( $soc ) ) :
 						$no++;
 					endif;
 				endforeach;
