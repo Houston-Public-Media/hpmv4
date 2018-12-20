@@ -201,14 +201,6 @@ get_header(); ?>
 				<div class="show-content">
 					<?php echo apply_filters( 'the_content', $show_content ); ?>
 				</div>
-				<div class="sidebar-ad">
-					<div id="div-gpt-ad-1394579228932-1">
-						<h4>Support Comes From</h4>
-						<script type='text/javascript'>
-							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-						</script>
-					</div>
-				</div>
 			</aside>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->

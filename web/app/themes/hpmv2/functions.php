@@ -1244,7 +1244,7 @@ function gtm_populate_category_items( $total_match, $match, $post_id ) {
 add_filter( 'media_send_to_editor', 'hpm_audio_shortcode_insert', 10, 8 );
 function hpm_audio_shortcode_insert ( $html, $id, $attachment ) {
 	if ( strpos( $html, '[audio' ) !== FALSE ) :
-		$html = str_replace( '][/audio]', ' small id="'.$id.'"][/audio]', $html );
+		$html = str_replace( '][/audio]', ' id="'.$id.'"][/audio]', $html );
 	endif;
 	return $html;
 }
