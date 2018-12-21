@@ -21,13 +21,35 @@ get_header(); ?>
 				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
 				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' ); 
 				$show_title = get_the_title(); 
-				$show_content = get_the_content(); ?>
-			<header class="page-header<?php echo (!empty( $header_back ) ? '" style="background-image: url(\''.$header_back[0].'\');"' : ' no-back'); ?>">
+				$show_content = get_the_content();
+				$page_head_style = '';
+				$page_head_class = '';
+				if ( !empty( $show['banners']['mobile'] ) || !empty( $show['banners']['tablet'] ) || !empty( $show['banners']['desktop'] ) ) :
+					$page_head_class = ' shows-banner-variable';
+					foreach ( $show['banners'] as $bk => $bv ) :
+						if ( $bk == 'mobile' ) :
+							$page_head_style .= ".page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); }";
+						elseif ( $bk == 'tablet' ) :
+							$page_head_style .= " @media screen and (min-width: 30.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
+						elseif ( $bk == 'desktop' ) :
+							$page_head_style .= " @media screen and (min-width: 50.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
+						endif;
+					endforeach;
+				elseif ( !empty( $header_back[0] ) ) :
+					$page_head_style = ".page-header { background-image: url($header_back[0]); }";
+				else :
+					$page_head_class = ' no-back';
+				endif;
+				if ( !empty( $page_head_style ) ) :
+					echo "<style>".$page_head_style."</style>";
+				endif; ?>
+			<header class="page-header<?php echo $page_head_class; ?>">
 				<h1 class="page-title<?php echo (!empty( $header_back ) ? ' screen-reader-text' : ''); ?>"><?php the_title(); ?></h1>
+			</header>
 			<?php
 				$no = $sp = $c = 0;
-				foreach( $show as $sh ) :
-					if ( !empty( $sh ) ) :
+				foreach( $show as $sk => $sh ) :
+					if ( !empty( $sh ) && $sk != 'banners' ) :
 						$no++;
 					endif;
 				endforeach;
@@ -37,76 +59,75 @@ get_header(); ?>
 					endif;
 				endforeach;
 				if ( $no > 0 ) : ?>
-				<div id="station-social">
+			<div id="station-social">
 			<?php
 					if ( !empty( $show['times'] ) ) : ?>
-					<h3><?php echo $show['times']; ?></h3>
-			<?php
-					endif;
-					if ( !empty( $social['fb'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="https://www.facebook.com/<?php echo $social['fb']; ?>" target="_blank" title="Facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $social['twitter'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="https://twitter.com/<?php echo $social['twitter']; ?>" target="_blank" title="Twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $social['yt'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="<?php echo $social['yt']; ?>" target="_blank" title="YouTube"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $social['sc'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="https://soundcloud.com/<?php echo $social['sc']; ?>" target="_blank" title="SoundCloud"><span class="fa fa-soundcloud" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $social['insta'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="https://instagram.com/<?php echo $social['insta']; ?>" target="_blank" title="Instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $social['tumblr'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="<?php echo $social['tumblr']; ?>" target="_blank" title="Tumblr"><span class="fa fa-tumblr" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $social['snapchat'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="http://www.snapchat.com/add/<?php echo $social['snapchat']; ?>" target="_blank" title="Snapchat"><span class="fa fa-snapchat-ghost" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $show['itunes'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="<?php echo $show['itunes']; ?>" target="_blank" title="iTunes Feed"><span class="fa fa-apple" aria-hidden="true"></span></a>
-					</div>
-			<?php
-					endif;
-					if ( !empty( $show['podcast'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="<?php echo $show['podcast']; ?>" target="_blank" title="Podcast Feed"><span class="fa fa-rss" aria-hidden="true"></span></a>
-					</div>
+				<h3><?php echo $show['times']; ?></h3>
 			<?php
 					endif;
 					if ( !empty( $show['gplay'] ) ) : ?>
-					<div class="station-social-icon">
-						<a href="<?php echo $show['gplay']; ?>" target="_blank" title="Google Play Podcasts Feed"><span class="fa fa-google" aria-hidden="true"></span></a>
-					</div>
+				<div class="station-social-icon">
+					<a href="<?php echo $show['gplay']; ?>" target="_blank" title="Google Play Podcasts Feed"><span class="fa fa-google" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $show['podcast'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="<?php echo $show['podcast']; ?>" target="_blank" title="Podcast Feed"><span class="fa fa-rss" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $show['itunes'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="<?php echo $show['itunes']; ?>" target="_blank" title="iTunes Feed"><span class="fa fa-apple" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $social['snapchat'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="http://www.snapchat.com/add/<?php echo $social['snapchat']; ?>" target="_blank" title="Snapchat"><span class="fa fa-snapchat-ghost" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $social['tumblr'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="<?php echo $social['tumblr']; ?>" target="_blank" title="Tumblr"><span class="fa fa-tumblr" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $social['insta'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="https://instagram.com/<?php echo $social['insta']; ?>" target="_blank" title="Instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $social['sc'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="https://soundcloud.com/<?php echo $social['sc']; ?>" target="_blank" title="SoundCloud"><span class="fa fa-soundcloud" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $social['yt'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="<?php echo $social['yt']; ?>" target="_blank" title="YouTube"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $social['twitter'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="https://twitter.com/<?php echo $social['twitter']; ?>" target="_blank" title="Twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+				</div>
+			<?php
+					endif;
+					if ( !empty( $social['fb'] ) ) : ?>
+				<div class="station-social-icon">
+					<a href="https://www.facebook.com/<?php echo $social['fb']; ?>" target="_blank" title="Facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+				</div>
 			<?php
 					endif; ?>
-				</div>
+			</div>
 			<?php 
 				endif;?>
-			</header>
 		<?php
 			endwhile; ?>
 			<div id="float-wrap">

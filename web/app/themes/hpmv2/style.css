@@ -1962,11 +1962,13 @@ body.page-template-page-series-tiles .page-header {
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: left top;
-	margin-bottom: 5em;
+	margin: 0;
 	width: 100%;
 	background-color: transparent;
-	position: relative;
 	padding-bottom: calc(100%/6);
+}
+body.single-shows .page-header.shows-banner-variable {
+	padding-bottom: calc(100%/1.49925);
 }
 body.page-template-page-series-tiles.series-header-center .page-header {
 	background-position: center top;
@@ -1977,14 +1979,14 @@ body.page-template-page-series-tiles .page-header .page-title {
 	float: left;
 	padding: 2em 1em;
 }
-body.single-shows .page-header #station-social {
+body.single-shows #station-social {
 	padding: 1em;
-	margin: 0;
+	margin: 0 0 1em 0;
 	background-color: white;
-	position: absolute;
-	top: 100%;
+	overflow: hidden;
+	width: 100%;
 }
-body.single-shows .page-header #station-social h3 {
+body.single-shows #station-social h3 {
 	font: normal 1.5em/1em 'alternate-gothic-no-2-d','MiloOT-Light',arial,sans-serif;
 	color: rgb(63,24,24);
 }
@@ -2685,6 +2687,9 @@ body.page.page-template-page-schedules .page-header {
 .page-header #station-social .station-social-icon {
 	float: left;
 }
+body.single-shows #station-social .station-social-icon {
+	float: right;
+}
 .page-header #station-social .station-printable {
 	float: left;
 	padding: 0.6em;
@@ -2694,7 +2699,8 @@ body.page.page-template-page-schedules .page-header {
 	background-color: transparent;
 	text-transform: uppercase;
 }
-.page-header #station-social .station-social-icon a {
+.page-header #station-social .station-social-icon a,
+body.single-shows #station-social .station-social-icon a {
 	display: block;
 	width: 2em;
 	height: 2em;
@@ -2702,7 +2708,8 @@ body.page.page-template-page-schedules .page-header {
 	margin: 0.25em;
 	text-align: center;
 }
-.page-header #station-social .station-social-icon .fa {
+.page-header #station-social .station-social-icon .fa,
+body.single-shows #station-social .station-social-icon .fa {
 	font-size: 1.5em;
 	line-height: 1.25em;
 	color: white;
@@ -3976,6 +3983,15 @@ body.page.page-template-page-kids .kids-schedule {
 	body.page-template-page-series-tiles .page-header.no-back .page-title {
 		padding: 1em;
 	}
+	body.single-shows #station-social h3 {
+		width: 50%;
+		padding: 0.375em 0;
+		float: left;
+		margin: 0;
+	}
+	body.single-shows .page-header.shows-banner-variable {
+		padding-bottom: calc(100%/4);
+	}
 	#shows-youtube #youtube-upcoming .youtube {
 		width: 50%;
 		float: left;
@@ -4067,6 +4083,10 @@ body.page.page-template-page-kids .kids-schedule {
 	.page-header #station-social {
 		width: 45%;
 		float: right;
+	}
+	body.single-shows #station-social {
+		width: 100%;
+		float: none;
 	}
 	#tv-search {
 		clear: both;
@@ -5044,14 +5064,15 @@ body.page.page-template-page-kids .kids-schedule {
 	body.page-template-page-series-tiles .page-header {
 		margin-bottom: 0;
 	}
-	body.single-shows .page-header #station-social {
-		padding: 1em;
-		height: 7em;
+	body.single-shows #station-social {
+		padding: 0.5em;
 		background-color: white;
-		position: absolute;
-		top: 20%;
-		float: none;
-		right: 0;
+	}
+	body.single-shows #station-social h3 {
+		width: 60%;
+	}
+	body.single-shows .page-header.shows-banner-variable {
+		padding-bottom: calc(100%/6);
 	}
 	.table-striped th {
 		font-size: 100%;
