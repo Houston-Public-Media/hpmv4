@@ -8593,12 +8593,13 @@ body.single-shows.hah-sub .page-header {
 	padding: 1em;
 	overflow: hidden;
 	border-bottom: 1px solid white;
+	background-color: rgb(0,98,136);
 }
 .hah-sub section#stories-from-the-storm #videos-nav .videos-playlist p {
 	color: white;
-	font: normal 1.25em/1em 'MiloOT-Light', arial, helvetica, sans-serif;
-	display: inline-block;
-	width: auto;
+	font: normal 1.25em/1em 'MiloOT-Medi', arial, helvetica, sans-serif;
+	display: block;
+	width: 100%;
 	padding: 0;
 	margin: 0;
 }

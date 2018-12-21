@@ -20,6 +20,8 @@
 
 class HPM_Promos {
 
+	protected $options;
+
 	public function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'init' ) );
 		add_action( 'init', array( $this, 'create_type' ) );
@@ -29,6 +31,7 @@ class HPM_Promos {
 	 * Init
 	 */
 	public function init() {
+		$this->options = get_option( 'hpm_promos_settings' );
 		add_action( 'admin_init', array( $this, 'add_role_caps' ), 999 );
 		// add_filter( 'user_can_richedit', array( $this, 'disable_wysiwyg' ) );
 		add_action( 'save_post', array( $this, 'save_meta' ), 10, 2 );
@@ -39,6 +42,10 @@ class HPM_Promos {
 		add_action( 'wp_footer', function() {
 			echo $this->generate();
 		}, 100 );
+
+		// Create menu in Admin Dashboard
+		add_action( 'admin_menu', [ $this, 'create_menu' ] );
+		add_filter( 'pre_update_option_hpm_promos_settings', [ $this, 'options_clean' ], 10, 2 );
 
 		// Make sure that the proper cron job is scheduled
 		if ( ! wp_next_scheduled( 'hpm_promo_cleanup' ) ) :
@@ -285,12 +292,14 @@ class HPM_Promos {
 		endif;
 	}
 
-	// public function disable_wysiwyg( $default ) {
-	// 	if ( get_post_type() === 'promos' ) :
-	// 		return false;
-	// 	endif;
-	// 	return $default;
-	// }
+	public function options_clean( $new_value, $old_value ) {
+		$find = [ '{/$}', '{^/}' ];
+		$replace = [ '', '' ];
+		foreach ( $new_value['bans'] as $k => $v ) :
+			$new_value['bans'][$k] = preg_replace( '/\s/', '', $v );
+		endforeach;
+		return $new_value;
+	}
 
 	public function unpub_date() {
 		global $post;
@@ -440,8 +449,9 @@ class HPM_Promos {
 		if ( $wp_global->is_page || $wp_global->is_single ) :
 			$page_id = $wp_global->get_queried_object_id();
 			$anc = get_post_ancestors( $page_id );
-			$bans = [ 61263, 135762, 135920, 290722, 309689 ];
-			$pt_slug = [ 'page-blank.php', 'page-ghr.php', 'page-elevator.php' ];
+			$opts = $this->$options;
+			$bans = explode( ',', $opts['bans']['ids'] );
+			$pt_slug = explode( ',', $opts['bans']['templates'] );
 			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
 				return $output;
 			elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
@@ -660,6 +670,78 @@ class HPM_Promos {
 			default :
 				break;
 		}
+	}
+
+	/**
+	 * Creates the Settings menu in the Admin Dashboard
+	 */
+	public function create_menu() {
+		add_submenu_page( 'edit.php?post_type=promos', 'HPM Promo Settings', 'Settings', 'manage_options', 'hpm-promos-settings', [ $this, 'settings_page' ] );
+		add_action( 'admin_init', [ $this, 'register_settings' ] );
+	}
+
+	/**
+	 * Registers the settings group for HPM Podcasts
+	 */
+	public function register_settings() {
+		register_setting( 'hpm-promos-settings-group', 'hpm_promos_settings' );
+	}
+
+	/**
+	 * Creates the Settings menu in the Admin Dashboard
+	 */
+	public function settings_page() {
+		$opts = $this->options; ?>
+<div class="wrap">
+	<h1><?php _e('Promo Banner Administration', 'hpm-promos' ); ?></h1>
+	<?php settings_errors(); ?>
+	<p><?php _e('The following section will help you administer your promo banners.', 'hpm-promos' ); ?></p>
+	<form method="post" action="options.php">
+		<?php settings_fields( 'hpm-promos-settings-group' ); ?>
+		<?php do_settings_sections( 'hpm-promos-settings-group' ); ?>
+		<div id="poststuff">
+			<div id="post-body" class="metabox-holder columns-2">
+				<div id="post-body-content">
+					<div class="meta-box-sortables ui-sortable">
+						<div class="postbox">
+							<div class="handlediv" title="Click to toggle"><br></div>
+							<h2 class="hndle"><span><?php _e('Exempted Pages', 'hpm-promos' ); ?></span></h2>
+							<div class="inside">
+								<p><?php _e('These fields will allow you to exempt certain pages and templates from displaying the promo banners. Please provide comma-separated lists of page/post IDs and page/post templates you would like to exempt.', 'hpm-promos' ); ?></p>
+								<table class="form-table">
+									<tr valign="top">
+										<th scope="row"><label for="hpm_promos_settings[bans][ids]"><?php _e('Exempted Post IDs', 'hpm-promos' ); ?></label></th>
+										<td><?php
+											$editor_opts = [
+												'editor_height' => 150,
+												'media_buttons' => false,
+												'teeny' => true
+											];
+											wp_editor( $opts['bans']['ids'], 'hpm_promos_settings[bans][ids]', $editor_opts );
+										?></td>
+									</tr>
+									<tr valign="top">
+										<th scope="row"><label for="hpm_promos_settings[bans][templates]"><?php _e('Exempted Post Templates', 'hpm-promos' ); ?></label></th>
+										<td><?php
+											$editor_opts = [
+												'editor_height' => 150,
+												'media_buttons' => false,
+												'teeny' => true
+											];
+											wp_editor( $opts['bans']['templates'], 'hpm_promos_settings[bans][templates]', $editor_opts );
+										?></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br class="clear" />
+		<?php submit_button(); ?>
+	</form>
+</div><?php
 	}
 }
 new HPM_Promos();
