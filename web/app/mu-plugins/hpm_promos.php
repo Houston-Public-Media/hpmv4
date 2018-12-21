@@ -449,9 +449,11 @@ class HPM_Promos {
 		if ( $wp_global->is_page || $wp_global->is_single ) :
 			$page_id = $wp_global->get_queried_object_id();
 			$anc = get_post_ancestors( $page_id );
-			$opts = $this->$options;
+			$opts = $this->options;
 			$bans = explode( ',', $opts['bans']['ids'] );
 			$pt_slug = explode( ',', $opts['bans']['templates'] );
+			print_r( $bans );
+			print_r( $pt_slug );
 			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
 				return $output;
 			elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
