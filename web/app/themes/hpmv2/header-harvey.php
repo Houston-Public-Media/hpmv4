@@ -107,10 +107,10 @@
 	<?php
 		$postscript = get_post_meta( $ID, 'postscript_meta', true );
 	?>
-	<body id="top" class="gradient <?php echo $postscript['class_body']; ?>">
+	<body id="top" class="gradient <?php echo ( !empty( $postscript['class_body'] ) ? $postscript['class_body'] : '' ); ?>">
 		<?php hpm_fb_sdk(); ?>
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
-		<header id="masthead" class="site-header<?php echo ( $postscript['class_body'] == 'hah-sub' ? ' active' : '' ); ?>" role="banner">
+		<header id="masthead" class="site-header<?php echo ( ( !empty( $postscript['class_body'] ) &&  $postscript['class_body'] == 'hah-sub' ) ? ' active' : '' ); ?>" role="banner">
 			<div class="site-branding">
 				<a href="/" rel="home" title="Houston Public Media"><img src="https://cdn.hpm.io/assets/images/hpm_service_line@2x.png" alt="Houston Public Media" /></a>
 			</div><!-- .site-branding -->

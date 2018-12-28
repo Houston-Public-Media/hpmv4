@@ -18,7 +18,7 @@ Template Name: NPR Content
 		endif;
 		return $results;
 	}
-	$html = file_get_contents("http://api.npr.org/query?id=".$npr_id."&fields=all&output=JSON&apiKey=MDAyMTgwNzc5MDEyMjQ4ODE4MjMyYTExMA001");
+	$html = file_get_contents("https://api.npr.org/query?id=".$npr_id."&fields=all&output=JSON&apiKey=MDAyMTgwNzc5MDEyMjQ4ODE4MjMyYTExMA001");
 	$json = json_decode($html,true);
 	$node = $json['list']['story'][0];
 	$related_links = $people = $paragraphs = $orgs = $media = $crops = $sound = $keywords = $collection = $members = $multimedia = $keywords_text = array();
