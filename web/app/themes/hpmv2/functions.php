@@ -114,7 +114,7 @@ add_action( 'wp_enqueue_scripts', 'hpmv2_scripts' );
 function homepage_meta_query( $query ) {
 	if ( $query->is_home() && $query->is_main_query() ) :
 		$query->set( 'post_status', 'publish' );
-		$query->set( 'category__not_in', array(0,1,7636,28) );
+		$query->set( 'category__not_in', array(0,1,7636,28,37840) );
 		//$query->set( 'category__in', array(26881,26989,27123) );
 		$query->set( 'ignore_sticky_posts', 1 );
 		$query->set( 'posts_per_page', 18 );
@@ -122,6 +122,13 @@ function homepage_meta_query( $query ) {
 }
 add_action( 'pre_get_posts', 'homepage_meta_query' );
 
+function hpm_exclude_category( $query ) {
+	if ( $query->is_feed ) {
+		$query->set('cat', '-37840');
+	}
+	return $query;
+}
+add_filter( 'pre_get_posts', 'hpm_exclude_category' );
 
 
 /*
