@@ -8800,7 +8800,6 @@ body.single-shows.hah-sub .page-header {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-image: url('https://cdn.hpm.io/assets/images/graffiti_hero2x-mobile.jpg');
-	background-attachment: fixed;
 	background-position: center center;
 }
 .page-template-page-ylc .page-header h2 {
@@ -8914,8 +8913,8 @@ section#ylc-join p.ylc-button a {
 	width: 50%;
 	color: white;
 	background-color: #52C2DD;
-	padding: 0.25em 1em;
-	font: normal 1.5em/2em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	padding: 0.5em 1.125em;
+	font: normal 1em/2em 'MiloOT-Medi',arial,helvetica,sans-serif;
 }
 #ylc-overlay {
 	position: fixed;
@@ -8955,7 +8954,7 @@ section#ylc-join p.ylc-button a {
 #ylc-overlay #ylc-overlay-wrap {
 	position: relative;
 	padding: 0;
-	width: 75%;
+	width: 70%;
 	background-color: #707070;
 	border-radius: 8px;
 }
@@ -8973,7 +8972,7 @@ section#ylc-join p.ylc-button a {
 #ylc-overlay-person h3 {
 	margin: 0;
 	color: white;
-	font: normal 1.25em/1em 'MiloOT-Light',arial,helvetica,sans-serif;
+	font: normal 1em/1em 'MiloOT-Light',arial,helvetica,sans-serif;
 }
 #ylc-overlay-quote {
 	border-top: 1px solid white;
@@ -8981,7 +8980,7 @@ section#ylc-join p.ylc-button a {
 #ylc-overlay-quote blockquote {
 	border: 0;
 	padding: 2.5em 2em 1em;
-	font: normal 1em/1em 'MiloOT-Medi',arial,helvetica,sans-serif;
+	font: normal 1em/1.25em 'MiloOT-Medi',arial,helvetica,sans-serif;
 	color: white;
 	position: relative;
 }
@@ -9060,8 +9059,8 @@ section#ylc-join p.ylc-button a {
 	padding-top: 1em
 }
 .ylc-form .wpforms-field label {
-color: #707070;
-font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
+	color: #707070;
+	font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
 }
 .ylc-form .wpforms-field.wpforms-field-file-upload label {
 	color: #52C2DD;
@@ -9071,6 +9070,9 @@ font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
 .ylc-form .wpforms-field input,
 .ylc-form .wpforms-field textarea {
 	font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
+}
+.ylc-form .wpforms-field.wpforms-field-checkbox label {
+	margin-bottom: 1em;
 }
 .ylc-form .wpforms-field h2 {
 	font: normal 2em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
@@ -9208,15 +9210,15 @@ font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
 	}
 	#ylc-overlay-person {
 		border-right: 1px solid white;
-		width: 80%;
+		width: 82%;
 	}
 	#ylc-close {
 		position: static;
 		top: 0;
 		right: 0;
 		background-color: transparent;
-		width: 20%;
-		font-size: 4em;
+		width: 18%;
+		font-size: 3em;
 		line-height: 1em;
 		padding: 0 0.25em;
 		text-align: center;
@@ -9265,10 +9267,10 @@ font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
 	.page-template-page-ylc .page-header .header-logo {
 		width: 35%;
 		margin: 0 32.5% 0.25em;
-		max-width: 22em;
+		max-width: 20em;
 	}
 	.page-template-page-ylc .page-header .page-title {
-		font-size: 325%;
+		font-size: 300%;
 	}
 	#ylc-overlay #ylc-overlay-wrap {
 		width: 73%;
@@ -9303,9 +9305,6 @@ font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
 	.page-template-page-ylc .page-header .header-logo {
 		width: 27%;
 		margin: 0 36.5% 0.25em;
-	}
-	.page-template-page-ylc .page-header .page-title {
-		font-size: 400%;
 	}
 	#ylc-overlay #ylc-overlay-wrap {
 		width: 52%;
