@@ -67,24 +67,23 @@ get_header(); ?>
 			}
 		}
 		jQuery(document).ready(function($){
-			window.eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
 			var main = $('#main').offset();
 			window.winhigh = $(window).height();
 			var header_height = winhigh - main.top;
 			$('.page-template-page-ylc .page-header').height(header_height);
-			$('a.down').on(eventType, function (event) {
+			$('a.down').on('click', function (event) {
 				event.preventDefault();
 				$('html, body').animate({scrollTop: $('#main-content').offset().top}, 500);
 			});
-			$('.ylc-roster-item').on(eventType, function (event) {
+			$('.ylc-roster-item').on('click', function (event) {
 				var dIndex = $(this).attr('id');
 				modalSwitch(dIndex,true);
 			});
-			$('#ylc-close').on(eventType, function(event) {
+			$('#ylc-close').on('click', function(event) {
 				event.preventDefault();
 				$('#ylc-overlay').removeClass('ylc-active');
 			});
-			$('#ylc-next,#ylc-prev').on(eventType, function(event) {
+			$('#ylc-next,#ylc-prev').on('click', function(event) {
 				event.preventDefault();
 				var dIndex = $(this).attr('data-item');
 				modalSwitch(dIndex,false);

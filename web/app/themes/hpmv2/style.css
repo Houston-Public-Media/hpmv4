@@ -9265,6 +9265,7 @@ font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
 	.page-template-page-ylc .page-header .header-logo {
 		width: 35%;
 		margin: 0 32.5% 0.25em;
+		max-width: 22em;
 	}
 	.page-template-page-ylc .page-header .page-title {
 		font-size: 325%;
