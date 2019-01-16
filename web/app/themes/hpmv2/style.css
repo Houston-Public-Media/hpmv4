@@ -8812,11 +8812,11 @@ body.single-shows.hah-sub .page-header {
 .page-template-page-ylc .page-header .page-title {
 	color: white;
 	text-align: center;
-	font-size: 225%;
+	font-size: 190%;
 }
 .page-template-page-ylc .page-header .header-logo {
-	width: 65%;
-	margin: 0 17.5% 0.25em;
+	width: 55%;
+	margin: 0 22.5% 0.25em;
 }
 .page-template-page-ylc .page-header a.down {
 	position: absolute;
@@ -9035,16 +9035,117 @@ section#ylc-join p.ylc-button a {
 #ylc-close:hover {
 	cursor: pointer;
 }
+.page-template-page-wide.ylc-form article {
+	padding: 0;
+}
+.ylc-form article .entry-header {
+	background-color: #707070;
+	padding: 1em;
+}
+.page.ylc-form article header.entry-header h1 {
+	color: white;
+	font: normal 1.5em/1.125em 'MiloOT-Bold',arial,helvetica,sans-serif;
+}
+.page.ylc-form article header.entry-header h1 span {
+	color: #52C2DD;
+	font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
+	font-size: 80%;
+}
+.page-template-page-wide.ylc-form article .entry-content {
+	padding: 1em;
+}
+.ylc-form .wpforms-field-divider h3 {
+	color: #52C2DD;
+	border-top: 1px solid rgba(0,0,0,0.25);
+	padding-top: 1em
+}
+.ylc-form .wpforms-field label {
+color: #707070;
+font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
+}
+.ylc-form .wpforms-field.wpforms-field-file-upload label {
+	color: #52C2DD;
+	font: normal 1.5em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
+}
+.ylc-form .wpforms-field select,
+.ylc-form .wpforms-field input,
+.ylc-form .wpforms-field textarea {
+	font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
+}
+.ylc-form .wpforms-field h2 {
+	font: normal 2em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	color: #cc0000;
+	display: inline-block;
+	border-bottom: 2px solid #cc0000;
+}
+.ylc-form .wpforms-field .ylc-form-wrap {
+	padding: 2em 1em;
+}
+.ylc-form .wpforms-field .ylc-form-wrap p {
+	font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
+	color: #707070;
+}
+.ylc-form .wpforms-field .ylc-form-wrap p.ylc-form-img {
+	-webkit-flex-flow: row nowrap;
+	-webkit-justify-content: flex-start;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-content: center;
+	align-items: center;
+	-ms-flex-flow: row nowrap;
+	-ms-justify-content: flex-start;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding: 1em 0;
+	margin: 0;
+}
+.ylc-form .wpforms-field .ylc-form-wrap p.ylc-form-img img {
+	width: 25%;
+	padding: 0 1em 1em 0;
+}
+.ylc-form .wpforms-field .ylc-form-wrap .ylc-form-block {
+	background-color: #707070;
+}
+.ylc-form .wpforms-field .ylc-form-wrap .ylc-form-block h3 {
+	color: #52C2DD;
+	text-align: center;
+	border-bottom: 1px solid white;
+	padding: 0.75em 1em;
+}
+.ylc-form div.wpforms-container-full .wpforms-form .wpforms-field-html ul {
+	margin: 0;
+	padding: 1em 2em !important;
+}
+.ylc-form .wpforms-field .ylc-form-wrap .ylc-form-block ul li {
+	color: white;
+	font: normal 1em/1em 'MiloOT-Light',arial,helvetica,sans-serif;
+	padding: 0 0 1em 0;
+}
+.ylc-form div.wpforms-container-full .wpforms-form .wpforms-submit-container {
+	text-align: center;
+}
+.ylc-form div.wpforms-container-full .wpforms-form button[type=submit] {
+	background-color: #52C2DD;
+	color: white;
+	font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
+}
 @media screen and (min-width: 30.0625em) {
 	.page-template-page-ylc .page-header h2 {
 		font-size: 250%;
 	}
 	.page-template-page-ylc .page-header .page-title {
-		font-size: 300%;
+		font-size: 280%;
 	}
 	.page-template-page-ylc .page-header .header-logo {
-		width: 50%;
-		margin: 0 25% 0.25em;
+		width: 38%;
+		margin: 0 31% 0.25em;
 	}
 	#ylc-intro img {
 		float: left;
@@ -9055,16 +9156,13 @@ section#ylc-join p.ylc-button a {
 		font-size: 200%;
 	}
 	section .ylc-wrapper .ylc-roster-item {
-		width: 33.333333%;
+		width: 25%;
 	}
 	section .ylc-wrapper .ylc-roster-item:nth-child(even) {
 		clear: none;
 	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(3n+2) {
+	section .ylc-wrapper .ylc-roster-item:nth-child(4n+2) {
 		clear: both;
-	}
-	section .ylc-wrapper .ylc-roster-item:last-child {
-		margin: 0 33.333333%;
 	}
 	section#ylc-involve h1,
 	section#ylc-involve p {
@@ -9123,6 +9221,17 @@ section#ylc-join p.ylc-button a {
 		padding: 0 0.25em;
 		text-align: center;
 	}
+	.ylc-form div.wpforms-container-full {
+		margin: 0 auto 24px;
+		width: 75%;
+	}
+	.ylc-form .wpforms-field .ylc-form-wrap p.ylc-form-img img {
+		width: 20%;
+		padding: 0 2em 0 0;
+	}
+	.ylc-form .wpforms-field .ylc-form-wrap {
+		padding: 2em;
+	}
 }
 @media screen and (min-width: 50.0625em) {
 	section .ylc-wrapper {
@@ -9131,15 +9240,6 @@ section#ylc-join p.ylc-button a {
 	}
 	section .ylc-wrapper .ylc-roster-item {
 		width: 25%;
-	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(3n+2) {
-		clear: none;
-	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(4n+2) {
-		clear: both;
-	}
-	section .ylc-wrapper .ylc-roster-item:last-child {
-		margin: 0;
 	}
 	section#ylc-intro img {
 		padding: 0 2em 2em 0;
@@ -9163,14 +9263,26 @@ section#ylc-join p.ylc-button a {
 		margin-bottom: 0.75em;
 	}
 	.page-template-page-ylc .page-header .header-logo {
-		width: 40%;
-		margin: 0 30% 0.25em;
+		width: 35%;
+		margin: 0 32.5% 0.25em;
 	}
 	.page-template-page-ylc .page-header .page-title {
-		font-size: 350%;
+		font-size: 325%;
 	}
 	#ylc-overlay #ylc-overlay-wrap {
 		width: 73%;
+	}
+	.page.ylc-form article header.entry-header {
+		padding: 2em 3em;
+	}
+	.page.ylc-form article header.entry-header h1 {
+		font: normal 2em/1.125em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	}
+	.ylc-form div.wpforms-container-full {
+		width: 66.66667%;
+	}
+	section#ylc-roster h1 {
+		margin-bottom: 1em;
 	}
 }
 @media screen and (min-width: 64.0625em) {
@@ -9188,14 +9300,42 @@ section#ylc-join p.ylc-button a {
 		margin-bottom: 0.75em;
 	}
 	.page-template-page-ylc .page-header .header-logo {
-		width: 30%;
-		margin: 0 35% 0.25em;
+		width: 27%;
+		margin: 0 36.5% 0.25em;
 	}
 	.page-template-page-ylc .page-header .page-title {
-		font-size: 425%;
+		font-size: 400%;
 	}
 	#ylc-overlay #ylc-overlay-wrap {
 		width: 52%;
 		max-width: 46.75em;
+	}
+	.ylc-form div.wpforms-container-full {
+		width: 60%;
+	}
+	section#ylc-intro {
+		padding-top: 3em;
+	}
+	section#ylc-intro img {
+		padding: 0 2em 0 0;
+	}
+	section#ylc-intro h2 {
+		font-size: 207%;
+	}
+	section#ylc-intro p {
+		font-size: 150%;
+		padding-right: 2em;
+	}
+	section .ylc-wrapper .ylc-roster-item {
+		width: 16.666667%;
+	}
+	section .ylc-wrapper .ylc-roster-item:nth-child(4n+2) {
+		clear: none;
+	}
+	section .ylc-wrapper .ylc-roster-item:nth-child(6n+2) {
+		clear: both;
+	}
+	section .ylc-wrapper .ylc-roster-item:nth-child(14) {
+		margin-left: 16.666667%;
 	}
 }
