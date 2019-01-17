@@ -38,6 +38,19 @@
 <?php $this->load_parts( array( 'footer' ) ); ?>
 
 <?php do_action( 'amp_post_template_footer', $this ); ?>
-
+<amp-analytics type="chartbeat">
+	<script type="application/json">
+		{
+			"vars": {
+				"uid": "33583",
+				"domain": "houstonpublicmedia.org",
+				"sections": "<?php echo str_replace( '&amp;', '&', wp_strip_all_tags( get_the_category_list( ', ', 'multiple', get_the_ID()	) ) ); ?>",
+				"authors": "<?php coauthors( ',', ',', '', '', true ); ?>",
+				"title": "<?php echo wp_kses_data( $this->get( 'post_title' ) ); ?>",
+				"canonicalPath": "<?php echo get_the_permalink(); ?>"
+			}
+		}
+	</script>
+</amp-analytics>
 </body>
 </html>
