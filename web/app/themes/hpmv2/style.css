@@ -1065,6 +1065,11 @@ span.edit-link {
 #article-share .article-share-icon .fa.fa-envelope {
 	line-height: 1.125em;
 }
+.single article .entry-content h2 {
+	margin-bottom: 0;
+	padding: 0.5em 0;
+	font: normal 1.5em/1.25em 'MiloOT-Medi',arial,helvetica,sans-serif;
+}
 .single #main {
 	-webkit-flex-flow: row wrap;
 	-webkit-justify-content: center;
@@ -8954,12 +8959,14 @@ section#ylc-join p.ylc-button a {
 #ylc-overlay #ylc-overlay-wrap {
 	position: relative;
 	padding: 0;
-	width: 70%;
+	width: 90%;
 	background-color: #707070;
 	border-radius: 8px;
 }
 #ylc-overlay-img img {
 	vertical-align: bottom;
+	width: 50%;
+	margin: 0 25%;
 }
 #ylc-overlay-person {
 	padding: 1em;
@@ -8979,7 +8986,7 @@ section#ylc-join p.ylc-button a {
 }
 #ylc-overlay-quote blockquote {
 	border: 0;
-	padding: 2.5em 2em 1em;
+	padding: 1em;
 	font: normal 1em/1.25em 'MiloOT-Medi',arial,helvetica,sans-serif;
 	color: white;
 	position: relative;
@@ -8989,7 +8996,7 @@ section#ylc-join p.ylc-button a {
 	position: absolute;
 	top: 0;
 	left: 0.125em;
-	opacity: 0.5;
+	opacity: 0;
 	color: #52C2DD;
 	font: normal 5em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
 }
@@ -8997,7 +9004,7 @@ section#ylc-join p.ylc-button a {
 	text-align: right;
 	padding: 0.25em 1em 1em;
 	color: white;
-	font: normal 1em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	font: normal 1.125em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
 }
 #ylc-overlay-controls span {
 	color: #52C2DD;
@@ -9022,12 +9029,11 @@ section#ylc-join p.ylc-button a {
 }
 #ylc-close {
 	position: absolute;
-	top: -0.5em;
-	right: -0.5em;
+	top: 0;
+	right: 0;
 	z-index: 11000;
 	color: white;
-	background-color: #707070;
-	font-size: 2em;
+	font-size: 2.5em;
 	line-height: 1em;
 	padding: 0 0.125em;
 }
@@ -9199,9 +9205,19 @@ section#ylc-join p.ylc-button a {
 		width: 40%;
 		float: left;
 	}
+	#ylc-overlay-img img {
+		width: 100%;
+		margin: 0;
+	}
 	#ylc-overlay-quote {
 		width: 60%;
 		float: left;
+	}
+	#ylc-overlay-quote blockquote {
+		padding: 2.5em 2em 1em;
+	}
+	#ylc-overlay-quote blockquote:before {
+		opacity: 0.5;
 	}
 	#ylc-overlay-controls {
 		position: absolute;

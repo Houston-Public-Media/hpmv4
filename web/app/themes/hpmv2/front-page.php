@@ -169,11 +169,20 @@ endif; ?>
 					<div id="in-depth">
 						<h4>News 88.7 In-Depth</h4>
 						<?php
-							$indepth = array(
-								'posts_per_page' => 1,
-								'cat' => 29328,
-								'ignore_sticky_posts' => 1
-							);
+							if ( !empty( $hpm_priority['indepth'] ) ) :
+								$indepth = [
+									'posts_per_page' => 1,
+									'p' => $hpm_priority['indepth'],
+									'post_status' => 'publish'
+								];
+							else :
+								$indepth = [
+									'posts_per_page' => 1,
+									'cat' => 29328,
+									'ignore_sticky_posts' => 1,
+									'post_status' => 'publish'
+								];
+							endif;
 							$indepth_query = new WP_Query( $indepth );
 							if ( $indepth_query->have_posts() ) :
 								while ( $indepth_query->have_posts() ) : $indepth_query->the_post();

@@ -1094,7 +1094,8 @@ add_action( 'admin_footer-post.php', 'hpm_npr_api_contributor' );
 function hpm_https_check() {
 	if ( 'post' !== $GLOBALS['post_type'] ) :
 		return;
-	endif; ?>
+	endif;
+	global $post; ?>
 	<script>
 		jQuery(document).ready(function($){
 			$('#publish, #save-post, #workflow_submit').on('click', function(e){
@@ -1106,6 +1107,12 @@ function hpm_https_check() {
 				} else {
 					return true;
 				}
+			});
+			$('#postimagediv .inside').append( '<p class="hide-if-no-js"><a href="/wp/wp-admin/edit.php?page=hpm-image-preview&p=<?php echo $post->ID; ?>" id="hpm-image-preview" style="color: white; font-weight: bolder; background-color: #0085ba; padding: 5px; text-decoration: none;">Preview featured image</a></p>' );
+			$('#hpm-image-preview').on('click', function(e){
+				e.preventDefault();
+				var href = $(this).attr('href');
+				var myWindow = window.open(href, 'HPM Featured Image Preview', "width=850,height=800");
 			});
 		});
 	</script>
@@ -1367,3 +1374,103 @@ function hpm_reset_password_message( $message, $key ) {
 
 }
 add_filter( 'retrieve_password_message', 'hpm_reset_password_message', null, 2 );
+
+function hpm_image_preview_page() {
+	$hook = add_submenu_page( 'edit.php', 'Featured Image Preview', 'Featured Image Preview', 'edit_posts', 'hpm-image-preview', function() {} );
+	add_action('load-' . $hook, function() {
+		$post_id = sanitize_text_field( $_GET['p'] );
+		$versions = hpm_versions();
+		$top_cat = hpm_top_cat( $post_id );
+		$img = [
+			'thumb' => get_the_post_thumbnail_url( $post_id, 'thumbnail' ),
+			'large' => get_the_post_thumbnail_url( $post_id, 'large' )
+		];
+		$title = get_the_title( $post_id );
+		$postClass = get_post_class( '', $post_id ); ?>
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="profile" href="http://gmpg.org/xfn/11">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>HPM Featured Image Preview</title>
+		<link rel="stylesheet" id="hpmv2-style-css"  href="https://cdn.hpm.io/assets/css/style.css?ver=<?php echo $versions['css']; ?>" type="text/css" media="all" />
+		<style>
+			@media screen and (min-width: 50.0625em) {
+				#float-wrap {
+    				max-width: 50em;
+					margin: 1em auto;
+				}
+				#float-wrap article.felix-type-a, #float-wrap article.felix-type-b, #float-wrap article.felix-type-c {
+					width: 95%;
+    				margin: 0 2.5% 1em 2.5%;
+				}
+				#float-wrap article.felix-type-d {
+					margin: 0 auto 1em;
+					width: 45%;
+					padding: 1em 1.5em;
+				}
+			}
+		</style>
+	</head>
+	<body class="home blog">
+		<div id="page" class="hfeed site">
+			<div id="content" class="site-content">
+				<div id="primary" class="content-area">
+					<main id="main" class="site-main" role="main">
+						<div id="float-wrap">
+<?php
+		if ( empty( $post_id ) ) : ?>
+							<h2 style="width: 100%;">Enter the ID number of the post you want to preview</h2>
+							<form action="" method="GET">
+								<input type="hidden" name="page" value="hpm-image-preview" />
+								<input type="number" name="p" value="" />
+								<input type="submit" value="Submit" />
+							</form>
+<?php
+		elseif ( ! in_array( 'has-post-thumbnail', $postClass ) ) : ?>
+							<h2 style="width: 100%;">The article you're previewing doesn't have a featured image. Set one in the editor and refresh this page.</h2>
+<?php
+		elseif ( is_user_logged_in() && current_user_can( 'edit_post', $post_id ) ) : ?>
+							<article class="<?php echo implode( ' ', $postClass ); ?> felix-type-a grid-item grid-item--width2">
+								<div class="thumbnail-wrap" style="background-image: url(<?php echo $img['large']; ?>)">
+									<a class="post-thumbnail" href="#" aria-hidden="true"></a>
+								</div>
+								<header class="entry-header">
+									<h3><?PHP echo $top_cat; ?></h3>
+									<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
+								</header>
+							</article>
+							<article class="<?php echo implode( ' ', $postClass ); ?> felix-type-b grid-item grid-item--width2">
+								<div class="thumbnail-wrap" style="background-image: url(<?php echo $img['thumb']; ?>)">
+									<a class="post-thumbnail" href="#" aria-hidden="true"></a>
+								</div>
+								<header class="entry-header">
+									<h3><?PHP echo $top_cat; ?></h3>
+									<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
+								</header>
+							</article>
+							<article class="<?php echo implode( ' ', $postClass ); ?> felix-type-d grid-item grid-item--width2">
+								<div class="thumbnail-wrap" style="background-image: url(<?php echo $img['thumb']; ?>)">
+									<a class="post-thumbnail" href="#" aria-hidden="true"></a>
+								</div>
+								<header class="entry-header">
+									<h3><?PHP echo $top_cat; ?></h3>
+									<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
+								</header>
+							</article>
+<?php 
+		endif; ?>
+						</div>
+					</main><!-- .site-main -->
+				</div><!-- .content-area -->
+			</div><!-- .site-content -->
+		</div><!-- .site -->
+	</body>
+</html><?php
+		exit;
+	});
+}
+
+add_action('admin_menu', 'hpm_image_preview_page');

@@ -39,26 +39,36 @@ function hpm_priority_register_settings() {
 
 function hpm_priority_settings_page() {
 	$priority = get_option( 'hpm_priority' );
-	$recents = array();
-	$recent = new WP_Query(
-		array(
-			'post_status' => 'publish',
-			'posts_per_page' => 150,
-			'post_type' => 'post',
-			'order' => 'DESC',
-			'orderby' => 'date',
-			'category__not_in' =>  array( 0, 1, 7636 )
-		)
-	);
+	$recents = $indepths = [];
+	$recent = new WP_Query([
+		'post_status' => 'publish',
+		'posts_per_page' => 150,
+		'post_type' => 'post',
+		'order' => 'DESC',
+		'orderby' => 'date',
+		'category__not_in' =>  [ 0, 1, 7636 ]
+	]);
 	if ( $recent->have_posts() ) :
 		while( $recent->have_posts() ) : $recent->the_post();
 			$recent_id = get_the_ID();
 			$recents[ $recent_id ] = get_the_title();
 		endwhile;
 	endif;
-	$recents[268795] = '2018 Elections: Everything You Need To Know For Early Voting';
-	$recents[268894] = 'CHECK OUT: Your Voting Guide 2018 For Houston And Harris County';
-	$recents[277306] = 'Texas Beware, 2018 Hurricane Season Expected To Be More Active Than Usual'; ?>
+	
+	$indepth = new WP_Query([
+		'post_status' => 'publish',
+		'posts_per_page' => 50,
+		'post_type' => 'post',
+		'order' => 'DESC',
+		'orderby' => 'date',
+		'category_name' => 'in-depth'
+	]);
+	if ( $indepth->have_posts() ) :
+		while( $indepth->have_posts() ) : $indepth->the_post();
+			$indepth_id = get_the_ID();
+			$indepths[ $indepth_id ] = get_the_title();
+		endwhile;
+	endif; ?>
 	<div class="wrap">
 		<?php settings_errors(); ?>
 		<h1><?php _e('Post Prioritization', 'hpmv2' ); ?></h1>
@@ -109,6 +119,42 @@ function hpm_priority_settings_page() {
 								</div>
 							</div>
 						</div>
+						<div class="meta-box-sortables ui-sortable">
+							<div class="postbox">
+								<div class="handlediv" title="Click to toggle"><br></div>
+								<h2 class="hndle"><span><?php _e('In-Depth', 'hpmv2' ); ?></span></h2>
+								<div class="inside">
+									<p>Choose an article to feature in the In-Depth box on the homepage. If left blank, the box will default to the most recent In-Depth article.</p>
+									<table class="wp-list-table widefat fixed striped posts">
+										<thead>
+											<tr>
+												<th scope="col" class="manage-column">Current Post</th>
+												<th scope="col" class="manage-column column-tags">Change to ID?</th>
+												<th scope="col" class="manage-column column-author">Clear?</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr valign="top">
+												<td>
+													<label class="screen-reader-text"><?php _e( "Current Article for In-Depth box:", 'hpmv2' ); ?></label>
+													<select id="hpm_priority-indepth-1" class="hpm-priority-select indepth-select">
+														<option value=""></option>
+														<?php
+														foreach( $indepths as $k => $v ) : ?>
+															<option value="<?php echo $k; ?>"<?php selected( $priority['indepth'], $k, TRUE ); ?>><?php echo
+																$v; ?></option>
+															<?php
+														endforeach; ?>
+													</select>
+												</td>
+												<td><label for="hpm_priority[indepth]" class="screen-reader-text"><?php _e('Change To?', 'hpmv2' ); ?></label><input type="number" name="hpm_priority[indepth]" id="indepth-1" class="indepth-select-input" value="<?php echo $priority['indepth']; ?>" style="max-width: 100%;" /></td>
+												<td><a href="#" id="hpm-indepth-clear">Reset</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 						<?php submit_button(); ?>
 						<br class="clear" />
 					</div>
@@ -134,6 +180,12 @@ function hpm_priority_settings_page() {
 							}
 						});
 					}
+				});
+				$("#hpm-indepth-clear").click(function (event) {
+					event.preventDefault();
+					$('#indepth-1').val('');
+					$('#hpm_priority-indepth-1').val('');
+
 				});
 				$( "input[type=number]" ).keyup(function(){
 					var inputId = $(this).attr('id');
