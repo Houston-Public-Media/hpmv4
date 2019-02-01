@@ -227,7 +227,7 @@ h2 a {
 }
 h3 {
 	margin-bottom: 0.5em;
-	font: normal 1.0625em/1.0625em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	font: normal 1.125em/1.125em 'MiloOT-Bold',arial,helvetica,sans-serif;
 	color:  #8E8F90;
 }
 h3 a {
@@ -734,113 +734,15 @@ article {
 	width: 100%;
 	padding: 1em;
 }
-article.category-arts-culture header h3,
-article.category-classical-music header h3,
-article.category-houston-symphony header h3,
-article.category-dance header h3,
-article.category-food header h3,
-article.category-literature header h3,
-article.category-arte-publico header h3,
-article.category-music header h3,
-article.category-opera-musical-theater header h3,
-article.category-theatre-film header h3,
-article.category-visual-art header h3 {
-	background-color: rgb(158,199,49);
-	color: white;
+article header h3 {
+	background-color: transparent;
+	color: #757575;
 	display: inline-block;
-	padding: 0.4em;
+	padding: 0.4em 0;
 	text-transform: uppercase;
 }
-article.category-education header h3,
-article.category-spelling-bee header h3 {
-	background-color: rgb(239,168,46);
-	color: white;
-	display: inline-block;
-	padding: 0.4em;
-	text-transform: uppercase;
-}
-article.category-news header h3,
-article.category-arts-culture-news header h3,
-article.category-business header h3,
-article.category-bauer-business-focus header h3,
-article.category-city-of-houston header h3,
-article.category-education-news header h3,
-article.category-energy-environment header h3,
-article.category-stateimpact header h3,
-article.category-health-science header h3,
-article.category-affordable-care-act header h3,
-article.category-hurricane header h3,
-article.category-newslab header h3,
-article.category-politics header h3,
-article.category-elections header h3,
-article.category-election-2015 header h3,
-article.category-election-2016 header h3,
-article.category-texas-legislature header h3,
-article.category-polls header h3,
-article.category-public-insight-network header h3,
-article.category-sports header h3,
-article.category-transportation header h3,
-article.category-weather header h3 {
-	background-color: rgb(0,98,136);
-	color: white;
-	display: inline-block;
-	padding: 0.4em;
-	text-transform: uppercase;
-}
-article.category-texas-originals header h3,
-article.category-uh-moment header h3,
-article.category-briefcase header h3 {
-	background-color: #14B0BC;
-	color: white;
-	display: inline-block;
-	padding: 0.4em;
-	text-transform: uppercase;
-}
-article.category-arts-culture .entry-content blockquote.pullquote p,
-article.category-classical-music .entry-content blockquote.pullquote p,
-article.category-houston-symphony .entry-content blockquote.pullquote p,
-article.category-dance .entry-content blockquote.pullquote p,
-article.category-food .entry-content blockquote.pullquote p,
-article.category-literature .entry-content blockquote.pullquote p,
-article.category-arte-publico .entry-content blockquote.pullquote p,
-article.category-music .entry-content blockquote.pullquote p,
-article.category-opera-musical-theater .entry-content blockquote.pullquote p,
-article.category-theatre-film .entry-content blockquote.pullquote p,
-article.category-visual-art .entry-content blockquote.pullquote p {
-	color: rgb(158,199,49);
-}
-article.category-education .entry-content blockquote.pullquote p,
-article.category-spelling-bee .entry-content blockquote.pullquote p {
-	color: rgb(239,168,46);
-}
-article.category-news .entry-content blockquote.pullquote p,
-article.category-arts-culture-news .entry-content blockquote.pullquote p,
-article.category-business .entry-content blockquote.pullquote p,
-article.category-bauer-business-focus .entry-content blockquote.pullquote p,
-article.category-city-of-houston .entry-content blockquote.pullquote p,
-article.category-education-news .entry-content blockquote.pullquote p,
-article.category-energy-environment .entry-content blockquote.pullquote p,
-article.category-stateimpact .entry-content blockquote.pullquote p,
-article.category-health-science .entry-content blockquote.pullquote p,
-article.category-affordable-care-act .entry-content blockquote.pullquote p,
-article.category-hurricane .entry-content blockquote.pullquote p,
-article.category-newslab .entry-content blockquote.pullquote p,
-article.category-politics .entry-content blockquote.pullquote p,
-article.category-elections .entry-content blockquote.pullquote p,
-article.category-election-2015 .entry-content blockquote.pullquote p,
-article.category-election-2016 .entry-content blockquote.pullquote p,
-article.category-texas-legislature .entry-content blockquote.pullquote p,
-article.category-polls .entry-content blockquote.pullquote p,
-article.category-public-insight-network .entry-content blockquote.pullquote p,
-article.category-sports .entry-content blockquote.pullquote p,
-article.category-transportation .entry-content blockquote.pullquote p,
-article.category-weather .entry-content blockquote.pullquote p {
-	color: rgb(0,98,136);
-}
-article.category-texas-originals .entry-content blockquote.pullquote p,
-article.category-uh-moment .entry-content blockquote.pullquote p,
-article.category-briefcase .entry-content blockquote.pullquote p {
-	color: #14B0BC;
+article blockquote.pullquote p {
+	color: #757575;
 }
 article .entry-content img, .mceMediaCreditOuterTemp {
 	margin: 0;
@@ -857,7 +759,8 @@ body.page #main,
 body.error404 #main {
 	background-color: white;
 }
-body.page.page-template-page-main-categories #main {
+body.page.page-template-page-main-categories #main,
+body.single.single-shows #main {
 	background-color: transparent;
 }
 .page-content {
@@ -2709,7 +2612,7 @@ body.single-shows #station-social .station-social-icon a {
 	display: block;
 	width: 2em;
 	height: 2em;
-	background-color: rgb(224,224,224);
+	background-color: rgb(175,175,175);
 	margin: 0.25em;
 	text-align: center;
 }
@@ -3325,10 +3228,6 @@ body.vietnam article .column-third section h3 {
 	padding: 0 0 1em 0;
 	border-bottom: 1px solid #00b0bc;
 }
-body.vietnam #search-results article .entry-header h3 {
-	color: #8E8F90;
-	background-color: transparent;
-}
 body.vietnam-events .entry-content h2 {
 	font: italic 1.75em/1.25em 'MiloOT-Bold',arial,helvetica,sans-serif;
 	margin-bottom: 0
@@ -3752,17 +3651,8 @@ body.page.page-template-page-kids .kids-schedule {
 	#float-wrap article.felix-type-a header h2 a {
 		font: normal 1.75em/1.125em 'alternate-gothic-no-2-d','MiloOT',arial,sans-serif;
 	}
-	article.category-arts-culture header h3 {
-		padding: 0.25em;
-	}
-	article.category-news header h3,
-	article.category-business header h3,
-	article.category-politics header h3 {
-		padding: 0.25em;
-	}
-	article.category-education header h3,
-	article.category-texas-originals header h3 {
-		padding: 0.375em;
+	article header h3 {
+		padding: 0.25em 0;
 	}
 	.column-left article.felix-type-a,
 	#float-wrap article.felix-type-a {
@@ -5500,6 +5390,16 @@ body.page.page-template-page-kids .kids-schedule {
 	body.page.page-template-page-kids table {
 		width: 50%;
 		margin: 0 25% 1em;
+	}
+	body.shows-template-single-shows-skyline #float-wrap article.felix-type-d {
+		margin: 0 0.75% 1em;
+		width: 48.5%;
+		padding: 1em 1.5em;
+	}
+	body.shows-template-single-shows-skyline #float-wrap.column-span article.felix-type-d {
+		margin: 0 0.75% 1em;
+		width: 31.5%;
+		padding: 1em 1.5em;
 	}
 }
 

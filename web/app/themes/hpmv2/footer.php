@@ -55,7 +55,7 @@
 		Include the masonry plugins and code for any pages that use the tiled display (front page, main category pages, tiled series and single shows)
 	*/
 	$post_type = get_post_type();
-	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) ) || is_page_template( 'page-series-tiles.php' ) || is_page_template( 'page-vietnam.php' ) ) :
+	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) && !is_page_template( 'single-shows-skyline.php' ) ) || is_page_template( 'page-series-tiles.php' ) || is_page_template( 'page-vietnam.php' ) ) :
 		if ( get_the_ID() != 61247 ) : ?>
 		<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 		<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
