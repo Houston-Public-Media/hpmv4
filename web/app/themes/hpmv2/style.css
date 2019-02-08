@@ -9255,3 +9255,52 @@ section#ylc-join p.ylc-button a {
 		margin-left: 16.666667%;
 	}
 }
+
+/*
+ *  Podcast Promo
+ */
+article .entry-content .podcast-episode-info,
+article .entry-summary .podcast-episode-info {
+	background-color: #eee;
+	width: 100%;
+	overflow: hidden;
+	padding: 1em;
+	margin-bottom: 1em;
+}
+article .entry-content .podcast-episode-info ul,
+article .entry-summary .podcast-episode-info ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+article .entry-content .podcast-episode-info ul li,
+article .entry-summary .podcast-episode-info ul li {
+	width: 50%;
+	padding: 0.25em 0.5em;
+	float: left;
+	clear: none;
+	text-align: center;
+}
+article .entry-content .podcast-episode-info ul li .fa,
+article .entry-summary .podcast-episode-info ul li .fa {
+	font-size: 250%;
+	padding: 0.125em 0 0 0;
+}
+@media screen and (min-width: 30.0625em) {
+	article .entry-content .podcast-episode-info ul li,
+	article .entry-summary .podcast-episode-info ul li {
+		width: 33.333%;
+	}
+	article .entry-content .podcast-episode-info ul li .fa,
+	article .entry-summary .podcast-episode-info ul li .fa {
+		font-size: 300%;
+		padding: 0.375em 0 0 0;
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	article .entry-content .podcast-episode-info ul li .fa,
+	article .entry-summary .podcast-episode-info ul li .fa {
+		font-size: 250%;
+		padding: 0.25em 0 0 0;
+	}
+}
