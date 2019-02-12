@@ -9281,26 +9281,15 @@ article .entry-summary .podcast-episode-info ul li {
 	clear: none;
 	text-align: center;
 }
-article .entry-content .podcast-episode-info ul li .fa,
-article .entry-summary .podcast-episode-info ul li .fa {
-	font-size: 250%;
-	padding: 0.125em 0 0 0;
-}
 @media screen and (min-width: 30.0625em) {
 	article .entry-content .podcast-episode-info ul li,
 	article .entry-summary .podcast-episode-info ul li {
 		width: 33.333%;
 	}
-	article .entry-content .podcast-episode-info ul li .fa,
-	article .entry-summary .podcast-episode-info ul li .fa {
-		font-size: 300%;
-		padding: 0.375em 0 0 0;
-	}
 }
 @media screen and (min-width: 50.0625em) {
-	article .entry-content .podcast-episode-info ul li .fa,
-	article .entry-summary .podcast-episode-info ul li .fa {
-		font-size: 250%;
-		padding: 0.25em 0 0 0;
+	article .entry-content .podcast-episode-info ul li,
+	article .entry-summary .podcast-episode-info ul li {
+		width: 25-2%;
 	}
 }
