@@ -249,7 +249,12 @@ function hpm_show_meta_box( $object, $box ) {
 					button: {text: 'Set ' + capitalizeFirstLetter(size) + ' Banner'}
 				});
 				frame.on('select', function(){
-					var thumb = frame.state().get('selection').first().attributes.sizes.medium.url;
+					var sizes = frame.state().get('selection').first().attributes.sizes;
+					if ( typeof sizes.medium !== 'undefined' ) {
+						var thumb = sizes.medium.url;
+					} else {
+						var thumb = sizes.full.url;
+					}
 					var attachId = frame.state().get('selection').first().id;
 					$('#hpm-show-banner-'+size).css( 'background-image', 'url('+thumb+')' )
 					$('#hpm-show-banner-'+size+'-id').val(attachId);
