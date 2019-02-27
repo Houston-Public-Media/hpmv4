@@ -89,9 +89,6 @@
 					<a href="http://www.texaschildrens.org/" target="_blank" class="beesponsor" id="texas-childrens-hospital">
 						<img src="https://cdn.hpm.io/assets/images/TCH_sponsor-01.png" alt="Texas Children's Hospital" style="margin: 0 12.5%; width: 75%; ">
 					</a>
-					<a href="https://www.wellsfargo.com" target="_blank" class="beesponsor">
-						<img src="https://cdn.hpm.io/assets/images/wells-fargo-logo-highlight-rgb-2.png" alt="Wells Fargo" style="margin: 0 12.5%; width: 75%; ">
-					</a>
 				</div>
 				<script>
 					var beeSponsor = document.querySelectorAll('.beesponsor');

@@ -3067,57 +3067,6 @@ body.page-template-page-listen .sgplayer {
 #campaign-donate img {
 	max-width: 100%;
 }
-.page .year-select-wrap {
-	overflow: hidden;
-	width: 100%;
-	margin: 0 0 1em 0;
-	border-bottom: 0.125em solid #808080;
-}
-.page .year-select {
-	float: left;
-	background-color: rgba(0,0,0,0.125);
-	padding: 1em;
-	border: 0.125em solid transparent;
-	font: normal 1.25em/1em 'MiloOT-Bold',arial,sans-serif;
-}
-.page .year-select:hover {
-	cursor: pointer;
-	background-color: rgba(0,0,0,0.5);
-}
-.page .year-select.active {
-	border-top: 0.125em solid rgb(163,204,216);
-	border-left: 0.125em solid rgb(163,204,216);
-	border-right: 0.125em solid rgb(163,204,216);
-	background-color: white;
-}
-.page .year-select.active:hover {
-	border-top: 0.125em solid rgb(163,204,216);
-	border-left: 0.125em solid rgb(163,204,216);
-	border-right: 0.125em solid rgb(163,204,216);
-	background-color: white;
-	cursor: arrow;
-}
-.page .years {
-	display: none;
-}
-.page .years.active {
-	display: block;
-}
-.page .donorlevels {
-	font: normal 1.5em/1.25em 'MiloOT-Bold',arial,helvetica;
-	text-transform: uppercase;
-	-moz-font-feature-settings: "lnum";
-	-webkit-font-feature-settings: "lnum";
-	font-feature-settings: "lnum";
-	color: black;
-	padding: 0.5em 0 0;
-}
-.page ul.levelinfo {
-	display: none;
-}
-.page ul.levelinfo li {
-	font: normal 1em/1.25em 'MiloOT-Light',arial,helvetica;
-}
 .page .smaller {
 	display: block;
 	text-align: right;
@@ -9290,6 +9239,468 @@ article .entry-summary .podcast-episode-info ul li {
 @media screen and (min-width: 50.0625em) {
 	article .entry-content .podcast-episode-info ul li,
 	article .entry-summary .podcast-episode-info ul li {
-		width: 25-2%;
+		width: 25%;
+	}
+}
+
+/*
+ * Studio Society Affinity Council
+ */
+.page.support-ssac article div.post-thumbnail {
+	position: relative;
+}
+.page.support-ssac h1.entry-title.screen-reader-text {
+	clip: initial !important;
+	width: initial !important;
+	height: initial !important;
+	overflow: initial !important;
+	bottom: 1.5em;
+	left: 0.5em;
+	color: white;
+	font: normal 2em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
+}
+.page.support-ssac .entry-content,
+.page.support-ss .entry-content {
+	padding: 0 1em 2em;
+	max-width: 55em;
+	margin: 0 auto;
+}
+.page.support-ssac .entry-content .major-giving-societies p {
+	margin: 0;
+	padding: 0.5em 0;
+}
+.page.support-ssac .major-giving-societies {
+	padding: 2em 0;
+}
+.page.support-ssac h2 {
+	color: #cc0000;
+	font: normal 1.25em/1.25em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	border-bottom: 1px solid #707070;
+	margin-bottom: 1em;
+	padding: 0 0.5em 0.5em;
+	text-align: center;
+}
+.page.support-ssac article .entry-content .major-giving-contacts img {
+	width: 50%;
+	margin: 0 25%;
+}
+.page.support-ssac .major-giving-contacts .adv-contact {
+	padding: 1em 0 2em;
+}
+.page.support-ssac section h1 {
+	font: normal 1.25em/1.25em 'MiloOT-Medi',arial,helvetica,sans-serif;
+	margin: 0;
+	color: #59595B;
+}
+.page.support-ssac section h2 {
+	padding: 0;
+	margin: 0 0 0.5em 0;
+	font: normal 1.25em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
+	color: #59595B;
+	border: 0;
+	text-align: left;
+}
+.page.support-ss .entry-content p {
+	color: #707070;
+	padding: 0;
+	margin: 0 0 2em;
+}
+.page.support-ssac article .entry-content p {
+	font: normal 1.25em/1.5em 'MiloOT-Light',arial,helvetica,sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #707070;
+}
+.page.support-ssac article .entry-content p a {
+	color: #59595B;
+	text-decoration: none;
+}
+.page.support-ss article .entry-content p a {
+	text-decoration: none;
+}
+.page.support-ss article .entry-content p a.ss-give {
+	color: white;
+	font: normal 1.5em/1em 'MiloOT-Medi',arial,helvetica,sans-serif;
+	background-color: #cc0000;
+	padding: 0.5em 0;
+	width: 50%;
+	display: block;
+	margin: 0 25% 0.25em;
+}
+h2.ss-join {
+	color: #11A6B3;
+	text-transform: uppercase;
+	text-align: center;
+	border-bottom: 1px solid #11A6B3;
+	margin-bottom: 1em;
+	padding: 1em 0 0.5em;
+}
+.page.support-ss article .entry-content ul {
+	display: block;
+	width: 100%;
+	margin: 0 0 2em 0;
+	padding: 1em;
+	list-style: none;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li {
+	width: 100%;
+	margin: 0 0 1em;
+	border-radius: 0.5em;
+	position: relative;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li img {
+	display: none;
+	position: absolute;
+	bottom: 2em;
+	left: -3em;
+	width: 6em;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-director img {
+	bottom: 5em;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-anchor img {
+	bottom: 2.5em;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-journalist img {
+	bottom: 1.5em;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li .ss-level-head {
+	overflow: hidden;
+	padding: 1em;
+	border-radius: 0.5em 0.5em 0 0;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li .ss-level-head h2 {
+	color: white;
+	font: normal 1.5em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li .ss-level-head h4 {
+	color: white;
+	font: normal 1.5em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li .ss-level-info {
+	padding: 1em;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-visionary {
+	background-color: #F5D6D6;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-producer {
+	background-color: #CEDADE;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-director {
+	background-color: #D6F6FD;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-anchor {
+	background-color: #F5FFED;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-journalist {
+	background-color: #E5E5E5;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-visionary .ss-level-head {
+	background-color: #cc0000;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-producer .ss-level-head {
+	background-color: #016D94;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-director .ss-level-head {
+	background-color: #52C2DD;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-anchor .ss-level-head {
+	background-color: #C1D7AE;
+}
+.page.support-ss article .entry-content ul.ss-donor-levels li.ss-journalist .ss-level-head {
+	background-color: #818285;
+}
+.page.support-ss .entry-content ul.ss-donor-levels p {
+	padding: 0;
+	margin: 0 0 1em;
+}
+.page.support-ss .entry-content ul.ss-donor-levels p:last-child {
+	margin: 0;
+}
+.page.support-ss h2.ss-contact {
+	text-align: left;
+	border: 0;
+	padding: 1em 0 0 30px;
+	background-repeat: no-repeat;
+	background-size: 25px;
+	background-position-x: 0;
+	background-position-y: 20px;
+	color: #52C2DD;
+	background-image: url(https://cdn.hpm.io/assets/images/contact_icon2x.png);
+}
+.page.support-ss .ss-meet {
+	-webkit-flex-flow: row wrap;
+	-webkit-justify-content: flex-start;
+	-webkit-align-content: flex-start;
+	-webkit-align-items: center;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	align-items: center;
+	-ms-flex-flow: row wrap;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding: 1em 0;
+}
+.page.support-ss .ss-meet h2 {
+	color: #016D94;
+	font-size: 150%;
+}
+.page.support-ss .ss-meet div.underline {
+	border-bottom: 2px solid #016D94;
+	flex-grow: 2;
+	margin: 1em 0.5em;
+	padding: 0;
+	position: relative;
+	top: -0.625em;
+}
+.page.support-ss article .entry-content ul.ss-meet-donors {
+	padding: 0;
+}
+.page.support-ss article .entry-content ul.ss-meet-donors li {
+	width: 100%;
+	margin: 0 0 1em;
+	-webkit-flex-flow: row nowrap;
+	-webkit-justify-content: flex-start;
+	-webkit-align-content: flex-start;
+	-webkit-align-items: center;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	align-items: center;
+	-ms-flex-flow: row nowrap;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+.page.support-ss article .entry-content ul.ss-meet-donors li img {
+	width: 25%;
+	padding: 0 1em 0 0;
+}
+.page.support-ss article .entry-content ul.ss-meet-donors li p span.ss-donor {
+	font-family: 'MiloOT-Bold',arial,helvetica,sans-serif;
+	color: #016D94;
+}
+.page.support-ss article .entry-content p a.ss-give.ss-member {
+	background-color: #016D94;;
+	width: 80%;
+	margin: 0 10% 0.25em;
+	font-size: 125%;
+}
+.page.support-ss article.support-members .entry-content .column-span {
+	margin: 0 0 1em 0;
+	width: 100%;
+}
+.page.support-ss article.support-members .entry-content ul {
+	margin: 0;
+	padding: 0;
+}
+.page.support-ss article.support-members .entry-content ul li {
+	margin: 0 0 0.5em;
+	font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
+	color: #59595B;
+}
+.page.support-ss article.support-members .entry-content p {
+	display: none;
+}
+.page.support-ss article.support-members .entry-content h3 {
+	font-size: 150%;
+}
+.page.support-ss article.support-members .entry-content .ss-visionary-leader h3,
+.page.support-ss article.support-members .entry-content .ss-visionary-foundation h3 {
+	color: #cc0000;
+}
+.page.support-ss article.support-members .entry-content .ss-foundation-champions h3 {
+	color: #F2B233;
+}
+.page.support-ss article.support-members .entry-content .ss-affinity-council h3,
+.page.support-ss article.support-members .entry-content .ss-members h3 {
+	color: #016D94;
+}
+.page .year-select-wrap {
+	-webkit-flex-flow: row nowrap;
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	-ms-flex-flow: row nowrap;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	border-bottom: 0.125em solid #808080;
+	margin-bottom: 2em;
+}
+.page .year-select {
+	padding: 0.5em 2em;
+	border-bottom: 0.1675em solid transparent;
+	color: #016D94;
+	font: normal 1.5em/1em 'MiloOT-Bold',arial,sans-serif;
+	position: relative;
+	bottom: -0.125em;
+}
+.page .year-select:hover {
+	cursor: pointer;
+	opacity: 0.75;
+}
+.page .year-select.active {
+	border-bottom: 0.1675em solid #016D94;
+}
+.page .year-select.active:hover {
+	opacity: 1;
+	cursor: arrow;
+}
+.page .years {
+	display: none;
+}
+.page .years.active {
+	display: block;
+}
+@media screen and (min-width: 23em) {
+	.page.support-ssac article .entry-content .adv-contact p {
+		padding: 0 0 0 1.5em;
+	}
+	.page.support-ssac article .entry-content p.phone {
+		background-image: url(https://cdn.hpm.io/assets/images/phone_icon2x.png);
+		background-size: 1em;
+		background-repeat: no-repeat;
+		background-position: 0;
+	}
+	.page.support-ssac article .entry-content p.email {
+		background-image: url(https://cdn.hpm.io/assets/images/email_icon2x.png);
+		background-size: 1em;
+		background-repeat: no-repeat;
+		background-position: 0 11px;
+	}
+}
+@media screen and (min-width: 30.0625em) {
+	.page.support-ssac .major-giving-contacts {
+		overflow: hidden;
+	}
+	.page.support-ssac .major-giving-contacts .adv-contact {
+		float: left;
+		width: 50%;
+		padding: 1em 1em 2em;
+	}
+	.page.support-ssac h1.entry-title.screen-reader-text {
+		font-size: 300%;
+	}
+	.page.support-ss article .entry-content ul.ss-donor-levels li {
+		width: 90%;
+		margin: 0 0 1em 10%;
+	}
+	.page.support-ss article .entry-content ul.ss-donor-levels li img {
+		display: block;
+	}
+	.page.support-ss article .entry-content ul.ss-donor-levels li .ss-level-info {
+		padding: 1em 1em 1em 4em;
+	}
+	.page.support-ss article .entry-content ul.ss-meet-donors {
+		overflow: hidden;
+	}
+	.page.support-ss article .entry-content ul.ss-meet-donors li {
+		width: 50%;
+		float: left;
+		padding: 1em;
+		clear: none;
+	}
+	.page.support-ss article .entry-content p a.ss-give.ss-member {
+		width: 60%;
+		margin: 0 20% 0.25em;
+	}
+	.page.support-ss article.support-members .entry-content .column-third {
+		float: left;
+		margin: 0 0.75% 1em;
+		width: 31.5%;
+	}
+	.page.support-ss article.support-members .entry-content ul {
+		margin: 0;
+		padding: 0;
+	}
+	.page.support-ss article.support-members .entry-content .column-span {
+		margin: 0 0 1em 0;
+		padding-left: 5em;
+		position: relative;
+		background-position: 1em 0.125em;
+		background-size: 3.25em;
+		background-repeat: no-repeat;
+	}
+	.page.support-ss article.support-members .entry-content .ss-visionary-leader {
+		background-image: url(https://cdn.hpm.io/assets/images/visionary_icon2x.png);
+	}
+	.page.support-ss article.support-members .entry-content .ss-foundation-champions {
+		background-image: url(https://cdn.hpm.io/assets/images/foundation_champions2x.png);
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	.page.support-ssac .major-giving-societies {
+		padding: 2em;
+	}
+	.page.support-ssac .major-giving-contacts {
+		padding: 0 2em;
+	}
+	.page.support-ssac .major-giving-contacts .adv-contact {
+		padding: 1em 2em 2em;
+	}
+	.page.support-ssac h2 {
+		font-size: 150%;
+	}
+	.page.support-ssac h1.entry-title.screen-reader-text {
+		font-size: 350%;
+	}
+	.page.support-ss article .entry-content ul.ss-donor-levels li {
+		width: 70%;
+		margin: 0 10% 1em 20%;
+	}
+	h2.ss-join {
+		font-size: 150%;
+	}
+	.page.support-ss article .entry-content p a.ss-give {
+		width: 25%;
+		display: block;
+		margin: 0 37.5% 0.5em;
+	}
+	.page.support-ss h2.ss-contact {
+		background-position-y: 26px;
+		font-size: 150%;
+	}
+	.page.support-ss article .entry-content p a.ss-give.ss-member {
+		width: 40%;
+		margin: 0 30% 0.25em;
+	}
+	.page.support-ss article.support-members .entry-content {
+		max-width: 65em;
+	}
+	.page.support-ss article .entry-content ul.ss-donor-levels li.ss-anchor img {
+		bottom: 3em;
+	}
+	.page.support-ss article .entry-content ul.ss-donor-levels li.ss-journalist img {
+		bottom: 2.5em;
 	}
 }
