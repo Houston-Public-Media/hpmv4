@@ -35,12 +35,12 @@ class AMWGalleria {
 
 		// determine the theme and version for the files to load
 
-		$theme_css   = sprintf("%s/galleria/themes/%s/galleria.%s.min.css", $this->url, $this->theme, $this->theme);
+		//$theme_css   = sprintf("%s/galleria/themes/%s/galleria.%s.min.css", $this->url, $this->theme, $this->theme);
 		$galleria_js = sprintf("%s/galleria/galleria-%s.min.js",        $this->url, $this->galleriaVersion);
 
 		// add required scripts and styles to head
-		wp_register_script('amw-galleria',       $galleria_js, array( 'jquery' ),       $this->galleriaVersion);
-		wp_register_style( 'amw-galleria-style', $theme_css,   array(),        $this->version);
+		wp_register_script('amw-galleria', $galleria_js, [ 'jquery' ], $this->galleriaVersion);
+		//wp_register_style( 'amw-galleria-style', $theme_css,   array(),        $this->version);
 
 		// admin options page
 		add_action('admin_menu', array(&$this, 'addOptionsPage'));
@@ -100,6 +100,7 @@ class AMWGalleria {
 			'include'      => '',
 			'exclude'      => '',
 			'ids'          => '',
+			'theme'        => '',
 			// galleria options
 			'width'        => $width,
 			'height'       => $height,
@@ -118,6 +119,10 @@ class AMWGalleria {
 		if (!empty($ids)) {
 			$include = $ids;
 		}
+
+		if ( empty( $theme ) ) :
+			$theme = 'classic';
+		endif;
 
 		// fetch the images
 		if (!empty($include)) {
@@ -191,7 +196,7 @@ class AMWGalleria {
 
 		// encode the Galleria options as JSON
 		$options = json_encode(array(
-            'theme'             => $this->theme,
+            'theme'             => $theme,
 			'width'             => (is_numeric($width)) ? (int) $width  : (string) $width,
 			'height'            => (is_int($height))    ? (int) $height : (float)  $height,
 			'autoplay'          => (boolean) $autoplay,
@@ -206,12 +211,12 @@ class AMWGalleria {
 		// the DOM is built in JavaScript so we just need a placeholder div
 		$output .= "<div id=\"" . $domId . "\" class=\"galleria\">".$images_full."</div>\n";
 
-		$theme_js    = sprintf("%s/galleria/themes/%s/galleria.%s.min.js",  $this->url, $this->theme, $this->theme);
+		$theme_js    = sprintf("%s/galleria/themes/%s/galleria.%s.min.js",  $this->url, $theme, $theme);
 		// galleria JavaScript output
 		// NOTE: WordPress disables the use of the dollar-sign function ($) for compatibility
 		$output .= '<div class="screen-reader-text"><script type="text/javascript">jQuery(document).ready(function(){Galleria.loadTheme(\''.$theme_js.'\');Galleria.run(\'#'. $domId .'\',' . $options . '); });</script></div>';
 		wp_enqueue_script( 'amw-galleria' );
-		wp_enqueue_style( 'amw-galleria-style' );
+		//wp_enqueue_style( 'amw-galleria-style' );
 		return $output;
 
 	}
