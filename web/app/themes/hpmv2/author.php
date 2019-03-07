@@ -41,7 +41,7 @@
 						$author_check->the_post();
 						$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE ); ?>
 					<div class="author-wrap-left">
-						<?PHP the_post_thumbnail( 'full', array( 'alt' => get_the_title(), 'class' => 'author-thumb' ) ); ?>
+						<?PHP the_post_thumbnail( 'medium', array( 'alt' => get_the_title(), 'class' => 'author-thumb' ) ); ?>
 						<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
 						<h3><?php echo $author['title']; ?></h3>
 				<?php

@@ -158,6 +158,7 @@ if ( is_preview() ) : ?>
 			<?php
 				$author_terms = get_the_terms( get_the_ID(), 'author');
 				if ( !empty( $author_terms ) ) :
+					$matches = [];
 					preg_match( "/([a-z\-]+) ([0-9]{1,3})/", $author_terms[0]->description, $matches );
 				    if ( !empty( $matches ) ) :
 					    $author_name = $matches[1];
@@ -186,7 +187,7 @@ if ( is_preview() ) : ?>
 							$author_id = get_post_meta( get_the_ID(), 'hpm_staff_authid', TRUE ); ?>
 				<div class="author-info-wrap">
 					<div class="author-image">
-						<?php the_post_thumbnail( 'full', array( 'alt' => get_the_title() ) ); ?>
+						<?php the_post_thumbnail( 'medium', array( 'alt' => get_the_title() ) ); ?>
 					</div>
 					<div class="author-info">
 						<h2><?php the_title(); ?></h2>
