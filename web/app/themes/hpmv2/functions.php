@@ -762,6 +762,7 @@ function overwrite_audio_shortcode() {
 add_action( 'wp_loaded', 'overwrite_audio_shortcode' );
 
 function hpm_nprapi_audio_shortcode( $text ) {
+	$matches = [];
 	preg_match_all( '/' . get_shortcode_regex() . '/', $text, $matches );
 	
 	$tags = $matches[2];

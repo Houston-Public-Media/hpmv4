@@ -9496,7 +9496,10 @@ h2.ss-join {
 	width: 25%;
 	padding: 0 1em 0 0;
 }
-.page.support-ss article .entry-content ul.ss-meet-donors li p span.ss-donor {
+.page.support-ss article .entry-content ul.ss-meet-donors li p {
+	margin: 0;
+}
+.page.support-ss article .entry-content ul.ss-meet-donors li p .ss-donor {
 	font-family: 'MiloOT-Bold',arial,helvetica,sans-serif;
 	color: #016D94;
 }

@@ -537,6 +537,7 @@ function analyticsPull_update() {
 	$t = $t + $offset;
 	$now = getdate($t);
 	$then = $now[0] - 172800;
+	$match = [];
 	$result = $analytics->data_ga->get(
 		'ga:142153354',
 		date( "Y-m-d", $then ),
