@@ -1010,82 +1010,82 @@ function wpdocs_set_html_mail_content_type() {
     return 'text/html';
 }
 
-function hpm_logins_cleanup() {
-	$logins = get_option( 'limit_login_logged' );
-	if ( !empty( $logins ) ) :
-		$temp = $ips = array();
-		$output = '';
-		$sheet = array(
-			'Logins' => array(),
-			'IPs' => array()
-		);
-		$sheet['Logins'][] = array( 'Date', 'User IP', 'Server IP', 'Attempted Login Name', 'Lockouts', 'Gateway' );
-		$sheet['IPs'][] = array( 'User IP', 'Number of Lockouts', 'Country', 'Region', 'City', 'ISP' );
-		foreach	( $logins as $k => $v ) :
-			$ip = explode( ',', $k );
-			foreach ( $v as $kk => $vv ) :
-				$name = $kk;
-				$date = $vv['date'];
-				$gateway = $vv['gateway'];
-				$count = $vv['counter'];
-			endforeach;
-			$user = trim( $ip[0] );
-			$server = ( empty( $ip[1] ) ? '' : trim( $ip[1] ) );
-			$temp[$date] = array( $user, $server, $name, $count, $gateway );
-			if ( !isset( $ips[$user] ) ) :
-				$ips[$user] = 1;
-			else :
-				$ips[$user]++;
-			endif;
-		endforeach;
-		krsort( $temp );
-		arsort( $ips );
-		foreach ( $temp as $kt => $vt ) :
-			$sheet['Logins'][] = array( date( 'r', $kt ), $vt[0], $vt[1], $vt[2], $vt[3], $vt[4] );
-		endforeach;
-		$count = 0;
-		foreach ( $ips as $ki => $vi ) :
-			if ( $count == 150 ) :
-				sleep( 65 );
-				$count = 0;
-			endif;
-			$look = file_get_contents( 'http://ip-api.com/json/'.$ki );
-			$json = json_decode( $look, true );
-			$count++;
-			$sheet['IPs'][] = array( $ki, $vi, $json['country'], $json['regionName'], $json['city'], $json['isp'] );
-		endforeach;
+// function hpm_logins_cleanup() {
+// 	$logins = get_option( 'limit_login_logged' );
+// 	if ( !empty( $logins ) ) :
+// 		$temp = $ips = array();
+// 		$output = '';
+// 		$sheet = array(
+// 			'Logins' => array(),
+// 			'IPs' => array()
+// 		);
+// 		$sheet['Logins'][] = array( 'Date', 'User IP', 'Server IP', 'Attempted Login Name', 'Lockouts', 'Gateway' );
+// 		$sheet['IPs'][] = array( 'User IP', 'Number of Lockouts', 'Country', 'Region', 'City', 'ISP' );
+// 		foreach	( $logins as $k => $v ) :
+// 			$ip = explode( ',', $k );
+// 			foreach ( $v as $kk => $vv ) :
+// 				$name = $kk;
+// 				$date = $vv['date'];
+// 				$gateway = $vv['gateway'];
+// 				$count = $vv['counter'];
+// 			endforeach;
+// 			$user = trim( $ip[0] );
+// 			$server = ( empty( $ip[1] ) ? '' : trim( $ip[1] ) );
+// 			$temp[$date] = array( $user, $server, $name, $count, $gateway );
+// 			if ( !isset( $ips[$user] ) ) :
+// 				$ips[$user] = 1;
+// 			else :
+// 				$ips[$user]++;
+// 			endif;
+// 		endforeach;
+// 		krsort( $temp );
+// 		arsort( $ips );
+// 		foreach ( $temp as $kt => $vt ) :
+// 			$sheet['Logins'][] = array( date( 'r', $kt ), $vt[0], $vt[1], $vt[2], $vt[3], $vt[4] );
+// 		endforeach;
+// 		$count = 0;
+// 		foreach ( $ips as $ki => $vi ) :
+// 			if ( $count == 150 ) :
+// 				sleep( 65 );
+// 				$count = 0;
+// 			endif;
+// 			$look = file_get_contents( 'http://ip-api.com/json/'.$ki );
+// 			$json = json_decode( $look, true );
+// 			$count++;
+// 			$sheet['IPs'][] = array( $ki, $vi, $json['country'], $json['regionName'], $json['city'], $json['isp'] );
+// 		endforeach;
 
-		foreach ( $sheet as $ks => $vs ) :
-			$output .= '<h2>'.$ks.'</h2><table width="100%" border="1" cellspacing="0" cellpadding="2">';
-			foreach ( $vs as $kvs => $vvs ) :
-				if ( $kvs == 0 ) :
-					$output .= '<thead><tr>';
-					foreach ( $vvs as $vvvs ) :
-						$output .= '<th>'.$vvvs.'</th>';
-					endforeach;
-					$output .= '</tr></thead><tbody>';
-				else :
-					$output .= '<tr>';
-					foreach ( $vvs as $vvvs ) :
-						$output .= '<td>'.$vvvs.'</td>';
-					endforeach;
-					$output .= '</tr>';
-				endif;
-			endforeach;
-			$output .= '</tbody></table><p>&nbsp;</p>';
-		endforeach;
-		add_filter( 'wp_mail_content_type', 'wpdocs_set_html_mail_content_type' );
-		wp_mail( 'jcounts@houstonpublicmedia.org', 'Login Attempts Blocked', $output );
-		update_option( 'limit_login_logged', array() );
-		remove_filter( 'wp_mail_content_type', 'wpdocs_set_html_mail_content_type' );
-	endif;
-}
+// 		foreach ( $sheet as $ks => $vs ) :
+// 			$output .= '<h2>'.$ks.'</h2><table width="100%" border="1" cellspacing="0" cellpadding="2">';
+// 			foreach ( $vs as $kvs => $vvs ) :
+// 				if ( $kvs == 0 ) :
+// 					$output .= '<thead><tr>';
+// 					foreach ( $vvs as $vvvs ) :
+// 						$output .= '<th>'.$vvvs.'</th>';
+// 					endforeach;
+// 					$output .= '</tr></thead><tbody>';
+// 				else :
+// 					$output .= '<tr>';
+// 					foreach ( $vvs as $vvvs ) :
+// 						$output .= '<td>'.$vvvs.'</td>';
+// 					endforeach;
+// 					$output .= '</tr>';
+// 				endif;
+// 			endforeach;
+// 			$output .= '</tbody></table><p>&nbsp;</p>';
+// 		endforeach;
+// 		add_filter( 'wp_mail_content_type', 'wpdocs_set_html_mail_content_type' );
+// 		wp_mail( 'jcounts@houstonpublicmedia.org', 'Login Attempts Blocked', $output );
+// 		update_option( 'limit_login_logged', array() );
+// 		remove_filter( 'wp_mail_content_type', 'wpdocs_set_html_mail_content_type' );
+// 	endif;
+// }
 
-add_action( 'hpm_logins', 'hpm_logins_cleanup' );
-$timestamp = wp_next_scheduled( 'hpm_logins' );
-if ( empty( $timestamp ) ) :
-	wp_schedule_event( time(), 'hpm_weekly', 'hpm_logins' );
-endif;
+// add_action( 'hpm_logins', 'hpm_logins_cleanup' );
+// $timestamp = wp_next_scheduled( 'hpm_logins' );
+// if ( empty( $timestamp ) ) :
+// 	wp_schedule_event( time(), 'hpm_weekly', 'hpm_logins' );
+// endif;
 
 add_action( 'admin_footer-post-new.php', 'hpm_https_check' );
 add_action( 'admin_footer-post.php', 'hpm_https_check' );
