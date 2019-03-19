@@ -33,7 +33,7 @@
 	},
 	{
 		"type": "composer",
-		"url": "https://composer.deliciousbrains.com/9F35605389B413FA222867FA4F31F61F"
+		"url": "https://composer.deliciousbrains.com"
 	},
 	{
 		"type": "git",
@@ -73,8 +73,8 @@
 		"wpackagist-plugin/term-management-tools": "1.1.4",
 		"wpackagist-plugin/tinymce-advanced": "5.1.0",
 		"wpackagist-plugin/wp-amazon-ses-smtp": "1.0.5",
-		"deliciousbrains-plugin/wp-offload-media": "2.1",
-		"deliciousbrains-plugin/wp-offload-media-assets-pull": "1.1.1",
+		"deliciousbrains-plugin/wp-offload-media": "*",
+		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
 		"jwcounts/hpm-podcasts": "1.6.5",
 		"jwcounts/wp-missed-schedule": "1.0"
 	},

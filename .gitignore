@@ -11,6 +11,7 @@ web/app/debug.log
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
+auth.json
 
 # WordPress
 web/wp
