@@ -162,7 +162,9 @@ if ( is_preview() ) : ?>
 						$q = new WP_query( array(
 							'posts_per_page' => 5,
 							'post__not_in' => array($single_id),
-							'author' => $author_id
+							'author' => $author_id,
+							'post_type' => 'post',
+							'post_status' => 'publish'
 						) );
 						if ( $q->have_posts() ) :
 							echo "<h4>Recent Stories</h4><ul>";

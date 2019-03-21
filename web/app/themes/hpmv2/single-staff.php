@@ -75,10 +75,12 @@ get_header(); ?>
 		<?php
 			if ( !empty( $staff_authid ) ) :
 				$nice_name = get_the_author_meta( 'user_nicename', $staff_authid );
-				$auth = new WP_query( array(
+				$auth = new WP_query( [
 					'author_name' => $nice_name,
-                    'posts_per_page' => 15
-				) );
+					'posts_per_page' => 15,
+					'post_type' => 'post',
+					'post_status' => 'publish'
+				 ] );
 				if ( $auth->have_posts() ) : ?>
 			<section id="search-results">
 		<?php
