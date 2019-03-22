@@ -619,7 +619,7 @@ function overwrite_audio_shortcode() {
 			$audio_url = str_replace( 'http:', 'https:', $audio_url );
 		endif;
 		$html = '';
-		if ( is_amp_endpoint() ) :
+		if ( is_amp_endpoint() || is_feed() ) :
 			$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'?source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'?source=amp-article"></amp-audio></div>';
 		else :
 			if ( is_admin() ) :
@@ -866,12 +866,14 @@ function hpm_site_header() {
 			</header><!-- .site-header --><?php
 }
 
-add_filter( 'hpm_filter_text', 'wptexturize'       );
-add_filter( 'hpm_filter_text', 'convert_smilies'   );
-add_filter( 'hpm_filter_text', 'convert_chars'     );
-add_filter( 'hpm_filter_text', 'wpautop'           );
-add_filter( 'hpm_filter_text', 'shortcode_unautop' );
-add_filter( 'hpm_filter_text', 'do_shortcode'      );
+if ( !array_key_exists( 'hpm_filter_text' , $GLOBALS['wp_filter'] ) ) :
+	add_filter( 'hpm_filter_text', 'wptexturize' );
+	add_filter( 'hpm_filter_text', 'convert_smilies' );
+	add_filter( 'hpm_filter_text', 'convert_chars' );
+	add_filter( 'hpm_filter_text', 'wpautop' );
+	add_filter( 'hpm_filter_text', 'shortcode_unautop' );
+	add_filter( 'hpm_filter_text', 'do_shortcode' );
+endif;
 
 function article_display_shortcode( $atts ) {
 	global $hpm_constants;
