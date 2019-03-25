@@ -425,25 +425,25 @@ function hpm_amp_modify_json_metadata( $metadata, $post ) {
 add_filter( 'amp_post_template_analytics', 'hpm_amp_add_custom_analytics' );
 function hpm_amp_add_custom_analytics( $analytics ) {
 	if ( ! is_array( $analytics ) ) :
-		$analytics = array();
+		$analytics = [];
 	endif;
-	$analytics['hpm-googleanalytics'] = array(
+	$analytics['hpm-googleanalytics'] = [
 		'type' => 'googleanalytics',
-		'attributes' => array(
+		'attributes' => [
 			// 'data-credentials' => 'include',
-		),
-		'config_data' => array(
-			'vars' => array(
+		],
+		'config_data' => [
+			'vars' => [
 				'account' => "UA-3106036-13"
-			),
-			'triggers' => array(
-				'trackPageview' => array(
+			],
+			'triggers' => [
+				'trackPageview' => [
 					'on' => 'visible',
 					'request' => 'pageview',
-				),
-			),
-		),
-	);
+				],
+			],
+		],
+	];
 	return $analytics;
 }
 
