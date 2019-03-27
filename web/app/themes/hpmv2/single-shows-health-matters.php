@@ -23,7 +23,16 @@ get_header(); ?>
 				$show_title = get_the_title();
 				$show_content = get_the_content();
 				$categories = get_the_category();
-				$media = get_attached_media( 'audio' );
+				$med = new WP_Query([
+					'post_type' => 'attachment',
+					'post_parent' => '315974',
+					'post_mime_type' => 'audio/mpeg',
+					'posts_per_page' => -1,
+					'post_status' => 'inherit',
+					'orderby' => 'date',
+					'order' => 'ASC'
+				]);
+				$media = $med->posts;
 				if ( !empty( $media ) ) :
 					$c = 0;
 					foreach ( $media as $m ) :
