@@ -124,6 +124,10 @@ get_header(); ?>
 					<a href="https://www.facebook.com/<?php echo $social['fb']; ?>" target="_blank" title="Facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
 				</div>
 			<?php
+					endif; 
+					if ( $show_name == 'party-politics' || $show_name == 'encore-houston' ) : ?>
+					<div class="station-social-icon"><p style="padding: 0.375em;">Subscribe:</p></div>
+			<?php
 					endif; ?>
 			</div>
 			<?php 
