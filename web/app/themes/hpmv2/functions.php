@@ -1270,3 +1270,78 @@ function wpf_dev_char_limit() {
 	<?php
 }
 add_action( 'wpforms_wp_footer', 'wpf_dev_char_limit' );
+
+function author_footer( $id ) {
+	$output = '';
+	$author_terms = get_the_terms( $id, 'author' );
+	if ( empty( $author_terms ) ) :
+		return $output;
+	endif;
+	$matches = [];
+	preg_match( "/([a-z\-]+) ([0-9]{1,3})/", $author_terms[0]->description, $matches );
+	if ( empty( $matches ) ) :
+		return $output;
+	endif;
+	$author_name = $matches[1];
+	$author_trans = get_transient( 'hpm_author_'.$author_name );
+	if ( !empty( $author_trans ) ) :
+		return $author_trans;
+	endif;
+
+	$authid = $matches[2];
+	$author_check = new WP_Query( [
+		'post_type' => 'staff',
+		'name' => $author_name,
+		'post_status' => 'publish'
+	] );
+	if ( !$author_check->have_posts() ) :
+		$author_check = new WP_Query([
+			'post_type' => 'staff',
+			'post_status' => 'publish',
+			'meta_query' => [ [
+				'key' => 'hpm_staff_authid',
+				'compare' => '=',
+				'value' => $authid
+			] ]
+		] );
+	endif;
+	if ( !$author_check->have_posts() ) :
+		return $output;
+	endif;
+	while ( $author_check->have_posts() ) :
+		$author_check->the_post();
+		$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
+		$authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', TRUE );
+		$output .= '<div class="author-info-wrap"><div class="author-image">'.get_the_post_thumbnail( 'medium', [ 'alt' => get_the_title() ] ).'</div><div class="author-info"><h2>'.get_the_title().'</h2><h3>'.$author['title'].'</h3><div class="author-social">';
+		if ( !empty( $author['facebook'] ) ) : 
+			$output .= '<div class="social-icon"><a href="'.$author['facebook'].'" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a></div>';
+		endif;
+		if ( !empty( $author['twitter'] ) ) : 
+			$output .= '<div class="social-icon"><a href="'.$author['twitter'].'" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a></div>';
+		endif; 
+		$author_bio = get_the_content();
+		if ( preg_match( '/Biography pending/', $author_bio ) ) :
+			$author_bio = '';
+		endif;
+		$output .= '</div><p>'.wp_trim_words( $author_bio, 50, '...' ).'</p><p><a href="'.get_the_permalink().'">More Information</a></p></div>';
+	endwhile;
+	$output .= '</div><div class="author-other-stories">';
+	$q = new WP_query([
+		'posts_per_page' => 5,
+		'author' => $authid,
+		'post_type' => 'post',
+		'post_status' => 'publish'
+	 ] );
+	if ( $q->have_posts() ) :
+		$output .= "<h4>Recent Stories</h4><ul>";
+		while ( $q->have_posts() ) :
+			$q->the_post();
+			$output .= '<li><h2 class="entry-title"><a href="'.esc_url( get_permalink() ).'" rel="bookmark">'.get_the_title().'</a></h2></li>';
+		endwhile;
+		$output .= "</ul>";
+	endif;
+	wp_reset_query();
+	$output .= '</div>';
+	set_transient( 'hpm_author_'.$author_name, $output, 7200 );
+	return $output;
+}

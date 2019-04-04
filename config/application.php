@@ -36,6 +36,7 @@ if (file_exists($env_config)) {
 /**
  * URLs
  */
+define('WP_CACHE', true);
 define('WP_HOME', env('WP_HOME'));
 define('WP_SITEURL', env('WP_SITEURL'));
 
