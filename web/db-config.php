@@ -74,39 +74,47 @@ $wpdb->check_tcp_responsiveness = true;
  */
 if ( WP_ENV == 'production' ) :
 	if ( is_admin() ) :
-		$wpdb->add_database(array(
+		$wpdb->add_database([
 			'host'     => DB_HOST,     // If port is other than 3306, use host:port.
 			'user'     => DB_USER,
 			'password' => DB_PASSWORD,
 			'name'     => DB_NAME,
 			'write'    => 1,
 			'read'     => 1
-		));
+		]);
 	else :
-		$wpdb->add_database(array(
+		$wpdb->add_database([
 			'host'     => DB_HOST_2,     // If port is other than 3306, use host:port.
 			'user'     => DB_USER,
 			'password' => DB_PASSWORD,
 			'name'     => DB_NAME,
 			'write'    => 0,
 			'read'     => 1
-		));
-		$wpdb->add_database(array(
+		]);
+		$wpdb->add_database([
+			'host'     => DB_HOST_3,     // If port is other than 3306, use host:port.
+			'user'     => DB_USER,
+			'password' => DB_PASSWORD,
+			'name'     => DB_NAME,
+			'write'    => 0,
+			'read'     => 1
+		]);
+		$wpdb->add_database([
 			'host'     => DB_HOST,     // If port is other than 3306, use host:port.
 			'user'     => DB_USER,
 			'password' => DB_PASSWORD,
 			'name'     => DB_NAME,
 			'write'    => 1,
 			'read'     => 0
-		));
+		]);
 	endif;
 else :
-	$wpdb->add_database(array(
+	$wpdb->add_database([
 		'host'     => DB_HOST,     // If port is other than 3306, use host:port.
 		'user'     => DB_USER,
 		'password' => DB_PASSWORD,
 		'name'     => DB_NAME,
 		'write'    => 1,
 		'read'     => 1
-	));
+	]);
 endif;

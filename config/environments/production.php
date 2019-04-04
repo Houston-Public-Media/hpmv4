@@ -7,7 +7,8 @@ define( 'SCRIPT_DEBUG', false );
 define( 'WP_DEBUG_LOG', false );
 /** Disable all file modifications including updates and update notifications */
 define( 'DISALLOW_FILE_MODS', false );
-define( 'DB_HOST_2', env('DB_HOST_2') );
+define( 'DB_HOST_2', env( 'DB_HOST_2' ) );
+define( 'DB_HOST_3', env( 'DB_HOST_3' ) );
 
 $_SERVER['HTTPS']='on';
 $protocol = 'https';
