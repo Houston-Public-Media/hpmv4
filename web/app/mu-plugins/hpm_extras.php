@@ -60,10 +60,10 @@ add_action( 'wp_head', 'hpmv2_javascript_detection', 0 );
 /*
  * Removes unnecessary metadata from the document head
  */
-remove_action('wp_head', 'wlwmanifest_link');
-remove_action('wp_head', 'rsd_link');
-remove_action('wp_head', 'wp_generator');
-remove_action('wp_head', 'wp_shortlink_wp_head');
+remove_action( 'wp_head', 'wlwmanifest_link' );
+remove_action( 'wp_head', 'rsd_link' );
+remove_action( 'wp_head', 'wp_generator' );
+remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 
 /**
  * Disable support for Wordpress Emojicons, because we will never use them and don't need the extra overhead
@@ -379,54 +379,6 @@ function hpm_youtube_playlist( $key ) {
 	set_transient( 'hpm_yt_'.$key, $json_r, 300 );
 	return $json_r;
 }
-
-/**
- * Push 25 most recent local stories to NPR API
- */
-//function hpm_npr_update() {
-//	global $wpdb;
-//	$msgs = array();
-//	$now = getdate();
-//	wp_set_current_user( 1 );
-//	$posts = $wpdb->get_results(
-//		"SELECT wp_posts.*
-//              FROM wp_posts,wp_users
-//              WHERE wp_posts.post_type = 'post'
-//                AND wp_posts.post_title NOT LIKE 'Engines of%'
-//                AND wp_posts.post_status = 'publish'
-//                AND wp_posts.post_author NOT IN (0,1,42,59)
-//                AND wp_posts.post_author = wp_users.ID
-//                AND wp_posts.post_content NOT LIKE '%[gallery%'
-//                AND wp_posts.post_excerpt != ''
-//              ORDER BY wp_posts.post_date DESC
-//              LIMIT 25" , OBJECT);
-//	foreach ( $posts as $p ) :
-//		$npr_id_before = get_post_meta( $p->ID, 'npr_story_id', true );
-//		$nprone = get_post_meta( $p->ID, '_send_to_nprone', true );
-//		$media = get_attached_media( 'audio' );
-//		if ( !empty( $media ) && empty( $nprone ) ) :
-//			update_post_meta( $p->ID, '_send_to_nprone', 1 );
-//		endif;
-//		$time_since = $now[0] - strtotime( $p->post_modified_gmt );
-//		if ( empty( $npr_id_before ) || ( !empty( $npr_id_before ) && ( $time_since < 1800 ) ) ) :
-//			nprstory_api_push( $p->ID, $p );
-//			$error_temp = get_post_meta( $p->ID, 'npr_push_story_error', true );
-//			if ( !empty( $error_temp ) ) :
-//				$msgs[] = $error_temp;
-//			endif;
-//		endif;
-//	endforeach;
-//	if ( !empty( $msgs ) ) :
-//		$msgs[] = date('r');
-//		wp_mail( 'jcounts@houstonpublicmedia.org', 'NPR Story Push Results', implode("\n\n",$msgs) );
-//	endif;
-//}
-//
-//add_action( 'hpm_nprapi_push', 'hpm_npr_update' );
-//$timestamp = wp_next_scheduled( 'hpm_nprapi_push' );
-//if ( empty( $timestamp ) ) :
-//	wp_schedule_event( time(), 'hourly', 'hpm_nprapi_push' );
-//endif;
 
 /*
  * Ping Facebook's OpenGraph servers whenever a post is published, in order to prime their cache
@@ -1007,85 +959,8 @@ function hpm_election_night() {
 add_shortcode( 'election_night', 'hpm_election_night' );
 
 function wpdocs_set_html_mail_content_type() {
-    return 'text/html';
+	return 'text/html';
 }
-
-// function hpm_logins_cleanup() {
-// 	$logins = get_option( 'limit_login_logged' );
-// 	if ( !empty( $logins ) ) :
-// 		$temp = $ips = array();
-// 		$output = '';
-// 		$sheet = array(
-// 			'Logins' => array(),
-// 			'IPs' => array()
-// 		);
-// 		$sheet['Logins'][] = array( 'Date', 'User IP', 'Server IP', 'Attempted Login Name', 'Lockouts', 'Gateway' );
-// 		$sheet['IPs'][] = array( 'User IP', 'Number of Lockouts', 'Country', 'Region', 'City', 'ISP' );
-// 		foreach	( $logins as $k => $v ) :
-// 			$ip = explode( ',', $k );
-// 			foreach ( $v as $kk => $vv ) :
-// 				$name = $kk;
-// 				$date = $vv['date'];
-// 				$gateway = $vv['gateway'];
-// 				$count = $vv['counter'];
-// 			endforeach;
-// 			$user = trim( $ip[0] );
-// 			$server = ( empty( $ip[1] ) ? '' : trim( $ip[1] ) );
-// 			$temp[$date] = array( $user, $server, $name, $count, $gateway );
-// 			if ( !isset( $ips[$user] ) ) :
-// 				$ips[$user] = 1;
-// 			else :
-// 				$ips[$user]++;
-// 			endif;
-// 		endforeach;
-// 		krsort( $temp );
-// 		arsort( $ips );
-// 		foreach ( $temp as $kt => $vt ) :
-// 			$sheet['Logins'][] = array( date( 'r', $kt ), $vt[0], $vt[1], $vt[2], $vt[3], $vt[4] );
-// 		endforeach;
-// 		$count = 0;
-// 		foreach ( $ips as $ki => $vi ) :
-// 			if ( $count == 150 ) :
-// 				sleep( 65 );
-// 				$count = 0;
-// 			endif;
-// 			$look = file_get_contents( 'http://ip-api.com/json/'.$ki );
-// 			$json = json_decode( $look, true );
-// 			$count++;
-// 			$sheet['IPs'][] = array( $ki, $vi, $json['country'], $json['regionName'], $json['city'], $json['isp'] );
-// 		endforeach;
-
-// 		foreach ( $sheet as $ks => $vs ) :
-// 			$output .= '<h2>'.$ks.'</h2><table width="100%" border="1" cellspacing="0" cellpadding="2">';
-// 			foreach ( $vs as $kvs => $vvs ) :
-// 				if ( $kvs == 0 ) :
-// 					$output .= '<thead><tr>';
-// 					foreach ( $vvs as $vvvs ) :
-// 						$output .= '<th>'.$vvvs.'</th>';
-// 					endforeach;
-// 					$output .= '</tr></thead><tbody>';
-// 				else :
-// 					$output .= '<tr>';
-// 					foreach ( $vvs as $vvvs ) :
-// 						$output .= '<td>'.$vvvs.'</td>';
-// 					endforeach;
-// 					$output .= '</tr>';
-// 				endif;
-// 			endforeach;
-// 			$output .= '</tbody></table><p>&nbsp;</p>';
-// 		endforeach;
-// 		add_filter( 'wp_mail_content_type', 'wpdocs_set_html_mail_content_type' );
-// 		wp_mail( 'jcounts@houstonpublicmedia.org', 'Login Attempts Blocked', $output );
-// 		update_option( 'limit_login_logged', array() );
-// 		remove_filter( 'wp_mail_content_type', 'wpdocs_set_html_mail_content_type' );
-// 	endif;
-// }
-
-// add_action( 'hpm_logins', 'hpm_logins_cleanup' );
-// $timestamp = wp_next_scheduled( 'hpm_logins' );
-// if ( empty( $timestamp ) ) :
-// 	wp_schedule_event( time(), 'hpm_weekly', 'hpm_logins' );
-// endif;
 
 add_action( 'admin_footer-post-new.php', 'hpm_https_check' );
 add_action( 'admin_footer-post.php', 'hpm_https_check' );

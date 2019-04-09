@@ -242,7 +242,7 @@ function rel_canonical_w_npr()
 	echo '<link rel="canonical" href="' . esc_url( $url ) . "\" />\n";
 }
 
-if( function_exists( 'rel_canonical' ) ) :
+if ( function_exists( 'rel_canonical' ) ) :
 	remove_action( 'wp_head', 'rel_canonical' );
 endif;
 add_action( 'wp_head', 'rel_canonical_w_npr' );
@@ -343,24 +343,24 @@ function hpm_top_cat( $post_id ) {
 function get_excerpt_by_id( $post_id ){
 	$the_post = get_post( $post_id );
 	if ( !empty( $the_post ) ) :
-        $the_excerpt = $the_post->post_excerpt;
-        if ( empty( $the_excerpt ) ) :
-            $the_excerpt = $the_post->post_content;
-            $excerpt_length = 55;
-            $the_excerpt = strip_tags(strip_shortcodes($the_excerpt));
-            $words = explode(' ', $the_excerpt, $excerpt_length + 1);
+		$the_excerpt = $the_post->post_excerpt;
+		if ( empty( $the_excerpt ) ) :
+			$the_excerpt = $the_post->post_content;
+			$excerpt_length = 55;
+			$the_excerpt = strip_tags(strip_shortcodes($the_excerpt));
+			$words = explode(' ', $the_excerpt, $excerpt_length + 1);
 
-            if(count($words) > $excerpt_length) :
-                array_pop($words);
-                array_push($words, '...');
-                $the_excerpt = implode(' ', $words);
-            endif;
-        endif;
+			if(count($words) > $excerpt_length) :
+				array_pop($words);
+				array_push($words, '...');
+				$the_excerpt = implode(' ', $words);
+			endif;
+		endif;
 
-        return $the_excerpt;
-    else :
-        return '';
-    endif;
+		return $the_excerpt;
+	else :
+		return '';
+	endif;
 }
 
 /*
@@ -376,7 +376,7 @@ function hpm_top_posts() {
 function remove_wp_version_rss() {
 	return '';
 }
-add_filter('the_generator','remove_wp_version_rss');
+add_filter( 'the_generator', 'remove_wp_version_rss' );
 
 /*
  * Display word count for post
@@ -814,11 +814,11 @@ function hpm_emergency() {
 }
 
 function hpm_site_header() {
-    global $hpm_emergency;
-    if ( empty( $hpm_emergency ) ) :
-        $ll_height = '400';
-    else :
-        $ll_height = '455';
+	global $hpm_emergency;
+	if ( empty( $hpm_emergency ) ) :
+		$ll_height = '400';
+	else :
+		$ll_height = '455';
 	endif; ?>
 			<a href="/ProdStage" rel="nofollow" style="display: none" aria-hidden="true">Production Staging</a>
 			<header id="masthead" class="site-header" role="banner">

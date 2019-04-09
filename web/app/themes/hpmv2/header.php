@@ -55,6 +55,7 @@
 		endif;
 	endif;
 	$thumb = str_replace( 'http://', 'https://', $thumb );
+	$post_type = get_post_type();
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" dir="ltr" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<head>
@@ -63,14 +64,25 @@
 		<link rel="profile" href="http://gmpg.org/xfn/11">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="<?PHP echo strip_tags( $head_excerpt ); ?>" />
-		<meta name="keywords" content="Houston Public Media,KUHT,TV 8,Houston Public Media Schedule,Educational TV Programs,independent program broadcasts,University of Houston,nonprofit,NPR News,KUHF,Classical Music,Arts & Culture,News 88.7" />
+		<meta name="keywords" content="Houston Public Media,KUHT,TV 8,Houston Public Media Schedule,Educational TV Programs,independent program broadcasts,University of Houston,nonprofit,NPR News,KUHF,Classical Music,Arts &amp; Culture,News 88.7" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="bitly-verification" content="7777946f1a0a"/>
 		<meta name="google-site-verification" content="QOrBnMZ1LXDA9tL3e5WmFUU-oI3JUbDRotOWST1P_Dg" />
 		<link rel="shortcut icon" href="https://cdn.hpm.io/assets/images/favicon.ico">
 		<link rel="icon" type="image/png" href="https://cdn.hpm.io/assets/images/favicon-192x192.png" sizes="192x192">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/apple-touch-icon-180x180.png">
-		<link rel="alternate" type="application/rss+xml" title="RSS 2.0 Feed" href="<?php bloginfo('rss2_url'); ?>" />
+<?php
+		if ( $post_type == 'shows' ) :
+			$show_meta = get_post_meta( $ID, 'hpm_show_meta', true );
+			if ( !empty( $show_meta['podcast'] ) ) : ?>
+		<link rel="alternate" type="application/rss+xml" title="<?php echo str_replace( ' | Houston Public Media', '', $head_title ); ?> Podcast Feed" href="<?php echo $show_meta['podcast']; ?>" />
+<?php
+			else :
+				$show_cat = get_post_meta( $ID, 'hpm_shows_cat', true ); ?>
+		<link rel="alternate" type="application/rss+xml" title="<?php echo str_replace( ' | Houston Public Media', '', $head_title ); ?> RSS Feed" href="<?php echo get_term_feed_link( $show_cat ); ?>" />
+<?php
+			endif;
+		endif; ?>
 		<meta name="apple-itunes-app" content="app-id=530216229" />
 		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />
 		<meta property="fb:app_id" content="523938487799321" />
@@ -91,7 +103,7 @@
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@houstonpubmedia" />
 		<meta name="twitter:creator" content="@houstonpubmedia" />
-		<meta name="twitter:title" content="<?php echo $head_title; ?> | Houston Public Media" />
+		<meta name="twitter:title" content="<?php echo $head_title; ?>" />
 		<meta name="twitter:image" content="<?php echo $thumb; ?>" />
 		<meta name="twitter:url" content="<?php echo $head_perma; ?>" />
 		<meta name="twitter:description" content="<?php echo $head_excerpt; ?>">
@@ -107,7 +119,6 @@
 			googletag.cmd = googletag.cmd || [];
 		</script>
 <?php
-		$post_type = get_post_type();
 		if ( is_page_template( 'page-kids.php' ) ) : ?>
 		<script>
 			googletag.cmd.push(function() {
