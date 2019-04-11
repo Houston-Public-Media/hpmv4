@@ -445,7 +445,7 @@ Template Name: Schedules
 <?PHP
 			endif;  */ ?>
 				<section id="station-schedule-display" class="column-span">
-					<iframe scrolling="auto" src="https://pw.myersinfosys.com/kuht/hour"></iframe>
+					<iframe scrolling="auto" src="https://proweb.myersinfosys.com/kuht/day"></iframe>
 <?php
 	else :
 		if ( $sched_station == 'news887' ) :
