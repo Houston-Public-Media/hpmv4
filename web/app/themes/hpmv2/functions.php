@@ -781,45 +781,7 @@ function hpm_nprapi_audio_shortcode( $text ) {
 }
 add_filter( 'npr_ds_shortcode_filter', 'hpm_nprapi_audio_shortcode', 10, 1 );
 
-function hpm_emergency() {
-	// Emergency Notifications
-	$t = getdate();
-	$emergency_query = new WP_Query(
-		array(
-			'post_type' => 'emergency',
-			'posts_per_page' => 1,
-			'post_status' => 'publish',
-			'meta_query' => array(
-				array(
-					'key'     => 'hpm_break_end_time',
-					'value'   => $t[0],
-					'compare' => '>=',
-				),
-			)
-		)
-	);
-	if ( $emergency_query->have_posts() ) :
-		$html = "<div id=\"emergency\">";
-		while ( $emergency_query->have_posts() ) :
-			$emergency_query->the_post();
-			$emergency_meta = get_post_meta( get_the_ID(), 'hpm_break_meta', 1 );
-			$html .= "<a href=\"".$emergency_meta."\"><span class=\"fa fa-exclamation-circle\" aria-hidden=\"true\"></span> ".get_the_title()."</a>";
-		endwhile;
-		$html .= "</div>";
-		wp_reset_query();
-		global $hpm_emergency;
-		$hpm_emergency = $html;
-		return $html;
-	endif;
-}
-
-function hpm_site_header() {
-	global $hpm_emergency;
-	if ( empty( $hpm_emergency ) ) :
-		$ll_height = '400';
-	else :
-		$ll_height = '455';
-	endif; ?>
+function hpm_site_header() { ?>
 			<a href="/ProdStage" rel="nofollow" style="display: none" aria-hidden="true">Production Staging</a>
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
@@ -833,7 +795,7 @@ function hpm_site_header() {
 						<div class="top-schedule-links"><a href="/classical">Classical</a></div>
 						<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 					</div>
-					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="860:<?php echo $ll_height; ?>">Listen Live</a></div>
+					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="860:455">Listen Live</a></div>
 					<div id="top-donate"><a href="/donate" target="_blank">Donate</a></div>
 					<div id="header-social">
 						<div class="header-social-icon header-facebook">

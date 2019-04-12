@@ -559,256 +559,6 @@ function hpm_nprapi_output() {
 }
 
 /**
- * Set up post type and tools for emergency info at the top of the site
- */
-add_action( 'init', 'create_hpm_emergency' );
-function create_hpm_emergency() {
-	register_post_type( 'emergency',
-		array(
-			'labels' => array(
-				'name' => __( 'Emergency Info' ),
-				'singular_name' => __( 'Emergency Info' ),
-				'menu_name' => __( 'Emergency Info' ),
-				'add_new_item' => __( 'Add New Emergency Info' ),
-				'edit_item' => __( 'Edit Emergency Info' ),
-				'new_item' => __( 'New Emergency Info' ),
-				'view_item' => __( 'View Emergency Info' ),
-				'search_items' => __( 'Search Emergency Info' ),
-				'not_found' => __( 'Emergency Info Not Found' ),
-				'not_found_in_trash' => __( 'Emergency Info not found in trash' )
-			),
-			'description' => 'Emergency info for top of the homepage',
-			'public' => false,
-			'show_ui' => true,
-			'show_in_admin_bar' => true,
-			'menu_position' => 20,
-			'menu_icon' => 'dashicons-warning',
-			'has_archive' => false,
-			'rewrite' => false,
-			'supports' => array( 'title' ),
-			'can_export' => false,
-			'capability_type' => array('hpm_emergency','hpm_emergencies'),
-			'map_meta_cap' => true
-		)
-	);
-}
-add_action('admin_init','hpm_br_emer_add_role_caps',999);
-function hpm_br_emer_add_role_caps() {
-	// Add the roles you'd like to administer the custom post types
-	$roles = array('editor','administrator');
-
-	// Loop through each role and assign capabilities
-	foreach($roles as $the_role) :
-		$role = get_role($the_role);
-		$role->add_cap( 'read' );
-		$role->add_cap( 'read_hpm_emergency');
-		$role->add_cap( 'read_private_hpm_emergencies' );
-		$role->add_cap( 'edit_hpm_emergency' );
-		$role->add_cap( 'edit_hpm_emergencies' );
-		$role->add_cap( 'edit_others_hpm_emergencies' );
-		$role->add_cap( 'edit_published_hpm_emergencies' );
-		$role->add_cap( 'publish_hpm_emergencies' );
-		$role->add_cap( 'delete_others_hpm_emergencies' );
-		$role->add_cap( 'delete_private_hpm_emergencies' );
-		$role->add_cap( 'delete_published_hpm_emergencies' );
-	endforeach;
-}
-
-add_action( 'load-post.php', 'hpm_break_setup' );
-add_action( 'load-post-new.php', 'hpm_break_setup' );
-function hpm_break_setup() {
-	add_action( 'add_meta_boxes', 'hpm_break_add_meta' );
-	add_action( 'save_post', 'hpm_break_save_meta', 10, 2 );
-	add_action( 'post_submitbox_misc_actions', 'hpm_break_unpub_date' );
-}
-
-function hpm_break_add_meta() {
-	global $post;
-	if ( $post->post_type == 'emergency' ) :
-		add_meta_box(
-			'hpm-break-meta-class',
-			esc_html__( 'Link URL', 'example' ),
-			'hpm_break_meta_box',
-			$post->post_type,
-			'normal',
-			'core'
-		);
-	endif;
-}
-
-function hpm_break_meta_box( $object, $box ) {
-	wp_nonce_field( basename( __FILE__ ), 'hpm_break_class_nonce' );
-	$exists_meta = metadata_exists( 'post', $object->ID, 'hpm_break_meta' );
-
-	if ( $exists_meta ) :
-		$hpm_break_meta = get_post_meta( $object->ID, 'hpm_break_meta', true );
-		if ( empty( $hpm_break_meta ) ) :
-			$hpm_break_meta = '';
-		endif;
-	else :
-		$hpm_break_meta = '';
-	endif;
-
-	?>
-	<p><?PHP _e( "Enter the URL you would like this item to link to.  If you don't want offer a link, either leave it blank or type a #.", 'example' ); ?></p>
-	<ul>
-		<li><label for="hpm-break-url"><?php _e( "URL:", 'example' ); ?></label> <input type="text" id="hpm-break-url" name="hpm-break-url" value="<?PHP echo $hpm_break_meta; ?>" placeholder="http://highway2.thedanger.zone/" style="width: 60%;" /></li>
-	</ul>
-<?php }
-
-function hpm_break_unpub_date() {
-	global $post;
-	if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) return false;
-	if ( $post->post_type == 'emergency' ) :
-		$endtime = get_post_meta( $post->ID, 'hpm_break_end_time', true );
-		$offset = get_option('gmt_offset')*3600;
-		if ( empty( $endtime ) ) :
-			$t = time() + $offset + ( 24 * HOUR_IN_SECONDS );
-		else :
-			$t = $endtime + $offset;
-		endif;
-		$timeend = array(
-			'mon' => date( 'm', $t),
-			'day' => date( 'd', $t),
-			'year' => date( 'Y', $t),
-			'hour' => date( 'H', $t),
-			'min' => date( 'i', $t)
-		);
-
-		?>
-		<div class="misc-pub-section curtime misc-pub-curtime">
-			<span id="endtimestamp">End Date:</span>
-			<fieldset id="endtimestampdiv">
-				<legend class="screen-reader-text">End date and time</legend>
-				<div class="timestamp-wrap">
-					<label>
-						<span class="screen-reader-text">Month</span>
-						<select id="hpm_break_end_mon" name="hpm_break[end][mon]">
-							<option value="01" data-text="Jan" <?PHP selected( $timeend['mon'], '01', TRUE ); ?>>01-Jan</option>
-							<option value="02" data-text="Feb" <?PHP selected( $timeend['mon'], '02', TRUE ); ?>>02-Feb</option>
-							<option value="03" data-text="Mar" <?PHP selected( $timeend['mon'], '03', TRUE ); ?>>03-Mar</option>
-							<option value="04" data-text="Apr" <?PHP selected( $timeend['mon'], '04', TRUE ); ?>>04-Apr</option>
-							<option value="05" data-text="May" <?PHP selected( $timeend['mon'], '05', TRUE ); ?>>05-May</option>
-							<option value="06" data-text="Jun" <?PHP selected( $timeend['mon'], '06', TRUE ); ?>>06-Jun</option>
-							<option value="07" data-text="Jul" <?PHP selected( $timeend['mon'], '07', TRUE ); ?>>07-Jul</option>
-							<option value="08" data-text="Aug" <?PHP selected( $timeend['mon'], '08', TRUE ); ?>>08-Aug</option>
-							<option value="09" data-text="Sep" <?PHP selected( $timeend['mon'], '09', TRUE ); ?>>09-Sep</option>
-							<option value="10" data-text="Oct" <?PHP selected( $timeend['mon'], '10', TRUE ); ?>>10-Oct</option>
-							<option value="11" data-text="Nov" <?PHP selected( $timeend['mon'], '11', TRUE ); ?>>11-Nov</option>
-							<option value="12" data-text="Dec" <?PHP selected( $timeend['mon'], '12', TRUE ); ?>>12-Dec</option>
-						</select>
-					</label>
-					<label>
-						<span class="screen-reader-text">Day</span>
-						<input type="text" id="hpm_break_end_day" name="hpm_break[end][day]" value="<?php echo $timeend['day']; ?>" size="2" maxlength="2" autocomplete="off">
-					</label>,
-					<label>
-						<span class="screen-reader-text">Year</span>
-						<input type="text" id="hpm_break_end_year" name="hpm_break[end][year]" value="<?php echo $timeend['year']; ?>" size="4" maxlength="4" autocomplete="off">
-					</label> @
-					<label>
-						<span class="screen-reader-text">Hour</span>
-						<input type="text" id="hpm_break_end_hour" name="hpm_break[end][hour]" value="<?php echo $timeend['hour']; ?>" size="2" maxlength="2" autocomplete="off">
-					</label>:
-					<label>
-						<span class="screen-reader-text">Minute</span>
-						<input type="text" id="hpm_break_end_min" name="hpm_break[end][min]" value="<?php echo $timeend['min']; ?>" size="2" maxlength="2" autocomplete="off">
-					</label>
-				</div>
-			</fieldset>
-		</div>
-		<style>
-			.curtime #endtimestamp {
-				padding: 2px 0 1px 0;
-				display: inline !important;
-				height: auto !important;
-			}
-			.curtime #endtimestamp:before {
-				content: "\f145";
-				position: relative;
-				top: -1px;
-				font: normal 20px/1 dashicons;
-				speak: none;
-				display: inline-block;
-				margin-left: -1px;
-				padding-right: 3px;
-				vertical-align: top;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-				color: #82878c;
-			}
-			#endtimestampdiv {
-				padding-top: 5px;
-				line-height: 23px;
-			}
-			#endtimestampdiv select {
-				height: 21px;
-				line-height: 14px;
-				padding: 0;
-				vertical-align: top;
-				font-size: 12px;
-			}
-			#endtimestampdiv input {
-				border-width: 1px;
-				border-style: solid;
-			}
-			#hpm_break_end_day,
-			#hpm_break_end_hour,
-			#hpm_break_end_min {
-				width: 2em;
-			}
-			#hpm_break_end_year,
-			#hpm_break_end_day,
-			#hpm_break_end_hour,
-			#hpm_break_end_min {
-				padding: 1px;
-				font-size: 12px;
-			}
-		</style>
-		<?php
-	endif;
-}
-
-function hpm_break_save_meta( $post_id, $post ) {
-	if ( $post->post_type == 'emergency' ) :
-		/* Verify the nonce before proceeding. */
-		if ( !isset( $_POST['hpm_break_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_break_class_nonce'], basename( __FILE__ ) ) )
-			return $post_id;
-
-		/* Get the post type object. */
-		$post_type = get_post_type_object( $post->post_type );
-
-		/* Check if the current user has permission to edit the post. */
-		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) :
-			return $post_id;
-		endif;
-
-		$hpend = $_POST['hpm_break']['end'];
-
-		foreach ( $hpend as $hpe ) :
-			if ( !is_numeric( $hpe ) || $hpe == '' ) :
-				return $post_id;
-			endif;
-		endforeach;
-
-		$offset = get_option('gmt_offset')*3600;
-		$endtime = mktime( $hpend['hour'], $hpend['min'], 0, $hpend['mon'], $hpend['day'], $hpend['year'] ) - $offset;
-		update_post_meta( $post_id, 'hpm_break_end_time', $endtime );
-
-		/* Get the posted data and sanitize it for use as an HTML class. */
-		$hpm_meta = ( !empty( $_POST['hpm-break-url'] ) ? sanitize_text_field( $_POST['hpm-break-url'] ) : '' );
-
-		$exists_meta = metadata_exists( 'post', $post_id, 'hpm_break_meta' );
-
-		if ( $exists_meta ) :
-			update_post_meta( $post_id, 'hpm_break_meta', $hpm_meta );
-		else :
-			add_post_meta( $post_id, 'hpm_break_meta', $hpm_meta, true );
-		endif;
-	endif;
-}
-
-/**
  * Hide the Comments menu in Admin because we don't use it
  */
 function remove_menus(){
@@ -1350,3 +1100,176 @@ function hpm_image_preview_page() {
 }
 
 add_action('admin_menu', 'hpm_image_preview_page');
+
+function diversecity_display_shortcode( $atts ) {
+	extract( shortcode_atts( array(
+		'section' => '',
+		'ids' => ''
+	), $atts, 'multilink' ) );
+	$i_exp = explode( ',', $ids);
+	$args = array(
+		'ignore_sticky_posts' => 1
+	);
+	$output = '';
+	global $post;
+	switch ( $section ) {
+		case "banner" :
+			if ( !empty( $i_exp[0] ) ) :
+				$args['post__in'] = $i_exp;
+			else :
+				$args['category_name'] = 'diversecity';
+			endif;
+			$args['posts_per_page'] = 1;
+			$article = new WP_query( $args );
+			if ( $article->have_posts() ) :
+				while ( $article->have_posts() ) : $article->the_post();
+					$postClass = get_post_class();
+					$fl_array = preg_grep("/felix-type-/", $postClass);
+					$fl_arr = array_keys( $fl_array );
+					$postClass[$fl_arr[0]] = 'dc-top';
+					$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><h3 class="toptag">Featured Story</h3><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), 'large' ).')"><a class="post-thumbnail" href="'.get_the_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><div class="entry-header-wrap"><h2 class="entry-title"><a href="'.get_the_permalink().'" rel="bookmark">'.get_the_title().'</a></h2><p><a href="'.get_the_permalink().'" rel="bookmark">'.get_the_excerpt().' &gt;&gt;</a></p></div></header></article>';
+				endwhile;
+			endif;
+			break;
+		case "photos" :
+			global $wpdb;
+			$photos = $wpdb->get_results("SELECT * FROM wp_posts WHERE post_type = 'attachment' AND post_parent = 183317 AND post_mime_type LIKE 'image%' ORDER BY post_date DESC LIMIT 3",TRUE);
+			foreach ( $photos as $p ) :
+				$img = wp_get_attachment_image_src( $p->ID, 'large' );
+				$output .= '<div class="photo-grid"><div class="thumbnail-wrap" style="background-image: url('.$img[0].')"><a class="post-thumbnail" href="/diversecity/photo-series/" aria-hidden="true"></a></div></div>';
+			endforeach;
+			break;
+		case "shapes" :
+			$article = array();
+			$args['category_name'] = 'how-it-shapes-us';
+			$args['posts_per_page'] = 3;
+			if ( !empty( $i_exp[0] ) ) :
+				$args['post__in'] = $i_exp;
+				$args['orderby'] = 'post__in';
+				$c = count( $i_exp );
+				if ( $c != $args['posts_per_page'] ) :
+					$diff = $args['posts_per_page'] - $c;
+					$args['posts_per_page'] = $c;
+					$article[] = new WP_Query( $args );
+					unset($args['post__in']);
+					unset($args['orderby']);
+					$args['post__not_in'] = $i_exp;
+					$args['posts_per_page'] = $diff;
+				endif;
+			endif;
+			$article[] = new WP_query( $args );
+			foreach ( $article as $art ) :
+				if ( $art->have_posts() ) :
+					while ( $art->have_posts() ) : $art->the_post();
+						$postClass = get_post_class();
+						$fl_array = preg_grep("/felix-type-/", $postClass);
+						$fl_arr = array_keys( $fl_array );
+						unset($postClass[$fl_arr[0]]);
+						$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), 'large' ).')"><a class="post-thumbnail" href="'.get_the_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h2 class="entry-title"><a href="'.get_the_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+					endwhile;
+				endif;
+			endforeach;
+			break;
+		case "conversations" :
+			if ( !empty( $i_exp[0] ) ) :
+				$args['post__in'] = $i_exp;
+			endif;
+			$args['category_name'] = 'conversations';
+			$args['posts_per_page'] = 1;
+			$article = new WP_query( $args );
+			if ( $article->have_posts() ) :
+				while ( $article->have_posts() ) : $article->the_post();
+					$postClass = get_post_class();
+					$fl_array = preg_grep("/felix-type-/", $postClass);
+					$fl_arr = array_keys( $fl_array );
+					unset($postClass[$fl_arr[0]]);
+					$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), 'large' ).')"><a class="post-thumbnail" href="'.get_the_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h2 class="entry-title"><a href="'.get_the_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+				endwhile;
+			endif;
+			break;
+		case "sounds-flavors" :
+			$args['category_name'] = 'sounds-flavors';
+			$args['posts_per_page'] = 3;
+			if ( !empty( $i_exp[0] ) ) :
+				$args['post__in'] = $i_exp;
+				$args['orderby'] = 'post__in';
+				$c = count( $i_exp );
+				if ( $c != $args['posts_per_page'] ) :
+					$diff = $args['posts_per_page'] - $c;
+					$args['posts_per_page'] = $c;
+					$article[] = new WP_Query( $args );
+					unset($args['post__in']);
+					unset($args['orderby']);
+					$args['post__not_in'] = $i_exp;
+					$args['posts_per_page'] = $diff;
+				endif;
+			endif;
+			$article[] = new WP_query( $args );
+			foreach ( $article as $art ) :
+				if ( $art->have_posts() ) :
+					while ( $art->have_posts() ) : $art->the_post();
+						$postClass = get_post_class();
+						$fl_array = preg_grep("/felix-type-/", $postClass);
+						$fl_arr = array_keys( $fl_array );
+						unset($postClass[$fl_arr[0]]);
+						$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), 'large' ).')"><a class="post-thumbnail" href="'.get_the_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h2 class="entry-title"><a href="'.get_the_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+					endwhile;
+				endif;
+			endforeach;
+			break;
+		case "influencers" :
+			$args['category_name'] = 'influencers';
+			$args['posts_per_page'] = 2;
+			if ( !empty( $i_exp[0] ) ) :
+				$args['post__in'] = $i_exp;
+				$args['orderby'] = 'post__in';
+				$c = count( $i_exp );
+				if ( $c != $args['posts_per_page'] ) :
+					$diff = $args['posts_per_page'] - $c;
+					$args['posts_per_page'] = $c;
+					$article[] = new WP_Query( $args );
+					unset($args['post__in']);
+					unset($args['orderby']);
+					$args['post__not_in'] = $i_exp;
+					$args['posts_per_page'] = $diff;
+				endif;
+			endif;
+			$article[] = new WP_query( $args );
+			foreach ( $article as $art ) :
+				if ( $art->have_posts() ) :
+					while ( $art->have_posts() ) : $art->the_post();
+						$postClass = get_post_class();
+						$fl_array = preg_grep("/felix-type-/", $postClass);
+						$fl_arr = array_keys( $fl_array );
+						unset($postClass[$fl_arr[0]]);
+						$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), 'large' ).')"><a class="post-thumbnail" href="'.get_the_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h2 class="entry-title"><a href="'.get_the_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+					endwhile;
+				endif;
+			endforeach;
+			break;
+		case "stories" :
+			if ( !empty( $i_exp[0] ) ) :
+				$args['post__in'] = $i_exp;
+			endif;
+			$args['post_type'] = 'dc-stories';
+			$args['posts_per_page'] = 1;
+			$article = new WP_query( $args );
+			if ( $article->have_posts() ) :
+				while ( $article->have_posts() ) : $article->the_post();
+					$postClass = get_post_class();
+					$dc_type = get_post_meta( get_the_ID(), 'hpm_dc_story_type', true );
+					if ( !empty( $dc_type['type'] ) ) :
+						$postClass[] = $dc_type['type'];
+					endif;
+					$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="entry-content">'.apply_filters( 'the_content', get_the_content() ).'</div><p class="dc-author">'.get_the_title().'</p>';
+					if ( !empty( $dc_type['author_desc'] ) ) :
+						$output .= '<p class="dc-desc">'.$dc_type['author_desc'].'</p>';
+					endif;
+					$output .= '</article>';
+				endwhile;
+			endif;
+			break;
+	}
+	return $output;
+}
+add_shortcode( 'diversecity', 'diversecity_display_shortcode' );

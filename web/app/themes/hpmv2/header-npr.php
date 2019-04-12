@@ -93,7 +93,6 @@
 		<?php do_action( 'body_open' ); ?>
 		<?php hpm_fb_sdk(); ?>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
-		<?php echo hpm_emergency(); ?>
 		<div class="container">
 			<?php hpm_site_header(); ?>
 		</div>

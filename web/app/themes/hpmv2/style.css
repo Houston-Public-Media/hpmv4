@@ -1350,6 +1350,8 @@ table.gsc-search-box td.gsc-input {
 #emergency {
 	padding: 0.25em 1em;
 	text-align: center;
+	color: #cc0000;
+	font: normal 1em/1em 'MiloOT',arial,helvetica,sans-serif;
 }
 #emergency a {
 	font: normal 1em/1em 'MiloOT',arial,helvetica,sans-serif;

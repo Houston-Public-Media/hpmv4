@@ -23,8 +23,8 @@ class HPM_Promos {
 	protected $options;
 
 	public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'init' ) );
-		add_action( 'init', array( $this, 'create_type' ) );
+		add_action( 'plugins_loaded', [ $this, 'init' ] );
+		add_action( 'init', [ $this, 'create_type' ] );
 	}
 
 	/**
@@ -32,13 +32,12 @@ class HPM_Promos {
 	 */
 	public function init() {
 		$this->options = get_option( 'hpm_promos_settings' );
-		add_action( 'admin_init', array( $this, 'add_role_caps' ), 999 );
-		// add_filter( 'user_can_richedit', array( $this, 'disable_wysiwyg' ) );
-		add_action( 'save_post', array( $this, 'save_meta' ), 10, 2 );
-		add_action( 'post_submitbox_misc_actions', array( $this, 'unpub_date' ) );
-		add_action( 'hpm_promo_cleanup', array( $this, 'cleanup' ) );
-		add_filter( 'manage_edit-promos_columns', array( $this, 'edit_columns' ) );
-		add_action( 'manage_promos_posts_custom_column', array( $this, 'manage_columns' ), 10, 2 );
+		add_action( 'admin_init', [ $this, 'add_role_caps' ], 999 );
+		add_action( 'save_post', [ $this, 'save_meta' ], 10, 2 );
+		add_action( 'post_submitbox_misc_actions', [ $this, 'unpub_date' ] );
+		add_action( 'hpm_promo_cleanup', [ $this, 'cleanup' ] );
+		add_filter( 'manage_edit-promos_columns', [ $this, 'edit_columns' ] );
+		add_action( 'manage_promos_posts_custom_column', [ $this, 'manage_columns' ], 10, 2 );
 		add_action( 'wp_footer', function() {
 			echo $this->generate();
 		}, 100 );
@@ -55,20 +54,20 @@ class HPM_Promos {
 
 	public function create_type() {
 		register_post_type( 'promos',
-			array(
-				'labels'               => array(
-					'name'               => __( 'Promo Banners' ),
-					'singular_name'      => __( 'Promo Banner' ),
-					'menu_name'          => __( 'Promo Banners' ),
-					'add_new_item'       => __( 'Add New Promo Banner' ),
-					'edit_item'          => __( 'Edit Promo Banner' ),
-					'new_item'           => __( 'New Promo Banner' ),
-					'view_item'          => __( 'View Promo Banner' ),
-					'search_items'       => __( 'Search Promo Banners' ),
-					'not_found'          => __( 'Promo Banner Not Found' ),
-					'not_found_in_trash' => __( 'Promo Banner not found in trash' )
-				),
-				'description'          => 'Internal promotional banners for the homepage and internal page sidebars',
+			[
+				'labels'               => [
+					'name'               => __( 'Promo Alerts' ),
+					'singular_name'      => __( 'Promo Alert' ),
+					'menu_name'          => __( 'Promo Alerts' ),
+					'add_new_item'       => __( 'Add New Promo Alert' ),
+					'edit_item'          => __( 'Edit Promo Alert' ),
+					'new_item'           => __( 'New Promo Alert' ),
+					'view_item'          => __( 'View Promo Alert' ),
+					'search_items'       => __( 'Search Promo Alerts' ),
+					'not_found'          => __( 'Promo Alert Not Found' ),
+					'not_found_in_trash' => __( 'Promo Alert not found in trash' )
+				],
+				'description'          => 'Internal promotional alerts for the homepage and internal page sidebars',
 				'public'               => false,
 				'show_ui'              => true,
 				'show_in_admin_bar'    => true,
@@ -76,18 +75,18 @@ class HPM_Promos {
 				'menu_icon'            => 'dashicons-warning',
 				'has_archive'          => false,
 				'rewrite'              => false,
-				'supports'             => array( 'title', 'editor' ),
+				'supports'             => [ 'title', 'editor' ],
 				'can_export'           => false,
-				'capability_type'      => array( 'hpm_promo', 'hpm_promos' ),
+				'capability_type'      => [ 'hpm_promo', 'hpm_promos' ],
 				'map_meta_cap'         => true,
-				'register_meta_box_cb' => array( $this, 'add_meta' )
-			)
+				'register_meta_box_cb' => [ $this, 'add_meta' ]
+			]
 		);
 	}
 
 	public function add_role_caps() {
 		// Add the roles you'd like to administer the custom post types
-		$roles = array( 'administrator' );
+		$roles = [ 'administrator' ];
 
 		// Loop through each role and assign capabilities
 		foreach ( $roles as $the_role ) :
@@ -110,8 +109,8 @@ class HPM_Promos {
 	public function add_meta() {
 		add_meta_box(
 			'hpm-promos-meta-class',
-			esc_html__( 'Banner Metadata', 'example' ),
-			array( $this, 'meta_box' ),
+			esc_html__( 'Alert Metadata', 'example' ),
+			[ $this, 'meta_box' ],
 			'promos',
 			'normal',
 			'core'
@@ -122,35 +121,36 @@ class HPM_Promos {
 		wp_nonce_field( basename( __FILE__ ), 'hpm_promos_class_nonce' );
 		$hpm_promo = get_post_meta( $object->ID, 'hpm_promos_meta', true );
 		if ( empty( $hpm_promo ) ) :
-			$hpm_promo = array(
+			$hpm_promo = [
 				'location' => 'homepage',
 				'type' => 'sidebar',
-				'options' => array(
-					'sidebar' => array(
+				'options' => [
+					'sidebar' => [
 						'mobile' => '',
 						'tablet' => '',
 						'desktop' => ''
-					),
-					'fullwidth' => array(
+					],
+					'fullwidth' => [
 						'mobile' => '',
 						'tablet' => '',
 						'desktop' => ''
-					),
-					'lightbox' => array(
-						'a' => array(
+					],
+					'lightbox' => [
+						'a' => [
 							'link' => '',
 							'image' => '',
 							'text' => ''
-						),
-						'b' => array(
+						],
+						'b' => [
 							'link' => '',
 							'image' => '',
 							'text' => ''
-						),
+						],
 						'total' => ''
-					)
-				)
-			);
+					],
+					'emergency' => []
+				]
+			];
 		endif;
 		$editor_opts = [
 			'editor_height' => 150,
@@ -170,6 +170,7 @@ class HPM_Promos {
 				<option value="sidebar" <?PHP selected( $hpm_promo['type'], 'sidebar', TRUE ); ?>>Sidebar Banner/Poll</option>
 				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth', TRUE ); ?>>Full-Width Banner</option>
 				<option value="lightbox" <?PHP selected( $hpm_promo['type'], 'lightbox', TRUE ); ?>>Lightbox</option>
+				<option value="emergency" <?PHP selected( $hpm_promo['type'], 'emergency', TRUE ); ?>>Emergency Notification</option>
 			</select>
 		</p>
 		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>>
@@ -221,6 +222,8 @@ class HPM_Promos {
 			<ul style="margin-bottom: 2em;">
 				<li><label for="hpm_promo[options][lightbox][total]"><?php _e('Link to JSON File: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][lightbox][total]" value="<?php echo $hpm_promo['options']['lightbox']['total']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
+		</div>
+		<div id="hpm-emergency" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'emergency' ? '' : ' style="display: none;"'); ?>>
 		</div>
 		<script>
 			jQuery(document).ready(function($){
@@ -282,11 +285,11 @@ class HPM_Promos {
 				endif;
 			endforeach;
 
-			$hpm_promo_meta = array(
+			$hpm_promo_meta = [
 				'location' => $_POST['hpm_promo']['location'],
 				'type' => $_POST['hpm_promo']['type'],
 				'options' => $options
-			);
+			];
 
 			update_post_meta( $post_id, 'hpm_promos_meta', $hpm_promo_meta );
 		endif;
@@ -312,13 +315,13 @@ class HPM_Promos {
 			else :
 				$t = $endtime + $offset;
 			endif;
-			$timeend = array(
+			$timeend = [
 				'mon' => date( 'm', $t),
 				'day' => date( 'd', $t),
 				'year' => date( 'Y', $t),
 				'hour' => date( 'H', $t),
 				'min' => date( 'i', $t)
-			);
+			];
 
 		?>
 <div class="misc-pub-section curtime misc-pub-curtime">
@@ -419,18 +422,18 @@ class HPM_Promos {
 		$offset = get_option('gmt_offset')*3600;
 		$t = $t + $offset;
 		$now = getdate($t);
-		$args = array(
+		$args = [
 			'post_type' => 'promos',
 			'posts_per_page' => -1,
 			'post_status' => 'publish',
-			'meta_query' => array(
-				array(
+			'meta_query' => [
+				[
 					'key' => 'hpm_promos_end_time',
 					'value' => $now[0],
 					'compare' => '<=',
-				)
-			)
-		);
+				]
+			]
+		];
 		$promos = new WP_Query( $args );
 		if ( $promos->have_posts() ) :
 			while ( $promos->have_posts() ) :
@@ -509,7 +512,7 @@ class HPM_Promos {
 						echo $content;
 						continue;
 					endif;
-					$sizing = array();
+					$sizing = [];
 					if ( !empty( $meta['options']['sidebar']['mobile'] ) ) :
 						$sizing[] = "if ( wide <= 480 ) { var image = '".$meta['options']['sidebar']['mobile']."'; }";
 					endif;
@@ -530,7 +533,7 @@ class HPM_Promos {
 					endif;
 				elseif ( $meta['type'] == 'fullwidth' ) :
 					if ( $fullwidth == 0 ) :
-						$sizing = array();
+						$sizing = [];
 						if ( !empty( $meta['options']['fullwidth']['mobile'] ) ) :
 							$sizing[] = "if ( wide <= 480 ) { var image = '".$meta['options']['fullwidth']['mobile']."'; }";
 						endif;
@@ -555,8 +558,8 @@ class HPM_Promos {
 		var visited = getCookie('visited');";
 						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) :
 							$content_esc = str_replace(
-								array( "[[link]]", "[[image]]", "[[text]]" ),
-								array( "'+lblink+'", "'+lbimage+'", "'+lbtext+'" ),
+								[ "[[link]]", "[[image]]", "[[text]]" ],
+								[ "'+lblink+'", "'+lbimage+'", "'+lbtext+'" ],
 								$content_esc );
 							$output .= "
 		var rand = Math.floor(Math.random() * 20);
@@ -574,11 +577,6 @@ class HPM_Promos {
 						if ( !empty( $meta['options']['lightbox']['total'] ) ) :
 							$remote = file_get_contents( $meta['options']['lightbox']['total'] );
 							$total = json_decode( $remote, true );
-//							if ( is_wp_error( $remote ) ) :
-//								return false;
-//							else :
-//								$json = wp_remote_retrieve_body( $remote );
-//							endif;
 							$content_esc = str_replace( "[[total]]", $total['total'], $content_esc );
 						endif;
 						$output .= "
@@ -605,6 +603,9 @@ class HPM_Promos {
 					else :
 						continue;
 					endif;
+				elseif ( $meta['type'] == 'emergency' ) :
+					$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
+					$output .= "document.getElementById('fb-root').insertAdjacentHTML('afterend', '<div id=\"emergency\"><span class=\"fa fa-exclamation-circle\" aria-hidden=\"true\"></span> ".$content_esc."</div>');";
 				endif;
 			endwhile;
 		endif;
@@ -632,14 +633,14 @@ class HPM_Promos {
 
 	
 	public function edit_columns( $columns ) {
-		$columns = array(
+		$columns = [
 			'cb' => '<input type="checkbox" />',
 			'title' => __( 'Name' ),
 			'promo_type' => __( 'Type' ),
 			'promo_location' => __( 'Location' ),
 			'date' => __( 'Date' ),
 			'promo_expiration' => __( 'Expiration' )
-		);
+		];
 		return $columns;
 	}
 	
