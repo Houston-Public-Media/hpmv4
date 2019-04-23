@@ -20,7 +20,7 @@ class Batcache_Manager {
 	 *
 	 * @var array
 	 */
-	private $feeds = array( 'rss', 'rss2', 'rdf', 'atom' );
+	private $feeds = [ 'rss', 'rss2', 'rdf', 'atom' ];
 
 	/**
 	 * List of links to process
@@ -29,7 +29,7 @@ class Batcache_Manager {
 	 *
 	 * @var array
 	 */
-	private $links = array();
+	private $links = [];
 
 	/**
 	 * Instance of this class.
@@ -48,38 +48,38 @@ class Batcache_Manager {
 		global $batcache, $wp_object_cache;
 
 		// Do not load if our advanced-cache.php isn't loaded
-		if ( ! isset( $batcache ) || ! is_object( $batcache ) || ! method_exists( $wp_object_cache, 'incr' ) ) {
+		if ( ! isset( $batcache ) || ! is_object( $batcache ) || ! method_exists( $wp_object_cache, 'incr' ) ) :
 			return;
-		}
+		endif;
 
 		$batcache->configure_groups();
 
 		// Posts
-		add_action( 'clean_post_cache', array( $this, 'action_clean_post_cache' ), 15 );
+		add_action( 'clean_post_cache', [ $this, 'action_clean_post_cache' ], 15 );
 		// Terms
-		add_action( 'clean_term_cache', array( $this, 'action_clean_term_cache' ), 10, 3 );
+		add_action( 'clean_term_cache', [ $this, 'action_clean_term_cache' ], 10, 3 );
 		//Comments
-		add_action( 'clean_comment_cache', array( $this, 'action_update_comment' ) ); // Only supported in 4.5
-		add_action( 'comment_post', array( $this, 'action_update_comment' ) );
-		add_action( 'wp_set_comment_status', array( $this, 'action_update_comment' ) );
-		add_action( 'edit_comment', array( $this, 'action_update_comment' ) );
+		add_action( 'clean_comment_cache', [ $this, 'action_update_comment' ] ); // Only supported in 4.5
+		add_action( 'comment_post', [ $this, 'action_update_comment' ] );
+		add_action( 'wp_set_comment_status', [ $this, 'action_update_comment' ] );
+		add_action( 'edit_comment', [ $this, 'action_update_comment' ] );
 		// Users
-		add_action( 'clean_user_cache', array( $this, 'action_update_user' ) );
-		add_action( 'profile_update', array( $this, 'action_update_user' ) );
+		add_action( 'clean_user_cache', [ $this, 'action_update_user' ] );
+		add_action( 'profile_update', [ $this, 'action_update_user' ] );
 		// Widgets
-		add_filter( 'widget_update_callback', array( $this, 'action_update_widget' ), 50 );
+		add_filter( 'widget_update_callback', [ $this, 'action_update_widget' ], 50 );
 		// Customiser
-		add_action( 'customize_save_after', array( $this, 'flush_all' ) );
+		add_action( 'customize_save_after', [ $this, 'flush_all' ] );
 		// Theme
-		add_action( 'switch_theme', array( $this, 'flush_all' ) );
+		add_action( 'switch_theme', [ $this, 'flush_all' ] );
 		// Nav
-		add_action( 'wp_update_nav_menu', array( $this, 'flush_all' ) );
+		add_action( 'wp_update_nav_menu', [ $this, 'flush_all' ] );
 
 		// Add site aliases to list of links
-		add_filter( 'batcache_manager_links', array( $this, 'add_site_alias' ) );
+		add_filter( 'batcache_manager_links', [ $this, 'add_site_alias' ] );
 
 		// Do the flush of the urls on shutdown
-		add_action( 'shutdown', array( $this, 'clear_urls' ) );
+		add_action( 'shutdown', [ $this, 'clear_urls' ] );
 	}
 
 	/**
@@ -91,10 +91,9 @@ class Batcache_Manager {
 	 */
 	public static function get_instance() {
 		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance ) {
+		if ( null == self::$instance ) :
 			self::$instance = new self;
-		}
-
+		endif;
 		return self::$instance;
 	}
 
@@ -111,9 +110,9 @@ class Batcache_Manager {
 	 */
 	public function is_post_type_viewable( $post_type ) {
 		$post_type_object = get_post_type_object( $post_type );
-		if ( empty( $post_type_object ) ) {
+		if ( empty( $post_type_object ) ) :
 			return false;
-		}
+		endif;
 
 		return $post_type_object->publicly_queryable || ( $post_type_object->_builtin && $post_type_object->public );
 	}
@@ -133,9 +132,9 @@ class Batcache_Manager {
 	 * @return bool Whether the taxonomy is public.
 	 */
 	function is_taxonomy_viewable( $taxonomy ) {
-		if ( ! taxonomy_exists( $taxonomy ) ) {
+		if ( ! taxonomy_exists( $taxonomy ) ) :
 			return false;
-		}
+		endif;
 
 		$taxonomy = get_taxonomy( $taxonomy );
 
@@ -150,13 +149,13 @@ class Batcache_Manager {
 	public function action_clean_post_cache( $post_id ) {
 
 		$post = get_post( $post_id );
-		if ( ! $this->is_post_type_viewable( $post->post_type ) || ! in_array( get_post_status( $post_id ), array(
+		if ( ! $this->is_post_type_viewable( $post->post_type ) || ! in_array( get_post_status( $post_id ), [
 				'publish',
 				'trash'
-			) )
-		) {
+		 	] )
+		) :
 			return;
-		}
+		endif;
 		$this->setup_post_urls( $post );
 		$this->setup_author_urls( $post->post_author );
 		$this->setup_site_urls();
@@ -172,17 +171,17 @@ class Batcache_Manager {
 	 */
 	public function action_clean_term_cache( $ids, $taxonomy, $clean_taxonomy = true ) {
 		// Clear taxonomy global caches. If false, lets not both.
-		if ( ! $clean_taxonomy ) {
+		if ( ! $clean_taxonomy ) :
 			return;
-		}
+		endif;
 		// If not a public taxonomy, don't clear caches.
-		if ( ! $this->is_taxonomy_viewable( $taxonomy ) ) {
+		if ( ! $this->is_taxonomy_viewable( $taxonomy ) ) :
 			return;
-		}
+		endif;
 
-		foreach ( $ids as $term ) {
+		foreach ( $ids as $term ) :
 			$this->setup_term_urls( $term, $taxonomy );
-		}
+		endforeach;
 	}
 
 	/**
@@ -207,9 +206,9 @@ class Batcache_Manager {
 	}
 
 	public function flush_all() {
-		if ( function_exists( 'batcache_flush_all' ) ) {
+		if ( function_exists( 'batcache_flush_all' ) ) :
 			batcache_flush_all();
-		}
+		endif;
 	}
 
 	/**
@@ -221,7 +220,6 @@ class Batcache_Manager {
 	 */
 	public function action_update_widget( $instance ) {
 		$this->flush_all();
-
 		return $instance;
 	}
 
@@ -234,38 +232,37 @@ class Batcache_Manager {
 	public function setup_term_urls( $term, $taxonomy ) {
 
 		$term_link = get_term_link( $term, $taxonomy );
-		if ( ! is_wp_error( $term_link ) ) {
+		if ( ! is_wp_error( $term_link ) ) :
 			$this->links[] = $term_link;
-		}
-		foreach ( $this->feeds as $feed ) {
+		endif;
+		foreach ( $this->feeds as $feed ) :
 			$term_link_feed = get_term_feed_link( $term, $taxonomy, $feed );
-			if ( $term_link_feed ) {
+			if ( $term_link_feed ) :
 				$this->links[] = $term_link_feed;
-			}
-		}
+			endif;
+		endforeach;
 
 		$taxonomy_object = get_taxonomy( $taxonomy );
-		if ( $taxonomy_object->show_in_rest && $taxonomy_object->rest_base ) {
+		if ( $taxonomy_object->show_in_rest && $taxonomy_object->rest_base ) :
 			$base = $taxonomy_object->rest_base;
 			$this->links[] = get_rest_url( null, '/wp/v2/' . $base );
 			$this->links[] = get_rest_url( null, '/wp/v2/' . $base . '/'. $term );
-		}
-
+		endif;
 	}
 
 	/**
 	 * Home page / blog page and feed links
 	 */
 	public function setup_site_urls() {
-		if ( get_option( 'show_on_front' ) == 'page' ) {
+		if ( get_option( 'show_on_front' ) == 'page' ) :
 			$this->links[] = get_permalink( get_option( 'page_for_posts' ) );
-		}
+		endif;
 
 		$this->links[] = home_url( '/' );
 
-		foreach ( $this->feeds as $feed ) {
+		foreach ( $this->feeds as $feed ) :
 			$this->links[] = get_feed_link( $feed );
-		}
+		endforeach;
 	}
 
 	/**
@@ -277,29 +274,29 @@ class Batcache_Manager {
 		$post = get_post( $post );
 
 		$this->links[] = get_permalink( $post );
-		if ( $post->post_type == 'post' ) {
+		if ( $post->post_type == 'post' ) :
 			$year          = get_the_time( "Y", $post );
 			$month         = get_the_time( "m", $post );
 			$day           = get_the_time( "d", $post );
 			$this->links[] = get_year_link( $year );
 			$this->links[] = get_month_link( $year, $month );
 			$this->links[] = get_day_link( $year, $month, $day );
-		} else if ( ! in_array( $post->post_type, get_post_types( array( 'public' => true ) ) ) ) {
-			if ( $archive_link = get_post_type_archive_link( $post->post_type ) ) {
+		elseif ( ! in_array( $post->post_type, get_post_types( [ 'public' => true ] ) ) ) :
+			if ( $archive_link = get_post_type_archive_link( $post->post_type ) ) :
 				$this->links[] = $archive_link;
-			}
-			foreach ( $this->feeds as $feed ) {
-				if ( $archive_link_feed = get_post_type_archive_feed_link( $post->post_type, $feed ) ) {
+			endif;
+			foreach ( $this->feeds as $feed ) :
+				if ( $archive_link_feed = get_post_type_archive_feed_link( $post->post_type, $feed ) ) :
 					$this->links[] = $archive_link_feed;
-				}
-			}
-		}
+				endif;
+			endforeach;
+		endif;
 		$post_type = get_post_type_object( $post->post_type );
-		if ( $post_type->show_in_rest && $post_type->rest_base ) {
+		if ( $post_type->show_in_rest && $post_type->rest_base ) :
 			$base = $post_type->rest_base;
 			$this->links[] = get_rest_url( null, '/wp/v2/' . $base );
 			$this->links[] = get_rest_url( null, '/wp/v2/' . $base . '/'. $post->ID );
-		}
+		endif;
 	}
 
 	/**
@@ -309,9 +306,9 @@ class Batcache_Manager {
 	 */
 	public function setup_author_urls( $author_id ) {
 		$this->links[] = get_author_posts_url( $author_id );
-		foreach ( $this->feeds as $feed ) {
+		foreach ( $this->feeds as $feed ) :
 			$this->links[] = get_author_feed_link( $author_id, $feed );
-		}
+		endforeach;
 		$this->links[] = get_rest_url( null, '/wp/v2/users' );
 		$this->links[] = get_rest_url( null, '/wp/v2/users/' . $author_id );
 	}
@@ -322,13 +319,13 @@ class Batcache_Manager {
 	 * @param $post_id
 	 */
 	public function setup_post_comment_urls( $post_id, $comment_id = 0 ) {
-		foreach ( $this->feeds as $feed ) {
+		foreach ( $this->feeds as $feed ) :
 			$this->links[] = get_post_comments_feed_link( $post_id, $feed );
-		}
+		endforeach;
 
-		foreach ( $this->feeds as $feed ) {
+		foreach ( $this->feeds as $feed ) :
 			$this->links[] = get_feed_link( "comments_" . $feed );
-		}
+		endforeach;
 		$this->links[] = get_rest_url( null, '/wp/v2/comments' );
 		$this->links[] = get_rest_url( null, '/wp/v2/comments/' . $comment_id );
 	}
@@ -342,20 +339,20 @@ class Batcache_Manager {
 	public function add_site_alias( $links ) {
 		$home = parse_url( home_url(), PHP_URL_HOST );
 
-		$compare_urls = array(
+		$compare_urls = [
 			parse_url( get_option( 'home' ), PHP_URL_HOST ),
 			parse_url( get_option( 'siteurl' ), PHP_URL_HOST ),
 			parse_url( site_url(), PHP_URL_HOST )
-		);
+		];
 
 		// Compare home, site urls with filtered home url
-		foreach ( $compare_urls as $compare_url ) {
-			if ( $compare_url != $home ) {
-				foreach ( $links as $url ) {
+		foreach ( $compare_urls as $compare_url ) :
+			if ( $compare_url != $home ) :
+				foreach ( $links as $url ) :
 					$links[] = str_replace( $home, $compare_url, $url );
-				}
-			}
-		}
+				endforeach;
+			endif;
+		endforeach;
 
 		return $links;
 	}
@@ -364,15 +361,15 @@ class Batcache_Manager {
 	 * Loop around all urls and clear
 	 */
 	public function clear_urls() {
-		if ( empty ( $this->get_links() ) ) {
+		if ( empty ( $this->get_links() ) ) :
 			return;
-		}
+		endif;
 
-		foreach ( $this->get_links() as $url ) {
+		foreach ( $this->get_links() as $url ) :
 			self::clear_url( $url );
-		}
+		endforeach;
 		// Clear out links
-		$this->links = array();
+		$this->links = [];
 	}
 
 	/**
@@ -386,9 +383,9 @@ class Batcache_Manager {
 
 		$url = apply_filters( 'batcache_manager_link', $url );
 
-		if ( empty( $url ) ) {
+		if ( empty( $url ) ) :
 			return false;
-		}
+		endif;
 
 		do_action( 'batcache_manager_before_flush', $url );
 
@@ -401,13 +398,13 @@ class Batcache_Manager {
 		$retval = wp_cache_incr( "{$url_key}_version", 1, $batcache->group );
 
 		$batcache_no_remote_group_key = array_search( $batcache->group, (array) $wp_object_cache->no_remote_groups );
-		if ( false !== $batcache_no_remote_group_key ) {
+		if ( false !== $batcache_no_remote_group_key ) :
 			// The *_version key needs to be replicated remotely, otherwise invalidation won't work.
 			// The race condition here should be acceptable.
 			unset( $wp_object_cache->no_remote_groups[ $batcache_no_remote_group_key ] );
 			$retval                                                             = wp_cache_set( "{$url_key}_version", $retval, $batcache->group );
 			$wp_object_cache->no_remote_groups[ $batcache_no_remote_group_key ] = $batcache->group;
-		}
+		endif;
 
 		do_action( 'batcache_manager_after_flush', $url, $retval );
 
@@ -421,12 +418,9 @@ class Batcache_Manager {
 	 */
 	public function get_links() {
 		$this->links = apply_filters( 'batcache_manager_links', $this->links );
-
 		return array_unique( $this->links );
 	}
 
 }
-
 global $batcache_manager;
-
 $batcache_manager = Batcache_Manager::get_instance();

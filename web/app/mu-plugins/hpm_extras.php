@@ -81,9 +81,9 @@ function disable_wp_emojicons() {
 
 function disable_emojicons_tinymce( $plugins ) {
 	if ( is_array( $plugins ) ) :
-		return array_diff( $plugins, array( 'wpemoji' ) );
+		return array_diff( $plugins, [ 'wpemoji' ] );
 	else :
-		return array();
+		return [];
 	endif;
 }
 add_action( 'init', 'disable_wp_emojicons' );
@@ -96,18 +96,7 @@ function add_query_vars($aVars) {
 	$aVars[] = "sched_year";
 	$aVars[] = "sched_month";
 	$aVars[] = "sched_day";
-	$aVars[] = "sched_tv_query";
-	$aVars[] = "sched_endpoint";
 	$aVars[] = "npr_id";
-	$aVars[] = "hpm_slug";
-	$aVars[] = "hpm_slug_extra";
-	$aVars[] = "hpm_epno";
-	$aVars[] = "dc_id";
-	$aVars[] = "dc_year";
-	$aVars[] = "dc_month";
-	$aVars[] = "dc_day";
-	$aVars[] = "dc_slug";
-	$aVars[] = "hm_old_id";
 	return $aVars;
 }
 add_filter('query_vars', 'add_query_vars');
@@ -116,22 +105,14 @@ add_filter('query_vars', 'add_query_vars');
  * Creating new rewrite rules to feed those special sections and external data pulls
  */
 function add_rewrite_rules($aRules) {
-	$aNewRules = array(
-		'^(news887|classical|tv8)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=day',
-		'^(news887|classical|tv8)/schedule/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=day',
-		'^(news887|classical|tv8)/schedule/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=day&sched_year=$matches[2]&sched_month=01&sched_day=01',
-		'^(news887|classical|tv8)/schedule/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=day&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=01',
-		'^(news887|classical|tv8)/schedule/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=day&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=$matches[4]',
-		'^(news887|classical)/schedule/(week)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=$matches[2]',
-		'^(news887|classical)/schedule/(week)/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=$matches[2]&sched_year=$matches[3]&sched_month=01&sched_day=01',
-		'^(news887|classical)/schedule/(week)/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=$matches[2]&sched_year=$matches[3]&sched_month=$matches[4]&sched_day=01',
-		'^(news887|classical)/schedule/(week)/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_enpoint=$matches[2]&sched_year=$matches[3]&sched_month=$matches[4]&sched_day=$matches[5]',
-		'^(tv8)/schedule/(search|episode|program)/([^/]+)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_endpoint=$matches[2]&sched_tv_query=$matches[3]',
-		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]{9})/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]',
-		'^news/([0-9]+)/?' => 'index.php?pagename=redirect&hpm_slug=$matches[1]',
-		'^diversecity/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]+)/([a-z0-9\-]+)/?' => 'index.php?p=$matches[4]',
-		'^hm-old/([0-9]+)/?$' => 'index.php?pagename=redirect&hm_old_id=$matches[1]'
-	);
+	$aNewRules = [
+		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=$matches[4]',
+		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=01',
+		'^(news887|classical)/schedule/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=01&sched_day=01',
+		'^(news887|classical)/schedule/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
+		'^(news887|classical)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
+		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]{9})/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]'
+	];
 	$aRules = $aNewRules + $aRules;
 	return $aRules;
 }
@@ -144,22 +125,22 @@ add_filter('rewrite_rules_array', 'add_rewrite_rules');
 add_filter( 'cron_schedules', 'hpm_cron_updates', 10, 2 );
 
 function hpm_cron_updates( $schedules ) {
-	$schedules['hpm_1min'] = array(
+	$schedules['hpm_1min'] = [
 		'interval' => 60,
 		'display' => __( 'Every Minute' )
-	);
-	$schedules['hpm_2min'] = array(
+	];
+	$schedules['hpm_2min'] = [
 		'interval' => 120,
 		'display' => __( 'Every Other Minute' )
-	);
-	$schedules['hpm_2hours'] = array(
+	];
+	$schedules['hpm_2hours'] = [
 		'interval' => 7200,
 		'display' => __( 'Every Two Hours' )
-	);
-	$schedules['hpm_weekly'] = array(
+	];
+	$schedules['hpm_weekly'] = [
 		'interval' => 604800,
 		'display' => __( 'Every Week' )
-	);
+	];
 	return $schedules;
 }
 
@@ -205,7 +186,7 @@ function hpmv2_nowplaying ( $station ) {
 }
 
 function hpmv2_nowplaying_update () {
-	$stations = array( 'news887', 'classical', 'tv8.1', 'tv8.2', 'tv8.3', 'tv8.4' );
+	$stations = [ 'news887', 'classical', 'tv8.1', 'tv8.2', 'tv8.3', 'tv8.4' ];
 	foreach ( $stations as $station ) :
 		if ( $station == 'news887' ) :
 			$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json" ) );
@@ -231,7 +212,7 @@ function hpmv2_nowplaying_update () {
 				$ense = '';
 			endif;
 			if (!empty($dom['onNow']['song'])) :
-				$descs = array();
+				$descs = [];
 				if (!empty($dom['onNow']['song']['composerName'])) :
 					$descs[] = "Composer: ".$dom['onNow']['song']['composerName'];
 				endif;
@@ -317,7 +298,7 @@ function save_hpm_no_mod_time( ) {
 /*
  * Disallow certain MIME types from being accepted by the media uploader
  */
-function custom_upload_mimes ( $existing_mimes=array() ) {
+function custom_upload_mimes ( $existing_mimes = [] ) {
 	unset( $existing_mimes['exe'] );
 	unset( $existing_mimes['wav'] );
 	unset( $existing_mimes['ra|ram'] );
@@ -348,7 +329,7 @@ function hpm_youtube_playlist( $key ) {
 	endif;
 	$totalResults = $json['pageInfo']['totalResults'];
 	$resultsPerPage = $json['pageInfo']['resultsPerPage'];
-	$times = array( strtotime( $json['items'][0]['snippet']['publishedAt'] ), strtotime( $json['items'][1]['snippet']['publishedAt'] ), strtotime( $json['items'][2]['snippet']['publishedAt'] ) );
+	$times = [ strtotime( $json['items'][0]['snippet']['publishedAt'] ), strtotime( $json['items'][1]['snippet']['publishedAt'] ), strtotime( $json['items'][2]['snippet']['publishedAt'] ) ];
 	if ( $times[0] > $times[1] && $times[1] > $times[2] ) :
 		$new2old = TRUE;
 	elseif ( $times[2] > $times[1] && $times[1] > $times[0] ) :
@@ -386,13 +367,13 @@ function hpm_youtube_playlist( $key ) {
 function hpm_facebook_ping( $arg1 ) {
 	$perma = get_permalink( $arg1 );
 	$url = 'http://graph.facebook.com';
-	$data = array('id' => $perma, 'scrape' => 'true');
-	$options = array(
-		'headers' => array(
+	$data = [ 'id' => $perma, 'scrape' => 'true' ];
+	$options = [
+		'headers' => [
 			"Content-type" => "application/x-www-form-urlencoded"
-		),
+		],
 		'body' => $data
-	);
+	];
 	$remote = wp_remote_get( esc_url_raw( $url ), $options );
 	if ( is_wp_error( $remote ) ) :
 		return false;
@@ -402,7 +383,7 @@ function hpm_facebook_ping( $arg1 ) {
 }
 function hpm_facebook_ping_schedule( $post_id, $post ) {
 	if ( WP_ENV == 'production' ) :
-		wp_schedule_single_event( time() + 60, 'hpm_facebook_ping', array( $post_id ) );
+		wp_schedule_single_event( time() + 60, 'hpm_facebook_ping', [ $post_id ] );
 	endif;
 }
 
@@ -417,21 +398,21 @@ add_action( 'owf_update_published_post', 'update_post_meta_info', 10, 2 );
  * Copy over any metadata from an article revision to its original
  */
 function update_post_meta_info( $original_post_id, $revised_post ) {
-	$post_meta_keys = get_post_custom_keys($revised_post->ID);
+	$post_meta_keys = get_post_custom_keys( $revised_post->ID );
 	if ( empty( $post_meta_keys ) ) :
 		return;
 	endif;
 
 	foreach ( $post_meta_keys as $meta_key ) :
-		$meta_key_trim = trim($meta_key);
-		if ( '_' == $meta_key_trim{0} || strpos($meta_key_trim,'oasis') !== false ) :
+		$meta_key_trim = trim( $meta_key );
+		if ( '_' == $meta_key_trim{0} || strpos( $meta_key_trim, 'oasis' ) !== false ) :
 			continue;
 		endif;
 		$revised_meta_values = get_post_custom_values( $meta_key, $revised_post->ID );
 		$original_meta_values = get_post_custom_values( $meta_key, $original_post_id );
 
 		// find the bigger array of the two
-		$meta_values_count = count( $revised_meta_values ) > count($original_meta_values) ? count( $revised_meta_values ) : count($original_meta_values);
+		$meta_values_count = count( $revised_meta_values ) > count( $original_meta_values ) ? count( $revised_meta_values ) : count( $original_meta_values );
 
 		// loop through the meta values to find what's added, modified and deleted.
 		for( $i = 0; $i < $meta_values_count; $i++) :
@@ -455,7 +436,6 @@ function update_post_meta_info( $original_post_id, $revised_post ) {
 			if ( count( $original_meta_values ) < $i+1 ) :
 				add_post_meta( $original_post_id, $meta_key, $new_meta_value );
 			endif;
-
 		endfor;
 	endforeach;
 }
@@ -495,14 +475,14 @@ function analyticsPull_update() {
 		date( "Y-m-d", $then ),
 		date( "Y-m-d", $now[0] ),
 		'ga:visits',
-		array(
+		[
 			'filters' => 'ga:pagePath=@/articles',
 			'dimensions'  => 'ga:pagePath',
 			'metrics'     => 'ga:pageviews,ga:uniquePageviews',
 			'sort'        => '-ga:pageviews,-ga:uniquePageviews',
 			'max-results' => '5',
 			'output'      => 'json'
-		)
+		]
 	);
 	$output = "<ul>";
 	foreach ( $result->rows as $row ) :
@@ -524,7 +504,6 @@ $timestamp = wp_next_scheduled( 'hpm_analytics' );
 if ( empty( $timestamp ) ) :
 	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
 endif;
-
 
 /**
  * @return mixed|string
@@ -567,8 +546,8 @@ function remove_menus(){
 add_action( 'admin_menu', 'remove_menus' );
 
 function hpm_render_tweet( $j ) {
-	$find = array( '/\n/' );
-	$replace = array( '<br />' );
+	$find = [ '/\n/' ];
+	$replace = [ '<br />' ];
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$time = strtotime( $j['created_at'] ) + $offset;
 	$date = date( 'F j, Y, g:i A', $time );
@@ -651,7 +630,7 @@ function hpm_tweets( $account, $num ) {
 	$output = '';
 	// $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name='.$account.'&count='.$num.'&include_rts=true&tweet_mode=extended';
 	$url = 'https://api.twitter.com/1.1/search/tweets.json?q=%23txdecides%20-RT&result_type=recent&count=25&include_entities=true&tweet_mode=extended';
-	$opts = array( 'headers' => array( "Authorization" => "Bearer AAAAAAAAAAAAAAAAAAAAAHC03AAAAAAAZo5NNz4NqlK6%2FjlJjcnhScYP3FQ%3DLR2gnzwqO2dn1SUGolipkUULalisg6DOpRfKlEVqzvYw7XtKfs" ) );
+	$opts = [ 'headers' => [ "Authorization" => "Bearer AAAAAAAAAAAAAAAAAAAAAHC03AAAAAAAZo5NNz4NqlK6%2FjlJjcnhScYP3FQ%3DLR2gnzwqO2dn1SUGolipkUULalisg6DOpRfKlEVqzvYw7XtKfs" ] ];
 	$remote = wp_remote_get( esc_url_raw( $url ), $opts );
 	if ( is_wp_error( $remote ) ) :
 		echo "Sorry, no tweets right now.";
@@ -763,9 +742,9 @@ function hpm_npr_api_contributor() {
 
 if ( !function_exists('hpm_add_allowed_tags' ) ) {
 	function hpm_add_allowed_tags( $tags ) {
-		$tags['script'] = array(
+		$tags['script'] = [
 			'src' => true,
-		);
+		];
 		return $tags;
 	}
 	add_filter( 'wp_kses_allowed_html', 'hpm_add_allowed_tags' );
@@ -1102,14 +1081,14 @@ function hpm_image_preview_page() {
 add_action('admin_menu', 'hpm_image_preview_page');
 
 function diversecity_display_shortcode( $atts ) {
-	extract( shortcode_atts( array(
+	extract( shortcode_atts( [
 		'section' => '',
 		'ids' => ''
-	), $atts, 'multilink' ) );
+	], $atts, 'multilink' ) );
 	$i_exp = explode( ',', $ids);
-	$args = array(
+	$args = [
 		'ignore_sticky_posts' => 1
-	);
+	];
 	$output = '';
 	global $post;
 	switch ( $section ) {
@@ -1140,7 +1119,7 @@ function diversecity_display_shortcode( $atts ) {
 			endforeach;
 			break;
 		case "shapes" :
-			$article = array();
+			$article = [];
 			$args['category_name'] = 'how-it-shapes-us';
 			$args['posts_per_page'] = 3;
 			if ( !empty( $i_exp[0] ) ) :
