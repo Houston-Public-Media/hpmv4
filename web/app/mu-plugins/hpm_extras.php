@@ -315,8 +315,8 @@ add_filter('upload_mimes', 'custom_upload_mimes');
 /*
  * Finds the last 5 entries in the specified YouTube playlist and saves into a site transient
  */
-function hpm_youtube_playlist( $key ) {
-	$list = get_transient( 'hpm_yt_'.$key );
+function hpm_youtube_playlist( $key, $num = 5 ) {
+	$list = get_transient( 'hpm_yt_'.$key.'_'.$num );
 	if ( !empty( $list ) ) :
 		return $list;
 	endif;
@@ -356,8 +356,8 @@ function hpm_youtube_playlist( $key ) {
 		endif;
 		$items = array_reverse( $json['items'] );
 	endif;
-	$json_r = array_slice( $items, 0, 5 );
-	set_transient( 'hpm_yt_'.$key, $json_r, 300 );
+	$json_r = array_slice( $items, 0, $num );
+	set_transient( 'hpm_yt_'.$key.'_'.$num, $json_r, 300 );
 	return $json_r;
 }
 

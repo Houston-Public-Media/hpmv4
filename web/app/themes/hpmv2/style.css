@@ -3830,7 +3830,7 @@ body.page.page-template-page-kids .kids-schedule {
 		padding: 1em;
 	}
 	body.single-shows #station-social h3 {
-		width: 50%;
+		width: 55%;
 		padding: 0.375em 0;
 		float: left;
 		margin: 0;
@@ -5740,7 +5740,7 @@ body.page.page-template-page-kids .kids-schedule {
 	background-image: url('https://cdn.hpm.io/assets/images/icons/passport_icon.png');
 }
 .page-template-page-passport.passport-faqs .page-header .page-title,
-.page-template-page-passport.passport-donation .page-header .page-title{
+.page-template-page-passport.passport-donation .page-header .page-title {
 	top: 0;
 	padding: 0 0 0 2em;
 	-webkit-flex-flow: row wrap;
@@ -9707,5 +9707,183 @@ h2.ss-join {
 	}
 	.page.support-ss article .entry-content ul.ss-donor-levels li.ss-journalist img {
 		bottom: 2.5em;
+	}
+}
+
+/*
+ *  Red, White, and Blue Show page
+*/
+body.single.single-shows.shows-template-single-shows-rwb #main {
+	background-color: white;
+}
+.shows-template-single-shows-rwb #shows-youtube {
+	margin: 0;
+	padding: 0;
+}
+.shows-template-single-shows-rwb #shows-youtube div.column-right {
+	width: 100%;
+	margin: 0;
+}
+body.single-shows.shows-template-single-shows-rwb #station-social {
+	margin: 0;
+}
+body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-right h3 {
+	margin: 0;
+	padding: 0.5em;
+	font: normal 2em/1em 'alternate-gothic-no-2-d','MiloOT-Light',arial,sans-serif;
+	color: #707070;
+	border-bottom: 0.0625em solid #c5c5c5;
+}
+body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-right .show-content {
+	padding: 0 0.5em;
+}
+body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-right .show-content p {
+	color: #707070;
+	font: normal 1em/1.25em arial,helvetica,sans-serif;
+}
+.shows-template-single-shows-rwb .column-right div {
+	margin: 1em 0;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-main h2 {
+	color: #707070;
+	margin-bottom: 0;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-main p,
+#rwb-austin p {
+	color: #707070;
+	font: normal 1em/1.25em arial,helvetica,sans-serif;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-main p.date {
+	margin-bottom: 0.5em;
+	text-transform: none;
+	font-family: 'MiloOT',arial,Arial, Helvetica, sans-serif;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-upcoming {
+	width: 100%;
+	margin: 1em 0;
+	background-color: #e8e8e8;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-upcoming h4 {
+	color: #fff;
+	text-transform: none;
+	text-align: center;
+	margin: 0 0 0.5em 0;
+	padding: 0.5em 0;
+	background-color: #676767;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-upcoming .youtube h2 {
+	font: normal 1.25em/1em 'MiloOT-Light',arial,sans-serif;
+	padding-top: 0.25em;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-upcoming .youtube p.date {
+	text-transform: none;
+}
+.shows-template-single-shows-rwb .readmore a {
+	font: normal 1.25em/1em 'MiloOT-Bold',arial,sans-serif;
+	text-transform: none;
+	width: 100%;
+	margin: 1em 0;
+	background-color: #cc0000;
+	color: #fff;
+}
+.shows-template-single-shows-rwb #shows-youtube #youtube-upcoming .youtube img {
+	padding: 0 1em 0 0;
+}
+#rwb-austin {
+	padding: 1em 1.5em;
+	border-top: 0.0625em solid #c5c5c5;
+	margin: 1em 0;
+	position: relative;
+	max-width: 100%;
+	width: 100%;
+}
+#rwb-austin h3 {
+	margin: 0;
+	padding: 0.5em 0;
+	font: normal 2em/1em 'alternate-gothic-no-2-d','MiloOT-Light',arial,sans-serif;
+	color: #707070;
+}
+#rwb-austin .rwb-austin-slideshow {
+	width: 100%;
+}
+#rwb-austin .rwb-austin-desc {
+	padding-bottom: 2em;
+}
+#rwb-austin .rwb-austin-slideshow p.iframe-embed {
+	margin-bottom: 0.5em;
+}
+#rwb-austin .rwb-austin-slideshow h4 {
+	font: normal 1.25em/1em 'alternate-gothic-no-2-d','MiloOT-Light',arial,sans-serif;
+	color: #707070;
+	margin: 0;
+}
+#rwb-austin .rwb-austin-slideshow .slick-slide div {
+	padding: 0 0 0.75em;
+}
+@media screen and (min-width: 30.0625em) {
+	.shows-template-single-shows-rwb #shows-youtube div.column-right {
+		padding: 1em;
+	}
+	body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-right h3 {
+		padding: 0.5em 1em;
+	}
+	body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-right .show-content {
+		padding: 0 2em;
+	}
+	#rwb-austin .rwb-austin-slideshow .slick-slide div {
+		padding: 0 0.25em;
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	.shows-template-single-shows-rwb #shows-youtube div.column-right {
+		width: 33%;
+	}
+	.shows-template-single-shows-rwb #shows-youtube #youtube-upcoming {
+		width: 33%;
+		border: 0;
+		height: 350px;
+		overflow-y: scroll;
+	}
+	.shows-template-single-shows-rwb #shows-youtube #youtube-upcoming .youtube h2 {
+		margin-bottom: 0.25em;
+		padding-top: 0;
+	}
+	.shows-template-single-shows-rwb .readmore {
+		width: 33%;
+		float: right;
+		clear: right;
+	}
+	#rwb-austin .rwb-austin-desc {
+		overflow: hidden;
+		padding: 1em 0 2em;
+		-webkit-flex-flow: row wrap;
+		-webkit-justify-content: left;
+		-webkit-align-content: center;
+		-webkit-align-items: center;
+		flex-flow: row wrap;
+		justify-content: left;
+		align-content: center;
+		align-items: center;
+		-ms-flex-flow: row wrap;
+		-ms-justify-content: left;
+		-ms-align-content: center;
+		-ms-align-items: center;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	}
+	#rwb-austin .rwb-austin-desc img {
+		width: 40%;
+		float: left;
+	}
+	#rwb-austin .rwb-austin-desc .rwb-austin-desc-wrap {
+		width: 60%;
+		float: left;
+		padding: 0 2em;
+	}
+	#rwb-austin .rwb-austin-slideshow {
+		padding: 1em 0;
 	}
 }

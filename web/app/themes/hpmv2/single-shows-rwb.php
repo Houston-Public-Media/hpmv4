@@ -129,12 +129,17 @@ get_header(); ?>
 			</div>
 			<?php 
 				endif;
-			endwhile;
-			if ( !empty( $show['ytp'] ) ) : ?>
+			endwhile; ?>
 			<div id="shows-youtube">
 				<div id="youtube-wrap">
+					<div class="column-right">
+						<h3>About</h3>
+						<div class="show-content">
+							<?php echo apply_filters( 'the_content', $show_content ); ?>
+						</div>
+		</div>
 				<?php
-					$json = hpm_youtube_playlist( $show['ytp'] );
+					$json = hpm_youtube_playlist( $show['ytp'], 10 );
 					foreach ( $json as $tubes ) :
 						$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
 						if ( $c == 0 ) : ?>
@@ -143,11 +148,11 @@ get_header(); ?>
 							<span class="fa fa-play" id="play-button"></span>
 						</div>
 						<h2><?php echo $tubes['snippet']['title']; ?></h2>
-						<p class="desc"><?php echo $tubes['snippet']['description']; ?></p>
 						<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
+						<p class="desc"><?php echo $tubes['snippet']['description']; ?></p>
 					</div>
 					<div id="youtube-upcoming">
-						<h4>Past Shows</h4>
+						<h4>Previous Episodes</h4>
 					<?php
 						endif; ?>
 						<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdate="<?php echo date( 'F j, Y', $pubtime); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
@@ -159,9 +164,39 @@ get_header(); ?>
 						$c++;
 					endforeach; ?>
 					</div>
+					<div class="readmore">
+						<a href="<?php echo $social['yt']; ?>">View More Episodes</a>
+					</div>
 				</div>
 			</div>
+			<div id="rwb-austin">
+				<div class="rwb-austin-desc">
+					<img src="https://cdn.hpm.io/assets/images/austin-polland.jpg" alt="Mr. Polland Goes to Austin" />
+					<div class="rwb-austin-desc-wrap">
+						<h3>Mr. Polland Goes to Austin</h3>
+						<p>Host Gary Polland travels to the Texas Capitol to check in with Texas legislators as they conduct the business of the 86th legislative session. This special edition includes exclusive interviews with Speaker of the House Dennis Bonnen, Senator Paul Bettencourt (R-Houston), Representative John Zerwas (R-Richmond), Representative Harold Dutton (D-Houston), and Representative James White (R-Hillister).</p>
+					</div>
+				</div>
+				<div class="rwb-austin-slideshow">
+				<?php
+					$a_json = hpm_youtube_playlist( 'PLGHyNdqkLN-CFayr3GPM4r4zDDBGqpAmP', 15 );
+					foreach ( $a_json as $aj ) : ?>
+					<div>
+						<p><iframe src="https://www.youtube.com/embed/<?php echo $aj['snippet']['resourceId']['videoId']; ?>?rel=0&amp;showinfo=0&amp;enablejsapi=1" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+						<h4><?php echo htmlentities( $aj['snippet']['title'], ENT_COMPAT ); ?></h4>
+					</div>
+				<?php
+					endforeach; ?>
+				</div>
+			</div>
+			<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick.min.css" />
+			<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
+			<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
 			<script>
+				jQuery(document).ready(function($){
+					var options = { slidesToShow: 3, rows: 1, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 2, slidesToScroll: 2, rows: 1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 2 } }] };
+					$('.rwb-austin-slideshow').slick(options);
+				});
 				var tag = document.createElement('script');
 				tag.src = "//www.youtube.com/player_api";
 				var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -323,31 +358,6 @@ get_header(); ?>
 					}
 				});
 			</script>
-			<?php
-				endif;  ?>
-			<div class="readmore">
-				<a href="<?php echo $social['yt']; ?>">View More Episodes</a>
-			</div>
-            <div class="column-span" style="padding: 0 1em;">
-                <aside class="column-span">
-                    <div class="alignleft">
-                        <h3>About <?php echo $show_title; ?></h3>
-                        <div class="show-content">
-							<?php echo apply_filters( 'the_content', $show_content ); ?>
-                        </div>
-                    </div>
-                    <div class="alignleft">
-                        <div class="sidebar-ad">
-                            <div id="div-gpt-ad-1394579228932-1">
-                                <h4>Support Comes From</h4>
-                                <script type='text/javascript'>
-                                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            </div>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 <?php get_footer(); ?>
