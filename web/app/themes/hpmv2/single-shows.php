@@ -125,7 +125,7 @@ get_header(); ?>
 				</div>
 			<?php
 					endif; 
-					if ( $show_name == 'party-politics' || $show_name == 'encore-houston' ) : ?>
+					if ( !empty( $show['podcast'] ) ) : ?>
 					<div class="station-social-icon"><p style="padding: 0.375em;">Subscribe:</p></div>
 			<?php
 					endif; ?>

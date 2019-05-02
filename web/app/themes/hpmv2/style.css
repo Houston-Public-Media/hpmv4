@@ -9887,3 +9887,288 @@ body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-righ
 		padding: 1em 0;
 	}
 }
+
+/*
+ * Generations on the Rise
+ */
+.page-template-page-generations article,
+.page-template-page-generations .page-content {
+	padding: 0;
+	margin: 0;
+}
+.page-template-page-generations #div-gpt-ad-1488818411584-0 {
+	display: none;
+}
+.page-template-page-generations .page-header {
+	padding: 0;
+	margin: 0;
+	background-color: #006E97;
+	background-image: url(https://cdn.hpm.io/assets/images/genrise_herobkg.jpg);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.page-template-page-generations .page-header h1 {
+	font: 500 2em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	color: white;
+	margin: 0;
+	padding: 0 0.5em 1em;
+	text-align: center;
+}
+#generations-orgs {
+	padding: 0 3.5em 2em;
+	font: 400 1.25em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	text-align: center;
+	color: white;
+}
+#generations-logo {
+	padding: 1.5em 3.5em 0;
+}
+.page-template-page-generations section {
+	padding: 2em 1em;
+	margin: 0;
+	position: relative;
+}
+section#generations-top {
+	background-color: #006E97;
+}
+section#generations-top h1 {
+	margin: 0;
+	font: 400 1.5em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	color: white;
+	text-align: center;
+}
+section#generations-top h1 a {
+	color: #A6C12F;
+}
+.page-template-page-generations section#generations-videos article {
+	margin-bottom: 2em;
+	padding-bottom: 1.25em;
+	background-image: url(https://cdn.hpm.io/assets/images/houstonfirst_black2x.png);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	background-size: 6em;
+}
+section#generations-videos h2 {
+	color: #1881A1;
+	font: 700 1.75em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	margin: 0;
+}
+section#generations-videos h3 {
+	font: 400 1.75em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	margin: 0 0 1em 0;
+	padding: 0 0 0.5em 0;
+	border-bottom: 0.0625em solid #1881A1;
+	color: #449EBB;
+}
+section#generations-videos h3 .generations-videos-title {
+	font-weight: 500;
+}
+section#generations-videos p {
+	color: #424242;
+	font: 400 1em/1.5em brandon-grotesque,arial,helvetica,sans-serif;
+	margin: 0;
+}
+section#generations-feature {
+	background-color: #1881A1;
+}
+section#generations-feature img {
+	width: 60%;
+	margin: 0 40% 0 0;
+}
+section#generations-feature .generations-feature-wrap {
+	padding: 1em 0;
+}
+section#generations-feature h3 {
+	color: white;
+	font: 700 1.125em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+}
+section#generations-feature h2 {
+	font: 700 1.75em/1.5em brandon-grotesque,arial,helvetica,sans-serif;
+	color: #A6C12F;
+}
+section#generations-feature p {
+	font: 400 1em/1.5em brandon-grotesque,arial,helvetica,sans-serif;
+	color: white;
+	margin: 0;
+}
+section#generations-feature #generations-feature-arrows {
+	position: absolute;
+	top: -2.25em;
+	right: 1em;
+	margin: 0;
+	width: 8em;
+}
+section#generations-footer {
+	background-color: #006E97;
+}
+section#generations-footer p {
+	font: 700 0.75em/1em brandon-grotesque,arial,helvetica,sans-serif;
+	color: white;
+	margin: 0;
+	text-align: center;
+}
+section#generations-footer p a {
+	font-weight: 400;
+	color: white;
+}
+@media screen and (min-width: 30.0625em) {
+	.page-template-page-generations .page-header {
+		padding: 0;
+		margin: 0;
+		background-color: #006E97;
+		background-image: url(https://cdn.hpm.io/assets/images/GenRise_Banner_arrows.png), url(https://cdn.hpm.io/assets/images/genrise_herobkg2x.jpg);
+		background-position: right top, center center;
+		background-repeat: no-repeat, no-repeat;
+		background-size: 100%, cover;
+		overflow: hidden;
+	}
+	.page-template-page-generations .page-header h1 {
+		font: 500 2em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+		color: white;
+		margin: 0;
+		padding: 6.5em 1em 0.5em;
+		float: left;
+		width: 50%;
+	}
+	#generations-orgs {
+		padding: 0 3.5em 1em;
+		width: 50%;
+		float: left;
+	}
+	#generations-logo {
+		width: 50%;
+		float: left;
+	}
+	.page-template-page-generations section#generations-videos article {
+		overflow: hidden;
+		padding: 1em 2em;
+		background-position: 95% bottom;
+	}
+	section#generations-feature {
+		-webkit-flex-flow: row wrap;
+		-webkit-justify-content: left;
+		-webkit-align-content: center;
+		-webkit-align-items: center;
+		flex-flow: row wrap;
+		justify-content: left;
+		align-content: center;
+		align-items: center;
+		-ms-flex-flow: row wrap;
+		-ms-justify-content: left;
+		-ms-align-content: center;
+		-ms-align-items: center;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	}
+	section#generations-feature img {
+		width: 40%;
+		margin: 0;
+		padding: 0 1em 0 0;
+		float: left;
+	}
+	section#generations-feature .generations-feature-wrap {
+		padding: 1em;
+		float: left;
+		width: 60%;
+	}
+	.page-template-page-generations section#generations-footer {
+		padding: 1em;
+	}
+	section#generations-feature #generations-feature-arrows {
+		padding: 0;
+		float: none;
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	section#generations-videos {
+		overflow: hidden;
+	}
+	.page-template-page-generations .page-header h1 {
+		padding: 8.5em 1em 1em;
+	}
+	#generations-orgs {
+		padding: 0 5.5em 1em;
+	}
+	#generations-logo {
+		padding: 1.5em 5em 0;
+	}
+	section#generations-top {
+		padding: 2em 11em;
+	}
+	.page-template-page-generations article {
+		width: 100%;
+		border: 0;
+		float: none;
+	}
+	.page-template-page-generations section#generations-videos article {
+		padding: 1em 0 1.5em;
+		-webkit-flex-flow: row wrap;
+		-webkit-justify-content: left;
+		-webkit-align-content: center;
+		-webkit-align-items: center;
+		flex-flow: row wrap;
+		justify-content: left;
+		align-content: center;
+		align-items: center;
+		-ms-flex-flow: row wrap;
+		-ms-justify-content: left;
+		-ms-align-content: center;
+		-ms-align-items: center;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	}
+	section#generations-videos .generations-video-wrap:nth-child(1) {
+		width: 40%;
+	}
+	section#generations-videos .generations-video-wrap:nth-child(2) {
+		width: 60%;
+		padding: 0 1em 0 2em;
+	}
+	section#generations-videos h3 {
+		font-size: 150%;
+		margin-bottom: 0.5em;
+	}
+	section#generations-feature {
+		padding: 2em 8em;
+	}
+	section#generations-feature img {
+		width: 30%;
+		padding: 0 2em 0 0;
+	}
+	section#generations-feature .generations-feature-wrap {
+		padding: 1em;
+		width: 70%;
+	}
+	section#generations-feature h2,
+	section#generations-feature h3 {
+		margin-bottom: 0;
+	}
+}
+@media screen and (min-width: 64.0625em) {
+	section#generations-feature {
+		padding: 2em 10em;
+	}
+	section#generations-top {
+		padding: 2em 13em;
+	}
+	section#generations-top h1 {
+		font-size: 175%;
+	}
+	#generations-logo {
+		padding: 1.5em 7em 0;
+	}
+	#generations-orgs {
+		padding: 0 7.5em 1em;
+	}
+	.page-template-page-generations .page-header h1 {
+		padding: 9.5em 2em 1em;
+		font-size: 212.5%;
+	}
+}
