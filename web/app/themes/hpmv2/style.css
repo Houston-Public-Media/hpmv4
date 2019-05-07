@@ -3823,11 +3823,18 @@ body.page.page-template-page-kids .kids-schedule {
 	body.single-shows .page-header.no-back,
 	body.page-template-page-series-tiles .page-header.no-back {
 		height: auto;
+		margin: 0 0 0.5em 0;
 		overflow: hidden;
+		padding: 0;
+		background-color: white;
 	}
 	body.single-shows .page-header.no-back .page-title,
 	body.page-template-page-series-tiles .page-header.no-back .page-title {
-		padding: 1em;
+		padding: 0.5em;
+		font-family: 'MiloOT-Bold',arial,helvetica,sans-serif;
+		width: 100%;
+		float: none;
+		margin: 0;
 	}
 	body.single-shows #station-social h3 {
 		width: 55%;
@@ -9909,20 +9916,20 @@ body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-righ
 	background-size: cover;
 }
 .page-template-page-generations .page-header h1 {
-	font: 500 2em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	font: 500 1.5em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
 	color: white;
 	margin: 0;
-	padding: 0 0.5em 1em;
+	padding: 0 1em 1em;
 	text-align: center;
 }
 #generations-orgs {
-	padding: 0 3.5em 2em;
-	font: 400 1.25em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	padding: 0 4.5em 2em;
+	font: 400 1em/2em brandon-grotesque,arial,helvetica,sans-serif;
 	text-align: center;
 	color: white;
 }
 #generations-logo {
-	padding: 1.5em 3.5em 0;
+	padding: 1.5em 5.5em 0;
 }
 .page-template-page-generations section {
 	padding: 2em 1em;
@@ -9943,38 +9950,49 @@ section#generations-top h1 a {
 }
 .page-template-page-generations section#generations-videos article {
 	margin-bottom: 2em;
-	padding-bottom: 1.25em;
+	padding-bottom: 1em;
 	background-image: url(https://cdn.hpm.io/assets/images/houstonfirst_black2x.png);
 	background-repeat: no-repeat;
 	background-position: right bottom;
 	background-size: 6em;
 }
+#generations-videos .iframe-embed {
+	padding-bottom: calc(100%/1.5) !important;
+}
+.page-template-page-generations section#generations-videos {
+	padding: 2em 0;
+}
 section#generations-videos h2 {
 	color: #1881A1;
 	font: 700 1.75em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
 	margin: 0;
+	text-transform: uppercase;
 }
 section#generations-videos h3 {
-	font: 400 1.75em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+	font: 400 1.25em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
 	margin: 0 0 1em 0;
 	padding: 0 0 0.5em 0;
 	border-bottom: 0.0625em solid #1881A1;
 	color: #449EBB;
+}
+section#generations-videos .generations-video-wrap:nth-child(2) {
+	padding: 2em 1em 1em;
 }
 section#generations-videos h3 .generations-videos-title {
 	font-weight: 500;
 }
 section#generations-videos p {
 	color: #424242;
-	font: 400 1em/1.5em brandon-grotesque,arial,helvetica,sans-serif;
+	font: 400 1.25em/1.4em brandon-grotesque,arial,helvetica,sans-serif;
 	margin: 0;
 }
 section#generations-feature {
 	background-color: #1881A1;
 }
 section#generations-feature img {
-	width: 60%;
-	margin: 0 40% 0 0;
+	width: 33%;
+	padding: 0 1em 0 0;
+	float: left;
 }
 section#generations-feature .generations-feature-wrap {
 	padding: 1em 0;
@@ -9988,7 +10006,7 @@ section#generations-feature h2 {
 	color: #A6C12F;
 }
 section#generations-feature p {
-	font: 400 1em/1.5em brandon-grotesque,arial,helvetica,sans-serif;
+	font: 300 1em/1.5em brandon-grotesque,arial,helvetica,sans-serif;
 	color: white;
 	margin: 0;
 }
@@ -9998,6 +10016,7 @@ section#generations-feature #generations-feature-arrows {
 	right: 1em;
 	margin: 0;
 	width: 8em;
+	display: none;
 }
 section#generations-footer {
 	background-color: #006E97;
@@ -10024,56 +10043,39 @@ section#generations-footer p a {
 		overflow: hidden;
 	}
 	.page-template-page-generations .page-header h1 {
-		font: 500 2em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
+		font: 500 1.75em/1.25em brandon-grotesque,arial,helvetica,sans-serif;
 		color: white;
 		margin: 0;
-		padding: 6.5em 1em 0.5em;
+		padding: 7.5em 1em 0.5em;
 		float: left;
 		width: 50%;
 	}
 	#generations-orgs {
-		padding: 0 3.5em 1em;
+		padding: 0 4em 1em;
 		width: 50%;
 		float: left;
 	}
 	#generations-logo {
 		width: 50%;
 		float: left;
+		padding: 1.5em 3.5em 0;
 	}
 	.page-template-page-generations section#generations-videos article {
 		overflow: hidden;
-		padding: 1em 2em;
+		padding: 1em 0 2em;
 		background-position: 95% bottom;
 	}
-	section#generations-feature {
-		-webkit-flex-flow: row wrap;
-		-webkit-justify-content: left;
-		-webkit-align-content: center;
-		-webkit-align-items: center;
-		flex-flow: row wrap;
-		justify-content: left;
-		align-content: center;
-		align-items: center;
-		-ms-flex-flow: row wrap;
-		-ms-justify-content: left;
-		-ms-align-content: center;
-		-ms-align-items: center;
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
+	section#generations-videos .generations-video-wrap:nth-child(2) {
+		padding: 1em 4em;
+	}
+	.page-template-page-generations section#generations-feature {
+		padding: 2em 4em;
 	}
 	section#generations-feature img {
-		width: 40%;
-		margin: 0;
-		padding: 0 1em 0 0;
-		float: left;
+		width: 20%;
 	}
-	section#generations-feature .generations-feature-wrap {
-		padding: 1em;
-		float: left;
-		width: 60%;
+	section#generations-feature h2 {
+		font-size: 200%;
 	}
 	.page-template-page-generations section#generations-footer {
 		padding: 1em;
@@ -10089,6 +10091,7 @@ section#generations-footer p a {
 	}
 	.page-template-page-generations .page-header h1 {
 		padding: 8.5em 1em 1em;
+		font-size: 200%;
 	}
 	#generations-orgs {
 		padding: 0 5.5em 1em;
@@ -10105,7 +10108,6 @@ section#generations-footer p a {
 		float: none;
 	}
 	.page-template-page-generations section#generations-videos article {
-		padding: 1em 0 1.5em;
 		-webkit-flex-flow: row wrap;
 		-webkit-justify-content: left;
 		-webkit-align-content: center;
@@ -10124,19 +10126,41 @@ section#generations-footer p a {
 		display: -webkit-flex;
 		display: flex;
 	}
+	section#generations-videos .generations-video-wrap {
+		width: 50%;
+	}
 	section#generations-videos .generations-video-wrap:nth-child(1) {
-		width: 40%;
+		padding-left: 2em;
 	}
 	section#generations-videos .generations-video-wrap:nth-child(2) {
-		width: 60%;
-		padding: 0 1em 0 2em;
+		padding: 0 4em 0 2em;
 	}
 	section#generations-videos h3 {
-		font-size: 150%;
+		font-size: 125%;
 		margin-bottom: 0.5em;
 	}
-	section#generations-feature {
-		padding: 2em 8em;
+	section#generations-videos p {
+		font-size: 100%;
+	}
+	.page-template-page-generations section#generations-feature {
+		padding: 2em 4em;
+		-webkit-flex-flow: row wrap;
+		-webkit-justify-content: left;
+		-webkit-align-content: center;
+		-webkit-align-items: center;
+		flex-flow: row wrap;
+		justify-content: left;
+		align-content: center;
+		align-items: center;
+		-ms-flex-flow: row wrap;
+		-ms-justify-content: left;
+		-ms-align-content: center;
+		-ms-align-items: center;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
 	}
 	section#generations-feature img {
 		width: 30%;
@@ -10152,8 +10176,8 @@ section#generations-footer p a {
 	}
 }
 @media screen and (min-width: 64.0625em) {
-	section#generations-feature {
-		padding: 2em 10em;
+	.page-template-page-generations section#generations-feature {
+		padding: 2em 8em;
 	}
 	section#generations-top {
 		padding: 2em 13em;
@@ -10168,7 +10192,10 @@ section#generations-footer p a {
 		padding: 0 7.5em 1em;
 	}
 	.page-template-page-generations .page-header h1 {
-		padding: 9.5em 2em 1em;
-		font-size: 212.5%;
+		padding: 9em 2em 1em;
+		font-size: 225%;
+	}
+	section#generations-videos p {
+		font-size: 125%;
 	}
 }

@@ -71,7 +71,7 @@ function nprstory_activation() {
 		// check if it is a network activation - if so, run the activation function for each blog id
 		$old_blog = $wpdb->blogid;
 		// Get all blog ids
-		$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs" ) );
+		$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM %s", $wpdb->blogs ) );
 		foreach ( $blogids as $blog_id ) {
 			switch_to_blog( $blog_id );
 			nprstory_activate();
@@ -107,7 +107,7 @@ function nprstory_deactivation() {
 		// check if it is a network activation - if so, run the activation function for each blog id
 		$old_blog = $wpdb->blogid;
 		// Get all blog ids
-		$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs" ) );
+		$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM %s", $wpdb->blogs ) );
 		foreach ( $blogids as $blog_id ) {
 			switch_to_blog( $blog_id );
 			nprstory_deactivate();

@@ -55,12 +55,7 @@ get_header(); ?>
 								?> </div>
 						</header><!-- .entry-header -->
 						<div class="entry-summary">
-							<p><?php echo get_the_excerpt(); ?> With host <?php
-								if ( function_exists( 'coauthors' ) ) :
-									coauthors(', ', ', ', '', '', true);
-								else :
-									echo get_the_author();
-								endif;?></p>
+							<p><?php echo get_the_excerpt(); ?></p>
 							<ul>
 								<li><a href="<?php echo $pod_link['page']; ?>">Episode Archive</a></li>
 						<?php
@@ -69,7 +64,7 @@ get_header(); ?>
 						<?php
 							else : ?>
 								<li><a href="<?php the_permalink(); ?>">RSS Feed</a></li>
-								<li><a href="<?php the_permalink(); ?>/feed/json/">JSON Feed</a></li>
+								<li class="screen-reader-text"><a href="<?php the_permalink(); ?>/feed/json/">JSON Feed</a></li>
 								<?php
 							endif; ?>
 							</ul>
