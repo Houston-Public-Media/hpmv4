@@ -10031,6 +10031,86 @@ section#generations-footer p a {
 	font-weight: 400;
 	color: white;
 }
+div.gotr-month {
+	display: none;
+}
+div.gotr-month.gotr-month-active {
+	display: block;
+}
+.page-template-page-generations section#generations-months {
+	padding: 0;
+	background-color: #006E97;
+}
+section#generations-months ul {
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: stretch;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: stretch;
+	justify-content: center;
+	align-content: center;
+	align-items: stretch;
+	-webkit-flex-flow: row nowrap;
+	-ms-flex-flow: row nowrap;
+	flex-flow: row nowrap;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border-top: 0.125em solid white;
+}
+section#generations-months ul li {
+	padding: 1em;
+	margin: 0;
+	text-align: center;
+	-webkit-flex-grow: 1;
+    -webkit-flex-shrink: 1;
+	-webkit-flex-basis: 0;
+	-ms-flex-grow: 1;
+    -ms-flex-shrink: 1;
+    -ms-flex-basis: 0;
+	flex-grow: 1;
+    flex-shrink: 1;
+	flex-basis: 0;
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	-webkit-flex-flow: row nowrap;
+	-ms-flex-flow: row nowrap;
+	flex-flow: row nowrap;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	border-right: 0.125em solid white;
+}
+section#generations-months ul li p {
+	font: 400 1.125em/1.125em brandon-grotesque,arial,helvetica,sans-serif;
+	color: white;
+	margin: 0;
+}
+section#generations-months ul li:last-child {
+	border-right: none;
+}
+section#generations-months ul li.gotr-month-active {
+	background-color: rgba(255,255,255,0.2);
+}
+section#generations-months ul li:hover {
+	cursor: pointer;
+	opacity: 0.75;
+}
 @media screen and (min-width: 30.0625em) {
 	.page-template-page-generations .page-header {
 		padding: 0;
@@ -10144,6 +10224,8 @@ section#generations-footer p a {
 	}
 	.page-template-page-generations section#generations-feature {
 		padding: 2em 4em;
+	}
+	section#generations-feature div.gotr-month {
 		-webkit-flex-flow: row wrap;
 		-webkit-justify-content: left;
 		-webkit-align-content: center;
@@ -10156,6 +10238,9 @@ section#generations-footer p a {
 		-ms-justify-content: left;
 		-ms-align-content: center;
 		-ms-align-items: center;
+		display: none;
+	}
+	section#generations-feature div.gotr-month.gotr-month-active {
 		display: -webkit-box;
 		display: -moz-box;
 		display: -ms-flexbox;
