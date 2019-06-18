@@ -70,13 +70,13 @@
 		"wpackagist-plugin/postscript": "1.0.0",
 		"wpackagist-plugin/publish-to-apple-news": "1.4.4",
 		"wpackagist-plugin/query-monitor": "3.3.6",
-		"wpackagist-plugin/redirection": "4.3",
+		"wpackagist-plugin/redirection": "4.3.1",
 		"wpackagist-plugin/term-management-tools": "1.1.4",
 		"wpackagist-plugin/tinymce-advanced": "5.2.1",
 		"wpackagist-plugin/wp-amazon-ses-smtp": "1.0.5",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
-		"jwcounts/hpm-podcasts": "1.6.6.1",
+		"jwcounts/hpm-podcasts": "2.0",
 		"jwcounts/wp-missed-schedule": "1.0"
 	},
 	"require-dev": {
