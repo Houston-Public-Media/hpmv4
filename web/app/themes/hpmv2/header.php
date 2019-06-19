@@ -75,7 +75,7 @@
 		if ( $post_type == 'shows' ) :
 			$show_meta = get_post_meta( $ID, 'hpm_show_meta', true );
 			if ( !empty( $show_meta['podcast'] ) ) : ?>
-		<link rel="alternate" type="application/rss+xml" title="<?php echo str_replace( ' | Houston Public Media', '', $head_title ); ?> Podcast Feed" href="<?php echo $show_meta['podcast']; ?>" />
+		<link rel="alternate" type="application/rss+xml" title="<?php echo str_replace( ' | Houston Public Media', '', $head_title ); ?> Podcast Feed" href="<?php echo get_the_permalink( $show_meta['podcast'] ); ?>" />
 <?php
 			else :
 				$show_cat = get_post_meta( $ID, 'hpm_shows_cat', true ); ?>
