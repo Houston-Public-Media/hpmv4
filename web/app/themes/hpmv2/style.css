@@ -6422,21 +6422,25 @@ body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
 	color: #cc0000;
 	font-family: 'MiloOT-Bold',arial,helvetica,sans-serif;
 }
-.page-template-page-support-sub .page-content ul {
+.page-template-page-support-sub .page-content ul,
+ul.passport-drop {
 	list-style: none;
 	padding: 0 0 2em;
 	margin: 0;
 }
-.page-template-page-support-sub .page-content ul li {
+.page-template-page-support-sub .page-content ul li,
+ul.passport-drop li {
 	margin: 1em 0;
 }
-.page-template-page-support-sub .page-content ul li.passport-faq {
+.page-template-page-support-sub .page-content ul li.passport-faq,
+ul.passport-drop li.passport-faq {
 	width: 100%;
 	border-bottom: 1px solid #707070;
 	font-weight: bolder;
 	padding: 0 0.5em 0.25em;
 }
-.page-template-page-support-sub .page-content ul li.passport-faq:hover {
+.page-template-page-support-sub .page-content ul li.passport-faq:hover,
+ul.passport-drop li.passport-faq:hover {
 	cursor: pointer;
 	opacity: 0.75;
 	-webkit-transition: opacity .2s ease-out;
@@ -6444,7 +6448,8 @@ body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
 	-o-transition: opacity .2s ease-out;
 	transition: opacity .2s ease-out;
 }
-.page-template-page-support-sub .page-content ul li.passport-faq:after {
+.page-template-page-support-sub .page-content ul li.passport-faq:after,
+ul.passport-drop li.passport-faq:after {
 	content: '\f0da';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
@@ -6452,10 +6457,12 @@ body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
 	margin-left: 0.375em;
 	color: rgb(0,170,235);
 }
-.page-template-page-support-sub .page-content ul li.passport-faq.passport-active:after {
+.page-template-page-support-sub .page-content ul li.passport-faq.passport-active:after,
+ul.passport-drop li.passport-faq.passport-active:after {
 	content: '\f0d7';
 }
-.page-template-page-support-sub .page-content ul li.passport-hidden {
+.page-template-page-support-sub .page-content ul li.passport-hidden,
+ul.passport-drop li.passport-hidden {
 	display: none;
 	margin: 1em 0 2em;
 	padding: 0 0.5em;
