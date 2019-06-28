@@ -41,7 +41,7 @@ Template Name: Moonwalk
 					<main id="main" class="site-main" role="main">
 						<header class="page-header">
 							<div class="header-logo">
-								<a href="/" rel="home" title="Houston Public Media homepage"><img src="https://local.hpm.io/moon/HPM_Logo.svg" alt="Houston Public Media, a service of the University of Houston" /></a>
+								<a href="/" rel="home" title="Houston Public Media homepage"><img src="https://cdn.hpm.io/assets/images/moon/HPM_Logo.svg" alt="Houston Public Media, a service of the University of Houston" /></a>
 							</div>
 							<div class="tch-wrap">
 								<a href="http://www.texaschildrens.org/best" title="Presenting Sponsor: Texas Children's Hospital" target="_blank">Presenting Sponsor</a>
@@ -50,8 +50,7 @@ Template Name: Moonwalk
 						<div class="page-content" id="main-content">
 							<section id="moon-desc">
 								<div class="full-wrap">
-									<h2>Fifty years after Apollo 11, Houston Public Media shares memories of the Apollo missions and human stories that followed the Space Age.</h2>
-									<p>This July experience Moonwalk, a multi-platform, multi-generational series of engaging conversations between voices in aerospace – including an Apollo 15 astronaut, the first African American to perform a spacewalk, present-day NASA astronauts, students from the Mars generation and the first female engineer in mission control during the Apollo Era.</p>
+									<h2>Fifty years after Apollo 11, Houston Public Media shares stories of the Apollo missions and their impact on generations of future space explorers.</h2>
 								</div>
 							</section>
 							<section id="moon-video">
@@ -91,14 +90,14 @@ Template Name: Moonwalk
 									<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 									<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
 										<div class="moon-wrap">
-											<p>Subscribe and listen to full-length versions of our video stories</p>
+											<p>Listen to extended conversations and get a behind the scenes glimpse at the making of the show. Subscribe anywhere you get your podcasts.</p>
 											<p>&nbsp;</p>
 											<ul class="pod-sub">
 												<li>
-													<a href="https://itunes.apple.com/us/podcast/stories-from-the-storm/id1406912537" target="_blank" title="Subscribe on Apple Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/apple_pod.png" alt="Subscribe on Apple Podcasts" /></a>
+													<a href="https://open.spotify.com/show/3rj9Th6eSpfiWkg04jhHqH" target="_blank" title="Subscribe on Spotify"><img src="https://cdn.hpm.io/assets/images/moon/spotify_pod.png" alt="Subscribe on Apple Podcasts" /></a>
 												</li>
 												<li>
-													<a href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&isi=691797987&ius=googleplaymusic&apn=com.google.android.music&link=https://play.google.com/music/m/Iewfxybo66acwbsqei5lqe3zncy?t%3DStories_from_the_Storm%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16" target="_blank" title="Subscribe on Google Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/google_pod.png" alt="Subscribe on Google Podcasts" /></a>
+													<a href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&isi=691797987&ius=googleplaymusic&apn=com.google.android.music&link=https://play.google.com/music/m/I44jctducmfyn6wjyajavcamqfq?t%3DMoonwalk%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16" target="_blank" title="Subscribe on Google Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/google_pod.png" alt="Subscribe on Google Podcasts" /></a>
 												</li>
 											</ul>
 											<div class="podcast-image">
@@ -156,13 +155,12 @@ Template Name: Moonwalk
 											</nav>
 										</aside>
 									</div>
-									<h3>Listen to the <span class="special">special edition Houston Matters</span> on <span class="special">July 1–8</span></h3>
 								</div>
 							</section>
 							<section id="moon-look">
 								<div class="full-wrap">
 									<h2>A Look Back at the Space Age</h2>
-									<p>Check out these small clips in the KUHT archive about space exploration in the past.</p>
+									<p>Check out these flashbacks from our archives.</p>
 									<article>
 										<p class="youtube-wrap"><iframe width="560" height="315" src="https://www.youtube.com/embed/Yv0Q36pjDoM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 										<h2><strong>KUHT Flashback</strong>: 1962 Interview With Tech Working On Apollo Simulator Model</h2>
