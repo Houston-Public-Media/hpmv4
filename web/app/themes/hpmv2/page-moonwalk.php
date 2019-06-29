@@ -105,7 +105,7 @@ Template Name: Moonwalk
 												</li>
 											</ul>
 											<div class="podcast-image">
-												<img src="https://cdn.hpm.io/assets/images/moon/moonwalk_header-small.jpg" alt="Moonwalk podcast" />
+												<img src="https://cdn.hpm.io/assets/images/moon/moonwalk_podcast-tile.jpg" alt="Moonwalk podcast" />
 											</div>
 											<a href="#" class="readmore" id="pod-more"><i class="fa fa-indent" aria-hidden="true"></i> All episodes</a>
 											<div class="jp-type-single">
