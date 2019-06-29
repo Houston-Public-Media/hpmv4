@@ -9,7 +9,11 @@ Template Name: Moonwalk
 		'order'   => 'ASC',
 		'posts_per_page' => -1,
 		'post_status' => [ 'publish' ],
-		'ignore_sticky_posts' => 1
+		'ignore_sticky_posts' => 1,
+		'meta_query' => [[
+			'key' => 'hpm_podcast_enclosure',
+			'compare' => 'EXISTS'
+		]]
 	]);
 	$first = $audio->posts[0];
 	$first_meta = get_post_meta( $first->ID, 'hpm_podcast_enclosure', true );
