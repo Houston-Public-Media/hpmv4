@@ -94,14 +94,14 @@ Template Name: Moonwalk
 											<p>&nbsp;</p>
 											<ul class="pod-sub">
 												<li>
-													<a href="https://open.spotify.com/show/3rj9Th6eSpfiWkg04jhHqH" target="_blank" title="Subscribe on Spotify"><img src="https://cdn.hpm.io/assets/images/moon/spotify_pod.png" alt="Subscribe on Apple Podcasts" /></a>
+													<a href="https://podcasts.apple.com/us/podcast/moonwalk/id1470272336" target="_blank" title="Subscribe on Spotify"><img src="https://cdn.hpm.io/assets/images/harvey/apple_pod.png" alt="Subscribe on Apple Podcasts" /></a>
 												</li>
 												<li>
 													<a href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&isi=691797987&ius=googleplaymusic&apn=com.google.android.music&link=https://play.google.com/music/m/I44jctducmfyn6wjyajavcamqfq?t%3DMoonwalk%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16" target="_blank" title="Subscribe on Google Podcasts"><img src="https://cdn.hpm.io/assets/images/harvey/google_pod.png" alt="Subscribe on Google Podcasts" /></a>
 												</li>
 											</ul>
 											<div class="podcast-image">
-												<img src="https://local.hpm.io/moon/moonwalk_header-small.jpg" alt="Moonwalk podcast" />
+												<img src="https://cdn.hpm.io/assets/images/moon/moonwalk_header-small.jpg" alt="Moonwalk podcast" />
 											</div>
 											<a href="#" class="readmore" id="pod-more"><i class="fa fa-indent" aria-hidden="true"></i> All episodes</a>
 											<div class="jp-type-single">
