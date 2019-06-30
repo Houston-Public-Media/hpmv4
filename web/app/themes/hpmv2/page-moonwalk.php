@@ -259,6 +259,9 @@ wp_reset_postdata(); ?>
 					});
 					$("#jquery_jplayer_1").bind( $.jPlayer.event.play, function(event) {
 						$('#pod-nav').removeClass('nav-active');
+						$.each(players, function() {
+							this.pauseVideo();
+						});
 					});
 				});
 			</script>
