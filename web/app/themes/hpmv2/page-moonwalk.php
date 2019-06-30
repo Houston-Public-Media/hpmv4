@@ -61,7 +61,7 @@ Template Name: Moonwalk
 								<div class="full-wrap">
 									<div class="moon-wrap">
 										<a href="#" class="readmore" id="video-more"><i class="fa fa-indent" aria-hidden="true"></i> See all videos</a>
-										<div id="youtube-player" style="background-image: url( '<?php echo $json[0]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
+										<div id="youtube-player" style="background-image: url( '<?php echo $json[0]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[0]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo $titles[0]; ?>">
 											<span class="fa fa-play" id="play-button"></span>
 										</div>
 										<div class="moon-video-info">
@@ -165,18 +165,38 @@ Template Name: Moonwalk
 								<div class="full-wrap">
 									<h2>A Look Back at the Space Age</h2>
 									<p>Check out these flashbacks from our archives.</p>
-									<article>
-										<p class="youtube-wrap"><iframe width="560" height="315" src="https://www.youtube.com/embed/Yv0Q36pjDoM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+									<article id="Yv0Q36pjDoM" class="moon-look-active">
+										<p class="youtube-wrap"><iframe width="560" height="315" id="moonwalk-look-1" src="https://www.youtube.com/embed/Yv0Q36pjDoM?rel=0&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 										<h2><strong>KUHT Flashback</strong>: 1962 Interview With Tech Working On Apollo Simulator Model</h2>
 									</article>
-									<article>
-										<p class="youtube-wrap"><iframe width="560" height="315" src="https://www.youtube.com/embed/7Fuqh7Xj1zg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+									<article id="7Fuqh7Xj1zg">
+										<p class="youtube-wrap"><iframe width="560" height="315" id="moonwalk-look-2" src="https://www.youtube.com/embed/7Fuqh7Xj1zg?rel=0&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 										<h2><strong>KUHT Flashback</strong>: 1962 Report On Plans For NASA’s “Manned Space Center”</h2>
 									</article>
-									<article>
-										<p class="youtube-wrap"><iframe width="560" height="315" src="https://www.youtube.com/embed/VJFir6uanW8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+									<article id="VJFir6uanW8">
+										<p class="youtube-wrap"><iframe width="560" height="315" id="moonwalk-look-3" src="https://www.youtube.com/embed/VJFir6uanW8?rel=0&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 										<h2><strong>KUHT Flashback</strong>: 1962 Report On People Relocating To Houston To Work For NASA</h2>
 									</article>
+									<aside id="look-nav">
+										<div id="yt-Yv0Q36pjDoM" class="moon-look-wrap moon-look-active">
+											<div class="youtube-moon-wrap" data-ytid="yt-Yv0Q36pjDoM" style="background-image: url(https://i.ytimg.com/vi/Yv0Q36pjDoM/hqdefault.jpg);">
+												<span class="fa fa-play" id="play-button"></span>
+											</div>
+											<h2><strong>KUHT Flashback</strong>: 1962 Interview With Tech Working On Apollo Simulator Model</h2>
+										</div>
+										<div id="yt-7Fuqh7Xj1zg" class="moon-look-wrap">
+											<div class="youtube-moon-wrap" data-ytid="yt-7Fuqh7Xj1zg" style="background-image: url(https://i.ytimg.com/vi/7Fuqh7Xj1zg/hqdefault.jpg);">
+												<span class="fa fa-play" id="play-button"></span>
+											</div>
+											<h2><strong>KUHT Flashback</strong>: 1962 Report On Plans For NASA’s “Manned Space Center”</h2>
+										</div>
+										<div id="yt-VJFir6uanW8" class="moon-look-wrap">
+											<div class="youtube-moon-wrap" data-ytid="yt-VJFir6uanW8" style="background-image: url(https://i.ytimg.com/vi/VJFir6uanW8/hqdefault.jpg);">
+												<span class="fa fa-play" id="play-button"></span>
+											</div>
+											<h2><strong>KUHT Flashback</strong>: 1962 Report On People Relocating To Houston To Work For NASA</h2>
+										</div>
+										</aside>
 								</div>
 							</section>
 							<section id="moon-behind">
@@ -238,7 +258,6 @@ wp_reset_postdata(); ?>
 						}
 					});
 					$("#jquery_jplayer_1").bind( $.jPlayer.event.play, function(event) {
-						console.log('Close Podcast Nav');
 						$('#pod-nav').removeClass('nav-active');
 					});
 				});
