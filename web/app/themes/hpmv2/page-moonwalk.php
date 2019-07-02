@@ -203,6 +203,22 @@ Template Name: Moonwalk
 								<h2>Behind the Scenes</h2>
 								<p>Take a behind-the-scenes look at the making of <em>Moonwalk</em></p>
 								<p class="explore-button"><a href="https://www.flickr.com/photos/houstonpubmedia/albums/72157709085401958" target="_blank">Explore</a></p>
+								<div class="spacer"></div>
+								<h2>Other Ways to Experience <em>Moonwalk</em></h2>
+								<div class="other-wrap">
+									<div class="other-way">
+										<img src="https://cdn.hpm.io/assets/images/pbs_app_icon2x.png" alt="Available on demand beginning July 8 on the PBS app" />
+										<h3>Available on demand<br /><span>beginning July 8</span><br />on the PBS app</h3>
+									</div>
+									<div class="other-way">
+										<img src="https://cdn.hpm.io/assets/images/tv8_icon2x.png" alt="A TV special premiere July 8 at 10pm on TV 8 following Chasing The Moon" />
+										<h3>A TV special premiere<br /><span>July 8 at 10pm on TV 8</span><br />following <em>Chasing the Moon</em></h3>
+									</div>
+									<div class="other-way">
+										<img src="https://cdn.hpm.io/assets/images/hm_icon2x.png" alt="A 1-hour radio special premieres July 20 at 5pm on News 88.7" />
+										<h3>A <span>1-hour radio special</span><br />premieres <span>July 20 at 5pm<br />on News 88.7</span></h3>
+									</div>
+								</div>
 							</section>
 						</div><!-- .entry-content -->
 					</main><!-- .site-main -->
