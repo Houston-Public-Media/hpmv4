@@ -34,11 +34,20 @@ Template Name: Moonwalk
 		endif;
 	}
 	$json = hpm_youtube_playlist_hah( 'PLGHyNdqkLN-ABBYbvKmMw7tGt_0eeALR-' );
+	foreach ( $json as $jk => $jv ) :
+		$desc = explode( "\n\n", $jv['snippet']['description'] );
+		foreach ( $desc as $dk => $dv ) :
+			if ( substr( $dv, 0, 10 ) === '"Moonwalk"' || substr( $dv, 0, 10 ) === 'Subscribe ' ) :
+				unset( $desc[$dk] );
+			endif;
+		endforeach;
+		$json[$jk]['snippet']['description'] = implode( '||', $desc );
+	endforeach;
 	$titles = [
 		'The Mission',
 		'The Women Of Mission Control',
-		'Breaking Barriers',
 		'Generations',
+		'Breaking Barriers',
 		'The Next Adventure'
 	]; ?>
 				<div id="primary" class="content-area">
@@ -66,7 +75,7 @@ Template Name: Moonwalk
 										</div>
 										<div class="moon-video-info">
 											<h3 id="moon-yt-title"><?php echo $titles[0]; ?></h3>
-											<p id="moon-yt-desc"><?php echo wp_trim_words( htmlentities( $json[0]['snippet']['description'] ), 50, '...' ); ?></p>
+											<p id="moon-yt-desc"><?php echo str_replace( "||", "<br /><br />", $json[0]['snippet']['description'] ); ?></p>
 										</div>
 									</div>
 									<aside id="videos-nav">
@@ -77,7 +86,7 @@ Template Name: Moonwalk
 											</div>
 											<ul>
 <?php foreach ( $json as $k => $tubes ) : ?>
-												<li id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo $titles[$k]; ?>" data-ytdesc="<?php echo wp_trim_words( htmlentities( $tubes['snippet']['description'] ), 50, '...' ); ?>"<?PHP echo ( $k == 0 ? ' class="current"' : '' ); ?>>
+												<li id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo $titles[$k]; ?>" data-ytdesc="<?php echo $tubes['snippet']['description']; ?>"<?PHP echo ( $k == 0 ? ' class="current"' : '' ); ?>>
 													<div class="videos-thumbnail"><img src="<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>" alt="<?php echo $titles[$k]; ?>" /></div>
 													<div class="videos-info"><?php echo $titles[$k]; ?></div>
 												</li>
