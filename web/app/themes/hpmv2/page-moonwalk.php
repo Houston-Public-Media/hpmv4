@@ -78,7 +78,7 @@ Template Name: Moonwalk
 											<ul>
 <?php foreach ( $json as $k => $tubes ) : ?>
 												<li id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo $titles[$k]; ?>" data-ytdesc="<?php echo wp_trim_words( htmlentities( $tubes['snippet']['description'] ), 50, '...' ); ?>"<?PHP echo ( $k == 0 ? ' class="current"' : '' ); ?>>
-													<div class="videos-thumbnail"><img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $titles[$k]; ?>" /></div>
+													<div class="videos-thumbnail"><img src="<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>" alt="<?php echo $titles[$k]; ?>" /></div>
 													<div class="videos-info"><?php echo $titles[$k]; ?></div>
 												</li>
 <?php endforeach; ?>
