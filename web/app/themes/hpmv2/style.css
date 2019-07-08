@@ -10207,15 +10207,15 @@ section#generations-months ul li:hover {
 		-webkit-flex-flow: row wrap;
 		-webkit-justify-content: left;
 		-webkit-align-content: center;
-		-webkit-align-items: center;
+		-webkit-align-items: flex-start;
 		flex-flow: row wrap;
 		justify-content: left;
 		align-content: center;
-		align-items: center;
+		align-items: flex-start;
 		-ms-flex-flow: row wrap;
 		-ms-justify-content: left;
 		-ms-align-content: center;
-		-ms-align-items: center;
+		-ms-align-items: flex-start;
 		display: -webkit-box;
 		display: -moz-box;
 		display: -ms-flexbox;

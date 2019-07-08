@@ -23,7 +23,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="bitly-verification" content="7777946f1a0a"/>
 		<meta name="google-site-verification" content="QOrBnMZ1LXDA9tL3e5WmFUU-oI3JUbDRotOWST1P_Dg" />
-		<link rel="shortcut icon" href="https://cdn.hpm.io/assets/images/favicon.ico">
+		<link rel="shortcut icon" href="https://cdn.hpm.io/assets/images/favicon-192x192.png">
 		<link rel="icon" type="image/png" href="https://cdn.hpm.io/assets/images/favicon-192x192.png" sizes="192x192">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/apple-touch-icon-180x180.png">
 		<link rel="alternate" type="application/rss+xml" title="RSS 2.0 Feed" href="<?php bloginfo('rss2_url'); ?>" />
