@@ -64,7 +64,7 @@
 		"wpackagist-plugin/google-sitemap-generator": "4.1.0",
 		"wpackagist-plugin/html-editor-syntax-highlighter": "2.4.2",
 		"wpackagist-plugin/two-factor": "*",
-		"wpackagist-plugin/members": "2.1.0",
+		"wpackagist-plugin/members": "2.2.0",
 		"wpackagist-plugin/metronet-tag-manager": "1.5.4",
 		"wpackagist-plugin/parent-page-filter": "1.0.2",
 		"wpackagist-plugin/postscript": "1.0.0",
@@ -76,7 +76,7 @@
 		"wpackagist-plugin/wp-amazon-ses-smtp": "1.0.5",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
-		"jwcounts/hpm-podcasts": "2019.07.16",
+		"jwcounts/hpm-podcasts": "2019.07.22",
 		"jwcounts/wp-missed-schedule": "1.0"
 	},
 	"require-dev": {
