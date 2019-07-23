@@ -8728,21 +8728,59 @@ section p {
 section .ylc-wrapper {
 	overflow: hidden;
 }
-section .ylc-wrapper .ylc-roster-item {
-	float: left;
+.ylc-grid-contain,
+.ylc-ambassadors-contain {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.ylc-ambassadors-contain div {
 	padding: 1em;
+	flex: 0 0 100%;
+}
+.page-template-page-ylc .page-content section#ylc-roster {
+	padding: 2em 0;
+}
+section#ylc-roster h1 {
+	text-align: center;
+	position: relative;
+}
+section#ylc-roster h1:before {
+	content: '';
+	position: absolute;
+	bottom: -10px;
 	width: 50%;
+	left: 25%;
+	border-bottom: 5px solid #cc0000;
 }
-section .ylc-wrapper .ylc-roster-item:nth-child(even) {
-	clear: both;
+section .ylc-wrapper .ylc-roster-item {
+	padding: 1em;
+	flex: 0 0 50%;
 }
-section .ylc-wrapper .ylc-roster-item:hover {
+section .ylc-wrapper .ylc-roster-item:hover,
+#ylc-prev-class:hover {
 	opacity: 0.75;
 	-webkit-transition: opacity .2s ease-out;
 	-moz-transition: opacity .2s ease-out;
 	-o-transition: opacity .2s ease-out;
 	transition: opacity .2s ease-out;
 	cursor: pointer;
+}
+#ylc-prev-class {
+	background-color: #cc0000;
+	color: white;
+	font: normal 1.5em/1.125em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	text-align: center;
+	padding: 1em;
+	border-radius: 10px;
+	width: 80%;
+	margin: 1em 10%;
+}
+.ylc-prev-class {
+	display: none;
+}
+.ylc-prev-class.active {
+	display: block;
 }
 #ylc-involve {
 	background-color: transparent;
@@ -8761,15 +8799,19 @@ section#ylc-involve p,
 section#ylc-join p {
 	color: white;
 }
-#ylc-join {
+#ylc-join,
+#ylc-success {
 	background-color: #59595B;
 }
-section#ylc-join h1 {
+section#ylc-join h1,
+section#ylc-success h1 {
 	text-align: center;
 	color: white;
 }
 section#ylc-join p span,
-section#ylc-join p a {
+section#ylc-join p a,
+section#ylc-success p span,
+section#ylc-success p a {
 	font-family: 'MiloOT-Bold',arial,helvetica,sans-serif;
 }
 section#ylc-join p.ylc-button {
@@ -8782,6 +8824,17 @@ section#ylc-join p.ylc-button a {
 	background-color: #52C2DD;
 	padding: 0.5em 1.125em;
 	font: normal 1em/2em 'MiloOT-Medi',arial,helvetica,sans-serif;
+}
+#ylc-success img {
+	width: 50%;
+	margin: 0 25% 0.5em;
+}
+section#ylc-success p {
+	color: white;
+	text-align: center;
+}
+section#ylc-success .column-third {
+	padding: 1em;
 }
 #ylc-overlay {
 	position: fixed;
@@ -9026,17 +9079,22 @@ section#ylc-join p.ylc-button a {
 		font-size: 200%;
 	}
 	section .ylc-wrapper .ylc-roster-item {
+		flex: 0 0 25%;
+	}
+	section#ylc-roster h1:before {
 		width: 25%;
-	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(even) {
-		clear: none;
-	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(4n+2) {
-		clear: both;
+		left: 37.5%;
 	}
 	section#ylc-involve h1,
 	section#ylc-involve p {
 		width: 50%;
+	}
+	.ylc-ambassadors-contain div {
+		flex: 0 0 50%;
+	}
+	#ylc-prev-class {
+		width: 60%;
+		margin: 1em 20%;
 	}
 	#ylc-overlay #ylc-overlay-wrap {
 		width: 97%;
@@ -9118,9 +9176,6 @@ section#ylc-join p.ylc-button a {
 		max-width: 64em;
 		margin: 0 auto;
 	}
-	section .ylc-wrapper .ylc-roster-item {
-		width: 25%;
-	}
 	section#ylc-intro img {
 		padding: 0 2em 2em 0;
 	}
@@ -9137,6 +9192,14 @@ section#ylc-join p.ylc-button a {
 	}
 	section#ylc-involve {
 		padding: 4em 2em;
+	}
+	section#ylc-roster h1:before {
+		width: 20%;
+		left: 40%;
+	}
+	#ylc-prev-class {
+		width: 40%;
+		margin: 1em 30%;
 	}
 	.page-template-page-ylc .page-header h2 {
 		font-size: 325%;
@@ -9205,16 +9268,7 @@ section#ylc-join p.ylc-button a {
 		padding-right: 2em;
 	}
 	section .ylc-wrapper .ylc-roster-item {
-		width: 16.666667%;
-	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(4n+2) {
-		clear: none;
-	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(6n+2) {
-		clear: both;
-	}
-	section .ylc-wrapper .ylc-roster-item:nth-child(14) {
-		margin-left: 16.666667%;
+		flex: 0 0 16.666667%;
 	}
 }
 

@@ -39,20 +39,21 @@ get_header(); ?>
 	<script>
 		function modalSwitch(dataId,modal) {
 			var dIndexSp = dataId.split('-');
-			var dInt = parseInt(dIndexSp[1]);
+			var dInt = parseInt(dIndexSp[2]);
+			var roster = document.getElementsByClassName(dIndexSp[0]+'-'+dIndexSp[1]);
 			if ( dInt - 1 == 0 ) {
-				var prev = 16;
+				var prev = roster.length;
 			} else {
 				var prev = dInt - 1;
 			}
-			if ( dInt + 1 == 17 ) {
+			if ( dInt + 1 == roster.length + 1 ) {
 				var next = 1;
 			} else {
 				var next = dInt + 1;
 			}
 			var current = jQuery('#'+dataId);
-			jQuery('#ylc-prev').attr('data-item', 'ylc-'+prev);
-			jQuery('#ylc-next').attr('data-item', 'ylc-'+next);
+			jQuery('#ylc-prev').attr('data-item', 'ylc-'+dIndexSp[1]+'-'+prev);
+			jQuery('#ylc-next').attr('data-item', 'ylc-'+dIndexSp[1]+'-'+next);
 			var name = current.attr('data-name');
 			var title = current.attr('data-title');
 			var quote = current.attr('data-quote');
@@ -79,14 +80,39 @@ get_header(); ?>
 				var dIndex = $(this).attr('id');
 				modalSwitch(dIndex,true);
 			});
-			$('#ylc-close').on('click', function(event) {
+			$('#ylc-close,#ylc-overlay').on('click', function(event) {
 				event.preventDefault();
 				$('#ylc-overlay').removeClass('ylc-active');
 			});
+			$('#ylc-overlay-wrap').on('click', function(event) {
+				event.stopPropagation();
+			});
 			$('#ylc-next,#ylc-prev').on('click', function(event) {
 				event.preventDefault();
+				event.stopPropagation();
 				var dIndex = $(this).attr('data-item');
 				modalSwitch(dIndex,false);
+			});
+			$(document).on('keyup', function(event) {
+				if ($('#ylc-overlay').hasClass('ylc-active')) {
+					if (event.which == 37) {
+						console.log( 'Keyboard Previous' );
+						var dIndex = $('#ylc-prev').attr('data-item');
+						modalSwitch(dIndex,false);
+					} else if (event.which == 39) {
+						console.log( 'Keyboard Next' );
+						var dIndex = $('#ylc-next').attr('data-item');
+						modalSwitch(dIndex,false);
+					}
+				}
+			});
+			$('#ylc-prev-class').on('click', function(event) {
+				event.preventDefault();
+				if ( $('.ylc-prev-class').hasClass('active') ) {
+					$('.ylc-prev-class').removeClass('active');
+				} else {
+					$('.ylc-prev-class').addClass('active');
+				}
 			});
 		});
 	</script>
