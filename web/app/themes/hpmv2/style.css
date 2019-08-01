@@ -6084,6 +6084,12 @@ body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
 	border: 1px solid #cc0000;
 	border-radius: 4px;
 }
+div.kimbiaDiv {
+	border: 3px solid #e30036!important;
+	top: initial !important;
+	background: #ffffff!important;
+	color: #000000;
+}
 @media screen and (min-width: 30.0625em) {
 	.page-template-page-passport .page-header {
 		padding-bottom: calc(100%/3.6676);
@@ -6154,6 +6160,7 @@ body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
 		padding: 0.5em 1.5em;
 	}
 	.k_jquery-ui,
+	.kimbia-form,
 	.page-template-page-passport.passport-donation .page-content h3 {
 		width: 80%;
 		margin: 0 10%;
@@ -6209,6 +6216,7 @@ body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
 		margin: 0 7.5% !important;
 	}
 	.k_jquery-ui,
+	.kimbia-form,
 	.page-template-page-passport.passport-donation .page-content h3 {
 		width: 70%;
 		margin: 0 15%;
@@ -6227,6 +6235,7 @@ body[class] div.kimbiaDiv.two_col div.k_sectionDonation label.k_radioCB {
 		margin: 0 15%;
 	}
 	.k_jquery-ui,
+	.kimbia-form,
 	.page-template-page-passport.passport-donation .page-content h3 {
 		width: 60%;
 		margin: 0 20%;
