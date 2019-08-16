@@ -1991,6 +1991,29 @@ body.page-template-page-series-tiles aside {
 	color: white;
 	font-size: 5em;
 }
+#yt-nowplay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	-ms-align-items: center;
+	-ms-justify-content: center;
+	-ms-align-content: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	background-color: rgba(0,0,0,0.75);
+	font: normal 2em/1.75em 'MiloOT',arial,sans-serif;
+	color: white;
+}
 body.single-shows aside h3,
 body.page-template-page-series-tiles aside h3 {
 	padding: 0.75em 1em;
@@ -3853,29 +3876,6 @@ body.page.page-template-page-kids .kids-schedule {
 	#shows-youtube #youtube-upcoming .youtube:hover {
 		cursor: pointer;
 		opacity: 0.8;
-	}
-	#yt-nowplay {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		align-items: center;
-		justify-content: center;
-		align-content: center;
-		-ms-align-items: center;
-		-ms-justify-content: center;
-		-ms-align-content: center;
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		background-color: rgba(0,0,0,0.75);
-		font: normal 2em/1.75em 'MiloOT',arial,sans-serif;
-		color: white;
 	}
 	#shows-youtube #youtube-main #youtube-player .fa {
 		font-size: 10em;
@@ -6652,7 +6652,7 @@ ul.passport-drop li.passport-hidden {
 		width: 35%;
 		margin: 0 7.5%;
 	}
-	.matching-info .support-buttons a { 
+	.matching-info .support-buttons a {
 		margin: 0 32.5%;
 	}
 	.page-template-page-support-sub .page-content #vehicle-donation-main h2 {
@@ -7443,7 +7443,7 @@ body.page.page-template-page-ghr #main {
 	float: right;
 }
 #videos-nav #videos-close:hover {
-	cursor: pointer;	
+	cursor: pointer;
 }
 #videos-nav #videos-close .fa {
 	font: normal 1.25em/1em 'fontawesome',arial,helvetica;
@@ -10361,5 +10361,189 @@ section#generations-months ul li:hover {
 	}
 	section#generations-videos p {
 		font-size: 125%;
+	}
+}
+
+/**
+ * Country Covers
+ */
+section#country-covers {
+	max-width: 100%;
+	background-color: rgb(181,159,109);
+	background-image: url(https://cdn.hpm.io/assets/images/tan_mobile.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+section#country-covers #shows-youtube {
+	margin: 0;
+}
+section#country-covers .column-right {
+	width: 100%;
+	margin: 0;
+}
+section#country-covers .column-right img {
+	margin-bottom: 0.5em;
+}
+section#country-covers .column-right .show-content p {
+	color: #1F2F42;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 112.5%;
+}
+section#country-covers .column-right .show-content h2 {
+	color: #f5f5f5;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	padding-bottom: 0.25em;
+	border-bottom: 1px solid #f5f5f5;
+}
+section#country-covers #shows-youtube #youtube-main {
+	padding: 0;
+	background-color: transparent;
+}
+section#country-covers #shows-youtube #youtube-main h2 {
+	text-transform: none;
+	color: #1F2F42;
+	margin-bottom: 0.25em;
+}
+section#country-covers #shows-youtube #youtube-main p {
+	color: #f5f5f5;
+	font: normal 1.125em/1.25em arial,sans-serif;
+}
+section#country-covers #shows-youtube #youtube-upcoming {
+	margin: 1em 2.5%;
+	width: 95%;
+	background-color: transparent;
+	overflow: visible;
+}
+section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+	color: #1F2F42;
+}
+section#country-covers #shows-youtube #youtube-upcoming .youtube {
+	padding: 1em 0;
+	-webkit-flex-flow: row nowrap;
+	-webkit-justify-content: left;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+	flex-flow: row nowrap;
+	justify-content: left;
+	align-content: center;
+	align-items: center;
+	-ms-flex-flow: row nowrap;
+	-ms-justify-content: left;
+	-ms-align-content: center;
+	-ms-align-items: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	position: relative;
+}
+section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+	font-family: 'alternate-gothic-no-2-d','MiloOT-Light',arial,sans-serif;
+}
+section#country-music {
+	background-color: #1C2329;
+	padding: 2em;
+}
+section#country-music img {
+	width: 75%;
+	margin: 0 12.5% 1em;
+}
+section#country-music p {
+	color: #f5f5f5;
+	font: normal 1.125em/1.25em arial,helvetica,sans-serif;
+}
+section#country-covers .slick-prev:before,
+section#country-covers .slick-next:before {
+	color: white !important;
+}
+@media screen and (min-width: 30.0625em) {
+	section#country-covers .column-right {
+		float: right;
+		width: 31%;
+		margin: 0 0 1em 3%;
+	}
+	section#country-covers #youtube-main {
+		float: left;
+		width: 66%;
+		margin: 0 0 1em 0;
+	}
+	section#country-covers #shows-youtube #youtube-upcoming {
+		clear: both;
+		border: 0;
+	}
+	section#country-covers #shows-youtube #youtube-upcoming .youtube {
+		width: 100%;
+		float: none;
+		display: block;
+		padding: 1em;
+	}
+	section#country-covers #shows-youtube #youtube-upcoming .youtube img {
+		width: 100%;
+		float: none;
+		padding: 0 0 0.5em 0;
+	}
+	section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+		margin: 0;
+	}
+	section#country-covers #shows-youtube {
+		margin: 0;
+		padding: 2em;
+	}
+	section#country-music {
+		-webkit-flex-flow: row nowrap;
+		-webkit-justify-content: left;
+		-webkit-align-content: center;
+		-webkit-align-items: center;
+		flex-flow: row nowrap;
+		justify-content: left;
+		align-content: center;
+		align-items: center;
+		-ms-flex-flow: row nowrap;
+		-ms-justify-content: left;
+		-ms-align-content: center;
+		-ms-align-items: center;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		position: relative;
+	}
+	section#country-music img {
+		width: 40%;
+		padding: 0 4em 0 0;
+		margin: 0;
+	}
+	section#country-covers .slick-prev:before,
+	section#country-covers .slick-next:before {
+		font-size: 40px !important;
+	}
+	section#country-covers .slick-prev,
+	section#country-covers .slick-next {
+		width: 40px !important;
+		height: 40px !important;
+	}
+	section#country-covers .slick-prev,
+	section#country-covers .slick-next {
+		width: 40px !important;
+		height: 40px !important;
+	}
+	section#country-covers .slick-next {
+		right: -40px !important;
+	}
+	section#country-covers .slick-prev {
+		left: -40px !important;
+	}
+}
+@media screen and (min-width: 50.0625em) {
+	section#country-covers #shows-youtube #youtube-wrap {
+		background-color: transparent;
+		overflow: visible;
+	}
+	section#country-music {
+		padding: 3em 4em;
 	}
 }

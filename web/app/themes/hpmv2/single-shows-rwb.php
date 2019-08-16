@@ -66,68 +66,9 @@ get_header(); ?>
 				<h3><?php echo $show['times']; ?></h3>
 			<?php
 					endif;
-					if ( !empty( $show['gplay'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $show['gplay']; ?>" target="_blank" title="Google Play Podcasts Feed"><span class="fa fa-google" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $show['podcast'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $show['podcast']; ?>" target="_blank" title="Podcast Feed"><span class="fa fa-rss" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $show['itunes'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $show['itunes']; ?>" target="_blank" title="iTunes Feed"><span class="fa fa-apple" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['snapchat'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="http://www.snapchat.com/add/<?php echo $social['snapchat']; ?>" target="_blank" title="Snapchat"><span class="fa fa-snapchat-ghost" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['tumblr'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $social['tumblr']; ?>" target="_blank" title="Tumblr"><span class="fa fa-tumblr" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['insta'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://instagram.com/<?php echo $social['insta']; ?>" target="_blank" title="Instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['sc'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://soundcloud.com/<?php echo $social['sc']; ?>" target="_blank" title="SoundCloud"><span class="fa fa-soundcloud" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['yt'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $social['yt']; ?>" target="_blank" title="YouTube"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['twitter'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://twitter.com/<?php echo $social['twitter']; ?>" target="_blank" title="Twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['fb'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://www.facebook.com/<?php echo $social['fb']; ?>" target="_blank" title="Facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif; ?>
+					echo HPM_Podcasts::show_social( $show['podcast'], false, get_the_ID() ); ?>
 			</div>
-			<?php 
+			<?php
 				endif;
 			endwhile; ?>
 			<div id="shows-youtube">
