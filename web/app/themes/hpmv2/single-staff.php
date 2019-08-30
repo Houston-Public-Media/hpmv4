@@ -12,10 +12,11 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
-			while ( have_posts() ) : the_post(); 
+			while ( have_posts() ) : the_post();
 				$staff = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
 				$staff_authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', true );
-				$staff_pic = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' ); ?>
+				$staff_pic = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' );
+				print_r( $staff ); ?>
 
 			<header class="page-header">
 				<div id="author-wrap">
@@ -28,40 +29,37 @@ get_header(); ?>
 						<h1 class="entry-title"><?php the_title(); ?></h1>
 						<h3><?php echo $staff['title']; ?></h3>
 			<?php
-				if (!empty($staff)): 
-					if ( !empty($staff['facebook'] ) || !empty( $staff['twitter'] ) ) :?>
+				if ( !empty( $staff ) ): ?>
 						<div class="author-social">
-					<?php
-						if (!empty($staff['facebook'])) : ?>
+				<?php
+					if (!empty( $staff['facebook'] ) ) : ?>
 							<div class="social-icon">
 								<a href="<?php echo $staff['facebook']; ?>" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
 							</div>
-				<?php
-						endif;
-						if (!empty($staff['twitter'])) : ?>
+			<?php
+					endif;
+					if ( !empty( $staff['twitter'] ) ) : ?>
 							<div class="social-icon">
 								<a href="<?php echo $staff['twitter']; ?>" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
 							</div>
-				<?php
-						endif;
-						if (!empty($staff['email'])) : ?>
+			<?php
+					endif;
+					if ( !empty( $staff['email'] ) ) : ?>
 							<div class="social-icon">
 								<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><span class="fa fa-envelope" aria-hidden="true"></span></a>
 							</div>
-				<?php
-						endif; ?>
-						</div>
-				<?php
+			<?php
 					endif; ?>
+						</div>
 					</div>
 					<div class="author-info-wrap">
-					<?php					
-						$author_bio = get_the_content();
-						if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) :
-							$author_bio = '';
-						endif;
-						echo apply_filters( 'hpm_filter_text', $author_bio );
-					?>
+				<?php
+					$author_bio = get_the_content();
+					if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) :
+						$author_bio = '';
+					endif;
+					echo apply_filters( 'hpm_filter_text', $author_bio );
+				?>
 					</div>
 				</div>
 			<?php
