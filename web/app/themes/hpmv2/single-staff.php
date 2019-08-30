@@ -15,8 +15,7 @@ get_header(); ?>
 			while ( have_posts() ) : the_post();
 				$staff = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
 				$staff_authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', true );
-				$staff_pic = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' );
-				print_r( $staff ); ?>
+				$staff_pic = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' ); ?>
 
 			<header class="page-header">
 				<div id="author-wrap">
