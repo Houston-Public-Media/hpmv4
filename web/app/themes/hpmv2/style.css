@@ -819,7 +819,6 @@ article .entry-content p a {
 }
 article .entry-content ul,
 .page-content ul,
-#station-schedule-display ul,
 .show-content ul {
 	list-style: disc outside none;
 }
@@ -2384,44 +2383,10 @@ body.parent-pageid-119396 .table-striped tr.out td {
 /**
  * 8.0 Station Schedule Styling
  */
-
-.proglist .progtime {
-	float: none;
-	width: auto;
-	padding: 1em 1em 1em 0;
-	text-align: left;
-	font-weight: 900;
-}
-.proglist .progname {
-	float: none;
-	border-left: 0;
-	padding: 0;
-	width: auto;
-	margin: 0;
-}
-section .progname h4 {
-	margin: 0;
-}
-section .progname p {
-	font-style: italic;
-}
-section .progname h5 {
-	font-size: 1em;
-	padding: 0 0 0 1em;
-}
-.proglist .progname .progplay {
-	padding: 0.5em 0 0 1em;
-}
-.proglist .progname .progplay li {
-	overflow: hidden;
-}
-.proglist .progname .progplay li.shade {
-	background: #ddd;
-}
-ul.proglist, ul.progplay {
+ul.proglist {
 	list-style: none;
 }
-ul.proglist li, ul.progplay li {
+ul.proglist li {
 	overflow: hidden;
 	list-style: none;
 }
@@ -2444,144 +2409,83 @@ ul.proglist li, ul.progplay li {
 	width: 96%;
 	margin: 0 2%;
 }
+#station-schedule-display ul {
+	list-style: disc outside none;
+	margin: 0;
+}
 #station-schedule-display iframe {
 	height: 1000px;
 	overflow: scroll;
 	width: 100%;
 }
-#station-schedule-display .head {
-	font-weight: 900;
-	text-align: center;
-	padding: 1em 0;
-}
-#station-schedule-display .time {
-	background-color: #00b0bc;
-	height: 8em;
-	color: #fff;
-	padding: 0.25em 0.5em;
-	align-items: center;
-	align-content: center;
-	-ms-align-items: center;
-	-ms-align-content: center;
-	justify-content: center;
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	border: 0.125em solid #fff;
-	font-size: 87%;
-}
-#station-schedule-display .time-column {
-	width: 25%;
-	float: left;
-	clear: left;
-	display: none;
-}
-#station-schedule-display .schedule-column {
-	width: 75%;
-	float: left;
-}
-#station-schedule-display .show {
-	border: 0.25em solid #fff;
-	padding: 0.25em 0.5em;
-	align-items: center;
-	align-content: center;
-	-ms-align-items: center;
-	-ms-align-content: center;
-	justify-content: center;
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	text-align: center;
-	background-color: #f5f5f5;
-	font-size: 87%;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow-x: hidden;
-}
-#station-schedule-display .fifteen {
-	height: 2em;
-}
-#station-schedule-display .thirty {
-	height: 4em;
-}
-#station-schedule-display .sixty {
-	height: 8em;
-}
-#station-schedule-display .ninety {
-	height: 12em;
-}
-#station-schedule-display .onetwenty {
-	height: 16em;
-}
-#station-schedule-display .onefifty {
-	height: 20em;
-}
-#station-schedule-display .toppad {
-	margin-top: 4em;
-}
-#station-schedule-display .schedule-column p {
-	margin: 0;
-	font-size: 0.825em;
-	max-width: 100%;
-}
-#station-schedule-display a.program-title {
-	font: normal 1.25em/1em 'MiloOT-Bold',arial,sans-serif;
-}
-#station-schedule-display span.program-title {
-	font: normal 1.25em/1em 'MiloOT-Bold',arial,sans-serif;
-	color: #707070;
-}
-#station-schedule-display .station-schedule-wrap .time-column:nth-child(2n+4)  {
-	display: none;
-	clear: both;
-}
-#station-schedule-display .station-schedule-wrap .time-column:nth-child(4) {
-	display: block;
-}
 #station-schedule-display ul li {
-	padding: 1em 0;
+	padding: 1em;
+	background-color: white;
+	border: 1px solid rgba(0,0,0,0.25);
+	margin: 0 0 1em 0;
 }
-#station-schedule-display ul li p i {
-	font-size: 85%;
+#station-schedule-display ul li ul li {
+	border: 0;
+	margin: 0;
+	padding: 0 0 0.5em 0;
 }
-section .progname .progsegment h4 {
-	color: #707070;
+#station-schedule-display ul li ul li.shade {
+	background-color: #ddd;
 }
-.progsegment {
-	padding: 1em 0 0 0;
+#station-schedule-display ul li p {
+	font-size: 90%;
+}
+.proglist .progsegment {
+	padding: 0 0 1em 0;
+}
+.proglist .progsegment h4 {
+	background-color: rgb(0,98,136);
+	color: white;
+	padding: 0.75em;
+	margin: 0;
+	position: relative;
+}
+.proglist .progsegment h4:hover {
+	opacity: 0.75;
+	cursor: pointer;
+}
+.proglist .progsegment h4.seg-active {
+	opacity: 0.75;
+	font-weight: bolder;
+}
+.proglist .progsegment h4:after {
+	content: '+';
+	position: absolute;
+	right: 1em;
+	font-weight: bolder;
+}
+.proglist .progsegment h4.seg-active:after {
+	content: '-';
+}
+.proglist .progsegment ul {
+	display: none;
+}
+#station-schedule-display .proglist .progsegment ul.seg-active {
+	display: block;
 }
 #station-schedule-display .progsegment li {
 	overflow: visible;
 	padding: 0.5em 0;
 	list-style: disc;
+	margin: 0 0 0 2em;
 }
-#tv-search {
-	padding: 1em 0;
+#station-schedule-display .proglist .progsegment ul.progplay li {
+	list-style: none;
+	margin: 0;
+	padding: 1em;
 }
-#tv-search input {
-	border: 0;
-	border-bottom: 1px solid #808080;
-	font-family: 'MiloOT-Light',arial,helvetica,sans-serif;
-}
-#tv-search label {
-	margin-right: 0.5em;
-	font-family: 'MiloOT',arial,helvetica,sans-serif;
-}
-#KUHTDT2, #KUHTDT3, #KUHTDT4 {
-	display: none;
+#station-schedule-display .proglist .progsegment ul.progplay li em {
+	color: rgb(49, 49, 49);
 }
 #schedule-search {
 	clear: both;
 }
 #schedule-search #day-select {
-	width: 100%;
-	margin: 1em 0;
-}
-#schedule-search #tv-search {
 	width: 100%;
 	margin: 1em 0;
 }
@@ -2600,18 +2504,26 @@ section .progname .progsegment h4 {
 	font: normal 1em/1em 'MiloOT-Light',arial,sans-serif;
 	text-transform: lowercase;
 }
-body.page.page-template-page-schedules #main {
+body.page.page-template-page-schedules-radio #main,
+body.page.page-template-page-schedules-tv #main {
 	margin-bottom: 1em;
+	background-color: transparent;
 }
-body.page.page-template-page-schedules .page-header .page-title {
+body.page.page-template-page-schedules-radio .page-header .page-title,
+body.page.page-template-page-schedules-tv .page-header .page-title {
 	color: #00b0bc;
 	text-transform: uppercase;
 	font: normal 2.5em/1.5em 'alternate-gothic-no-2-d','MiloOT',arial,sans-serif;
 	margin-bottom: 0.5em;
 }
-body.page.page-template-page-schedules .page-header {
+body.page.page-template-page-schedules-radio .page-header,
+body.page.page-template-page-schedules-tv .page-header {
 	overflow: hidden;
 	margin-bottom: 1em;
+}
+body.page.page-template-page-schedules-tv .entry-content,
+body.page.page-template-page-schedules-radio .entry-content {
+	padding: 1em;
 }
 .page-header #station-social {
 	width: 100%;
@@ -3835,12 +3747,14 @@ body.page.page-template-page-kids .kids-schedule {
 	#author-wrap .author-thumb {
 		width: 100%;
 	}
-	body.page.page-template-page-schedules .page-header .page-title {
+	body.page.page-template-page-schedules-radio .page-header .page-title,
+	body.page.page-template-page-schedules-tv .page-header .page-title {
 		display: block;
 		float: left;
 		margin-bottom: 0;
 	}
-	body.page.page-template-page-schedules .entry-content {
+	body.page.page-template-page-schedules-radio .entry-content,
+	body.page.page-template-page-schedules-tv .entry-content {
 		padding: 1em;
 	}
 	body.single-shows .page-header.no-back,
@@ -3926,12 +3840,6 @@ body.page.page-template-page-kids .kids-schedule {
 		padding: 1em;
 		background-color: white;
 		margin: 0 2%;
-	}
-	#station-schedule-display .time {
-		font-size: 100%;
-	}
-	#station-schedule-display .show {
-		font-size: 100%;
 	}
 	.page-header #station-social {
 		width: 45%;
@@ -4518,7 +4426,8 @@ body.page.page-template-page-kids .kids-schedule {
 		overflow: hidden;
 	}
 	body.page.page-template-page-main-categories #main,
-	body.page.page-template-page-schedules #main,
+	body.page.page-template-page-schedules-tv #main,
+	body.page.page-template-page-schedules-radio #main,
 	body.single-shows #main,
 	body.page-template-page-now-time #main,
 	body.page-template-page-series-tiles #main {
@@ -5132,84 +5041,19 @@ body.page.page-template-page-kids .kids-schedule {
 		-o-transition: transform .2s ease-out;
 		transition: transform .2s ease-out;
 	}
-	#station-schedule-display {
-		width: 100%;
+	#station-schedule-display.column-left {
+		width: 66%;
 		margin: 0 0 1em;
 	}
-	#station-schedule-display .time {
-		background-color: #00b0bc;
-		border: 0.125em solid #f5f5f5;
-		font-size: 90%;
-	}
-	#station-schedule-display .time-column {
-		width: 8%;
-	}
-	#station-schedule-display .schedule-column {
-		width: 21%;
-		float: left;
-	}
-	#station-schedule-display .show {
-		border: 0.25em solid #f5f5f5;
-		background-color: #fff;
-		white-space: normal;
-		text-overflow: ellipsis;
-		overflow-x: visible;
-		font-size: 90%;
-	}
-	#station-schedule-display .station-schedule-wrap .time-column:nth-child(4),
-	#station-schedule-display .station-schedule-wrap .time-column:nth-child(12) {
-		display: block;
-		clear: none;
-	}
-	#station-schedule-display .station-schedule-wrap .time-column:nth-child(6),
-	#station-schedule-display .station-schedule-wrap .time-column:nth-child(8) {
-		display: none;
-	}
-	#station-schedule-display .fifteen {
-		height: 3em;
-	}
-	#station-schedule-display .thirty {
-		height: 6em;
-	}
-	#station-schedule-display .sixty {
-		height: 12em;
-	}
-	#station-schedule-display .ninety {
-		height: 18em;
-	}
-	#station-schedule-display .onetwenty {
-		height: 24em;
-	}
-	#station-schedule-display .onefifty {
-		height: 30em;
-	}
-	#station-schedule-display .toppad {
-		margin-top: 6em;
-	}
-	#station-schedule-display .time-column .time {
-		height: 12em;
-	}
-	#tv-search {
-		padding: 1em 1em 1em 2em;
-		float: left;
-		clear: none;
+	body.page.page-template-page-schedules-radio .column-right article {
+		width: 100%;
+		padding: 0;
+		background-color: white;
 	}
 	#schedule-search #day-select {
 		float: left;
 		width: 50%;
 		margin: 0;
-	}
-	#schedule-search #tv-search {
-		float: right;
-		width: 50%;
-		text-align: right;
-		margin: 0;
-	}
-	#tv-channel-select {
-		display: none;
-	}
-	#KUHTDT, #KUHTDT2, #KUHTDT3, #KUHTDT4 {
-		display: block;
 	}
 
 	/**
@@ -5539,12 +5383,6 @@ body.page.page-template-page-kids .kids-schedule {
 	}
 	#station-schedule-display {
 		padding: 1em 0;
-	}
-	#station-schedule-display .time {
-		font-size: 100%;
-	}
-	#station-schedule-display .show {
-		font-size: 100%;
 	}
 }
 

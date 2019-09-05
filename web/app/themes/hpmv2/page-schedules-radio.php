@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Schedules
+Template Name: Radio Schedules
 */
 	$t = time();
 	$offset = get_option('gmt_offset')*3600;
@@ -29,7 +29,7 @@ Template Name: Schedules
 	endif;
 	$today_date = date('Y-m-d', $t);
 	$date = $sched_year."-".$sched_month."-".$sched_day;
-	get_header(); 
+	get_header();
 ?>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -61,67 +61,39 @@ Template Name: Schedules
 				<h1 class="page-title entry-title"><?php the_title(); ?></h1>
 				<div id="station-social">
 				<?php
-					if ( $sched_station == 'tv8' ) :
-						$media = get_posts(array(
+					if ( $sched_station == 'news887' ) :
+						$media = get_posts([
 							'post_parent' => get_the_ID(),
 							'post_type' => 'attachment',
 							'post_mime_type' => 'application/pdf',
 							'orderby' => 'date',
 							'posts_per_page' => 1,
 							'order' => 'DESC'
-						)); ?>
-					<div class="station-social-icon">
-						<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-social-icon">
-						<a href="https://twitter.com/hpmeducation" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-social-icon">
-						<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-printable">
-						<a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">View Printable eGuide</a>
-					</div>
-				<?php
-					elseif ( $sched_station == 'news887' ) :
-						$media = get_posts(array(
-							'post_parent' => get_the_ID(),
-							'post_type' => 'attachment',
-							'post_mime_type' => 'application/pdf',
-							'orderby' => 'date',
-							'posts_per_page' => 1,
-							'order' => 'DESC'
-						)); ?>
+						]); ?>
 					<div class="station-social-icon">
 						<a href="https://www.facebook.com/HoustonNews887" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
 					</div>
 					<div class="station-social-icon">
 						<a href="https://twitter.com/hpmnews887" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
 					</div>
-					<div class="station-social-icon">
-						<a href="https://soundcloud.com/hpmnews887" target="_blank"><span class="fa fa-soundcloud" aria-hidden="true"></span></a>
-					</div>
                     <div class="station-printable">
                         <a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">Printable Schedule</a>
                     </div>
 				<?php
 					elseif ( $sched_station == 'classical' ) :
-						$media = get_posts(array(
+						$media = get_posts([
 							'post_parent' => get_the_ID(),
 							'post_type' => 'attachment',
 							'post_mime_type' => 'application/pdf',
 							'orderby' => 'date',
 							'posts_per_page' => 1,
 							'order' => 'DESC'
-						)); ?>
+						]); ?>
 					<div class="station-social-icon">
 						<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
 					</div>
 					<div class="station-social-icon">
 						<a href="https://twitter.com/hpmartsculture" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-social-icon">
-						<a href="https://soundcloud.com/hpmartsandculture" target="_blank"><span class="fa fa-soundcloud" aria-hidden="true"></span></a>
 					</div>
                     <div class="station-printable">
                         <a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">Printable Schedule</a>
@@ -129,8 +101,6 @@ Template Name: Schedules
 				<?php
 					endif; ?>
 				</div>
-			<?php	
-	 			if ( $sched_station != 'tv8' ) : ?>
 				<div id="schedule-search">
 					<div id="day-select">
 						<form role="form" method="" action="">
@@ -139,16 +109,8 @@ Template Name: Schedules
 						</form>
 					</div>
 				</div>
-<?php	
-				endif; ?>
 			</header>
-			
-<?php	
-	if ( $sched_station == 'tv8' ) : ?>
-				<section id="station-schedule-display" class="column-span">
-					<iframe scrolling="auto" src="https://proweb.myersinfosys.com/kuht/day"></iframe>
 <?php
-	else :
 		if ( $sched_station == 'news887' ) :
 			$station = "519131dee1c8f40813e79115";
 		elseif ( $sched_station == 'classical' ) :
@@ -179,89 +141,129 @@ Template Name: Schedules
 				<h3>Playlist Error</h3>
 				<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="/<?php echo $sched_station; ?>/">return to today&#39;s playlist</a>.</p>
 <?PHP
-			else: ?>
+			else:
+				$current = [
+					'name' => '',
+					'time' => '',
+					'index' => ''
+				];
+				$progs = [];
+
+				foreach ( $json['onToday'] as $k => $v ) :
+					$fullend = strtotime( $v['fullend'] );
+					$fullstart = strtotime( $v['fullstart'] );
+					$duration = $fullend - $fullstart;
+					$name = $v['program']['name'];
+					if ( $duration > 600 ) :
+						if (
+							( empty( $current['name'] ) && empty( $current['time'] ) ) ||
+							( $name !== $current['name'] && $fullstart !== $current['time'] )
+						) :
+							$current = [
+								'name' => $name,
+								'time' => $fullstart,
+								'index' => $k
+							];
+							$progs[$k] = [
+								'name' => $name,
+								'time' => date( 'g:i a', $fullstart ),
+								'link' => $v['program']['program_link'],
+								'desc' => $v['program']['program_desc'],
+								'playlist' => ( !empty( $v['playlist'] ) ? $v['playlist'] : [] ),
+								'sub' => []
+							];
+						endif;
+					else :
+						$index = $current['index'];
+						$progs[ $index ]['sub'][] = [
+							'name' => $name,
+							'time' => date( 'g:i a', $fullstart ),
+							'link' => $v['program']['program_link']
+						];
+					endif;
+				endforeach; ?>
 				<h3>Playlist for <?PHP echo $today; ?></h3>
 				<ul class="proglist">
 <?PHP
-				foreach ($json['onToday'] as $show) :
-					$start_date = explode('-',$show['date']);
-					$start_time = explode(':',$show['start_time']);
-					$start_string = date('g:i a',mktime($start_time[0],$start_time[1],0,$start_date[1],$start_date[2],$start_date[0]));
-					$end_time = explode(':',$show['end_time']);
-					$end_string = date('g:i a',mktime($end_time[0],$end_time[1],0,$start_date[1],$start_date[2],$start_date[0])); ?>
+				foreach ( $progs as $prog ) : ?>
 					<li>
-						<div class="progtime"><?PHP echo $start_string; ?></div>
-						<div class="progname">
-							<h4><a href="<?PHP echo $show['program']['program_link']; ?>"><?PHP echo $show['program']['name']; ?></a></h4>
-							<p><?PHP echo wp_trim_words( $show['program']['program_desc'], 25, '...' ); ?></p>
+						<h2><strong><?PHP echo $prog['time']; ?>:</strong> <?php echo ( !empty( $prog['link'] ) ? '<a href="'.$prog['link'].'">' : '' ) . $prog['name'] . ( !empty( $prog['link'] ) ? '</a>' : '' ); ?></h2>
+						<p><?PHP echo $prog['desc']; ?></p>
 <?PHP
-					echo hpm_segments( $show['program']['name'], $date );
-					if (!empty($show['playlist'])) : ?>
-							<h5>Program Playlist</h5>
-							<ul class="progplay">
+					echo hpm_segments( $prog['name'], $date );
+					if ( !empty( $prog['sub'] ) ) : ?>
+					<div class="progsegment">
+						<h4>Interstitials</h4>
+						<ul>
 <?PHP
-						$c = 1;
-						foreach($show['playlist'] as $song) :
-							$song_info = array();
-							$song_start = explode(' ',$song['_start_time']);
-							$song_start_date = explode('-',$song_start[0]);
-							$song_start_time = explode(':',$song_start[1]);
-							$song_start_string = date('g:i a',mktime($song_start_time[0],$song_start_time[1],$song_start_time[2],$song_start_date[0],$song_start_date[1],$song_start_date[2]));
-							if (!empty($song['composerName'])) :
-								$song_info[] = "<i>Composer</i>: ".trim($song['composerName']);
+						foreach( $prog['sub'] as $ksu => $vsu ) : ?>
+							<li>
+								<strong><?PHP echo $vsu['time']; ?>:</strong> <?php echo ( !empty( $vsu['link'] ) ? '<a href="'.$vsu['link'].'">' : '' ) . $vsu['name'] . ( !empty( $vsu['link'] ) ? '</a>' : '' ); ?>
+							</li>
+<?PHP
+						endforeach; ?>
+						</ul>
+					</div>
+<?php
+					endif;
+					if ( !empty( $prog['playlist'] ) ) : ?>
+					<div class="progsegment">
+						<h4>Program Playlist</h4>
+						<ul class="progplay">
+<?PHP
+						foreach( $prog['playlist'] as $ks => $song ) :
+							$song_info = [];
+							$song_start = explode(' ', $song['_start_time'] );
+							$song_start_date = explode( '-', $song_start[0] );
+							$song_start_time = explode( ':', $song_start[1] );
+							$song_start_string = date( 'g:i a', mktime( $song_start_time[0], $song_start_time[1], $song_start_time[2], $song_start_date[0], $song_start_date[1], $song_start_date[2] ) );
+							if ( !empty( $song['composerName'] ) ) :
+								$song_info[] = "<em>Composer</em>: " . trim( $song['composerName'] );
 							endif;
-							if (!empty($song['ensembles'])) :
-								$song_info[] = "<i>Ensembles</i>: ".trim($song['ensembles']);
+							if ( !empty( $song['ensembles'] ) ) :
+								$song_info[] = "<em>Ensembles</em>: " . trim( $song['ensembles'] );
 							endif;
-							if (!empty($song['artistName'])) :
-								$song_info[] = "<i>Performer</i>: ".trim($song['artistName']);
+							if ( !empty( $song['artistName'] ) ) :
+								$song_info[] = "<em>Performer</em>: " . trim( $song['artistName'] );
 							endif;
-							if (!empty($song['conductor'])) : 
-								$song_info[] = "<i>Conductor</i>: ".trim($song['conductor']);
+							if ( !empty( $song['conductor'] ) ) :
+								$song_info[] = "<em>Conductor</em>: " . trim( $song['conductor'] );
 							endif;
-							if (!empty($song['copyright'])) :
-								if (!empty($song['catalog'])) : 
-									$song_info[] = "<br />(Catalog Information: ".trim($song['copyright'])." ".trim($song['catalog']).")";
+							if ( !empty( $song['copyright'] ) ) :
+								if ( !empty( $song['catalogNumber'] ) ) :
+									$song_info[] = "<em>Catalog Information</em>: " . trim( $song['copyright'] ) . " " . trim( $song['catalogNumber'] );
 								else :
-									$song_info[] = "<br />(Label: ".trim($song['copyright']).")";
+									$song_info[] = "<em>Label</em>: " . trim( $song['copyright'] );
 								endif;
 							endif;
-							if ($c & 1) : ?>
+							if ( ( $ks + 1 ) & 1 ) : ?>
 								<li>
 <?PHP
 							else : ?>
 								<li class="shade">
 <?PHP
 							endif; ?>
-									<div class="progtime"><?PHP echo $song_start_string; ?></div>
-									<div class="progname">
-										<b><?php echo trim($song['trackName']); ?>,</b><br />
-										<?php echo implode( ', ', $song_info ); ?><br /><br />
-									</div>
+									<h2><?PHP echo $song_start_string; ?>: <b><?php echo trim( $song['trackName'] ); ?></b></h2>
+									<?php echo implode( '<br />', $song_info ); ?>
 								</li>
 <?PHP
-							$c++;
 						endforeach; ?>
 							</ul>
 <?PHP
 					endif; ?>
-						</div>
 					</li>
 <?PHP
 				endforeach; ?>
 				</ul>
 <?PHP
 			endif;
-		endif;
-	endif; ?>
+		endif; ?>
 			</section>
 			<div id="top-schedule-wrap" class="column-right">
 				<nav id="category-navigation" class="category-navigation" role="navigation">
 					<h4><?php the_title(); ?> Quick Links</h4>
 					<?php
-						if ( $sched_station == 'tv8' ) :
-							$nav_id = 2212;
-						elseif ( $sched_station == 'news887' ) :
+						if ( $sched_station == 'news887' ) :
 							$nav_id = 2213;
 						elseif ( $sched_station == 'classical' ) :
 							$nav_id = 2214;
@@ -273,7 +275,7 @@ Template Name: Schedules
 					?>
 				</nav>
 			</div>
-			<div class="column-left">
+			<div class="column-right">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 					<div class="entry-content">
 						<?php the_content(); ?>
@@ -283,8 +285,25 @@ Template Name: Schedules
 		<?php
 		endwhile;
 		?>
-			
+
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
-
+	<script>
+		jQuery(document).ready(function($){
+			$('.progsegment h4').click(function(event){
+				event.preventDefault();
+				var next = $(this).next('ul');
+				if ( next.hasClass('seg-active') ) {
+					next.removeClass('seg-active');
+				} else {
+					next.addClass('seg-active');
+				}
+				if ( $(this).hasClass('seg-active') ) {
+					$(this).removeClass('seg-active');
+				} else {
+					$(this).addClass('seg-active');
+				}
+			});
+		});
+	</script>
 <?php get_footer(); ?>

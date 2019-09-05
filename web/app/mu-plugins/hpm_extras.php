@@ -643,10 +643,10 @@ function hpm_tweets( $account, $num ) {
 			if ( !empty( $j['retweeted_status'] ) ) :
 				$r = $j['retweeted_status'];
 				if ( $r['is_quote_status'] ) :
-					$output .= '<div class="tweet">'.hpm_render_tweet( $r ).'<div class="tweet">'.hpm_render_tweet( $r['quoted_status'] ).'</div><p class="tweet-rt">🔄 Retweeted by <a 
+					$output .= '<div class="tweet">'.hpm_render_tweet( $r ).'<div class="tweet">'.hpm_render_tweet( $r['quoted_status'] ).'</div><p class="tweet-rt">🔄 Retweeted by <a
 href="https://twitter.com/'.$j['user']['screen_name'].'" target="_blank">'.$j['user']['name'].'</a></p></div>';
 				else :
-					$output .= '<div class="tweet">'.hpm_render_tweet( $r ).'<p class="tweet-rt">🔄 Retweeted by <a href="https://twitter.com/'.$j['user']['screen_name'].'" 
+					$output .= '<div class="tweet">'.hpm_render_tweet( $r ).'<p class="tweet-rt">🔄 Retweeted by <a href="https://twitter.com/'.$j['user']['screen_name'].'"
 target="_blank">'.$j['user']['name'].'</a></p></div>';
 				endif;
 			elseif ( $j['is_quote_status'] ) :
@@ -880,7 +880,7 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api, TRUE );
 					if ( !empty( $json['list']['story'] ) ) :
-						$output .= "<div class=\"progsegment\"><h4>{$name} Segments for {$date}</h4><ul>";
+						$output .= "<div class=\"progsegment\"><h4>Segments for {$date}</h4><ul>";
 						foreach ( $json['list']['story'] as $j ) :
 							foreach ( $j['link'] as $jl ) :
 								if ( $jl['type'] == 'html' ) :
@@ -897,11 +897,11 @@ function hpm_segments( $name, $date ) {
 		elseif ( $shows[$name]['source'] == 'regex' ) :
 			if ( $name == 'BBC World Service' ) :
 				$offset = str_replace( '-', '', get_option( 'gmt_offset' ) );
-				$output .= "<div class=\"progsegment\"><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></div>";
+				$output .= "<div class=\"progsegment\"><h4>Schedule</h4><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></div>";
 			elseif ( $name == 'Texas Standard' ) :
 				$dstr = date( 'F-j-Y', $du );
 				$dstrdisp = date( 'F j, Y', $du );
-				$output .= "<div class=\"progsegment\"><ul><li><a href=\"{$shows[$name]['id']}".strtolower( $dstr )."/\" target=\"_blank\">Texas Standard for ".$dstrdisp."</a></li></ul></div>";
+				$output .= "<div class=\"progsegment\"><h4>Schedule</h4><ul><li><a href=\"{$shows[$name]['id']}".strtolower( $dstr )."/\" target=\"_blank\">Texas Standard for ".$dstrdisp."</a></li></ul></div>";
 			else :
 				return $output;
 			endif;
@@ -918,7 +918,7 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api );
 					if ( !empty( $json ) ) :
-						$output .= "<div class=\"progsegment\"><h4>{$name} Segments for {$date}</h4><ul>";
+						$output .= "<div class=\"progsegment\"><h4>Segments for {$date}</h4><ul>";
 						foreach ( $json as $j ) :
 							$output .= '<li><a href="'.$j->link.'" target="_blank">'.$j->title->rendered.'</a></li>';
 						endforeach;
@@ -939,7 +939,7 @@ function hpm_segments( $name, $date ) {
 					'ignore_sticky_posts' => 1
 				] );
 				if ( $hm->have_posts() ) :
-					$output .= "<div class=\"progsegment\"><h4>{$name} Segments for {$date}</h4><ul>";
+					$output .= "<div class=\"progsegment\"><h4>Segments for {$date}</h4><ul>";
 					while( $hm->have_posts() ) :
 						$hm->the_post();
 						$output .= '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';
@@ -966,9 +966,9 @@ function hpm_reset_password_message( $message, $key ) {
 		$login = trim( $_POST['user_login'] );
 		$user_data = get_user_by( 'login', $login );
 	endif;
-	
+
 	$user_login = $user_data->user_login;
-	
+
 	$msg = __( 'The password for the following account has been requested to be reset:' ). "\r\n\r\n";
 	$msg .= network_site_url() . "\r\n\r\n";
 	$msg .= sprintf( __( 'Username: %s' ), $user_login ) . "\r\n\r\n";
@@ -1065,7 +1065,7 @@ function hpm_image_preview_page() {
 									<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
 								</header>
 							</article>
-<?php 
+<?php
 		endif; ?>
 						</div>
 					</main><!-- .site-main -->
@@ -1335,7 +1335,7 @@ function hpm_cclassroom_update() {
 		wp_mail( 'jcounts@houstonpublicmedia.org', 'Error inserting Classical Classroom episode', $errors, [ 'From: HPM CC Bot <webmaster@houstonpublicmedia.org>', 'Content-Type: text/html; charset=UTF-8' ] );
 		return false;
 	endif;
-	
+
 	$tmp = download_url( $image );
 	if ( is_wp_error( $tmp ) ) :
 		$errors = implode( "\n\n", $tmp->get_error_messages() );
