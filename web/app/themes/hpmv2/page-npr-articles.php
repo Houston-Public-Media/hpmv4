@@ -35,7 +35,7 @@ Template Name: NPR Content
 			'link' => $link_text, 'api' => $api
 		);
 	endif;
-	
+
 	if ( !empty( $node['organization'][0] ) ) :
 		$orgs = array(
 			'name' => $node['organization'][0]['name']['$text'],
@@ -183,7 +183,7 @@ Template Name: NPR Content
 	$primary_image = $other_media = $other_image = $slidepic = $storylist = $audiolist = $videos = $inserts = array();
 	$oi_count = 0;
 	$interval = '';
-	
+
 	if (!empty($item_array['media'])) :
 		$media_count = count($item_array['media']);
 		$primary = search($item_array['media'],'image_type','primary');
@@ -223,7 +223,7 @@ Template Name: NPR Content
 				$storylist[] = array(
 					'title' => $mem['title'],
 					'intro_text' => $mem['intro_text'],
-					'url' => $mem['url'] 
+					'url' => $mem['url']
 				);
 			endforeach;
 		elseif (!empty($item_array['collection']) && $item_array['collection']['displayType'] == 'Music Classic Playlist') :
@@ -251,7 +251,7 @@ Template Name: NPR Content
 		$interval = round($para_count/($image_count+1),0,PHP_ROUND_HALF_UP);
 		$l = 0;
 		for($c=0;$c<$image_count;$c++) :
-			$l = $l+$interval; 
+			$l = $l+$interval;
 			$inserts[] = $l;
 		endfor;
 	endif;
@@ -334,7 +334,7 @@ Template Name: NPR Content
 		if (!empty($inserts) && in_array($i,$inserts)) :
 			if (!empty($slidepic)) :
 				$body_text .= "<div id=\"amw_galleria_slideshow_1\">";
-				
+
 				foreach($slidepic as $slide) :
 					if (!empty($slide['provider']) && !empty($slide['producer'])) :
 						$slidecred = $slide['provider'].", ".$slide['producer'];
@@ -395,7 +395,7 @@ Template Name: NPR Content
 		'date' => date( 'c', $date_offset ),
 		'author' => $people
 	);
-get_header('npr'); ?>
+get_header(); ?>
 	<style>
 		article .entry-content .fullattribution img { max-width: 1px; max-height: 1px; }
 	</style>
@@ -431,7 +431,7 @@ get_header('npr'); ?>
 				</header><!-- .entry-header -->
 				<div class="entry-content">
 					<?php
-						if (!empty( $audio )) : 
+						if (!empty( $audio )) :
 							echo do_shortcode( '[audio mp3="'.$audio.'"][/audio]' );
 						endif;
 						if ( !empty( $image ) ) :

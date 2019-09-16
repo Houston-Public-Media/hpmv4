@@ -7,7 +7,7 @@
  * @since HPMv2 1.0
  */
 
-get_header('single');
+get_header();
 if ( is_preview() ) : ?>
 	<div id="preview-warn">You're viewing a preview. Some things might be a little squirrelly.  --The Management</div>
 <?php endif; ?>
@@ -88,7 +88,7 @@ if ( is_preview() ) : ?>
 				</div><!-- .entry-content -->
 
 				<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) :
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
@@ -147,7 +147,7 @@ if ( is_preview() ) : ?>
 					<?php
 							endwhile; ?>
 				</div>
-				<?php	
+				<?php
 						endif;
 					endif;
 				endforeach;

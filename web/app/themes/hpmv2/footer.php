@@ -1,5 +1,7 @@
 			</div><!-- .site-content -->
-
+<?php if ( is_page_template( 'page-blank.php' ) ) : ?>
+		</div>
+<?php else : ?>
 			<footer id="colophon" class="site-footer" role="contentinfo">
 				<div class="site-info">
 					<div class="foot-logo">
@@ -24,11 +26,11 @@
 					</div>
 					<nav id="secondary-navigation" class="footer-navigation" role="navigation">
 <?php
-	wp_nav_menu( array(
-		'menu_class' => 'nav-menu',
-		'theme_location' => 'footer',
-		'walker' => new HPMv2_Menu_Walker
-	) );
+		wp_nav_menu( array(
+			'menu_class' => 'nav-menu',
+			'theme_location' => 'footer',
+			'walker' => new HPMv2_Menu_Walker
+		) );
 ?>
 						<div class="clear"></div>
 					</nav>
@@ -39,24 +41,24 @@
 			</footer><!-- .site-footer -->
 		</div><!-- .site -->
 <?php
-	/*
-		Set up properly offset times for banner insertions
-	*/
-	$t = time();
-	$offset = get_option('gmt_offset')*3600;
-	$t = $t + $offset;
-	$now = getdate($t);
-	if ( !empty( $_GET['testtime'] ) ) :
-		$tt = explode( '-', $_GET['testtime'] );
-		$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) );
-	endif;
-	wp_reset_query();
-	/*
-		Include the masonry plugins and code for any pages that use the tiled display (front page, main category pages, tiled series and single shows)
-	*/
-	$post_type = get_post_type();
-	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) && !is_page_template( 'single-shows-skyline.php' ) ) || is_page_template( 'page-series-tiles.php' ) || is_page_template( 'page-vietnam.php' ) ) :
-		if ( get_the_ID() != 61247 ) : ?>
+		/*
+			Set up properly offset times for banner insertions
+		*/
+		$t = time();
+		$offset = get_option('gmt_offset')*3600;
+		$t = $t + $offset;
+		$now = getdate($t);
+		if ( !empty( $_GET['testtime'] ) ) :
+			$tt = explode( '-', $_GET['testtime'] );
+			$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) );
+		endif;
+		wp_reset_query();
+		/*
+			Include the masonry plugins and code for any pages that use the tiled display (front page, main category pages, tiled series and single shows)
+		*/
+		$post_type = get_post_type();
+		if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) && !is_page_template( 'single-shows-skyline.php' ) ) || is_page_template( 'page-series-tiles.php' ) || is_page_template( 'page-vietnam.php' ) ) :
+			if ( get_the_ID() != 61247 ) : ?>
 		<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 		<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
 		<script>
@@ -76,11 +78,11 @@
 		/*
 			Manually set the top pixel offset of the NPR articles box on the homepage, since Masonry doesn't calculate offsets for stamped elements
 		*/
-			if ( is_front_page() ) : ?>
+				if ( is_front_page() ) : ?>
 					var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
 					document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
 <?php
-			endif; ?>
+				endif; ?>
 				}
 				else
 				{
@@ -110,22 +112,22 @@
 			});
 		</script>
 <?php
+			endif;
 		endif;
-	endif;
-	/*
-	Insert banners for when Houston Matters is airing
-	*/
-	$anc = get_post_ancestors( get_the_ID() );
-	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
-	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) ) :
-		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 12 || $now['hours'] == 19 ) ) :
-			$alt = ($now['hours'] == 19 ? 'This Is an Encore Broadcast, But You Can Still Get in Touch: talk@houstonmatters.org | @HoustonMatters | facebook.com/houstonmatters': 'Listening Now? Join the Conversation: Call (713) 440-8870 | Email talk@houstonmatters.org | Tweet @HoustonMatters');
+		/*
+		Insert banners for when Houston Matters is airing
+		*/
+		$anc = get_post_ancestors( get_the_ID() );
+		$bans = [ 135762, 290722, 303436, 303018, 315974 ];
+		if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) ) :
+			if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 19 ) ) :
+				$alt = ($now['hours'] == 19 ? 'This Is an Encore Broadcast, But You Can Still Get in Touch: talk@houstonmatters.org | @HoustonMatters | facebook.com/houstonmatters': 'Listening Now? Join the Conversation: Call (713) 440-8870 | Email talk@houstonmatters.org | Tweet @HoustonMatters');
 
-			if ( is_front_page() || is_page_template( 'page-main-categories.php' ) ) :
-				$jquery = "#top-schedule-wrap";
-			else :
-				$jquery = "aside.column-right";
-			endif; ?>
+				if ( is_front_page() || is_page_template( 'page-main-categories.php' ) ) :
+					$jquery = "#top-schedule-wrap";
+				else :
+					$jquery = "aside.column-right";
+				endif; ?>
 		<script>
 			document.addEventListener("DOMContentLoaded", function() {
 				var banner = '<div id="houston-matters" class="top-banner"><a href="http://houstonmatters.org" target="_blank"><img src="https://cdn.hpm.io/assets/images/HoustonMatters_WebBanners-<?php echo $now['hours']; ?>.png" alt="<?php echo
@@ -146,9 +148,9 @@
 			});
 		</script>
 <?php
+			endif;
 		endif;
 	endif;
-
 	wp_reset_postdata();
 	if ( !in_array( 61383, $anc ) ) : ?>
 		<script type='text/javascript'>

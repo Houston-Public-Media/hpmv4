@@ -2,13 +2,13 @@
 /*
 Template Name: Blank Wrapper
 */
-	get_header('blank'); ?>
+	get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?PHP while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
-					<?php 						
+					<?php
 						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 				</header><!-- .entry-header -->
 				<div class="entry-content">
@@ -16,7 +16,7 @@ Template Name: Blank Wrapper
 						if ( has_post_thumbnail() ) :
 					?>
 					<div class="post-thumbnail">
-						<?php 
+						<?php
 							the_post_thumbnail( 'hpm-large' );
 							$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
 							if (!empty($thumb_caption)) :
@@ -34,7 +34,7 @@ Template Name: Blank Wrapper
 				</div><!-- .entry-content -->
 
 				<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) {
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
@@ -50,4 +50,4 @@ Template Name: Blank Wrapper
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 
-<?php get_footer('blank'); ?>
+<?php get_footer(); ?>

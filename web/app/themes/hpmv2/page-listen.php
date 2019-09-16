@@ -2,7 +2,7 @@
 /*
 Template Name: Listen Live
 */
-get_header('listen'); ?>
+get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?PHP while ( have_posts() ) : the_post(); ?>

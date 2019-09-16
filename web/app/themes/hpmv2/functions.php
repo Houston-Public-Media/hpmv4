@@ -25,31 +25,19 @@ function hpmv2_setup() {
 	/*
 	 * Enable support for Post Thumbnails on posts and pages and set specific image sizes
 	 */
-	add_theme_support( 'post-thumbnails', array( 'post','page','shows','staff','podcasts' ) );
-//	set_post_thumbnail_size( 450, 450, false );
-//	update_option( 'thumbnail_size_w', 450 );
-//	update_option( 'thumbnail_size_h', 450 );
-//	update_option( 'thumbnail_crop', 0 );
-//	update_option( 'medium_size_w', 1000 );
-//	update_option( 'medium_size_h', 1000 );
-//	update_option( 'medium_crop', 0 );
-//	update_option( 'large_size_w', 1200 );
-//	update_option( 'large_size_h', 800 );
-//	update_option( 'large_crop', 0 );
+	add_theme_support( 'post-thumbnails', [ 'post','page','shows','staff','podcasts' ] );
 
 
 	// This theme uses wp_nav_menu() in two locations.
-	register_nav_menus( array(
+	register_nav_menus([
 		'head-main' => __( 'Main Header Menu', 'hpmv2' ),
 		'footer' => __( 'Footer Menu', 'hpmv2' )
-	) );
+	]);
 
 	/*
 	 * Switch default core markup for search form, comment form, and comments to output valid HTML5.
 	 */
-	add_theme_support( 'html5', array(
-		'search-form', 'gallery', 'caption'
-	) );
+	add_theme_support( 'html5', [ 'search-form', 'gallery', 'caption' ] );
 }
 add_action( 'after_setup_theme', 'hpmv2_setup' );
 
@@ -68,43 +56,43 @@ add_filter( 'the_content', 'shortcode_unautop');
 function hpmv2_scripts() {
 	$versions = hpm_versions();
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'fontawesome', get_stylesheet_directory_uri().'/css/font-awesome.min.css', array(), '4.3.6' );
+	wp_enqueue_style( 'fontawesome', 'https://cdn.hpm.io/assets/css/font-awesome.min.css', [], '4.3.6' );
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_style( 'hpmv2-style', 'https://local.hpm.io/hpm-style.css', array(), date('Ymd') );
+		wp_enqueue_style( 'hpmv2-style', 'https://local.hpm.io/hpm-style.css', [], date('Ymd') );
 	else :
-		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', array(), $versions['css'] );
+		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 	endif;
 
 	// Load the Internet Explorer specific stylesheet.
-	wp_enqueue_script( 'html5-shiv', '//html5shiv.googlecode.com/svn/trunk/html5.js', array() );
+	wp_enqueue_script( 'html5-shiv', '//html5shiv.googlecode.com/svn/trunk/html5.js', [] );
 	wp_script_add_data( 'html5-shiv', 'conditional', 'lt IE 9' );
 
-	wp_enqueue_script( 'respond-js', get_stylesheet_directory_uri().'/js/respond.min.js', array() );
+	wp_enqueue_script( 'respond-js', 'http://cdn.hpm.io/static/js/respond.min.js', [] );
 	wp_script_add_data( 'respond-js', 'conditional', 'lt IE 9' );
 
-	wp_enqueue_style( 'ie9-css', get_stylesheet_directory_uri().'/css/ie9.css', array() );
+	wp_enqueue_style( 'ie9-css', 'http://cdn.hpm.io/static/css/ie9.css', [] );
 	wp_style_add_data( 'ie9-css', 'conditional', 'lt IE 10' );
 
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_script( 'hpmv2-js', 'https://local.hpm.io/hpm-main.js', array('jquery'), date('Ymd'), true );
+		wp_enqueue_script( 'hpmv2-js', 'https://local.hpm.io/hpm-main.js', [ 'jquery' ], date('Ymd'), true );
 	else :
-		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', array('jquery'), $versions['js'], true );
+		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], true );
 	endif;
 
-	wp_register_script( 'jplayer', get_stylesheet_directory_uri().'/js/jplayer/jquery.jplayer.min.js', array( 'jquery' ),	'20170928' );
+	wp_register_script( 'jplayer', 'https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js', [ 'jquery' ],	'20170928' );
 
-	if ( is_page( 142253 ) ) :
-		wp_enqueue_script( 'hpmv2-tablesorter', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.min.js', array(), '20160321', true );
-		wp_enqueue_script( 'hpmv2-tablesorter-widgets', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.widgets.min.js', array(), '20160321', true );
-		wp_enqueue_script( 'hpmv2-spellers', 'https://app.hpm.io/spellers/spellers.js', array(), '20160321', true );
-		wp_enqueue_style( 'hpmv2-tablesorter-styles', 'https://cdn.hpm.io/static/tablesorter/css/theme.bootstrap.min.css', array(), '20160321', 'all' );
-    elseif ( is_page( 145596 ) ) :
-		wp_enqueue_script( 'hpmv2-tablesorter', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.min.js', array(), '20160321', true );
-		wp_enqueue_script( 'hpmv2-tablesorter-widgets', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.widgets.min.js', array(), '20160321', true );
-		wp_enqueue_style( 'hpmv2-tablesorter-styles', 'https://cdn.hpm.io/static/tablesorter/css/theme.bootstrap.min.css', array(), '20160321', 'all' );
-	endif;
+	// if ( is_page( 142253 ) ) :
+	// 	wp_enqueue_script( 'hpmv2-tablesorter', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.min.js', [], '20160321', true );
+	// 	wp_enqueue_script( 'hpmv2-tablesorter-widgets', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.widgets.min.js', [], '20160321', true );
+	// 	wp_enqueue_script( 'hpmv2-spellers', 'https://app.hpm.io/spellers/spellers.js', [], '20160321', true );
+	// 	wp_enqueue_style( 'hpmv2-tablesorter-styles', 'https://cdn.hpm.io/static/tablesorter/css/theme.bootstrap.min.css', [], '20160321', 'all' );
+    // elseif ( is_page( 145596 ) ) :
+	// 	wp_enqueue_script( 'hpmv2-tablesorter', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.min.js', [], '20160321', true );
+	// 	wp_enqueue_script( 'hpmv2-tablesorter-widgets', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.widgets.min.js', [], '20160321', true );
+	// 	wp_enqueue_style( 'hpmv2-tablesorter-styles', 'https://cdn.hpm.io/static/tablesorter/css/theme.bootstrap.min.css', [], '20160321', 'all' );
+	// endif;
 }
 add_action( 'wp_enqueue_scripts', 'hpmv2_scripts' );
 
@@ -129,7 +117,6 @@ function hpm_exclude_category( $query ) {
 	return $query;
 }
 add_filter( 'pre_get_posts', 'hpm_exclude_category' );
-
 
 /*
  * Modification to the normal Menu Walker to add <div> elements in certain locations and remove links with '#' hrefs
@@ -199,9 +186,6 @@ function hpmv2_npr_article_title( $title ) {
 	if ( is_page_template( 'page-npr-articles.php' ) ) :
 		global $nprdata;
 		return $nprdata['title']." | NPR &amp; Houston Public Media";
-	elseif ( is_page_template( 'page-diversecity-single.php' ) ) :
-		global $dc;
-		return the_title_attribute( array( 'before' => '', 'after' => ' | Houston Public Media', 'echo' => false, 'post' => $dc['id'] ) );
 	endif;
 	return $title;
 }
@@ -347,16 +331,15 @@ function get_excerpt_by_id( $post_id ){
 		if ( empty( $the_excerpt ) ) :
 			$the_excerpt = $the_post->post_content;
 			$excerpt_length = 55;
-			$the_excerpt = strip_tags(strip_shortcodes($the_excerpt));
+			$the_excerpt = wp_strip_all_tags( strip_shortcodes( $the_excerpt ), true );
 			$words = explode(' ', $the_excerpt, $excerpt_length + 1);
 
-			if(count($words) > $excerpt_length) :
-				array_pop($words);
-				array_push($words, '...');
-				$the_excerpt = implode(' ', $words);
+			if ( count( $words ) > $excerpt_length ) :
+				array_pop( $words );
+				array_push( $words, '...' );
+				$the_excerpt = implode( ' ', $words );
 			endif;
 		endif;
-
 		return $the_excerpt;
 	else :
 		return '';
@@ -764,7 +747,7 @@ add_action( 'wp_loaded', 'overwrite_audio_shortcode' );
 function hpm_nprapi_audio_shortcode( $text ) {
 	$matches = [];
 	preg_match_all( '/' . get_shortcode_regex() . '/', $text, $matches );
-	
+
 	$tags = $matches[2];
 	$args = $matches[3];
 	foreach( $tags as $i => $tag ) :
@@ -782,7 +765,7 @@ function hpm_nprapi_audio_shortcode( $text ) {
 add_filter( 'npr_ds_shortcode_filter', 'hpm_nprapi_audio_shortcode', 10, 1 );
 
 function hpm_site_header() { ?>
-			<a href="/ProdStage" rel="nofollow" style="display: none" aria-hidden="true">Production Staging</a>
+<a href="/ProdStage" rel="nofollow" style="display: none" aria-hidden="true">Production Staging</a>
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
 					<div class="site-logo">
@@ -1047,64 +1030,85 @@ function hpm_login_logo() { ?>
 <?php }
 add_action( 'login_enqueue_scripts', 'hpm_login_logo' );
 
-function hpm_google_tracker() { ?>
-	<script>
-		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-		ga('create', 'UA-3106036-9', 'auto');
-		ga('create', 'UA-3106036-11', 'auto', 'hpmRollup' );
-		var custom_vars = {
-			nid: {name: "nid", slot: 8, scope_id: 3},
-			pop: {name: "pop", slot: 9, scope_id: 3},
-			author: {name: "author", slot: 11, scope_id: 3},
-			keywords: {name: "tags", slot: 12, scope_id: 3},
-			org_id: {name: "org_id", slot: 13, scope_id: 3},
-			brand: {name: "CP_Station", slot: 14, scope_id: 2},
-			has_audio: {name: "Has_Inline_Audio", slot: 15, scope_id: 3},
-			programs: {name: "Program", slot: 16, scope_id: 3},
-			category: {name: "Category", slot: 10, scope_id: 3},
-			datePublished: {name: "PublishedDate", slot: 17, scope_id: 3},
-			wordCount: {name: "WordCount", slot: 18, scope_id: 3},
-			story_id: {name: "API_Story_Id", slot: 19, scope_id: 3},
-			pmp_guid: {name: "pmp_guid", slot: 20, scope_id: 3}
-		};
-		metadata = document.getElementsByTagName("meta");
-		// no metadata then no custom variables
-		if (metadata.length > 0) {
-			for (var k = 0; k < metadata.length; k++) {
-				if (metadata[k].content !== "") {
-					if (custom_vars[metadata[k].name]) {
-						if (metadata[k].name === 'keywords' && metadata[k].content.length > 150) {
-							var tagString = escape(metadata[k].content);
-							var comma = tagString.lastIndexOf('%2C', 150);
-							var tag = tagString.substring( comma-5, comma );
-							var short = metadata[k].content.substring( 0, metadata[k].content.lastIndexOf( tag, 150 ) + 5 );
-							ga('set', "dimension" + custom_vars[metadata[k].name]["slot"], short );
-							ga('hpmRollup.set', "dimension" + custom_vars[metadata[k].name]["slot"], short );
-						} else {
-							ga('set', "dimension" + custom_vars[metadata[k].name]["slot"], metadata[k].content );
-							ga('hpmRollup.set', "dimension" + custom_vars[metadata[k].name]["slot"], metadata[k].content );
-						}
+function hpm_google_tracker() {
+?>		<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+		<script>
+			var googletag = googletag || {};
+			googletag.cmd = googletag.cmd || [];
+			googletag.cmd.push(function() {
+				googletag.defineSlot('/9147267/HPM_Kids_Sidebar', [300, 250], 'div-gpt-ad-1467299583216-0').addService(googletag.pubads());
+				googletag.defineSlot('/9147267/HPM_Kids_Sidebar', [300, 250], 'div-gpt-ad-1467299583216-1').addService(googletag.pubads());
+				googletag.defineSlot('/9147267/HPM_Kids_Sidebar', [300, 250], 'div-gpt-ad-1467299583216-2').addService(googletag.pubads());
+				googletag.defineSlot('/9147267/HPM_Kids_Sidebar', [300, 250], 'div-gpt-ad-1467299583216-3').addService(googletag.pubads());
+				var dfpWide = window.innerWidth;
+				if ( dfpWide > 1000 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [970, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '970px';
+				}
+				else if ( dfpWide <= 1000 && dfpWide > 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [728, 90], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '728px';
+				}
+				else if ( dfpWide <= 730 ) {
+					googletag.defineSlot('/9147267/HPM_Under_Nav', [320, 50], 'div-gpt-ad-1488818411584-0').addService(googletag.pubads());
+					document.getElementById('div-gpt-ad-1488818411584-0').style.width = '320px';
+				}
+				googletag.defineSlot('/9147267/HPM_Music_Sidebar', [300, 250], 'div-gpt-ad-1470409396951-0').addService(googletag.pubads());
+				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').addService(googletag.pubads());
+				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
+				googletag.pubads().collapseEmptyDivs();
+				googletag.enableServices();
+			});
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', 'UA-3106036-9', 'auto');
+			ga('create', 'UA-3106036-11', 'auto', 'hpmRollup' );
+			var custom_vars = {
+				nid: {name: "nid", slot: 8, scope_id: 3},
+				pop: {name: "pop", slot: 9, scope_id: 3},
+				author: {name: "author", slot: 11, scope_id: 3},
+				keywords: {name: "tags", slot: 12, scope_id: 3},
+				org_id: {name: "org_id", slot: 13, scope_id: 3},
+				brand: {name: "CP_Station", slot: 14, scope_id: 2},
+				has_audio: {name: "Has_Inline_Audio", slot: 15, scope_id: 3},
+				programs: {name: "Program", slot: 16, scope_id: 3},
+				category: {name: "Category", slot: 10, scope_id: 3},
+				datePublished: {name: "PublishedDate", slot: 17, scope_id: 3},
+				wordCount: {name: "WordCount", slot: 18, scope_id: 3},
+				story_id: {name: "API_Story_Id", slot: 19, scope_id: 3},
+				pmp_guid: {name: "pmp_guid", slot: 20, scope_id: 3}
+			};
+			metadata = document.getElementsByTagName("meta");
+			// no metadata then no custom variables
+			if (metadata.length > 0) {
+				for (var k = 0; k < metadata.length; k++) {
+					if (metadata[k].content !== "") {
+						if (custom_vars[metadata[k].name]) {
+							if (metadata[k].name === 'keywords' && metadata[k].content.length > 150) {
+								var tagString = escape(metadata[k].content);
+								var comma = tagString.lastIndexOf('%2C', 150);
+								var tag = tagString.substring( comma-5, comma );
+								var short = metadata[k].content.substring( 0, metadata[k].content.lastIndexOf( tag, 150 ) + 5 );
+								ga('set', "dimension" + custom_vars[metadata[k].name]["slot"], short );
+								ga('hpmRollup.set', "dimension" + custom_vars[metadata[k].name]["slot"], short );
+							} else {
+								ga('set', "dimension" + custom_vars[metadata[k].name]["slot"], metadata[k].content );
+								ga('hpmRollup.set', "dimension" + custom_vars[metadata[k].name]["slot"], metadata[k].content );
+							}
 
+						}
 					}
 				}
 			}
-		}
-		ga('send', 'pageview');
-		ga('hpmRollup.send', 'pageview');
-		function hpmKimbiaComplete(kimbiaData) {
-			var charge = kimbiaData['initialCharge'];
-			var amount = Number(charge.replace(/[^0-9\.]+/g,""));
-			fbq( 'track', 'Purchase', { value: amount, currency: 'USD' } );
-			ga('send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
-		}
-	</script>
-	<script async src='https://www.google-analytics.com/analytics.js'></script>
-<?php
-}
-
-function hpm_fb_sdk() { ?>
-	<div id="fb-root"></div>
-	<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v3.1' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+			ga('send', 'pageview');
+			ga('hpmRollup.send', 'pageview');
+			function hpmKimbiaComplete(kimbiaData) {
+				var charge = kimbiaData['initialCharge'];
+				var amount = Number(charge.replace(/[^0-9\.]+/g,""));
+				fbq( 'track', 'Purchase', { value: amount, currency: 'USD' } );
+				ga('send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
+			}
+		</script>
+		<script async src='https://www.google-analytics.com/analytics.js'></script>
 <?php
 }
 
@@ -1275,12 +1279,12 @@ function author_footer( $id ) {
 		$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
 		$authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', TRUE );
 		$output .= '<div class="author-info-wrap"><div class="author-image">'.get_the_post_thumbnail( 'medium', [ 'alt' => get_the_title() ] ).'</div><div class="author-info"><h2>'.get_the_title().'</h2><h3>'.$author['title'].'</h3><div class="author-social">';
-		if ( !empty( $author['facebook'] ) ) : 
+		if ( !empty( $author['facebook'] ) ) :
 			$output .= '<div class="social-icon"><a href="'.$author['facebook'].'" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a></div>';
 		endif;
-		if ( !empty( $author['twitter'] ) ) : 
+		if ( !empty( $author['twitter'] ) ) :
 			$output .= '<div class="social-icon"><a href="'.$author['twitter'].'" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a></div>';
-		endif; 
+		endif;
 		$author_bio = get_the_content();
 		if ( preg_match( '/Biography pending/', $author_bio ) ) :
 			$author_bio = '';
@@ -1307,3 +1311,294 @@ function author_footer( $id ) {
 	set_transient( 'hpm_author_'.$author_name, $output, 7200 );
 	return $output;
 }
+
+function hpm_header_info() {
+	global $wp_query;
+	$reqs = [
+		'description' => 'Houston Public Media provides informative, thought-provoking and entertaining content through a multi-media platform that includes TV 8, News 88.7 and HPM Classical and reaches a combined weekly audience of more than 1.5 million.',
+		'keywords' => [ 'Houston Public Media', 'KUHT', 'TV 8', 'Houston Public Media Schedule', 'Educational TV Programs', 'independent program broadcasts', 'University of Houston', 'nonprofit', 'NPR News', 'KUHF', 'Classical Music', 'Arts &amp; Culture', 'News 88.7' ],
+		'permalink' => 'https://www.houstonpublicmedia.org',
+		'title' => 'Houston Public Media',
+		'thumb' => 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg',
+		'thumb_meta' => [
+			'width' => 1200,
+			'height' => 800,
+			'mime-type' => 'image/jpeg'
+		],
+		'og_type' => 'website',
+		'author' => [],
+		'publish_date' => '',
+		'modified_date' => '',
+		'word_count' => 0,
+		'npr_byline' => '',
+		'npr_story_id' => '',
+		'hpm_section' => '',
+		'has_audio' => 0
+	];
+
+	if ( is_home() || is_404() ) :
+		// Do Nothing
+	else :
+		$ID = $wp_query->queried_object_id;
+
+		if ( is_archive() ) :
+			if ( is_post_type_archive() ) :
+				$obj = get_post_type_object( get_post_type() );
+				$reqs['permalink'] = get_post_type_archive_link( get_post_type() );
+				$reqs['title'] = $obj->labels->name . ' | Houston Public Media';
+				$reqs['description'] = wp_strip_all_tags( $obj->description, true );
+			else :
+				$reqs['permalink'] = get_the_permalink( $ID );
+				$reqs['title'] = $wp_query->queried_object->name . ' | Houston Public Media';
+			endif;
+		elseif ( is_single() ) :
+			$attach_id = get_post_thumbnail_id( $ID );
+			if ( !empty( $attach_id ) ) :
+				$feature_img = wp_get_attachment_image_src( $attach_id, 'large' );
+				$reqs['thumb_meta'] = [
+					'width' => $feature_img[1],
+					'height' => $feature_img[2],
+					'mime-type' => get_post_mime_type( $attach_id )
+				];
+				$reqs['thumb'] = $feature_img[0];
+			endif;
+			$reqs['title'] = wp_strip_all_tags( get_the_title( $ID ), true ) . ' | Houston Public Media';
+			$reqs['permalink'] = get_the_permalink( $ID );
+			$reqs['description'] = htmlentities( wp_strip_all_tags( get_excerpt_by_id( $ID ), true ), ENT_QUOTES );
+			$reqs['og_type'] = 'article';
+			$coauthors = get_coauthors( $ID );
+			foreach ( $coauthors as $coa ) :
+				$author_fb = '';
+				if ( is_a( $coa, 'wp_user' ) ) :
+					$author_check = new WP_Query( [
+						'post_type' => 'staff',
+						'post_status' => 'publish',
+						'meta_query' => [ [
+							'key' => 'hpm_staff_authid',
+							'compare' => '=',
+							'value' => $coa->ID
+						] ]
+					] );
+					if ( $author_check->have_posts() ) :
+						$author_meta = get_post_meta( $author_check->post->ID, 'hpm_staff_meta', true );
+						if ( !empty( $author_meta['facebook'] ) ) :
+							$author_fb = $author_meta['facebook'];
+						endif;
+					endif;
+				elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) :
+					if ( !empty( $coa->linked_account ) ) :
+						$authid = get_user_by( 'login', $coa->linked_account );
+						$author_check = new WP_Query( [
+							'post_type' => 'staff',
+							'post_status' => 'publish',
+							'meta_query' => [ [
+								'key' => 'hpm_staff_authid',
+								'compare' => '=',
+								'value' => $authid->ID
+							] ]
+						] );
+						if ( $author_check->have_posts() ) :
+							$author_meta = get_post_meta( $author_check->post->ID, 'hpm_staff_meta', true );
+							if ( !empty( $author_meta['facebook'] ) ) :
+								$author_fb = $author_meta['facebook'];
+							endif;
+						endif;
+					endif;
+				endif;
+				$reqs['author'][] = [
+					'profile' => ( !empty( $author_fb ) ? $author_fb : get_author_posts_url( $coa->ID, $coa->user_nicename ) ),
+					'first_name' => $coa->first_name,
+					'last_name' => $coa->last_name,
+					'username' => $coa->user_nicename
+				];
+			endforeach;
+			$reqs['publish_date'] = get_the_date( 'c', $ID );
+			$reqs['modified_date'] = get_the_modified_date( 'c', $ID );
+			$reqs['description'] = htmlentities( wp_strip_all_tags( get_excerpt_by_id( $ID ), true ), ENT_QUOTES );
+			$head_categories = get_the_category( $ID );
+			$head_tags = wp_get_post_tags( $ID );
+			$reqs['keywords'] = [];
+			foreach( $head_categories as $hcat ) :
+				$reqs['keywords'][] = $hcat->name;
+			endforeach;
+			foreach( $head_tags as $htag ) :
+				$reqs['keywords'][] = $htag->name;
+			endforeach;
+			if ( get_post_type() === 'post' ) :
+				$reqs['word_count'] = word_count( $ID );
+				$reqs['has_audio'] = ( preg_match( '/\[audio/', $wp_query->post->post_content ) ? 1 : 0 );
+				$npr_retrieved_story = get_post_meta( $ID, 'npr_retrieved_story', 1 );
+				$reqs['npr_story_id'] = get_post_meta( $ID, 'npr_story_id', 1 );
+				$reqs['hpm_section'] = hpm_top_cat( $ID );
+				$reqs['npr_byline'] = ( $npr_retrieved_story == 1 ? get_post_meta( $ID, 'npr_byline', 1 ) : coauthors( ', ', ', ', '', '', false ) );
+			elseif ( get_post_type() === 'staff' ) :
+				$reqs['og_type'] = 'profile';
+			endif;
+		elseif ( is_author() ) :
+			global $curauth;
+			global $author_check;
+			$reqs['og_type'] = 'profile';
+			$reqs['permalink'] = get_author_posts_url( $coa->ID, $coa->user_nicename );
+			$reqs['title'] = $curauth->display_name." | Houston Public Media";
+			if ( !empty( $author_check ) ) :
+				while ( $author_check->have_posts() ) :
+					$author_check->the_post();
+					$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
+					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) :
+						$reqs['description'] = $head_excerpt;
+					endif;
+					$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
+					$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
+					if ( !empty( $head_categories ) ) :
+						$reqs['keywords'] = [];
+						foreach( $head_categories as $hcat ) :
+							$reqs['keywords'][] = $hcat->name;
+						endforeach;
+					endif;
+					$reqs['title'] = $curauth->display_name.", ".$author['title']." | Houston Public Media";
+				endwhile;
+				wp_reset_query();
+			endif;
+		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
+			global $nprdata;
+			$reqs['title'] = $nprdata['title'];
+			$reqs['permalink'] = $nprdata['permalink'];
+			$reqs['description'] = htmlentities( wp_strip_all_tags( $nprdata['excerpt'], true ), ENT_QUOTES );
+			$reqs['keywords'] = $nprdata['keywords'];
+			$reqs['thumb'] = $nprdata['image']['src'];
+			$reqs['thumb_meta'] = [
+				'width' => $nprdata['image']['width'],
+				'height' => $nprdata['image']['height'],
+				'mime-type' => $nprdata['image']['mime-type']
+			];
+			$reqs['publish_date'] = $nprdata['date'];
+		endif;
+	endif;
+?>
+		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime()</script>
+		<meta charset="<?php bloginfo( 'charset' ); ?>">
+		<link rel="profile" href="http://gmpg.org/xfn/11">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
+		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="bitly-verification" content="7777946f1a0a"/>
+		<meta name="google-site-verification" content="QOrBnMZ1LXDA9tL3e5WmFUU-oI3JUbDRotOWST1P_Dg" />
+		<link rel="shortcut icon" href="https://cdn.hpm.io/assets/images/favicon-192x192.png">
+		<link rel="icon" type="image/png" href="https://cdn.hpm.io/assets/images/favicon-192x192.png" sizes="192x192">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/apple-touch-icon-180x180.png">
+		<meta name="apple-itunes-app" content="app-id=530216229" />
+		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />
+		<meta property="fb:app_id" content="523938487799321" />
+		<meta property="fb:admins" content="37511993" />
+		<meta property="fb:pages" content="27589213702" />
+		<meta property="fb:pages" content="183418875085596" />
+		<meta property="og:type" content="<?php echo $reqs['og_type'] ?>" />
+		<meta property="og:title" content="<?php echo $reqs['title']; ?>" />
+		<meta property="og:url" content="<?php echo $reqs['permalink']; ?>"/>
+		<meta property="og:site_name" content="Houston Public Media" />
+		<meta property="og:description" content="<?php echo $reqs['description']; ?>" />
+		<meta property="og:image" content="<?php echo $reqs['thumb']; ?>" />
+		<meta property="og:image:url" content="<?php echo $reqs['thumb']; ?>" />
+		<meta property="og:image:height" content="<?php echo $reqs['thumb_meta']['height']; ?>" />
+		<meta property="og:image:width" content="<?php echo $reqs['thumb_meta']['width']; ?>" />
+		<meta property="og:image:type" content="<?php echo $reqs['thumb_meta']['mime-type']; ?>" />
+		<meta property="og:image:secure_url" content="<?php echo $reqs['thumb']; ?>" />
+<?php
+	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' ) : ?>
+		<meta property="article:content_tier" content="free" />
+		<meta property="article:published_time" content="<?php echo $reqs['publish_date']; ?>" />
+		<meta property="article:modified_time" content="<?php echo $reqs['modified_date']; ?>" />
+		<meta property="article:publisher" content="https://www.facebook.com/houstonpublicmedia/" />
+		<meta property="article:section" content="<?php echo $reqs['hpm_section']; ?>" />
+<?php
+		if ( !empty( $reqs['keywords'] ) ) :
+			foreach( $reqs['keywords'] as $keys ) : ?>
+		<meta property="article:tag" content="<?php echo $keys; ?>" />
+<?php
+			endforeach;
+		endif;
+		foreach ( $reqs['author'] as $aup ) : ?>
+		<meta property="article:author" content="<?php echo $aup['profile']; ?>" />
+<?php
+		endforeach;
+	endif;
+	if ( is_author() || ( is_single() && get_post_type() === 'staff' ) ) : ?>
+		<meta property="profile:first_name" content="<?php echo $curauth->first_name; ?>">
+		<meta property="profile:last_name" content="<?php echo $curauth->last_name; ?>">
+		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>">
+<?php
+	endif; ?>
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@houstonpubmedia" />
+		<meta name="twitter:creator" content="@houstonpubmedia" />
+		<meta name="twitter:title" content="<?php echo $reqs['title']; ?>" />
+		<meta name="twitter:image" content="<?php echo $reqs['thumb']; ?>" />
+		<meta name="twitter:url" content="<?php echo $reqs['permalink']; ?>" />
+		<meta name="twitter:description" content="<?php echo $reqs['description']; ?>">
+		<meta name="twitter:widgets:link-color" content="#000000">
+		<meta name="twitter:widgets:border-color" content="#000000">
+		<meta name="twitter:partner" content="tfwp">
+<?php
+	if ( is_single() && get_post_type() !== 'staff' ) : ?>
+		<meta name="datePublished" content="<?php echo $reqs['publish_date']; ?>" />
+		<meta name="story_id" content="<?php echo $reqs['npr_story_id']; ?>" />
+		<meta name="has_audio" content="<?php echo $reqs['has_audio']; ?>" />
+		<meta name="programs" content="none" />
+		<meta name="category" content="<?php echo $reqs['hpm_section']; ?>" />
+		<meta name="org_id" content="220" />
+		<meta name="author" content="<?php echo $reqs['npr_byline']; ?>" />
+		<meta name="wordCount" content="<?php echo $reqs['word_count']; ?>" />
+<?php
+	endif;
+}
+add_action( 'wp_head', 'hpm_header_info', 1 );
+add_action( 'wp_head', 'hpm_google_tracker', 100 );
+
+function hpm_body_open() {
+	global $wp_query; ?><div id="fb-root"></div>
+		<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v3.1' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
+<?php
+	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) : ?>
+		<div class="container">
+			<?php hpm_site_header(); ?>
+	</div>
+<?php
+	elseif ( is_page_template( 'page-listen.php' ) ) : ?>
+		<div class="container">
+			<header id="masthead" class="site-header" role="banner">
+				<div class="site-branding">
+					<div class="site-logo">
+						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
+					</div>
+					<div id="top-donate"><a href="/donate" target="_blank">Donate</a></div>
+					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span></div>
+					<nav id="site-navigation" class="main-navigation" role="navigation">
+						<?php
+							wp_nav_menu( array(
+								'menu_class' => 'nav-menu',
+								'menu' => 12244,
+								'walker' => new HPMv2_Menu_Walker
+							) ); ?>
+						<div class="clear"></div>
+					</nav><!-- .main-navigation -->
+				</div><!-- .site-branding -->
+			</header><!-- .site-header -->
+		</div>
+<?php
+	endif; ?>
+		<div id="page" class="hfeed site">
+			<div id="content" class="site-content">
+<?php
+	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) : ?>
+			<!-- /9147267/HPM_Under_Nav -->
+				<div id='div-gpt-ad-1488818411584-0'>
+					<script>
+						googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
+					</script>
+				</div>
+<?php
+	endif;
+}
+add_action( 'body_open', 'hpm_body_open' );

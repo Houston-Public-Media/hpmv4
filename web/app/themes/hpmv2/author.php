@@ -28,7 +28,7 @@
 	else :
 		$author_check = '';
     endif;
-	get_header('author');
+	get_header();
 ?>
 	<section id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
@@ -95,7 +95,7 @@
 			<?php
 						endif; ?>
 					</ul>
-		<?php	
+		<?php
 					endif;
 				endif;
 			else : ?>
