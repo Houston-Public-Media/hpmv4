@@ -75,7 +75,7 @@
 		"wpackagist-plugin/wp-amazon-ses-smtp": "1.0.5",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
-		"jwcounts/hpm-mods": "2019.2.4",
+		"jwcounts/hpm-mods": "2019.2.5",
 		"jwcounts/wp-missed-schedule": "1.0"
 	},
 	"require-dev": {
