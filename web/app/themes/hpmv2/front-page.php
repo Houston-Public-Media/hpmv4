@@ -33,7 +33,7 @@ endif; ?>
 		<main id="main" class="site-main" role="main">
 			<div id="float-wrap">
 				<div class="grid-sizer"></div>
-				
+
 		<?php
 			// Sticky Posts
 			$hpm_priority = get_option( 'hpm_priority' );
@@ -231,8 +231,8 @@ endif; ?>
 					</div>
 					<?php hpm_top_posts(); ?>
 					<div class="sidebar-ad">
+						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-1">
-							<h4>Support Comes From</h4>
 							<script type='text/javascript'>
 								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
 							</script>
@@ -248,8 +248,8 @@ endif; ?>
 						<?php echo hpm_nprapi_output(); ?>
 					</div>
 					<div class="sidebar-ad">
+						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-2">
-							<h4>Support Comes From</h4>
 							<script type='text/javascript'>
 								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
 							</script>

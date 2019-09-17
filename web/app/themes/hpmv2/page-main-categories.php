@@ -33,10 +33,10 @@ get_header(); ?>
 				$c = 0;
 				$exclude = array();
 				if ( have_posts() ) :
-					the_post(); 
+					the_post();
 					$main_cat = $wp_query->query_vars['pagename']; ?>
 		<main id="main" class="site-main <?php echo $main_cat; ?>" role="main">
-			
+
 			<header class="page-header">
 				<h1 class="page-title"><?php the_title(); ?></h1>
 			</header>
@@ -65,8 +65,8 @@ get_header(); ?>
 					?>
 				</nav>
                 <div class="sidebar-ad">
+					<h4>Support Comes From</h4>
                     <div id="div-gpt-ad-1394579228932-1">
-                        <h4>Support Comes From</h4>
                         <script type='text/javascript'>
                             googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
                         </script>
@@ -102,8 +102,8 @@ get_header(); ?>
 						<?php
 							endif; ?>
 				<div class="sidebar-ad">
+					<h4>Support Comes From</h4>
 					<div id="div-gpt-ad-1394579228932-2">
-						<h4>Support Comes From</h4>
 						<script type='text/javascript'>
 							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
 						</script>
@@ -124,7 +124,7 @@ get_header(); ?>
 					'ignore_sticky_posts' => 1,
 					'posts_per_page' => 21
 				);
-				
+
 				$orig_post = $post;
 				global $post;
 				$q = new WP_Query( $args );

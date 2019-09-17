@@ -46,8 +46,8 @@ get_header(); ?>
 				endif; ?>
 			<aside class="column-right clear">
 				<div class="sidebar-ad">
+					<h4>Support Comes From</h4>
 					<div id="div-gpt-ad-1394579228932-1">
-						<h4>Support Comes From</h4>
 						<script type='text/javascript'>
 							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
 						</script>
@@ -56,14 +56,14 @@ get_header(); ?>
 			</aside>
 			<aside class="column-right clear">
 			<?php
-				$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true ); 
+				$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
 				if ( !empty( $embeds['twitter'] ) ) : ?>
 				<section id="embeds">
 				<?php
 					if ( !empty( $embeds['twitter'] ) ) : ?>
 					<h4>Twitter</h4>
-					<?php 
-						echo $embeds['twitter']; 
+					<?php
+						echo $embeds['twitter'];
 					endif; ?>
 				</section>
 			<?php
@@ -73,8 +73,8 @@ get_header(); ?>
 			endwhile; ?>
             <aside class="column-right clear">
                 <div class="sidebar-ad">
+					<h4>Support Comes From</h4>
                     <div id="div-gpt-ad-1394579228932-2">
-                        <h4>Support Comes From</h4>
                         <script type='text/javascript'>
                             googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
                         </script>

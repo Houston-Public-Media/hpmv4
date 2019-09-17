@@ -6,8 +6,8 @@
  */
 ?>
 <div class="sidebar-ad">
+	<h4>Support Comes From</h4>
     <div id="div-gpt-ad-1394579228932-1">
-        <h4>Support Comes From</h4>
         <script type='text/javascript'>
             googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
         </script>
@@ -53,8 +53,8 @@
     hpm_top_posts();
 ?>
 <div class="sidebar-ad">
+	<h4>Support Comes From</h4>
     <div id="div-gpt-ad-1394579228932-2">
-        <h4>Support Comes From</h4>
         <script type='text/javascript'>
             googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
         </script>
