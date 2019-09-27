@@ -148,7 +148,7 @@ get_header(); ?>
 			<?php
 					endif; ?>
 			</div>
-			<?php 
+			<?php
 				endif;?>
 		<?php
 			endwhile; ?>
@@ -215,7 +215,7 @@ get_header(); ?>
 							<p><?php echo $show_title; ?> Episodes</p>
 						</div>
 						<ul>
-							<?php 
+							<?php
 							foreach ( $media as $m ) : ?>
 							<li <?php echo ( $m->ID == $first->ID ? 'class="current" ' : '' ); ?>id="<?php echo $m->ID; ?>" data-ytid="<?php echo wp_get_attachment_url( $m->ID ); ?>" data-yttitle="<?php echo $m->post_title; ?>">
 								<div class="videos-info"><?php echo $m->post_title; ?></div>
@@ -234,7 +234,7 @@ get_header(); ?>
 			</aside>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
-	<script type="text/javascript" src='https://assets.hpm.io/app/themes/hpmv2/js/jplayer/jquery.jplayer.min.js?ver=20170928'></script>
+	<script type="text/javascript" src='https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js?ver=20170928'></script>
 	<script>
 		jQuery(document).ready(function($){
 			$('#videos-nav ul li').click(function() {

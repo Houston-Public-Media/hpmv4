@@ -6555,6 +6555,7 @@ body.single-shows.hah-sub .page-header {
 	color: white;
 	height: 100%;
 	overflow: scroll;
+	background-color: #808080;
 }
 .hah-sub #videos-nav .videos-playlist {
 	padding: 1em;
