@@ -517,105 +517,67 @@ function tendenci_soundcloud_removal( $content ) {
 }
 add_filter( 'the_content', 'tendenci_soundcloud_removal' );
 
-function overwrite_audio_shortcode() {
-	function hpm_audio_shortcode( $attr, $content = '' ) {
-		global $wpdb;
-		$post_id = get_post() ? get_the_ID() : 0;
-		static $instance = 0;
-		$instance++;
-
-		$override = apply_filters( 'wp_audio_shortcode_override', '', $attr, $content, $instance );
-		if ( '' !== $override ) :
-			return $override;
+function hpm_audio_shortcode( $html, $attr ) {
+	global $wpdb;
+	$post_id = get_post() ? get_the_ID() : 0;
+	static $instance = 0;
+	$instance++;
+	$supported = false;
+	$audio_type = '';
+	$default_types = wp_get_audio_extensions();
+	foreach ( $default_types as $type ) :
+		if ( !empty( $attr[ $type ] ) ) :
+			$supported = true;
+			$audio_type = $type;
 		endif;
+	endforeach;
 
-		$audio = null;
+	if ( !$supported ) :
+		return '&nbsp;';
+	endif;
 
-		$default_types = wp_get_audio_extensions();
-		$defaults_atts = array(
-			'src'      => '',
-			'loop'     => '',
-			'autoplay' => '',
-			'preload'  => 'none',
-			'class'    => 'wp-audio-shortcode',
-			'style'    => 'width: 100%; visibility: hidden;'
-		);
-		foreach ( $default_types as $type ) :
-			$defaults_atts[$type] = '';
-		endforeach;
+	if ( !empty( $attr['id'] ) ) :
+		$audio_id = $attr['id'];
+	else :
+		$audio_id = $attr['instance'];
+	endif;
+	$audio_title = 'Listen';
+	$audio_url = $attr[ $audio_type ];
 
-		$atts = shortcode_atts( $defaults_atts, $attr, 'audio' );
-
-		$attach_id = $attr['id'];
-		$primary = false;
-		if ( ! empty( $atts['src'] ) ) :
-			$type = wp_check_filetype( $atts['src'], wp_get_mime_types() );
-			if ( ! in_array( strtolower( $type['ext'] ), $default_types ) ) :
-				return sprintf( '<a class="wp-embedded-audio" href="%s">%s</a>', esc_url( $atts['src'] ), esc_html( $atts['src'] ) );
-			endif;
-			$primary = true;
-			array_unshift( $default_types, 'src' );
-		else :
-			foreach ( $default_types as $ext ) :
-				if ( ! empty( $atts[ $ext ] ) ) :
-					$type = wp_check_filetype( $atts[ $ext ], wp_get_mime_types() );
-					if ( strtolower( $type['ext'] ) === $ext ) :
-						$primary = true;
-					endif;
-				endif;
-			endforeach;
-		endif;
-
-		if ( ! $primary ) :
-			$atts['src'] = wp_get_attachment_url( $attach_id );
-			if ( empty( $atts['src'] ) ) :
-				return;
-			endif;
-			$audio_id = $attach_id;
-			$audio_title = 'Listen';
-			$audio_url = $atts['src'];
-			array_unshift( $default_types, 'src' );
-		elseif ( $primary ) :
-			foreach ( $default_types as $fallback ) :
-				if ( ! empty( $atts[ $fallback ] ) ) :
-					if ( empty( $fileurl ) ) :
-						$fileurl = $atts[ $fallback ];
-					endif;
-				endif;
-			endforeach;
-			$audio_id = $instance;
-			$audio_title = 'Listen';
-			$audio_url = $fileurl;
-		endif;
-		$sg_file = get_post_meta( $post_id, 'hpm_podcast_enclosure', true );
-		if ( !empty( $sg_file ) ) :
-			$s3_parse = parse_url( $audio_url );
-			$s3_path = pathinfo( $s3_parse['path'] );
-			$sg_parse = parse_url( $sg_file['url'] );
-			$sg_path = pathinfo( $sg_parse['path'] );
-			if ( $s3_path['basename'] == $sg_path['basename'] ) :
-				$audio_url = $sg_file['url'];
-			else :
-				$audio_url = str_replace( 'http:', 'https:', $audio_url );
-			endif;
+	$sg_file = get_post_meta( $post_id, 'hpm_podcast_enclosure', true );
+	if ( !empty( $sg_file ) ) :
+		$s3_parse = parse_url( $audio_url );
+		$s3_path = pathinfo( $s3_parse['path'] );
+		$sg_parse = parse_url( $sg_file['url'] );
+		$sg_path = pathinfo( $sg_parse['path'] );
+		if ( $s3_path['basename'] === $sg_path['basename'] ) :
+			$audio_url = $sg_file['url'];
 		else :
 			$audio_url = str_replace( 'http:', 'https:', $audio_url );
 		endif;
-		$html = '';
-		if ( is_amp_endpoint() || is_feed() ) :
-			$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'?source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'?source=amp-article"></amp-audio></div>';
+	else :
+		$audio_url = str_replace( 'http:', 'https:', $audio_url );
+	endif;
+	if ( strpos( $audio_url, '?' ) === false ) :
+		$audio_url .= '?';
+	else :
+		$audio_url .= '&';
+	endif;
+	$html = '';
+	if ( is_amp_endpoint() || is_feed() ) :
+		$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'source=amp-article"></amp-audio></div>';
+	else :
+		if ( is_admin() ) :
+			$html .= '<link rel="stylesheet" id="fontawesome-css" href="https://cdn.hpm.io/assets/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hpmv2-css" href="https://cdn.hpm.io/assets/css/style.css" type="text/css" media="all"><script type="text/javascript" src="/wp/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js"></script>';
 		else :
-			if ( is_admin() ) :
-				$html .= '<link rel="stylesheet" id="fontawesome-css" href="https://cdn.hpm.io/assets/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hpmv2-css" href="https://cdn.hpm.io/assets/css/style.css" type="text/css" media="all"><script type="text/javascript" src="/wp/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js"></script>';
-			else :
-				wp_enqueue_script( 'jplayer' );
-			endif;
-			if ( in_array( 'small', $attr ) ) :
-				$player_class = 'jp-audio jp-float';
-			else :
-				$player_class = 'jp-audio';
-			endif;
-			$html .= "
+			wp_enqueue_script( 'jplayer' );
+		endif;
+		if ( in_array( 'small', $attr ) ) :
+			$player_class = 'jp-audio jp-float';
+		else :
+			$player_class = 'jp-audio';
+		endif;
+		$html .= "
 <div id=\"jquery_jplayer_{$audio_id}\" class=\"jp-jplayer\"></div>
 <div id=\"jp_container_{$audio_id}\" class=\"{$player_class}\" role=\"application\" aria-label=\"media player\">
 	<div class=\"jp-type-single\">
@@ -643,14 +605,14 @@ function overwrite_audio_shortcode() {
 			</div>
 		</div>
 	</div>";
-	if ( !is_admin() ) :
+	if ( !is_admin() && !empty( $attr['id'] ) ) :
 		$html .= "
 	<a href=\"#\" class=\"jp-audio-embed\"><span class=\"fa fa-code\"></span></a>
 	<div class=\"jp-audio-embed-popup\" id=\"jp_container_{$audio_id}-popup\">
 		<div class=\"jp-audio-embed-wrap\">
 			<p>To embed this piece of audio in your site, please use this code:</p>
 			<div class=\"jp-audio-embed-code\">
-				&lt;iframe src=\"https://embed.hpm.io/{$attach_id}/{$post_id}\" style=\"height: 115px; width: 100%;\"&gt;&lt;/iframe&gt;
+				&lt;iframe src=\"https://embed.hpm.io/{$audio_id}/{$post_id}\" style=\"height: 115px; width: 100%;\"&gt;&lt;/iframe&gt;
 			</div>
 			<div class=\"jp-audio-embed-close\">X</div>
 		</div>
@@ -665,7 +627,7 @@ function overwrite_audio_shortcode() {
 				ready: function () {
 					$(this).jPlayer(\"setMedia\", {
 						title: \"".htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false )."\",
-						mp3: \"{$audio_url}?source=jplayer-article\"
+						mp3: \"{$audio_url}source=jplayer-article\"
 					});
 				},
 				swfPath: \"https://cdn.hpm.io/assets/js/jplayer\",
@@ -734,15 +696,11 @@ function overwrite_audio_shortcode() {
 		});
 	</script>
 </div>";
-
-			$library = 'jplayer';
-		endif;
-		return $html;
-	}
-	remove_shortcode('audio');
-	add_shortcode( 'audio', 'hpm_audio_shortcode' );
+	endif;
+	return $html;
 }
-add_action( 'wp_loaded', 'overwrite_audio_shortcode' );
+
+add_filter( 'wp_audio_shortcode_override', 'hpm_audio_shortcode', 10, 2 );
 
 function hpm_nprapi_audio_shortcode( $text ) {
 	$matches = [];

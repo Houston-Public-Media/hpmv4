@@ -7377,7 +7377,7 @@ article .entry-content .podcast-episode-info ul.podcast-badges li,
 article .entry-summary .podcast-episode-info ul.podcast-badges li,
 ul.podcast-badges li {
 	width: 3em;
-    padding: 0 0.25em;
+	padding: 0 0.25em;
 	float: left;
 	text-align: center;
 	clear: none;
@@ -7472,33 +7472,26 @@ ul.podcast-badges li {
 	background-color: #efefef;
 }
 .support-ssac th, .support-ssac td {
-    text-align: center;
-    color: rgb(89, 89, 91);
+	text-align: center;
+	color: rgb(89, 89, 91);
 	padding: 0.75em 0.5em;
 	vertical-align: middle;
 }
-.support-ssac th.ssac-table-5 {
-    border-bottom-color: rgb(89, 89, 91);
+.support-ssac th.ssac-table-5,
+.support-ssac td.ssac-table-5 {
+	color: #D8002B;
+	border-bottom-color: #D8002B;
 }
 .support-ssac th.ssac-table-1,
-.support-ssac td.ssac-table-1 {
-    color: #D8002B;
-    border-bottom-color: #D8002B;
-}
+.support-ssac td.ssac-table-1,
 .support-ssac th.ssac-table-2,
-.support-ssac td.ssac-table-2 {
-    color: #00566C;
-    border-bottom-color: #00566C;
-}
+.support-ssac td.ssac-table-2,
 .support-ssac th.ssac-table-3,
-.support-ssac td.ssac-table-3 {
-    color: #A9CF38;
-    border-bottom-color: #A9CF38;
-}
+.support-ssac td.ssac-table-3,
 .support-ssac th.ssac-table-4,
 .support-ssac td.ssac-table-4 {
-    color: #F2B236;
-    border-bottom-color: #F2B236;
+	color: #00566C;
+	border-bottom-color: #00566C;
 }
 .page.support-ssac article .entry-content .major-giving-contacts img {
 	width: 50%;
@@ -7556,51 +7549,51 @@ h2.ss-join {
 	padding: 1em 0;
 }
 .page.support-ssac section.ssac-engage h2 {
-    font: normal 1.5em/1.25em 'MiloOT-Bold',arial,helvetica,sans-serif;
-    color: #14B0BC;
-    background-image: url(https://cdn.hpm.io/assets/images/color_border2x.png);
-    background-repeat: no-repeat;
-    padding: 0 0 0.5em 0.5em;
-    background-position: bottom;
-    background-size: 100%;
+	font: normal 1.5em/1.25em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	color: #14B0BC;
+	background-image: url(https://cdn.hpm.io/assets/images/color_border2x.png);
+	background-repeat: no-repeat;
+	padding: 0 0 0.5em 0.5em;
+	background-position: bottom;
+	background-size: 100%;
 }
 .page.support-ssac section.ssac-engage.ssac-ss h2 {
-    color: #cc0000;
+	color: #cc0000;
 }
 .page.support-ssac section.ssac-engage h2 span {
-    font: normal 1em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
-    color: #59595B;
+	font: normal 1em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
+	color: #59595B;
 }
 .page.support-ssac section.ssac-engage ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    width: 100%;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	width: 100%;
 }
 .page.support-ssac section.ssac-engage ul li {
-    padding: 1em;
-    width: 100%;
+	padding: 1em;
+	width: 100%;
 }
 .page.support-ssac section.ssac-engage h3 {
-    color: #14B0BC;
-    font-size: 150%;
+	color: #14B0BC;
+	font-size: 150%;
 }
 .page.support-ssac section.ssac-engage p.ssac-aside {
-    font-size: 100%;
-    color: #cc0000;
-    font-style: italic;
-    clear: both;
+	font-size: 100%;
+	color: #cc0000;
+	font-style: italic;
+	clear: both;
 }
 .page.support-ssac section.ssac-engage h4 {
-    color: #00566C;
-    font-size: 125%;
-    font-family: 'MiloOT-Bold',arial,helvetica,sans-serif;
+	color: #00566C;
+	font-size: 125%;
+	font-family: 'MiloOT-Bold',arial,helvetica,sans-serif;
 }
 .page.support-ssac section.ssac-engage p.ssac-disclaim {
-    font-size: 100%;
-    color: #00566C;
-    font-style: italic;
-    padding: 0 1em 1em 1em;
+	font-size: 100%;
+	color: #00566C;
+	font-style: italic;
+	padding: 0 1em 1em 1em;
 }
 .page.support-ssac article .entry-content p a.ss-give.ss-member {
 	background-color: #016D94;
@@ -8163,13 +8156,13 @@ section#generations-months ul li {
 	margin: 0;
 	text-align: center;
 	-webkit-flex-grow: 1;
-    -webkit-flex-shrink: 1;
+	-webkit-flex-shrink: 1;
 	-webkit-flex-basis: 0;
 	-ms-flex-grow: 1;
-    -ms-flex-shrink: 1;
-    -ms-flex-basis: 0;
+	-ms-flex-shrink: 1;
+	-ms-flex-basis: 0;
 	flex-grow: 1;
-    flex-shrink: 1;
+	flex-shrink: 1;
 	flex-basis: 0;
 	-webkit-justify-content: center;
 	-webkit-align-content: center;
