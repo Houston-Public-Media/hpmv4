@@ -8555,3 +8555,20 @@ section#country-covers .slick-next:before {
 		padding: 3em 4em;
 	}
 }
+#dropSelect {
+	width: 100%;
+	text-align: center;
+	padding: 1em;
+}
+#dropSelect.fixed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	border-bottom: 1px solid #808080;
+	background-color: white;
+}
+#dropSelect #raceSelect {
+	font: normal 1.5em/1.25em 'MiloOT-Medi',arial,helvetica,sans-serif;
+	padding: 0.5em;
+	width: 20em;
+}
