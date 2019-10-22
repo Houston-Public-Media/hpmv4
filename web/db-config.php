@@ -91,14 +91,6 @@ if ( WP_ENV == 'production' ) :
 			'write'    => 0,
 			'read'     => 1
 		]);
-		// $wpdb->add_database([
-		// 	'host'     => DB_HOST_3,     // If port is other than 3306, use host:port.
-		// 	'user'     => DB_USER,
-		// 	'password' => DB_PASSWORD,
-		// 	'name'     => DB_NAME,
-		// 	'write'    => 0,
-		// 	'read'     => 1
-		// ]);
 		$wpdb->add_database([
 			'host'     => DB_HOST,     // If port is other than 3306, use host:port.
 			'user'     => DB_USER,

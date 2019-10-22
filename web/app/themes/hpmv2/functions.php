@@ -930,6 +930,7 @@ function article_list_shortcode( $atts ) {
 	extract( shortcode_atts( array(
 		'num' => 1,
 		'category' => '',
+		'tag' => '',
 		'post_id' => ''
 	), $atts, 'multilink' ) );
 	$args = array(
@@ -940,6 +941,9 @@ function article_list_shortcode( $atts ) {
 	if ( !empty( $category ) ) :
 		$args['category_name'] = $category;
 		$extra = '<li><a href="/topics/'.$category.'/">Read More...</a></li>';
+	endif;
+	if ( !empty( $tag ) ) :
+		$args['tag_slug__in'][] = $tag;
 	endif;
 	if ( !empty( $post_id ) ) :
 		$args['p'] = $post_id;

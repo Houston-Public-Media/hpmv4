@@ -4904,6 +4904,7 @@ body.page.page-template-page-kids .kids-schedule {
 		right: 4em;
 		top: 0;
 		padding: 0.5em 1em;
+		display: block;
 	}
 	body.page-template-page-listen #masthead .site-branding .site-logo {
 		height: 4em;
