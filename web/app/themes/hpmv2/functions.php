@@ -789,7 +789,6 @@ function article_display_shortcode( $atts ) {
 		'tag' => '',
 		'category' => '',
 		'type' => 'd',
-		'overline' => '',
 		'post_id' => ''
 	], $atts, 'multilink' ) );
 	$args = [
@@ -830,30 +829,40 @@ function article_display_shortcode( $atts ) {
 	endif;
 	$article[] = new WP_query( $args );
 	$output = '<div class="grid-sizer"></div>';
+	ob_start();
 	foreach ( $article as $art ) :
 		if ( $art->have_posts() ) :
 			while ( $art->have_posts() ) : $art->the_post();
-				$postClass = get_post_class();
-				$fl_array = preg_grep("/felix-type-/", $postClass);
-				$fl_arr = array_keys( $fl_array );
-				$postClass[$fl_arr[0]] = 'felix-type-'.$type;
-				$postClass[] = 'grid-item';
-				if ( $type == 'a' ) :
-					$thumbnail_type = 'large';
-					$postClass[] = 'grid-item--width2';
-				elseif ( $type == 'b' ) :
-					$thumbnail_type = 'thumbnail';
-					$postClass[] = 'grid-item--width2';
+				if ( $type == 'search' ) :
+					get_template_part( 'content', get_post_format() );
 				else :
-					$thumbnail_type = 'thumbnail';
-				endif;
-				if ( empty( $overline ) ) :
+					$postClass = get_post_class();
+					$fl_array = preg_grep("/felix-type-/", $postClass);
+					$fl_arr = array_keys( $fl_array );
+					$postClass[$fl_arr[0]] = 'felix-type-'.$type;
+					$postClass[] = 'grid-item';
+					if ( $type == 'a' ) :
+						$thumbnail_type = 'large';
+						$postClass[] = 'grid-item--width2';
+					elseif ( $type == 'b' ) :
+						$thumbnail_type = 'thumbnail';
+						$postClass[] = 'grid-item--width2';
+					else :
+						$thumbnail_type = 'thumbnail';
+					endif;
+					$hpm_constants[] = get_the_ID();
 					$overline = hpm_top_cat( get_the_ID() );
+					$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
 				endif;
-				$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
 			endwhile;
 		endif;
 	endforeach;
+	wp_reset_query();
+	$getContent = ob_get_contents();
+	ob_end_clean();
+	if ( $type == 'search' ) :
+		$output = $getContent;
+	endif;
 	return $output;
 }
 add_shortcode( 'hpm_articles', 'article_display_shortcode' );
