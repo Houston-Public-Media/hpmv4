@@ -86,6 +86,7 @@ define('AWS_SECRET_ACCESS_KEY', env('AWS_SECRET_ACCESS_KEY'));
 define('HPM_SFTP_PASSWORD', env('HPM_SFTP_PASSWORD'));
 define('HPM_MVAULT_ID', env('HPM_MVAULT_ID'));
 define('HPM_MVAULT_SECRET', env('HPM_MVAULT_SECRET'));
+define('WP_CACHE_KEY_SALT', env('WP_HOME'));
 $memcached_servers = [
 	'default' => [ env('HPM_MEMCACHE') ]
 ];

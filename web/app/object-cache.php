@@ -435,7 +435,7 @@ class WP_Object_Cache {
 			'delete'     => 0,
 			'miss'       => 0,
 		);
-		
+
 		global $memcached_servers;
 
 		if ( isset( $memcached_servers ) )
