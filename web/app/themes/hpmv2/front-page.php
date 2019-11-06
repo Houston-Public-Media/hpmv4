@@ -16,7 +16,7 @@ if ( !empty( $_GET['testtime'] ) ) :
 	$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) );
 endif; ?>
 	<div id="primary" class="content-area">
-<?php /*
+<?php
 		$election_args = array(
 			'p' => 248126,
 			'post_type'  => 'page',
@@ -29,7 +29,7 @@ endif; ?>
 				the_content();
 			endwhile;
 			wp_reset_postdata();
-		endif; */ ?>
+		endif; ?>
 		<main id="main" class="site-main" role="main">
 			<div id="float-wrap">
 				<div class="grid-sizer"></div>
