@@ -117,7 +117,7 @@
 		/*
 		Insert banners for when Houston Matters is airing
 		*/
-		$anc = get_post_ancestors( get_the_ID() );
+		/*$anc = get_post_ancestors( get_the_ID() );
 		$bans = [ 135762, 290722, 303436, 303018, 315974 ];
 		if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) ) :
 			if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 19 ) ) :
@@ -149,7 +149,7 @@
 		</script>
 <?php
 			endif;
-		endif;
+		endif; */
 	endif;
 	wp_reset_postdata();
 	if ( !in_array( 61383, $anc ) ) : ?>
@@ -181,5 +181,3 @@
 	wp_footer(); ?>
 	</body>
 </html>
-
-

@@ -76,7 +76,7 @@
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
 		"jwcounts/hpm-mods": "2019.2.7",
-		"jwcounts/wp-missed-schedule": "1.0"
+		"jwcounts/wp-missed-schedule": "1.0.1"
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^3.0.2"
