@@ -8573,3 +8573,36 @@ section#country-covers .slick-next:before {
 	padding: 0.5em;
 	width: 20em;
 }
+#hm-top {
+	background: rgb(239,185,73);
+	background: linear-gradient(180deg, rgba(239,185,73,1) 0%, rgba(239,185,73,0.33) 100%);
+}
+#hm-top p {
+	padding: 0.5em;
+	font: normal 1em/1.25em 'MiloOT',arial,helvetica;
+	color: rgb(38,92,113);
+	text-align: center;
+}
+#hm-top p span::after {
+	content: "\A";
+	display: block;
+}
+#hm-top p strong {
+	font: normal 100%/1em 'MiloOT-Bold',arial,helvetica;
+}
+#hm-top p a {
+	text-decoration: underline;
+	color: #cc0000;
+	font: normal 100%/1em 'MiloOT-Bold',arial,helvetica;
+}
+@media screen and (min-width: 50.0625em) {
+	#hm-top p span::after {
+		content: "";
+		display: inline;
+	}
+}
+@media screen and (min-width: 64.0625em) {
+	#hm-top p {
+		font: normal 1.125em/1.25em 'MiloOT',arial,helvetica;
+	}
+}
