@@ -130,6 +130,9 @@ class HPMv2_Menu_Walker extends Walker_Nav_Menu {
 		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 		$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args, $depth );
 		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+		if ( in_array( 'flex-break-before', $classes ) ) :
+			$output .= $indent . '<li class="flex-break"></li>';
+		endif;
 		$output .= $indent . '<li' . $id . $class_names .'>';
 		$atts = [];
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
@@ -152,6 +155,7 @@ class HPMv2_Menu_Walker extends Walker_Nav_Menu {
 				$attributes .= ' ' . $attr . '="' . $value . '"';
 			endif;
 		endforeach;
+
 		$item_output = $args->before;
 		if ( $item->url == '#' ) :
 			if ( $depth > 0 && !in_array( 'nav-back', $classes ) ) :
