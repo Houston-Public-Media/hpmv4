@@ -75,7 +75,7 @@
 		"wpackagist-plugin/redis-cache": "1.5.5",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
-		"jwcounts/hpm-mods": "2019.2.9",
+		"jwcounts/hpm-mods": "2019.2.10",
 		"jwcounts/wp-missed-schedule": "1.0.1"
 	},
 	"require-dev": {
