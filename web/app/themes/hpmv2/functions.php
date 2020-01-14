@@ -1032,7 +1032,8 @@ function hpm_google_tracker() {
 				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').addService(googletag.pubads());
 				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
 				//googletag.pubads().collapseEmptyDivs();
-				googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+				googletag.defineSlot('/9147267/HPM_About_300x250', [300, 250], 'div-gpt-ad-1579034137004-0').addService(googletag.pubads());
+    			googletag.pubads().addEventListener('slotRenderEnded', function(event) {
 					var slotId = event.slot.getSlotElementId();
 					if (event.isEmpty) {
 						var sideBar = document.getElementById(slotId).parentNode;
