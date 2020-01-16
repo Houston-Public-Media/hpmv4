@@ -18,7 +18,7 @@
 		<?PHP while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
-					<?php 						
+					<?php
 						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 					<p class="byline-date screen-reader-text">
 					<?PHP
@@ -50,7 +50,7 @@
 						if ( has_post_thumbnail() && !in_array( 'hide-featured-image', $classes ) ) :
 					?>
 					<div class="post-thumbnail">
-						<?php 
+						<?php
 							the_post_thumbnail( 'large' );
 							$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
 							if (!empty($thumb_caption)) :
@@ -68,7 +68,7 @@
 				</div><!-- .entry-content -->
 
 				<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) {
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
@@ -80,9 +80,14 @@
 				</footer><!-- .entry-footer -->
 			</article><!-- #post-## -->
 			<?php
-				endwhile; ?>
+				endwhile;
+				if ( $pagename == 'about' ) : ?>
+			<aside class="column-right" style="overflow: visible;">
+			<?php
+				else : ?>
 			<aside class="column-right">
 			<?php
+				endif;
 				if ( $pagename == 'spelling-bee' ) : ?>
 				<div class="sidebar-ad">
 					<h4>Presented By</h4>
