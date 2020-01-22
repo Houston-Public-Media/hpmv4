@@ -1754,3 +1754,20 @@ function hpm_hm_banner() {
 add_action( 'wp_footer', 'hpm_chartbeat', 100 );
 add_action( 'wp_footer', 'hpm_masonry', 99 );
 add_action( 'wp_footer', 'hpm_hm_banner', 100 );
+
+function hpm_tvguide_url() {
+	$tvguide = get_transient( 'hpm_tvguide_url' );
+	if ( !empty( $tvguide ) ) :
+		return $tvguide;
+	endif;
+	$remote = wp_remote_get( esc_url_raw( "https://cdn.hpm.io/assets/tvguide.json" ) );
+	if ( is_wp_error( $remote ) ) :
+		return "";
+	else :
+		$api = wp_remote_retrieve_body( $remote );
+		$json = json_decode( $api, TRUE );
+		$tvguide = $json['url'];
+	endif;
+	set_transient( 'hpm_tvguide_url', $tvguide, 1800 );
+	return $tvguide;
+}

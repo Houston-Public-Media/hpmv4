@@ -11,15 +11,6 @@ Template Name: TV Schedule
 			<header class="page-header">
 				<h1 class="page-title entry-title"><?php the_title(); ?></h1>
 				<div id="station-social">
-				<?php
-					$media = get_posts([
-						'post_parent' => get_the_ID(),
-						'post_type' => 'attachment',
-						'post_mime_type' => 'application/pdf',
-						'orderby' => 'date',
-						'posts_per_page' => 1,
-						'order' => 'DESC'
-					]); ?>
 					<div class="station-social-icon">
 						<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
 					</div>
@@ -30,7 +21,7 @@ Template Name: TV Schedule
 						<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
 					</div>
 					<div class="station-printable">
-						<a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">View Printable eGuide</a>
+						<a href="<?php echo hpm_tvguide_url(); ?>">View Printable eGuide</a>
 					</div>
 
 				</div>
