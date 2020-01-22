@@ -1768,6 +1768,6 @@ function hpm_tvguide_url() {
 		$json = json_decode( $api, TRUE );
 		$tvguide = $json['url'];
 	endif;
-	set_transient( 'hpm_tvguide_url', $tvguide, 1800 );
+	set_transient( 'hpm_tvguide_url', $tvguide, 900 );
 	return $tvguide;
 }
