@@ -3291,7 +3291,7 @@ body.page.page-template-page-kids .kids-schedule {
  * 16.1 Tablet 481px-800px
  */
 
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 
 	/**
 	 * 16.1.1 Navigation
@@ -5799,7 +5799,7 @@ div.kimbiaDiv {
 	background: #ffffff!important;
 	color: #000000;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.page-template-page-passport .page-header {
 		padding-bottom: calc(100%/3.6676);
 	}
@@ -6052,7 +6052,7 @@ div.kimbiaDiv {
 .page.support-main article header.entry-header h1::first-line {
 	font: normal 1.5em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.support-main .support-tile {
 		width: 47%;
 		padding-bottom: calc(47%/1.3);
@@ -6356,7 +6356,7 @@ ul.passport-drop li.passport-hidden {
 	background-position-y: 0px;
 	background-image: url('https://cdn.hpm.io/assets/images/phone_icon2x.png');
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.support-buttons a {
 		width: 35%;
 		margin: 0 7.5%;
@@ -6670,7 +6670,7 @@ body.single-shows.hah-sub .page-header {
 .hah-sub .jp-gui.jp-interface .jp-details {
 	display: none;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.single.hah-sub #main aside#videos-nav,
 	body.single-shows.hah-sub aside#videos-nav {
 		padding: 1em;
@@ -7135,7 +7135,7 @@ section#ylc-success .column-third {
 	color: white;
 	font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.page-template-page-ylc .page-header h2 {
 		font-size: 250%;
 	}
@@ -7378,7 +7378,7 @@ ul.podcast-badges li {
 	text-align: center;
 	clear: none;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	ul.podcast-badges {
 		display: inline-block;
 		float: right;
@@ -7695,7 +7695,7 @@ h2.ss-join {
 		background-position: 0 8px;
 	}
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.page.support-ssac .alignleft {
 		width: 45%;
 		margin: 0 2.5% 1em;
@@ -7910,7 +7910,7 @@ body.single-shows.shows-template-single-shows-rwb #shows-youtube div.column-righ
 #rwb-austin .rwb-austin-slideshow .slick-slide div {
 	padding: 0 0 0.75em;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.shows-template-single-shows-rwb #shows-youtube div.column-right {
 		padding: 1em;
 	}
@@ -8194,7 +8194,7 @@ section#generations-months ul li:hover {
 	cursor: pointer;
 	opacity: 0.75;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.page-template-page-generations .page-header {
 		padding: 0;
 		margin: 0;
@@ -8463,7 +8463,7 @@ section#country-covers .slick-prev:before,
 section#country-covers .slick-next:before {
 	color: white !important;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	section#country-covers .column-right {
 		float: right;
 		width: 31%;
@@ -8942,14 +8942,14 @@ section#country-covers .slick-next:before {
 }
 .page-template-page-innovation section.i-s-supporters .i-s-supporters-button {
 	font: normal 1.25em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
-	padding: 0.5em;
+	padding: 1em 0.5em;
 	width: 100%;
 	margin: 0 0 2em;
 	background-color: #4FC4CD;
 	display: block;
 	color: white;
 }
-@media screen and (min-width: 30.0625em) {
+@media screen and (min-width: 34em) {
 	.i-s-flex {
 		-webkit-flex-flow: row nowrap;
 		-webkit-justify-content: center;
