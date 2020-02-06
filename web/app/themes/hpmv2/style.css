@@ -8612,21 +8612,13 @@ section#country-covers .slick-next:before {
 .page-template-page-innovation article .entry-header {
 	padding: 0;
 	overflow: hidden;
-	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#b82b35+25,22556a+100 */
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#b82b35+25,22556a+100
 	background: #b82b35;
-	background: linear-gradient(to right,  #b82b35 25%,#22556a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: linear-gradient(to right,  #b82b35 25%,#22556a 100%); */
 }
-.page-template-page-innovation article .entry-header p,
-.page-template-page-innovation article .entry-title {
-	color: white;
-	text-align: center;
-}
-.page-template-page-innovation article .entry-title {
-	padding-top: 0.5em;
-}
-.page-template-page-innovation article .entry-header p,
-.page-template-page-innovation article .entry-title span {
-	font-family: 'MiloOT-Bold',arial,Arial, Helvetica, sans-serif;
+.page-template-page-innovation article .entry-header img {
+	padding: 1em;
+	width: 100%;
 }
 .page-template-page-innovation article .entry-header .plan-colorbar {
 	height: 0.25em;
@@ -8970,17 +8962,6 @@ section#country-covers .slick-next:before {
 		display: flex;
 		padding: 1em 0;
 	}
-	.page-template-page-innovation article .entry-header p {
-		padding: 0 0 0 0.5em;
-		margin: 0;
-		text-align: left;
-		max-width: 50%;
-	}
-	.page.page-template-page-innovation article .entry-header h1 {
-		text-align: right;
-		max-width: 35%;
-		padding: 0 0.5em 0 0;
-	}
 	.page-template-page-innovation section .i-s-map,
 	.page-template-page-innovation section .i-s-legend {
 		width: 50%;
@@ -9056,6 +9037,10 @@ section#country-covers .slick-next:before {
 	}
 }
 @media screen and (min-width: 50.0625em) {
+	.page-template-page-innovation article .entry-header img {
+		width: 75%;
+		margin: 0 12.5%;
+	}
 	.page-template-page-innovation article {
 		width: 100%;
 		border-right: 0;
@@ -9141,12 +9126,9 @@ section#country-covers .slick-next:before {
 	}
 }
 @media screen and (min-width: 64.0625em) {
-	.page.page-template-page-innovation article .entry-header h1 {
-		max-width: 25%;
-		font-size: 300%;
-	}
-	.page-template-page-innovation article .entry-header p {
-		font-size: 150%;
+	.page-template-page-innovation article .entry-header img {
+		width: 66%;
+		margin: 0 17%;
 	}
 	.page-template-page-innovation section h2 {
 		font-size: 275%;
