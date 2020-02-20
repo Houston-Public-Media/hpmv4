@@ -85,9 +85,9 @@ jQuery(document).ready(function($){
 			{
 				bod.removeClass('nav-active-menu').css({'transform':'translate3d(0,0,0)'}).removeAttr('height');
 				if ($(this).hasClass('dc-top-menu')) {
-					$(this).html('<span class="genericons-neue genericons-neue-menu" aria-hidden="true"></span>');
+					$(this).html('<span class="genericons-neue genericons-neue-menu" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
 				} else {
-					$(this).html('<span class="fa fa-bars" aria-hidden="true"></span>');
+					$(this).html('<span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
 				}
 				if ( listenLive === true ) {
 					siteNav.addClass('screen-reader-text');
@@ -95,9 +95,9 @@ jQuery(document).ready(function($){
 			} else {
 				bod.addClass('nav-active-menu').css({'transform':'translate3d(-'+move+'px,0,0)'});
 				if ($(this).hasClass('dc-top-menu')) {
-					$(this).html('<span class="genericons-neue genericons-neue-close-alt" aria-hidden="true"></span>');
+					$(this).html('<span class="genericons-neue genericons-neue-close-alt" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>');
 				} else {
-					$(this).html('<span class="fa fa-close" aria-hidden="true"></span>');
+					$(this).html('<span class="fa fa-close" aria-hidden="true"></span><span class="top-mobile-text">Close</span>');
 				}
 				if ( listenLive === true ) {
 					siteNav.removeClass('screen-reader-text');
@@ -232,5 +232,9 @@ jQuery(document).ready(function($){
 			$(this).addClass('c2c-active');
 			$('#'+dat).addClass('c2c-gallery-active');
 		}
+	});
+	$('#top-schedule .top-schedule-label a').click(function(e){
+		e.preventDefault();
+		$('#top-schedule .top-schedule-link-wrap').toggleClass('top-sched-active');
 	});
 });

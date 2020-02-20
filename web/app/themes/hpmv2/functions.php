@@ -734,14 +734,16 @@ function hpm_site_header() { ?>
 						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
 					</div>
 					<div id="top-schedule">
-						<div class="top-schedule-label">Schedules</div>
-						<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
-						<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
-						<div class="top-schedule-links"><a href="/classical">Classical</a></div>
-						<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
+						<div class="top-schedule-label"><a href="#top-schedule-wrap"><span class="fa fa-calendar" aria-hidden="true"></span>Schedules</a></div>
+						<div class="top-schedule-link-wrap">
+							<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
+							<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
+							<div class="top-schedule-links"><a href="/classical">Classical</a></div>
+							<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
+						</div>
 					</div>
-					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="860:455">Listen Live</a></div>
-					<div id="top-donate"><a href="/donate" target="_blank">Donate</a></div>
+					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="860:455"><span class="fa fa-microphone" aria-hidden="true"></span>Listen Live</a></div>
+					<div id="top-donate"><a href="/donate"><span class="fa fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
 					<div id="header-social">
 						<div class="header-social-icon header-facebook">
 							<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
@@ -756,7 +758,7 @@ function hpm_site_header() { ?>
 							<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
 						</div>
 					</div>
-					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span></div>
+					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
 						<div id="top-search"><span class="fa fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
 					<?php
@@ -1042,6 +1044,9 @@ function hpm_google_tracker() {
 						}
 					}
 				});
+<?php if ( is_home() ) : ?>
+				googletag.pubads().setTargeting('section', 'homepage');
+<?php endif; ?>
 				googletag.enableServices();
 			});
 			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -1558,8 +1563,8 @@ function hpm_body_open() {
 					<div class="site-logo">
 						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
 					</div>
-					<div id="top-donate"><a href="/donate" target="_blank">Donate</a></div>
-					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span></div>
+					<div id="top-donate"><a href="/donate"><span class="fa fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
+					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
 						<?php
 							wp_nav_menu( array(
