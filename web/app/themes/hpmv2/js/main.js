@@ -9,16 +9,11 @@ function parameters($) {
 	window.move = wide - topMobileMenu;
 	window.totalHigh = mastHigh + bodyHigh;
 	window.listenLive = bod.hasClass('page-template-page-listen');
-	if ( listenLive === true ) {
-		move = 400;
-	}
 
 	if (wide < 801 || listenLive === true )
 	{
-		siteNav.width(move).height(totalHigh);
-	}
-	else
-	{
+		siteNav.width(move);
+	} else {
 		bod.removeClass('nav-active-menu').removeAttr('style');
 		siteNav.removeAttr('style');
 	}
@@ -83,7 +78,7 @@ jQuery(document).ready(function($){
 		{
 			if (bod.hasClass('nav-active-menu'))
 			{
-				bod.removeClass('nav-active-menu').css({'transform':'translate3d(0,0,0)'}).removeAttr('height');
+				bod.removeClass('nav-active-menu').removeAttr('style').removeAttr('height');
 				if ($(this).hasClass('dc-top-menu')) {
 					$(this).html('<span class="genericons-neue genericons-neue-menu" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
 				} else {
@@ -93,7 +88,7 @@ jQuery(document).ready(function($){
 					siteNav.addClass('screen-reader-text');
 				}
 			} else {
-				bod.addClass('nav-active-menu').css({'transform':'translate3d(-'+move+'px,0,0)'});
+				bod.addClass('nav-active-menu');
 				if ($(this).hasClass('dc-top-menu')) {
 					$(this).html('<span class="genericons-neue genericons-neue-close-alt" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>');
 				} else {
