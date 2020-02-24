@@ -436,7 +436,6 @@ body.nav-active-menu #masthead #top-mobile-menu {
 	text-transform: uppercase;
 }
 body #masthead #top-mobile-menu:hover {
-	opacity: 0.75;
 	transition: all .2s ease-out;
 	cursor: pointer;
 }
