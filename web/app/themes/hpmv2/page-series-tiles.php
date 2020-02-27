@@ -8,12 +8,34 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post();
-				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-				$show_title = get_the_title();
-				$show_content = get_the_content(); ?>
-			<header class="page-header<?php echo (!empty( $header_back ) ? '" style="background-image: url(\''.$header_back[0].'\');"' : ' no-back'); ?>">
-				<h1 class="page-title<?php echo (!empty( $header_back ) ? ' screen-reader-text' : ''); ?>"><?php the_title(); ?></h1>
-			</header>
+			$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+			$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
+			$show_title = get_the_title();
+			$show_content = get_the_content();
+			$page_head_style = '';
+			$page_head_class = '';
+			if ( !empty( $embeds['banner']['mobile'] ) || !empty( $embeds['banner']['tablet'] ) || !empty( $embeds['banner']['desktop'] ) ) :
+				$page_head_class = ' shows-banner-variable';
+				foreach ( $embeds['banner'] as $bk => $bv ) :
+					if ( $bk == 'mobile' ) :
+						$page_head_style .= ".page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); }";
+					elseif ( $bk == 'tablet' ) :
+						$page_head_style .= " @media screen and (min-width: 30.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
+					elseif ( $bk == 'desktop' ) :
+						$page_head_style .= " @media screen and (min-width: 50.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
+					endif;
+				endforeach;
+			elseif ( !empty( $header_back[0] ) ) :
+				$page_head_style = ".page-header { background-image: url($header_back[0]); }";
+			else :
+				$page_head_class = ' no-back';
+			endif;
+			if ( !empty( $page_head_style ) ) :
+				echo "<style>".$page_head_style."</style>";
+			endif; ?>
+		<header class="page-header<?php echo $page_head_class; ?>">
+			<h1 class="page-title<?php echo (!empty( $header_back ) ? ' screen-reader-text' : ''); ?>"><?php the_title(); ?></h1>
+		</header>
 		<?php
 			endwhile; ?>
 			<div id="float-wrap">
@@ -59,8 +81,7 @@ get_header(); ?>
 				</aside>
 		<?php
 			$cat_no = get_post_meta( get_the_ID(), 'hpm_series_cat', true );
-			$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
-			$top =  get_post_meta( get_the_ID(), 'hpm_series_top', true );
+			$top = get_post_meta( get_the_ID(), 'hpm_series_top', true );
 			$terms = get_terms( array( 'include'  => $cat_no, 'taxonomy' => 'category' ) );
 			$term = reset( $terms );
 			if ( empty( $embeds['order'] ) ) :
