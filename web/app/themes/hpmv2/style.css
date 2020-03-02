@@ -694,14 +694,14 @@ body.nav-active-menu {
 }
 #masthead #header-social .header-social-icon a {
 	display: block;
-	width: 2em;
-	height: 2em;
+	width: 1.75em;
+	height: 1.75em;
 	background-color: #808184;
-	margin: 0 0.5em;
+	margin: 0 0.25em;
 	text-align: center;
 }
 #masthead #header-social .header-social-icon .fa {
-	font-size: 1.5em;
+	font-size: 1.375em;
 	line-height: 1.25em;
 	color: white;
 }
@@ -1317,7 +1317,8 @@ table.gsc-search-box td.gsc-input {
 	padding: 0.25em 1em;
 	text-align: center;
 	color: #cc0000;
-	font: normal 1em/1em 'MiloOT',arial,helvetica,sans-serif;
+	font: normal 1.25em/1.25em 'MiloOT',arial,helvetica,sans-serif;
+	background-color: white;
 }
 #emergency a {
 	font: normal 1em/1em 'MiloOT',arial,helvetica,sans-serif;
@@ -1846,6 +1847,13 @@ body.single-shows #station-social h3 {
 body.single-shows aside,
 body.page-template-page-series-tiles aside {
 	background-color: white;
+	margin: 0;
+	width: 100%;
+}
+body.single-shows aside .sidebar-ad,
+body.page-template-page-series-tiles aside .sidebar-ad {
+	padding-left: 1em;
+	padding-right: 1em;
 }
 #shows-youtube {
 	width: 100%;
@@ -1959,6 +1967,7 @@ body.single-shows aside .show-content p,
 body.page-template-page-series-tiles aside .show-content p {
 	color: rgb(76,76,80);
 	font: normal 1.25em/1.25em 'MiloOT',arial,sans-serif;
+	padding-bottom: 1em;
 }
 .column-right div.upcoming-eps {
 	padding: 0.5em;
@@ -2622,7 +2631,7 @@ footer#colophon #footer-social .footer-social-icon a {
 	margin-right: 1em;
 	text-align: center;
 }
-footer#colophon #footer-social .footer-social-icon.footer-youtube a {
+footer#colophon #footer-social .footer-social-icon:last-child a {
 	margin-right: 0;
 }
 footer#colophon #footer-social .footer-social-icon .fa {
@@ -3837,6 +3846,15 @@ body.page.page-template-page-kids .kids-schedule {
 		min-width: 51.25em;
 		margin: 0 auto;
 	}
+	#emergency {
+		background-color: #cc0000;
+		color: white;
+		max-width: 100%;
+	}
+	#emergency a {
+		background-color: #cc0000;
+		color: white;
+	}
 	.page-template-page-blank #content {
 		max-width: 100%;
 		min-width: 100%;
@@ -4529,6 +4547,12 @@ body.page.page-template-page-kids .kids-schedule {
 		width: 970px;
 		margin: 0 auto;
 	}
+	body.single-shows aside,
+	body.page-template-page-series-tiles aside {
+		padding: 0;
+		margin: 0 0.75% 1em;
+		width: 31.5%;
+	}
 
 	/**
 	 * 16.2.4 Search Results/Category/Tag Article Styles
@@ -5059,6 +5083,9 @@ body.page.page-template-page-kids .kids-schedule {
 		position: relative;
 		max-width: 75em;
 		margin: 0 auto;
+	}
+	#emergency {
+		max-width: 100%;
 	}
 	#masthead {
 		height: 8.75em;

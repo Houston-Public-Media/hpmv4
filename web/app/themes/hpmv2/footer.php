@@ -46,6 +46,9 @@
 							<div class="footer-social-icon footer-youtube">
 								<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
 							</div>
+							<div class="footer-social-icon footer-linkedin">
+								<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+							</div>
 						</div>
 					</div>
 				</section>

@@ -30,6 +30,9 @@ function hpm_site_header() { ?>
 						<div class="header-social-icon header-youtube">
 							<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
 						</div>
+						<div class="header-social-icon header-linkedin">
+							<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+						</div>
 					</div>
 					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
