@@ -39,7 +39,7 @@ Template Name: Full-Width Page
 				</div><!-- .entry-content -->
 
 				<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) {
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
