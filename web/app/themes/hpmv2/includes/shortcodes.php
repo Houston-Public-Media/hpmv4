@@ -408,3 +408,36 @@ function article_list_shortcode( $atts ) {
 	return $output;
 }
 add_shortcode( 'hpm_article_list', 'article_list_shortcode' );
+
+function hpm_npr_article_shortcode( $atts ) {
+	extract( shortcode_atts( [
+		'category' => 1001,
+		'num' => 4
+	], $atts, 'multilink' ) );
+	$npr = get_transient( 'hpm_nprapi_'.$category );
+	if ( !empty( $npr ) ) :
+		return $npr;
+	endif;
+	$output = '';
+	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=".$category."&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=4&apiKey=MDAyMTgwNzc5MDEyMjQ4ODE4MjMyYTExMA001" ) );
+	if ( is_wp_error( $remote ) ) :
+		return "<p></p>";
+	else :
+		$npr = wp_remote_retrieve_body( $remote );
+		$npr_json = json_decode( $npr, TRUE );
+	endif;
+	foreach ( $npr_json['list']['story'] as $story ) :
+		$npr_date = strtotime($story['storyDate']['$text']);
+		$output .= '<article class="national-content">';
+		if ( !empty( $story['image'][0]['src'] ) ) :
+			$output .= '<div class="national-image" style="background-image: url('.$story['image'][0]['src'].')"><a href="//www.houstonpublicmedia.org/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"></a></div><div class="national-text">';
+		else :
+			$output .= '<div class="national-text-full">';
+		endif;
+		$output .= '<h2><a href="//www.houstonpublicmedia.org/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/">'.$story['title']['$text'].'</a></h2><p class="screen-reader-text">'
+		           .$story['teaser']['$text'].'</p></div></article>';
+	endforeach;
+	set_transient( 'hpm_nprapi_'.$category, $output, 600 );
+	return $output;
+}
+add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );

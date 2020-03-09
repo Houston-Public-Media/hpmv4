@@ -113,6 +113,12 @@ get_header(); ?>
 			font-size: 125%;
 			border: 0;
 		}
+		#npr-side article h2 {
+			padding: 0;
+			font-size: 125%;
+			border: 0;
+			margin: 0;
+		}
 		#search-results article .entry-summary {
 			padding: 0;
 		}
