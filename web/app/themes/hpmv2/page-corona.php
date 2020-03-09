@@ -69,6 +69,8 @@ get_header(); ?>
 			margin: 0;
 			font-family: 'MiloOT-XBold',arial,helvetica,sans-serif;
 			width: 100%;
+			font-size: 400%;
+			line-height: 100%;
 		}
 		.page-header p {
 			font-size: 125%;
