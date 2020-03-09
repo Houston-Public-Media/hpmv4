@@ -37,6 +37,9 @@ get_header(); ?>
 			overflow: hidden;
 			padding: 2.5em 1em 1em;
 		}
+		.page-content p {
+			margin-bottom: 1em;
+		}
 		.page-header {
 			background-position: center;
 			background-repeat: no-repeat;
@@ -45,7 +48,7 @@ get_header(); ?>
 			padding-right: 0;
 			padding-left: 0;
 			padding-top: 0;
-			padding-bottom: calc(100%/1.5);
+			padding-bottom: calc(100%/1.75);
 			position: relative;
 		}
 		.page-header .page-header-wrap {
@@ -60,7 +63,6 @@ get_header(); ?>
 		}
 		.page-header .page-header-wrap div {
 			padding: 1em;
-			background-color: rgba(0,0,0,0.66);
 		}
 		.page-header h1 {
 			color: white;
