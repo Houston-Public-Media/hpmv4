@@ -7,9 +7,8 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 			<?PHP while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<?PHP $header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' ); ?>
-				<header class="page-header" style="background-image: url('<?php echo $header_back[0]; ?>');">
-					<div class="page-header-wrap"><div><h1 class="page-title"><?php echo get_the_title(); ?></h1><p><?php echo get_the_excerpt(); ?></p></div></div>
+				<header class="page-header">
+					<h1 class="page-title screen-reader-text"><?php echo get_the_title(); ?></h1>
 				</header><!-- .entry-header -->
 				<div class="page-content">
 					<?php the_content(); ?>
@@ -48,8 +47,9 @@ get_header(); ?>
 			padding-right: 0;
 			padding-left: 0;
 			padding-top: 0;
-			padding-bottom: calc(100%/1.75);
+			padding-bottom: calc(100%/1.5);
 			position: relative;
+			background-image: url(https://cdn.hpm.io/assets/images/covid19_Mobile.png);
 		}
 		.page-header .page-header-wrap {
 			display: flex;
@@ -147,6 +147,7 @@ get_header(); ?>
 				padding-left: 0;
 				padding-top: 0;
 				padding-bottom: calc(100%/4);
+				background-image: url(https://cdn.hpm.io/assets/images/covid19_Tablet.png);
 			}
 		}
 		@media screen and (min-width: 50.0625em) {
@@ -160,6 +161,7 @@ get_header(); ?>
 				padding-left: 0;
 				padding-top: 0;
 				padding-bottom: calc(100%/6);
+				background-image: url(https://cdn.hpm.io/assets/images/covid19_Desktop.png);
 			}
 		}
 	</style>
