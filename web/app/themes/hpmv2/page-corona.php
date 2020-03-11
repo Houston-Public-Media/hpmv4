@@ -93,14 +93,20 @@ get_header(); ?>
 			display: block;
 			position: relative;
 		}
-		.corona-links a .fa {
+		.corona-links a:before {
 			color: #cc0000;
-			font-size: 1.5em;
 			position: absolute;
 			top: 0.55em;
 			left: 0.375em;
 			text-align: center;
 			width: 1.5em;
+			display: inline-block;
+			-webkit-font-smoothing: antialiased;
+			font: normal 1.5em/1 'FontAwesome';
+		}
+		.corona-links p {
+			margin: 0;
+			padding: 0;
 		}
 		h2 {
 			font-size: 150%;
@@ -140,6 +146,24 @@ get_header(); ?>
 		}
 		.corona-local ul {
 			padding: 0 1em 4em 1em;
+		}
+		.corona-links a#cv-spread:before {
+			content: '\f007';
+		}
+		.corona-links a#cv-symptom:before {
+			content: '\f0fa';
+		}
+		.corona-links a#cv-prevent:before {
+			content: '\f21e';
+		}
+		.corona-links a#cv-stigma:before {
+			content: '\f0c0';
+		}
+		.corona-links a#cv-what:before {
+			content: '\f0f1';
+		}
+		.corona-links a#cv-faq:before {
+			content: '\f086';
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {
