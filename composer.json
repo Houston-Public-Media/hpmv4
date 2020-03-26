@@ -71,7 +71,7 @@
 		"wpackagist-plugin/term-management-tools": "1.1.4",
 		"wpackagist-plugin/tinymce-advanced": "5.3.0",
 		"wpackagist-plugin/wp-amazon-ses-smtp": "1.0.5",
-		"wpackagist-plugin/redis-cache": "1.5.6",
+		"wpackagist-plugin/redis-cache": "1.5.7",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
 		"jwcounts/hpm-mods": "2020.1.7.3",

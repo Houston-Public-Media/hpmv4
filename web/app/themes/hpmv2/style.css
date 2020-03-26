@@ -3155,6 +3155,24 @@ body.page.page-template-page-kids .kids-schedule {
 	margin: 0;
 	width: 100%;
 }
+body.page.page-template-page-kids .kids-schedule p {
+	color: white;
+	padding-bottom: 1em;
+}
+body.page.page-template-page-kids .kids-schedule a {
+	color: white;
+	text-decoration: underline
+}
+body.page.page-template-page-kids .kids-schedule ul {
+	list-style: disc outside none;
+}
+body.page.page-template-page-kids .kids-schedule ul li {
+	padding-bottom: 0.5em;
+}
+body.page.page-template-page-kids .kids-schedule ul li a {
+	color: rgb(23,177,189);
+	text-decoration: none;
+}
 
 /**
  * 15.0 Accessibility
