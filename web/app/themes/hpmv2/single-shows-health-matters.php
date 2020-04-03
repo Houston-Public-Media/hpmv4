@@ -30,7 +30,7 @@ get_header(); ?>
 					'posts_per_page' => -1,
 					'post_status' => 'inherit',
 					'orderby' => 'date',
-					'order' => 'ASC'
+					'order' => 'DESC'
 				]);
 				$media = $med->posts;
 				if ( !empty( $media ) ) :
