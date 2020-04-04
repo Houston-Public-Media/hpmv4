@@ -441,3 +441,170 @@ function hpm_npr_article_shortcode( $atts ) {
 	return $output;
 }
 add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
+
+function hpm_athome_sched() {
+	$output = get_transient( 'hpm_athome_sched' );
+	if ( !empty( $output ) ) :
+		return $output;
+	endif;
+	$t = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+	$now = getdate( $t );
+	$week = [
+		1 => [
+			'name' => 'Monday',
+			'date' => '',
+			'date_unix' => '',
+			'data' => [
+				'8.1' => [],
+				'8.4' => []
+			]
+		],
+		2 => [
+			'name' => 'Tuesday',
+			'date' => '',
+			'date_unix' => '',
+			'data' => [
+				'8.1' => [],
+				'8.4' => []
+			]
+		],
+		3 => [
+			'name' => 'Wednesday',
+			'date' => '',
+			'date_unix' => '',
+			'data' => [
+				'8.1' => [],
+				'8.4' => []
+			]
+		],
+		4 => [
+			'name' => 'Thursday',
+			'date' => '',
+			'date_unix' => '',
+			'data' => [
+				'8.1' => [],
+				'8.4' => []
+			]
+		],
+		5 => [
+			'name' => 'Friday',
+			'date' => '',
+			'date_unix' => '',
+			'data' => [
+				'8.1' => [],
+				'8.4' => []
+			]
+		]
+	];
+	$temp = [
+		'8.1' => '',
+		'8.4' => ''
+	];
+	$timecol = [
+		'8.1' => '<div class="lah-col lah-time"><div class="lah-col-head"></div><div>6:00am</div><div>6:30am</div><div>7:00am</div><div>7:30am</div><div>8:00am</div><div>8:30am</div><div>9:00am</div><div>9:30am</div><div>10:00am</div><div>10:30am</div><div>11:00am</div><div>11:30am</div><div>12:00pm</div><div>12:30pm</div><div>1:00pm</div><div>1:30pm</div><div>2:00pm</div><div>2:30pm</div><div>3:00pm</div><div>3:30pm</div><div>4:00pm</div><div>4:30pm</div><div>5:00pm</div><div>5:30pm</div></div>',
+		'8.4' => '<div class="lah-col lah-time"><div class="lah-col-head"></div><div>11:00am</div><div>11:30am</div><div>12:00pm</div><div>12:30pm</div><div>1:00pm</div><div>1:30pm</div><div>2:00pm</div><div>2:30pm</div><div>3:00pm</div><div>3:30pm</div></div>'
+	];
+	if ( $now['wday'] >= 1 && $now['wday'] <= 5 ) :
+		$monday_unix = ( $now[0] - ( ( $now['wday'] - 1 ) * 86400 ) );
+	elseif ( $now['wday'] == 0 ) :
+		$monday_unix = ( $now[0] + 86400 );
+	elseif ( $now['wday'] == 6 ) :
+		$monday_unix = ( $now[0] + ( 2 * 86400 ) );
+	endif;
+	$week[1]['date'] = date( "Ymd" , $monday_unix );
+	$week[1]['date_unix'] = $monday_unix;
+	for ( $i = 2; $i < 6; $i++ ) :
+		$week[$i]['date'] = date( "Ymd" , $monday_unix + ( ( $i - 1 ) * 86400 ) );
+		$week[$i]['date_unix'] = $monday_unix + ( ( $i - 1 ) * 86400 );
+	endfor;
+
+	$opts = array(
+		'http' => array(
+			'method' => "GET",
+			'header' => "X-PBSAuth: houstonpublicmedia-50022ddd26361b6838fe0a7b102d00322fe87389d10340222049992ec93cd36b"
+		)
+	);
+	$url_base = "https://services.pbs.org/tvss/kuht/";
+	foreach ( $week as $k => $w ) :
+		$url1 = $url_base."day/".$w['date']."/623006be-27ab-40ab-aea7-208777d02ab1";
+		$url4 = $url_base."day/".$w['date']."/afc37341-cecf-45a4-ac81-0ed31542d4c9";
+
+		$context = stream_context_create( $opts );
+		$result1 = file_get_contents( $url1, FALSE, $context );
+		$result4 = file_get_contents( $url4, FALSE, $context );
+		$data1 = json_decode( $result1, true );
+		$data4 = json_decode( $result4, true );
+		$week[$k]['data']['8.1'] = $data1['feeds'][0]['listings'];
+		$week[$k]['data']['8.4'] = $data4['feeds'][0]['listings'];
+	endforeach;
+
+	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-wrap">'.$timecol['8.1'];
+	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-wrap">'.$timecol['8.4'];
+	foreach ( $week as $w ) :
+		foreach ( $w['data'] as $dk => $dv ) :
+			$temp[ $dk ] .= '<div class="lah-col lah-' . strtolower( $w['name'] ) . '"><div class="lah-col-head">' . $w['name'] . '<br />' . date( 'm/d/Y', $w['date_unix'] ) . '</div>';
+			foreach ( $dv as $pv ) :
+				if (
+					( $dk === '8.1' && $pv['start_time'] >= 600 && $pv['start_time'] < 1800 ) ||
+					( $dk === '8.4' && $pv['start_time'] >= 1100 && $pv['start_time'] < 1600 )
+				) :
+					if ( $dk === '8.1' ) :
+						if ( $pv['start_time'] < 1800 ) :
+							$class = 'lah-' . $pv['minutes'] . ' lah-young';
+						elseif ( $pv['start_time'] >= 600 && $pv['start_time'] < 1800 ) :
+							$class = 'lah-' . $pv['minutes'] . ' lah-middle';
+						elseif ( $pv['start_time'] >= 600 ) :
+							$class = 'lah-' . $pv['minutes'] . ' lah-high';
+						endif;
+					else :
+						$class = 'lah-' . $pv['minutes'];
+					endif;
+					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'Y-m-d-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">'.$pv['title'].'</a></div>';
+				endif;
+			endforeach;
+			$temp[ $dk ] .= '</div>';
+		endforeach;
+	endforeach;
+	$temp['8.1'] .= $timecol['8.1'] . '</div></div>';
+	$temp['8.4'] .= $timecol['8.4'] . '</div></div>';
+	$style = "<style>
+	.lah-schedule .lah-wrap {
+		display: flex;
+	}
+
+	.lah-col {
+		flex-direction: column;
+		display: flex;
+		width: 17%;
+	}
+	.lah-col.lah-time {
+		width: 7.5%;
+	}
+	.lah-col div {
+		width: 100%;
+		height: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid #fff;
+	}
+	.lah-col div a {
+		text-align: center;
+	}
+	.lah-col div.lah-60 {
+		height: 100px;
+	}
+	.lah-col div.lah-90 {
+		height: 150px;
+	}
+	.lah-col div.lah-120 {
+		height: 200px;
+	}
+</style>";
+	$output = $temp['8.1'] . $temp['8.4'] . $style;
+	set_transient( 'hpm_athome_sched', $output, 3600 );
+	return $output;
+}
+add_shortcode( 'hpm_athome', 'hpm_athome_sched' );
