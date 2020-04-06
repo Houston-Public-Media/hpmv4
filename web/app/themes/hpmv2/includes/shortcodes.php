@@ -442,7 +442,10 @@ function hpm_npr_article_shortcode( $atts ) {
 }
 add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
 
-function hpm_athome_sched() {
+/**
+ * Cron job for updating at-home learning page schedule
+ */
+function hpm_athome_sched_update() {
 	$output = get_transient( 'hpm_athome_sched' );
 	if ( !empty( $output ) ) :
 		return $output;
@@ -551,17 +554,17 @@ function hpm_athome_sched() {
 					( $dk === '8.4' && $pv['start_time'] >= 1100 && $pv['start_time'] < 1600 )
 				) :
 					if ( $dk === '8.1' ) :
-						if ( $pv['start_time'] < 1800 ) :
+						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
 							$class = 'lah-' . $pv['minutes'] . ' lah-young';
-						elseif ( $pv['start_time'] >= 600 && $pv['start_time'] < 1800 ) :
+						elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1330 ) :
 							$class = 'lah-' . $pv['minutes'] . ' lah-middle';
-						elseif ( $pv['start_time'] >= 600 ) :
+						elseif ( $pv['start_time'] >= 1330 ) :
 							$class = 'lah-' . $pv['minutes'] . ' lah-high';
 						endif;
 					else :
 						$class = 'lah-' . $pv['minutes'];
 					endif;
-					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'Y-m-d-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">'.$pv['title'].'</a></div>';
+					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'Y-m-d-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 10, '&hellip;' ) . '</a></div>';
 				endif;
 			endforeach;
 			$temp[ $dk ] .= '</div>';
@@ -570,10 +573,27 @@ function hpm_athome_sched() {
 	$temp['8.1'] .= $timecol['8.1'] . '</div></div>';
 	$temp['8.4'] .= $timecol['8.4'] . '</div></div>';
 	$style = "<style>
+	.kids-schedule h1 {
+		width: 90%;
+		margin: 0.5em 5%;
+		font-family: 'PBSKids',arial,helvetica,sans-serif;
+		color: white;
+	}
 	.lah-schedule .lah-wrap {
 		display: flex;
 	}
-
+	.lah-schedule {
+		margin-bottom: 2em;
+		width: 100%;
+		overflow-x: scroll;
+	}
+	.lah-wrap {
+		width: 1000px;
+	}
+	.lah-schedule h2, .lah-schedule h3 {
+		font-family: 'PBSKids',arial,helvetica,sans-serif;
+		color: white;
+	}
 	.lah-col {
 		flex-direction: column;
 		display: flex;
@@ -586,12 +606,36 @@ function hpm_athome_sched() {
 		width: 100%;
 		height: 50px;
 		display: flex;
+		text-align: center;
+		padding: 5px;
 		justify-content: center;
 		align-items: center;
-		border: 1px solid #fff;
+		border: 1px solid rgb(23,177,189);
+		background-color: white;
+		color: rgb(23,177,189);
+		font-family: 'PBSKids',arial,helvetica,sans-serif;
 	}
-	.lah-col div a {
+	body.page.page-template-page-kids .kids-schedule .lah-col div a {
 		text-align: center;
+		color: rgb(23,177,189);
+	}
+	.lah-col div.lah-young {
+		background-color: rgb(246,188,188);
+	}
+	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-young a {
+		color: #000;
+	}
+	.lah-col div.lah-middle {
+		background-color: rgb(147,216,236);
+	}
+	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-middle a {
+		color: #000;
+	}
+	.lah-col div.lah-high {
+		background-color: rgb(248,211,144);
+	}
+	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-high a {
+		color: #000;
 	}
 	.lah-col div.lah-60 {
 		height: 100px;
@@ -602,9 +646,21 @@ function hpm_athome_sched() {
 	.lah-col div.lah-120 {
 		height: 200px;
 	}
+	@media screen and (min-width: 50.0625em) {
+		.kids-schedule h1 {
+			width: 100%;
+			margin: 0.5em 0;
+		}
+		.lah-wrap {
+			width: 100%;
+		}
+		.lah-schedule {
+			overflow: visible;
+		}
+	}
 </style>";
-	$output = $temp['8.1'] . $temp['8.4'] . $style;
-	set_transient( 'hpm_athome_sched', $output, 3600 );
+	$output = $temp['8.1'] . $temp['8.4'] . $style . '<p style="display: none;">Last Update: ' . date( 'Y/m/d H:i:s', $t ) . '</p>';
+	set_transient( 'hpm_athome_sched', $output, 7200 );
 	return $output;
 }
-add_shortcode( 'hpm_athome', 'hpm_athome_sched' );
+add_shortcode( 'hpm_athome', 'hpm_athome_sched_update' );

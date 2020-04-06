@@ -3057,10 +3057,6 @@ body.page.page-template-page-kids #main {
 	background-color: rgb(166,239,24);
 	position: relative;
 }
-body.page.page-template-page-kids .column-left {
-	margin: 0;
-	width: 100%;
-}
 body.page.page-template-page-kids .page-header {
 	background-color: transparent;
 	background-image: url('https://cdn.hpm.io/wp-content/uploads/2016/01/14164222/White-lines-2.png');
@@ -3070,6 +3066,7 @@ body.page.page-template-page-kids .page-header {
 	position: relative;
 	height: 10em;
 	border-bottom: 0.25em solid white;
+	display: none;
 }
 body.page.page-template-page-kids .page-header #head-logo {
 	position: absolute;
@@ -5078,6 +5075,9 @@ body.page.page-template-page-kids .kids-schedule ul li a {
 	body.page.page-template-page-kids table {
 		width: 50%;
 		margin: 0 25% 1em;
+	}
+	body.page.page-template-page-kids .kids-schedule {
+		padding: 0 1em;
 	}
 	body.shows-template-single-shows-skyline #float-wrap article.felix-type-d {
 		margin: 0 0.75% 1em;
