@@ -446,9 +446,13 @@ add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
  * Cron job for updating at-home learning page schedule
  */
 function hpm_athome_sched_update() {
-	$output = get_transient( 'hpm_athome_sched' );
-	if ( !empty( $output ) ) :
-		return $output;
+	if ( WP_DEBUG ) :
+		$output = '';
+	else :
+		$output = get_transient( 'hpm_athome_sched' );
+		if ( !empty( $output ) ) :
+			return $output;
+		endif;
 	endif;
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
@@ -543,7 +547,7 @@ function hpm_athome_sched_update() {
 		$week[$k]['data']['8.4'] = $data4['feeds'][0]['listings'];
 	endforeach;
 
-	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-wrap">'.$timecol['8.1'];
+	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
 	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-wrap">'.$timecol['8.4'];
 	foreach ( $week as $w ) :
 		foreach ( $w['data'] as $dk => $dv ) :
@@ -619,23 +623,46 @@ function hpm_athome_sched_update() {
 		text-align: center;
 		color: rgb(23,177,189);
 	}
-	.lah-col div.lah-young {
+	.lah-col div.lah-young,
+	.lah-legend .lah-legend-young span {
 		background-color: rgb(246,188,188);
 	}
 	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-young a {
 		color: #000;
 	}
-	.lah-col div.lah-middle {
+	.lah-col div.lah-middle,
+	.lah-legend .lah-legend-middle span {
 		background-color: rgb(147,216,236);
 	}
 	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-middle a {
 		color: #000;
 	}
-	.lah-col div.lah-high {
+	.lah-col div.lah-high,
+	.lah-legend .lah-legend-high span {
 		background-color: rgb(248,211,144);
 	}
 	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-high a {
 		color: #000;
+	}
+	.lah-legend {
+		background-color: white;
+		font-family: 'PBSKids',arial,helvetica,sans-serif;
+		padding: 0.5em;
+		margin-bottom: 1em;
+		display: flex;
+		justify-content: space-evenly;
+		width: 100%;
+	}
+	.lah-legend div {
+		padding: 0 0.5em;
+		display: flex;
+		align-items: center;
+	}
+	.lah-legend span {
+		width: 2em;
+		height: 1em;
+		display: inline-block;
+		margin-right: 0.5em;
 	}
 	.lah-col div.lah-60 {
 		height: 100px;
@@ -656,6 +683,14 @@ function hpm_athome_sched_update() {
 		}
 		.lah-schedule {
 			overflow: visible;
+		}
+		.lah-schedule h3 {
+			display: inline-block;
+			float: left;
+		}
+		.lah-legend {
+			width: 66%;
+			float: right;
 		}
 	}
 </style>";
