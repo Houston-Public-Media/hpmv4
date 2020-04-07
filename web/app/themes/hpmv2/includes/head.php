@@ -242,7 +242,7 @@ function hpm_header_info() {
 		<link rel="mask-icon" href="https://cdn.hpm.io/assets/images/favicon/safari-pinned-tab.svg" color="#ff0000">
 		<meta name="msapplication-config" content="https://cdn.hpm.io/assets/images/favicon/config.xml" />
 		<link rel="manifest" href="https://cdn.hpm.io/assets/images/favicon/manifest.json">
-		<meta name="apple-itunes-app" content="app-id=530216229" />
+		<meta name="apple-itunes-app" content="app-id=530216229,app-argument=<?php echo $reqs['permalink']; ?>" />
 		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />
 		<meta property="fb:app_id" content="523938487799321" />
 		<meta property="fb:admins" content="37511993" />
