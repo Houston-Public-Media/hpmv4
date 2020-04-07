@@ -547,8 +547,8 @@ function hpm_athome_sched_update() {
 		$week[$k]['data']['8.4'] = $data4['feeds'][0]['listings'];
 	endforeach;
 
-	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
-	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div></div><div class="lah-wrap">'.$timecol['8.4'];
+	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 Learning at Home Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
+	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 Learning at Home Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div></div><div class="lah-wrap">'.$timecol['8.4'];
 	foreach ( $week as $w ) :
 		foreach ( $w['data'] as $dk => $dv ) :
 			$temp[ $dk ] .= '<div class="lah-col lah-' . strtolower( $w['name'] ) . '"><div class="lah-col-head">' . $w['name'] . '<br />' . date( 'm/d/Y', $w['date_unix'] ) . '</div>';
