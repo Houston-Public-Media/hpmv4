@@ -559,12 +559,22 @@ function hpm_athome_sched_update() {
 				) :
 					$class = 'lah-' . $pv['minutes'];
 					if ( $dk === '8.1' ) :
-						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
-							$class .= ' lah-young';
-						elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1330 ) :
-							$class .= ' lah-middle';
-						elseif ( $pv['start_time'] >= 1330 ) :
-							$class .= ' lah-high';
+						if ( $w['date_unix'] < mktime( 0, 0, 0, 4, 12, 2020 ) ) :
+							if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
+								$class .= ' lah-young';
+							elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1330 ) :
+								$class .= ' lah-middle';
+							elseif ( $pv['start_time'] >= 1330 ) :
+								$class .= ' lah-high';
+							endif;
+						else :
+							if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
+								$class .= ' lah-young';
+							elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1300 ) :
+								$class .= ' lah-middle';
+							elseif ( $pv['start_time'] >= 1300 ) :
+								$class .= ' lah-high';
+							endif;
 						endif;
 					elseif ( $dk === '8.4' ) :
 						if ( $pv['start_time'] < 1300 ) :
