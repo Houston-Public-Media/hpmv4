@@ -83,31 +83,29 @@ do_action( 'rss_tag_pre', 'rss2' );
 	<item>
 		<title><?php the_title_rss() ?></title>
 		<link><?php the_permalink_rss() ?>?utm_source=rss-<?php echo $topcat; ?>-article&amp;utm_medium=link&amp;utm_campaign=hpm-rss-link</link>
-<?php if ( get_comments_number() || comments_open() ) : ?>
-		<comments><?php comments_link_feed(); ?></comments>
-<?php endif; ?>
 		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
 		<dc:creator><![CDATA[<?php echo coauthors( ', ', ', ', '', '', false ); ?>]]></dc:creator>
-		<?php the_category_rss('rss2') ?>
-
+<?php the_category_rss('rss2') ?>
 		<guid isPermaLink="false"><?php the_guid(); ?></guid>
-<?php if (get_option('rss_use_excerpt')) : ?>
+<?php if ( get_option( 'rss_use_excerpt' ) ) : ?>
 		<description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
 <?php else : ?>
 		<description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
-	<?php $content = get_the_content_feed('rss2'); ?>
-	<?php if ( strlen( $content ) > 0 ) : ?>
+<?php
+		$content = get_the_content_feed('rss2');
+		if ( strlen( $content ) > 0 ) : ?>
 		<content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
-	<?php else : ?>
+<?php 	else : ?>
 		<content:encoded><![CDATA[<?php the_excerpt_rss(); ?>]]></content:encoded>
-	<?php endif; ?>
-<?php endif; ?>
-<?php if ( get_comments_number() || comments_open() ) : ?>
-		<wfw:commentRss><?php echo esc_url( get_post_comments_feed_link(null, 'rss2') ); ?></wfw:commentRss>
-		<slash:comments><?php echo get_comments_number(); ?></slash:comments>
-<?php endif; ?>
-<?php rss_enclosure(); ?>
-	<?php
+<?php
+		endif;
+	endif;
+	if ( has_post_thumbnail() ) :
+		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumbnail' ); ?>
+		<media:thumbnail url="<?php echo $thumb[0]; ?>" width="<?php echo $thumb[1]; ?>" height="<?php echo $thumb[2]; ?>" />
+<?php endif;
+	rss_enclosure();
+
 	/**
 	 * Fires at the end of each RSS2 feed item.
 	 *
@@ -116,6 +114,6 @@ do_action( 'rss_tag_pre', 'rss2' );
 	do_action( 'rss2_item' );
 	?>
 	</item>
-	<?php endwhile; ?>
+<?php endwhile; ?>
 </channel>
 </rss>
