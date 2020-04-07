@@ -3152,6 +3152,12 @@ body.page.page-template-page-kids .kids-schedule {
 	margin: 0;
 	width: 100%;
 }
+.kids-schedule h1 {
+	width: 90%;
+	margin: 0.5em 5%;
+	font-family: 'PBSKids',arial,helvetica,sans-serif;
+	color: white;
+}
 body.page.page-template-page-kids .kids-schedule p {
 	color: white;
 	padding-bottom: 1em;
@@ -5071,6 +5077,10 @@ body.page.page-template-page-kids .kids-schedule ul li a {
 		margin: 0 1% 1em;
 		padding: 1em;
 		width: 31.5%;
+	}
+	.kids-schedule h1 {
+		width: 100%;
+		margin: 0.5em 0;
 	}
 	body.page.page-template-page-kids table {
 		width: 50%;

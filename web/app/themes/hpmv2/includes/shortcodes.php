@@ -446,10 +446,10 @@ add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
  * Cron job for updating at-home learning page schedule
  */
 function hpm_athome_sched_update() {
+	$output = get_transient( 'hpm_athome_sched' );
 	if ( WP_DEBUG ) :
 		$output = '';
 	else :
-		$output = get_transient( 'hpm_athome_sched' );
 		if ( !empty( $output ) ) :
 			return $output;
 		endif;
@@ -597,12 +597,6 @@ function hpm_athome_sched_update() {
 	$temp['8.1'] .= $timecol['8.1'] . '</div></div>';
 	$temp['8.4'] .= $timecol['8.4'] . '</div></div>';
 	$style = "<style>
-	.kids-schedule h1 {
-		width: 90%;
-		margin: 0.5em 5%;
-		font-family: 'PBSKids',arial,helvetica,sans-serif;
-		color: white;
-	}
 	.lah-schedule .lah-wrap {
 		display: flex;
 	}
@@ -697,10 +691,6 @@ function hpm_athome_sched_update() {
 		height: 200px;
 	}
 	@media screen and (min-width: 50.0625em) {
-		.kids-schedule h1 {
-			width: 100%;
-			margin: 0.5em 0;
-		}
 		.lah-wrap {
 			width: 100%;
 		}
@@ -722,3 +712,9 @@ function hpm_athome_sched_update() {
 	return $output;
 }
 add_shortcode( 'hpm_athome', 'hpm_athome_sched_update' );
+
+add_action( 'hpm_athome_update', 'hpm_athome_sched_update' );
+$timestamp = wp_next_scheduled( 'hpm_athome_update' );
+if ( empty( $timestamp ) ) :
+	wp_schedule_event( time(), 'hourly', 'hpm_athome_update' );
+endif;
