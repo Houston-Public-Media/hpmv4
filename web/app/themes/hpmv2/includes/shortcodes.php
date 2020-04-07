@@ -548,7 +548,7 @@ function hpm_athome_sched_update() {
 	endforeach;
 
 	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
-	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-wrap">'.$timecol['8.4'];
+	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 Learning at Home Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div></div><div class="lah-wrap">'.$timecol['8.4'];
 	foreach ( $week as $w ) :
 		foreach ( $w['data'] as $dk => $dv ) :
 			$temp[ $dk ] .= '<div class="lah-col lah-' . strtolower( $w['name'] ) . '"><div class="lah-col-head">' . $w['name'] . '<br />' . date( 'm/d/Y', $w['date_unix'] ) . '</div>';
@@ -557,16 +557,36 @@ function hpm_athome_sched_update() {
 					( $dk === '8.1' && $pv['start_time'] >= 600 && $pv['start_time'] < 1800 ) ||
 					( $dk === '8.4' && $pv['start_time'] >= 1100 && $pv['start_time'] < 1600 )
 				) :
+					$class = 'lah-' . $pv['minutes'];
 					if ( $dk === '8.1' ) :
 						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
-							$class = 'lah-' . $pv['minutes'] . ' lah-young';
+							$class .= ' lah-young';
 						elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1330 ) :
-							$class = 'lah-' . $pv['minutes'] . ' lah-middle';
+							$class .= ' lah-middle';
 						elseif ( $pv['start_time'] >= 1330 ) :
-							$class = 'lah-' . $pv['minutes'] . ' lah-high';
+							$class .= ' lah-high';
 						endif;
-					else :
-						$class = 'lah-' . $pv['minutes'];
+					elseif ( $dk === '8.4' ) :
+						if ( $pv['start_time'] < 1300 ) :
+							$class .= ' lah-science';
+						elseif ( $pv['start_time'] >= 1300 && $pv['start_time'] < 1500 ) :
+							$class .= ' lah-sstudies';
+						elseif ( $pv['start_time'] >= 1500 ) :
+							if (
+								preg_match( '/John Lewis/', $pv['title'] ) ||
+								preg_match( '/Rick Steves/', $pv['title'] ) ||
+								preg_match( '/John Lewis/', $pv['title'] ) ||
+								preg_match( '/Tiananmen/', $pv['title'] ) ||
+								preg_match( '/American/', $pv['title'] ) ||
+								preg_match( '/Shanghai/', $pv['title'] ) ||
+								preg_match( '/Summoned/', $pv['title'] ) ||
+								preg_match( '/Africa/', $pv['title'] )
+							) :
+								$class .= ' lah-sstudies';
+							else :
+								$class .= ' lah-ela';
+							endif;
+						endif;
 					endif;
 					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'Y-m-d-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 10, '&hellip;' ) . '</a></div>';
 				endif;
@@ -621,28 +641,31 @@ function hpm_athome_sched_update() {
 	}
 	body.page.page-template-page-kids .kids-schedule .lah-col div a {
 		text-align: center;
-		color: rgb(23,177,189);
+		color: #000;
 	}
 	.lah-col div.lah-young,
 	.lah-legend .lah-legend-young span {
 		background-color: rgb(246,188,188);
 	}
-	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-young a {
-		color: #000;
-	}
 	.lah-col div.lah-middle,
 	.lah-legend .lah-legend-middle span {
 		background-color: rgb(147,216,236);
-	}
-	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-middle a {
-		color: #000;
 	}
 	.lah-col div.lah-high,
 	.lah-legend .lah-legend-high span {
 		background-color: rgb(248,211,144);
 	}
-	body.page.page-template-page-kids .kids-schedule .lah-col div.lah-high a {
-		color: #000;
+	.lah-col div.lah-science,
+	.lah-legend .lah-legend-science span {
+		background-color: rgb(233,243,205);
+	}
+	.lah-col div.lah-sstudies,
+	.lah-legend .lah-legend-sstudies span {
+		background-color: rgb(196,235,238);
+	}
+	.lah-col div.lah-ela,
+	.lah-legend .lah-legend-ela span {
+		background-color: rgb(207,188,219);
 	}
 	.lah-legend {
 		background-color: white;
