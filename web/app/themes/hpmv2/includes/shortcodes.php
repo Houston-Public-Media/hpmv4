@@ -576,6 +576,9 @@ function hpm_athome_sched_update() {
 								$class .= ' lah-high';
 							endif;
 						endif;
+						if ( $pv['title'] === 'The Gene: An Intimate History' && $w['date_unix'] < mktime( 0, 0, 0, 4, 11, 2020 ) ) :
+							$pv['title'] = 'Mayo Clinic: Faith - Hope - Science';
+						endif;
 					elseif ( $dk === '8.4' ) :
 						if ( $pv['start_time'] < 1300 ) :
 							$class .= ' lah-science';
