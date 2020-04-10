@@ -457,11 +457,17 @@ function hpm_login_logo() { ?>
 	<style type="text/css">
 		#login h1 a, .login h1 a {
 			background-image: url(https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Color.png);
-			height:85px;
-			width:320px;
-			background-size: 320px 85px;
+			height:95px;
+			width:360px;
+			background-size: 360px 95px;
 			background-repeat: no-repeat;
 			padding-bottom: 0;
+		}
+		.login form .forgetmenot {
+			padding-top: 5px !important;
+		}
+		#login {
+			width: 360px !important;
 		}
 	</style>
 <?php }
@@ -506,63 +512,11 @@ function hpm_tvguide_url() {
 	return $tvguide;
 }
 
-// function hpm_virtual_arts() {
-// 	$output = get_transient( 'hpm_virtual_arts' );
-// 	if ( !empty( $output ) ) :
-// 		return $output;
-// 	endif;
-// 	$events = [];
-// 	$t = time();
-// 	$offset = get_option( 'gmt_offset' ) * 3600;
-// 	$t = $t + $offset;
-// 	$now = getdate( $t );
-// 	$today = mktime( 0, 0, 0, $now['mon'], $now['mday'], $now['year'] );
-// 	global $wpdb;
-// 	$results = $wpdb->get_results( "SELECT fields FROM wp_wpforms_entries WHERE form_id = 365812", OBJECT );
-// 	foreach ( $results as $r ) :
-// 		$data = json_decode( $r->fields, true );
-// 		$temp = [
-// 			'org' => '',
-// 			'category' => '',
-// 			'title' => '',
-// 			'link' => '',
-// 			'description' => '',
-// 			'date' => [
-// 				'value' => '',
-// 				'unix' => ''
-// 			]
-// 		];
-// 		foreach ( $data as $d ) :
-// 			if ( $d['name'] == 'Arts Organization' ) :
-// 				$temp['org'] = $d['value'];
-// 			elseif ( $d['name'] === 'Event Category' ) :
-// 				$temp['category'] = $d['value'];
-// 			elseif ( $d['name'] === 'Event Title' ) :
-// 				$temp['title'] = $d['value'];
-// 			elseif ( $d['name'] === 'Event Link' ) :
-// 				$temp['link'] = $d['value'];
-// 			elseif ( $d['name'] === 'Event Description' ) :
-// 				$temp['description'] = $d['value'];
-// 			elseif ( $d['name'] === 'Event Date / Time' ) :
-// 				$temp['date']['value'] = $d['value'];
-// 				$temp['date']['unix'] = $d['unix'];
-// 			endif;
-// 		endforeach;
-// 		if ( $temp['date']['unix'] >= $today ) :
-// 			$events[$temp['category']][$temp['org']][] = $temp;
-// 		endif;
-// 	endforeach;
-// 	foreach ( $events as $catk => $catv ) :
-// 		$output .= '<div class="hvas-category"><h2>' . $catk . '</h2><div class="hvas-wrap">';
-// 		foreach ( $catv as $orgk => $orgv ) :
-// 			$output .= '<h3>' . $orgk . '</h3><ul>';
-// 			foreach ( $orgv as $ev ) :
-// 				$output .= '<li><p><strong><a href="' . $ev['link'] . '" target="_blank">' . $ev['title'] . '</a></strong><br />' . $ev['date'] . '<br />' . trim($ev['description']) . ' <a href="' . $ev['link'] . '" target="_blank">More Information</a></p></li>';
-// 			endforeach;
-// 			$output .= '</ul>';
-// 		endforeach;
-// 		$output .= '</div></div>';
-// 	endforeach;
-// 	set_transient( 'hpm_virtual_arts', $output, 900 );
-// 	return $output;
-// }
+function login_checked_remember_me() {
+	add_filter( 'login_footer', 'rememberme_checked' );
+}
+add_action( 'init', 'login_checked_remember_me' );
+
+function rememberme_checked() {
+	echo "<script>var rem = document.getElementById('rememberme');rem.checked = true;rem.labels[0].textContent = 'Stay Logged in for 2 Weeks';</script>";
+}
