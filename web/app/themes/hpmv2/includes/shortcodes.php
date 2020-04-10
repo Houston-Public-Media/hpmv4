@@ -530,7 +530,7 @@ function hpm_athome_sched_update() {
 	$opts = array(
 		'http' => array(
 			'method' => "GET",
-			'header' => "X-PBSAuth: houstonpublicmedia-50022ddd26361b6838fe0a7b102d00322fe87389d10340222049992ec93cd36b"
+			'header' => HPM_PBS_TVSS
 		)
 	);
 	$url_base = "https://services.pbs.org/tvss/kuht/";
