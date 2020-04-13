@@ -446,7 +446,12 @@ add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
  * Cron job for updating at-home learning page schedule
  */
 function hpm_athome_sched_update() {
+	// Pull cached transient from Redis
 	$output = get_transient( 'hpm_athome_sched' );
+	/**
+	 *  If WP_Debug is enabled, ignore the transient and regenerate
+	 *  If the transient is not empty, serve it, otherwise move forward
+	 */
 	if ( WP_DEBUG ) :
 		$output = '';
 	else :
@@ -454,10 +459,13 @@ function hpm_athome_sched_update() {
 			return $output;
 		endif;
 	endif;
+
+	// Determine the current time in GMT and adjust to timezone
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 	$now = getdate( $t );
+	// Set up data structure for the week to display
 	$week = [
 		1 => [
 			'name' => 'Monday',
@@ -505,14 +513,24 @@ function hpm_athome_sched_update() {
 			]
 		]
 	];
+	// Set up data structure for temporary schedule
 	$temp = [
 		'8.1' => '',
 		'8.4' => ''
 	];
+	// Time columns to put on the front and back of the schedules
+	// Could probably script this but I was in a hurry
 	$timecol = [
 		'8.1' => '<div class="lah-col lah-time"><div class="lah-col-head"></div><div>6:00am</div><div>6:30am</div><div>7:00am</div><div>7:30am</div><div>8:00am</div><div>8:30am</div><div>9:00am</div><div>9:30am</div><div>10:00am</div><div>10:30am</div><div>11:00am</div><div>11:30am</div><div>12:00pm</div><div>12:30pm</div><div>1:00pm</div><div>1:30pm</div><div>2:00pm</div><div>2:30pm</div><div>3:00pm</div><div>3:30pm</div><div>4:00pm</div><div>4:30pm</div><div>5:00pm</div><div>5:30pm</div></div>',
 		'8.4' => '<div class="lah-col lah-time"><div class="lah-col-head"></div><div>11:00am</div><div>11:30am</div><div>12:00pm</div><div>12:30pm</div><div>1:00pm</div><div>1:30pm</div><div>2:00pm</div><div>2:30pm</div><div>3:00pm</div><div>3:30pm</div></div>'
 	];
+
+	/**
+	 * Determine the nearest Monday
+	 * 	-- If Monday, set that day as Monday
+	 * 	-- If Tuesday - Friday, find previous Monday
+	 * 	-- If Saturday - Sunday, find next Monday
+	 */
 	if ( $now['wday'] >= 1 && $now['wday'] <= 5 ) :
 		$monday_unix = ( $now[0] - ( ( $now['wday'] - 1 ) * 86400 ) );
 	elseif ( $now['wday'] == 0 ) :
@@ -520,6 +538,8 @@ function hpm_athome_sched_update() {
 	elseif ( $now['wday'] == 6 ) :
 		$monday_unix = ( $now[0] + ( 2 * 86400 ) );
 	endif;
+
+	// Loop through week data structure and determine dates and Unix times for each day
 	$week[1]['date'] = date( "Ymd" , $monday_unix );
 	$week[1]['date_unix'] = $monday_unix;
 	for ( $i = 2; $i < 6; $i++ ) :
@@ -527,6 +547,11 @@ function hpm_athome_sched_update() {
 		$week[$i]['date_unix'] = $monday_unix + ( ( $i - 1 ) * 86400 );
 	endfor;
 
+	/**
+	 * Set up context for API pulls
+	 * HPM_PBS_TVSS is a global that contains the authorization header token that starts with 'X-PBSAuth:'
+	 * You can get an access token by filing a ticket here: https://docs.pbs.org/display/tvsapi#TVSchedulesService(TVSS)API-Access
+	*/
 	$opts = array(
 		'http' => array(
 			'method' => "GET",
@@ -534,6 +559,12 @@ function hpm_athome_sched_update() {
 		)
 	);
 	$url_base = "https://services.pbs.org/tvss/kuht/";
+
+
+	/**
+	 * Loop though the week and pull the actual schedule data
+	 * 8.1 is our main public channel, and 8.4 is our WORLD broadcast
+	*/
 	foreach ( $week as $k => $w ) :
 		$url1 = $url_base."day/".$w['date']."/623006be-27ab-40ab-aea7-208777d02ab1";
 		$url4 = $url_base."day/".$w['date']."/afc37341-cecf-45a4-ac81-0ed31542d4c9";
@@ -541,44 +572,54 @@ function hpm_athome_sched_update() {
 		$context = stream_context_create( $opts );
 		$result1 = file_get_contents( $url1, FALSE, $context );
 		$result4 = file_get_contents( $url4, FALSE, $context );
+		// Data arrives as JSON, so we decode it into an associative array
 		$data1 = json_decode( $result1, true );
 		$data4 = json_decode( $result4, true );
 		$week[$k]['data']['8.1'] = $data1['feeds'][0]['listings'];
 		$week[$k]['data']['8.4'] = $data4['feeds'][0]['listings'];
 	endforeach;
 
+	// Build the head of each schedule and put it into our temp array
 	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
 	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div></div><div class="lah-wrap">'.$timecol['8.4'];
+
+
+	/**
+	 * Wheels within wheels, my friend. Well, loops within loops
+	 * Loops through the days in the week
+	 */
 	foreach ( $week as $w ) :
+		// Loop through the daily data for each channel
 		foreach ( $w['data'] as $dk => $dv ) :
+			// Setup the header for each daily column
 			$temp[ $dk ] .= '<div class="lah-col lah-' . strtolower( $w['name'] ) . '"><div class="lah-col-head">' . $w['name'] . '<br />' . date( 'm/d/Y', $w['date_unix'] ) . '</div>';
+			// Loop through each entry of the current day
 			foreach ( $dv as $pv ) :
+				// Determine if the program is in the right timeframe for the channel
 				if (
 					( $dk === '8.1' && $pv['start_time'] >= 600 && $pv['start_time'] < 1800 ) ||
 					( $dk === '8.4' && $pv['start_time'] >= 1100 && $pv['start_time'] < 1600 )
 				) :
+					// Set up a generic CSS class
 					$class = 'lah-' . $pv['minutes'];
+					/**
+					 * Modify CSS class to reflect grade level on main channel
+					 * This is mostly based on timeframes but there might be some wiggle
+					 */
 					if ( $dk === '8.1' ) :
-						if ( $w['date_unix'] < mktime( 0, 0, 0, 4, 12, 2020 ) ) :
-							if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
-								$class .= ' lah-young';
-							elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1330 ) :
-								$class .= ' lah-middle';
-							elseif ( $pv['start_time'] >= 1330 ) :
-								$class .= ' lah-high';
-							endif;
-						else :
-							if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
-								$class .= ' lah-young';
-							elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1300 ) :
-								$class .= ' lah-middle';
-							elseif ( $pv['start_time'] >= 1300 ) :
-								$class .= ' lah-high';
-							endif;
+						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
+							$class .= ' lah-young';
+						elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1300 ) :
+							$class .= ' lah-middle';
+						elseif ( $pv['start_time'] >= 1300 ) :
+							$class .= ' lah-high';
 						endif;
-						if ( $pv['title'] === 'The Gene: An Intimate History' && $w['date_unix'] < mktime( 0, 0, 0, 4, 11, 2020 ) ) :
-							$pv['title'] = 'Mayo Clinic: Faith - Hope - Science';
-						endif;
+
+					/**
+					 * Modify CSS class to reflect subject matter on WORLD channel
+					 * This is partially based on timeframe, but ELA gets preempted at least 2 days a week in favor of social studies
+					 * Had to make some best guesses, and am looking ahead at the schedule to adjust the exemptions
+					 */
 					elseif ( $dk === '8.4' ) :
 						if ( $pv['start_time'] < 1300 ) :
 							$class .= ' lah-science';
@@ -601,15 +642,24 @@ function hpm_athome_sched_update() {
 							endif;
 						endif;
 					endif;
+					// Create the schedule entries and concatenate them onto the temp schedule
 					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'Y-m-d-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 10, '&hellip;' ) . '</a></div>';
 				endif;
 			endforeach;
+			// Close out the column
 			$temp[ $dk ] .= '</div>';
 		endforeach;
 	endforeach;
+	// Close out the temp schedules
 	$temp['8.1'] .= $timecol['8.1'] . '</div></div>';
 	$temp['8.4'] .= $timecol['8.4'] . '</div></div>';
+
+	/**
+	 * Concatenate the channel schedules along with a hidden time stamp
+	 * Makes it easier to ensure that the cron job is running and the schedule is updating
+	*/
 	$output = $temp['8.1'] . $temp['8.4'] . '<p style="display: none;">Last Update: ' . date( 'Y/m/d H:i:s', $t ) . '</p>';
+	// Save the output as a site transient in Redis and output
 	set_transient( 'hpm_athome_sched', $output, 7200 );
 	return $output;
 }
