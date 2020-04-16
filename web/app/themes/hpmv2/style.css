@@ -6005,10 +6005,6 @@ div.kimbiaDiv {
 	.support-main .support-tile:nth-child(n+10) {
 		padding-bottom: calc(31.333333%/1.85142);
 	}
-	.page.support-main article header.entry-header h1 {
-		width: 40%;
-		margin: 0 30%;
-	}
 	.support-main .support-button a {
 		width: 30%;
 		margin: 0.5em 35%;
@@ -6018,10 +6014,6 @@ div.kimbiaDiv {
 	}
 }
 @media screen and (min-width: 64.0625em) {
-	.page.support-main article header.entry-header h1 {
-		width: 30%;
-		margin: 0 35%;
-	}
 	.support-main .support-button a {
 		width: 20%;
 		margin: 0.5em 40%;
