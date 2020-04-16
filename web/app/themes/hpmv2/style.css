@@ -6116,10 +6116,9 @@ ul.passport-drop li.passport-hidden {
 	font: normal 1em/1.125em 'MiloOT-Light',arial,helvetica,sans-serif;
 }
 .support-buttons a {
-	width: 45%;
+	width: 47.5%;
 	display: block;
-	float:  left;
-	margin: 0 2.5%;
+	margin: 0 1.25% 1em;
 	padding: 1em 0.25em;
 	text-align: center;
 	color: white;
@@ -6132,9 +6131,15 @@ ul.passport-drop li.passport-hidden {
 .support-buttons {
 	margin-bottom: 1em;
 	overflow: hidden;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
 }
 .support-buttons a.vehicle-donate {
 	background-color: #016D94;
+}
+.support-buttons a.vehicle-covid-faq {
+	background-color: #cc0000;
 }
 .page-template-page-support-sub #vehicle-donation-main p {
 	color: #59595B;
@@ -6260,7 +6265,7 @@ ul.passport-drop li.passport-hidden {
 @media screen and (min-width: 34em) {
 	.support-buttons a {
 		width: 35%;
-		margin: 0 7.5%;
+		margin: 0 7.5% 1em;
 	}
 	.matching-info .support-buttons a {
 		margin: 0 32.5%;
@@ -6365,8 +6370,12 @@ ul.passport-drop li.passport-hidden {
 		margin: 0 10%;
 	}
 	.support-buttons {
-		width: 75%;
-		margin: 0 12.5% 1em;
+		width: 100%;
+		margin: 0 0 1em;
+	}
+	.support-buttons a {
+		width: 25%;
+		margin: 0 4% 1em;
 	}
 	.vehicle-contact {
 		width: 80%;
