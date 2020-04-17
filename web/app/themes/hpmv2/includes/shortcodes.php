@@ -624,7 +624,13 @@ function hpm_athome_sched_update() {
 						if ( $pv['start_time'] < 1300 ) :
 							$class .= ' lah-science';
 						elseif ( $pv['start_time'] >= 1300 && $pv['start_time'] < 1500 ) :
-							$class .= ' lah-sstudies';
+							if (
+								preg_match( '/SciGirls/', $pv['title'] )
+							) :
+								$class .= ' lah-science';
+							else :
+								$class .= ' lah-sstudies';
+							endif;
 						elseif ( $pv['start_time'] >= 1500 ) :
 							if (
 								preg_match( '/John Lewis/', $pv['title'] ) ||

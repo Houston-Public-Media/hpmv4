@@ -1353,17 +1353,19 @@ table.gsc-search-box td.gsc-input {
 	color: #464646;
 }
 .column-left,
-.column-right,
 .column-span,
 .column-third {
 	width: 90%;
 	margin: 0 5%;
 	overflow: hidden;
 }
+.column-right {
+	width: 90%;
+	margin: 0 5%;
+}
 .column-right.toc {
 	width: 100%;
 	margin: 2em 0;
-	overflow: hidden;
 	padding: 1em;
 }
 .column-right section,

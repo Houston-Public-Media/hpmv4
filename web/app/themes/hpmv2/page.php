@@ -80,14 +80,9 @@
 				</footer><!-- .entry-footer -->
 			</article><!-- #post-## -->
 			<?php
-				endwhile;
-				if ( $pagename == 'about' ) : ?>
-			<aside class="column-right" style="overflow: visible;">
-			<?php
-				else : ?>
+				endwhile; ?>
 			<aside class="column-right">
 			<?php
-				endif;
 				if ( $pagename == 'spelling-bee' ) : ?>
 				<div class="sidebar-ad">
 					<h4>Presented By</h4>
