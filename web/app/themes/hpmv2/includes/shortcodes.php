@@ -552,12 +552,12 @@ function hpm_athome_sched_update() {
 	 * HPM_PBS_TVSS is a global that contains the authorization header token that starts with 'X-PBSAuth:'
 	 * You can get an access token by filing a ticket here: https://docs.pbs.org/display/tvsapi#TVSchedulesService(TVSS)API-Access
 	*/
-	$opts = array(
-		'http' => array(
+	$opts = [
+		'http' => [
 			'method' => "GET",
 			'header' => HPM_PBS_TVSS
-		)
-	);
+		]
+	];
 	$url_base = "https://services.pbs.org/tvss/kuht/";
 
 

@@ -6146,7 +6146,7 @@ ul.passport-drop li.passport-hidden {
 .page-template-page-support-sub #vehicle-donation-main p {
 	color: #59595B;
 	text-align:  center;
-	font:  normal 1.25em/1em 'MiloOT-Medi',arial,sans-serif;
+	font:  normal 1.25em/1.125em 'MiloOT-Light',arial,sans-serif;
 	margin-bottom: 1em;
 }
 #vehicle-form {
@@ -6310,10 +6310,7 @@ ul.passport-drop li.passport-hidden {
 		padding-bottom: 1em;
 	}
 	.vehicle-donation-help-wrap {
-		flex-flow: row nowrap;
-		align-content: center;
-		align-items: center;
-		display: flex;
+		overflow: hidden;
 	}
 	.vehicle-donation-help-wrap .vehicle-donation-help {
 		float: left;
@@ -8949,6 +8946,12 @@ body.page.page-template-page-kids .kids-schedule .lah-col div a {
 }
 .lah-col div.lah-120 {
 	height: 200px;
+}
+.lah-col div.lah-150 {
+	height: 250px;
+}
+.lah-col div.lah-180 {
+	height: 300px;
 }
 @media screen and (min-width: 50.0625em) {
 	.lah-wrap {
