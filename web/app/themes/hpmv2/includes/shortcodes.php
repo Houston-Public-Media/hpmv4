@@ -463,7 +463,7 @@ function hpm_athome_sched_update() {
 	// Determine the current time in GMT and adjust to timezone
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset;
+	$t = $t + $offset + 86400;
 	$now = getdate( $t );
 	// Set up data structure for the week to display
 	$week = [
@@ -623,33 +623,35 @@ function hpm_athome_sched_update() {
 					elseif ( $dk === '8.4' ) :
 						if ( $pv['start_time'] < 1300 ) :
 							$class .= ' lah-science';
-						elseif ( $pv['start_time'] >= 1300 && $pv['start_time'] < 1500 ) :
-							if (
-								preg_match( '/SciGirls/', $pv['title'] )
-							) :
-								$class .= ' lah-science';
+						elseif ( $pv['start_time'] >= 1300 ) :
+							if ( $pv['title'] == 'American Masters' ) :
+								$class .= ' lah-ela';
 							else :
 								$class .= ' lah-sstudies';
 							endif;
+						/* elseif ( $pv['start_time'] >= 1300 && $pv['start_time'] < 1500 ) :
+							$class .= ' lah-sstudies';
 						elseif ( $pv['start_time'] >= 1500 ) :
 							if (
 								preg_match( '/John Lewis/', $pv['title'] ) ||
 								preg_match( '/Rick Steves/', $pv['title'] ) ||
 								preg_match( '/John Lewis/', $pv['title'] ) ||
 								preg_match( '/Tiananmen/', $pv['title'] ) ||
-								preg_match( '/American/', $pv['title'] ) ||
+								preg_match( '/American Experience/', $pv['title'] ) ||
 								preg_match( '/Shanghai/', $pv['title'] ) ||
 								preg_match( '/Summoned/', $pv['title'] ) ||
+								preg_match( '/Cuban/', $pv['title'] ) ||
+								preg_match( '/Shanghai/', $pv['title'] ) ||
 								preg_match( '/Africa/', $pv['title'] )
 							) :
 								$class .= ' lah-sstudies';
 							else :
 								$class .= ' lah-ela';
-							endif;
+							endif; */
 						endif;
 					endif;
 					// Create the schedule entries and concatenate them onto the temp schedule
-					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'Y-m-d-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 10, '&hellip;' ) . '</a></div>';
+					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 10, '&hellip;' ) . '</a></div>';
 				endif;
 			endforeach;
 			// Close out the column
