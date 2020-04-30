@@ -463,7 +463,7 @@ function hpm_athome_sched_update() {
 	// Determine the current time in GMT and adjust to timezone
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset + 86400;
+	$t = $t + $offset;
 	$now = getdate( $t );
 	// Set up data structure for the week to display
 	$week = [
