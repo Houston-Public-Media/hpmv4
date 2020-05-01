@@ -8916,6 +8916,10 @@ body.page.page-template-page-kids .kids-schedule .lah-col div a {
 .lah-legend .lah-legend-ela span {
 	background-color: rgb(207,188,219);
 }
+.lah-col div.lah-math,
+.lah-legend .lah-legend-math span {
+	background-color: rgb(252,170,129);
+}
 .lah-legend {
 	background-color: white;
 	font-family: 'PBSKids',arial,helvetica,sans-serif;

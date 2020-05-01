@@ -463,7 +463,7 @@ function hpm_athome_sched_update() {
 	// Determine the current time in GMT and adjust to timezone
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset;
+	$t = $t + $offset +86400;
 	$now = getdate( $t );
 	// Set up data structure for the week to display
 	$week = [
@@ -581,7 +581,7 @@ function hpm_athome_sched_update() {
 
 	// Build the head of each schedule and put it into our temp array
 	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
-	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div></div><div class="lah-wrap">'.$timecol['8.4'];
+	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div><div class="lah-legend-math"><span></span> Math</div></div><div class="lah-wrap">'.$timecol['8.4'];
 
 
 	/**
@@ -622,7 +622,13 @@ function hpm_athome_sched_update() {
 					 */
 					elseif ( $dk === '8.4' ) :
 						if ( $pv['start_time'] < 1300 ) :
-							$class .= ' lah-science';
+							if (
+								preg_match( '/Math/', $pv['title'] )
+							) :
+								$class .= ' lah-math';
+							else :
+								$class .= ' lah-science';
+							endif;
 						elseif ( $pv['start_time'] >= 1300 ) :
 							if ( $pv['title'] == 'American Masters' ) :
 								$class .= ' lah-ela';
