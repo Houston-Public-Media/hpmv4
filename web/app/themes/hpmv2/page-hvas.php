@@ -111,6 +111,51 @@ Template Name: Arts Virtual
 		.hvas-contain.museum .hvas-contain-org {
 			background-color: #E7F7F8;
 		}
+		.hvas-contain {
+			display: none;
+		}
+		.hvas-contain.hvas-active {
+			display: block;
+		}
+		.hvas-select {
+			width: 100%;
+			border-bottom: 1px solid #808080;
+			display: flex;
+		}
+		.hvas-select div {
+			width: 33.333333%;
+			text-align: center;
+			padding: 0.5em 0;
+			border-bottom: 3px solid transparent;
+			position: relative;
+			bottom: -2px;
+			font: normal 1.5em/1.125em 'MiloOT-Bold',arial,helvetica,sans-serif;
+			z-index: 100;
+		}
+		.hvas-select div:hover {
+			cursor: pointer;
+		}
+		#hvas-music {
+			color: #C8102E;
+		}
+		#hvas-music.hvas-active {
+			border-bottom: 3px solid #C8102E;
+			background-color: #f6f6f6;
+		}
+		#hvas-museum {
+			color: #4FC4CD;
+		}
+		#hvas-museum.hvas-active {
+			border-bottom: 3px solid #4FC4CD;
+			background-color: #f6f6f6;
+		}
+		#hvas-arts {
+			color: #FFCE16;
+		}
+		#hvas-arts.hvas-active {
+			border-bottom: 3px solid #FFCE16;
+			background-color: #f6f6f6;
+		}
 		@media screen and (min-width: 34em) {
 			.page-header {
 				padding-right: 0;
@@ -130,4 +175,19 @@ Template Name: Arts Virtual
 			}
 		}
 	</style>
+	<script>
+		jQuery(document).ready(function($){
+			$('.hvas-select div').click(function(e){
+				e.preventDefault();
+				var id = $(this).attr('id');
+				if ( !$(this).hasClass('hvas-active') ) {
+					$('.hvas-select div').removeClass('hvas-active');
+					$('.hvas-contain').removeClass('hvas-active');
+					$(this).addClass('hvas-active');
+					$('#'+id+'-tab').addClass('hvas-active');
+				} else {
+					return false;
+				}
+			});
+		});</script>
 <?php get_footer(); ?>
