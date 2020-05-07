@@ -684,3 +684,12 @@ $timestamp = wp_next_scheduled( 'hpm_athome_update' );
 if ( empty( $timestamp ) ) :
 	wp_schedule_event( time(), 'hourly', 'hpm_athome_update' );
 endif;
+
+/**
+ * Cron job for updating at-home learning page schedule
+ */
+function hpm_artspace_trans() {
+	return get_transient( 'hpm_artspace' );
+
+}
+add_shortcode( 'hpm_artspace', 'hpm_artspace_trans' );
