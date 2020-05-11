@@ -1945,6 +1945,9 @@ body.page-template-page-series-tiles aside .sidebar-ad {
 	align-content: center;
 	display: flex;
 }
+#shows-youtube #youtube-main #youtube-player:hover {
+	cursor: pointer;
+}
 #shows-youtube #youtube-main #youtube-player .fa {
 	color: white;
 	font-size: 5em;

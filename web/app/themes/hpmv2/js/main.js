@@ -109,6 +109,11 @@ jQuery(document).ready(function($){
 			" iframe[src*='drive.google.com'], iframe[src*='vuhaus.com'], object, embed, .videoarchive," +
 			" iframe[src*='googleusercontent.com'], iframe[src*='player.pbs.org']," +
 			" iframe[src*='facebook.com/plugins/video.php'], iframe[src*='houstontranstar.org'], iframe[src*='archive.org/embed']");
+		window.ytPlayers = [];
+		var youtube = false;
+		if ( document.getElementById('youtube-player') !== null ) {
+			youtube = true;
+		}
 		$allVideos.each(function() {
 			var iframeClass;
 			var vidHigh = $(this).attr('height');
@@ -119,6 +124,10 @@ jQuery(document).ready(function($){
 			if ( frameSrc.indexOf('google.com/maps') !== -1 || frameSrc.indexOf('googleusercontent.com') !== -1 || frameSrc.indexOf('houstontranstar.org') !== -1 ) {
 				iframeClass = 'iframe-embed-tall';
 			} else {
+				if ( frameSrc.indexOf('youtube') !== -1 ) {
+					window.ytPlayers.push( $(this).attr('id') );
+					youtube = true;
+				}
 				if ( ratio > 1 ) {
 					iframeClass = 'iframe-embed';
 				} else {
@@ -127,6 +136,12 @@ jQuery(document).ready(function($){
 			}
 			$(this).parent().addClass(iframeClass);
 		});
+		if (youtube) {
+			var tag = document.createElement('script');
+			tag.src = "https://cdn.hpm.io/assets/js/youtube.js";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		}
 	});
 	$(".article-share-icon a, #top-listen a, .nav-listen-live a").click(function(e){
 		var attr = $(this).attr('data-dialog');
