@@ -525,7 +525,8 @@ function hpm_yt_embed_mod( $content ) {
 	global $post;
 	if ( preg_match( '/<iframe.+youtube(-nocookie)?\.com.+><\/iframe>/', $content ) ) :
 		$doc = new DOMDocument();
-		$doc->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		$doc->loadHTML( $content );
+		$doc->removeChild( $doc->doctype );
 		$frame = $doc->getElementsByTagName( 'iframe' );
 		foreach ( $frame as $f ) :
 			$src = $f->getAttribute('src');
@@ -544,6 +545,7 @@ function hpm_yt_embed_mod( $content ) {
 		endforeach;
 		$content = $doc->saveHTML();
 	endif;
+	$content = str_replace( [ '<html><body>', '</body></html>' ], [ '', '' ], $content );
 	return $content;
 }
 add_filter( 'the_content', 'hpm_yt_embed_mod', 999 );
