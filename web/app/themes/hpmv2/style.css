@@ -704,19 +704,46 @@ body.nav-active-menu {
 #masthead #header-social .header-social-icon {
 	float: left;
 }
-#masthead #header-social .header-social-icon a {
+#masthead #header-social .header-social-icon a,
+footer#colophon #footer-social .footer-social-icon a {
 	display: block;
-	width: 1.75em;
-	height: 1.75em;
+	width: 2em;
+	height: 2em;
 	background-color: #808184;
-	margin: 0 0.25em;
+	margin-right: 0.5em;
 	text-align: center;
 }
-#masthead #header-social .header-social-icon .fa {
-	font-size: 1.375em;
+#masthead #header-social .header-social-icon:last-child a,
+footer#colophon #footer-social .footer-social-icon:last-child a {
+	margin-right: 0;
+}
+#masthead #header-social .header-social-icon .fa,
+footer#colophon #footer-social .footer-social-icon .fa {
+	font-size: 1.5em;
 	line-height: 1.25em;
 	color: white;
 }
+#masthead #header-social .header-social-icon.header-facebook a,
+footer#colophon #footer-social .footer-social-icon.footer-facebook a {
+	background-color: rgb(59,89,152);
+}
+#masthead #header-social .header-social-icon.header-instagram a,
+footer#colophon #footer-social .footer-social-icon.footer-instagram a {
+	background-color: rgb(138,58,185);
+}
+#masthead #header-social .header-social-icon.header-twitter a,
+footer#colophon #footer-social .footer-social-icon.footer-twitter a {
+	background-color: rgb(29,161,242);
+}
+#masthead #header-social .header-social-icon.header-youtube a,
+footer#colophon #footer-social .footer-social-icon.footer-youtube a {
+	background-color: rgb(234,50,35);
+}
+#masthead #header-social .header-social-icon.header-linkedin a,
+footer#colophon #footer-social .footer-social-icon.footer-linkedin a {
+	background-color: rgb(40,103,178);
+}
+
 #homepage-header article {
 	border: 0.125em solid rgb(244,244,244) !important;
 	margin: 1em 0;
@@ -2640,7 +2667,7 @@ footer#colophon #footer-social {
 	display: flex;
 	margin-bottom: 1em;
 }
-footer#colophon #footer-social .footer-social-icon a {
+/* footer#colophon #footer-social .footer-social-icon a {
 	display: block;
 	width: 2em;
 	height: 2em;
@@ -2655,7 +2682,7 @@ footer#colophon #footer-social .footer-social-icon .fa {
 	font-size: 1.5em;
 	line-height: 1.25em;
 	color: #404040;
-}
+} */
 footer#colophon p {
 	padding: 0 0 1em;
 	font: 400 0.85em/1.25em 'PBS-Sans',arial,sans-serif;
