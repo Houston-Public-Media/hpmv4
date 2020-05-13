@@ -98,7 +98,7 @@ get_header(); ?>
 					$r = rand( 0, count( $json ) - 1 ); ?>
 						<div id="youtube-main">
 							<div id="youtube-player" style="background-image: url( '<?php echo $json[$r]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[$r]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $json[$r]['snippet']['title'], ENT_COMPAT ); ?>">
-								<span class="fa fa-play" id="play-button"></span>
+								<span class="fa fa-youtube-play" id="play-button"></span>
 							</div>
 							<h2><?php echo $json[$r]['snippet']['title']; ?></h2>
 							<p class="desc"><?php echo $json[$r]['snippet']['description']; ?></p>
