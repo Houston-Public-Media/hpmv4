@@ -630,8 +630,10 @@ function hpm_athome_sched_update() {
 								$class .= ' lah-science';
 							endif;
 						elseif ( $pv['start_time'] >= 1300 ) :
-							if ( $pv['title'] == 'American Masters' ) :
+							if ( $pv['title'] == 'American Masters' || $pv['title'] == 'Poetry in America' ) :
 								$class .= ' lah-ela';
+							elseif ( preg_match( '/Amazing Human Body/', $pv['title'] ) ) :
+								$class .= ' lah-science';
 							else :
 								$class .= ' lah-sstudies';
 							endif;
