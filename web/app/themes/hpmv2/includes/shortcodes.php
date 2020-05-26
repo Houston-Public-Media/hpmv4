@@ -462,9 +462,11 @@ function hpm_athome_sched_update() {
 
 	// Determine the current time in GMT and adjust to timezone
 	$t = time();
+	// $t = mktime( 0, 0, 0, 6, 16, 2020 );
 	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset +86400;
+	$t = $t + $offset;
 	$now = getdate( $t );
+	$cutoff = mktime( 0, 0, 0, 6, 14, 2020 ) + $offset;
 	// Set up data structure for the week to display
 	$week = [
 		1 => [
@@ -580,8 +582,16 @@ function hpm_athome_sched_update() {
 	endforeach;
 
 	// Build the head of each schedule and put it into our temp array
-	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
+	if ( $monday_unix > $cutoff ) :
+		$timecol['8.1'] = '<div class="lah-col lah-time"><div class="lah-col-head"></div><div>12:00pm</div><div>12:30pm</div><div>1:00pm</div><div>1:30pm</div><div>2:00pm</div><div>2:30pm</div><div>3:00pm</div><div>3:30pm</div><div>4:00pm</div><div>4:30pm</div><div>5:00pm</div><div>5:30pm</div></div>';
+		$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
+		$cutoff81 = 1200;
+	else :
+		$cutoff81 = 600;
+		$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
+	endif;
 	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div><div class="lah-legend-math"><span></span> Math</div></div><div class="lah-wrap">'.$timecol['8.4'];
+
 
 
 	/**
@@ -597,7 +607,7 @@ function hpm_athome_sched_update() {
 			foreach ( $dv as $pv ) :
 				// Determine if the program is in the right timeframe for the channel
 				if (
-					( $dk === '8.1' && $pv['start_time'] >= 600 && $pv['start_time'] < 1800 ) ||
+					( $dk === '8.1' && $pv['start_time'] >= $cutoff81 && $pv['start_time'] < 1800 ) ||
 					( $dk === '8.4' && $pv['start_time'] >= 1100 && $pv['start_time'] < 1600 )
 				) :
 					// Set up a generic CSS class
@@ -607,12 +617,20 @@ function hpm_athome_sched_update() {
 					 * This is mostly based on timeframes but there might be some wiggle
 					 */
 					if ( $dk === '8.1' ) :
-						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
-							$class .= ' lah-young';
-						elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1300 ) :
-							$class .= ' lah-middle';
-						elseif ( $pv['start_time'] >= 1300 ) :
-							$class .= ' lah-high';
+						if ( $cutoff81 === 1200 ) :
+							if ( $pv['start_time'] >= $cutoff81 && $pv['start_time'] < 1500 ) :
+								$class .= ' lah-middle';
+							elseif ( $pv['start_time'] >= 1500 ) :
+								$class .= ' lah-high';
+							endif;
+						else :
+							if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
+								$class .= ' lah-young';
+							elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1300 ) :
+								$class .= ' lah-middle';
+							elseif ( $pv['start_time'] >= 1300 ) :
+								$class .= ' lah-high';
+							endif;
 						endif;
 
 					/**
