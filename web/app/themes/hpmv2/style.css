@@ -8986,6 +8986,15 @@ body.page.page-template-page-kids .kids-schedule .lah-col div a {
 .lah-col div.lah-180 {
 	height: 300px;
 }
+.lah-col div.lah-100 {
+	height: 166.66667px;
+}
+.lah-col div.lah-65 {
+	height: 108.33333px;
+}
+.lah-col div.lah-70 {
+	height: 116.666669px;
+}
 @media screen and (min-width: 50.0625em) {
 	.lah-wrap {
 		width: 100%;
