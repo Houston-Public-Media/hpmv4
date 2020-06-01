@@ -457,9 +457,9 @@ function hpm_login_logo() { ?>
 	<style type="text/css">
 		#login h1 a, .login h1 a {
 			background-image: url(https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Color.png);
-			height:95px;
-			width:360px;
-			background-size: 360px 95px;
+			height:85px;
+			width:320px;
+			background-size: 320px 85px;
 			background-repeat: no-repeat;
 			padding-bottom: 0;
 		}
@@ -467,7 +467,7 @@ function hpm_login_logo() { ?>
 			padding-top: 5px !important;
 		}
 		#login {
-			width: 360px !important;
+			width: 340px !important;
 		}
 	</style>
 <?php }
