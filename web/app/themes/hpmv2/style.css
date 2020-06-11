@@ -2894,6 +2894,29 @@ body.page-template-page-listen .sgplayer {
 	width: 95%;
 	margin: 1em 2.5%;
 }
+#campaign-splash.lightbox,
+#thisiswhy-splash.lightbox {
+	display: flex;
+	background-color: rgba(0,0,0,0.75);
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 20000;
+	margin: 0;
+	justify-content: center;
+	justify-items: center;
+	align-content: center;
+	align-items: center;
+}
+#campaign-splash.lightbox #splash {
+	z-index: 10001;
+	width: 85%;
+	position: relative;
+}
 #splash,
 #tiw-splash {
 	width: 100%;
@@ -2910,7 +2933,7 @@ body.page-template-page-listen .sgplayer {
 }
 #campaign-splash #campaign-close,
 #thisiswhy-splash #tiw-close {
-	display: none;
+	/* display: none; */
 	position: absolute;
 	top: -0.75em;
 	right: -0.75em;
@@ -2932,7 +2955,7 @@ body.page-template-page-listen .sgplayer {
 	padding: 0.5em 1em;
 }
 #campaign-splash .campaign-push p {
-	font: normal 1.25em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
+	font: normal 1.125em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
 	margin-bottom: 1em;
 }
 #campaign-splash .campaign-push p strong {
@@ -2941,13 +2964,13 @@ body.page-template-page-listen .sgplayer {
 #campaign-splash .campaign-push a {
 	display: block;
 	background-color: rgb(224,17,42);
-	width: 35%;
+	width: 75%;
 	text-align: center;
 	margin: 0 auto 0.5em;
 	color: white;
-	font: normal 1.5em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
+	font: normal 1.25em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
 	text-transform: uppercase;
-	padding: 0.25em;
+	padding: 0.5em;
 }
 #campaign-splash .campaign-total h4 {
 	margin: 0;
@@ -3206,6 +3229,14 @@ body.page.page-template-page-kids .kids-schedule ul li {
 body.page.page-template-page-kids .kids-schedule ul li a {
 	color: rgb(23,177,189);
 	text-decoration: none;
+}
+body.page.page-template-page-kids .kids-schedule .felix-type-b a,
+body.page.page-template-page-kids .kids-schedule .felix-type-b p,
+body.page.page-template-page-kids .kids-schedule .felix-type-b ul,
+body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
+	color:#55565a;
+	text-decoration: none;
+	margin-bottom: 0;
 }
 
 /**
@@ -3520,6 +3551,13 @@ body.page.page-template-page-kids .kids-schedule ul li a {
 	#float-wrap article.felix-type-b header h2 a {
 		font: normal 1.5em/1.25em 'MiloOT-Light',arial,sans-serif;
 	}
+	.kids-schedule .column-left article.felix-type-b .thumbnail-wrap {
+		order: initial;
+	}
+	.kids-schedule .column-left article.felix-type-b header {
+		order: initial;
+		padding: 0 0 0 1em;
+	}
 	.column-right section, .column-right div {
 		margin: 0 0 1em 0;
 	}
@@ -3830,26 +3868,8 @@ body.page.page-template-page-kids .kids-schedule ul li a {
 	 * 16.1.9 Membership
 	 */
 
-	#campaign-splash.lightbox,
-	#thisiswhy-splash.lightbox {
-		display: block;
-		background-color: rgba(0,0,0,0.75);
-		position: fixed;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 20000;
-		margin: 0;
-	}
 	#campaign-splash.lightbox #splash {
-		position: absolute;
-		z-index: 10001;
 		width: 60%;
-		top: 15%;
-		left: 20%;
 	}
 	#thisiswhy-splash.lightbox #tiw-splash {
 		position: absolute;
@@ -3865,6 +3885,13 @@ body.page.page-template-page-kids .kids-schedule ul li a {
 	#campaign-splash .campaign-total-bar,
 	#campaign-splash .campaign-push {
 		display: block;
+	}
+	#campaign-splash .campaign-push p {
+		font: normal 1.25em/1.25em 'MiloOT-Light',arial,helvetica,sans-serif;
+	}
+	#campaign-splash .campaign-push a {
+		width: 66%;
+		font: normal 1.5em/1em 'MiloOT-Bold',arial,helvetica,sans-serif;
 	}
 	#campaign .campaign-left {
 		flex-flow: row wrap;
@@ -5055,7 +5082,6 @@ body.page.page-template-page-kids .kids-schedule ul li a {
 	}
 	#campaign-splash.lightbox #splash {
 		width: 45%;
-		left: 27.5%;
 	}
 	#thisiswhy-splash.lightbox #tiw-splash {
 		width: 65%;
@@ -5276,7 +5302,6 @@ body.page.page-template-page-kids .kids-schedule ul li a {
 	}
 	#campaign-splash.lightbox #splash {
 		width: 35%;
-		left: 32.5%;
 	}
 	article .entry-content,
 	article .entry-footer,

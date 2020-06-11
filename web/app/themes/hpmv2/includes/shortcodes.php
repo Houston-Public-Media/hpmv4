@@ -204,6 +204,27 @@ function hpm_nprapi_audio_shortcode( $text ) {
 }
 add_filter( 'npr_ds_shortcode_filter', 'hpm_nprapi_audio_shortcode', 10, 1 );
 
+function hpm_apple_news_audio( $text ) {
+	$matches = [];
+	preg_match_all( '/' . get_shortcode_regex() . '/', $text, $matches );
+
+	$tags = $matches[2];
+	$args = $matches[3];
+	foreach( $tags as $i => $tag ) :
+		if ( $tag == "audio" ) :
+			$atts = shortcode_parse_atts( $args[$i] );
+			if ( !empty( $atts['mp3'] ) ) :
+				$a_tag = '<p><audio controls src="' . $atts['mp3'] . '"></audio></p>';
+				$text = str_replace( '<p>'.$matches[0][$i].'</p>', $a_tag, $text );
+				$text = str_replace( $matches[0][$i], $a_tag, $text );
+			endif;
+		endif;
+	endforeach;
+	log_it( $text );
+	return $text;
+}
+add_filter( 'apple_news_exporter_content_pre', 'hpm_apple_news_audio', 10, 1 );
+
 
 add_filter( 'media_send_to_editor', 'hpm_audio_shortcode_insert', 10, 8 );
 function hpm_audio_shortcode_insert ( $html, $id, $attachment ) {
@@ -462,7 +483,7 @@ function hpm_athome_sched_update() {
 
 	// Determine the current time in GMT and adjust to timezone
 	$t = time();
-	// $t = mktime( 0, 0, 0, 6, 9, 2020 );
+	$t = mktime( 0, 0, 0, 6, 15, 2020 );
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 	$now = getdate( $t );
@@ -672,7 +693,7 @@ function hpm_athome_sched_update() {
 						endif;
 					endif;
 					// Create the schedule entries and concatenate them onto the temp schedule
-					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 10, '&hellip;' ) . '</a></div>';
+					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 9, '&hellip;' ) . '</a></div>';
 				endif;
 			endforeach;
 			// Close out the column
