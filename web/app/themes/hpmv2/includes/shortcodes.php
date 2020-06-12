@@ -486,7 +486,7 @@ function hpm_athome_sched_update() {
 
 	// Determine the current time in GMT and adjust to timezone
 	$t = time();
-	$t = mktime( 0, 0, 0, 6, 15, 2020 );
+
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 	$now = getdate( $t );
