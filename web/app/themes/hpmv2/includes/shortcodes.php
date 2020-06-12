@@ -1,6 +1,5 @@
 <?php
 function hpm_audio_shortcode( $html, $attr ) {
-	global $wpdb;
 	$post_id = get_post() ? get_the_ID() : 0;
 	static $instance = 0;
 	$instance++;
@@ -225,7 +224,6 @@ function hpm_apple_news_audio( $text ) {
 			endif;
 		endif;
 	endforeach;
-	log_it( $text );
 	return $text;
 }
 add_filter( 'apple_news_exporter_content_pre', 'hpm_apple_news_audio', 10, 1 );
