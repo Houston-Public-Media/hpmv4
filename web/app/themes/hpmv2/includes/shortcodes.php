@@ -213,8 +213,13 @@ function hpm_apple_news_audio( $text ) {
 	foreach( $tags as $i => $tag ) :
 		if ( $tag == "audio" ) :
 			$atts = shortcode_parse_atts( $args[$i] );
-			if ( !empty( $atts['mp3'] ) ) :
-				$a_tag = '<p><audio controls src="' . $atts['mp3'] . '"></audio></p>';
+			if ( !empty( $atts ) ) :
+				$a_tag = '';
+				if ( !empty( $atts['id'] ) ) :
+					$a_tag = '<audio src="' . wp_get_attachment_url( $atts['id'] ) . '"></audio>';
+				elseif ( !empty( $atts['mp3'] ) ) :
+					$a_tag = '<audio src="' . $atts['mp3'] . '"></audio>';
+				endif;
 				$text = str_replace( '<p>'.$matches[0][$i].'</p>', $a_tag, $text );
 				$text = str_replace( $matches[0][$i], $a_tag, $text );
 			endif;

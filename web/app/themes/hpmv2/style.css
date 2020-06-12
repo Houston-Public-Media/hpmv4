@@ -3215,6 +3215,7 @@ body.page.page-template-page-kids .kids-schedule {
 body.page.page-template-page-kids .kids-schedule p {
 	color: white;
 	padding-bottom: 1em;
+	font-size: 112.5%;
 }
 body.page.page-template-page-kids .kids-schedule a {
 	color: white;
@@ -3237,6 +3238,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	color:#55565a;
 	text-decoration: none;
 	margin-bottom: 0;
+	font-size: 100%;
 }
 
 /**
@@ -8921,6 +8923,7 @@ section#country-covers .slick-next:before {
 .lah-schedule h2, .lah-schedule h3 {
 	font-family: 'PBSKids',arial,helvetica,sans-serif;
 	color: white;
+	font-size: 150%;
 }
 .lah-col {
 	flex-direction: column;
