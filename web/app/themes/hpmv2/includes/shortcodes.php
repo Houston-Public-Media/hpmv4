@@ -204,6 +204,9 @@ function hpm_nprapi_audio_shortcode( $text ) {
 add_filter( 'npr_ds_shortcode_filter', 'hpm_nprapi_audio_shortcode', 10, 1 );
 
 function hpm_apple_news_audio( $text ) {
+	global $post;
+	global $wpdb;
+	$id = $post->ID;
 	$matches = [];
 	preg_match_all( '/' . get_shortcode_regex() . '/', $text, $matches );
 
@@ -224,6 +227,34 @@ function hpm_apple_news_audio( $text ) {
 			endif;
 		endif;
 	endforeach;
+	$terms = get_the_terms( $id, 'category' );
+	$show = 0;
+	foreach( $terms as $t ) :
+		$cats = get_ancestors( $t->term_id, 'category', 'taxonomy' );
+		if ( in_array( 5, $cats ) ) :
+			$show = $t->term_id;
+		endif;
+	endforeach;
+	if ( $show !== 0 ) :
+		$res = $wpdb->get_results( "SELECT wp_posts.*
+			FROM wp_posts
+			LEFT JOIN wp_postmeta AS tr1 ON (wp_posts.ID = tr1.post_id)
+			WHERE 
+				( tr1.meta_key = 'hpm_shows_cat' OR tr1.meta_key = 'hpm_pod_cat' ) AND
+				tr1.meta_value = $show AND
+				wp_posts.post_status = 'publish' AND
+				( wp_posts.post_type = 'shows' OR wp_posts.post_type = 'podcasts' ) ", OBJECT );
+		if ( !empty( $res ) ) :
+			if ( $res[0]->post_type == 'shows' ) :
+				$text .= '<p><strong><em>For more information and episodes, visit the <a href="' . get_the_permalink(
+					$res[0]->ID ) . '">' . $res[0]->post_title . ' show page</a>.</em></strong></p>';
+			elseif ( $res[0]->post_type == 'podcasts' ) :
+				$podmeta = get_post_meta( $res[0]->ID, 'hpm_pod_link', true );
+				$text .= '<p><strong><em>For more information and episodes, visit the <a href="' . $podmeta['page'] .
+				         '">' . $res[0]->post_title . ' show page</a>.</em></strong></p>';
+			endif;
+		endif;
+	endif;
 	return $text;
 }
 add_filter( 'apple_news_exporter_content_pre', 'hpm_apple_news_audio', 10, 1 );
