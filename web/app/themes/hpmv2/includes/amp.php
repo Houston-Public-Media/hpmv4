@@ -5,7 +5,7 @@
 add_filter( 'amp_post_template_data', 'hpm_amp_set_site_icon_url' );
 function hpm_amp_set_site_icon_url( $data ) {
     // Ideally a 32x32 image
-    // $data[ 'site_icon_url' ] = 'https://cdn.hpm.io/assets/images/apple-touch-icon-180x180.png';
+    $data[ 'site_icon_url' ] = 'https://cdn.hpm.io/assets/images/favicon/favicon-32.png';
     return $data;
 }
 

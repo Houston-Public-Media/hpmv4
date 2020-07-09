@@ -12,7 +12,7 @@ web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
 auth.json
-web/app/themes/hpmv4/
+web/app/themes/hpm-new/
 
 # WordPress
 web/wp
