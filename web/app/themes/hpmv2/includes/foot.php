@@ -1,80 +1,102 @@
 <?php
 function author_footer( $id ) {
 	$output = '';
-	$author_terms = get_the_terms( $id, 'author' );
-	if ( empty( $author_terms ) ) :
-		return $output;
-	endif;
-	$matches = [];
-	preg_match( "/([a-z\-]+) ([0-9]{1,3})/", $author_terms[0]->description, $matches );
-	if ( empty( $matches ) ) :
-		return $output;
-	endif;
-	$author_name = $matches[1];
-	$author_trans = get_transient( 'hpm_author_'.$author_name );
-	if ( !empty( $author_trans ) ) :
-		return $author_trans;
-	endif;
-
-	$authid = $matches[2];
-	$author_check = new WP_Query( [
-		'post_type' => 'staff',
-		'name' => $author_name,
-		'post_status' => 'publish'
-	] );
-	if ( !$author_check->have_posts() ) :
-		$author_check = new WP_Query([
-			'post_type' => 'staff',
+	$coauthors = get_coauthors( $id );
+	foreach ( $coauthors as $k => $coa ) :
+		$author_trans = get_transient( 'hpm_author_'.$coa->user_nicename );
+		if ( !empty( $author_trans ) ) :
+			$output .= $author_trans;
+			continue;
+		endif;
+		$local = false;
+		if ( is_a( $coa, 'wp_user' ) ) :
+			$author = new WP_Query( [
+				'post_type' => 'staff',
+				'post_status' => 'publish',
+				'meta_query' => [ [
+					'key' => 'hpm_staff_authid',
+					'compare' => '=',
+					'value' => $coa->ID
+				] ]
+			] );
+		elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) :
+			if ( !empty( $coa->linked_account ) ) :
+				$authid = get_user_by( 'login', $coa->linked_account );
+				$author = new WP_Query( [
+					'post_type' => 'staff',
+					'post_status' => 'publish',
+					'meta_query' => [ [
+						'key' => 'hpm_staff_authid',
+						'compare' => '=',
+						'value' => $authid->ID
+					] ]
+				] );
+			endif;
+		endif;
+		if ( !empty( $author ) && $author->have_posts() ) :
+			$local = true;
+			$meta = $author->post->hpm_staff_meta;
+		endif;
+		$output .= "
+	<div class=\"author-inner-wrap\">
+		<div class=\"author-info-wrap\">
+			<div class=\"author-image\">" .
+		           ( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
+		    "</div>
+			<div class=\"author-info\">
+				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
+				<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
+				<div class=\"author-social\">";
+		if ( $local ) :
+			if ( !empty( $meta['facebook'] ) ) :
+				$output .= '<div class="social-icon"><a href="'.$meta['facebook'].'" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a></div>';
+			endif;
+			if ( !empty( $meta['twitter'] ) ) :
+				$output .= '<div class="social-icon"><a href="'.$meta['twitter'].'" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a></div>';
+			endif;
+			$author_bio = $author->post->post_content;
+			if ( preg_match( '/Biography pending/', $author_bio ) ) :
+				$author_bio = '';
+			endif;
+		else :
+			if ( !empty( $coa->user_email ) ) :
+				$output .= '<div class="social-icon"><a href="mailto:'.$coa->user_email.'" target="_blank"><span class="fa fa-envelope" aria-hidden="true"></span></a></div>';
+			endif;
+			if ( !empty( $coa->website ) ) :
+				$output .= '<div class="social-icon"><a href="'.$coa->website.'" target="_blank"><span class="fa fa-home" aria-hidden="true"></span></a></div>';
+			endif;
+		endif;
+		$output .= "
+				</div>
+				<p>" . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . "</p>
+				<p>" . ( $local ? '<a href="' . get_the_permalink( $author->post->ID ) . '">More Information</a>' : '' ) ."</p>
+			</div>
+		</div>
+		<div class=\"author-other-stories\">";
+		$q = new WP_query([
+			'posts_per_page' => 4,
+			'post_type' => 'post',
 			'post_status' => 'publish',
-			'meta_query' => [ [
-				'key' => 'hpm_staff_authid',
-				'compare' => '=',
-				'value' => $authid
-			] ]
-		] );
-	endif;
-	if ( !$author_check->have_posts() ) :
-		return $output;
-	endif;
-	while ( $author_check->have_posts() ) :
-		$author_check->the_post();
-		$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
-		$authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', TRUE );
-		$output .= '<div class="author-info-wrap"><div class="author-image">'.get_the_post_thumbnail( get_the_ID(), 'post-thumbnail', [ 'alt' => get_the_title() ] ).'</div><div class="author-info"><h2>'.get_the_title().'</h2><h3>'.$author['title'].'</h3><div class="author-social">';
-		if ( !empty( $author['facebook'] ) ) :
-			$output .= '<div class="social-icon"><a href="'.$author['facebook'].'" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a></div>';
+			'author_name' => $coa->user_nicename
+		]);
+		if ( $q->have_posts() ) :
+			$output .= "
+			<h4>Recent Stories</h4>
+			<ul>";
+			foreach ( $q->posts as $qp ) :
+				$output .= '<li><h2 class="entry-title"><a href="'.esc_url( get_permalink( $qp->ID ) ).'" rel="bookmark">'.$qp->post_title.'</a></h2></li>';
+			endforeach;
+			$output .= "
+			</ul>
+			<p><a href=\"/articles/author/'.$coa->user_nicename.'\">More Articles by This Author</a></p>";
 		endif;
-		if ( !empty( $author['twitter'] ) ) :
-			$output .= '<div class="social-icon"><a href="'.$author['twitter'].'" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a></div>';
-		endif;
-		$author_bio = get_the_content();
-		if ( preg_match( '/Biography pending/', $author_bio ) ) :
-			$author_bio = '';
-		endif;
-		$output .= '</div><p>'.wp_trim_words( $author_bio, 50, '...' ).'</p><p><a href="'.get_the_permalink().'">More Information</a></p></div>';
-	endwhile;
-	$output .= '</div><div class="author-other-stories">';
-	$q = new WP_query([
-		'posts_per_page' => 5,
-		'author' => $authid,
-		'post_type' => 'post',
-		'post_status' => 'publish'
-	 ] );
-	if ( $q->have_posts() ) :
-		$output .= "<h4>Recent Stories</h4><ul>";
-		while ( $q->have_posts() ) :
-			$q->the_post();
-			$output .= '<li><h2 class="entry-title"><a href="'.esc_url( get_permalink() ).'" rel="bookmark">'.get_the_title().'</a></h2></li>';
-		endwhile;
-		$output .= "</ul>";
-	endif;
-	wp_reset_query();
-	$output .= '</div>';
-	set_transient( 'hpm_author_'.$author_name, $output, 7200 );
+		$output .= "
+		</div>
+	</div>";
+		set_transient( 'hpm_author_'.$coa->user_nicename, $output, 7200 );
+	endforeach;
 	return $output;
 }
-
-
 
 function hpm_houston_matters_check() {
 	$hm_air = get_transient( 'hpm_hm_airing' );

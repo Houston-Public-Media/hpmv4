@@ -2542,6 +2542,13 @@ body.single-shows #station-social .station-social-icon .fa {
 	width: 100%;
 	text-align: center;
 }
+#author-wrap .author-inner-wrap {
+	border-bottom: 1px solid #808080;
+	overflow: hidden;
+}
+#author-wrap .author-inner-wrap:last-child {
+	border-bottom: 0;
+}
 #author-wrap .author-thumb {
 	width: 66%;
 	padding: 0.75em 1em 0.5em 0;
