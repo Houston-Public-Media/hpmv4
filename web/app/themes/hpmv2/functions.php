@@ -552,7 +552,7 @@ add_filter( 'the_content', 'hpm_yt_embed_mod', 999 );
 
 function hpm_charset_clean( $content ) {
 	$find = [ ' ', '…', '’', '“', '”' ];
-	$replace = [ '', '...', "'", '"', '"' ];
+	$replace = [ ' ', '...', "'", '"', '"' ];
 	return str_replace( $find, $replace, $content );
 }
 add_filter( 'the_content', 'hpm_charset_clean', 10 );
