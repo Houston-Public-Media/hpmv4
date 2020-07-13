@@ -3,6 +3,7 @@ function author_footer( $id ) {
 	$output = '';
 	$coauthors = get_coauthors( $id );
 	foreach ( $coauthors as $k => $coa ) :
+		$temp = '';
 		$author_trans = get_transient( 'hpm_author_'.$coa->user_nicename );
 		if ( !empty( $author_trans ) ) :
 			$output .= $author_trans;
@@ -37,22 +38,22 @@ function author_footer( $id ) {
 			$local = true;
 			$meta = $author->post->hpm_staff_meta;
 		endif;
-		$output .= "
+		$temp .= "
 	<div class=\"author-inner-wrap\">
 		<div class=\"author-info-wrap\">
 			<div class=\"author-image\">" .
-		           ( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
-		    "</div>
+		         ( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
+		         "</div>
 			<div class=\"author-info\">
 				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
 				<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
 				<div class=\"author-social\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :
-				$output .= '<div class="social-icon"><a href="'.$meta['facebook'].'" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="'.$meta['facebook'].'" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['twitter'] ) ) :
-				$output .= '<div class="social-icon"><a href="'.$meta['twitter'].'" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="'.$meta['twitter'].'" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a></div>';
 			endif;
 			$author_bio = $author->post->post_content;
 			if ( preg_match( '/Biography pending/', $author_bio ) ) :
@@ -60,13 +61,13 @@ function author_footer( $id ) {
 			endif;
 		else :
 			if ( !empty( $coa->user_email ) ) :
-				$output .= '<div class="social-icon"><a href="mailto:'.$coa->user_email.'" target="_blank"><span class="fa fa-envelope" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="mailto:'.$coa->user_email.'" target="_blank"><span class="fa fa-envelope" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $coa->website ) ) :
-				$output .= '<div class="social-icon"><a href="'.$coa->website.'" target="_blank"><span class="fa fa-home" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="'.$coa->website.'" target="_blank"><span class="fa fa-home" aria-hidden="true"></span></a></div>';
 			endif;
 		endif;
-		$output .= "
+		$temp .= "
 				</div>
 				<p>" . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . "</p>
 				<p>" . ( $local ? '<a href="' . get_the_permalink( $author->post->ID ) . '">More Information</a>' : '' ) ."</p>
@@ -80,20 +81,21 @@ function author_footer( $id ) {
 			'author_name' => $coa->user_nicename
 		]);
 		if ( $q->have_posts() ) :
-			$output .= "
+			$temp .= "
 			<h4>Recent Stories</h4>
 			<ul>";
 			foreach ( $q->posts as $qp ) :
-				$output .= '<li><h2 class="entry-title"><a href="'.esc_url( get_permalink( $qp->ID ) ).'" rel="bookmark">'.$qp->post_title.'</a></h2></li>';
+				$temp .= '<li><h2 class="entry-title"><a href="'.esc_url( get_permalink( $qp->ID ) ).'" rel="bookmark">'.$qp->post_title.'</a></h2></li>';
 			endforeach;
-			$output .= "
+			$temp .= "
 			</ul>
-			<p><a href=\"/articles/author/'.$coa->user_nicename.'\">More Articles by This Author</a></p>";
+			<p><a href=\"/articles/author/".$coa->user_nicename."\">More Articles by This Author</a></p>";
 		endif;
-		$output .= "
+		$temp .= "
 		</div>
 	</div>";
-		set_transient( 'hpm_author_'.$coa->user_nicename, $output, 7200 );
+		set_transient( 'hpm_author_'.$coa->user_nicename, $temp, 7200 );
+		$output .= $temp;
 	endforeach;
 	return $output;
 }
