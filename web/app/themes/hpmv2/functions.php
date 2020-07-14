@@ -61,38 +61,13 @@ function hpmv2_scripts() {
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
 		wp_enqueue_style( 'hpmv2-style', 'https://local.hpm.io/hpm-style.css', [], date('Ymd') );
-	else :
-		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
-	endif;
-
-	// Load the Internet Explorer specific stylesheet.
-	wp_enqueue_script( 'html5-shiv', '//html5shiv.googlecode.com/svn/trunk/html5.js', [] );
-	wp_script_add_data( 'html5-shiv', 'conditional', 'lt IE 9' );
-
-	wp_enqueue_script( 'respond-js', 'http://cdn.hpm.io/static/js/respond.min.js', [] );
-	wp_script_add_data( 'respond-js', 'conditional', 'lt IE 9' );
-
-	wp_enqueue_style( 'ie9-css', 'http://cdn.hpm.io/static/css/ie9.css', [] );
-	wp_style_add_data( 'ie9-css', 'conditional', 'lt IE 10' );
-
-	if ( WP_ENV == 'development' ) :
 		wp_enqueue_script( 'hpmv2-js', 'https://local.hpm.io/hpm-main.js', [ 'jquery' ], date('Ymd'), true );
 	else :
+		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], true );
 	endif;
 
 	wp_register_script( 'jplayer', 'https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js', [ 'jquery' ],	'20170928' );
-
-	// if ( is_page( 142253 ) ) :
-	// 	wp_enqueue_script( 'hpmv2-tablesorter', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.min.js', [], '20160321', true );
-	// 	wp_enqueue_script( 'hpmv2-tablesorter-widgets', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.widgets.min.js', [], '20160321', true );
-	// 	wp_enqueue_script( 'hpmv2-spellers', 'https://app.hpm.io/spellers/spellers.js', [], '20160321', true );
-	// 	wp_enqueue_style( 'hpmv2-tablesorter-styles', 'https://cdn.hpm.io/static/tablesorter/css/theme.bootstrap.min.css', [], '20160321', 'all' );
-    // elseif ( is_page( 145596 ) ) :
-	// 	wp_enqueue_script( 'hpmv2-tablesorter', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.min.js', [], '20160321', true );
-	// 	wp_enqueue_script( 'hpmv2-tablesorter-widgets', 'https://cdn.hpm.io/static/tablesorter/js/jquery.tablesorter.widgets.min.js', [], '20160321', true );
-	// 	wp_enqueue_style( 'hpmv2-tablesorter-styles', 'https://cdn.hpm.io/static/tablesorter/css/theme.bootstrap.min.css', [], '20160321', 'all' );
-	// endif;
 }
 add_action( 'wp_enqueue_scripts', 'hpmv2_scripts' );
 
@@ -562,24 +537,13 @@ function hpm_revue_signup( $content ) {
 	if ( is_single() && $post->post_type == 'post' ) :
 		if ( in_category( 'news' ) ) :
 			$content .= "<div id=\"revue-embed\">
-	<form action=\"https://www.getrevue.co/profile/HoustonPublicMediaNewsroom/add_subscriber\" method=\"post\" id=\"revue-form\" name=\"revue-form\"  target=\"_blank\">
-		<div class=\"revue-form-group\">
-			<label for=\"member_email\">Email address</label>
-			<input class=\"revue-form-field\" placeholder=\"Your email address...\" type=\"email\" name=\"member[email]\" id=\"member_email\">
-		</div>
-		<div class=\"revue-form-group\">
-			<label for=\"member_first_name\">First name <span class=\"optional\">(Optional)</span></label>
-			<input class=\"revue-form-field\" placeholder=\"First name... (Optional)\" type=\"text\" name=\"member[first_name]\" id=\"member_first_name\">
-		</div>
-		<div class=\"revue-form-group\">
-			<label for=\"member_last_name\">Last name <span class=\"optional\">(Optional)</span></label>
-			<input class=\"revue-form-field\" placeholder=\"Last name... (Optional)\" type=\"text\" name=\"member[last_name]\" id=\"member_last_name\">
-		</div>
-		<div class=\"revue-form-actions\">
-			<input type=\"submit\" value=\"Subscribe\" name=\"member[subscribe]\" id=\"member_submit\">
-		</div>
-	</form>
-</div>";
+<h2>Subscribe to <em>Today in Houston</em></h2>
+<p>Fill out the form below to subscribe our new daily editorial newsletter from the HPM Newsroom.</p>
+<form action=\"https://www.getrevue.co/profile/HoustonPublicMediaNewsroom/add_subscriber\" method=\"post\" id=\"revue-form\" name=\"revue-form\" target=\"_blank\">
+<div class=\"revue-form-group\"><label for=\"member_email\">Email*</label><input class=\"revue-form-field\" placeholder=\"Email (Required)\" type=\"email\" name=\"member[email]\" id=\"member_email\"></div>
+<div class=\"revue-form-group\"><label for=\"member_first_name\">First Name</label><input class=\"revue-form-field\" placeholder=\"First Name\" type=\"text\" name=\"member[first_name]\" id=\"member_first_name\"></div>
+<div class=\"revue-form-group\"><label for=\"member_last_name\">Last Name</label><input class=\"revue-form-field\" placeholder=\"Last Name\" type=\"text\" name=\"member[last_name]\" id=\"member_last_name\"></div>
+<div class=\"revue-form-actions\"><p class=\"revue-small\">* required</p><input type=\"submit\" value=\"Subscribe\" name=\"member[subscribe]\" id=\"member_submit\"></div></form></div>";
 		endif;
 	endif;
 	return $content;
