@@ -3,7 +3,7 @@
  * Plugin Name: Redis Object Cache Drop-In
  * Plugin URI: http://wordpress.org/plugins/redis-cache/
  * Description: A persistent object cache backend powered by Redis. Supports Predis, PhpRedis, Credis, HHVM, replication, clustering and WP-CLI.
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Till Krüss
  * Author URI: https://wprediscache.com
  * License: GPLv3
@@ -727,7 +727,7 @@ class WP_Object_Cache {
             $connection_string = array_values( WP_REDIS_SERVERS )[0];
             $sentinel = new Credis_Sentinel( new Credis_Client( $connection_string ) );
             $this->redis = $sentinel->getCluster( WP_REDIS_SENTINEL );
-            $args['is_sentinel'] = true;
+            $args['servers'] = WP_REDIS_SERVERS;
         } elseif ( defined( 'WP_REDIS_CLUSTER' ) || defined( 'WP_REDIS_SERVERS' ) ) {
             $parameters['db'] = $parameters['database'];
 
@@ -753,29 +753,29 @@ class WP_Object_Cache {
 
             $this->redis = new Credis_Cluster( $clients );
 
-            $args = $clients;
-            $args[ $is_cluster ? 'is_cluster' : 'is_multi' ] = true;
+            $args['servers'] = $clients;
         } else {
-            $host = 'unix' === $parameters['scheme']
-                ? $parameters['path']
-                : $parameters['host'];
-
             $args = [
-                "{$parameters['scheme']}://{$host}",
-                $parameters['port'],
-                $parameters['timeout'],
-                '',
-                isset( $parameters['database'] ) ? $parameters['database'] : 0,
-                isset( $parameters['password'] ) ? $parameters['password'] : null,
+                'host' => $parameters['scheme'] === 'unix' ? $parameters['path'] : $parameters['host'],
+                'port' => $parameters['port'],
+                'timeout' => $parameters['timeout'],
+                'persistent' => null,
+                'database' => $parameters['database'],
+                'password' => isset( $parameters['password'] ) ? $parameters['password'] : null,
             ];
 
-            $this->redis = new Credis_Client( ...$args );
+            $this->redis = new Credis_Client( ...array_values( $args ) );
         }
 
-        // Credis uses phpredis if it detects it unless we force it to run standalone.
+        // Don't use PhpRedis
         $this->redis->forceStandalone();
 
         $this->redis->connect();
+
+        if ( $parameters['read_timeout'] ) {
+            $args['read_timeout'] = $parameters['read_timeout'];
+            $this->redis->setReadTimeout( $parameters['read_timeout'] );
+        }
 
         $this->diagnostics = array_merge(
             [ 'client' => sprintf( '%s (v%s)', $client, Credis_Client::VERSION ) ],
