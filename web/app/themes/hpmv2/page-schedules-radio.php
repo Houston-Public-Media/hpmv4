@@ -174,12 +174,14 @@ Template Name: Radio Schedules
 							];
 						endif;
 					else :
-						$index = $current['index'];
-						$progs[ $index ]['sub'][] = [
-							'name' => $name,
-							'time' => date( 'g:i a', $fullstart ),
-							'link' => $v['program']['program_link']
-						];
+						if ( $name !== $current['name'] && $fullstart !== $current['time'] ) :
+							$index = $current['index'];
+							$progs[ $index ]['sub'][] = [
+								'name' => $name,
+								'time' => date( 'g:i a', $fullstart ),
+								'link' => $v['program']['program_link']
+							];
+						endif;
 					endif;
 				endforeach; ?>
 				<h3>Playlist for <?PHP echo $today; ?></h3>
