@@ -549,3 +549,36 @@ function hpm_revue_signup( $content ) {
 	return $content;
 }
 //add_filter( 'the_content', 'hpm_revue_signup', 8 );
+
+
+function hpm_nprone_check( $post_id, $post ) {
+	if ( $_POST['post_type'] === 'post' ) :
+		$coauthors = get_coauthors( $post_id );
+		$local = false;
+		foreach ( $coauthors as $k => $coa ) :
+			if ( is_a( $coa, 'wp_user' ) ) :
+				$local = true;
+			elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) :
+				if ( !empty( $coa->linked_account ) ) :
+					$local = true;
+				endif;
+			endif;
+		endforeach;
+		if ( $local ) :
+			$_POST['send_to_api'] = 1;
+			if ( preg_match( '/\[audio.+\]\[\/audio\]/', $post->post_content ) ) :
+				$_POST['send_to_one'] = 1;
+				$_POST['nprone_featured'] = 1;
+			else :
+				unset( $_POST['send_to_one'] );
+				unset( $_POST['nprone_featured'] );
+			endif;
+		else :
+			unset( $_POST['send_to_api'] );
+			unset( $_POST['send_to_one'] );
+			unset( $_POST['nprone_featured'] );
+		endif;
+	endif;
+}
+add_action( 'save_post', 'hpm_nprone_check', 2, 2 );
+add_action( 'publish_post', 'hpm_nprone_check', 2, 2 );
