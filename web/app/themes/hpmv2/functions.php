@@ -534,7 +534,10 @@ add_filter( 'the_content', 'hpm_charset_clean', 10 );
 
 function hpm_revue_signup( $content ) {
 	global $post;
-	if ( is_single() && $post->post_type == 'post' ) :
+	$c = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$c = $c + $offset;
+	if ( is_single() && $post->post_type == 'post' && $c > mktime( 5, 0, 0, 8, 3, 2020 ) ) :
 		if ( in_category( 'news' ) ) :
 			$content .= "<div id=\"revue-embed\">
 <h2>Subscribe to <em>Today in Houston</em></h2>
@@ -548,7 +551,7 @@ function hpm_revue_signup( $content ) {
 	endif;
 	return $content;
 }
-//add_filter( 'the_content', 'hpm_revue_signup', 8 );
+add_filter( 'the_content', 'hpm_revue_signup', 8 );
 
 
 function hpm_nprone_check( $post_id, $post ) {
