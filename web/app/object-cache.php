@@ -3,7 +3,7 @@
  * Plugin Name: Redis Object Cache Drop-In
  * Plugin URI: http://wordpress.org/plugins/redis-cache/
  * Description: A persistent object cache backend powered by Redis. Supports Predis, PhpRedis, Credis, HHVM, replication, clustering and WP-CLI.
- * Version: 2.0.5
+ * Version: 2.0.8
  * Author: Till Krüss
  * Author URI: https://wprediscache.com
  * License: GPLv3
@@ -1041,7 +1041,7 @@ class WP_Object_Cache {
             do_action( 'redis_object_cache_delete', $key, $group, $execute_time );
         }
 
-        return $result;
+        return (bool) $result;
     }
 
     /**
@@ -1355,27 +1355,31 @@ LUA;
             return $cache;
         }
 
-        $keys = array_values( $derived_keys );
-
         if ( ! $force ) {
             foreach ( $keys as $key ) {
-                $cache[ $key ] = $this->get_from_internal_cache( $derived_keys[ $key ] );
-            }
+                $value = $this->get_from_internal_cache( $derived_keys[ $key ] );
 
-            $keys = array_keys(
-                array_filter(
-                    $cache,
-                    function ( $value ) {
-                        return $value === false;
-                    }
-                )
-            );
+                if ( $value === false ) {
+                    $this->cache_misses++;
+                } else {
+                    $cache[ $key ] = $value;
+                    $this->cache_hits++;
+                }
+            }
+        }
+
+        $remaining_keys = array_filter( $keys, function ( $key ) use ( $cache ) {
+            return ! isset( $cache[ $key ] );
+        } );
+
+        if ( empty( $remaining_keys ) ) {
+            return $cache;
         }
 
         $start_time = microtime( true );
 
         try {
-            $results = array_combine( $keys, $this->redis->mget( $keys ) );
+            $results = array_combine( $remaining_keys, $this->redis->mget( $remaining_keys ) );
         } catch ( Exception $exception ) {
             $this->handle_exception( $exception );
 
@@ -1388,21 +1392,21 @@ LUA;
         $this->cache_time += $execute_time;
 
         foreach ( $results as $key => $value ) {
+            $cache[ $key ] = $value;
+
             if ( $value === false ) {
                 $this->cache_misses++;
-                continue;
+            } else {
+                $this->cache_hits++;
+
+                $this->add_to_internal_cache( $derived_keys[ $key ], $value );
             }
-
-            $this->cache_hits++;
-
-            $cache[ $key ] = $value;
-            $this->add_to_internal_cache( $derived_keys[ $key ], $value );
         }
 
         $cache = array_map( array( $this, 'maybe_unserialize' ), $cache );
 
         if ( function_exists( 'do_action' ) ) {
-            do_action( 'redis_object_cache_get_multi', $keys, $cache, $group, $force, $execute_time );
+            do_action( 'redis_object_cache_get_multiple', $keys, $cache, $group, $force, $execute_time );
         }
 
         if ( function_exists( 'apply_filters' ) && function_exists( 'has_filter' ) ) {
@@ -1610,8 +1614,6 @@ LUA;
         );
 
         return (object) [
-            // Connected, Disabled, Unknown, Not connected
-            'status' => '...',
             'hits' => $this->cache_hits,
             'misses' => $this->cache_misses,
             'ratio' => $total > 0 ? round( $this->cache_hits / ( $total / 100 ), 1 ) : 100,
