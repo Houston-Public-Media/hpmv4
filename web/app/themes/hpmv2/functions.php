@@ -585,3 +585,17 @@ function hpm_nprone_check( $post_id, $post ) {
 }
 add_action( 'save_post', 'hpm_nprone_check', 2, 2 );
 add_action( 'publish_post', 'hpm_nprone_check', 2, 2 );
+
+function hpm_footer_ads() {
+	global $wp_query;
+	$id = $wp_query->post->ID;
+	$type = $wp_query->post->post_type;
+	if ( $type === 'page' ) :
+		if ( $id === 362776 || $id === 366638 ) :
+			echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '<h2 id=\"foot-banner\">These services are brought to you by our community of donors, foundations, and partners.</h2>');</script>";
+		endif;
+	elseif ( $type === 'post' ) :
+		echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '<h2 id=\"foot-banner\"><a href=\"/donate\">Stories like this are made possible by the generosity of our community of donors, foundations and corporate partners. If you value our reporting, join others and make a gift to Houston Public Media.<br /><br /><span class=\"donate\"><span class=\"fa fa-heart\"></span> DONATE</span></h2>');</script>";
+	endif;
+}
+add_action( 'wp_footer', 'hpm_footer_ads', 100 );
