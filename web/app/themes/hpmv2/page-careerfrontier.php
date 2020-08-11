@@ -269,6 +269,7 @@ Template Name: Career Frontier
 				margin: 0;
 				padding: 0 1em;
 				order: 2;
+				min-width: 250px;
 			}
 			.cf-eps-wrap .jp-gui.jp-interface .jp-details {
 				display: none;
