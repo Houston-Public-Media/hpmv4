@@ -202,7 +202,7 @@ Template Name: Career Frontier
 			right: 1em;
 			z-index: 10;
 			float: none;
-			width: auto;
+			width: initial;
 			display: inline;
 			padding: 0;
 			color: white;
@@ -285,7 +285,7 @@ Template Name: Career Frontier
 				opacity: 0.75;
 			}
 			.cf-guest-wrap article {
-				min-height: 45em;
+				min-height: 46.375em;
 			}
 		}
 		@media screen and (min-width: 50.0625em) {
