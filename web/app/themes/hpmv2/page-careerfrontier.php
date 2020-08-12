@@ -144,7 +144,7 @@ Template Name: Career Frontier
 		}
 		.cf-eps-wrap article h1 {
 			margin-bottom: 0em;
-			font-size: 200%;
+			font-size: 175%;
 			font-family: Montserrat,Arial, Helvetica, sans-serif;
 			font-weight: 800;
 			position: relative;
@@ -306,9 +306,9 @@ Template Name: Career Frontier
 			}
 			.page-template-page-careerfrontier .cf-eps-wrap article,
 			.page-template-page-careerfrontier .cf-guest-wrap article {
-				width: 30%;
+				width: 32%;
 				padding: 1em;
-				margin: 0 1.5% 2em;
+				margin: 0 0.6% 2em;
 			}
 			.cf-eps-wrap article .episode-content,
 			.cf-eps-wrap article.topic-active .episode-content {
