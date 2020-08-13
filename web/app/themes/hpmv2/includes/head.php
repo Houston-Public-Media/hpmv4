@@ -58,7 +58,7 @@ function hpm_header_info() {
 		'keywords' => [ 'Houston Public Media', 'KUHT', 'TV 8', 'Houston Public Media Schedule', 'Educational TV Programs', 'independent program broadcasts', 'University of Houston', 'nonprofit', 'NPR News', 'KUHF', 'Classical Music', 'Arts &amp; Culture', 'News 88.7' ],
 		'permalink' => 'https://www.houstonpublicmedia.org',
 		'title' => 'Houston Public Media',
-		'thumb' => 'https://cdn.hpm.io/assets/images/HPM-logo-OGimage.jpg',
+		'thumb' => 'https://cdn.hpm.io/assets/images/HPM-logo-OGimage-2.jpg',
 		'thumb_meta' => [
 			'width' => 1200,
 			'height' => 630,
