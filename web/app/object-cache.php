@@ -3,9 +3,9 @@
  * Plugin Name: Redis Object Cache Drop-In
  * Plugin URI: http://wordpress.org/plugins/redis-cache/
  * Description: A persistent object cache backend powered by Redis. Supports Predis, PhpRedis, Credis, HHVM, replication, clustering and WP-CLI.
- * Version: 2.0.8
+ * Version: 2.0.10
  * Author: Till Krüss
- * Author URI: https://wprediscache.com
+ * Author URI: https://objectcache.pro
  * License: GPLv3
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -863,7 +863,7 @@ class WP_Object_Cache {
      * @return bool
      */
     public function redis_status() {
-         return $this->redis_connected;
+         return (bool) $this->redis_connected;
     }
 
     /**
@@ -1379,7 +1379,14 @@ LUA;
         $start_time = microtime( true );
 
         try {
-            $results = array_combine( $remaining_keys, $this->redis->mget( $remaining_keys ) );
+            $results = array_combine(
+                $remaining_keys,
+                $this->redis->mget(
+                    array_map( function ( $key ) use ( $derived_keys ) {
+                        return $derived_keys[ $key ];
+                    }, $remaining_keys )
+                )
+            );
         } catch ( Exception $exception ) {
             $this->handle_exception( $exception );
 
@@ -1392,6 +1399,7 @@ LUA;
         $this->cache_time += $execute_time;
 
         foreach ( $results as $key => $value ) {
+            $value = $this->maybe_unserialize($value);
             $cache[ $key ] = $value;
 
             if ( $value === false ) {
@@ -1402,8 +1410,6 @@ LUA;
                 $this->add_to_internal_cache( $derived_keys[ $key ], $value );
             }
         }
-
-        $cache = array_map( array( $this, 'maybe_unserialize' ), $cache );
 
         if ( function_exists( 'do_action' ) ) {
             do_action( 'redis_object_cache_get_multiple', $keys, $cache, $group, $force, $execute_time );
@@ -1581,7 +1587,7 @@ LUA;
 
         ?> <p>
             <strong>Redis Status:</strong>
-            <?php echo $this->redis_status() ? 'Connected' : 'Not Connected'; ?>
+            <?php echo $this->redis_status() ? 'Connected' : 'Not connected'; ?>
             <br />
             <strong>Redis Client:</strong>
             <?php echo $this->diagnostics['client'] ?: 'Unknown'; ?>
