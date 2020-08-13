@@ -90,7 +90,7 @@ function hpm_header_info() {
 				$reqs['permalink'] = get_the_permalink( $ID );
 				$reqs['title'] = $wp_query->queried_object->name . ' | Houston Public Media';
 			endif;
-		elseif ( is_single() ) :
+		elseif ( is_single() || is_page() ) :
 			$attach_id = get_post_thumbnail_id( $ID );
 			if ( !empty( $attach_id ) ) :
 				$feature_img = wp_get_attachment_image_src( $attach_id, 'large' );
