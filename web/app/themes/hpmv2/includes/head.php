@@ -15,7 +15,7 @@ function hpm_site_header() { ?>
 							<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 						</div>
 					</div>
-					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="860:455"><span class="fa fa-microphone" aria-hidden="true"></span>Listen Live</a></div>
+					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="480:855"><span class="fa fa-microphone" aria-hidden="true"></span>Listen Live</a></div>
 					<div id="top-donate"><a href="/donate"><span class="fa fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
 					<div id="header-social">
 						<div class="header-social-icon header-facebook">

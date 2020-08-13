@@ -2853,9 +2853,13 @@ body.page-template-page-listen #div-gpt-ad-1394579228932-0 {
 }
 body.page-template-page-listen .sgplayer {
 	width: 100%;
-	height: 750px;
+	height: 650px;
 	display:inline-block;
-	margin-bottom: 1em;
+	margin: 0;
+}
+body.page-template-page-listen #primary {
+	max-width: 30em;
+	margin: 0 auto;
 }
 
 /**
@@ -4378,7 +4382,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	}
 	#masthead #top-donate a, #masthead #top-listen a {
 		font: normal 1em/1.25em 'MiloOT',arial,sans-serif;
-		text-transform: lowercase;
+		text-transform: initial;
 		display: block;
 		padding: 0;
 		background-color: transparent;
@@ -4917,12 +4921,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	 * 16.2.9 Listen Live
 	 */
 	body.page-template-page-listen #primary {
-		max-width: 54em;
+		max-width: 30em;
 		margin: 0 auto;
-	}
-	body.page-template-page-listen .sgplayer {
-		height: 260px;
-		margin: 0;
 	}
 	body.page-template-page-listen #masthead #top-schedule {
 		display: none;
