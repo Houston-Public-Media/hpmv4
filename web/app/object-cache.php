@@ -3,7 +3,7 @@
  * Plugin Name: Redis Object Cache Drop-In
  * Plugin URI: http://wordpress.org/plugins/redis-cache/
  * Description: A persistent object cache backend powered by Redis. Supports Predis, PhpRedis, Credis, HHVM, replication, clustering and WP-CLI.
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Till Krüss
  * Author URI: https://objectcache.pro
  * License: GPLv3
@@ -1379,13 +1379,13 @@ LUA;
         $start_time = microtime( true );
 
         try {
+            $remaining_ids = array_map( function ( $key ) use ( $derived_keys ) {
+                return $derived_keys[ $key ];
+            }, $remaining_keys );
+
             $results = array_combine(
                 $remaining_keys,
-                $this->redis->mget(
-                    array_map( function ( $key ) use ( $derived_keys ) {
-                        return $derived_keys[ $key ];
-                    }, $remaining_keys )
-                )
+                $this->redis->mget( $remaining_ids )
             );
         } catch ( Exception $exception ) {
             $this->handle_exception( $exception );
@@ -1399,15 +1399,14 @@ LUA;
         $this->cache_time += $execute_time;
 
         foreach ( $results as $key => $value ) {
-            $value = $this->maybe_unserialize($value);
-            $cache[ $key ] = $value;
-
-            if ( $value === false ) {
+            if ( $value === null || $value === false ) {
+                $cache[ $key ] = false;
                 $this->cache_misses++;
             } else {
-                $this->cache_hits++;
+                $cache[ $key ] = $this->maybe_unserialize( $value );
+                $this->add_to_internal_cache( $derived_keys[ $key ], $cache[ $key ] );
 
-                $this->add_to_internal_cache( $derived_keys[ $key ], $value );
+                $this->cache_hits++;
             }
         }
 
@@ -1620,6 +1619,8 @@ LUA;
         );
 
         return (object) [
+            // Connected, Disabled, Unknown, Not connected
+            'status' => '...',
             'hits' => $this->cache_hits,
             'misses' => $this->cache_misses,
             'ratio' => $total > 0 ? round( $this->cache_hits / ( $total / 100 ), 1 ) : 100,
