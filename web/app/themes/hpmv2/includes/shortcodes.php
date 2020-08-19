@@ -20,7 +20,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 	if ( !empty( $attr['id'] ) ) :
 		$audio_id = $attr['id'];
 	else :
-		$audio_id = $attr['instance'];
+		$audio_id = $instance;
 	endif;
 	$audio_title = 'Listen';
 	$audio_url = $attr[ $audio_type ];
