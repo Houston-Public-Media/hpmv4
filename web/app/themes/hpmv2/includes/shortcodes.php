@@ -129,6 +129,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 				$.jPlayer.event.play, function(event) {
 					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
 					var mediaName = event.jPlayer.status.src;
+					$(this).jPlayer(\"pauseOthers\");
 					ga('send', 'event', 'jPlayer', 'Play', mediaName, playerTime);
 					ga('hpmRollup.send', 'event', 'jPlayer', 'Play', mediaName, playerTime);
 				}
