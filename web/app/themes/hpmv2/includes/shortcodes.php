@@ -239,7 +239,7 @@ function hpm_apple_news_audio( $text ) {
 		$res = $wpdb->get_results( "SELECT wp_posts.*
 			FROM wp_posts
 			LEFT JOIN wp_postmeta AS tr1 ON (wp_posts.ID = tr1.post_id)
-			WHERE 
+			WHERE
 				( tr1.meta_key = 'hpm_shows_cat' OR tr1.meta_key = 'hpm_pod_cat' ) AND
 				tr1.meta_value = $show AND
 				wp_posts.post_status = 'publish' AND
@@ -726,8 +726,14 @@ function hpm_athome_sched_update() {
 							endif; */
 						endif;
 					endif;
+					if ( strlen( $pv['title'] ) > 40 ) :
+						$exp_title = explode( ':', $pv['title'] );
+						$show_title = wp_trim_words( trim( $exp_title[0] ), 9, '&hellip;' );
+					else :
+						$show_title = wp_trim_words( trim( $pv['title'] ), 9, '&hellip;' );
+					endif;
 					// Create the schedule entries and concatenate them onto the temp schedule
-					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . wp_trim_words( $pv['title'], 9, '&hellip;' ) . '</a></div>';
+					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . $show_title . '</a></div>';
 				endif;
 			endforeach;
 			// Close out the column
