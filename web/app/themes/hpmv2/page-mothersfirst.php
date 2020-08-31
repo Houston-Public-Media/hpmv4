@@ -129,7 +129,7 @@ Template Name: Mothers First
 			font-size: 1.125em;
 		}
 		.m1-eps h1 {
-			text-transform: uppercase;
+			text-transform: capitalize;
 			font-family: Montserrat, Arial, Helvetica, sans-serif;
 			font-weight: 600;
 			font-size: 2em;
@@ -140,7 +140,7 @@ Template Name: Mothers First
 			line-height: 1em;
 		}
 		.m1-eps h3 {
-			text-transform: uppercase;
+			text-transform: capitalize;
 			font-family: Montserrat, Arial, Helvetica, sans-serif;
 			font-weight: 400;
 			font-size: 1.5em;
