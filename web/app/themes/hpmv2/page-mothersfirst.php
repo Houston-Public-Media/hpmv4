@@ -95,6 +95,9 @@ Template Name: Mothers First
 			margin: 0;
 			padding: 0;
 		}
+		.m1-credit p a {
+			color: white;
+		}
 		.m1-head p {
 			font-size: 1.125em;
 			font-weight: 200;
