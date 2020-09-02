@@ -27,7 +27,7 @@ Template Name: TV Schedule
 				</div>
 			</header>
 			<section id="station-schedule-display" class="column-span">
-				<iframe scrolling="auto" src="https://proweb.myersinfosys.com/kuht/day"></iframe>
+				<iframe scrolling="auto" src="https://proweb.myersinfosys.com/kuht/day?time_zone=America%2FChicago&provider=2"></iframe>
 			</section>
 			<div id="top-schedule-wrap" class="column-right">
 				<nav id="category-navigation" class="category-navigation" role="navigation">
