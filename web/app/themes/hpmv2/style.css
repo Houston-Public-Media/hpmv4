@@ -8950,8 +8950,12 @@ section#country-covers .slick-next:before {
 	align-items: center;
 	border: 1px solid rgb(23,177,189);
 	background-color: white;
-	color: rgb(23,177,189);
+	color: black;
 	font-family: 'PBSKids',arial,helvetica,sans-serif;
+}
+.lah-col.lah-time div,
+.lah-col div.lah-col-head {
+	color: rgb(23,177,189);
 }
 body.page.page-template-page-kids .kids-schedule .lah-col div a {
 	text-align: center;
@@ -9030,6 +9034,144 @@ body.page.page-template-page-kids .kids-schedule .lah-col div a {
 .lah-col div.lah-70 {
 	height: 116.666669px;
 }
+.ahl-tile-wrap {
+	display: flex;
+	align-content: center;
+	justify-content: space-between;
+	flex-flow: row wrap;
+	margin-bottom: 1em;
+}
+.ahl-tile-wrap .ahl-tile {
+	width: 100%;
+	padding: 0;
+	height: 0;
+	padding-bottom: calc(100%/1.1);
+	margin: 0 0 1em 0;
+	position: relative;
+	overflow: hidden;
+}
+.ahl-tile-wrap .ahl-tile a {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: block;
+}
+.ahl-tile-wrap .ahl-tile .ahl-title {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 2000;
+}
+body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-tile-wrap .ahl-tile .ahl-title a {
+	position: static;
+	width: 100%;
+	padding: 0.5em 1em;
+	text-align: center;
+	color: white;
+	text-decoration: none;
+	font: normal 1.375em/1em 'PBSKids',arial,helvetica,sans-serif;
+	height: 3em;
+	display: flex;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+}
+.ahl-tile-wrap .ahl-tile:nth-child(1) .ahl-title a {
+	background-color: #FFCE16;
+}
+.ahl-tile-wrap .ahl-tile:nth-child(2) .ahl-title a {
+	background-color: #A9CF38;
+}
+.ahl-tile-wrap .ahl-tile:nth-child(3) .ahl-title a {
+	background-color: #FE704E;
+}
+.ahl-tile-wrap .ahl-tile:nth-child(4) .ahl-title a {
+	background-color: #2638C4;
+}
+.ahl-tile-wrap .ahl-tile:nth-child(5) .ahl-title a {
+	background-color: #EB8F30;
+}
+.ahl-tile-wrap .ahl-tile:nth-child(6) .ahl-title a {
+	background-color: #6A1B9A;
+}
+.kids-ahl .column-right {
+	padding: 1em;
+	background-color: white;
+	margin-bottom: 2em;
+}
+.kids-ahl .column-right h1 {
+	font-family: 'PBSKids',arial,helvetica,sans-serif;
+	color: #17b1bd;
+	margin: 0 0 0.5em;
+	font-size: 150%;
+}
+body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-sched-links ul {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	width: 100%;
+}
+body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-sched-links ul li {
+	padding: 0 0 0.75em 0;
+	margin: 0;
+	text-align: center;
+}
+body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-sched-links ul li a {
+	font-family: 'PBSKids',arial,helvetica,sans-serif;
+	color: white;
+	background-color: #0061AF;
+	font-size: 125%;
+	padding: 0.5em;
+	display: block;
+}
+.ahl-8-3 {
+	width: 100%;
+	overflow-x: scroll;
+	margin-bottom: 2em;
+	padding: 0.5em;
+	background-color: white;
+}
+.ahl-8-3-schedule {
+	display: grid;
+	grid-template-columns: [time] 15% [show] auto [grade] 10% [objective] 25% [end];
+	grid-template-rows: auto;
+	gap: 0;
+	align-items: stretch;
+	align-content: center;
+	justify-items: stretch;
+	justify-content: stretch;
+	width: 800px;
+}
+.ahl-8-3-schedule div {
+	font-family: 'PBSKids',arial,helvetica,sans-serif;
+	padding: 0.5em;
+	display: flex;
+	align-items: center;
+}
+.ahl-8-3-schedule > div:nth-child(-n+4) {
+	font-weight: bolder;
+	border-bottom: 1px solid black;
+	font-size: 125%;
+}
+.ahl-8-3-schedule > div:nth-child(8n+5),
+.ahl-8-3-schedule > div:nth-child(8n+6),
+.ahl-8-3-schedule > div:nth-child(8n+7),
+.ahl-8-3-schedule > div:nth-child(8n+8) {
+	background-color: #ebebeb;
+}
+body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-8-3-schedule div a {
+	text-decoration: none;
+	color: #00b0bc;
+}
+@media screen and (min-width: 34em) {
+	.ahl-tile-wrap .ahl-tile {
+		width: 45%;
+		padding-bottom: calc(45%/1.1);
+	}
+}
 @media screen and (min-width: 50.0625em) {
 	.lah-wrap {
 		width: 100%;
@@ -9044,6 +9186,10 @@ body.page.page-template-page-kids .kids-schedule .lah-col div a {
 	.lah-legend {
 		width: 66%;
 		float: right;
+	}
+	.ahl-tile-wrap .ahl-tile {
+		width: 32%;
+		padding-bottom: calc(32%/1.1);
 	}
 }
 
