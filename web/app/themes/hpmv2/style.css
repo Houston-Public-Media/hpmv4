@@ -9191,6 +9191,14 @@ body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-8-3-schedule div 
 		width: 32%;
 		padding-bottom: calc(32%/1.1);
 	}
+	.ahl-8-3 {
+		width: 66%;
+		overflow-x: visible;
+		float: left;
+	}
+	.ahl-8-3-schedule {
+		width: 100%;
+	}
 }
 
 /**

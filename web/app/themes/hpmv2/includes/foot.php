@@ -111,7 +111,7 @@ function hpm_houston_matters_check() {
 	$date = date( 'Y-m-d', $t );
 	$hm_airtimes = [
 		9 => false,
-		19 => false
+		15 => false
 	];
 	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=".$date."&format=json" ) );
 	if ( is_wp_error( $remote ) ) :
@@ -123,8 +123,10 @@ function hpm_houston_matters_check() {
 			if ( $j['program']['name'] == 'Houston Matters with Craig Cohen' ) :
 				if ( $j['start_time'] == '09:00' ) :
 					$hm_airtimes[9] = true;
-				elseif ( $j['start_time'] == '19:00' ) :
-					$hm_airtimes[19] = true;
+				endif;
+			elseif ( $j['program']['name'] == 'Town Square with Ernie Manouse' ) :
+				if ( $j['start_time'] == '15:00' ) :
+					$hm_airtimes[15] = true;
 				endif;
 			endif;
 		endforeach;
@@ -242,10 +244,10 @@ function hpm_hm_banner() {
 	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
 	$hm_air = hpm_houston_matters_check();
 	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) ) :
-		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 19 ) && $hm_air[ $now['hours'] ] ) : ?>
+		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && $hm_air[ $now['hours'] ] ) : ?>
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
-			document.getElementById('hm-top').innerHTML = '<?php echo ( $now['hours'] == 19 ? '<p><span>This is an encore presentation of <strong>Houston Matters</strong>, but you can still get in touch:</span> Call <strong>713-440-8870</strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | Tweet <a href="https://twitter.com/houstonmatters">@houstonmatters</a></p>': '<p><span><strong>Houston Matters</strong> is on the air now! Join the conversation:</span> Call <strong>713-440-8870</strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | Tweet <a href="https://twitter.com/houstonmatters">@houstonmatters</a></p>' ); ?>';
+			document.getElementById('hm-top').innerHTML = '<?php echo ( $now['hours'] == 15 ? '<p><span><strong>Town Square</strong> is on the air now! Join the conversation:</span> Call <strong>888.486.9677</strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | Tweet <a href="https://twitter.com/townsquaretalk">@townsquaretalk</a></p>': '<p><span><strong>Houston Matters</strong> is on the air now! Join the conversation:</span> Call <strong>713.440.8870</strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | Tweet <a href="https://twitter.com/houstonmatters">@houstonmatters</a></p>' ); ?>';
 			var topBanner = document.getElementById('hm-top');
 			for (i = 0; i < topBanner.length; ++i) {
 				topBanner[i].addEventListener('click', function() {

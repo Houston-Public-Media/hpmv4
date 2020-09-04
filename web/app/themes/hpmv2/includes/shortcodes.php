@@ -522,7 +522,7 @@ function hpm_athome_sched_update() {
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 	$now = getdate( $t );
-	$cutoff = mktime( 0, 0, 0, 6, 14, 2020 ) + $offset;
+	$cutoff = mktime( 0, 0, 0, 9, 6, 2020 ) + $offset;
 	// Set up data structure for the week to display
 	$week = [
 		1 => [
@@ -639,8 +639,11 @@ function hpm_athome_sched_update() {
 
 	// Build the head of each schedule and put it into our temp array
 	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
-	$temp['8.4'] = '<div class="lah-schedule"><h2>Channel 8.4 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div><div class="lah-legend-math"><span></span> Math</div></div><div class="lah-wrap">'.$timecol['8.4'];
-
+	if ( $monday_unix > $cutoff ) :
+		$temp['8.4'] = '<div class="lah-schedule"><h2 id="tv8.4">Channel 8.4 At-Home Learning Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div><div class="lah-legend-math"><span></span> Math</div></div><div class="lah-wrap">'.$timecol['8.4'];
+	else :
+		$temp['8.4'] = '<div class="lah-schedule"><h2 id="tv8.4">Channel 8.4 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div><div class="lah-legend-math"><span></span> Math</div></div><div class="lah-wrap">'.$timecol['8.4'];
+	endif;
 
 
 	/**
@@ -666,22 +669,12 @@ function hpm_athome_sched_update() {
 					 * This is mostly based on timeframes but there might be some wiggle
 					 */
 					if ( $dk === '8.1' ) :
-						if ( $monday_unix > $cutoff ) :
-							if ( $pv['start_time'] >= 600 && $pv['start_time'] < 1200 ) :
-								$class .= ' lah-young';
-							elseif ( $pv['start_time'] >= 1200 && $pv['start_time'] < 1500 ) :
-								$class .= ' lah-middle';
-							elseif ( $pv['start_time'] >= 1500 ) :
-								$class .= ' lah-high';
-							endif;
-						else :
-							if ( $pv['start_time'] >= 600 && $pv['start_time'] < 800 ) :
-								$class .= ' lah-young';
-							elseif ( $pv['start_time'] >= 800 && $pv['start_time'] < 1300 ) :
-								$class .= ' lah-middle';
-							elseif ( $pv['start_time'] >= 1300 ) :
-								$class .= ' lah-high';
-							endif;
+						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 1200 ) :
+							$class .= ' lah-young';
+						elseif ( $pv['start_time'] >= 1200 && $pv['start_time'] < 1500 ) :
+							$class .= ' lah-middle';
+						elseif ( $pv['start_time'] >= 1500 ) :
+							$class .= ' lah-high';
 						endif;
 
 					/**
@@ -734,7 +727,11 @@ function hpm_athome_sched_update() {
 						$show_title = wp_trim_words( trim( $pv['title'] ), 9, '&hellip;' );
 					endif;
 					// Create the schedule entries and concatenate them onto the temp schedule
-					$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . $show_title . '</a></div>';
+					if ( $monday_unix > $cutoff ) :
+						$temp[ $dk ] .= '<div class="' . $class . '">' . $show_title . '</div>';
+					else :
+						$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . $show_title . '</a></div>';
+					endif;
 				endif;
 			endforeach;
 			// Close out the column
@@ -749,7 +746,11 @@ function hpm_athome_sched_update() {
 	 * Concatenate the channel schedules along with a hidden time stamp
 	 * Makes it easier to ensure that the cron job is running and the schedule is updating
 	*/
-	$output = $temp['8.1'] . $temp['8.4'] . '<p style="display: none;">Last Update: ' . date( 'Y/m/d H:i:s', $t ) . '</p>';
+	if ( $monday_unix > $cutoff ) :
+		$output = $temp['8.4'] . '<p style="display: none;">Last Update: ' . date( 'Y/m/d H:i:s', $t ) . '</p>';
+	else :
+		$output = $temp['8.1'] . $temp['8.4'] . '<p style="display: none;">Last Update: ' . date( 'Y/m/d H:i:s', $t ) . '</p>';
+	endif;
 	// Save the output as a site transient in Redis and output
 	set_transient( 'hpm_athome_sched', $output, 7200 );
 	return $output;
