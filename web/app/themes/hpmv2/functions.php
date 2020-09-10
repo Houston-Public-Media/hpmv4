@@ -60,10 +60,10 @@ function hpmv2_scripts() {
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		// wp_enqueue_style( 'hpmv2-style', 'https://local.hpm.io/hpm-style.css', [], date('Ymd') );
-		// wp_enqueue_script( 'hpmv2-js', 'https://local.hpm.io/hpm-main.js', [ 'jquery' ], date('Ymd'), true );
-		wp_enqueue_style( 'hpmv2-style', 'https://hpmwebv2.s3.us-west-2.amazonaws.com/assets/css/style.css', [], '' );
-		wp_enqueue_script( 'hpmv2-js', 'https://hpmwebv2.s3.us-west-2.amazonaws.com/assets/js/main.js', [ 'jquery' ], '', true );
+		wp_enqueue_style( 'hpmv2-style', 'https://local.hpm.io/hpm-style.css', [], date('Ymd') );
+		wp_enqueue_script( 'hpmv2-js', 'https://local.hpm.io/hpm-main.js', [ 'jquery' ], date('Ymd'), true );
+		// wp_enqueue_style( 'hpmv2-style', 'https://hpmwebv2.s3.us-west-2.amazonaws.com/assets/css/style.css', [], '' );
+		// wp_enqueue_script( 'hpmv2-js', 'https://hpmwebv2.s3.us-west-2.amazonaws.com/assets/js/main.js', [ 'jquery' ], '', true );
 	else :
 		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], true );
