@@ -53,6 +53,9 @@ get_header(); ?>
 			padding: 0;
 			margin: 0;
 		}
+		#search-results article .entry-summary {
+			padding: 0;
+		}
 		#search-results article {
 			display: flex;
 			justify-content: center;
