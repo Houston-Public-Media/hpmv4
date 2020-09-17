@@ -9166,6 +9166,9 @@ body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-8-3-schedule div 
 	text-decoration: none;
 	color: #00b0bc;
 }
+body.page.page-template-page-kids .kids-schedule.kids-ahl a {
+	text-decoration: none;
+}
 @media screen and (min-width: 34em) {
 	.ahl-tile-wrap .ahl-tile {
 		width: 45%;
@@ -9198,6 +9201,9 @@ body.page.page-template-page-kids .kids-schedule.kids-ahl .ahl-8-3-schedule div 
 	}
 	.ahl-8-3-schedule {
 		width: 100%;
+	}
+	.kids-ahl #float-wrap article.felix-type-d {
+		width: 48.5%;
 	}
 }
 
