@@ -9,3 +9,8 @@ define( 'WP_DEBUG_LOG', true );
 define( 'WP_REDIS_SCHEME', 'unix' );
 define( 'WP_REDIS_PATH', '/Applications/MAMP/tmp/redis.sock' );
 $_SERVER['SERVER_NAME'] = 'www.houstonpublicmedia.org';
+define( 'AS3CF_ASSETS_PULL_SETTINGS', serialize( [
+	'rewrite-urls' => false,
+	'domain' => 'assets.hpm.io',
+	'force-https' => false,
+] ) );

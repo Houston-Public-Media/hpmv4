@@ -138,7 +138,7 @@ function hpm_houston_matters_check() {
 function hpm_chartbeat() {
 	global $wp_query;
 	$anc = get_post_ancestors( get_the_ID() );
-	if ( !in_array( 61383, $anc ) ) : ?>
+	if ( !in_array( 61383, $anc ) && WP_ENV !== 'development' ) : ?>
 		<script type='text/javascript'>
 			var _sf_async_config={};
 			/** CONFIGURATION START **/
