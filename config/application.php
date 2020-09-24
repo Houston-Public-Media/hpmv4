@@ -37,7 +37,7 @@ if (file_exists($env_config)) {
  * URLs
  */
 // define('WP_CACHE', true);
-if ( $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && strpos( $_SERVER['HTTP_X_ORIGINAL_HOST'], 'ngrok.io' ) !== FALSE ) :
+if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && strpos( $_SERVER['HTTP_X_ORIGINAL_HOST'], 'ngrok.io' ) !== FALSE ) :
 	define('WP_HOME', 'https://' . $_SERVER['HTTP_X_ORIGINAL_HOST'] );
 	define('WP_SITEURL', 'https://' . $_SERVER['HTTP_X_ORIGINAL_HOST'] . '/wp' );
 else :
