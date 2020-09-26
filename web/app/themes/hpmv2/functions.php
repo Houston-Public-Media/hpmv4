@@ -601,3 +601,12 @@ function hpm_footer_ads() {
 	endif;
 }
 add_action( 'wp_footer', 'hpm_footer_ads', 100 );
+
+function skip_apple_news( $post_id ) {
+	if ( WP_ENV === 'production' ) :
+		return true;
+	else :
+		return false;
+	endif;
+}
+add_filter( 'apple_news_skip_push', 'skip_apple_news', 10, 1 );

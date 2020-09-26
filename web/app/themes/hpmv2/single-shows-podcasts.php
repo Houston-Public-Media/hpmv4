@@ -105,18 +105,40 @@ get_header(); ?>
 						width: 100%;
 						padding: 0.5em 0;
 					}
+					#hpm-show-podcast .jp-type-single {
+						background-color: transparent;
+					}
 					#hpm-show-podcast .jp-gui.jp-interface .jp-controls button {
-						width: 5em;
-						height: 5em;
+						background-color: transparent;
+						width: 4em;
+						height: 4em;
 					}
 					#hpm-show-podcast .jp-gui.jp-interface .jp-controls button .fa {
-						font-size: 4em;
+						font-size: 3.25em;
 					}
 					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper {
-						padding: 0.5em 1em;
+						position: relative;
+						padding: 1em 0.5em;
 					}
-					#hpm-show-podcast .jp-gui.jp-interface .jp-time-holder {
-						padding: 0.5em 0 0;
+					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
+						margin: 0;
+						background-color: rgb(79, 79, 79);
+						z-index: 9;
+						position: relative;
+					}
+					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
+						z-index: 11;
+					}
+					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
+						position: absolute;
+						top: 1.5em;
+						right: 1em;
+						z-index: 10;
+						float: none;
+						width: auto;
+						display: inline;
+						padding: 0;
+						color: white;
 					}
 					@media screen and (min-width: 34em) {
 						#float-wrap article#hpm-show-podcast.felix-type-b {
@@ -133,6 +155,12 @@ get_header(); ?>
 						.podcast-pane:nth-child(3) {
 							width: 40%;
 							padding: 1em 0 0 0;
+						}
+						#hpm-show-podcast .jp-gui.jp-interface .jp-details {
+							display: none;
+						}
+						#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
+							top: 1.25em;
 						}
 					}
 					@media screen and (min-width: 50.0625em) {
