@@ -35,19 +35,19 @@
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
 						<div id="footer-social">
 							<div class="footer-social-icon footer-facebook">
-								<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+								<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 							</div>
 							<div class="footer-social-icon footer-twitter">
-								<a href="https://twitter.com/houstonpubmedia" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+								<a href="https://twitter.com/houstonpubmedia" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
 							</div>
 							<div class="footer-social-icon footer-instagram">
-								<a href="https://instagram.com/houstonpubmedia" target="_blank"><span class="fa fa-instagram" aria-hidden="true"></span></a>
+								<a href="https://instagram.com/houstonpubmedia" target="_blank"><span class="fab fa-instagram" aria-hidden="true"></span></a>
 							</div>
 							<div class="footer-social-icon footer-youtube">
-								<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
+								<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fab fa-youtube" aria-hidden="true"></span></a>
 							</div>
 							<div class="footer-social-icon footer-linkedin">
-								<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+								<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
 							</div>
 						</div>
 					</div>

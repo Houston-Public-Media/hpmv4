@@ -10,21 +10,7 @@ Template Name: TV Schedule
 			while ( have_posts() ) : the_post(); ?>
 			<header class="page-header">
 				<h1 class="page-title entry-title"><?php the_title(); ?></h1>
-				<div id="station-social">
-					<div class="station-social-icon">
-						<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-social-icon">
-						<a href="https://twitter.com/hpmeducation" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-social-icon">
-						<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-printable">
-						<a href="<?php echo hpm_tvguide_url(); ?>">View Printable eGuide</a>
-					</div>
-
-				</div>
+				<div id="station-social"></div>
 			</header>
 			<section id="station-schedule-display" class="column-span">
 				<iframe scrolling="auto" src="https://proweb.myersinfosys.com/kuht/day?time_zone=America%2FChicago&provider=2"></iframe>

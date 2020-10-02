@@ -92,7 +92,7 @@ jQuery(document).ready(function($){
 				if ($(this).hasClass('dc-top-menu')) {
 					$(this).html('<span class="genericons-neue genericons-neue-close-alt" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>');
 				} else {
-					$(this).html('<span class="fa fa-close" aria-hidden="true"></span><span class="top-mobile-text">Close</span>');
+					$(this).html('<span class="fa fa-times" aria-hidden="true"></span><span class="top-mobile-text">Close</span>');
 				}
 				if ( listenLive === true ) {
 					siteNav.removeClass('screen-reader-text');
@@ -162,9 +162,9 @@ jQuery(document).ready(function($){
 			var myWindow = window.open(href, text, "width=" + size[0] + ",height=" + size[1]);
 		}
 	});
-	$('a').click(function(){
+	$('a').click(function(e){
 		var aHref = $(this).attr('href');
-		if ( aHref.indexOf(location.host) === -1 ) {
+		if ( aHref.indexOf(location.host) === -1 && aHref.startsWith('http') ) {
 			ga('send', 'event', 'External', 'Click-Exit Link', aHref);
 		}
 	});

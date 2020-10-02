@@ -3,6 +3,7 @@
 Template Name: Health Matters
 Template Post Type: shows
 */
+
 /**
  * The template for displaying show pages
  *
@@ -12,277 +13,223 @@ Template Post Type: shows
  */
 
 get_header(); ?>
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
 		<?php
-			while ( have_posts() ) : the_post();
-				$show_name = $post->post_name;
-				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
-				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
-				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-				$show_title = get_the_title();
-				$show_content = get_the_content();
-				$categories = get_the_category();
-				$med = new WP_Query([
-					'post_type' => 'attachment',
-					'post_parent' => '315974',
-					'post_mime_type' => 'audio/mpeg',
-					'posts_per_page' => -1,
-					'post_status' => 'inherit',
-					'orderby' => 'date',
-					'order' => 'DESC'
-				]);
-				$media = $med->posts;
-				if ( !empty( $media ) ) :
-					$c = 0;
-					foreach ( $media as $m ) :
-						if ( $c == 0 ) :
-							$first = $m;
-						elseif ( $c == 1 ) :
-							$second = $m;
-						endif;
-						$c++;
-					endforeach;
-				endif;
-				$page_head_style = '';
-				$page_head_class = '';
-				if ( !empty( $show['banners']['mobile'] ) || !empty( $show['banners']['tablet'] ) || !empty( $show['banners']['desktop'] ) ) :
-					$page_head_class = ' shows-banner-variable';
-					foreach ( $show['banners'] as $bk => $bv ) :
-						if ( $bk == 'mobile' ) :
-							$page_head_style .= ".page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); }";
-						elseif ( $bk == 'tablet' ) :
-							$page_head_style .= " @media screen and (min-width: 30.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
-						elseif ( $bk == 'desktop' ) :
-							$page_head_style .= " @media screen and (min-width: 50.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
-						endif;
-					endforeach;
-				elseif ( !empty( $header_back[0] ) ) :
-					$page_head_style = ".page-header { background-image: url($header_back[0]); }";
-				else :
-					$page_head_class = ' no-back';
-				endif;
-				if ( !empty( $page_head_style ) ) :
-					echo "<style>".$page_head_style."</style>";
-				endif; ?>
+		while (have_posts()) : the_post();
+			$show_name = $post->post_name;
+			$social = get_post_meta(get_the_ID(), 'hpm_show_social', true);
+			$show = get_post_meta(get_the_ID(), 'hpm_show_meta', true);
+			$header_back = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
+			$show_title = get_the_title();
+			$show_content = get_the_content();
+			$categories = get_the_category();
+			$med = new WP_Query([
+				'post_type' => 'attachment',
+				'post_parent' => '315974',
+				'post_mime_type' => 'audio/mpeg',
+				'posts_per_page' => -1,
+				'post_status' => 'inherit',
+				'orderby' => 'date',
+				'order' => 'DESC'
+			]);
+			$media = $med->posts;
+			if (!empty($media)) :
+				$c = 0;
+				foreach ($media as $m) :
+					if ($c == 0) :
+						$first = $m;
+					elseif ($c == 1) :
+						$second = $m;
+					endif;
+					$c++;
+				endforeach;
+			endif;
+			$page_head_style = '';
+			$page_head_class = '';
+			if (!empty($show['banners']['mobile']) || !empty($show['banners']['tablet']) || !empty($show['banners']['desktop'])) :
+				$page_head_class = ' shows-banner-variable';
+				foreach ($show['banners'] as $bk => $bv) :
+					if ($bk == 'mobile') :
+						$page_head_style .= ".page-header.shows-banner-variable { background-image: url(" . wp_get_attachment_url($bv) . "); }";
+					elseif ($bk == 'tablet') :
+						$page_head_style .= " @media screen and (min-width: 30.0625em) { .page-header.shows-banner-variable { background-image: url(" . wp_get_attachment_url($bv) . "); } }";
+					elseif ($bk == 'desktop') :
+						$page_head_style .= " @media screen and (min-width: 50.0625em) { .page-header.shows-banner-variable { background-image: url(" . wp_get_attachment_url($bv) . "); } }";
+					endif;
+				endforeach;
+			elseif (!empty($header_back[0])) :
+				$page_head_style = ".page-header { background-image: url($header_back[0]); }";
+			else :
+				$page_head_class = ' no-back';
+			endif;
+			if (!empty($page_head_style)) :
+				echo "<style>" . $page_head_style . "</style>";
+			endif; ?>
 			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title<?php echo (!empty( $header_back ) ? ' screen-reader-text' : ''); ?>"><?php the_title(); ?></h1>
+				<h1 class="page-title<?php echo (!empty($header_back) ? ' screen-reader-text' : ''); ?>"><?php the_title(); ?></h1>
 			</header>
 			<?php
-				$no = $sp = $c = 0;
-				foreach( $show as $sk => $sh ) :
-					if ( !empty( $sh ) && $sk != 'banners' ) :
-						$no++;
+			$no = $sp = $c = 0;
+			foreach ($show as $sk => $sh) :
+				if (!empty($sh) && $sk != 'banners') :
+					$no++;
+				endif;
+			endforeach;
+			foreach ($social as $soc) :
+				if (!empty($soc)) :
+					$no++;
+				endif;
+			endforeach;
+			if ($no > 0) : ?>
+				<div id="station-social">
+					<?php
+					if (!empty($show['times'])) : ?>
+						<h3><?php echo $show['times']; ?></h3>
+					<?php
 					endif;
-				endforeach;
-				foreach( $social as $soc ) :
-					if ( !empty( $soc ) ) :
-						$no++;
-					endif;
-				endforeach;
-				if ( $no > 0 ) : ?>
-			<div id="station-social">
-			<?php
-					if ( !empty( $show['times'] ) ) : ?>
-				<h3><?php echo $show['times']; ?></h3>
-			<?php
-					endif;
-					if ( !empty( $show['gplay'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $show['gplay']; ?>" target="_blank" title="Google Play Podcasts Feed"><span class="fa fa-google" aria-hidden="true"></span></a>
+					echo HPM_Podcasts::show_social($show['podcast'], false, get_the_ID()); ?>
 				</div>
 			<?php
-					endif;
-					if ( !empty( $show['podcast'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $show['podcast']; ?>" target="_blank" title="Podcast Feed"><span class="fa fa-rss" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $show['itunes'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $show['itunes']; ?>" target="_blank" title="iTunes Feed"><span class="fa fa-apple" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['snapchat'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="http://www.snapchat.com/add/<?php echo $social['snapchat']; ?>" target="_blank" title="Snapchat"><span class="fa fa-snapchat-ghost" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['tumblr'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $social['tumblr']; ?>" target="_blank" title="Tumblr"><span class="fa fa-tumblr" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['insta'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://instagram.com/<?php echo $social['insta']; ?>" target="_blank" title="Instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['sc'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://soundcloud.com/<?php echo $social['sc']; ?>" target="_blank" title="SoundCloud"><span class="fa fa-soundcloud" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['yt'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="<?php echo $social['yt']; ?>" target="_blank" title="YouTube"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['twitter'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://twitter.com/<?php echo $social['twitter']; ?>" target="_blank" title="Twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif;
-					if ( !empty( $social['fb'] ) ) : ?>
-				<div class="station-social-icon">
-					<a href="https://www.facebook.com/<?php echo $social['fb']; ?>" target="_blank" title="Facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-				</div>
-			<?php
-					endif; ?>
-			</div>
-			<?php
-				endif;?>
+			endif; ?>
 		<?php
-			endwhile; ?>
-			<section id="stories-from-the-storm" class="alignleft">
-				<div class="hah-split sfts-interviews-video">
+		endwhile; ?>
+		<section id="stories-from-the-storm" class="alignleft">
+			<div class="hah-split sfts-interviews-video">
 				<div id="jquery_jplayer_1" class="jp-jplayer" data-next-id="<?php echo $second->ID; ?>"></div>
-					<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
-						<div class="jp-type-single">
-							<div class="jp-gui jp-interface">
-								<div class="jp-controls">
-									<button class="jp-play" role="button" tabindex="0">
-										<span class="fa fa-play" aria-hidden="true"></span>
-									</button>
-									<button class="jp-pause" role="button" tabindex="0">
-										<span class="fa fa-pause" aria-hidden="true"></span>
-									</button>
+				<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+					<div class="jp-type-single">
+						<div class="jp-gui jp-interface">
+							<div class="jp-controls">
+								<button class="jp-play" role="button" tabindex="0">
+									<span class="fa fa-play" aria-hidden="true"></span>
+								</button>
+								<button class="jp-pause" role="button" tabindex="0">
+									<span class="fa fa-pause" aria-hidden="true"></span>
+								</button>
+							</div>
+							<div class="jp-progress-wrapper">
+								<div class="jp-progress">
+									<div class="jp-seek-bar">
+										<div class="jp-play-bar"></div>
+									</div>
 								</div>
-								<div class="jp-progress-wrapper">
-									<div class="jp-progress">
-										<div class="jp-seek-bar">
-											<div class="jp-play-bar"></div>
-										</div>
-									</div>
-									<div class="jp-details">
-										<div class="jp-title" aria-label="title">&nbsp;</div>
-									</div>
-									<div class="jp-time-holder">
-										<span class="jp-current-time" role="timer" aria-label="time"></span> /<span class="jp-duration" role="timer" aria-label="duration"></span>
-									</div>
+								<div class="jp-details">
+									<div class="jp-title" aria-label="title">&nbsp;</div>
+								</div>
+								<div class="jp-time-holder">
+									<span class="jp-current-time" role="timer" aria-label="time"></span> /<span class="jp-duration" role="timer" aria-label="duration"></span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="screen-reader-text">
-						<script type="text/javascript">
-							jQuery(document).ready(function($){
-								$("#jquery_jplayer_1").jPlayer({
-									ready: function () {
-										$(this).jPlayer("setMedia", {
-											title: "<?php echo $first->post_title; ?>",
-											mp3: "<?php echo wp_get_attachment_url( $first->ID ); ?>?source=jplayer-article"
-										});
-									},
-									swfPath: "https://cdn.hpm.io/assets/js/jplayer",
-									supplied: "mp3",
-									preload: "metadata",
-									cssSelectorAncestor: "#jp_container_1",
-									wmode: "window",
-									useStateClassSkin: true,
-									autoBlur: false,
-									smoothPlayBar: true,
-									keyEnabled: true,
-									remainingDuration: false,
-									toggleDuration: true
-								});
-							});
-						</script>
-					</div>
-					<h3 id="sfts-yt-title"><?php echo $first->post_title; ?></h3>
 				</div>
-				<aside id="videos-nav">
-					<nav id="videos">
-						<div class="videos-playlist">
-							<p><?php echo $show_title; ?> Episodes</p>
-						</div>
-						<ul>
-							<?php
-							foreach ( $media as $m ) : ?>
-							<li <?php echo ( $m->ID == $first->ID ? 'class="current" ' : '' ); ?>id="<?php echo $m->ID; ?>" data-ytid="<?php echo wp_get_attachment_url( $m->ID ); ?>" data-yttitle="<?php echo $m->post_title; ?>">
+				<div class="screen-reader-text">
+					<script type="text/javascript">
+						jQuery(document).ready(function($) {
+							$("#jquery_jplayer_1").jPlayer({
+								ready: function() {
+									$(this).jPlayer("setMedia", {
+										title: "<?php echo $first->post_title; ?>",
+										mp3: "<?php echo wp_get_attachment_url($first->ID); ?>?source=jplayer-article"
+									});
+								},
+								swfPath: "https://cdn.hpm.io/assets/js/jplayer",
+								supplied: "mp3",
+								preload: "metadata",
+								cssSelectorAncestor: "#jp_container_1",
+								wmode: "window",
+								useStateClassSkin: true,
+								autoBlur: false,
+								smoothPlayBar: true,
+								keyEnabled: true,
+								remainingDuration: false,
+								toggleDuration: true
+							});
+						});
+					</script>
+				</div>
+				<h3 id="sfts-yt-title"><?php echo $first->post_title; ?></h3>
+			</div>
+			<aside id="videos-nav">
+				<nav id="videos">
+					<div class="videos-playlist">
+						<p><?php echo $show_title; ?> Episodes</p>
+					</div>
+					<ul>
+						<?php
+						foreach ($media as $m) : ?>
+							<li <?php echo ($m->ID == $first->ID ? 'class="current" ' : ''); ?>id="<?php echo $m->ID; ?>" data-ytid="<?php echo wp_get_attachment_url($m->ID); ?>" data-yttitle="<?php echo $m->post_title; ?>">
 								<div class="videos-info"><?php echo $m->post_title; ?></div>
 							</li>
-							<?php
-							endforeach; ?>
-						</ul>
-					</nav>
-				</aside>
-			</section>
-			<aside class="alignleft">
-				<h3>About <?php echo $show_title; ?></h3>
-				<div class="show-content">
-					<?php echo apply_filters( 'the_content', $show_content ); ?>
-				</div>
+						<?php
+						endforeach; ?>
+					</ul>
+				</nav>
 			</aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-	<script type="text/javascript" src='https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js?ver=20170928'></script>
-	<script>
-		jQuery(document).ready(function($){
-			$('#videos-nav ul li').click(function() {
-				var ytid = $(this).attr('data-ytid');
-				var yttitle = $(this).attr('data-yttitle');
-				if ( ytid === 'null' ) {
+		</section>
+		<aside class="alignleft">
+			<h3>About <?php echo $show_title; ?></h3>
+			<div class="show-content">
+				<?php echo apply_filters('the_content', $show_content); ?>
+			</div>
+		</aside>
+	</main><!-- .site-main -->
+</div><!-- .content-area -->
+<script type="text/javascript" src='https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js?ver=20170928'></script>
+<script>
+	jQuery(document).ready(function($) {
+		$('#videos-nav ul li').click(function() {
+			var ytid = $(this).attr('data-ytid');
+			var yttitle = $(this).attr('data-yttitle');
+			if (ytid === 'null') {
+				return false;
+			} else {
+				$('#sfts-yt-title').html(yttitle);
+				if ($(this).next('li').length) {
+					var next = $(this).next('li').attr('id');
+				} else {
+					var next = $('#videos > ul li:first-child').attr('id');
+				}
+				$("#jquery_jplayer_1").jPlayer('stop').jPlayer("setMedia", {
+					title: yttitle,
+					mp3: ytid + "?source=jplayer-article"
+				}).attr('data-next-id', next).jPlayer('play');
+				$('#videos-nav ul li').removeClass('current');
+				$(this).addClass('current');
+			}
+		});
+		$("#jquery_jplayer_1").bind(
+			$.jPlayer.event.ended,
+			function(event) {
+				var nextId = $('#jquery_jplayer_1').attr('data-next-id');
+				var nextEp = $('#' + nextId);
+				var ytid = nextEp.attr('data-ytid');
+				if (ytid === 'null') {
 					return false;
 				} else {
-					$('#sfts-yt-title').html(yttitle);
-					if ( $(this).next('li').length ) {
-						var next = $(this).next('li').attr('id');
+					var yttitle = nextEp.attr('data-yttitle');
+					var next = nextEp.next('li').attr('id');
+					if ($(this).next('li').length) {
+						var next = nextEp.next('li').attr('id');
 					} else {
 						var next = $('#videos > ul li:first-child').attr('id');
 					}
-					$("#jquery_jplayer_1").jPlayer('stop').jPlayer("setMedia", {
+					$('#sfts-yt-title').html(yttitle);
+					$("#jquery_jplayer_1").jPlayer("setMedia", {
 						title: yttitle,
-						mp3: ytid+"?source=jplayer-article"
+						mp3: ytid + "?source=jplayer-article"
 					}).attr('data-next-id', next).jPlayer('play');
 					$('#videos-nav ul li').removeClass('current');
-					$(this).addClass('current');
+					nextEp.addClass('current');
 				}
-			});
-			$("#jquery_jplayer_1").bind(
-				$.jPlayer.event.ended, function(event) {
-					var nextId = $('#jquery_jplayer_1').attr('data-next-id');
-					var nextEp = $('#'+nextId);
-					var ytid = nextEp.attr('data-ytid');
-					if ( ytid === 'null' ) {
-						return false;
-					} else {
-						var yttitle = nextEp.attr('data-yttitle');
-						var next = nextEp.next('li').attr('id');
-						if ( $(this).next('li').length ) {
-							var next = nextEp.next('li').attr('id');
-						} else {
-							var next = $('#videos > ul li:first-child').attr('id');
-						}
-						$('#sfts-yt-title').html(yttitle);
-						$("#jquery_jplayer_1").jPlayer("setMedia", {
-							title: yttitle,
-							mp3: ytid+"?source=jplayer-article"
-						}).attr('data-next-id', next).jPlayer('play');
-						$('#videos-nav ul li').removeClass('current');
-						nextEp.addClass('current');
-					}
-				}
-			);
-		});
-	</script>
-	<style>#div-gpt-ad-1488818411584-0 { display: none !important; }</style>
+			}
+		);
+	});
+</script>
+<style>
+	#div-gpt-ad-1488818411584-0 {
+		display: none !important;
+	}
+</style>
 <?php get_footer(); ?>

@@ -45,7 +45,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 		$audio_url .= '&';
 	endif;
 	$html = '';
-	if ( is_amp_endpoint() || is_feed() ) :
+	if ( amp_is_request() || is_feed() ) :
 		$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'source=amp-article"></amp-audio></div>';
 	else :
 		if ( is_admin() ) :
@@ -88,7 +88,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 	</div>";
 	if ( !is_admin() && !empty( $attr['id'] ) ) :
 		$html .= "
-	<a href=\"#\" class=\"jp-audio-embed\"><span class=\"fa fa-code\"></span></a>
+	<a href=\"#\" class=\"jp-audio-embed\"><span class=\"fas fa-code\"></span></a>
 	<div class=\"jp-audio-embed-popup\" id=\"jp_container_{$audio_id}-popup\">
 		<div class=\"jp-audio-embed-wrap\">
 			<p>To embed this piece of audio in your site, please use this code:</p>
@@ -475,7 +475,8 @@ function hpm_npr_article_shortcode( $atts ) {
 		return $npr;
 	endif;
 	$output = '';
-	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=".$category."&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=4&apiKey=MDAyMTgwNzc5MDEyMjQ4ODE4MjMyYTExMA001" ) );
+	$api_key = get_option( 'ds_npr_api_key' );
+	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $category . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=4&apiKey=" . $api_key ) );
 	if ( is_wp_error( $remote ) ) :
 		return "<p></p>";
 	else :

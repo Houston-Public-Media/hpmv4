@@ -69,12 +69,12 @@
 		"wpackagist-plugin/query-monitor": "3.6.4",
 		"wpackagist-plugin/redirection": "4.8",
 		"wpackagist-plugin/term-management-tools": "1.1.4",
-		"wpackagist-plugin/tinymce-advanced": "5.5.0",
-		"wpackagist-plugin/redis-cache": "2.0.14",
+		"wpackagist-plugin/tinymce-advanced": "5.5.1",
+		"wpackagist-plugin/redis-cache": "2.0.15",
 		"wpackagist-plugin/wp-ses": "*",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
-		"jwcounts/hpm-mods": "2020.1.11",
+		"jwcounts/hpm-mods": "2020.1.14",
 		"jwcounts/wp-missed-schedule": "1.0.1"
 	},
 	"require-dev": {

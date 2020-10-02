@@ -7,7 +7,7 @@ function hpm_site_header() { ?>
 						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
 					</div>
 					<div id="top-schedule">
-						<div class="top-schedule-label"><a href="#top-schedule-wrap"><span class="fa fa-calendar" aria-hidden="true"></span>Schedules</a></div>
+						<div class="top-schedule-label"><a href="#top-schedule-wrap"><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</a></div>
 						<div class="top-schedule-link-wrap">
 							<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
 							<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
@@ -15,28 +15,28 @@ function hpm_site_header() { ?>
 							<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 						</div>
 					</div>
-					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="480:855"><span class="fa fa-microphone" aria-hidden="true"></span>Listen Live</a></div>
-					<div id="top-donate"><a href="/donate"><span class="fa fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
+					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen Live</a></div>
+					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
 					<div id="header-social">
 						<div class="header-social-icon header-facebook">
-							<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+							<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 						</div>
 						<div class="header-social-icon header-twitter">
-							<a href="https://twitter.com/houstonpubmedia" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+							<a href="https://twitter.com/houstonpubmedia" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
 						</div>
 						<div class="header-social-icon header-instagram">
-							<a href="https://instagram.com/houstonpubmedia" target="_blank"><span class="fa fa-instagram" aria-hidden="true"></span></a>
+							<a href="https://instagram.com/houstonpubmedia" target="_blank"><span class="fab fa-instagram" aria-hidden="true"></span></a>
 						</div>
 						<div class="header-social-icon header-youtube">
-							<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
+							<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fab fa-youtube" aria-hidden="true"></span></a>
 						</div>
 						<div class="header-social-icon header-linkedin">
-							<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+							<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
 						</div>
 					</div>
-					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
+					<div id="top-mobile-menu"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div id="top-search"><span class="fa fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
+						<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
 					<?php
 						// Primary navigation menu.
 						wp_nav_menu( array(
@@ -328,10 +328,10 @@ function hpm_body_open() {
 					<div class="site-logo">
 						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
 					</div>
-					<div id="top-donate"><a href="/donate"><span class="fa fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div id="top-mobile-menu"><span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
+					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
+					<div id="top-mobile-menu"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div id="top-search"><span class="fa fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
+						<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
 						<?php
 							wp_nav_menu( array(
 								'menu_class' => 'nav-menu',

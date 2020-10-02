@@ -452,8 +452,12 @@ body #masthead #top-mobile-menu:hover {
 	cursor: pointer;
 }
 body #masthead #top-mobile-menu .fa,
-body #masthead #top-donate .fa {
-	font: normal 2.5em/0.9em 'FontAwesome';
+body #masthead #top-donate .fa,
+body #masthead #top-mobile-menu .fas,
+body #masthead #top-donate .fas,
+body #masthead #top-mobile-menu .fab,
+body #masthead #top-donate .fab {
+	font: normal 2.5em/0.9em 'Font Awesome 5 Free';
 	margin: 0;
 }
 #masthead #top-donate {
@@ -511,7 +515,11 @@ body #masthead #top-donate .fa {
 	text-align: center;
 }
 #masthead #top-schedule div.top-schedule-label .fa,
-#masthead #top-listen .fa {
+#masthead #top-listen .fa,
+#masthead #top-schedule div.top-schedule-label .fab,
+#masthead #top-listen .fab,
+#masthead #top-schedule div.top-schedule-label .fas,
+#masthead #top-listen .fas {
 	padding-right:  0.25em;
 }
 #masthead #top-schedule div.top-schedule-label a {
@@ -586,7 +594,7 @@ li.nav-top.menu-item-has-children div.nav-top:after {
 	content: '\f0da';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal .75em/1 'FontAwesome';
+	font: normal .75em/1 'Font Awesome 5 Free';
 	float: right;
 	padding-right: 1em;
 	position: relative;
@@ -678,7 +686,9 @@ body.nav-active-menu {
 	padding: 1.5em;
 	position: relative;
 }
-#masthead #top-search .fa {
+#masthead #top-search .fa,
+#masthead #top-search .fab,
+#masthead #top-search .fas {
 	position: absolute;
 	top: 0.375em;
 	left: 0.25em;
@@ -718,7 +728,11 @@ footer#colophon #footer-social .footer-social-icon:last-child a {
 	margin-right: 0;
 }
 #masthead #header-social .header-social-icon .fa,
-footer#colophon #footer-social .footer-social-icon .fa {
+footer#colophon #footer-social .footer-social-icon .fa,
+#masthead #header-social .header-social-icon .fab,
+footer#colophon #footer-social .footer-social-icon .fab,
+#masthead #header-social .header-social-icon .fas,
+footer#colophon #footer-social .footer-social-icon .fas {
 	font-size: 1.5em;
 	line-height: 1.25em;
 	color: white;
@@ -923,7 +937,7 @@ ul.timeline li:last-child {
 article .entry-content ul.timeline li:before,
 ul.timeline li:before {
 	content: '\f111';
-	font: normal 1em/1em 'fontawesome';
+	font: normal 1em/1em 'Font Awesome 5 Free';
 	position: absolute;
 	left: -0.45em;
 	top: -0.0625em;
@@ -1006,7 +1020,9 @@ span.edit-link {
 	text-align: center;
 	margin: 0.5em;
 }
-#article-share .article-share-icon .fa {
+#article-share .article-share-icon .fa,
+#article-share .article-share-icon .fab,
+#article-share .article-share-icon .fas {
 	font-size: 3.25em;
 	line-height: 1.25em;
 	color: white;
@@ -1168,7 +1184,9 @@ span.edit-link {
 	color: rgb(187,188,189);
 	font: normal 1em/1em 'MiloOT-Bold',arial,sans-serif;
 }
-#search-results article .entry-summary .fa {
+#search-results article .entry-summary .fa,
+#search-results article .entry-summary .fas,
+#search-results article .entry-summary .fab {
 	color: rgb(187,188,189);
 }
 #search-results article .entry-footer {
@@ -1252,7 +1270,9 @@ nav.pagination a.page-numbers.next {
 	border: 0;
 	outline: 0;
 }
-.search-results-form button.search-submit.screen-reader-text .fa {
+.search-results-form button.search-submit.screen-reader-text .fa,
+.search-results-form button.search-submit.screen-reader-text .fab,
+.search-results-form button.search-submit.screen-reader-text .fas {
 	font-size: 1.5em;
 	line-height: 1em;
 }
@@ -1533,7 +1553,7 @@ body.single #author-wrap .author-other-stories h2 a,
 	content: '\f099';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal .75em/1 'FontAwesome';
+	font: normal .75em/1 'Font Awesome 5 Free';
 	float: right;
 	padding-right: 1em;
 	position: relative;
@@ -1628,7 +1648,9 @@ body.single #author-wrap .author-other-stories h2 a,
 	bottom: 0;
 	position: absolute;
 }
-#twitter-home .tweet .tweet-photo a .fa {
+#twitter-home .tweet .tweet-photo a .fa,
+#twitter-home .tweet .tweet-photo a .fab,
+#twitter-home .tweet .tweet-photo a .fas {
 	font-size: 5em;
 	color: white;
 }
@@ -1787,7 +1809,9 @@ body.single #author-wrap .author-other-stories h2 a,
 	margin: 0.5em 1em 0.5em 0;
 	text-align: center;
 }
-#author-wrap .author-social .social-icon .fa {
+#author-wrap .author-social .social-icon .fa,
+#author-wrap .author-social .social-icon .fab,
+#author-wrap .author-social .social-icon .fas {
 	font-size: 2.5em;
 	line-height: 1.25em;
 	color: #00b0bc;
@@ -1975,7 +1999,9 @@ body.page-template-page-series-tiles aside .sidebar-ad {
 #shows-youtube #youtube-main #youtube-player:hover {
 	cursor: pointer;
 }
-#shows-youtube #youtube-main #youtube-player .fa {
+#shows-youtube #youtube-main #youtube-player .fa,
+#shows-youtube #youtube-main #youtube-player .fab,
+#shows-youtube #youtube-main #youtube-player .fas {
 	color: white;
 	font-size: 4em;
 }
@@ -2231,7 +2257,9 @@ body.parent-pageid-119396 .table-striped tr.out td {
 	background-color: rgb(208,226,231);
 	text-align: center;
 }
-.jp-gui.jp-interface .jp-controls button .fa {
+.jp-gui.jp-interface .jp-controls button .fa,
+.jp-gui.jp-interface .jp-controls button .fas,
+.jp-gui.jp-interface .jp-controls button .fab {
 	font-size: 5.5em;
 	color: rgb(153,197,211);
 	line-height: 1em;
@@ -2277,7 +2305,9 @@ body.parent-pageid-119396 .table-striped tr.out td {
 	padding: 0 6px;
 	color: #cc0000;
 }
-.jp-audio .jp-audio-embed .fa {
+.jp-audio .jp-audio-embed .fa,
+.jp-audio .jp-audio-embed .fab,
+.jp-audio .jp-audio-embed .fas {
 	font-weight: bolder;
 	font-size: 16px;
 }
@@ -2512,7 +2542,11 @@ body.single-shows #station-social .station-social-icon a {
 	text-align: center;
 }
 .page-header #station-social .station-social-icon .fa,
-body.single-shows #station-social .station-social-icon .fa {
+body.single-shows #station-social .station-social-icon .fa,
+.page-header #station-social .station-social-icon .fas,
+body.single-shows #station-social .station-social-icon .fas,
+.page-header #station-social .station-social-icon .fab,
+body.single-shows #station-social .station-social-icon .fab {
 	font-size: 2em;
 	line-height: 1.25em;
 	color: white;
@@ -3332,8 +3366,12 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		left: 6em;
 	}
 	body #masthead #top-mobile-menu .fa,
-	body #masthead #top-donate .fa {
-		font: normal 3.5em/0.9em 'FontAwesome';
+	body #masthead #top-donate .fa,
+	body #masthead #top-mobile-menu .fab,
+	body #masthead #top-donate .fab,
+	body #masthead #top-mobile-menu .fas,
+	body #masthead #top-donate .fas {
+		font: normal 3.5em/0.9em 'Font Awesome 5 Free';
 	}
 	#masthead #top-donate {
 		right: 6em;
@@ -3629,7 +3667,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		color: rgb(187,188,189);
 		font: normal 1em/1em 'MiloOT-Bold',arial,sans-serif;
 	}
-	#search-results article .entry-summary .fa {
+	#search-results article .entry-summary .fa,
+	#search-results article .entry-summary .fab,
+	#search-results article .entry-summary .fas {
 		color: rgb(187,188,189);
 		font-size: 1.25em;
 	}
@@ -3778,7 +3818,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		cursor: pointer;
 		opacity: 0.8;
 	}
-	#shows-youtube #youtube-main #youtube-player .fa {
+	#shows-youtube #youtube-main #youtube-player .fa,
+	#shows-youtube #youtube-main #youtube-player .fab,
+	#shows-youtube #youtube-main #youtube-player .fas {
 		font-size: 8em;
 	}
 	#shows-youtube #youtube-main {
@@ -4062,7 +4104,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		content: '\f0d8';
 		display: inline-block;
 		-webkit-font-smoothing: antialiased;
-		font: normal .75em/1 'FontAwesome';
+		font: normal .75em/1 'Font Awesome 5 Free';
 		position: relative;
 		top: -0.25em;
 		padding-left: 0.25em;
@@ -4344,12 +4386,16 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		right: 12.5em;
 		z-index: 10;
 	}
-	#masthead #top-search .fa {
+	#masthead #top-search .fa,
+	#masthead #top-search .fab,
+	#masthead #top-search .fas {
 		top: -0.125em;
 		font-size: 1.625em;
 		left: -1em;
 	}
-	#masthead #top-search .fa:hover {
+	#masthead #top-search .fa:hover,
+	#masthead #top-search .fab:hover,
+	#masthead #top-search .fas:hover {
 		cursor: pointer;
 	}
 	#masthead #top-search .search-form {
@@ -4377,7 +4423,11 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		width: auto;
 	}
 	#masthead #top-listen .fa,
-	#masthead #top-schedule .fa {
+	#masthead #top-schedule .fa,
+	#masthead #top-listen .fab,
+	#masthead #top-schedule .fab,
+	#masthead #top-listen .fas,
+	#masthead #top-schedule .fas {
 		display: none;
 	}
 	#masthead #top-donate a, #masthead #top-listen a {
@@ -4489,7 +4539,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		height: 3.5em;
 		margin: 0 1em 1em 0;
 	}
-	#article-share .article-share-icon .fa {
+	#article-share .article-share-icon .fa,
+	#article-share .article-share-icon .fab,
+	#article-share .article-share-icon .fas {
 		font-size: 3em;
 	}
 	.alignleft {
@@ -4683,7 +4735,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		color: rgb(187,188,189);
 		font: normal 1em/1em 'MiloOT-Bold',arial,sans-serif;
 	}
-	#search-results article .entry-summary .fa {
+	#search-results article .entry-summary .fa,
+	#search-results article .entry-summary .fab,
+	#search-results article .entry-summary .fas {
 		color: rgb(187,188,189);
 		font-size: 1.25em;
 	}
@@ -4874,7 +4928,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	.jp-audio.jp-float .jp-gui.jp-interface .jp-progress-wrapper {
 		padding: 0.5em 0 0 0;
 	}
-	.jp-audio.jp-float .jp-gui.jp-interface .jp-controls button .fa {
+	.jp-audio.jp-float .jp-gui.jp-interface .jp-controls button .fa,
+	.jp-audio.jp-float .jp-gui.jp-interface .jp-controls button .fab,
+	.jp-audio.jp-float .jp-gui.jp-interface .jp-controls button .fas {
 		font-size: 2.5em;
 	}
 	.jp-audio.jp-float .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
@@ -4945,7 +5001,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		padding: 1.5em;
 		background-color: rgb(242,243,243);
 	}
-	body.page-template-page-listen #masthead #top-search .fa {
+	body.page-template-page-listen #masthead #top-search .fa,
+	body.page-template-page-listen #masthead #top-search .fab,
+	body.page-template-page-listen #masthead #top-search .fas {
 		position: absolute;
 		top: 0.375em;
 		left: 0.25em;
@@ -4998,8 +5056,12 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		width: 25em !important;
 	}
 	body.page-template-page-listen #masthead #top-mobile-menu .fa,
-	body.page-template-page-listen #masthead #top-donate .fa {
-		font: normal 1.75em/0.9em 'FontAwesome';
+	body.page-template-page-listen #masthead #top-donate .fa,
+	body.page-template-page-listen #masthead #top-mobile-menu .fab,
+	body.page-template-page-listen #masthead #top-donate .fab,
+	body.page-template-page-listen #masthead #top-mobile-menu .fas,
+	body.page-template-page-listen #masthead #top-donate .fas {
+		font: normal 1.75em/0.9em 'Font Awesome 5 Free';
 	}
 	body.page-template-page-listen #masthead #top-donate a {
 		text-transform: uppercase !important;
@@ -5033,7 +5095,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		content: '\f0da';
 		display: inline-block;
 		-webkit-font-smoothing: antialiased;
-		font: normal .75em/1 'FontAwesome';
+		font: normal .75em/1 'Font Awesome 5 Free';
 		float: right;
 		padding-right: 1em;
 		position: relative;
@@ -5204,7 +5266,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	#masthead nav#site-navigation .nav-top a {
 		font: normal 1.1875em/1em 'MiloOT-Bold',arial, helvetica, sans-serif;
 	}
-	#masthead nav#site-navigation .nav-top i.fa {
+	#masthead nav#site-navigation .nav-top i.fa,
+	#masthead nav#site-navigation .nav-top i.fab,
+	#masthead nav#site-navigation .nav-top i.fas {
 		line-height: 1em;
 	}
 	#masthead #top-schedule div.top-schedule-label {
@@ -5730,7 +5794,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	content: '\f0da';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal 1em/1 'FontAwesome';
+	font: normal 1em/1 'Font Awesome 5 Free';
 	margin-left: 0.375em;
 	color: rgb(0,170,235);
 }
@@ -6147,7 +6211,7 @@ ul.passport-drop li.passport-faq:after {
 	content: '\f0da';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal 1em/1 'FontAwesome';
+	font: normal 1em/1 'Font Awesome 5 Free';
 	margin-left: 0.375em;
 	color: rgb(0,170,235);
 }
@@ -6568,7 +6632,9 @@ body.single-shows.hah-sub .page-header {
 	background-color: transparent;
 	text-align: center;
 }
-.hah-sub .jp-gui.jp-interface .jp-controls button .fa {
+.hah-sub .jp-gui.jp-interface .jp-controls button .fa,
+.hah-sub .jp-gui.jp-interface .jp-controls button .fab,
+.hah-sub .jp-gui.jp-interface .jp-controls button .fas {
 	font-size: 3.5em;
 	line-height: 1em;
 }
@@ -9290,7 +9356,9 @@ h2#foot-banner span.donate {
 	border-radius: 5px;
 	display: inline-block;
 }
-h2#foot-banner span.donate .fa {
+h2#foot-banner span.donate .fa,
+h2#foot-banner span.donate .fab,
+h2#foot-banner span.donate .fas {
 	color: rgb(200,16,46);
 }
 @media screen and (min-width: 34em) {

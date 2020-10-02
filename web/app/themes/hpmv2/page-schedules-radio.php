@@ -70,12 +70,6 @@ Template Name: Radio Schedules
 							'posts_per_page' => 1,
 							'order' => 'DESC'
 						]); ?>
-					<div class="station-social-icon">
-						<a href="https://www.facebook.com/HoustonNews887" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-social-icon">
-						<a href="https://twitter.com/hpmnews887" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-					</div>
                     <div class="station-printable">
                         <a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">Printable Schedule</a>
                     </div>
@@ -89,12 +83,6 @@ Template Name: Radio Schedules
 							'posts_per_page' => 1,
 							'order' => 'DESC'
 						]); ?>
-					<div class="station-social-icon">
-						<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-					</div>
-					<div class="station-social-icon">
-						<a href="https://twitter.com/hpmartsculture" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-					</div>
                     <div class="station-printable">
                         <a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">Printable Schedule</a>
                     </div>

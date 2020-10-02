@@ -56,7 +56,7 @@ add_filter( 'the_content', 'shortcode_unautop');
 function hpmv2_scripts() {
 	$versions = hpm_versions();
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'fontawesome', 'https://cdn.hpm.io/assets/css/font-awesome.min.css', [], '4.3.6' );
+	wp_enqueue_style( 'fontawesome', 'https://cdn.hpm.io/assets/fonts/fontawesome/css/all.css', [], '5.14.0' );
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
@@ -597,7 +597,7 @@ function hpm_footer_ads() {
 			echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '<h2 id=\"foot-banner\">These services are brought to you by our community of donors, foundations, and partners.</h2>');</script>";
 		endif;
 	elseif ( $type === 'post' ) :
-		echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '<h2 id=\"foot-banner\"><a href=\"/donate\">Stories like this are made possible by the generosity of our community of donors, foundations and corporate partners. If you value our reporting, join others and make a gift to Houston Public Media.<br /><br /><span class=\"donate\"><span class=\"fa fa-heart\"></span> DONATE</span></h2>');</script>";
+		echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '<h2 id=\"foot-banner\"><a href=\"/donate\">Stories like this are made possible by the generosity of our community of donors, foundations and corporate partners. If you value our reporting, join others and make a gift to Houston Public Media.<br /><br /><span class=\"donate\"><span class=\"fas fa-heart\"></span> DONATE</span></h2>');</script>";
 	endif;
 }
 add_action( 'wp_footer', 'hpm_footer_ads', 100 );

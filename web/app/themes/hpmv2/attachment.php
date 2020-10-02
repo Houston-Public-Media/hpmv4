@@ -72,15 +72,15 @@ get_header(); ?>
 						<?php if ( !empty( $attach['image_meta']['iso'] ) ) : ?><li>ISO: <?PHP echo $attach['image_meta']['iso']; ?></li><?php endif; ?>
 						<?php if ( !empty( $attach['image_meta']['shutter_speed'] ) ) : ?><li>Shutter Speed: <?PHP echo $attach['image_meta']['shutter_speed']; ?></li><?php endif; ?>
 					</ul>
-					<?PHP		
-						elseif ( preg_match( '/audio/', $mime ) ) : 
+					<?PHP
+						elseif ( preg_match( '/audio/', $mime ) ) :
 							if ( $mime == 'audio/mpeg' || $mime == 'audio/wav' ) :
-								echo do_shortcode( '[audio id="'.get_the_ID().'"][/audio]' );	
+								echo do_shortcode( '[audio id="'.get_the_ID().'"][/audio]' );
 							else : ?>
 					<p><a href="<?PHP echo wp_get_attachment_url( get_the_ID() ); ?>?source=download-attachment">Download	the
                             file</a></p>
 					<?php
-							endif; ?>	
+							endif; ?>
 					<p>File Information:</p>
 						<?PHP
 							$bitrate = ($attach['bitrate']/1000).'kbps '.strtoupper($attach['bitrate_mode']);
@@ -160,7 +160,7 @@ get_header(); ?>
 						<li>File Size: <?PHP echo $size; ?></li>
 					</ul>
 					<?php
-						elseif ( preg_match( '/application/', $mime ) ) : 
+						elseif ( preg_match( '/application/', $mime ) ) :
 							$site_url = site_url();
 							echo do_shortcode('[pdfjs-viewer url='.$site_url.'/'.$s3['key'].' viewer_width=600px viewer_height=700px fullscreen=true download=true print=true openfile=false]');?>
 					<p>File Information:</p>
@@ -193,29 +193,29 @@ get_header(); ?>
 						<h4>Share</h4>
 						<div class="article-share-icon">
 							<a href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" target="_blank" data-dialog="400:368">
-								<span class="fa fa-facebook" aria-hidden="true"></span>
+								<span class="fab fa-facebook-f" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							 <a href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" target="_blank" data-dialog="364:250">
-								<span class="fa fa-twitter" aria-hidden="true"></span>
+								<span class="fab fa-twitter" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
-								<span class="fa fa-envelope" aria-hidden="true"></span>
+								<span class="fas fa-envelope" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							<a href="http://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
-								<span class="fa fa-linkedin" aria-hidden="true"></span>
+								<span class="fab fa-linkedin-in" aria-hidden="true"></span>
 							</a>
 						</div>
 					</div>
 				</div><!-- .entry-content -->
 
 				<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) {
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',

@@ -18,7 +18,8 @@ Template Name: NPR Content
 		endif;
 		return $results;
 	}
-	$html = file_get_contents("https://api.npr.org/query?id=".$npr_id."&fields=all&output=JSON&apiKey=MDAyMTgwNzc5MDEyMjQ4ODE4MjMyYTExMA001");
+	$api_key = get_option( 'ds_npr_api_key' );
+	$html = file_get_contents( "https://api.npr.org/query?id=" . $npr_id . "&fields=all&output=JSON&apiKey=".$api_key );
 	$json = json_decode($html,true);
 	$node = $json['list']['story'][0];
 	$related_links = $people = $paragraphs = $orgs = $media = $crops = $sound = $keywords = $collection = $members = $multimedia = $keywords_text = array();
@@ -458,22 +459,22 @@ get_header(); ?>
 						<h4>Share</h4>
 						<div class="article-share-icon">
 							<a href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" target="_blank" data-dialog="400:368">
-								<span class="fa fa-facebook" aria-hidden="true"></span>
+								<span class="fab fa-facebook-f" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							 <a href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" target="_blank" data-dialog="364:250">
-								<span class="fa fa-twitter" aria-hidden="true"></span>
+								<span class="fab fa-twitter" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
-								<span class="fa fa-envelope" aria-hidden="true"></span>
+								<span class="fas fa-envelope" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							<a href="http://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
-								<span class="fa fa-linkedin" aria-hidden="true"></span>
+								<span class="fab fa-linkedin-in" aria-hidden="true"></span>
 							</a>
 						</div>
 					</div>

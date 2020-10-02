@@ -50,10 +50,10 @@ function author_footer( $id ) {
 				<div class=\"author-social\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :
-				$temp .= '<div class="social-icon"><a href="'.$meta['facebook'].'" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="'.$meta['facebook'].'" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['twitter'] ) ) :
-				$temp .= '<div class="social-icon"><a href="'.$meta['twitter'].'" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="'.$meta['twitter'].'" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a></div>';
 			endif;
 			$author_bio = $author->post->post_content;
 			if ( preg_match( '/Biography pending/', $author_bio ) ) :
@@ -61,10 +61,10 @@ function author_footer( $id ) {
 			endif;
 		else :
 			if ( !empty( $coa->user_email ) ) :
-				$temp .= '<div class="social-icon"><a href="mailto:'.$coa->user_email.'" target="_blank"><span class="fa fa-envelope" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="mailto:'.$coa->user_email.'" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $coa->website ) ) :
-				$temp .= '<div class="social-icon"><a href="'.$coa->website.'" target="_blank"><span class="fa fa-home" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="'.$coa->website.'" target="_blank"><span class="fas fa-home" aria-hidden="true"></span></a></div>';
 			endif;
 		endif;
 		$temp .= "

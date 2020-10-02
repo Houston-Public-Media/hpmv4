@@ -63,29 +63,29 @@ if ( is_preview() ) : ?>
 						<h4>Share</h4>
 						<div class="article-share-icon">
 							<a href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" target="_blank" data-dialog="400:368">
-								<span class="fa fa-facebook" aria-hidden="true"></span>
+								<span class="fab fa-facebook-f" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							 <a href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" target="_blank" data-dialog="364:250">
-								<span class="fa fa-twitter" aria-hidden="true"></span>
+								<span class="fab fa-twitter" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
-								<span class="fa fa-envelope" aria-hidden="true"></span>
+								<span class="fas fa-envelope" aria-hidden="true"></span>
 							</a>
 						</div>
 						<div class="article-share-icon">
 							<a href="http://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
-								<span class="fa fa-linkedin" aria-hidden="true"></span>
+								<span class="fab fa-linkedin-in" aria-hidden="true"></span>
 							</a>
 						</div>
 					</div>
 				</div><!-- .entry-content -->
 
 				<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) :
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
@@ -136,16 +136,16 @@ if ( is_preview() ) : ?>
 				<?php
 							if (!empty($author['facebook'])) : ?>
 							<div class="social-icon">
-								<a href="<?php echo $author['facebook']; ?>" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+								<a href="<?php echo $author['facebook']; ?>" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif;
 							if (!empty($author['twitter'])) : ?>
 							<div class="social-icon">
-								<a href="<?php echo $author['twitter']; ?>" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+								<a href="<?php echo $author['twitter']; ?>" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
 							</div>
 				<?php
-							endif; 
+							endif;
 							$author_bio = get_the_content();
 							if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) :
 								$author_bio = '';

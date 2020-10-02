@@ -14,7 +14,7 @@ get_header(); ?>
 						</div>
 						<h1 class="page-title"><?php the_title(); ?></h1>
 						<a class="down scrollto" href="#main-content">
-							<i class="fa fa-chevron-down" aria-hidden="true"></i>
+							<i class="fas fa-chevron-down" aria-hidden="true"></i>
 						</a>
 					</header><!-- .entry-header -->
 					<div class="page-content">

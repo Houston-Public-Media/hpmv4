@@ -50,19 +50,19 @@
 					<?php
 							if (!empty($author['facebook'])) : ?>
 							<div class="social-icon">
-								<a href="<?php echo $author['facebook']; ?>" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+								<a href="<?php echo $author['facebook']; ?>" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif;
 							if (!empty($author['twitter'])) : ?>
 							<div class="social-icon">
-								<a href="<?php echo $author['twitter']; ?>" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+								<a href="<?php echo $author['twitter']; ?>" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif;
 							if (!empty($author['email'])) : ?>
 							<div class="social-icon">
-								<a href="mailto:<?php echo $author['email']; ?>" target="_blank"><span class="fa fa-envelope" aria-hidden="true"></span></a>
+								<a href="mailto:<?php echo $author['email']; ?>" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif; ?>
