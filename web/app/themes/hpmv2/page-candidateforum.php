@@ -61,7 +61,9 @@ get_header(); ?>
 		padding: 0;
 		margin: 0;
 	}
-
+	.page-template-page-candidateforum h2 a {
+		color: #00b0bc;
+	}
 	section.column-left article,
 	aside.column-right {
 		padding: 1em;
