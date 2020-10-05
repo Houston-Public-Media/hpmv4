@@ -30,9 +30,13 @@ get_header(); ?>
 	</main><!-- .site-main -->
 </div><!-- .content-area -->
 <style>
+	body.page.page-template-page-candidateforum #main {
+		background-color: transparent !important;
+	}
+
 	.page-content {
 		overflow: hidden;
-		padding: 2.5em 1em 1em;
+		padding: 1em 0;
 	}
 
 	.page-content p {
@@ -58,17 +62,29 @@ get_header(); ?>
 		margin: 0;
 	}
 
-	#search-results article .entry-summary {
-		padding: 0;
+	section.column-left article,
+	aside.column-right {
+		padding: 1em;
+		overflow: hidden;
+		background-color: white;
+		margin-bottom: 2em;
 	}
 
-	#search-results article {
-		display: flex;
-		justify-content: center;
-		align-content: center;
-		align-items: center;
+	section.column-left,
+	aside.column-right {
+		width: 100%;
+		margin: 0 0 2em 0;
 	}
 
+	section h1 {
+		margin-bottom: 0.25em;
+	}
+
+	.candidates div {
+		margin-bottom: 2em;
+		padding: 1em;
+		background-color: #f5f5f5;
+	}
 	@media screen and (min-width: 34em) {
 		.page-header {
 			padding-right: 0;
@@ -78,23 +94,45 @@ get_header(); ?>
 			margin: 0 !important;
 			background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_tablet.jpg);
 		}
-	}
 
-	@media screen and (min-width: 50.0625em) {
-		.page-template-page-candidateforum article {
-			width: 100%;
-			float: none;
-			border-right: 0;
+		section.column-left,
+		aside.column-right {
+			width: 95%;
+			margin: 0 2.5% 2em;
+		}
+		.candidates {
+			display: flex;
+			flex-flow: row nowrap;
+		}
+		.candidates div {
+			width: 47.5%;
+			margin: 0 1.25%;
 		}
 
-		.page-header {
-			padding-right: 0;
-			padding-left: 0;
-			padding-top: 0;
-			padding-bottom: calc(100%/6);
-			margin: 0 !important;
-			background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_desktop.jpg);
+		@media screen and (min-width: 50.0625em) {
+			.page-template-page-candidateforum article {
+				width: 100%;
+				float: none;
+				border-right: 0;
+			}
+
+			.page-header {
+				padding-right: 0;
+				padding-left: 0;
+				padding-top: 0;
+				padding-bottom: calc(100%/6);
+				margin: 0 !important;
+				background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_desktop.jpg);
+			}
+
+			aside.column-right {
+				margin: 0 0 2em 1.5%;
+				width: 31.5%;
+			}
+			section.column-left {
+				width: 67%;
+				margin: 0 0 2em 0;
+			}
 		}
-	}
 </style>
 <?php get_footer(); ?>
