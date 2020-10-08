@@ -171,7 +171,7 @@ function hpm_masonry() {
 	global $wp_query;
 	$post_type = get_post_type();
 	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) && !is_page_template( 'single-shows-skyline.php' ) ) || is_page_template( 'page-series-tiles.php' ) ) :
-		if ( get_the_ID() != 61247 ) : ?>
+		// if ( get_the_ID() != 61247 ) : ?>
 	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
 	<script>
@@ -225,7 +225,7 @@ function hpm_masonry() {
 		});
 	</script>
 <?php
-			endif;
+			// endif;
 		endif;
 }
 
