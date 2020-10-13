@@ -115,7 +115,7 @@ get_header(); ?>
 					$temp = [
 						'id' => $match[2],
 						'title' => get_the_title( $match[2] ),
-						'url' => $match[1]
+						'url' => wp_get_attachment_url( $match[2] )
 					];
 					array_unshift( $atts, $temp );
 				endif;
