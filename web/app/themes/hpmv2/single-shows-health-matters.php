@@ -107,7 +107,8 @@ get_header(); ?>
 				'category_name' => 'health-matters',
 				'posts_per_page' => -1,
 				'orderby' => 'date',
-				'order' => 'ASC'
+				'order' => 'ASC',
+				'post_status' => 'publish'
 			]);
 			foreach ( $med->posts as $m ) :
 				preg_match( '/\[audio mp3="(.+)" id="([0-9]+)"\]\[\/audio\]/', $m->post_content, $match );
