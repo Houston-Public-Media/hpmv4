@@ -247,8 +247,9 @@ function hpm_hm_banner() {
 		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && $hm_air[ $now['hours'] ] ) : ?>
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
-			document.getElementById('hm-top').innerHTML = '<?php echo ( $now['hours'] == 15 ? '<p><span><strong>Town Square</strong> is on the air now! Join the conversation:</span> Call <strong>888.486.9677</strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | Tweet <a href="https://twitter.com/townsquaretalk">@townsquaretalk</a></p>': '<p><span><strong>Houston Matters</strong> is on the air now! Join the conversation:</span> Call <strong>713.440.8870</strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | Tweet <a href="https://twitter.com/houstonmatters">@houstonmatters</a></p>' ); ?>';
 			var topBanner = document.getElementById('hm-top');
+			topBanner.innerHTML = '<?php echo ( $now['hours'] == 15 ? '<p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong>888.486.9677</strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p>': '<p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Call <strong>713.440.8870</strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a></p>' ); ?>';
+			<?php echo ( $now['hours'] == 15 ? 'topBanner.classList.add(\'townsquare\');' : '' ); ?>
 			for (i = 0; i < topBanner.length; ++i) {
 				topBanner[i].addEventListener('click', function() {
 					var attr = this.id;

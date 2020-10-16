@@ -8407,14 +8407,19 @@ section#country-covers .slick-next:before {
 	width: 20em;
 }
 #hm-top {
-	background: rgb(239,185,73);
-	background: linear-gradient(180deg, rgba(239,185,73,1) 0%, rgba(239,185,73,0.33) 100%);
+	background: rgb(35,74,147);
+}
+#hm-top.townsquare {
+	background: rgb(248,207,75);
 }
 #hm-top p {
 	padding: 0.5em;
-	font: normal 1em/1.25em 'MiloOT',arial,helvetica;
-	color: rgb(38,92,113);
+	font: normal 1.125em/1.25em 'MiloOT',arial,helvetica;
+	color: rgb(236,246,251);
 	text-align: center;
+}
+#hm-top.townsquare p {
+	color: rgb(47,47,47);
 }
 #hm-top p span::after {
 	content: "\A";
@@ -8425,8 +8430,11 @@ section#country-covers .slick-next:before {
 }
 #hm-top p a {
 	text-decoration: underline;
-	color: #cc0000;
+	color: rgb(232,141,61);
 	font: normal 100%/1em 'MiloOT-Bold',arial,helvetica;
+}
+#hm-top.townsquare p a {
+	color: #cc0000;
 }
 @media screen and (min-width: 50.0625em) {
 	#hm-top p span::after {
@@ -8436,7 +8444,7 @@ section#country-covers .slick-next:before {
 }
 @media screen and (min-width: 64.0625em) {
 	#hm-top p {
-		font: normal 1.125em/1.25em 'MiloOT',arial,helvetica;
+		font: normal 1.375em/1.25em 'MiloOT',arial,helvetica;
 	}
 }
 
