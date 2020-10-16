@@ -55,6 +55,12 @@ function author_footer( $id ) {
 			if ( !empty( $meta['twitter'] ) ) :
 				$temp .= '<div class="social-icon"><a href="'.$meta['twitter'].'" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a></div>';
 			endif;
+			if ( !empty( $meta['linkedin'] ) ) :
+				$temp .= '<div class="social-icon"><a href="'.$meta['linkedin'].'" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a></div>';
+			endif;
+			if ( !empty( $meta['email'] ) ) :
+				$temp .= '<div class="social-icon"><a href="mailto:'.$meta['email'].'" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a></div>';
+			endif;
 			$author_bio = $author->post->post_content;
 			if ( preg_match( '/Biography pending/', $author_bio ) ) :
 				$author_bio = '';
