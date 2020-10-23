@@ -85,13 +85,13 @@ add_action( 'amp_post_template_css', 'hpm_amp_additional_css' );
 function hpm_amp_additional_css( $amp_template ) {
 	?>
 	@font-face {
-		font-family: 'MiloOT-Light';
+		font-family: 'MiloOT';
 		src: url('https://cdn.hpm.io/assets/fonts/MiloOT-Light.otf') format('opentype'), url('https://cdn.hpm.io/assets/fonts/MiloWeb-Light.woff') format('woff'), url('https://cdn.hpm.io/assets/fonts/MiloWeb-Light.eot') format('eot');
-		font-weight: normal;
+		font-weight: 300;
 		font-style: normal;
 	}
 	.amp-wp-title {
-		font: normal 2em/1.125em 'MiloOT-Light',helvetica,arial;
+		font: 300 2em/1.125em 'MiloOT',helvetica,arial;
 	}
 	.amp-audio-wrap {
 		text-align: center;
