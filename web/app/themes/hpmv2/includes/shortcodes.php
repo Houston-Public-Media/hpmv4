@@ -772,3 +772,19 @@ function hpm_artspace_trans() {
 
 }
 add_shortcode( 'hpm_artspace', 'hpm_artspace_trans' );
+
+function hpm_programs_shortcode( $atts ) {
+	extract( shortcode_atts( [
+		'channel' => 'news'
+	], $atts, 'multilink' ) );
+	if ( empty( $channel ) ) :
+		return 'EMPTY';
+	endif;
+	$out = get_transient( 'hpm_programs_' . $channel );
+	if ( empty( $out ) ) :
+		return "Transient Empty";
+	endif;
+	return $out;
+
+}
+add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
