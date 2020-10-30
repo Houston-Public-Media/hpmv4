@@ -24,6 +24,7 @@ web/.htaccess
 !.env.example
 env.production
 .idea
+.nova
 
 # Composer
 /vendor
