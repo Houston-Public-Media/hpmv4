@@ -104,67 +104,36 @@ endif; ?>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8</a></h5>
-								<?PHP echo hpmv2_nowplaying('tv8.1'); ?>
+								<div id="np-tv8.1"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
-								<?PHP echo hpmv2_nowplaying('tv8.2'); ?>
+								<div id="np-tv8.2"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
-								<?PHP echo hpmv2_nowplaying('tv8.3'); ?>
+								<div id="np-tv8.3"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.4 (World)</a></h5>
-								<?PHP echo hpmv2_nowplaying('tv8.4'); ?>
+								<div id="np-tv8.4"></div>
 							</div>
 						</div>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
 								<h5><a href="/news887">News 88.7</a></h5>
-								<?PHP echo hpmv2_nowplaying('news887'); ?>
+								<div id="np-news"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/classical">Classical</a></h5>
-								<?PHP echo hpmv2_nowplaying('classical'); ?>
+								<div id="np-classical"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/mixtape">Mixtape</a></h5>
-								<div id="mixtape"></div>
-								<script>
-									var getJSON = function(url, callback) {
-										var xhr = new XMLHttpRequest();
-										xhr.open('GET', url, true);
-										xhr.responseType = 'json';
-										xhr.onload = function() {
-											var status = xhr.status;
-											if (status === 200) {
-												callback(null, xhr.response);
-											} else {
-												callback(status, xhr.response);
-											}
-										};
-										xhr.send();
-									};
-									function update() {
-										getJSON( "https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/mixtape.json",
-											function(err, data) {
-												if (err !== null) {
-													console.log(err);
-												} else {
-													document.getElementById('mixtape').innerHTML = '<h3>'+data[0]+' - '+data[1]+'</h3><p>Album: '+data[2]+'</p>';
-													masonLoad();
-												}
-											}
-										);
-									}
-									document.addEventListener("DOMContentLoaded", function() {
-										update();
-										setInterval("update()", 60000);
-									});
-								</script>
+								<div id="np-mixtape"></div>
 							</div>
 						</div>
+						<script>hpmNowPlaying('all',false);</script>
 					</div>
 					<div id="in-depth">
 						<h4>News 88.7 In-Depth</h4>

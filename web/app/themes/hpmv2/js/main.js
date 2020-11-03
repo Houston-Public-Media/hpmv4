@@ -249,3 +249,174 @@ jQuery(document).ready(function($){
 		$('#top-schedule .top-schedule-link-wrap').toggleClass('top-sched-active');
 	});
 });
+var getJSON = function(url, callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url, true);
+	xhr.responseType = 'json';
+	xhr.onload = function() {
+		var status = xhr.status;
+		if (status === 200) {
+			callback(null, xhr.response);
+		} else {
+			callback(status, xhr.response);
+		}
+	};
+	xhr.send();
+};
+let stationIds = {
+	'news': 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json&show_song=true',
+	'classical': 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
+	'mixtape': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
+	'tv8.1': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
+	'tv8.2': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
+	'tv8.3': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
+	'tv8.4': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json'
+}
+function updateData( data, station, next) {
+	var output = '';
+	if (next) {
+		output = '<h2>On Now</h2>';
+	}
+	if ( station.startsWith('tv') ) {
+		if (next) {
+			output += '<ul>';
+			for ( var al = 0; al < data['airlist'].length; al++ ) {
+				if (al == 1) {
+					output += '</ul><h2>Coming Up</h2><ul>'
+				}
+				var airStart = new Date(data['airlist'][al]['air-start']);
+				output += '<li>'+
+					airStart.toLocaleTimeString([],{hour:'numeric',minute: '2-digit' }) +
+					': ' + data['airlist'][al]['version']['series']['series-title'] + '</li>';
+			}
+			output += '</ul>';
+		} else {
+			output += '<h3>'+data['airlist'][0]['version']['series']['series-title']+'</h3>';
+		}
+	} else if ( station === 'mixtape' ) {
+		output = '<h3>'+data[0]+' - '+data[1]+'</h3><p>Album: '+data[2]+'</p>';
+	} else {
+		if ( typeof data.onNow.song !== 'object') {
+			output = '<h3>'+data.onNow.program.name+'</h3>';
+		} else {
+			var descs = [];
+			if (data.onNow.song.composerName.length > 0) {
+				descs.push("Composer: "+data.onNow.song.composerName );
+			}
+			if (data.onNow.song.conductor.length > 0) {
+				descs.push("Conductor: "+data.onNow.song.conductor);
+			}
+			if (data.onNow.song.copyright.length > 0 && data.onNow.song.catalogNumber.length > 0) {
+				descs.push("Catalog Number: "+data.onNow.song.copyright+" "+data.onNow.song.catalogNumber);
+			}
+			extra = descs.join(', ');
+			output = "<h3>"+data.onNow.song.trackName.replace('&','&amp;')+"</h3><p>"+extra+"</p>";
+		}
+		if (next) {
+			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].fullstart)+': '+data.nextUp[0].program.name+'</li></ul>';
+		}
+	}
+	document.getElementById('np-'+station).innerHTML = output;
+}
+function updateStations(station, next) {
+	if ( station !== 'all' ) {
+		getJSON( stationIds[station], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,station,next);
+			}
+		});
+	} else {
+		getJSON( stationIds['news'], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,'news',next);
+			}
+		});
+		getJSON( stationIds['classical'], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,'classical',next);
+			}
+		});
+		getJSON( stationIds['mixtape'], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,'mixtape',next);
+			}
+		});
+		getJSON( stationIds['tv8.1'], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,'tv8.1',next);
+			}
+		});
+		getJSON( stationIds['tv8.2'], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,'tv8.2',next);
+			}
+		});
+		getJSON( stationIds['tv8.3'], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,'tv8.3',next);
+			}
+		});
+		getJSON( stationIds['tv8.4'], function(err, data) {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				updateData(data,'tv8.4',next);
+			}
+		});
+	}
+	masonLoad();
+}
+function hpmNowPlaying(station,next) {
+	document.addEventListener("DOMContentLoaded", function() {
+		updateStations(station,next);
+		setInterval("updateStations(station,next)", 60000);
+	});
+}
+function amPm(timeString) {
+	var hourEnd = timeString.indexOf(":");
+	var H = +timeString.substr(0, hourEnd);
+	var h = H % 12 || 12;
+	var ampm = (H < 12 || H === 24) ? " AM" : " PM";
+	return timeString = h + timeString.substr(hourEnd, 3) + ampm;
+}
+function masonLoad() {
+	var isActive = false;
+	if ( window.wide > 800 )
+	{
+		imagesLoaded( '#float-wrap', function() {
+			var msnry = new Masonry( '#float-wrap', {
+				itemSelector: '.grid-item',
+				stamp: '.stamp',
+				columnWidth: '.grid-sizer'
+			});
+			isActive = true;
+		});
+		if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
+			var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
+			document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
+		}
+	} else {
+		if ( isActive ) {
+			msnry.destroy();
+			isActive = !isActive;
+		}
+		var gridItem = document.querySelectorAll('.grid-item');
+		for ( i = 0; i < gridItem.length; ++i ) {
+			gridItem[i].removeAttribute('style');
+		}
+	}
+}

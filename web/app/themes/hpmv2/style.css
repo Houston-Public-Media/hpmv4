@@ -592,7 +592,7 @@ li.nav-top.menu-item-has-children div.nav-top:after {
 	content: '\f0da';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal .75em/1 'Font Awesome 5 Free';
+	font: 900 .75em/1 'Font Awesome 5 Free';
 	float: right;
 	padding-right: 1em;
 	position: relative;
@@ -2780,15 +2780,15 @@ footer#colophon ul li a {
  */
 
 body.page-template-page-listen .np-selector-wrap {
-	overflow: hidden;
+	display: flex;
 	border-right: 0.125em solid rgb(230,230,230);
 }
 body.page-template-page-listen #masthead #top-listen {
 	display: none;
 }
 body.page-template-page-listen .np-selector-wrap div {
-	float: left;
-	width: 33.3333%;
+	flex-basis: 1;
+	flex-grow: 2;
 	text-align: center;
 	font: normal 21px/25px 'MiloOT-Light',arial,helvetica,sans-serif;
 	color: #58585b;
@@ -4105,7 +4105,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		content: '\f0d8';
 		display: inline-block;
 		-webkit-font-smoothing: antialiased;
-		font: normal .75em/1 'Font Awesome 5 Free';
+		font: 900 .75em/1 'Font Awesome 5 Free';
 		position: relative;
 		top: -0.25em;
 		padding-left: 0.25em;
@@ -4981,6 +4981,10 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		max-width: 30em;
 		margin: 0 auto;
 	}
+	body.page-template-page-listen.watch-tv #primary {
+		max-width: 60em;
+		margin: 0 auto;
+	}
 	body.page-template-page-listen #masthead #top-schedule {
 		display: none;
 	}
@@ -5096,7 +5100,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		content: '\f0da';
 		display: inline-block;
 		-webkit-font-smoothing: antialiased;
-		font: normal .75em/1 'Font Awesome 5 Free';
+		font: 900 .75em/1 'Font Awesome 5 Free';
 		float: right;
 		padding-right: 1em;
 		position: relative;
@@ -5795,7 +5799,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	content: '\f0da';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal 1em/1 'Font Awesome 5 Free';
+	font: 900 1em/1 'Font Awesome 5 Free';
 	margin-left: 0.375em;
 	color: rgb(0,170,235);
 }
@@ -6212,7 +6216,7 @@ ul.passport-drop li.passport-faq:after {
 	content: '\f0da';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal 1em/1 'Font Awesome 5 Free';
+	font: 900 1em/1 'Font Awesome 5 Free';
 	margin-left: 0.375em;
 	color: rgb(0,170,235);
 }

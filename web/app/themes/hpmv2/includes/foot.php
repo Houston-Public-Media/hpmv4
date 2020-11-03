@@ -176,45 +176,10 @@ function hpm_masonry() {
 	wp_reset_query();
 	global $wp_query;
 	$post_type = get_post_type();
-	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) && !is_page_template( 'single-shows-skyline.php' ) ) || is_page_template( 'page-series-tiles.php' ) ) :
-		// if ( get_the_ID() != 61247 ) : ?>
+	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) && !is_page_template( 'single-shows-skyline.php' ) ) || is_page_template( 'page-series-tiles.php' ) ) : ?>
 	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
 	<script>
-		function masonLoad() {
-			var isActive = false;
-			if ( window.wide > 800 )
-			{
-				imagesLoaded( '#float-wrap', function() {
-					var msnry = new Masonry( '#float-wrap', {
-						itemSelector: '.grid-item',
-						stamp: '.stamp',
-						columnWidth: '.grid-sizer'
-					});
-					isActive = true;
-				});
-<?php
-		/*
-			Manually set the top pixel offset of the NPR articles box on the homepage, since Masonry doesn't calculate offsets for stamped elements
-		*/
-			if ( is_front_page() ) : ?>
-				var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
-				document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
-<?php
-			endif; ?>
-			}
-			else
-			{
-				if ( isActive ) {
-					msnry.destroy();
-					isActive = !isActive;
-				}
-				var gridItem = document.querySelectorAll('.grid-item');
-				for ( i = 0; i < gridItem.length; ++i ) {
-					gridItem[i].removeAttribute('style');
-				}
-			}
-		}
 		document.addEventListener("DOMContentLoaded", function() {
 			masonLoad();
 			var resizeTimeout;
@@ -231,7 +196,6 @@ function hpm_masonry() {
 		});
 	</script>
 <?php
-			// endif;
 		endif;
 }
 

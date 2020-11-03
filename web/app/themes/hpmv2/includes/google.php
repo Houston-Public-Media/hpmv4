@@ -93,7 +93,7 @@ function hpm_google_tracker() {
 		<script async src='https://www.google-analytics.com/analytics.js'></script>
 <?php
 }
-
+add_action( 'wp_head', 'hpm_google_tracker', 100 );
 add_filter( 'gtm_post_category', 'gtm_populate_category_items', 10, 3 );
 
 function gtm_populate_category_items( $total_match, $match, $post_id ) {

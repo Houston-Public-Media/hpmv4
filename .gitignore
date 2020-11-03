@@ -13,6 +13,8 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 auth.json
 web/app/themes/hpm-new/
+web/app/themes/hpmv2/style-*
+web/app/themes/hpmv2/front-page-*
 
 # WordPress
 web/wp
