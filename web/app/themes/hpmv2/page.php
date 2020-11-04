@@ -90,17 +90,6 @@
 						<img src="https://cdn.hpm.io/assets/images/TCH_sponsor-01.png" alt="Texas Children's Hospital" style="margin: 0 12.5%; width: 75%; ">
 					</a>
 				</div>
-				<script>
-					var beeSponsor = document.querySelectorAll('.beesponsor');
-					for (i = 0; i < beeSponsor.length; ++i) {
-						beeSponsor[i].addEventListener('click', function() {
-							var attr = this.id;
-							if ( typeof attr !== typeof undefined && attr !== false) {
-								ga('event', 'click', {'method': 'Bee Sponsor', 'href': attr});
-							}
-						});
-					}
-				</script>
 			<?php
 				elseif ( $pagename == 'about' || in_array( 61381, $anc ) ) : ?>
 				<div id="top-schedule-wrap">

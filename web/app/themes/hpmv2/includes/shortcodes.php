@@ -130,8 +130,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
 					var mediaName = event.jPlayer.status.src;
 					$(this).jPlayer(\"pauseOthers\");
-					ga('send', 'event', 'jPlayer', 'Play', mediaName, playerTime);
-					ga('hpmRollup.send', 'event', 'jPlayer', 'Play', mediaName, playerTime);
+					gaAll('send', 'event', 'jPlayer', 'Play', mediaName, playerTime);
 				}
 			);
 			$(\"#jquery_jplayer_{$audio_id}\").bind(
@@ -139,8 +138,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
 					var mediaName = event.jPlayer.status.src;
 					if (playerTime<100) {
-						ga('send', 'event', 'jPlayer', 'Pause', mediaName, playerTime);
-						ga('hpmRollup.send', 'event', 'jPlayer', 'Pause', mediaName, playerTime);
+						gaAll('send', 'event', 'jPlayer', 'Pause', mediaName, playerTime);
 					}
 				}
 			);
@@ -148,8 +146,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 				$.jPlayer.event.seeking, function(event) {
 					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
 					var mediaName = event.jPlayer.status.src;
-					ga('send', 'event', 'jPlayer', 'Seeking', mediaName, playerTime);
-					ga('hpmRollup.send', 'event', 'jPlayer', 'Seeking', mediaName, playerTime);
+					gaAll('send', 'event', 'jPlayer', 'Seeking', mediaName, playerTime);
 				}
 			);
 			$(\"#jquery_jplayer_{$audio_id}\").bind(
@@ -157,11 +154,9 @@ function hpm_audio_shortcode( $html, $attr ) {
 					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
 					var mediaName = event.jPlayer.status.src;
 					if (playerTime>0) {
-						ga('send', 'event', 'jPlayer', 'Seeked', mediaName, playerTime);
-						ga('hpmRollup.send', 'event', 'jPlayer', 'Seeked', mediaName, playerTime);
+						gaAll('send', 'event', 'jPlayer', 'Seeked', mediaName, playerTime);
 					} else {
-						ga('send', 'event', 'jPlayer', 'Stopped', mediaName, playerTime);
-						ga('hpmRollup.send', 'event', 'jPlayer', 'Stopped', mediaName, playerTime);
+						gaAll('send', 'event', 'jPlayer', 'Stopped', mediaName, playerTime);
 					}
 				}
 			);
@@ -169,8 +164,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 				$.jPlayer.event.ended, function(event) {
 					var playerTime = 100;
 					var mediaName = event.jPlayer.status.src;
-					ga('send', 'event', 'jPlayer', 'Ended', mediaName, playerTime);
-					ga('hpmRollup.send', 'event', 'jPlayer', 'Ended', mediaName, playerTime);
+					gaAll('send', 'event', 'jPlayer', 'Ended', mediaName, playerTime);
 				}
 			);";
 		endif;

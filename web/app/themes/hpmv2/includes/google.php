@@ -36,60 +36,19 @@ function hpm_google_tracker() {
 						}
 					}
 				});
-<?php if ( is_home() ) : ?>
-				googletag.pubads().setTargeting('section', 'homepage');
-<?php endif; ?>
+				if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
+					googletag.pubads().setTargeting('section', 'homepage');
+				}
 				googletag.enableServices();
 			});
-			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-			ga('create', 'UA-3106036-9', 'auto');
-			ga('create', 'UA-3106036-11', 'auto', 'hpmRollup' );
-			var custom_vars = {
-				nid: {name: "nid", slot: 8, scope_id: 3},
-				pop: {name: "pop", slot: 9, scope_id: 3},
-				author: {name: "author", slot: 11, scope_id: 3},
-				keywords: {name: "tags", slot: 12, scope_id: 3},
-				org_id: {name: "org_id", slot: 13, scope_id: 3},
-				brand: {name: "CP_Station", slot: 14, scope_id: 2},
-				has_audio: {name: "Has_Inline_Audio", slot: 15, scope_id: 3},
-				programs: {name: "Program", slot: 16, scope_id: 3},
-				category: {name: "Category", slot: 10, scope_id: 3},
-				datePublished: {name: "PublishedDate", slot: 17, scope_id: 3},
-				wordCount: {name: "WordCount", slot: 18, scope_id: 3},
-				story_id: {name: "API_Story_Id", slot: 19, scope_id: 3},
-				pmp_guid: {name: "pmp_guid", slot: 20, scope_id: 3}
-			};
-			metadata = document.getElementsByTagName("meta");
-			// no metadata then no custom variables
-			if (metadata.length > 0) {
-				for (var k = 0; k < metadata.length; k++) {
-					if (metadata[k].content !== "") {
-						if (custom_vars[metadata[k].name]) {
-							if (metadata[k].name === 'keywords' && metadata[k].content.length > 150) {
-								var tagString = escape(metadata[k].content);
-								var comma = tagString.lastIndexOf('%2C', 150);
-								var tag = tagString.substring( comma-5, comma );
-								var short = metadata[k].content.substring( 0, metadata[k].content.lastIndexOf( tag, 150 ) + 5 );
-								ga('set', "dimension" + custom_vars[metadata[k].name]["slot"], short );
-								ga('hpmRollup.set', "dimension" + custom_vars[metadata[k].name]["slot"], short );
-							} else {
-								ga('set', "dimension" + custom_vars[metadata[k].name]["slot"], metadata[k].content );
-								ga('hpmRollup.set', "dimension" + custom_vars[metadata[k].name]["slot"], metadata[k].content );
-							}
-
-						}
-					}
-				}
-			}
-			ga('send', 'pageview');
-			ga('hpmRollup.send', 'pageview');
 			function hpmKimbiaComplete(kimbiaData) {
 				var charge = kimbiaData['initialCharge'];
 				var amount = Number(charge.replace(/[^0-9\.]+/g,""));
 				fbq( 'track', 'Purchase', { value: amount, currency: 'USD' } );
-				ga('send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
+				gaAll('send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
 			}
 		</script>
+		<script>addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)});</script>
 		<script async src='https://www.google-analytics.com/analytics.js'></script>
 <?php
 }

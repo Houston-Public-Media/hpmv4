@@ -144,7 +144,7 @@ jQuery(document).ready(function($){
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 		}
 	});
-	$(".article-share-icon a, #top-listen a, .nav-listen-live a").click(function(e){
+	$(".article-share-icon a, #top-listen a, .nav-listen-live a, #top-watch a").click(function(e){
 		var attr = $(this).attr('data-dialog');
 		var hrefCheck = $(this).attr('href');
 		if ( hrefCheck.includes('mailto:') ) {
@@ -161,12 +161,6 @@ jQuery(document).ready(function($){
 			var href = $(this).attr('href');
 			var text = $(this).text();
 			var myWindow = window.open(href, text, "width=" + size[0] + ",height=" + size[1]);
-		}
-	});
-	$('a').click(function(e){
-		var aHref = $(this).attr('href');
-		if ( aHref.indexOf(location.host) === -1 && aHref.startsWith('http') ) {
-			ga('send', 'event', 'External', 'Click-Exit Link', aHref);
 		}
 	});
 	$("a").filter(function() {

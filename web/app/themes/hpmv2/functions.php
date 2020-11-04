@@ -66,6 +66,7 @@ function hpmv2_scripts() {
 		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], false );
 	endif;
+	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], time(), true );
 
 	wp_register_script( 'jplayer', 'https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js', [ 'jquery' ],	'20170928' );
 }

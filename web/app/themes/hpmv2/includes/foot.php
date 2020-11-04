@@ -224,8 +224,7 @@ function hpm_hm_banner() {
 				topBanner[i].addEventListener('click', function() {
 					var attr = this.id;
 					if ( typeof attr !== typeof undefined && attr !== false) {
-						ga('send', 'event', 'Top Banner', 'click', attr);
-						ga('hpmRollup.send', 'event', 'Top Banner', 'click', attr);
+						gaAll('send', 'event', 'Top Banner', 'click', attr);
 					}
 				});
 			}
