@@ -472,12 +472,14 @@ body #masthead #top-donate .fab {
 #masthead #top-donate a {
 	color: white;
 }
-#masthead #top-listen {
+#masthead #top-listen,
+#masthead #top-watch {
 	text-align: center;
 	float: left;
-	width: 50%;
+	width: 33.3333%;
 }
-#masthead #top-listen a {
+#masthead #top-listen a,
+#masthead #top-watch a {
 	padding: 0.5em 0;
 	display: block;
 	font: normal 1.5em/1em 'alternate-gothic-no-2-d','MiloOT',arial,sans-serif;
@@ -485,8 +487,11 @@ body #masthead #top-donate .fab {
 	background: #404040;
 	color: white;
 }
+#masthead #top-watch a {
+	background:#00566C;
+}
 #masthead #top-schedule {
-	width: 50%;
+	width: 33.33333%;
 	float: left;
 	position: relative;
 }
@@ -494,7 +499,7 @@ body #masthead #top-donate .fab {
 	position: relative;
 	top: 100%;
 	display: none;
-	width: 200%;
+	width: 300%;
 	overflow: hidden;
 }
 #masthead #top-schedule .top-schedule-link-wrap.top-sched-active {
@@ -514,10 +519,13 @@ body #masthead #top-donate .fab {
 }
 #masthead #top-schedule div.top-schedule-label .fa,
 #masthead #top-listen .fa,
+#masthead #top-watch .fa,
 #masthead #top-schedule div.top-schedule-label .fab,
 #masthead #top-listen .fab,
+#masthead #top-watch .fab,
 #masthead #top-schedule div.top-schedule-label .fas,
-#masthead #top-listen .fas {
+#masthead #top-listen .fas,
+#masthead #top-watch .fas {
 	padding-right:  0.25em;
 }
 #masthead #top-schedule div.top-schedule-label a {
@@ -2783,7 +2791,8 @@ body.page-template-page-listen .np-selector-wrap {
 	display: flex;
 	border-right: 0.125em solid rgb(230,230,230);
 }
-body.page-template-page-listen #masthead #top-listen {
+body.page-template-page-listen #masthead #top-listen,
+body.page-template-page-listen #masthead #top-watch {
 	display: none;
 }
 body.page-template-page-listen .np-selector-wrap div {
@@ -4059,7 +4068,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	#masthead #top-mobile-menu {
 		display: none;
 	}
-	#masthead #top-listen, #masthead nav#site-navigation {
+	#masthead #top-listen,
+	#masthead nav#site-navigation,
+	#masthead #top-watch {
 		display: block;
 		background-color: transparent;
 	}
@@ -4337,6 +4348,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		width: auto;
 		overflow: hidden;
 		float: none;
+		padding-top: 0.25em;
 	}
 	#masthead #top-schedule div {
 		float: left;
@@ -4380,7 +4392,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	}
 	#masthead #top-search {
 		position: absolute;
-		top: -4.5em;
+		top: -4.25em;
 		width: auto;
 		padding: 0;
 		background-color: transparent;
@@ -4418,26 +4430,32 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	#masthead #top-donate {
 		display: none;
 	}
-	#masthead #top-listen {
+	#masthead #top-listen,
+	#masthead #top-watch {
 		position: static;
 		text-align: left;
 		width: auto;
 	}
-	#masthead #top-listen .fa,
 	#masthead #top-schedule .fa,
-	#masthead #top-listen .fab,
 	#masthead #top-schedule .fab,
-	#masthead #top-listen .fas,
 	#masthead #top-schedule .fas {
 		display: none;
 	}
-	#masthead #top-donate a, #masthead #top-listen a {
+	#masthead #top-donate a {
 		font: normal 1em/1.25em 'MiloOT',arial,sans-serif;
 		text-transform: initial;
 		display: block;
 		padding: 0;
 		background-color: transparent;
 		color: #00b0bc;
+	}
+	#masthead #top-listen a, #masthead #top-watch a {
+		padding: 0.25em 0.5em;
+		font-size: 125%;
+		line-height: 112.5%;
+	}
+	#masthead #top-listen a .fas, #masthead #top-watch a .fas {
+		font-size: 85%;
 	}
 	#masthead #top-donate a {
 		background-color: #cc0000;
@@ -4447,7 +4465,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	#masthead #header-social {
 		display: block;
 		position: relative;
-		top: -0.25em;
+		top: 0em;
 		margin: 0 0 0 3em;
 	}
 	#masthead nav#site-navigation .nav-top.nav-passport a {
@@ -5051,6 +5069,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	}
 	body.page-template-page-listen #masthead #top-mobile-menu {
 		left: calc(100% - 64px);
+		line-height: 112.5%;
 	}
 	body.page-template-page-listen.nav-active-menu #masthead #top-mobile-menu {
 		left: calc(100% - 29em);
@@ -5073,6 +5092,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		background-color: transparent;
 		padding: 0;
 		font-family: Arial, Helvetica, sans-serif;
+		line-height: 112.5%;
 	}
 	body.page-template-page-listen #masthead #top-donate a .top-mobile-text {
 		margin-left: -3px;
@@ -5283,11 +5303,11 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		font: normal 1.25em/1.25em 'MiloOT-Light',arial,sans-serif;
 		border-right: 0.0625em solid rgb(165,167,169);
 	}
-	#masthead #top-donate a, #masthead #top-listen a {
+	#masthead #top-donate a {
 		font: normal 1.25em/1.25em 'MiloOT',arial,sans-serif;
 	}
 	#masthead #top-search {
-		top: -5.5em;
+		top: -5.25em;
 	}
 	#masthead nav#site-navigation .nav-top.nav-passport a {
 		background-size: 15%;
