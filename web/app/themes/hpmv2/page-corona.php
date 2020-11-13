@@ -67,9 +67,8 @@ get_header(); ?>
 		.page-header h1 {
 			color: white;
 			margin: 0;
-			/* font-family: var(--hpm-font-main);
-			font-weight: 900; */
-			font-family: 'MiloOT-XBold',arial,helvetica,sans-serif;
+			font-family: var(--hpm-font-main);
+			font-weight: 900;
 			width: 100%;
 			font-size: 500%;
 			line-height: 100%;
@@ -77,9 +76,8 @@ get_header(); ?>
 		.page-header p {
 			font-size: 125%;
 			width: 100%;
-			/* font-family: var(--hpm-font-main);
-			font-weight: 500; */
-			font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
+			font-family: var(--hpm-font-main);
+			font-weight: 500;
 			color: white;
 			margin: 0;
 		}

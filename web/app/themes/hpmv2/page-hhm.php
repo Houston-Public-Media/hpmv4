@@ -48,7 +48,8 @@ Template Name: Hispanic Heritage
 		}
 		.page-content p {
 			margin-bottom: 1em;
-			font-family: 'MiloOT-Light', Arial, Helvetica, sans-serif;
+			font-family: var(--hpm-font-main);
+			font-weight: 100;
 		}
 		.page-content a {
 			color: var(--hhm-red);
@@ -183,8 +184,8 @@ Template Name: Hispanic Heritage
 			color: white;
 			margin: 0 0 2em 0;
 			padding: 0.5em 2em 1em;
-			font-family: 'MiloOT-Light', Arial, Helvetica, sans-serif;
-			font-weight: 400;
+			font-family: var(--hpm-font-main);
+			font-weight: 100;
 		}
 		.hhm-resources ul li a {
 			color: white;
@@ -238,7 +239,7 @@ Template Name: Hispanic Heritage
 				padding: 1em 1em 0;
 			}
 		}
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			.page-header {
 				padding-right: 0;
 				padding-left: 0;

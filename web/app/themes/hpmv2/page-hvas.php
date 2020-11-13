@@ -129,7 +129,7 @@ Template Name: Arts Virtual
 			border-bottom: 3px solid transparent;
 			position: relative;
 			bottom: -2px;
-			font: normal 1.5em/1.125em 'MiloOT-Bold',arial,helvetica,sans-serif;
+			font: 700 1.5em/1.125em var(--hpm-font-main);
 			z-index: 100;
 		}
 		.hvas-select div:hover {
@@ -165,7 +165,7 @@ Template Name: Arts Virtual
 				background-image: url(https://cdn.hpm.io/assets/images/havs_tablet2x.jpeg);
 			}
 		}
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			.page-header {
 				padding-right: 0;
 				padding-left: 0;
