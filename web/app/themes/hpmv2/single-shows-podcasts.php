@@ -30,9 +30,9 @@ get_header(); ?>
 						if ( $bk == 'mobile' ) :
 							$page_head_style .= ".page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); }";
 						elseif ( $bk == 'tablet' ) :
-							$page_head_style .= " @media screen and (min-width: 30.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
+							$page_head_style .= " @media screen and (min-width: 34em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
 						elseif ( $bk == 'desktop' ) :
-							$page_head_style .= " @media screen and (min-width: 50.0625em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
+							$page_head_style .= " @media screen and (min-width: 52.5em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
 						endif;
 					endforeach;
 				elseif ( !empty( $header_back[0] ) ) :
@@ -163,7 +163,7 @@ get_header(); ?>
 							top: 1.25em;
 						}
 					}
-					@media screen and (min-width: 50.0625em) {
+					@media screen and (min-width: 52.5em) {
 						#float-wrap article#hpm-show-podcast.felix-type-b {
 							width: 64.5%;
 							margin: 0 0.75% 1em;

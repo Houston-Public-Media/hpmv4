@@ -52,7 +52,7 @@ Template Name: Career Frontier
 		}
 		.page-content p {
 			margin-bottom: 1em;
-			font-family: usual, 'MiloOT',arial,sans-serif;
+			font-family: usual,arial,sans-serif;
 		}
 		.page-content a {
 			color: rgb(80, 127, 145);
@@ -95,7 +95,7 @@ Template Name: Career Frontier
 		.page-header p {
 			font-size: 125%;
 			width: 100%;
-			font-family: usual, 'MiloOT',arial,sans-serif;
+			font-family: usual,arial,sans-serif;
 			color: white;
 			margin: 0;
 		}
@@ -163,7 +163,7 @@ Template Name: Career Frontier
 			content: '\f0d7';
 			display: inline-block;
 			-webkit-font-smoothing: antialiased;
-			font: normal 1em/1 'FontAwesome';
+			font: 900 1em/1 'Font Awesome 5 Free';
 			position: absolute;
 			top: 0.5em;
 			right: 0.5em;
@@ -289,7 +289,7 @@ Template Name: Career Frontier
 				min-height: 46.375em;
 			}
 		}
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			.page-header {
 				padding-right: 0;
 				padding-left: 0;

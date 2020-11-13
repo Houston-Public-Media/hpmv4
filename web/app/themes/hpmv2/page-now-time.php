@@ -101,7 +101,7 @@ get_header(); ?>
 						border-top: 0.125em solid #f5f5f5;
 					}
 				}
-				@media screen and (min-width: 50.0625em) {
+				@media screen and (min-width: 52.5em) {
 					.page-header {
 						background-image: url(https://cdn.hpm.io/assets/images/nitt-header.png);
 						padding-bottom: calc(100%/6);

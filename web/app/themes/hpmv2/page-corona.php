@@ -67,6 +67,8 @@ get_header(); ?>
 		.page-header h1 {
 			color: white;
 			margin: 0;
+			/* font-family: var(--hpm-font-main);
+			font-weight: 900; */
 			font-family: 'MiloOT-XBold',arial,helvetica,sans-serif;
 			width: 100%;
 			font-size: 500%;
@@ -75,6 +77,8 @@ get_header(); ?>
 		.page-header p {
 			font-size: 125%;
 			width: 100%;
+			/* font-family: var(--hpm-font-main);
+			font-weight: 500; */
 			font-family: 'MiloOT-Medi',arial,helvetica,sans-serif;
 			color: white;
 			margin: 0;
@@ -102,7 +106,7 @@ get_header(); ?>
 			width: 1.5em;
 			display: inline-block;
 			-webkit-font-smoothing: antialiased;
-			font: normal 1.5em/1 'FontAwesome';
+			font: 900 1.5em/1 'Font Awesome 5 Free';
 		}
 		.corona-links p {
 			margin: 0;
@@ -174,7 +178,7 @@ get_header(); ?>
 				background-image: url(https://cdn.hpm.io/assets/images/covid19_Tablet.png);
 			}
 		}
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			.page-template-page-corona article {
 				width: 100%;
 				float: none;

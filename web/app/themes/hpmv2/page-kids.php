@@ -109,7 +109,7 @@ get_header(); ?>
                 font-size: 1.5em;
             }
 		}
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			#station-module {
 				height: 750px;
 			}

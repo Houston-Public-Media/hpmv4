@@ -60,7 +60,7 @@ function hpmv2_scripts() {
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style.css', [], time() );
+		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style-mod.css', [], time() );
 		wp_enqueue_script( 'hpmv2-js', get_template_directory_uri().'/js/main.js', [ 'jquery' ], time(), false );
 	else :
 		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );

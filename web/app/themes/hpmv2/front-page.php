@@ -104,33 +104,33 @@ endif; ?>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8</a></h5>
-								<div id="np-tv8.1"></div>
+								<div class="nowplay-tv81"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
-								<div id="np-tv8.2"></div>
+								<div class="nowplay-tv82"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
-								<div id="np-tv8.3"></div>
+								<div class="nowplay-tv83"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.4 (World)</a></h5>
-								<div id="np-tv8.4"></div>
+								<div class="nowplay-tv84"></div>
 							</div>
 						</div>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
 								<h5><a href="/news887">News 88.7</a></h5>
-								<div id="np-news"></div>
+								<div class="nowplay-news"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/classical">Classical</a></h5>
-								<div id="np-classical"></div>
+								<div class="nowplay-classical"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/mixtape">Mixtape</a></h5>
-								<div id="np-mixtape"></div>
+								<div class="nowplay-mixtape"></div>
 							</div>
 						</div>
 						<script>hpmNowPlaying('all',false);</script>

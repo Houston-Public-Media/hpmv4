@@ -72,7 +72,7 @@ get_header(); ?>
 				background-image: url(https://cdn.hpm.io/assets/images/Election-2020_tablet-2x.jpg);
 			}
 		}
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			.page-template-page-election2020 article {
 				width: 100%;
 				float: none;

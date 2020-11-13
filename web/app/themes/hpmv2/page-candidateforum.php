@@ -111,7 +111,7 @@ get_header(); ?>
 			margin: 0 1.25%;
 		}
 
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			.page-template-page-candidateforum article {
 				width: 100%;
 				float: none;

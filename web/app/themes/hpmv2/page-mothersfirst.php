@@ -275,7 +275,7 @@ Template Name: Mothers First
 				font-size: 1.375em;
 			}
 		}
-		@media screen and (min-width: 50.0625em) {
+		@media screen and (min-width: 52.5em) {
 			.page-header {
 				padding-right: 0;
 				padding-left: 0;
