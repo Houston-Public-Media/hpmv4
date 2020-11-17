@@ -66,7 +66,7 @@ function hpmv2_scripts() {
 		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], false );
 	endif;
-	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], '', true );
+	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], '', false );
 
 	wp_register_script( 'jplayer', 'https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js', [ 'jquery' ],	'20170928' );
 }
@@ -99,7 +99,11 @@ add_filter( 'pre_get_posts', 'hpm_exclude_category' );
  */
 require( get_template_directory() . '/includes/amp.php' );
 require( get_template_directory() . '/includes/google.php' );
-require( get_template_directory() . '/includes/head.php' );
+if ( WP_ENV == 'development' ) :
+	require( get_template_directory() . '/includes/head-new.php' );
+else :
+	require( get_template_directory() . '/includes/head.php' );
+endif;
 require( get_template_directory() . '/includes/foot.php' );
 require( get_template_directory() . '/includes/shortcodes.php' );
 
