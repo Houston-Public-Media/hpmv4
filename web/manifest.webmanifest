@@ -1,0 +1,32 @@
+{
+	"lang": "en",
+	"name": "Houston Public Media - Together we do it for the love of Houston",
+	"short_name": "Houston Public Media",
+	"icons": [
+		{
+			"src": "https://cdn.hpm.io/assets/images/favicon/icon-144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "https://cdn.hpm.io/assets/images/favicon//icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "https://cdn.hpm.io/assets/images/favicon//icon-256.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		},
+		{
+			"src": "https://cdn.hpm.io/assets/images/favicon//icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"theme_color": "#C8102E",
+	"background_color": "#ffffff",
+	"display": "standalone",
+	"scope": "/",
+	"start_url": "/?source=pwa"
+}
