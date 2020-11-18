@@ -127,44 +127,17 @@ function hpm_audio_shortcode( $html, $attr ) {
 			$html .= "
 			$(\"#jquery_jplayer_{$audio_id}\").bind(
 				$.jPlayer.event.play, function(event) {
-					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
 					var mediaName = event.jPlayer.status.src;
 					$(this).jPlayer(\"pauseOthers\");
-					gaAll('send', 'event', 'jPlayer', 'Play', mediaName, playerTime);
-				}
-			);
-			$(\"#jquery_jplayer_{$audio_id}\").bind(
-				$.jPlayer.event.pause, function(event) {
-					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
-					var mediaName = event.jPlayer.status.src;
-					if (playerTime<100) {
-						gaAll('send', 'event', 'jPlayer', 'Pause', mediaName, playerTime);
-					}
-				}
-			);
-			$(\"#jquery_jplayer_{$audio_id}\").bind(
-				$.jPlayer.event.seeking, function(event) {
-					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
-					var mediaName = event.jPlayer.status.src;
-					gaAll('send', 'event', 'jPlayer', 'Seeking', mediaName, playerTime);
-				}
-			);
-			$(\"#jquery_jplayer_{$audio_id}\").bind(
-				$.jPlayer.event.seeked, function(event) {
-					var playerTime = Math.round(event.jPlayer.status.currentPercentAbsolute);
-					var mediaName = event.jPlayer.status.src;
-					if (playerTime>0) {
-						gaAll('send', 'event', 'jPlayer', 'Seeked', mediaName, playerTime);
-					} else {
-						gaAll('send', 'event', 'jPlayer', 'Stopped', mediaName, playerTime);
-					}
+					ga('hpmprod.send', 'event', 'jPlayer', 'Play', mediaName);
+					ga('hpmRollupprod.send', 'event', 'jPlayer', 'Play', mediaName);
 				}
 			);
 			$(\"#jquery_jplayer_{$audio_id}\").bind(
 				$.jPlayer.event.ended, function(event) {
-					var playerTime = 100;
 					var mediaName = event.jPlayer.status.src;
-					gaAll('send', 'event', 'jPlayer', 'Ended', mediaName, playerTime);
+					ga('hpmprod.send', 'event', 'jPlayer', 'Ended', mediaName);
+					ga('hpmRollupprod.send', 'event', 'jPlayer', 'Ended', mediaName);
 				}
 			);";
 		endif;
