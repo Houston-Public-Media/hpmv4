@@ -56,6 +56,23 @@ function hpm_amp_add_custom_analytics( $analytics ) {
 			],
 		],
 	];
+	$analytics['hpmwebamp-googleanalytics'] = [
+		'type' => 'googleanalytics',
+		'attributes' => [
+			// 'data-credentials' => 'include',
+		],
+		'config_data' => [
+			'vars' => [
+				'account' => "UA-3106036-22"
+			],
+			'triggers' => [
+				'trackPageview' => [
+					'on' => 'visible',
+					'request' => 'pageview',
+				],
+			],
+		],
+	];
 	return $analytics;
 }
 
@@ -85,13 +102,16 @@ add_action( 'amp_post_template_css', 'hpm_amp_additional_css' );
 function hpm_amp_additional_css( $amp_template ) {
 	?>
 	@font-face {
-		font-family: 'MiloOT';
-		src: url('https://cdn.hpm.io/assets/fonts/MiloOT-Light.otf') format('opentype'), url('https://cdn.hpm.io/assets/fonts/MiloWeb-Light.woff') format('woff'), url('https://cdn.hpm.io/assets/fonts/MiloWeb-Light.eot') format('eot');
-		font-weight: 300;
+		font-family: 'PBS-Sans';
+		src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans.woff2') format('woff2'),
+		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans.woff') format('woff'),
+		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans.ttf') format('truetype');
+		font-display: auto;
+		font-weight: 400;
 		font-style: normal;
 	}
 	.amp-wp-title {
-		font: 300 2em/1.125em 'MiloOT',helvetica,arial;
+		font: 400 2em/1.125em 'PBS-Sans',helvetica,arial;
 	}
 	.amp-audio-wrap {
 		text-align: center;
