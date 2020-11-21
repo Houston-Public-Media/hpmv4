@@ -1,22 +1,12 @@
 function parameters($) {
 	var bod = $('body');
-	var siteNav = $('#site-navigation');
 	window.wide = $(window).width();
 	window.high = $(window).height();
 	window.mastHigh = $('#masthead').height();
 	window.bodyHigh = $('#page').height();
-	window.topMobileMenu = $('#top-mobile-menu').outerWidth();
-	window.move = wide - topMobileMenu;
 	window.totalHigh = mastHigh + bodyHigh;
 	window.listenLive = bod.hasClass('page-template-page-listen');
 
-	if (wide < 801 || listenLive === true )
-	{
-		siteNav.width(move);
-	} else {
-		bod.removeClass('nav-active-menu').removeAttr('style');
-		siteNav.removeAttr('style');
-	}
 	if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
 		$('.felix-type-b > .thumbnail-wrap').each(function() {
 			var felixWide = $(this).width();
@@ -74,33 +64,25 @@ jQuery(document).ready(function($){
 		$(this).removeClass('nav-active');
 	});
 	$('#top-mobile-menu').click(function(){
-		if (wide < 801 || listenLive === true )
-		{
+		// if (wide < 801 || listenLive === true )
+		// {
 			if (bod.hasClass('nav-active-menu'))
 			{
-				bod.removeClass('nav-active-menu').removeAttr('style').removeAttr('height');
-				if ($(this).hasClass('dc-top-menu')) {
-					$(this).html('<span class="genericons-neue genericons-neue-menu" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
-				} else {
-					$(this).html('<span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
-				}
+				bod.removeClass('nav-active-menu');
+				$(this).html('<span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
 				if ( listenLive === true ) {
 					siteNav.addClass('screen-reader-text');
 				}
 			} else {
 				bod.addClass('nav-active-menu');
-				if ($(this).hasClass('dc-top-menu')) {
-					$(this).html('<span class="genericons-neue genericons-neue-close-alt" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>');
-				} else {
-					$(this).html('<span class="fa fa-times" aria-hidden="true"></span><span class="top-mobile-text">Close</span>');
-				}
+				$(this).html('<span class="fas fa-times" aria-hidden="true"></span><span class="top-mobile-text">Close</span>');
 				if ( listenLive === true ) {
 					siteNav.removeClass('screen-reader-text');
 				}
 			}
-		} else {
-			return false;
-		}
+		// } else {
+		// 	return false;
+		// }
 	});
 
 	$(function() {
@@ -227,23 +209,19 @@ jQuery(document).ready(function($){
 			$('#'+dat).fadeIn();
 		}
 	});
-	$('#c2c-galleries li').click(function(){
-		var dat = $(this).attr('data-device');
-		if ( $(this).hasClass( 'c2c-active' ) ) {
-			return false;
-		} else {
-			$('#c2c-galleries li').removeClass('c2c-active');
-			$('.c2c-gallery').removeClass('c2c-gallery-active');
-			$(this).addClass('c2c-active');
-			$('#'+dat).addClass('c2c-gallery-active');
-		}
-	});
-	$('#top-schedule .top-schedule-label a').click(function(e){
+	$('#top-schedule .top-schedule-label a, #top-schedule-hide').click(function(e){
 		e.preventDefault();
-		$('#top-schedule .top-schedule-link-wrap').toggleClass('top-sched-active');
+		bod.toggleClass('schedule-show');
 	});
+	const queryString = window.location.search;
+	var urlParams = new URLSearchParams(queryString);
+	if (urlParams.get('option') === 'fixed-head') {
+	 	document.getElementsByTagName("body")[0].classList.add('fixed');
+	} else if (urlParams.get('option') === 'np-slide') {
+		document.getElementsByTagName("body")[0].classList.add('np-slide');
+	}
 });
-var getJSON = function(url, callback) {
+const getJSON = function(url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url, true);
 	xhr.responseType = 'json';
@@ -257,16 +235,106 @@ var getJSON = function(url, callback) {
 	};
 	xhr.send();
 };
-let stationIds = {
+const stationIds = {
 	'news': 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json&show_song=true',
 	'classical': 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
 	'mixtape': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
-	'tv8.1': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
-	'tv8.2': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
-	'tv8.3': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-	'tv8.4': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json'
+	'tv81': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
+	'tv82': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
+	'tv83': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
+	'tv84': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json'
 }
-function updateData( data, station, next) {
+let stationLoad = [];
+function hpmNowPlaying(station,next) {
+	let check = {
+		'station': station,
+		'next': next
+	};
+	if (stationLoad.length > 0) {
+		let match = false;
+		for (let s in stationLoad) {
+			if ( stationLoad[s].station == station && stationLoad[s].next == next ) {
+				match = true;
+			}
+		}
+		if (!match) {
+			stationLoad.push(check);
+		}
+	} else {
+		stationLoad.push(check);
+	}
+	if (stationLoad.length == 1) {
+		document.addEventListener("DOMContentLoaded", function() {
+			updateStations();
+			setInterval("updateStations()", 60000);
+		});
+	}
+}
+function updateStations() {
+	for (let s in stationLoad) {
+		if ( stationLoad[s].station !== 'all' ) {
+			getJSON( stationIds[stationLoad[s].station], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,stationLoad[s].station,stationLoad[s].next);
+				}
+			});
+		} else {
+			getJSON( stationIds['news'], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,'news',stationLoad[s].next);
+				}
+			});
+			getJSON( stationIds['classical'], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,'classical',stationLoad[s].next);
+				}
+			});
+			getJSON( stationIds['mixtape'], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,'mixtape',stationLoad[s].next);
+				}
+			});
+			getJSON( stationIds['tv81'], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,'tv81',stationLoad[s].next);
+				}
+			});
+			getJSON( stationIds['tv82'], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,'tv82',stationLoad[s].next);
+				}
+			});
+			getJSON( stationIds['tv83'], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,'tv83',stationLoad[s].next);
+				}
+			});
+			getJSON( stationIds['tv84'], function(err, data) {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					updateData(data,'tv84',stationLoad[s].next);
+				}
+			});
+		}
+	}
+	masonLoad();
+}
+function updateData(data,station,next) {
 	var output = '';
 	if (next) {
 		output = '<h2>On Now</h2>';
@@ -310,75 +378,15 @@ function updateData( data, station, next) {
 			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].fullstart)+': '+data.nextUp[0].program.name+'</li></ul>';
 		}
 	}
-	document.getElementById('np-'+station).innerHTML = output;
-}
-function updateStations(station, next) {
-	if ( station !== 'all' ) {
-		getJSON( stationIds[station], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,station,next);
-			}
-		});
+	var nps;
+	if (next) {
+		nps = document.querySelectorAll('.nowplay-'+station+'-next');
 	} else {
-		getJSON( stationIds['news'], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,'news',next);
-			}
-		});
-		getJSON( stationIds['classical'], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,'classical',next);
-			}
-		});
-		getJSON( stationIds['mixtape'], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,'mixtape',next);
-			}
-		});
-		getJSON( stationIds['tv8.1'], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,'tv8.1',next);
-			}
-		});
-		getJSON( stationIds['tv8.2'], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,'tv8.2',next);
-			}
-		});
-		getJSON( stationIds['tv8.3'], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,'tv8.3',next);
-			}
-		});
-		getJSON( stationIds['tv8.4'], function(err, data) {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				updateData(data,'tv8.4',next);
-			}
-		});
+		nps = document.querySelectorAll('.nowplay-'+station);
 	}
-	masonLoad();
-}
-function hpmNowPlaying(station,next) {
-	document.addEventListener("DOMContentLoaded", function() {
-		updateStations(station,next);
-		setInterval("updateStations(station,next)", 60000);
-	});
+	for (var n in nps) {
+		nps[n].innerHTML = output;
+	}
 }
 function amPm(timeString) {
 	var hourEnd = timeString.indexOf(":");
@@ -389,28 +397,30 @@ function amPm(timeString) {
 }
 function masonLoad() {
 	var isActive = false;
-	if ( window.wide > 800 )
-	{
-		imagesLoaded( '#float-wrap', function() {
-			var msnry = new Masonry( '#float-wrap', {
-				itemSelector: '.grid-item',
-				stamp: '.stamp',
-				columnWidth: '.grid-sizer'
+	if (typeof imagesLoaded === "function") {
+    	if ( window.wide > 800 )
+		{
+			imagesLoaded( '#float-wrap', function() {
+				var msnry = new Masonry( '#float-wrap', {
+					itemSelector: '.grid-item',
+					stamp: '.stamp',
+					columnWidth: '.grid-sizer'
+				});
+				isActive = true;
 			});
-			isActive = true;
-		});
-		if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
-			var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
-			document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
-		}
-	} else {
-		if ( isActive ) {
-			msnry.destroy();
-			isActive = !isActive;
-		}
-		var gridItem = document.querySelectorAll('.grid-item');
-		for ( i = 0; i < gridItem.length; ++i ) {
-			gridItem[i].removeAttribute('style');
+			if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
+				var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
+				document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
+			}
+		} else {
+			if ( isActive ) {
+				msnry.destroy();
+				isActive = !isActive;
+			}
+			var gridItem = document.querySelectorAll('.grid-item');
+			for ( i = 0; i < gridItem.length; ++i ) {
+				gridItem[i].removeAttribute('style');
+			}
 		}
 	}
 }

@@ -99,7 +99,7 @@ endif; ?>
 				endif;
 			endif; ?>
 				<div id="top-schedule-wrap" class="column-right grid-item stamp">
-					<div id="station-schedules">
+					<?php /* ?><div id="station-schedules">
 						<h4>ON AIR</h4>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
@@ -134,7 +134,7 @@ endif; ?>
 							</div>
 						</div>
 						<script>hpmNowPlaying('all',false);</script>
-					</div>
+					</div><?php */ ?>
 					<div id="in-depth">
 						<h4>News 88.7 In-Depth</h4>
 						<?php

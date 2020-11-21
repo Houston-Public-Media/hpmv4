@@ -75,6 +75,10 @@ get_header(); ?>
 				<div class="grid-sizer"></div>
 <?php
 	if ( !empty( $show['podcast'] ) ) :
+		/* $pod_link = get_post_meta( $show['podcast'], 'hpm_pod_link', true );
+		if ( !empty( $pod_link['itunes'] ) ) :
+			echo '<article class="grid-item grid-item--width2 felix-type-a"><iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" height="450" style="width:100%;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="'.str_replace( 'https://podcasts.apple.com', 'https://embed.podcasts.apple.com', $pod_link['itunes'] ).'"></iframe></article>';
+		endif; */
 		$last_id = get_post_meta( $show['podcast'], 'hpm_pod_last_id', true );
 		$enc = get_post_meta( $last_id['id'], 'hpm_podcast_enclosure', true );
 		$audio = '[audio mp3="' . $enc['url'] . '"][/audio]'; ?>

@@ -53,11 +53,11 @@
 		"roots/wp-password-bcrypt": "1.0.0",
 		"google/apiclient": "^2.0",
 		"wpackagist-plugin/admin-category-filter": "1.6.1",
-		"wpackagist-plugin/amp": "2.0.6",
+		"wpackagist-plugin/amp": "2.0.7",
 		"wpackagist-plugin/better-image-credits": "2.0.3",
 		"wpackagist-plugin/classic-editor": "1.6",
 		"wpackagist-plugin/co-authors-plus": "3.4.3",
-		"wpackagist-plugin/documentcloud": "0.4.3",
+		"wpackagist-plugin/documentcloud": "0.5.0",
 		"wpackagist-plugin/easy-primary-category": "1.1.1",
 		"wpackagist-plugin/feed-json": "1.0.10",
 		"wpackagist-plugin/google-sitemap-generator": "4.1.1",
@@ -74,7 +74,7 @@
 		"wpackagist-plugin/wp-ses": "*",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
-		"jwcounts/hpm-mods": "2020.21",
+		"jwcounts/hpm-mods": "2020.22",
 		"jwcounts/wp-missed-schedule": "1.0.1"
 	},
 	"require-dev": {
