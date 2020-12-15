@@ -72,7 +72,7 @@
 		"wpackagist-plugin/tinymce-advanced": "5.6.0",
 		"wpackagist-plugin/redis-cache": "2.0.15",
 		"wpackagist-plugin/wp-ses": "*",
-		"deliciousbrains-plugin/wp-offload-media": "*",
+		"deliciousbrains-plugin/wp-offload-media": "2.5.1",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
 		"jwcounts/hpm-mods": "2020.22",
 		"jwcounts/wp-missed-schedule": "1.0.1"
