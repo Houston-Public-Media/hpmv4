@@ -563,7 +563,7 @@ function hpm_nprone_check( $post_id, $post ) {
 	if ( $_POST['post_type'] === 'post' ) :
 		$coauthors = get_coauthors( $post_id );
 		$local = false;
-		foreach ( $coauthors as $k => $coa ) :
+		foreach ( $coauthors as $coa ) :
 			if ( is_a( $coa, 'wp_user' ) ) :
 				$local = true;
 			elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) :
@@ -573,11 +573,7 @@ function hpm_nprone_check( $post_id, $post ) {
 			endif;
 		endforeach;
 		if ( $local ) :
-			$_POST['send_to_api'] = 1;
-			if ( preg_match( '/\[audio.+\]\[\/audio\]/', $post->post_content ) ) :
-				$_POST['send_to_one'] = 1;
-				$_POST['nprone_featured'] = 1;
-			else :
+			if ( !preg_match( '/\[audio.+\]\[\/audio\]/', $post->post_content ) ) :
 				unset( $_POST['send_to_one'] );
 				unset( $_POST['nprone_featured'] );
 			endif;
