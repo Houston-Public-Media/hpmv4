@@ -70,7 +70,7 @@
 		"wpackagist-plugin/redirection": "4.9.2",
 		"wpackagist-plugin/term-management-tools": "2.0.1",
 		"wpackagist-plugin/tinymce-advanced": "5.6.0",
-		"wpackagist-plugin/redis-cache": "2.0.16",
+		"wpackagist-plugin/redis-cache": "2.0.17",
 		"wpackagist-plugin/wp-ses": "*",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
