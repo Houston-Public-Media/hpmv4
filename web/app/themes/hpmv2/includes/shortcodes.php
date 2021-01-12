@@ -757,7 +757,7 @@ add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
 function hpm_careers_trans() {
 	$output = get_transient( 'hpm_careers' );
 	if ( !empty( $output ) ) :
-		return "TRANSIENT: " . $output;
+		return $output;
 	endif;
 	$curl = curl_init();
 
@@ -790,7 +790,7 @@ function hpm_careers_trans() {
 	if ( empty( $json['requisitionList'] ) ) :
 		$output = '<p>Thank you for your interest in Houston Public Media. We do not currently have any job openings. Please check back later, or you can check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 		set_transient( 'hpm_careers', $output, 3600 );
-		return "EMPTY: " . $output;
+		return $output;
 	endif;
 	$output = '<ul>';
 	foreach ( $json['requisitionList'] as $j ) :
@@ -798,6 +798,6 @@ function hpm_careers_trans() {
 	endforeach;
 	$output .= '</ul><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 	set_transient( 'hpm_careers', $output, 3600 );
-	return "PULL: " . $output;
+	return $output;
 }
 add_shortcode( 'hpm_careers', 'hpm_careers_trans' );
