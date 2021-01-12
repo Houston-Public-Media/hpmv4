@@ -736,7 +736,6 @@ endif;
  */
 function hpm_artspace_trans() {
 	return get_transient( 'hpm_artspace' );
-
 }
 add_shortcode( 'hpm_artspace', 'hpm_artspace_trans' );
 
@@ -752,6 +751,53 @@ function hpm_programs_shortcode( $atts ) {
 		return "Transient Empty";
 	endif;
 	return $out;
-
 }
 add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
+
+function hpm_careers_trans() {
+	$output = get_transient( 'hpm_careers' );
+	if ( !empty( $output ) ) :
+		return "TRANSIENT: " . $output;
+	endif;
+	$curl = curl_init();
+
+	curl_setopt_array( $curl, [
+		CURLOPT_URL => 'https://uhs.taleo.net/careersection/rest/jobboard/searchjobs?lang=en&portal=8100120292',
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => '',
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => 'POST',
+		CURLOPT_POSTFIELDS =>'{"multilineEnabled":false,"sortingSelection":{"sortBySelectionParam":"3","ascendingSortingOrder":"false"},"fieldData":{"fields":{"KEYWORD":""},"valid":true},"filterSelectionParam":{"searchFilterSelections":[{"id":"POSTING_DATE","selectedValues":[]},{"id":"ORGANIZATION","selectedValues":["14400120292"]},{"id":"JOB_TYPE","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_SCHEDULE","selectedValues":[]}]},"advancedSearchFiltersSelectionParam":{"searchFilterSelections":[{"id":"ORGANIZATION","selectedValues":[]},{"id":"LOCATION","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_NUMBER","selectedValues":[]},{"id":"URGENT_JOB","selectedValues":[]},{"id":"EMPLOYEE_STATUS","selectedValues":[]},{"id":"STUDY_LEVEL","selectedValues":[]},{"id":"JOB_SHIFT","selectedValues":[]}]},"pageNo":1}',
+		CURLOPT_HTTPHEADER => [
+			'Referer: https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)',
+			'Origin: https://uhs.taleo.net',
+			'X-Requested-With: XMLHttpRequest',
+			'tz: GMT-06:00',
+			'tzname: America/Chicago',
+			'Pragma: no-cache',
+			'Content-Type: application/json',
+			'Cookie: locale=en'
+		],
+	]);
+
+	$response = curl_exec( $curl );
+
+	curl_close( $curl );
+	$json = json_decode( $response, true );
+	if ( empty( $json['requisitionList'] ) ) :
+		$output = '<p>Thank you for your interest in Houston Public Media. We do not currently have any job openings. Please check back later, or you can check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
+		set_transient( 'hpm_careers', $output, 3600 );
+		return "EMPTY: " . $output;
+	endif;
+	$output = '<ul>';
+	foreach ( $json['requisitionList'] as $j ) :
+		$output .= "<li><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong> (Posted on " . trim( $j['column'][2] ) . ")</a></li>";
+	endforeach;
+	$output .= '</ul><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
+	set_transient( 'hpm_careers', $output, 3600 );
+	return "PULL: " . $output;
+}
+add_shortcode( 'hpm_careers', 'hpm_careers_trans' );

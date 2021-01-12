@@ -178,7 +178,7 @@ function hpm_header_info() {
 			global $curauth;
 			global $author_check;
 			$reqs['og_type'] = 'profile';
-			$reqs['permalink'] = get_author_posts_url( $coa->ID, $coa->user_nicename );
+			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
 			$reqs['title'] = $curauth->display_name." | Houston Public Media";
 			if ( !empty( $author_check ) ) :
 				while ( $author_check->have_posts() ) :
