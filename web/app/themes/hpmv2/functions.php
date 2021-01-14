@@ -60,7 +60,8 @@ function hpmv2_scripts() {
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style-mod.css', [], time() );
+		// wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style-mod.css', [], time() );
+		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 		wp_enqueue_script( 'hpmv2-js', get_template_directory_uri().'/js/main.js', [ 'jquery' ], time(), false );
 	else :
 		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
@@ -100,7 +101,7 @@ add_filter( 'pre_get_posts', 'hpm_exclude_category' );
 require( get_template_directory() . '/includes/amp.php' );
 require( get_template_directory() . '/includes/google.php' );
 if ( WP_ENV == 'development' ) :
-	require( get_template_directory() . '/includes/head-new.php' );
+	require( get_template_directory() . '/includes/head.php' );
 else :
 	require( get_template_directory() . '/includes/head.php' );
 endif;
@@ -560,7 +561,7 @@ add_filter( 'the_content', 'hpm_revue_signup', 8 );
 
 
 function hpm_nprone_check( $post_id, $post ) {
-	if ( $_POST['post_type'] === 'post' ) :
+	if ( !empty( $_POST ) && $_POST['post_type'] === 'post' ) :
 		$coauthors = get_coauthors( $post_id );
 		$local = false;
 		foreach ( $coauthors as $coa ) :

@@ -216,7 +216,7 @@ function hpm_header_info() {
 			global $curauth;
 			global $author_check;
 			$reqs['og_type'] = 'profile';
-			$reqs['permalink'] = get_author_posts_url( $coa->ID, $coa->user_nicename );
+			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
 			$reqs['title'] = $curauth->display_name." | Houston Public Media";
 			if ( !empty( $author_check ) ) :
 				while ( $author_check->have_posts() ) :
@@ -350,7 +350,11 @@ add_action( 'wp_head', 'hpm_header_info', 1 );
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
 
 function hpm_body_open() {
-	global $wp_query; ?><div id="fb-root"></div>
+	global $wp_query;
+	if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) : ?>
+	<script>setCookie('inapp','true',1);</script>
+	<style>#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }</style>
+<?php endif; ?><div id="fb-root"></div>
 		<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v3.1' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
 <?php

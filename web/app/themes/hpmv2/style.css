@@ -4239,7 +4239,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Topics */
 	#masthead nav#site-navigation ul li.nav-topics ul {
-		left: -20em;
+		/* left: -20em; */
+		left: 0em;
 		width: 52em;
 	}
 	#masthead nav#site-navigation ul li.nav-topics ul li {
@@ -4265,7 +4266,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Programs */
 	#masthead nav#site-navigation ul li.nav-programs ul {
-		left: -32em;
+		/* left: -32em; */
+		left: -20em;
 		width: 54em;
 	}
 	#masthead nav#site-navigation ul li.nav-programs ul li {
@@ -5373,8 +5375,10 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Programs */
 	#masthead nav#site-navigation ul li.nav-programs ul {
-		left: -38em;
-		width: 66em;
+		/* left: -38em;
+		width: 66em; */
+		left: -22em;
+		width: 60em;
 	}
 	#masthead nav#site-navigation ul li.nav-programs ul li a {
 		font: 400 1.125em/1.25em var(--hpm-font-main);
