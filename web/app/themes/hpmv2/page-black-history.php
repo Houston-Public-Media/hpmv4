@@ -54,9 +54,9 @@ Template Name: Black History Month
 			font-weight: 400;
 		}
 		#page {
-			/* background-position: 0px 0px;
+			background-position: 0px 0px;
 			background-repeat: repeat-x;
-			background-image: url(https://cdn.hpm.io/assets/images/Black-History-Month_Banners_Mobile.png); */
+			background-image: url(https://cdn.hpm.io/assets/images/BHM_pattern-top-clip.png);
 		}
 		.page-header {
 			/* background-position: center;
@@ -81,6 +81,8 @@ Template Name: Black History Month
 			margin: 0 0 0.25em 0;
 			color: #808080;
 			text-transform: uppercase;
+			letter-spacing: 2px;
+			padding: 0;
 		}
 		.page-header h1 {
 			text-transform: uppercase;
@@ -88,9 +90,10 @@ Template Name: Black History Month
 			font: 800 3em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
 			margin: 0;
 			color: #e6e6e6;
+			letter-spacing: 2px;
 		}
 		body.page-template-page-black-history {
-			background-image: url(https://local.hpm.io/assets/BHM_pattern-tile-nobg3.png);
+			background-image: url(https://cdn.hpm.io/assets/images/BHM_pattern-tile-nobg3.png);
 			background-color: #000 !important;
 		}
 		.page-template-page-black-history article {
@@ -104,42 +107,62 @@ Template Name: Black History Month
 		body.page-template-page-black-history #main {
 			background-color: transparent !important;
 		}
-		h2 {
-			font-size: 200%;
-			padding: 0;
-			margin: 0;
-			color: var(--color-resource);
-			text-transform: uppercase;
-			font-weight: 800;
-		}
 		.site-content section {
-			/* padding: 32px; */
 			width: 100%;
-			margin-bottom: 2em;
-			/*background-image: url(https://local.hpm.io/assets/BHM_pattern-tile-nobg3.png); */
-			border: 32px;
-			border-image: url(https://interactive-examples.mdn.mozilla.net/media/examples/border-diamonds.png) 32 32 round;
-
+			/* margin-bottom: 1em; */
+			padding: 1em 0;
+		}
+		.site-content section:nth-child(n+2) {
+			padding: 0 0 1em;
 		}
 		.site-content section .bhm-prop-wrap {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			flex-flow: column nowrap;
-			background-color: transparent;
+			padding: 0 0 1.625em;
+			background-position: 0 100%;
+			background-repeat: repeat-x;
+			background-image: url(https://cdn.hpm.io/assets/images/BHM_pattern-top-clip-bg.png);
 		}
-		/* .site-content section img {
-			max-width: 66%;
+		.site-content section div.bhm-img img {
+			display: block;
 		}
-		.site-content section.bhm-1 {
+		.site-content section .bhm-wrap {
+			padding: 1em;
+			width: 100%;
+		}
+		.site-content section.bhm-1 .bhm-prop-wrap {
 			background-color: var(--bhm-red);
 		}
-		.site-content section.bhm-2 {
+		.site-content section.bhm-2 .bhm-prop-wrap {
 			background-color: var(--bhm-green);
 		}
-		.site-content section.bhm-3 {
+		.site-content section.bhm-3 .bhm-prop-wrap {
 			background-color: var(--bhm-yellow);
-		} */
+		}
+		.site-content section .bhm-prop-wrap h1 {
+			font: 500 2em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
+			text-transform: uppercase;
+			margin-bottom: 0.25em;
+		}
+		.site-content .page-content section .bhm-prop-wrap p {
+			margin: 0;
+		}
+		.site-content section.bhm-1 .bhm-prop-wrap p,
+		.site-content section.bhm-1 .bhm-prop-wrap h1,
+		.site-content section.bhm-1 .bhm-prop-wrap p a,
+		.site-content section.bhm-2 .bhm-prop-wrap p,
+		.site-content section.bhm-2 .bhm-prop-wrap h1,
+		.site-content section.bhm-2 .bhm-prop-wrap p a {
+			color: white;
+		}
+		.site-content section .bhm-prop-wrap a {
+			text-decoration: underline;
+		}
+		.site-content section .bhm-prop-wrap ul li p a {
+			color: #59595B;
+		}
 		.site-content section h1 {
 			margin-bottom: 0;
 		}
@@ -175,23 +198,32 @@ Template Name: Black History Month
 		} */
 		@media screen and (min-width: 34em) {
 			.page-header h2 {
-				font: 500 2em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
+				font: 500 1.75em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
 			}
 			.page-header h1 {
 				font: 800 4em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
+			}
+			.site-content section {
+				padding: 1em;
+			}
+			.site-content section:nth-child(n+2) {
+				padding: 0 1em 1em;
 			}
 			.site-content section .bhm-prop-wrap {
 				display: flex;
 				flex-flow: row nowrap;
 			}
-			.site-content section img {
+			.site-content section div.bhm-img {
 				width: 50%;
 				padding: 0 1em 0 0;
+			}
+			.site-content section .bhm-wrap {
+				width: 50%;
 			}
 			.site-content section.bhm-flip .bhm-prop-wrap {
 				flex-flow: row-reverse nowrap;
 			}
-			.site-content section.bhm-flip img {
+			.site-content section.bhm-flip div.bhm-img {
 				padding: 0 0 0 1em;
 			}
 			div#bhm-nav ul li {
@@ -200,7 +232,7 @@ Template Name: Black History Month
 		}
 		@media screen and (min-width: 52.5em) {
 			.page-header h2 {
-				font: 500 2.5em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
+				font: 500 2em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
 			}
 			.page-header h1 {
 				font: 800 6em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
@@ -213,13 +245,10 @@ Template Name: Black History Month
 				float: none;
 			}
 			div#bhm-nav ul li {
-				width: 20%;
+				width: 16.6666%;
 			}
 			.site-content section .bhm-section-wrap {
 				padding: 1em 2em;
-			}
-			.site-content section img {
-				width: 40%;
 			}
 			.site-content section .bhm-wrap {
 				padding: 0 1em;
