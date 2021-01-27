@@ -67,7 +67,7 @@
 		"wpackagist-plugin/parent-page-filter": "1.0.2",
 		"wpackagist-plugin/publish-to-apple-news": "2.1.0",
 		"wpackagist-plugin/query-monitor": "3.6.7",
-		"wpackagist-plugin/redirection": "5.0",
+		"wpackagist-plugin/redirection": "5.0.1",
 		"wpackagist-plugin/term-management-tools": "2.0.1",
 		"wpackagist-plugin/tinymce-advanced": "5.6.0",
 		"wpackagist-plugin/redis-cache": "2.0.17",

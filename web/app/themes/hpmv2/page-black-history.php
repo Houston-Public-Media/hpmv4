@@ -33,6 +33,9 @@ Template Name: Black History Month
 				endwhile; ?>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
+	<link rel="stylesheet" href="https://cdn.hpm.io/static/js/slick/slick.min.css" />
+	<link rel="stylesheet" href="https://cdn.hpm.io/static/js/slick/slick-theme.css" />
+	<script src="https://cdn.hpm.io/static/js/slick/slick.min.js"></script>
 	<style>
 		#div-gpt-ad-1488818411584-0 {
 			display: none;
@@ -59,17 +62,6 @@ Template Name: Black History Month
 			background-image: url(https://cdn.hpm.io/assets/images/BHM_pattern-top-clip.png);
 		}
 		.page-header {
-			/* background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-			height: 0;
-			padding-right: 0;
-			padding-left: 0;
-			padding-top: 0;
-			margin: 0 !important;
-			padding-bottom: calc(100%/1.5);
-			position: relative;
-			background-image: url(https://cdn.hpm.io/assets/images/Black-History-Month_Banners_Mobile.png); */
 			margin: 0 !important;
 			width: 100%;
 			padding: 3em 1em 2em;
@@ -132,6 +124,20 @@ Template Name: Black History Month
 			padding: 1em;
 			width: 100%;
 		}
+		.site-content section .bhm-wrap.bhm-wide {
+			padding: 1em !important;
+			width: 100% !important;
+		}
+		.site-content section#nprprogramming .bhm-prop-wrap,
+		.site-content section#pbsprogramming .bhm-prop-wrap {
+			align-items: flex-start;
+		}
+		.site-content section .bhm-wrap.bhm-list {
+			padding-top: 0;
+		}
+		.site-content section .bhm-wrap.bhm-list:nth-child(2) {
+			padding-bottom: 0;
+		}
 		.site-content section.bhm-1 .bhm-prop-wrap {
 			background-color: var(--bhm-red);
 		}
@@ -152,9 +158,16 @@ Template Name: Black History Month
 		.site-content section.bhm-1 .bhm-prop-wrap p,
 		.site-content section.bhm-1 .bhm-prop-wrap h1,
 		.site-content section.bhm-1 .bhm-prop-wrap p a,
+		.site-content section.bhm-1 .bhm-prop-wrap li,
 		.site-content section.bhm-2 .bhm-prop-wrap p,
 		.site-content section.bhm-2 .bhm-prop-wrap h1,
-		.site-content section.bhm-2 .bhm-prop-wrap p a {
+		.site-content section.bhm-2 .bhm-prop-wrap p a,
+		.site-content section.bhm-2 .bhm-prop-wrap li {
+			color: white;
+		}
+		.site-content section .bhm-prop-wrap h2 {
+			font: 500 1.75em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
+			margin-bottom: 0.25em;
 			color: white;
 		}
 		.site-content section .bhm-prop-wrap a {
@@ -193,9 +206,41 @@ Template Name: Black History Month
 			border: 0.125em solid white;
 			border-top: 0;
 		}
-		/* div#bhm-nav ul li:last-child {
-			border-right: none;
-		} */
+		.page-content div#bhm-nav ul li a {
+			font: 500 1.25em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
+			text-transform: uppercase;
+		}
+		.site-content section .bhm-videos {
+			width: 95%;
+			margin-left: 2.5%;
+			margin-right: 2.5%;
+			padding: 1em;
+		}
+		.site-content section .bhm-videos .slick-slide {
+			padding: 0 0.5em;
+		}
+		.slick-dots li.slick-active button:before,
+		.slick-dots li button:before {
+			color: #000;
+		}
+		.page-content ul.slick-dots {
+			list-style: none !important;
+			right: 0;
+			left: 0;
+		}
+		.slick-prev, .slick-next {
+			width: 35px !important;
+			height: 35px !important;
+		}
+		.slick-prev:before, .slick-next:before {
+			font-size: 35px !important;
+		}
+		.site-content .page-content section .bhm-prop-wrap ul li ul {
+			margin-left: 1em;
+		}
+		.site-content .page-content section .bhm-prop-wrap ul li p:nth-child(n+2) {
+			margin-left: 1em;
+		}
 		@media screen and (min-width: 34em) {
 			.page-header h2 {
 				font: 500 1.75em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
@@ -211,23 +256,29 @@ Template Name: Black History Month
 			}
 			.site-content section .bhm-prop-wrap {
 				display: flex;
-				flex-flow: row nowrap;
+				flex-flow: row wrap;
 			}
 			.site-content section div.bhm-img {
 				width: 50%;
 				padding: 0 1em 0 0;
 			}
+			.site-content section#blackchurch div.bhm-img img {
+				padding: 2em 1em 0;
+			}
 			.site-content section .bhm-wrap {
 				width: 50%;
 			}
 			.site-content section.bhm-flip .bhm-prop-wrap {
-				flex-flow: row-reverse nowrap;
+				flex-flow: row-reverse wrap;
 			}
 			.site-content section.bhm-flip div.bhm-img {
 				padding: 0 0 0 1em;
 			}
 			div#bhm-nav ul li {
-				width: 33.3333%;
+				width: 25%;
+			}
+			.site-content section .bhm-wrap.bhm-list:nth-child(2) {
+				padding-bottom: 1em;
 			}
 		}
 		@media screen and (min-width: 52.5em) {
@@ -244,9 +295,6 @@ Template Name: Black History Month
 				border-right: 0;
 				float: none;
 			}
-			div#bhm-nav ul li {
-				width: 16.6666%;
-			}
 			.site-content section .bhm-section-wrap {
 				padding: 1em 2em;
 			}
@@ -255,4 +303,38 @@ Template Name: Black History Month
 			}
 		}
 	</style>
+	<script>
+		jQuery(document).ready(function($){
+			var options = {
+				slidesToShow: 2,
+				slidesToScroll: 2,
+				infinite: false,
+				adaptiveHeight: false,
+				autoplay: false,
+				dots: true,
+				speed: 500,
+				responsive: [{
+					breakpoint: 800,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 2,
+						rows: 1
+					}
+				}, {
+					breakpoint: 480,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1,
+						rows: 2
+					}
+				}]
+			};
+			$('#bhm-carousel-1').slick(options);
+			$('#bhm-carousel-2').slick(options);
+			$('#bhm-carousel-3').slick(options);
+		});
+	</script>
 <?php get_footer(); ?>
+
+
+
