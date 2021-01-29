@@ -237,6 +237,7 @@ Template Name: Black History Month
 		}
 		.site-content .page-content section .bhm-prop-wrap ul li ul {
 			margin-left: 1em;
+			list-style: none;
 		}
 		.site-content .page-content section .bhm-prop-wrap ul li p:nth-child(n+2) {
 			margin-left: 1em;
