@@ -4239,8 +4239,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Topics */
 	#masthead nav#site-navigation ul li.nav-topics ul {
-		/* left: -20em; */
-		left: 0em;
+		left: -20em;
 		width: 52em;
 	}
 	#masthead nav#site-navigation ul li.nav-topics ul li {
@@ -4266,8 +4265,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Programs */
 	#masthead nav#site-navigation ul li.nav-programs ul {
-		/* left: -32em; */
-		left: -20em;
+		left: -32em;
 		width: 54em;
 	}
 	#masthead nav#site-navigation ul li.nav-programs ul li {
@@ -5272,6 +5270,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		width: 31.5%;
 		padding: 1em 1.5em;
 	}
+	body.page-template-page-schedules-tv #main .column-left {
+		padding-left: 1em;
+	}
 }
 
 /**
@@ -5296,6 +5297,9 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		position: relative;
 		max-width: 75em;
 		margin: 0 auto;
+	}
+	body.page-template-page-schedules-tv #content {
+		max-width: 92em;
 	}
 	#emergency {
 		max-width: 100%;
@@ -5375,10 +5379,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Programs */
 	#masthead nav#site-navigation ul li.nav-programs ul {
-		/* left: -38em;
-		width: 66em; */
-		left: -22em;
-		width: 60em;
+		left: -38em;
+		width: 66em;
 	}
 	#masthead nav#site-navigation ul li.nav-programs ul li a {
 		font: 400 1.125em/1.25em var(--hpm-font-main);
@@ -9427,5 +9429,102 @@ h2#foot-banner span.donate .fas {
 @media screen and (min-width: 34em) {
 	h2#foot-banner {
 		padding: 1em 5em;
+	}
+}
+p.info-toggle {
+	width: 100%;
+	font-weight: bolder;
+	padding: 0 0.5em 0.25em;
+}
+p.info-toggle:hover {
+	cursor: pointer;
+	opacity: 0.75;
+	transition: opacity .2s ease-out;
+}
+p.info-toggle:after {
+	content: '\f0da';
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	font: 900 1em/1 'Font Awesome 5 Free';
+	margin-left: 0.375em;
+	color: rgb(0,170,235);
+}
+p.info-toggle.info-toggle-active:after {
+	content: '\f0d7';
+}
+p.info-toggle-hidden {
+	display: none;
+}
+
+/* Planned Giving */
+.column-right div.planning-nav {
+	background-color: white;
+	border: 1px solid #ebebeb;
+	margin: 0 0 2em;
+	display: none;
+}
+.column-right div#planning-menu {
+	background-color: #cc0000;
+	color: white;
+	font-size: 1.5em;
+	text-align: right;
+	margin: 0 0 1em 0;
+	padding: 0.25em;
+}
+.column-right div#planning-menu:before {
+	content: 'Menu';
+	float: left;
+}
+.column-right div#planning-menu:hover {
+	cursor: pointer;
+	opacity: 0.75;
+}
+.planning-nav h2 {
+	border-bottom: 1px solid #cc0000;
+	padding: 0.5em 1em;
+	margin: 0;
+}
+.planning-nav h2 a {
+	color: #cc0000;
+}
+article .entry-content .planning-nav ul {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+}
+article .entry-content .planning-nav ul li {
+	padding: 0.5em 1em 0.5em 2em;
+	border-bottom: 1px solid #ebebeb;
+	margin: 0;
+}
+article .entry-content .planning-nav ul li.planning-contact {
+	background-color: #cc0000;
+}
+article .entry-content .planning-nav ul li.planning-contact a {
+	color: white;
+	font-weight: bolder;
+}
+.planned-giving .column-left .column-left,
+.planned-giving .column-left .column-right {
+	width: 100%;
+	margin: 0;
+}
+@media screen and (min-width: 34em) {
+	.planned-giving .column-left .column-left {
+		width: 66%;
+		float: left;
+	}
+	.planned-giving .column-left .column-right {
+		margin: 0 0.75% 1em;
+		width: 31.5%;
+		float: right;
+	}
+}
+@media screen and (min-width: 52.5em) {
+	#planning-menu {
+		display: none;
+	}
+	.column-right div.planning-nav {
+		display: block;
 	}
 }

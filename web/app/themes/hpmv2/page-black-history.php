@@ -242,6 +242,42 @@ Template Name: Black History Month
 		.site-content .page-content section .bhm-prop-wrap ul li p:nth-child(n+2) {
 			margin-left: 1em;
 		}
+		.bhm-wrap .jp-type-single {
+			background-color: transparent;
+		}
+		.bhm-wrap .jp-gui.jp-interface .jp-controls button {
+			background-color: transparent;
+			width: 4em;
+			height: 4em;
+		}
+		.bhm-wrap .jp-gui.jp-interface .jp-controls button .fa {
+			font-size: 3.25em;
+			color: var(--bhm-green);
+		}
+		.bhm-wrap .jp-gui.jp-interface .jp-progress-wrapper {
+			position: relative;
+			padding: 1em 0.5em;
+		}
+		.bhm-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
+			margin: 0;
+			background-color: rgb(79, 79, 79);
+			z-index: 9;
+			position: relative;
+		}
+		.bhm-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
+			z-index: 11;
+		}
+		.bhm-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
+			position: absolute;
+			top: 1.5em;
+			right: 1em;
+			z-index: 10;
+			float: none;
+			width: auto;
+			display: inline;
+			padding: 0;
+			color: white;
+		}
 		@media screen and (min-width: 34em) {
 			.page-header h2 {
 				font: 500 1.75em/1em 'futura-pt-condensed',helvetica,arial,sans-serif;
@@ -280,6 +316,12 @@ Template Name: Black History Month
 			}
 			.site-content section .bhm-wrap.bhm-list:nth-child(2) {
 				padding-bottom: 1em;
+			}
+			.bhm-wrap .jp-gui.jp-interface .jp-details {
+				display: none;
+			}
+			.bhm-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
+				top: 1.25em;
 			}
 		}
 		@media screen and (min-width: 52.5em) {
