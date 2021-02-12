@@ -254,6 +254,9 @@ Template Name: Black History Month
 			font-size: 3.25em;
 			color: var(--bhm-green);
 		}
+		.bhm-2 .bhm-wrap .jp-gui.jp-interface .jp-controls button .fa {
+			color: var(--bhm-red);
+		}
 		.bhm-wrap .jp-gui.jp-interface .jp-progress-wrapper {
 			position: relative;
 			padding: 1em 0.5em;

@@ -9454,6 +9454,8 @@ h2#foot-banner span.donate .fas {
 }
 .info-toggle-hidden {
 	display: none;
+	background-color: #f5f5f5;
+	padding: 0.5em;
 }
 
 /* Planned Giving */
