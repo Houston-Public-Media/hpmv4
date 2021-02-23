@@ -53,6 +53,11 @@ add_filter( 'the_content', 'shortcode_unautop');
 /*
  * Enqueue Typekit, FontAwesome, Masonry, jPlayer scripts, stylesheets and some conditional scripts and stylesheets for older versions of IE
  */
+$hpm_test = $_GET['version'];
+if ( $hpm_test !== '-mod' ) :
+	$hpm_test = '';
+endif;
+define('HPM_TEST', $hpm_test);
 function hpmv2_scripts() {
 	$versions = hpm_versions();
 	// Add custom fonts, used in the main stylesheet.
@@ -60,9 +65,9 @@ function hpmv2_scripts() {
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style.css', [], time() );
+		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style'.HPM_TEST.'.css', [], time() );
 		// wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
-		wp_enqueue_script( 'hpmv2-js', get_template_directory_uri().'/js/main.js', [ 'jquery' ], time(), false );
+		wp_enqueue_script( 'hpmv2-js', get_template_directory_uri().'/js/main'.HPM_TEST.'.js', [ 'jquery' ], time(), false );
 	else :
 		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], false );
@@ -101,7 +106,7 @@ add_filter( 'pre_get_posts', 'hpm_exclude_category' );
 require( get_template_directory() . '/includes/amp.php' );
 require( get_template_directory() . '/includes/google.php' );
 if ( WP_ENV == 'development' ) :
-	require( get_template_directory() . '/includes/head.php' );
+	require( get_template_directory() . '/includes/head'.HPM_TEST.'.php' );
 else :
 	require( get_template_directory() . '/includes/head.php' );
 endif;
