@@ -11,7 +11,7 @@ Template Name: Black History Month
 				<header class="page-header">
 					<?php the_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
 					<h2>Houston Public Media Celebrates</h2>
-					<h1>Black History Month</h1>
+					<h1>Black History</h1>
 				</header><!-- .entry-header -->
 				<div class="page-content">
 					<?php the_content(); ?>
