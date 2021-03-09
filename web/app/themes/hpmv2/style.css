@@ -356,9 +356,13 @@ img {
 	height: auto !important;
 }
 blockquote {
-	padding: 0 0 1em 1.5em;
-	margin: 0;
+	padding: 0.25em 0 0.25em 1.5em;
+	margin: 0 0 1em 0;
 	border-left: 0.125em solid #f5f5f5;
+}
+blockquote * {
+	padding: 0;
+	margin: 0;
 }
 .clear {
 	clear: both;
@@ -588,7 +592,7 @@ body.nav-active-menu #masthead nav#site-navigation {
 	text-decoration: none;
 	color: rgb(156,159,161);
 	display: block;
-	padding: 0.5em 0 0.5em 2em;
+	padding: 0.5em 0 0.5em 0.75em;
 }
 #masthead nav#site-navigation .nav-top.nav-uh div.nav-top,
 #masthead nav#site-navigation .nav-top.nav-uh a {
@@ -599,7 +603,7 @@ body.nav-active-menu #masthead nav#site-navigation {
 	color: white;
 	background-repeat: no-repeat;
 	background-size: 10%;
-	background-position-x: 10px;
+	background-position-x: 95%;
 	background-position-y: center;
 	background-image: url('https://cdn.hpm.io/assets/images/icons/Passport-Icon-Head.png');
 }
@@ -620,9 +624,9 @@ li.nav-top.menu-item-has-children div.nav-top:after {
 	-webkit-font-smoothing: antialiased;
 	font: 900 .75em/1 'Font Awesome 5 Free';
 	float: right;
-	padding-right: 1em;
+	padding-right: 0.5em;
 	position: relative;
-	top: 0.25em;
+	top: 0.5em;
 }
 #masthead nav#site-navigation ul li ul li div.nav-top-head {
 	font: 400 1.25em/1.25em var(--hpm-font-main);
@@ -892,7 +896,8 @@ article header.entry-header .byline-date .byline {
 	padding-right: 0.125em;
 }
 article header.entry-header .byline-date a {
-	font-family: var(--hpm-font-main); font-weight: 500;
+	font-family: var(--hpm-font-main);
+	font-weight: 500;
 }
 article header.entry-header .byline-date address {
 	display: inline-block;
@@ -1022,6 +1027,7 @@ figure.wp-caption figcaption.wp-caption-text {
 	padding: 0 0 0.25em 0 !important;
 	font: italic 0.75em/1.125em arial,helvetica,sans-serif;
 	color: #404144;
+	max-width: 100% !important;
 }
 span.edit-link {
 	display: block;
@@ -1505,7 +1511,8 @@ body.single #author-wrap .author-other-stories h2 a,
 	padding: 0.3125em;
 	text-transform: uppercase;
 	color: white;
-	font-family: var(--hpm-font-main); font-weight: 700;
+	font-family: var(--hpm-font-main);
+	font-weight: 700;
 }
 #national-news h4 {
 	margin: 1em;
@@ -1751,7 +1758,8 @@ body.single #author-wrap .author-other-stories h2 a,
 	padding: 0.3125em;
 	text-transform: uppercase;
 	color: white;
-	font-family: var(--hpm-font-main); font-weight: 700;
+	font-family: var(--hpm-font-main);
+	font-weight: 700;
 }
 #float-wrap #in-depth article .entry-header h2 a {
 	font: 400 1.5em/1.25em var(--hpm-font-condensed);
@@ -2186,10 +2194,12 @@ article .entry-content ul.acc li,
 	background-color: rgb(205,23,49);
 	padding: 1em 1em 0.5em 1em;
 	border-bottom: 1px solid white;
-	font-family: var(--hpm-font-main); font-weight: 500;
+	font-family: var(--hpm-font-main);
+	font-weight: 500;
 }
 .page-template-page-strategic article .entry-header .entry-title span {
-	font-family: var(--hpm-font-main); font-weight: 100;
+	font-family: var(--hpm-font-main);
+	font-weight: 100;
 }
 .page-template-page-strategic article .entry-header .plan-colorbar {
 	height: 0.5em;
@@ -2671,7 +2681,8 @@ body.single-shows #station-social .station-social-icon .fab {
 .post-type-archive-staff #search-results article h2 a,
 .tax-staff_category #search-results article h2 a {
 	color: #00b0bc;
-	font-family: var(--hpm-font-main); font-weight: 500;
+	font-family: var(--hpm-font-main);
+	font-weight: 500;
 }
 .post-type-archive-staff #search-results .entry-summary,
 .tax-staff_category #search-results .entry-summary {
@@ -3029,7 +3040,8 @@ body.page-template-page-listen #primary {
 	margin-bottom: 1em;
 }
 #campaign-splash .campaign-push p strong {
-	font-family: var(--hpm-font-main); font-weight: 500;
+	font-family: var(--hpm-font-main);
+	font-weight: 500;
 }
 #campaign-splash .campaign-push a {
 	display: block;
@@ -3820,7 +3832,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	body.single-shows .page-header.no-back .page-title,
 	body.page-template-page-series-tiles .page-header.no-back .page-title {
 		padding: 0.5em;
-		font-family: var(--hpm-font-main); font-weight: 700;
+		font-family: var(--hpm-font-main);
+		font-weight: 700;
 		width: 100%;
 		float: none;
 		margin: 0;
@@ -4202,8 +4215,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Stations */
 	#masthead nav#site-navigation ul li.nav-stations ul {
-		left: -18.5em;
-		width: 46em;
+		left: -14.5em;
+		width: 42em;
 	}
 	#masthead nav#site-navigation ul li.nav-stations ul li {
 		width: 25%;
@@ -4237,54 +4250,38 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		padding: 1em 0 0.5em 0;
 	}
 
-	/* Nav-Topics */
-	#masthead nav#site-navigation ul li.nav-topics ul {
-		left: -20em;
-		width: 52em;
-	}
-	#masthead nav#site-navigation ul li.nav-topics ul li {
-		width: 25%;
-		float: left;
-		text-align: left;
-		border: 0;
-	}
-	#masthead nav#site-navigation ul li.nav-topics ul li ul {
-		width: auto;
-	}
-	#masthead nav#site-navigation ul li.nav-topics ul li a {
-		color: #006d93;
-		font: 400 1em/1.25em var(--hpm-font-main);
-		text-transform: none;
-		padding: 0.25em 1.25em 0.25em 0;
-	}
-	#masthead nav#site-navigation ul li.nav-topics ul li ul li {
-		padding: 0;
-		float: none;
-		width: 100%;
-	}
-
 	/* Nav-Programs */
 	#masthead nav#site-navigation ul li.nav-programs ul {
-		left: -32em;
-		width: 54em;
+		left: -10em;
+		width: 35em;
 	}
 	#masthead nav#site-navigation ul li.nav-programs ul li {
-		width: 20%;
+		width: 33.33333%;
 		padding: 0;
 		float: left;
 		text-align: left;
 		border: 0;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li ul {
+	#masthead nav#site-navigation ul li.nav-news ul li {
+		width: 50%;
+		padding: 0;
+		float: left;
+		text-align: left;
+		border: 0;
+	}
+	#masthead nav#site-navigation ul li.nav-programs ul li ul,
+	#masthead nav#site-navigation ul li.nav-news ul li ul {
 		width: auto;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li a {
+	#masthead nav#site-navigation ul li.nav-programs ul li a,
+	#masthead nav#site-navigation ul li.nav-news ul li a {
 		color: rgb(0,98,136);
 		font: 400 1em/1.25em var(--hpm-font-main);
 		text-transform: none;
 		padding: 0.25em 1.5em 0.25em 0;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li ul li {
+	#masthead nav#site-navigation ul li.nav-programs ul li ul li,
+	#masthead nav#site-navigation ul li.nav-news ul li ul li {
 		padding: 0;
 		float: none;
 		width: 100%;
@@ -4314,32 +4311,19 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-News */
 	#masthead nav#site-navigation ul li.nav-news ul {
-		width: 12em;
+		width: 28em;
 		left: 0;
 	}
-	#masthead nav#site-navigation ul li.nav-news ul li {
-		width: 100%;
-		border: 0;
-	}
-	#masthead nav#site-navigation ul li.nav-news ul li a {
-		color: rgb(0,98,136);
-		font: 400 1.125em/1.25em var(--hpm-font-main);
-		text-transform: none;
-		padding: 0.25em 0;
-	}
 
-	/* Nav-Music */
-	#masthead nav#site-navigation ul li.nav-arts-culture ul,
+	/* Nav-Support */
 	#masthead nav#site-navigation ul li.nav-support ul {
 		width: 12em;
 		left: -2em;
 	}
-	#masthead nav#site-navigation ul li.nav-arts-culture ul li,
 	#masthead nav#site-navigation ul li.nav-support ul li {
 		width: 100%;
 		border: 0;
 	}
-	#masthead nav#site-navigation ul li.nav-arts-culture ul li a,
 	#masthead nav#site-navigation ul li.nav-support ul li a {
 		color: rgb(0,98,136);
 		font: 400 1.125em/1.25em var(--hpm-font-main);
@@ -5353,8 +5337,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		font: 400 1.5em/1.25em var(--hpm-font-main);
 	}
 	#masthead nav#site-navigation ul li.nav-stations ul {
-		left: -20em;
-		width: 52em;
+		left: -18em;
+		width: 48em;
 	}
 
 	/* Nav-UH */
@@ -5369,20 +5353,16 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-News */
 	#masthead nav#site-navigation ul li.nav-news ul {
-		left: -2.5em;
-	}
-
-	/* Nav-Music */
-	#masthead nav#site-navigation ul li.nav-arts-culture ul {
-		left: -0.75em;
+		width: 30em;
 	}
 
 	/* Nav-Programs */
 	#masthead nav#site-navigation ul li.nav-programs ul {
-		left: -38em;
-		width: 66em;
+		left: -10em;
+		width: 39em;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li a {
+	#masthead nav#site-navigation ul li.nav-programs ul li a,
+	#masthead nav#site-navigation ul li.nav-news ul li a {
 		font: 400 1.125em/1.25em var(--hpm-font-main);
 	}
 
@@ -5650,7 +5630,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	display: flex;
 }
 .page-template-page-passport .page-header .page-title .passport-bold {
-	font-family: var(--hpm-font-main); font-weight: 700;
+	font-family: var(--hpm-font-main);
+	font-weight: 700;
 }
 .page-template-page-passport .page-content {
 	padding: 1.5em 0 0;
@@ -5718,7 +5699,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	font-size: 1em;
 }
 .page-template-page-passport .page-content .passport-example h3 {
-	font-family: var(--hpm-font-main); font-weight: 100;
+	font-family: var(--hpm-font-main);
+	font-weight: 100;
 	color: #464646;
 	font-size: 1.25em;
 }
@@ -9616,3 +9598,158 @@ article .entry-content .planning-nav ul li.planning-contact a {
 		width: 66%;
 	}
 }
+
+/* Women's History Month */
+:root {
+	--whm-blue: #2f1f50;
+	--whm-red: #ec5832;
+	--whm-pink: #fbdce2;
+}
+.whm #div-gpt-ad-1488818411584-0 {
+	display: none;
+}
+.whm aside.column-right {
+	margin: 0 0 2em 0;
+	width: 100%;
+}
+.whm section.column-left {
+	margin: 0 0 2em 0;
+	width: 100%;
+	padding: 1em;
+}
+.whm .whm-program {
+	margin-bottom: 2em;
+}
+ .whm section.column-left:nth-child(2n) {
+	background-color: var(--whm-blue);
+}
+.whm section.column-left:nth-child(2n) * {
+	color: white;
+}
+.whm section.column-left:nth-child(2n) a {
+	text-decoration: underline;
+}
+.whm h1 {
+	font-weight: 900;
+	margin-bottom: 0.5em;
+	color: var(--whm-red);
+}
+.whm aside h1 {
+	font-size: 1.5em;
+	margin-bottom: 0;
+}
+.whm h2 {
+	font-weight: 900;
+	margin-bottom: 0;
+	font-size: 1.5em;
+	color: var(--whm-blue);
+}
+.whm section.column-left ul {
+	margin-bottom: 2em;
+}
+.whm article {
+	padding: 0;
+	margin-top: 0;
+}
+.whm article .entry-content {
+	padding: 1em;
+}
+.whm .entry-header {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 0;
+	padding-right: 0;
+	padding-left: 0;
+	padding-top: 0;
+	padding-bottom: calc(100%/1.5);
+	position: relative;
+	background-image: url(https://cdn.hpm.io/assets/images/Womens-History-Month_MOBILE-BANNER.png);
+}
+.whm .entry-header h1 {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	width: 1px;
+	position: absolute !important;
+}
+.whm .whm-split:nth-child(1) {
+	margin-bottom: 1em;
+}
+@media screen and (min-width: 34em) {
+	.whm .entry-header {
+		padding-right: 0;
+		padding-left: 0;
+		padding-top: 0;
+		padding-bottom: calc(100%/4);
+		background-image: url(https://cdn.hpm.io/assets/images/Womens-History-Month_TABLET-BANNER.png);
+	}
+	.whm .whm-split {
+		float: left;
+		width: 60%;
+		margin-bottom: 0;
+	}
+	.whm .whm-split:nth-child(2) {
+		width: 40%;
+		padding-left: 1em;
+	}
+}
+@media screen and (min-width: 52.5em) {
+	body.whm {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-attachment: fixed;
+		background-image: url(https://cdn.hpm.io/assets/images/74355172_xl_light-pink.jpg);
+	}
+	.whm .whm-split,
+	.whm .whm-split:nth-child(1),
+	.whm .whm-split:nth-child(2) {
+		float: none;
+		width: 100%;
+		margin-bottom: 1em;
+		padding: 0;
+	}
+	.whm .entry-header {
+		padding-right: 0;
+		padding-left: 0;
+		padding-top: 0;
+		padding-bottom: calc(100%/6);
+		background-image: url(https://cdn.hpm.io/assets/images/Womens-History-Month_DESKTOP-BANNER.png);
+	}
+	.whm aside.column-right {
+		margin: 0 0 2em;
+		width: 28%;
+	}
+	.whm section.column-left {
+		width: 72%;
+	}
+	.whm .whm-program.whm-flip {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	.whm .whm-program.whm-flip div {
+		display: flex;
+		justify-content: center;
+		flex-flow: column nowrap;
+	}
+	.whm .whm-program.whm-flip .whm-video {
+		width: 40%;
+		padding: 0 1em 0 0;
+	}
+	.whm .whm-program.whm-flip .whm-desc {
+		width: 60%;
+	}
+	.whm .whm-program p {
+		padding: 0;
+	}
+	.whm .whm-program.whm-flip:nth-child(2n) {
+		flex-flow: row-reverse nowrap;
+	}
+	.whm .whm-program.whm-flip:nth-child(2n) .whm-video {
+		padding: 0 0 0 1em;
+	}
+}
+/*	TODO: Add header banners for WHM page
+	TODO: Add pink background
+	TODO: Figure out where else to use the colors */

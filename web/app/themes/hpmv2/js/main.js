@@ -232,17 +232,6 @@ jQuery(document).ready(function($){
 			$('#'+dat).fadeIn();
 		}
 	});
-	$('#c2c-galleries li').on('click', function(){
-		var dat = $(this).attr('data-device');
-		if ( $(this).hasClass( 'c2c-active' ) ) {
-			return false;
-		} else {
-			$('#c2c-galleries li').removeClass('c2c-active');
-			$('.c2c-gallery').removeClass('c2c-gallery-active');
-			$(this).addClass('c2c-active');
-			$('#'+dat).addClass('c2c-gallery-active');
-		}
-	});
 	$('#top-schedule .top-schedule-label a').on('click', function(e){
 		e.preventDefault();
 		$('#top-schedule .top-schedule-link-wrap').toggleClass('top-sched-active');
@@ -433,28 +422,30 @@ function amPm(timeString) {
 }
 function masonLoad() {
 	var isActive = false;
-	if ( window.innerWidth > 800 )
-	{
-		imagesLoaded( '#float-wrap', function() {
-			var msnry = new Masonry( '#float-wrap', {
-				itemSelector: '.grid-item',
-				stamp: '.stamp',
-				columnWidth: '.grid-sizer'
+	if (typeof imagesLoaded === "function") {
+		if ( window.innerWidth > 800 )
+		{
+			imagesLoaded( '#float-wrap', function() {
+				var msnry = new Masonry( '#float-wrap', {
+					itemSelector: '.grid-item',
+					stamp: '.stamp',
+					columnWidth: '.grid-sizer'
+				});
+				isActive = true;
 			});
-			isActive = true;
-		});
-		if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
-			var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
-			document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
-		}
-	} else {
-		if ( isActive ) {
-			msnry.destroy();
-			isActive = !isActive;
-		}
-		var gridItem = document.querySelectorAll('.grid-item');
-		for ( i = 0; i < gridItem.length; ++i ) {
-			gridItem[i].removeAttribute('style');
+			if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
+				var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
+				document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
+			}
+		} else {
+			if ( isActive ) {
+				msnry.destroy();
+				isActive = !isActive;
+			}
+			var gridItem = document.querySelectorAll('.grid-item');
+			for ( i = 0; i < gridItem.length; ++i ) {
+				gridItem[i].removeAttribute('style');
+			}
 		}
 	}
 }
