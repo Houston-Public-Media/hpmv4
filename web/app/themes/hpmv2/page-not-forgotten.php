@@ -17,23 +17,21 @@ Template Name: Not Forgotten
 				padding: 0.5em;
 				z-index: 9999;
 				border: 0;
-				height: 5.5em;
+				height: 4.5em;
 				background-color: transparent;
 				transition: background-color 0.5s;
 				flex-flow: row nowrap;
 				align-items: center;
 				display: flex;
+				justify-content: space-between;
 			}
 			.page-template-page-not-forgotten #masthead .site-title,
 			.page-template-page-not-forgotten #masthead .site-nav {
 				display: none;
 			}
-			.page-template-page-not-forgotten #masthead div {
-				width: 33.33333%;
-			}
 			.page-template-page-not-forgotten #masthead div.site-nav {
 				text-align: right;
-				font-size: 150%;
+				font-size: 112.5%;
 			}
 			.page-template-page-not-forgotten #masthead div.site-nav a {
 				color: white;
@@ -46,6 +44,9 @@ Template Name: Not Forgotten
 				background-color: rgba( 0, 0, 0, 0.85 );
 				transition: background-color 0.5s;
 			}
+			.page-template-page-not-forgotten #masthead.active .site-nav {
+				display: block;
+			}
 			.page-template-page-not-forgotten #masthead .site-branding {
 				background-color: transparent !important;
 				padding: 0 !important;
@@ -57,6 +58,7 @@ Template Name: Not Forgotten
 			.page-template-page-not-forgotten #masthead h1 {
 				margin: 0;
 				text-align: center;
+				font-size: 2em;
 			}
 			.page-template-page-not-forgotten #masthead h1 a {
 				color: white;
@@ -203,6 +205,9 @@ Template Name: Not Forgotten
 					width: 48%;
 					padding: 1em;
 				}
+				.page-template-page-not-forgotten #masthead .site-branding img {
+					max-width: 10em;
+				}
 			}
 			@media screen and (min-width: 52.5em) {
 				section#nf-profiles article {
@@ -230,7 +235,7 @@ Template Name: Not Forgotten
 				<a href="/" rel="home" title="Houston Public Media"><img src="https://cdn.hpm.io/assets/images/HPM-PBS-NPR-White.png" alt="Houston Public Media" /></a>
 			</div><!-- .site-branding -->
 			<div class="site-title"><h1><a href="/not-forgotten/">Not Forgotten</a></h1></div>
-			<div class="site-nav"><a href="#about">About</a></div>
+			<div class="site-nav"><a href="/coronavirus/">COVID News</a></div>
 		</header><!-- .site-header -->
 		<div id="page" class="hfeed site">
 			<div id="content" class="site-content">
