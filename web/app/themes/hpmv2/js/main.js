@@ -87,7 +87,7 @@ jQuery(document).ready(function($){
 				if ($(this).hasClass('dc-top-menu')) {
 					$(this).html('<span class="genericons-neue genericons-neue-menu" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
 				} else {
-					$(this).html('<span class="fa fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
+					$(this).html('<span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>');
 				}
 				if ( listenLive === true ) {
 					siteNav.addClass('screen-reader-text');
@@ -97,7 +97,7 @@ jQuery(document).ready(function($){
 				if ($(this).hasClass('dc-top-menu')) {
 					$(this).html('<span class="genericons-neue genericons-neue-close-alt" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>');
 				} else {
-					$(this).html('<span class="fa fa-times" aria-hidden="true"></span><span class="top-mobile-text">Close</span>');
+					$(this).html('<span class="fas fa-times" aria-hidden="true"></span><span class="top-mobile-text">Close</span>');
 				}
 				if ( listenLive === true ) {
 					siteNav.removeClass('screen-reader-text');

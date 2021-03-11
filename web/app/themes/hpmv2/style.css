@@ -477,7 +477,7 @@ body #masthead #top-mobile-menu .fas,
 body #masthead #top-donate .fas,
 body #masthead #top-mobile-menu .fab,
 body #masthead #top-donate .fab {
-	font: normal 2.5em/0.9em 'Font Awesome 5 Free';
+	font: 900 2.5em/0.9em 'Font Awesome 5 Free';
 	margin: 0;
 }
 #masthead #top-donate {
@@ -966,7 +966,7 @@ ul.timeline li:last-child {
 article .entry-content ul.timeline li:before,
 ul.timeline li:before {
 	content: '\f111';
-	font: normal 1em/1em 'Font Awesome 5 Free';
+	font: 900 1em/1em 'Font Awesome 5 Free';
 	position: absolute;
 	left: -0.45em;
 	top: -0.0625em;
@@ -1584,7 +1584,7 @@ body.single #author-wrap .author-other-stories h2 a,
 	content: '\f099';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
-	font: normal .75em/1 'Font Awesome 5 Free';
+	font: 900 .75em/1 'Font Awesome 5 Free';
 	float: right;
 	padding-right: 1em;
 	position: relative;
@@ -3408,7 +3408,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	body #masthead #top-donate .fab,
 	body #masthead #top-mobile-menu .fas,
 	body #masthead #top-donate .fas {
-		font: normal 3.5em/0.9em 'Font Awesome 5 Free';
+		font: 900 3.5em/0.9em 'Font Awesome 5 Free';
 	}
 	#masthead #top-donate {
 		right: 6em;
@@ -5087,7 +5087,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	body.page-template-page-listen #masthead #top-donate .fab,
 	body.page-template-page-listen #masthead #top-mobile-menu .fas,
 	body.page-template-page-listen #masthead #top-donate .fas {
-		font: normal 1.75em/0.9em 'Font Awesome 5 Free';
+		font: 900 1.75em/0.9em 'Font Awesome 5 Free';
 	}
 	body.page-template-page-listen #masthead #top-donate a {
 		text-transform: uppercase !important;
@@ -9750,6 +9750,3 @@ article .entry-content .planning-nav ul li.planning-contact a {
 		padding: 0 0 0 1em;
 	}
 }
-/*	TODO: Add header banners for WHM page
-	TODO: Add pink background
-	TODO: Figure out where else to use the colors */
