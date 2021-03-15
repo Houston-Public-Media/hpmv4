@@ -6,6 +6,7 @@ Template Name: Not Forgotten
 <html <?php language_attributes(); ?> class="no-js" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" dir="ltr" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<head>
 		<?php wp_head(); ?>
+		<link rel="stylesheet" href="https://use.typekit.net/uku0xns.css">
 		<style>
 			body.page-template-page-not-forgotten {
 				background-color: black;
@@ -59,9 +60,12 @@ Template Name: Not Forgotten
 				margin: 0;
 				text-align: center;
 				font-size: 2em;
+				font-family: minion-3, serif;
+				font-weight: 400;
+				font-style: italic;
 			}
 			.page-template-page-not-forgotten #masthead h1 a {
-				color: white;
+				color: #f4b572;
 			}
 			.page-template-page-not-forgotten #content {
 				width: 100% !important;
@@ -72,8 +76,11 @@ Template Name: Not Forgotten
 				background-color: transparent;
 			}
 			.page-template-page-not-forgotten .page-header {
-				background: rgb(68,68,68);
-				background: radial-gradient(circle, rgba(68,68,68,1) 0%, rgba(0,0,0,1) 100%);
+				background-color: #000000;
+				background-image: url(https://cdn.hpm.io/assets/images/NotForgotten_Landing-Page_Art_1500x1500.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
 				margin-bottom: 6em;
 				flex-flow: column nowrap;
 				justify-content: center;
@@ -95,24 +102,18 @@ Template Name: Not Forgotten
 				font-size: 3em;
 				line-height: 0.5em;
 			}
-			.page-template-page-not-forgotten .page-header h1 {
-				text-align: center;
-				padding: 0 1em;
-				color: white;
-				font-size: 300%
-			}
-			.page-template-page-not-forgotten .page-header h2 {
-				text-align: center;
-				padding: 0 1em;
-				color: white;
-				font-size: 150%;
+			.page-template-page-not-forgotten .page-header img {
+				width: 85%;
 			}
 			section#nf-head p {
 				color: white;
 			}
+			section#nf-profiles {
+				padding: 0 1em;
+			}
 			section#nf-profiles article {
 				border: 0 !important;
-				background-color: white !important;
+				background-color: #014d60 !important;
 				margin-bottom: 2em;
 			}
 			section#nf-profiles article:hover {
@@ -120,9 +121,18 @@ Template Name: Not Forgotten
 			}
 			section#nf-profiles article h1 {
 				margin: 0;
+				color: #f4b572;
+				font-family: minion-3, serif;
+				font-weight: 400;
+				font-style: normal;
+				text-align: center;
 			}
 			section#nf-profiles article .profile-full {
 				display: none;
+			}
+			#nf-msg blockquote h2 {
+				font-weight: bolder;
+				font-style: italic;
 			}
 			#nf-msg-overlay {
 				position: fixed;
@@ -185,6 +195,45 @@ Template Name: Not Forgotten
 				position: fixed;
 				height: 100vh;
 			}
+			#nf-msg .jp-type-single {
+				background-color: transparent;
+			}
+			#nf-msg .jp-gui.jp-interface .jp-controls button {
+				background-color: transparent;
+				width: 4em;
+				height: 4em;
+			}
+			#nf-msg .jp-gui.jp-interface .jp-controls button .fa {
+				font-size: 3.25em;
+				color: #f4b572;
+			}
+			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper {
+				position: relative;
+				padding: 1em 0.5em;
+			}
+			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
+				margin: 0;
+				background-color: #014d60;
+				z-index: 9;
+				position: relative;
+			}
+			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
+				z-index: 11;
+			}
+			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-play-bar {
+				background-color: rgba( 255, 255, 255, 0.25 );
+			}
+			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
+				position: absolute;
+				top: 1.5em;
+				right: 1em;
+				z-index: 10;
+				float: none;
+				width: auto;
+				display: inline;
+				padding: 0;
+				color: white;
+			}
 			@media screen and (min-width: 34em) {
 				.page-template-page-not-forgotten #masthead.active .site-title,
 				.page-template-page-not-forgotten #masthead.active .site-nav {
@@ -208,17 +257,41 @@ Template Name: Not Forgotten
 				.page-template-page-not-forgotten #masthead .site-branding img {
 					max-width: 10em;
 				}
+				.page-template-page-not-forgotten #masthead div {
+					width: 33.33333%;
+				}
+				.page-template-page-not-forgotten .page-header img {
+					width: 66%;
+				}
+				#nf-msg .jp-gui.jp-interface .jp-details {
+					display: none;
+				}
+				#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
+					top: 1.25em;
+				}
 			}
 			@media screen and (min-width: 52.5em) {
+				section#nf-profiles {
+					justify-content: center;
+				}
 				section#nf-profiles article {
-					width: 32%;
+					width: 31.333333%;
 					padding: 1em;
+					margin: 0 1% 2em;
 				}
 				#nf-msg-overlay #nf-msg-wrap {
 					max-width: 60em;
 				}
 				#nf-msg-overlay .fa, #nf-msg-overlay .fas {
 					font-size: 3em;
+				}
+				.page-template-page-not-forgotten .page-header img {
+					width: 50%;
+				}
+			}
+			@media screen and (min-width: 64.5em) {
+				.page-template-page-not-forgotten .page-header img {
+					width: 45%;
 				}
 			}
 		</style>
@@ -242,8 +315,7 @@ Template Name: Not Forgotten
 				<div id="primary" class="content-area">
 					<main id="main" class="site-main" role="main">
 						<header class="page-header">
-							<h1 class="page-title"><?php echo get_the_title(); ?></h1>
-							<h2><?php echo get_the_excerpt(); ?></h2>
+							<img src="https://cdn.hpm.io/assets/images/NotForgotten_Logo.svg" alt="<?php echo get_the_title() . ": " . get_the_excerpt(); ?>" />
 							<a class="down scrollto" href="#main-content">
 								<span class="fa fa-angle-double-down"></span>
 							</a>
@@ -287,6 +359,7 @@ Template Name: Not Forgotten
 						$('body').removeClass('modal-open');
 						var scroll = document.body.style.top;
 						window.scrollTo(0, parseInt(scroll || '0') * -1);
+						$.jPlayer.pause();
 					});
 					$('a.down').on(eventType, function (event) {
 						event.preventDefault();
@@ -317,6 +390,7 @@ Template Name: Not Forgotten
 						var message = $('#nf-profile-'+next).children('.profile-full').html();
 						$('#nf-msg').html(message);
 						$('#nf-msg-wrap').scrollTop(0);
+						$.jPlayer.pause();
 					});
 					$('#nf-previous').on(eventType, function (event) {
 						var current = parseInt($('#nf-msg').attr('data-current'));
@@ -329,6 +403,7 @@ Template Name: Not Forgotten
 						var message = $('#nf-profile-'+prev).children('.profile-full').html();
 						$('#nf-msg').html(message);
 						$('#nf-msg-wrap').scrollTop(0);
+						$.jPlayer.pause();
 					});
 				});
 			</script>
