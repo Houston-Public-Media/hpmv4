@@ -53,7 +53,7 @@ add_filter( 'the_content', 'shortcode_unautop');
 /*
  * Enqueue Typekit, FontAwesome, Masonry, jPlayer scripts, stylesheets and some conditional scripts and stylesheets for older versions of IE
  */
-$hpm_test = $_GET['version'];
+$hpm_test = ( !empty( $_GET['version'] ) ? $_GET['version'] : '' );
 if ( $hpm_test !== '-mod' ) :
 	$hpm_test = '';
 endif;

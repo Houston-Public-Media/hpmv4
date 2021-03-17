@@ -91,7 +91,7 @@ function hpm_header_info() {
 				$reqs['permalink'] = get_the_permalink( $ID );
 				$reqs['title'] = $wp_query->queried_object->name . ' | Houston Public Media';
 			endif;
-		elseif ( is_single() || is_page() ) :
+		elseif ( is_single() || is_page() || get_post_type() == 'embeds' ) :
 			$attach_id = get_post_thumbnail_id( $ID );
 			if ( !empty( $attach_id ) ) :
 				$feature_img = wp_get_attachment_image_src( $attach_id, 'large' );
@@ -261,7 +261,7 @@ function hpm_header_info() {
 		<meta property="og:image:type" content="<?php echo $reqs['thumb_meta']['mime-type']; ?>" />
 		<meta property="og:image:secure_url" content="<?php echo $reqs['thumb']; ?>" />
 <?php
-	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' ) : ?>
+	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta property="article:content_tier" content="free" />
 		<meta property="article:published_time" content="<?php echo $reqs['publish_date']; ?>" />
 		<meta property="article:modified_time" content="<?php echo $reqs['modified_date']; ?>" />
@@ -296,7 +296,7 @@ function hpm_header_info() {
 		<meta name="twitter:widgets:border-color" content="#000000">
 		<meta name="twitter:partner" content="tfwp">
 <?php
-	if ( is_single() && get_post_type() !== 'staff' ) : ?>
+	if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta name="datePublished" content="<?php echo $reqs['publish_date']; ?>" />
 		<meta name="story_id" content="<?php echo $reqs['npr_story_id']; ?>" />
 		<meta name="has_audio" content="<?php echo $reqs['has_audio']; ?>" />
