@@ -755,10 +755,10 @@ function hpm_programs_shortcode( $atts ) {
 add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
 
 function hpm_careers_trans() {
-	$output = get_transient( 'hpm_careers' );
-	if ( !empty( $output ) ) :
-		return $output;
-	endif;
+	// $output = get_transient( 'hpm_careers' );
+	// if ( !empty( $output ) ) :
+	// 	return $output;
+	// endif;
 	$curl = curl_init();
 
 	curl_setopt_array( $curl, [
@@ -794,7 +794,20 @@ function hpm_careers_trans() {
 	endif;
 	$output = '<ul>';
 	foreach ( $json['requisitionList'] as $j ) :
-		$output .= "<li><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong> (Posted on " . trim( $j['column'][2] ) . ")</a></li>";
+		$url = 'https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=' . $j['contestNo'] . '&tz=GMT-06%3A00&tzname=America%2FChicago';
+		$output .= '<li><h2 style="margin-bottom: 0;display:inline-block;padding-right:1em;"><a href="' . $url . '"><strong>' . trim( $j['column'][0] ) . '</strong> (Posted on ' . trim( $j['column'][2] ) . ')</a></h2><div class="info-toggle" style="display: inline-block; width: 25%;"><em><strong>More</strong></em></div><div class="info-toggle-hidden">';
+		$dom = new DOMDocument();
+		$dom->loadHTML( file_get_contents( 'https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=STA007009&tz=GMT-05%3A00&tzname=America%2FChicago' ) );
+		$div = $dom->getElementById('initialHistory');
+		$val = urldecode( $div->getAttribute('value') );
+		$ex = explode( '!|!', $val );
+		$ex = array_unique( $ex );
+		foreach ( $ex as $e ) :
+			if ( substr( $e, 0, 3) === '!*!' ) :
+				$output .= preg_replace( [ '/ style="(.+)">/', '/<\/?span>/', '/\\\:/', '/!\*!/', '/\*/', '/<p>&nbsp;<\/p>/', '/[\n\t]/' ], [ '>', '', ':', '', '', '', '' ], $e );
+			endif;
+		endforeach;
+		$output .= '</div></li>';
 	endforeach;
 	$output .= '</ul><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 	set_transient( 'hpm_careers', $output, 3600 );

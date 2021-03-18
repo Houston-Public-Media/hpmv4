@@ -4215,8 +4215,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-Stations */
 	#masthead nav#site-navigation ul li.nav-stations ul {
-		left: -14.5em;
-		width: 42em;
+		left: -18.5em;
+		width: 46em;
 	}
 	#masthead nav#site-navigation ul li.nav-stations ul li {
 		width: 25%;
@@ -4250,38 +4250,54 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		padding: 1em 0 0.5em 0;
 	}
 
-	/* Nav-Programs */
-	#masthead nav#site-navigation ul li.nav-programs ul {
-		left: -10em;
-		width: 35em;
+	/* Nav-Topics */
+	#masthead nav#site-navigation ul li.nav-topics ul {
+		left: -20em;
+		width: 52em;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li {
-		width: 33.33333%;
-		padding: 0;
+	#masthead nav#site-navigation ul li.nav-topics ul li {
+		width: 25%;
 		float: left;
 		text-align: left;
 		border: 0;
 	}
-	#masthead nav#site-navigation ul li.nav-news ul li {
-		width: 50%;
-		padding: 0;
-		float: left;
-		text-align: left;
-		border: 0;
-	}
-	#masthead nav#site-navigation ul li.nav-programs ul li ul,
-	#masthead nav#site-navigation ul li.nav-news ul li ul {
+	#masthead nav#site-navigation ul li.nav-topics ul li ul {
 		width: auto;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li a,
-	#masthead nav#site-navigation ul li.nav-news ul li a {
+	#masthead nav#site-navigation ul li.nav-topics ul li a {
+		color: #006d93;
+		font: 400 1em/1.25em var(--hpm-font-main);
+		text-transform: none;
+		padding: 0.25em 1.25em 0.25em 0;
+	}
+	#masthead nav#site-navigation ul li.nav-topics ul li ul li {
+		padding: 0;
+		float: none;
+		width: 100%;
+	}
+
+	/* Nav-Programs */
+	#masthead nav#site-navigation ul li.nav-programs ul {
+		left: -32em;
+		width: 54em;
+	}
+	#masthead nav#site-navigation ul li.nav-programs ul li {
+		width: 20%;
+		padding: 0;
+		float: left;
+		text-align: left;
+		border: 0;
+	}
+	#masthead nav#site-navigation ul li.nav-programs ul li ul {
+		width: auto;
+	}
+	#masthead nav#site-navigation ul li.nav-programs ul li a {
 		color: rgb(0,98,136);
 		font: 400 1em/1.25em var(--hpm-font-main);
 		text-transform: none;
 		padding: 0.25em 1.5em 0.25em 0;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li ul li,
-	#masthead nav#site-navigation ul li.nav-news ul li ul li {
+	#masthead nav#site-navigation ul li.nav-programs ul li ul li {
 		padding: 0;
 		float: none;
 		width: 100%;
@@ -4311,19 +4327,32 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-News */
 	#masthead nav#site-navigation ul li.nav-news ul {
-		width: 28em;
+		width: 12em;
 		left: 0;
 	}
+	#masthead nav#site-navigation ul li.nav-news ul li {
+		width: 100%;
+		border: 0;
+	}
+	#masthead nav#site-navigation ul li.nav-news ul li a {
+		color: rgb(0,98,136);
+		font: 400 1.125em/1.25em var(--hpm-font-main);
+		text-transform: none;
+		padding: 0.25em 0;
+	}
 
-	/* Nav-Support */
+	/* Nav-Music */
+	#masthead nav#site-navigation ul li.nav-arts-culture ul,
 	#masthead nav#site-navigation ul li.nav-support ul {
 		width: 12em;
 		left: -2em;
 	}
+	#masthead nav#site-navigation ul li.nav-arts-culture ul li,
 	#masthead nav#site-navigation ul li.nav-support ul li {
 		width: 100%;
 		border: 0;
 	}
+	#masthead nav#site-navigation ul li.nav-arts-culture ul li a,
 	#masthead nav#site-navigation ul li.nav-support ul li a {
 		color: rgb(0,98,136);
 		font: 400 1.125em/1.25em var(--hpm-font-main);
@@ -5337,8 +5366,8 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		font: 400 1.5em/1.25em var(--hpm-font-main);
 	}
 	#masthead nav#site-navigation ul li.nav-stations ul {
-		left: -18em;
-		width: 48em;
+		left: -20em;
+		width: 52em;
 	}
 
 	/* Nav-UH */
@@ -5353,16 +5382,20 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 
 	/* Nav-News */
 	#masthead nav#site-navigation ul li.nav-news ul {
-		width: 30em;
+		left: -2.5em;
+	}
+
+	/* Nav-Music */
+	#masthead nav#site-navigation ul li.nav-arts-culture ul {
+		left: -0.75em;
 	}
 
 	/* Nav-Programs */
 	#masthead nav#site-navigation ul li.nav-programs ul {
-		left: -10em;
-		width: 39em;
+		left: -38em;
+		width: 66em;
 	}
-	#masthead nav#site-navigation ul li.nav-programs ul li a,
-	#masthead nav#site-navigation ul li.nav-news ul li a {
+	#masthead nav#site-navigation ul li.nav-programs ul li a {
 		font: 400 1.125em/1.25em var(--hpm-font-main);
 	}
 
