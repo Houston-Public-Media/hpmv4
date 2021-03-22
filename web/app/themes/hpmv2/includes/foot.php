@@ -143,17 +143,29 @@ function hpm_houston_matters_check() {
 
 function hpm_chartbeat() {
 	global $wp_query;
-	$anc = get_post_ancestors( get_the_ID() );
-	if ( !in_array( 61383, $anc ) && WP_ENV !== 'development' ) : ?>
+	$id = $wp_query->get_queried_object_id();
+	$anc = get_post_ancestors( $id );
+	if ( !in_array( 61383, $anc ) && WP_ENV !== 'development' ) :
+		$auth = get_coauthors( $id );
+		$auth_temp = [];
+		$authors = '';
+		if ( empty( $auth ) || is_front_page() ) :
+			$authors = 'Houston Public Media';
+		else :
+			foreach ( $auth as $a ) :
+				$auth_temp[] = $a->display_name;
+			endforeach;
+			$authors = implode( ', ', $auth_temp );
+		endif; ?>
 		<script type='text/javascript'>
 			var _sf_async_config={};
 			/** CONFIGURATION START **/
 			_sf_async_config.uid = 33583;
 			_sf_async_config.domain = 'houstonpublicmedia.org';
 			_sf_async_config.useCanonical = true;
-			_sf_async_config.sections = "<?php echo ( is_front_page() ? 'News, Arts & Culture, Education' : str_replace( '&amp;', '&', wp_strip_all_tags( get_the_category_list( ', ', 'multiple', get_the_ID() ) ) ) );
+			_sf_async_config.sections = "<?php echo ( is_front_page() ? 'News, Arts & Culture, Education' : str_replace( '&amp;', '&', wp_strip_all_tags( get_the_category_list( ', ', 'multiple', $id ) ) ) );
 			?>";
-			_sf_async_config.authors = "<?php echo ( is_front_page() ? 'Houston Public Media' : coauthors( ',', ',', '', '', false ) ); ?>";
+			_sf_async_config.authors = "<?php echo $authors; ?>";
 			(function(){
 				function loadChartbeat() {
 					window._sf_endpt=(new Date()).getTime();
