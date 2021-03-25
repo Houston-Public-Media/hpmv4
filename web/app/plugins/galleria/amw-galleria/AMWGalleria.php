@@ -8,7 +8,7 @@ class AMWGalleria {
 	protected $url;
 	protected $theme;
 	protected $version = '1.5';
-	protected $galleriaVersion = '1.5.7';
+	protected $galleriaVersion = '1.6.1';
 	protected $optionsName = 'amw_galleria_theme';
 	protected $defaultTheme = 'classic'; // TODO: add option to switch theme
 
@@ -202,19 +202,20 @@ class AMWGalleria {
 			'autoplay'          => (boolean) $autoplay,
 			'transition'        => 'fade',
 			'lightbox'          => (boolean) true,
-			'showInfo'          => (boolean) true
+			'showInfo'          => (boolean) true,
+			'wait'              => (boolean) true
 		));
 
 		// unique ID for this slideshow
 		$domId = "amw_galleria_slideshow_" . $instance;
 
 		// the DOM is built in JavaScript so we just need a placeholder div
-		$output .= "<div id=\"" . $domId . "\" class=\"galleria\">".$images_full."</div>\n";
+		$output .= "<div class=\"column-span\"><div id=\"" . $domId . "\" class=\"galleria\">".$images_full."</div>\n";
 
 		$theme_js    = sprintf("%s/galleria/themes/%s/galleria.%s.min.js",  $this->url, $theme, $theme);
 		// galleria JavaScript output
 		// NOTE: WordPress disables the use of the dollar-sign function ($) for compatibility
-		$output .= '<div class="screen-reader-text"><script type="text/javascript">jQuery(document).ready(function(){Galleria.loadTheme(\''.$theme_js.'\');Galleria.run(\'#'. $domId .'\',' . $options . '); });</script></div>';
+		$output .= '<div class="screen-reader-text"><script type="text/javascript">jQuery(document).ready(function(){Galleria.loadTheme(\''.$theme_js.'\');Galleria.run(\'#'. $domId .'\',' . $options . '); });</script></div></div>';
 		wp_enqueue_script( 'amw-galleria' );
 		//wp_enqueue_style( 'amw-galleria-style' );
 		return $output;

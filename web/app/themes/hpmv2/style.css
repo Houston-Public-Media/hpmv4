@@ -994,7 +994,7 @@ article .entry-footer .tags-links a {
 	margin: 0 0.625em 0.5em 0;
 }
 figure.wp-caption {
-	width: 100%;
+	width: 100% !important;
 	margin: 0 auto 1em;
 	padding: 1em;
 	max-width: 100%;
@@ -1312,7 +1312,6 @@ nav.pagination a.page-numbers.next {
 	background-color: rgb(243,244,244) !important;
 	color: rgb(142,144,144) !important;
 	font: 500 1.5em/1.5em var(--hpm-font-main);
-	padding: 0.5em !important;
 	width: 100% !important;
 }
 input.gsc-search-button {
@@ -1329,6 +1328,7 @@ table.gsc-search-box td.gsc-input {
 	max-width: 100% !important;
 	width: 100% !important;
 	max-height: none !important;
+	padding-right: 1em;
 }
 .gsc-thumbnail, .gs-promotion-image-cell {
 	padding: 0 1em 1em 0 !important;
