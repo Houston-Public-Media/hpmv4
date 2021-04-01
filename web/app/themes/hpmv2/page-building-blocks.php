@@ -146,6 +146,7 @@ Template Name: Building Blocks
 			padding: 0 0 0.5em;
 			margin: 0 0 0.5em 0;
 			line-height: 1em;
+			letter-spacing: -3px;
 		}
 		.bblocks-eps h3 {
 			text-transform: capitalize;
@@ -211,7 +212,7 @@ Template Name: Building Blocks
 			color: var(--bblocks-red);
 			margin: 0 0 2em 0;
 			padding: 0 1em;
-			font-family: Arial, Helvetica, sans-serif;
+			font-family: 'PBS-Sans', Arial, Helvetica, sans-serif;
 			font-weight: 400;
 			font-size: 1.25em;
 		}
