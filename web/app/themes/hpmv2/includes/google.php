@@ -44,7 +44,6 @@ function hpm_google_tracker() {
 			function hpmKimbiaComplete(kimbiaData) {
 				var charge = kimbiaData['initialCharge'];
 				var amount = Number(charge.replace(/[^0-9\.]+/g,""));
-				fbq( 'track', 'Purchase', { value: amount, currency: 'USD' } );
 				ga('hpmprod.send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
 				ga('hpmWebAmpprod.send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
 			}

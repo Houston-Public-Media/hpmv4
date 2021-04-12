@@ -47,9 +47,9 @@ function hpm_site_header() { ?>
 						) );
 					?>
 						<div class="clear"></div>
-					</nav><!-- .main-navigation -->
-				</div><!-- .site-branding -->
-			</header><!-- .site-header --><?php
+					</nav>
+				</div>
+			</header><?php
 }
 
 function hpm_header_info() {
@@ -260,6 +260,7 @@ function hpm_header_info() {
 		<meta property="og:image:width" content="<?php echo $reqs['thumb_meta']['width']; ?>" />
 		<meta property="og:image:type" content="<?php echo $reqs['thumb_meta']['mime-type']; ?>" />
 		<meta property="og:image:secure_url" content="<?php echo $reqs['thumb']; ?>" />
+		<script>var timeOuts = [];</script>
 <?php
 	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta property="article:content_tier" content="free" />
@@ -316,8 +317,8 @@ function hpm_body_open() {
 	if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) : ?>
 	<script>setCookie('inapp','true',1);</script>
 	<style>#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }</style>
-<?php endif; ?><div id="fb-root"></div>
-		<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v10.0' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+<?php endif; /* ?><div id="fb-root"></div>
+		<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v10.0' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script><?php */ ?>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
 <?php
 	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) : ?>
@@ -344,9 +345,9 @@ function hpm_body_open() {
 								'walker' => new HPMv2_Menu_Walker
 							) ); ?>
 						<div class="clear"></div>
-					</nav><!-- .main-navigation -->
-				</div><!-- .site-branding -->
-			</header><!-- .site-header -->
+					</nav>
+				</div>
+			</header>
 		</div>
 <?php
 	endif; ?>

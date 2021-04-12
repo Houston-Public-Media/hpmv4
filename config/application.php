@@ -37,6 +37,9 @@ if (file_exists($env_config)) {
  * URLs
  */
 // define('WP_CACHE', true);
+if ( empty( $_SERVER['HTTP_HOST'] ) && WP_ENV == 'development' ) :
+	$_SERVER['HTTP_HOST'] = 'dev.houstonpublicmedia.org';
+endif;
 if ( empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) :
 	$_SERVER['HTTP_X_ORIGINAL_HOST'] = $_SERVER['HTTP_HOST'];
 endif;
