@@ -1151,6 +1151,15 @@ span.edit-link {
 .galleria {
 	margin-bottom: 2em;
 }
+.job-listings h2 {
+	margin-bottom: 0;
+	display: inline-block;
+	padding-right: 1em;
+}
+.job-listings .info-toggle {
+	display: inline-block;
+	width: 25%;
+}
 
 /**
  * 5.2 Search Result/Category/Tag Styles
