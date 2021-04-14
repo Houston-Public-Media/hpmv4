@@ -1,6 +1,5 @@
 <?php
 function hpm_site_header() { ?>
-<a href="/ProdStage" rel="nofollow" style="display: none" aria-hidden="true">Production Staging</a>
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
 					<div class="site-logo">
