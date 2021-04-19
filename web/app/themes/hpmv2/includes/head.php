@@ -214,7 +214,7 @@ function hpm_header_info() {
 		endif;
 	endif;
 ?>
-		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime()</script>
+		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime();</script>
 		<meta charset="<?php bloginfo( 'charset' ); ?>">
 		<link rel="profile" href="http://gmpg.org/xfn/11">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
