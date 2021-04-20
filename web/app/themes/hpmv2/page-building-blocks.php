@@ -69,12 +69,8 @@ Template Name: Building Blocks
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
-			height: 0;
-			padding-right: 0;
-			padding-left: 0;
-			padding-top: 0;
+			padding: 0;
 			margin: 0 !important;
-			padding-bottom: calc(100%/0.666667);
 			position: relative;
 			background-image: url(https://cdn.hpm.io/assets/images/building-blocks_background-sm.jpg);
 		}
@@ -256,10 +252,7 @@ Template Name: Building Blocks
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/1);
+				padding: 0;
 				background-image: url(https://cdn.hpm.io/assets/images/building-blocks_background.jpg);
 			}
 			.bblocks-eps .jp-gui.jp-interface .jp-details {
@@ -283,12 +276,6 @@ Template Name: Building Blocks
 			}
 		}
 		@media screen and (min-width: 52.5em) {
-			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/2);
-			}
 			.page-template-page-building-blocks article {
 				padding: 0;
 				margin: 0;
