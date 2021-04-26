@@ -125,7 +125,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 			});";
 		if ( !is_admin() ) :
 			$html .= "
-			$(\"#jquery_jplayer_{$audio_id}\").bind(
+			$(\"#jquery_jplayer_{$audio_id}\").on(
 				$.jPlayer.event.play, function(event) {
 					var mediaName = event.jPlayer.status.src;
 					$(this).jPlayer(\"pauseOthers\");
@@ -133,7 +133,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 					ga('hpmRollupprod.send', 'event', 'jPlayer', 'Play', mediaName);
 				}
 			);
-			$(\"#jquery_jplayer_{$audio_id}\").bind(
+			$(\"#jquery_jplayer_{$audio_id}\").on(
 				$.jPlayer.event.ended, function(event) {
 					var mediaName = event.jPlayer.status.src;
 					ga('hpmprod.send', 'event', 'jPlayer', 'Ended', mediaName);
