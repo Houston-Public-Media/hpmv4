@@ -70,7 +70,7 @@ $articles = hpm_homepage_articles(); ?>
 				</div>
 				<div class="article-wrap">
 <?php
-		elseif ( $ka == 13 ) : ?>
+		elseif ( $ka == 12 ) : ?>
 				</div>
 				<div id="npr-side" class="column-right">
 					<div id="national-news">
@@ -86,24 +86,24 @@ $articles = hpm_homepage_articles(); ?>
 				</div>
 				<div class="article-wrap">
 <?php
+		endif;
+		$postClass = get_post_class( $va->ID );
+		$search = 'felix-type-';
+		$felix_type = array_filter($postClass, function($el) use ($search) {
+			return ( strpos($el, $search) !== false );
+		});
+		$felix = 'felix-type-d';
+		if ( $ka == 0 ) :
+			$felix = 'felix-type-a';
+		elseif ( $ka == 1 ) :
+			$felix = 'felix-type-b';
+		endif;
+		if ( !empty( $felix_type ) ) :
+			$key = array_keys( $felix_type );
+			$postClass[$key[0]] = $felix;
 		else :
-			$postClass = get_post_class( $va->ID );
-			$search = 'felix-type-';
-			$felix_type = array_filter($postClass, function($el) use ($search) {
-				return ( strpos($el, $search) !== false );
-			});
-			$felix = 'felix-type-d';
-			if ( $ka == 0 ) :
-				$felix = 'felix-type-a';
-			elseif ( $ka == 1 ) :
-				$felix = 'felix-type-b';
-			endif;
-			if ( !empty( $felix_type ) ) :
-				$key = array_keys( $felix_type );
-				$postClass[$key[0]] = $felix;
-			else :
-				$postClass[] = $felix;
-			endif; ?>
+			$postClass[] = $felix;
+		endif; ?>
 				<article id="post-<?php echo $va->ID; ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
 					<?php
 						if ( has_post_thumbnail( $va->ID ) ) : ?>
@@ -124,7 +124,6 @@ $articles = hpm_homepage_articles(); ?>
 					</header>
 				</article>
 <?PHP
-		endif;
 	endforeach; ?>
 				</div>
 			</div>
