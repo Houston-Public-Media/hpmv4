@@ -114,7 +114,7 @@ $articles = hpm_homepage_articles(); ?>
 						endif; ?>
 					<header class="entry-header">
 						<h3><?php echo hpm_top_cat( $va->ID ); ?></h3>
-						<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink( $va->ID ) ) ), '</a></h2>' ); ?>
+						<h2 class="entry-title"><a href="<?php the_permalink( $va->ID ); ?>" rel="bookmark"><?php echo $va->post_title; ?></a></h2>
 						<div class="screen-reader-text">
 							<?PHP
 								coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true );
