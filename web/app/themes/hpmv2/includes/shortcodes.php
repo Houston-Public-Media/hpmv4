@@ -48,6 +48,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 	if ( amp_is_request() || is_feed() ) :
 		$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'source=amp-article"></amp-audio></div>';
 	else :
+		/*$html .= '<div class="article-audio" data-audio="'.$audio_url.'source=article-audio"><button><span class="fa fa-play" aria-hidden="true"></span></button> <h2>Click to Queue in Player</h2></div>';*/
 		if ( is_admin() ) :
 			$html .= '<link rel="stylesheet" id="fontawesome-css" href="https://cdn.hpm.io/assets/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hpmv2-css" href="https://cdn.hpm.io/assets/css/style.css" type="text/css" media="all"><script type="text/javascript" src="/wp/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js"></script>';
 		else :
@@ -287,7 +288,7 @@ function article_display_shortcode( $atts ) {
 		endif;
 	endif;
 	$article[] = new WP_query( $args );
-	$output = '<div class="grid-sizer"></div>';
+	$output = '';
 	ob_start();
 	foreach ( $article as $art ) :
 		if ( $art->have_posts() ) :
@@ -299,13 +300,10 @@ function article_display_shortcode( $atts ) {
 					$fl_array = preg_grep("/felix-type-/", $postClass);
 					$fl_arr = array_keys( $fl_array );
 					$postClass[$fl_arr[0]] = 'felix-type-'.$type;
-					$postClass[] = 'grid-item';
 					if ( $type == 'a' ) :
 						$thumbnail_type = 'large';
-						$postClass[] = 'grid-item--width2';
 					elseif ( $type == 'b' ) :
 						$thumbnail_type = 'thumbnail';
-						$postClass[] = 'grid-item--width2';
 					else :
 						$thumbnail_type = 'thumbnail';
 					endif;

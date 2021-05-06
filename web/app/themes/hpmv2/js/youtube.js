@@ -91,16 +91,7 @@ function onPlayerStateChange(event) {
 }
 if (document.getElementById('youtube-player') !== null) {
 	ytdimensions();
-	var resizeTimeout;
-	function resizeThrottler() {
-		if (!resizeTimeout) {
-			resizeTimeout = setTimeout(function () {
-				resizeTimeout = null;
-				ytdimensions();
-			}, 66);
-		}
-	}
-	window.addEventListener("resize", resizeThrottler(), false);
+	timeOuts.push(setTimeout(ytdimensions(), 500));
 	document.getElementById('play-button').addEventListener('click', function(){
 		window.ytid = this.parentNode.getAttribute('data-ytid');
 		var f = document.getElementById('yt-nowplay');

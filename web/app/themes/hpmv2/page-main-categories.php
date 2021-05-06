@@ -41,13 +41,12 @@ get_header(); ?>
 				<h1 class="page-title"><?php the_title(); ?></h1>
 			</header>
 			<div id="float-wrap">
-				<div class="grid-sizer"></div>
 			<?php
 				endif;
 				if ( $main_cat == 'education' ) :
 					$main_cat .= '-news';
 				endif; ?>
-			<div id="top-schedule-wrap" class="column-right stamp grid-item">
+			<div id="top-schedule-wrap" class="column-right">
 				<nav id="category-navigation" class="category-navigation" role="navigation">
 					<h4><?php echo str_replace('-news','',$main_cat); ?> Features and Series</h4>
 					<?php
@@ -110,6 +109,7 @@ get_header(); ?>
 					</div>
 				</div>
 			</div>
+			<div class="article-wrap">
 			<?php
 				if ( $main_cat == 'education-news' ) :
 					$main_cat_pull = 'education-news,texas-originals,uh-moment';
@@ -122,7 +122,7 @@ get_header(); ?>
 					'post_status' => 'publish',
 					'category__not_in' => 0,
 					'ignore_sticky_posts' => 1,
-					'posts_per_page' => 21
+					'posts_per_page' => 20
 				);
 
 				$orig_post = $post;
@@ -132,7 +132,6 @@ get_header(); ?>
 					$q->the_post();
 					if ( !in_array( get_the_ID(), $exclude ) ) :
 						$postClass = get_post_class();
-						$postClass[] = 'grid-item';
 						$search = 'felix-type-';
 						$felix_type = array_filter($postClass, function($el) use ($search) {
 							return ( strpos($el, $search) !== false );
@@ -164,6 +163,7 @@ get_header(); ?>
 				$post = $orig_post;
 				wp_reset_query();
 			?>
+				</div>
 			</div><!-- #float-wrap -->
 			<div class="readmore">
 				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>

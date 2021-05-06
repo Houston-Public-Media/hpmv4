@@ -39,8 +39,7 @@ get_header(); ?>
 		<?php
 			endwhile; ?>
 			<div id="float-wrap">
-				<div class="grid-sizer"></div>
-				<aside class="column-right grid-item stamp">
+				<aside class="column-right">
 <?php
 	if ( $show_title == '#TXDecides' ) : ?>
 					<div class="show-content">
@@ -79,6 +78,7 @@ get_header(); ?>
 			<?php
 				endif; ?>
 				</aside>
+				<div class="article-wrap">
 		<?php
 			$cat_no = get_post_meta( get_the_ID(), 'hpm_series_cat', true );
 			$top = get_post_meta( get_the_ID(), 'hpm_series_top', true );
@@ -103,11 +103,8 @@ get_header(); ?>
 				if ( $top_art->have_posts() ) :
 					while ( $top_art->have_posts() ) : $top_art->the_post();
 						$postClass = get_post_class();
-						$postClass[] = 'grid-item';
 						$fl_array = preg_grep("/felix-type-/", $postClass);
 						$fl_arr = array_keys( $fl_array );
-						$postClass[] = 'pinned';
-						$postClass[] = 'grid-item--width2';
 						if ( has_post_thumbnail() ) :
 							$postClass[$fl_arr[0]] = 'felix-type-a';
 						else :
@@ -142,12 +139,9 @@ get_header(); ?>
 			if ( $cat->have_posts() ) :
 				while ( $cat->have_posts() ) : $cat->the_post();
 					$postClass = get_post_class();
-					$postClass[] = 'grid-item';
 					$fl_array = preg_grep("/felix-type-/", $postClass);
 					$fl_arr = array_keys( $fl_array );
 					if ( $cat->current_post == 0 && empty( $top_art ) ) :
-						$postClass[] = 'pinned';
-						$postClass[] = 'grid-item--width2';
 						if ( has_post_thumbnail() ) :
 							$postClass[$fl_arr[0]] = 'felix-type-a';
 						else :
@@ -182,6 +176,7 @@ get_header(); ?>
 			<?PHP
 				endwhile;
 			endif; ?>
+				</div>
 			</div>
 		<?php
 			if ( $cat->found_posts > 15 ) : ?>

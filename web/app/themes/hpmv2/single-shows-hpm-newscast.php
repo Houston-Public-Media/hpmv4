@@ -71,7 +71,7 @@ get_header(); ?>
 				endif;?>
 		<?php
 			endwhile; ?>
-			<aside class="column-right grid-item stamp">
+			<aside class="column-right">
 				<h3>About <?php echo $show_title; ?></h3>
 				<div class="show-content">
 					<?php echo apply_filters( 'the_content', $show_content ); ?>

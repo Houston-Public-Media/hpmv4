@@ -144,7 +144,8 @@ get_header(); ?>
 					</div>
 				</div>
 			</aside>
-			<div id="float-wrap" class="column-left">
+			<div id="float-wrap">
+				<div class="article-wrap">
 		<?php
 			$studio = new WP_Query([
 				'category__in' => [ 38141 ],
@@ -160,8 +161,7 @@ get_header(); ?>
 
 			if ( $studio->have_posts() ) :
 				while ( $studio->have_posts() ) : $studio->the_post();
-					$postClass = get_post_class();
-					$postClass[] = 'grid-item'; ?>
+					$postClass = get_post_class(); ?>
 					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
 						<?php
 						if ( has_post_thumbnail() ) : ?>
@@ -183,14 +183,10 @@ get_header(); ?>
 				<div class="readmore" style="clear: both; width: 100%">
 					<a href="/topics/in-studio/page/2">View More Performances</a>
 				</div>
-			</div>
-
-				<div id="float-wrap" class="column-span">
 <?php
 			if ( $others->have_posts() ) :
 				while ( $others->have_posts() ) : $others->the_post();
-					$postClass = get_post_class();
-					$postClass[] = 'grid-item'; ?>
+					$postClass = get_post_class(); ?>
 					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
 						<?php
 						if ( has_post_thumbnail() ) : ?>
@@ -213,6 +209,7 @@ get_header(); ?>
 				<a href="/topics/skyline-sessions/page/2">View More Related Articles</a>
 			</div>
 			</div>
+		</div>
 
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->

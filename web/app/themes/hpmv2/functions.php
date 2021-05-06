@@ -51,12 +51,13 @@ add_action( 'init', 'wpcodex_add_excerpt_support_for_pages' );
 add_filter( 'the_content', 'shortcode_unautop');
 
 /*
- * Enqueue Typekit, FontAwesome, Masonry, jPlayer scripts, stylesheets and some conditional scripts and stylesheets for older versions of IE
+ * Enqueue Typekit, FontAwesome, jPlayer scripts, stylesheets and some conditional scripts and stylesheets for older versions of IE
  */
 $hpm_test = ( !empty( $_GET['version'] ) ? $_GET['version'] : '' );
 if ( $hpm_test !== '-mod' ) :
 	$hpm_test = '';
 endif;
+//$hpm_test = '-mod';
 define('HPM_TEST', $hpm_test);
 function hpmv2_scripts() {
 	$versions = hpm_versions();
@@ -83,11 +84,14 @@ add_action( 'wp_enqueue_scripts', 'hpmv2_scripts' );
  */
 function homepage_meta_query( $query ) {
 	if ( $query->is_home() && $query->is_main_query() ) :
+		$priority = get_option('hpm_priority');
+		if ( !empty( $priority['homepage'] ) ) :
+			$query->set( 'post__not_in', $priority['homepage'] );
+		endif;
 		$query->set( 'post_status', 'publish' );
-		$query->set( 'category__not_in', array(0,1,7636,28,37840) );
-		//$query->set( 'category__in', array(26881,26989,27123) );
+		$query->set( 'category__not_in', [ 0, 1, 7636, 28, 37840 ] );
 		$query->set( 'ignore_sticky_posts', 1 );
-		$query->set( 'posts_per_page', 18 );
+		$query->set( 'posts_per_page', 25 );
 	endif;
 }
 add_action( 'pre_get_posts', 'homepage_meta_query' );
@@ -611,4 +615,110 @@ function skip_apple_news( $post_id, $post ) {
 	if ( WP_ENV !== 'production' ) :
 		apply_filters( 'apple_news_skip_push', true, $post_id );
 	endif;
+}
+
+function election_homepage() {
+	$election_args = [
+		'p' => 248126,
+		'post_type'  => 'page',
+		'post_status' => 'publish'
+	];
+	$election = new WP_Query( $election_args );
+	if ( $election->have_posts() ) :
+		while ( $election->have_posts() ) :
+			$election->the_post();
+			the_content();
+		endwhile;
+		wp_reset_postdata();
+	endif;
+}
+
+function hpm_homepage_articles() {
+	$articles = [];
+	$hpm_priority = get_option( 'hpm_priority' );
+	if ( !empty( $hpm_priority['homepage'] ) ) :
+		$sticknum = count( $hpm_priority['homepage'] );
+		$sticky_args = [
+			'posts_per_page' => $sticknum,
+			'post__in'  => $hpm_priority['homepage'],
+			'orderby' => 'post__in',
+			'ignore_sticky_posts' => 1
+		];
+		$sticky_query = new WP_Query( $sticky_args );
+		if ( $sticky_query->have_posts() ) :
+			foreach ( $sticky_query->posts as $stp ) :
+				$articles[] = $stp;
+			endforeach;
+		endif;
+	endif;
+	global $wp_query;
+	if ( $wp_query->have_posts() ) :
+		foreach ( $wp_query->posts as $wpp ) :
+			$articles[] = $wpp;
+		endforeach;
+	endif;
+	return $articles;
+}
+
+function hpm_priority_indepth() {
+	$hpm_priority = get_option( 'hpm_priority' );
+	if ( !empty( $hpm_priority['indepth'] ) ) :
+		$indepth = [
+			'posts_per_page' => 1,
+			'p' => $hpm_priority['indepth'],
+			'post_status' => 'publish'
+		];
+	else :
+		$indepth = [
+			'posts_per_page' => 1,
+			'cat' => 29328,
+			'ignore_sticky_posts' => 1,
+			'post_status' => 'publish'
+		];
+	endif;
+	$indepth_query = new WP_Query( $indepth );
+	if ( $indepth_query->have_posts() ) :
+		while ( $indepth_query->have_posts() ) : $indepth_query->the_post();
+			$postClass = get_post_class();
+			$search = 'felix-type-';
+			$felix_type = array_filter($postClass, function($el) use ($search) {
+				return ( strpos($el, $search) !== false );
+			});
+			if ( !empty( $felix_type ) ) :
+				$key = array_keys( $felix_type );
+				unset( $postClass[$key[0]] );
+			endif; ?>
+			<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
+				<?php
+				if ( has_post_thumbnail() ) : ?>
+					<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
+						<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
+					</div>
+				<?php
+				endif; ?>
+				<header class="entry-header">
+				<?php
+					the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' );
+					the_excerpt(); ?>
+					<div class="screen-reader-text">
+					<?php
+						coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true );
+						$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+
+						$time_string = sprintf( $time_string,
+							esc_attr( get_the_date( 'c' ) ),
+							get_the_date( 'F j, Y' )
+						);
+
+						printf( '<span class="posted-on"><span class="screen-reader-text">%1$s </span>%2$s</span>',
+							_x( 'Posted on', 'Used before publish date.', 'hpmv2' ),
+							$time_string
+						); ?>
+					</div>
+				</header>
+			</article>
+<?php
+		endwhile;
+	endif;
+	wp_reset_query();
 }

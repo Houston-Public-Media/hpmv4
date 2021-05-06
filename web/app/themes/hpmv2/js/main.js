@@ -51,7 +51,7 @@ function setCookie(cname, cvalue, exhours) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exhours*60*60*1000));
 	var expires = 'expires=' + d.toUTCString();
-	document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+	document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/;SameSite=lax;Secure;';
 }
 if ( getCookie('inapp') !== null ) {
 	var css = document.createElement('style');
@@ -135,7 +135,16 @@ jQuery(document).ready(function($){
 					youtube = true;
 				}
 				if ( ratio > 1 ) {
-					iframeClass = 'iframe-embed';
+					if( frameSrc.indexOf('player.pbs') !== -1 ) {
+						if ( frameSrc.indexOf('ga-livestream') !== -1 ) {
+							iframeClass = 'iframe-embed';
+						} else {
+							iframeClass = 'iframe-embed-pbs';
+						}
+
+					} else {
+						iframeClass = 'iframe-embed';
+					}
 				} else {
 					iframeClass = 'iframe-embed-vert';
 				}
@@ -163,9 +172,8 @@ jQuery(document).ready(function($){
 				attr = '576:730';
 			}
 			var size = attr.split(':');
-			var href = $(this).attr('href');
 			var text = $(this).text();
-			var myWindow = window.open(href, text, "width=" + size[0] + ",height=" + size[1]);
+			var myWindow = window.open(hrefCheck, text, "width=" + size[0] + ",height=" + size[1]);
 		}
 	});
 	$("a").filter(function() {
@@ -245,6 +253,10 @@ jQuery(document).ready(function($){
 			$(this).addClass('info-toggle-active').next('.info-toggle-hidden').slideDown();
 		}
 	});
+	var passport = document.querySelector('.nav-passport > .nav-item-head-main');
+	if (passport !== null) {
+		passport.innerHTML = '<img src="https://cdn.hpm.io/assets/images/icons/Passport-Icon-Head.png" class="nav-passport-icon"> Passport';
+	}
 });
 const getJSON = function(url, callback) {
 	var xhr = new XMLHttpRequest();
@@ -357,7 +369,6 @@ function updateStations() {
 			});
 		}
 	}
-	masonLoad();
 }
 function updateData(data,station,next) {
 	var output = '';
@@ -419,33 +430,4 @@ function amPm(timeString) {
 	var h = H % 12 || 12;
 	var ampm = (H < 12 || H === 24) ? " AM" : " PM";
 	return timeString = h + timeString.substr(hourEnd, 3) + ampm;
-}
-function masonLoad() {
-	var isActive = false;
-	if (typeof imagesLoaded === "function") {
-		if ( window.innerWidth > 800 )
-		{
-			imagesLoaded( '#float-wrap', function() {
-				var msnry = new Masonry( '#float-wrap', {
-					itemSelector: '.grid-item',
-					stamp: '.stamp',
-					columnWidth: '.grid-sizer'
-				});
-				isActive = true;
-			});
-			if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
-				var topSched = document.querySelector('#top-schedule-wrap').getBoundingClientRect().height;
-				document.getElementById('npr-side').style.cssText += 'top: '+topSched+'px';
-			}
-		} else {
-			if ( isActive ) {
-				msnry.destroy();
-				isActive = !isActive;
-			}
-			var gridItem = document.querySelectorAll('.grid-item');
-			for ( i = 0; i < gridItem.length; ++i ) {
-				gridItem[i].removeAttribute('style');
-			}
-		}
-	}
 }

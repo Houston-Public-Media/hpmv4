@@ -184,33 +184,6 @@ function hpm_chartbeat() {
 	endif;
 }
 
-function hpm_masonry() {
-	wp_reset_query();
-	global $wp_query;
-	$post_type = get_post_type();
-	if ( is_page_template( 'page-main-categories.php' ) || is_front_page() || ( $post_type == 'shows' && !is_page_template( 'single-shows-health-matters.php' ) && !is_page_template( 'single-shows-skyline.php' ) ) || is_page_template( 'page-series-tiles.php' ) ) : ?>
-	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			masonLoad();
-			var resizeTimeout;
-			function resizeThrottler() {
-				if ( !resizeTimeout ) {
-					resizeTimeout = setTimeout(function() {
-						resizeTimeout = null;
-						masonLoad();
-					}, 66);
-				}
-			}
-			window.addEventListener("resize", resizeThrottler(), false);
-			window.setTimeout(masonLoad(), 5000);
-		});
-	</script>
-<?php
-		endif;
-}
-
 function hpm_hm_banner() {
 	wp_reset_query();
 	global $wp_query;
@@ -247,5 +220,4 @@ function hpm_hm_banner() {
 	endif;
 }
 add_action( 'wp_footer', 'hpm_chartbeat', 100 );
-add_action( 'wp_footer', 'hpm_masonry', 99 );
 add_action( 'wp_footer', 'hpm_hm_banner', 100 );
