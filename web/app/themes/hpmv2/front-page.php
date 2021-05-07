@@ -95,8 +95,12 @@ $articles = hpm_homepage_articles(); ?>
 		$felix = 'felix-type-d';
 		if ( $ka == 0 ) :
 			$felix = 'felix-type-a';
+			$thumb = get_the_post_thumbnail_url( $va->ID, 'large' );
 		elseif ( $ka == 1 ) :
 			$felix = 'felix-type-b';
+			$thumb = get_the_post_thumbnail_url( $va->ID, 'thumbnail' );
+		else :
+			$thumb = get_the_post_thumbnail_url( $va->ID, 'thumbnail' );
 		endif;
 		if ( !empty( $felix_type ) ) :
 			$key = array_keys( $felix_type );
@@ -107,7 +111,7 @@ $articles = hpm_homepage_articles(); ?>
 				<article id="post-<?php echo $va->ID; ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
 					<?php
 						if ( has_post_thumbnail( $va->ID ) ) : ?>
-					<div class="thumbnail-wrap" style="background-image: url(<?php echo get_the_post_thumbnail_url( $va->ID, 'thumbnail' ); ?>)">
+					<div class="thumbnail-wrap" style="background-image: url(<?php echo $thumb; ?>)">
 						<a class="post-thumbnail" href="<?php the_permalink( $va->ID ); ?>" aria-hidden="true"></a>
 					</div>
 					<?php
