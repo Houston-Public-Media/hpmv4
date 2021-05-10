@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 FILE=/usr/local/bin/wp
 if test -f "$FILE"; then
     echo ""
