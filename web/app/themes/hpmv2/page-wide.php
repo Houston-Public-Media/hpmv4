@@ -4,7 +4,9 @@ Template Name: Full-Width Page
 */
 	get_header();
 	$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
-	echo $embeds['bottom']; ?>
+	if ( !empty( $embeds ) ) :
+		echo $embeds['bottom'];
+	endif; ?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">

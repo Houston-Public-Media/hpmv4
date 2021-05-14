@@ -56,9 +56,10 @@
 					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" target="_blank">University of Houston</a></p>
 					<p>Copyright &copy; <?php echo date('Y'); ?></p>
 				</div>
-			</footer><!-- .site-footer -->
-		</div><!-- .site -->
-		<?php wp_footer(); ?>
-	<?php endif; ?>
+			</footer>
+		</div>
+	<?php
+			wp_footer();
+		endif; ?>
 	</body>
 </html>

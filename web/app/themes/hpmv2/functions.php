@@ -66,16 +66,17 @@ function hpmv2_scripts() {
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style'.HPM_TEST.'.css', [], time() );
+		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style'.HPM_TEST.'.css', [], date('Y-m-d-H') );
 		// wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
-		wp_enqueue_script( 'hpmv2-js', get_template_directory_uri().'/js/main'.HPM_TEST.'.js', [ 'jquery' ], time(), false );
+		wp_enqueue_script( 'hpmv2-js', get_template_directory_uri().'/js/main'.HPM_TEST.'.js', [ 'jquery' ], date('Y-m-d-H'), false );
 	else :
 		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
 		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], false );
 	endif;
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], $versions['analytics'], false );
 
-	wp_register_script( 'jplayer', 'https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js', [ 'jquery' ],	'20170928' );
+	wp_register_script( 'jplayer', 'https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js', [ 'jquery' ], '20170928' );
+	wp_register_script( 'hpm-jpp', get_template_directory_uri().'/js/jppTurbo.js', [ 'jquery' ], date('Y-m-d-H') );
 }
 add_action( 'wp_enqueue_scripts', 'hpmv2_scripts' );
 
@@ -721,4 +722,44 @@ function hpm_priority_indepth() {
 		endwhile;
 	endif;
 	wp_reset_query();
+}
+
+function hpm_article_share($nprdata = null) {
+	global $post;
+	if ( empty( $nprdata ) ) :
+		$uri_title = rawurlencode( get_the_title() );
+		$facebook_link = rawurlencode( get_the_permalink().'?utm_source=facebook-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
+		$twitter_link = rawurlencode( get_the_permalink().'?utm_source=twitter-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
+		$linkedin_link = rawurlencode( get_the_permalink().'?utm_source=linked-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
+		$uri_excerpt = rawurlencode( get_the_excerpt() );
+	else :
+		$uri_title = rawurlencode( $nprdata['title'] );
+		$facebook_link = rawurlencode( $nprdata['permalink'].'?utm_source=facebook-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
+		$twitter_link = rawurlencode( $nprdata['permalink'].'?utm_source=twitter-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
+		$linkedin_link = rawurlencode( $nprdata['permalink'].'?utm_source=linked-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
+		$uri_excerpt = rawurlencode( $nprdata['excerpt'] );
+	endif; ?>
+	<div id="article-share">
+		<h4>Share</h4>
+		<div class="article-share-icon">
+			<button data-href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" data-dialog="400:368">
+				<span class="fab fa-facebook-f" aria-hidden="true"></span>
+			</button>
+		</div>
+		<div class="article-share-icon">
+			<button data-href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
+				<span class="fab fa-twitter" aria-hidden="true"></span>
+			</button>
+		</div>
+		<div class="article-share-icon">
+			<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
+				<span class="fas fa-envelope" aria-hidden="true"></span>
+			</a>
+		</div>
+		<div class="article-share-icon">
+			<button data-href="http://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
+				<span class="fab fa-linkedin-in" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div><?php
 }

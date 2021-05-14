@@ -91,7 +91,7 @@ function onPlayerStateChange(event) {
 }
 if (document.getElementById('youtube-player') !== null) {
 	ytdimensions();
-	timeOuts.push(setTimeout(ytdimensions(), 500));
+	timeOuts.push(setInterval('ytdimensions()', 5000));
 	document.getElementById('play-button').addEventListener('click', function(){
 		window.ytid = this.parentNode.getAttribute('data-ytid');
 		var f = document.getElementById('yt-nowplay');

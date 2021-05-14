@@ -6,7 +6,7 @@ function hpm_site_header() { ?>
 						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
 					</div>
 					<div id="top-schedule">
-						<div class="top-schedule-label"><a href="#top-schedule-wrap"><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</a></div>
+						<div class="top-schedule-label"><button data-href="#top-schedule-wrap"><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
 						<div class="top-schedule-link-wrap">
 							<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
 							<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
@@ -14,10 +14,10 @@ function hpm_site_header() { ?>
 							<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 						</div>
 					</div>
-					<div id="top-listen"><a href="/listen-live" target="_blank" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</a></div>
-					<div id="top-watch"><a href="/watch-live" target="_blank" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</a></div>
+					<div id="top-listen"><button data-href="/listen-live" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</button></div>
+					<div id="top-watch"><button data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
 					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div id="header-social">
+					<?php  ?><div id="header-social">
 						<div class="header-social-icon header-facebook">
 							<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 						</div>
@@ -33,7 +33,7 @@ function hpm_site_header() { ?>
 						<div class="header-social-icon header-linkedin">
 							<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
 						</div>
-					</div>
+					</div><?php  ?>
 					<div id="top-mobile-menu"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
 						<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
