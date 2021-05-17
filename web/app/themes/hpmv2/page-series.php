@@ -8,13 +8,15 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
+			$page_head_class = hpm_head_banners( get_the_ID() );
 			while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header">
-					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+				<header class="entry-header<?php echo $page_head_class; ?>">
+				<?php
+					the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 				</header><!-- .entry-header -->
 				<div class="entry-content">
-					<?PHP
+					<?php
 						the_content( sprintf(
 							__( 'Continue reading %s', 'hpmv2' ),
 							the_title( '<span class="screen-reader-text">', '</span>', false )
@@ -59,14 +61,14 @@ get_header(); ?>
 				<?php
 					if ( !empty( $embeds['twitter'] ) ) : ?>
 					<h4>Twitter</h4>
-					<?php 
-						echo $embeds['twitter']; 
+					<?php
+						echo $embeds['twitter'];
 					endif;
 
 					if ( !empty( $embeds['facebook'] ) ) : ?>
 					<h4>Facebook</h4>
-					<?php 
-						echo $embeds['facebook']; 
+					<?php
+						echo $embeds['facebook'];
 					endif; ?>
 				</section>
 			<?php

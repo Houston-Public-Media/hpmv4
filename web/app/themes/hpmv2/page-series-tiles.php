@@ -12,29 +12,9 @@ get_header(); ?>
 			$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
 			$show_title = get_the_title();
 			$show_content = get_the_content();
-			$page_head_style = '';
-			$page_head_class = '';
-			if ( !empty( $embeds['banner']['mobile'] ) || !empty( $embeds['banner']['tablet'] ) || !empty( $embeds['banner']['desktop'] ) ) :
-				$page_head_class = ' shows-banner-variable';
-				foreach ( $embeds['banner'] as $bk => $bv ) :
-					if ( $bk == 'mobile' ) :
-						$page_head_style .= ".page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); }";
-					elseif ( $bk == 'tablet' ) :
-						$page_head_style .= " @media screen and (min-width: 34em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
-					elseif ( $bk == 'desktop' ) :
-						$page_head_style .= " @media screen and (min-width: 52.5em) { .page-header.shows-banner-variable { background-image: url(".wp_get_attachment_url( $bv )."); } }";
-					endif;
-				endforeach;
-			elseif ( !empty( $header_back[0] ) ) :
-				$page_head_style = ".page-header { background-image: url($header_back[0]); }";
-			else :
-				$page_head_class = ' no-back';
-			endif;
-			if ( !empty( $page_head_style ) ) :
-				echo "<style>".$page_head_style."</style>";
-			endif; ?>
+			$page_head_class = hpm_head_banners( get_the_ID() ); ?>
 		<header class="page-header<?php echo $page_head_class; ?>">
-			<h1 class="page-title<?php echo (!empty( $header_back ) ? ' screen-reader-text' : ''); ?>"><?php the_title(); ?></h1>
+			<h1 class="page-title"><?php the_title(); ?></h1>
 		</header>
 		<?php
 			endwhile; ?>

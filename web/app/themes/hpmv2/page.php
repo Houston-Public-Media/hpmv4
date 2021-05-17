@@ -15,9 +15,11 @@
 	get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post(); ?>
+		<?php
+			$page_head_class = hpm_head_banners( get_the_ID() );
+			while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header">
+				<header class="entry-header<?php echo $page_head_class; ?>">
 					<?php
 						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 					<p class="byline-date screen-reader-text">
@@ -46,7 +48,7 @@
 				</header><!-- .entry-header -->
 				<div class="entry-content">
 					<?php
-						$classes = get_body_class();
+						/* $classes = get_body_class();
 						if ( has_post_thumbnail() && !in_array( 'hide-featured-image', $classes ) ) :
 					?>
 					<div class="post-thumbnail">
@@ -59,7 +61,7 @@
 						?>
 					</div><!-- .post-thumbnail -->
 					<?PHP
-						endif;
+						endif; */
 						the_content( sprintf(
 							__( 'Continue reading %s', 'hpmv2' ),
 							the_title( '<span class="screen-reader-text">', '</span>', false )

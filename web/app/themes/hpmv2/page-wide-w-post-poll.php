@@ -5,7 +5,9 @@ Template Name: Wide with Articles &amp; Poll
 
 get_header();
 $embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
-echo $embeds['bottom']; ?>
+if ( !empty( $embeds ) ) :
+	echo $embeds['bottom'];
+endif; ?>
 	<style>
 		#harriscounty {
 			padding: 1em;
@@ -47,8 +49,8 @@ echo $embeds['bottom']; ?>
 	<script type="text/javascript">
 		function update() {
 			jQuery.ajax({
-				type: "POST",  
-				url: "https://media.houstonpublicmedia.org/election/embed.php",  
+				type: "POST",
+				url: "https://media.houstonpublicmedia.org/election/embed.php",
 				data: '',
 				success: function(data)
 				{
@@ -72,39 +74,27 @@ echo $embeds['bottom']; ?>
 			});
 		});
 	</script>
-	<div id="primary" class="content-area">
+		<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
+			<?php $page_head_class = hpm_head_banners( get_the_ID() ); ?>
 			<div class="column-span">
-		<?PHP while ( have_posts() ) : the_post(); ?>
-				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-					<header class="entry-header">
-					<?php 						
-						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-					</header><!-- .entry-header -->
-					<div class="entry-content">
+			<?PHP while ( have_posts() ) : the_post(); ?>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="entry-header<?php echo $page_head_class; ?>">
+				<?php
+					the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+				</header><!-- .entry-header -->
+				<div class="entry-content">
 					<?php
-						if ( has_post_thumbnail() ) :
-					?>
-						<div class="post-thumbnail">
-						<?php 
-							the_post_thumbnail( 'medium' );
-							$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
-							if (!empty($thumb_caption)) :
-								echo "<p>".$thumb_caption."</p>";
-							endif;
-						?>
-						</div><!-- .post-thumbnail -->
-					<?PHP
-						endif;
 						the_content( sprintf(
 							__( 'Continue reading %s', 'hpmv2' ),
 							the_title( '<span class="screen-reader-text">', '</span>', false )
 						) );
 					?>
-					</div><!-- .entry-content -->
+				</div><!-- .entry-content -->
 
 					<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) {
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',

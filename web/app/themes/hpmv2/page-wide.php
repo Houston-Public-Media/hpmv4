@@ -10,26 +10,13 @@ Template Name: Full-Width Page
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post();
-				if ( has_post_thumbnail() ) : ?>
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="padding: 0;">
-				<header class="entry-header" style="padding: 0 0 1em 0;">
-					<div class="post-thumbnail" style="margin: 0;">
-					<?php
-						the_post_thumbnail( 'full' );
-						the_title( '<h1 class="entry-title screen-reader-text">', '</h1>' );
-						$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
-						if (!empty($thumb_caption)) :
-							echo "<p>".$thumb_caption."</p>";
-						endif; ?>
-					</div><!-- .post-thumbnail -->
-				<?PHP
-					else : ?>
+		<?PHP
+			$page_head_class = hpm_head_banners( get_the_ID() );
+			while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header">
+				<header class="entry-header<?php echo $page_head_class; ?>">
 				<?php
-					the_title( '<h1 class="entry-title">', '</h1>' );
-					endif; ?>
+					the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 				</header><!-- .entry-header -->
 				<div class="entry-content">
 					<?php
