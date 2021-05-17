@@ -757,7 +757,7 @@ function hpm_article_share($nprdata = null) {
 			</a>
 		</div>
 		<div class="article-share-icon">
-			<button data-href="http://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
+			<button data-href="https://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
 				<span class="fab fa-linkedin-in" aria-hidden="true"></span>
 			</button>
 		</div>
