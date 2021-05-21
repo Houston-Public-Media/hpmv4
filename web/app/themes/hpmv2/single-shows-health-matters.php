@@ -12,7 +12,7 @@ Template Post Type: shows
  * @since HPMv2 1.0
  */
 
-get_header(); ?>
+get_header();?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
 		<?php
@@ -153,60 +153,8 @@ get_header(); ?>
 		endwhile; ?>
 		<section id="stories-from-the-storm" class="alignleft">
 			<div class="hah-split sfts-interviews-video">
-				<div id="jquery_jplayer_1" class="jp-jplayer" data-next-id="<?php echo $second->ID; ?>"></div>
-				<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
-					<div class="jp-type-single">
-						<div class="jp-gui jp-interface">
-							<div class="jp-controls">
-								<button class="jp-play" role="button" tabindex="0">
-									<span class="fa fa-play" aria-hidden="true"></span>
-								</button>
-								<button class="jp-pause" role="button" tabindex="0">
-									<span class="fa fa-pause" aria-hidden="true"></span>
-								</button>
-							</div>
-							<div class="jp-progress-wrapper">
-								<div class="jp-progress">
-									<div class="jp-seek-bar">
-										<div class="jp-play-bar"></div>
-									</div>
-								</div>
-								<div class="jp-details">
-									<div class="jp-title" aria-label="title">&nbsp;</div>
-								</div>
-								<div class="jp-time-holder">
-									<span class="jp-current-time" role="timer" aria-label="time"></span> /<span class="jp-duration" role="timer" aria-label="duration"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="screen-reader-text">
-					<script type="text/javascript">
-						jQuery(document).ready(function($) {
-							$("#jquery_jplayer_1").jPlayer({
-								ready: function() {
-									$(this).jPlayer("setMedia", {
-										title: "<?php echo $atts[0]['title']; ?>",
-										mp3: "<?php echo $atts[0]['url']; ?>?source=jplayer-article"
-									});
-								},
-								swfPath: "https://cdn.hpm.io/assets/js/jplayer",
-								supplied: "mp3",
-								preload: "metadata",
-								cssSelectorAncestor: "#jp_container_1",
-								wmode: "window",
-								useStateClassSkin: true,
-								autoBlur: false,
-								smoothPlayBar: true,
-								keyEnabled: true,
-								remainingDuration: false,
-								toggleDuration: true
-							});
-						});
-					</script>
-				</div>
-				<h3 id="sfts-yt-title"><?php echo $atts[0]['title']; ?></h3>
+				<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'" id="'.$atts[0]['id'].'"][/audio]' ); ?>
+				<h3 id="sfts-yt-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
 			</div>
 			<aside id="videos-nav">
 				<nav id="videos">
@@ -216,7 +164,7 @@ get_header(); ?>
 					<ul>
 						<?php
 						foreach ($atts as $a) : ?>
-							<li <?php echo ($a['id'] == $atts[0]['id'] ? 'class="current" ' : ''); ?>id="<?php echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
+							<li <?php echo ($a['id'] == $atts[0]['id'] ? 'class="current" ' : ''); ?>id="hm<?php echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
 								<div class="videos-info"><?php echo $a['title']; ?></div>
 							</li>
 						<?php
@@ -233,60 +181,82 @@ get_header(); ?>
 		</aside>
 	</main><!-- .site-main -->
 </div><!-- .content-area -->
-<script type="text/javascript" src='https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js?ver=20170928'></script>
 <script>
-	jQuery(document).ready(function($) {
-		$('#videos-nav ul li').click(function() {
-			var ytid = $(this).attr('data-ytid');
-			var yttitle = $(this).attr('data-yttitle');
-			if (ytid === 'null') {
-				return false;
-			} else {
-				$('#sfts-yt-title').html(yttitle);
-				if ($(this).next('li').length) {
-					var next = $(this).next('li').attr('id');
-				} else {
-					var next = $('#videos > ul li:first-child').attr('id');
-				}
-				$("#jquery_jplayer_1").jPlayer('stop').jPlayer("setMedia", {
-					title: yttitle,
-					mp3: ytid + "?source=jplayer-article"
-				}).attr('data-next-id', next).jPlayer('play');
-				$('#videos-nav ul li').removeClass('current');
-				$(this).addClass('current');
-			}
-		});
-		$("#jquery_jplayer_1").bind(
-			$.jPlayer.event.ended,
-			function(event) {
-				var nextId = $('#jquery_jplayer_1').attr('data-next-id');
-				var nextEp = $('#' + nextId);
-				var ytid = nextEp.attr('data-ytid');
-				if (ytid === 'null') {
+	document.addEventListener('DOMContentLoaded', () => {
+		var navs = document.querySelectorAll('#videos-nav ul li');
+		Array.from(navs).forEach((nav) => {
+			nav.addEventListener('click', () => {
+				var ytid = nav.getAttribute('data-ytid');
+				var yttitle = nav.getAttribute('data-yttitle');
+				var stTitle = document.querySelector('#sfts-yt-title');
+				if (ytid === null) {
 					return false;
 				} else {
-					var yttitle = nextEp.attr('data-yttitle');
-					var next = nextEp.next('li').attr('id');
-					if ($(this).next('li').length) {
-						var next = nextEp.next('li').attr('id');
+					stTitle.innerHTML = yttitle;
+					if (nav.nextElementSibling !== null) {
+						var next = nav.nextElementSibling.getAttribute('id');
 					} else {
-						var next = $('#videos > ul li:first-child').attr('id');
+						var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
 					}
-					$('#sfts-yt-title').html(yttitle);
-					$("#jquery_jplayer_1").jPlayer("setMedia", {
-						title: yttitle,
-						mp3: ytid + "?source=jplayer-article"
-					}).attr('data-next-id', next).jPlayer('play');
-					$('#videos-nav ul li').removeClass('current');
-					nextEp.addClass('current');
+					hpm.players[0].pause();
+					hpm.players[0].source = {
+						'type': 'audio',
+						'title': yttitle,
+						'sources': [{
+							'src': ytid + '?source=plyr-article',
+							'type': 'audio/mpeg'
+						}]
+					};
+					hpm.players[0].play();
+					stTitle.setAttribute('data-next-id', next);
+					Array.from(navs).forEach((nas) => {
+						nas.classList.remove('current');
+					});
+					nav.classList.add('current');
 				}
-			}
-		);
+			});
+		});
+		setTimeout(() => {
+			hpm.players[0].on('ended', (event) => {
+				var stTitle = document.querySelector('#sfts-yt-title');
+				var nextId = stTitle.getAttribute('data-next-id');
+				var nextEp = document.querySelector('#' + nextId);
+				var ytid = nextEp.getAttribute('data-ytid');
+				if (ytid === null) {
+					return false;
+				} else {
+					var yttitle = nextEp.getAttribute('data-yttitle');
+					if (nextEp.nextElementSibling !== null) {
+						var next = nextEp.nextElementSibling.getAttribute('id');
+					} else {
+						var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
+					}
+					stTitle.innerHTML = yttitle;
+					hpm.players[0].source = {
+						'type': 'audio',
+						'title': yttitle,
+						'sources': [{
+							'src': ytid + '?source=plyr-article',
+							'type': 'audio/mpeg'
+						}]
+					};
+					hpm.players[0].play();
+					stTitle.setAttribute('data-next-id', next);
+					Array.from(navs).forEach((nas) => {
+						nas.classList.remove('current');
+					});
+					nextEp.classList.add('current');
+				}
+			});
+		}, 500);
 	});
 </script>
 <style>
 	#div-gpt-ad-1488818411584-0 {
 		display: none !important;
+	}
+	.article-player-wrap h3 {
+		display: none;
 	}
 </style>
 <?php get_footer(); ?>
