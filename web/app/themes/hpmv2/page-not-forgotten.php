@@ -97,6 +97,12 @@ Template Name: Not Forgotten
 				color: white;
 				text-align: center;
 				transition: opacity 0.5s;
+				background-color: transparent;
+				border: 0;
+			}
+			button:hover {
+				cursor: pointer;
+				opacity: 0.75;
 			}
 			.page-template-page-not-forgotten .page-header .down .fa {
 				font-size: 3em;
@@ -195,44 +201,8 @@ Template Name: Not Forgotten
 				position: fixed;
 				height: 100vh;
 			}
-			#nf-msg .jp-type-single {
-				background-color: transparent;
-			}
-			#nf-msg .jp-gui.jp-interface .jp-controls button {
-				background-color: transparent;
-				width: 4em;
-				height: 4em;
-			}
-			#nf-msg .jp-gui.jp-interface .jp-controls button .fa {
-				font-size: 3.25em;
-				color: #f4b572;
-			}
-			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper {
-				position: relative;
-				padding: 1em 0.5em;
-			}
-			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
-				margin: 0;
-				background-color: #014d60;
-				z-index: 9;
-				position: relative;
-			}
-			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
-				z-index: 11;
-			}
-			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-play-bar {
-				background-color: rgba( 255, 255, 255, 0.25 );
-			}
-			#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-				position: absolute;
-				top: 1.5em;
-				right: 1em;
-				z-index: 10;
-				float: none;
-				width: auto;
-				display: inline;
-				padding: 0;
-				color: white;
+			.article-player-wrap {
+				margin-bottom: 1em;
 			}
 			@media screen and (min-width: 34em) {
 				.page-template-page-not-forgotten #masthead.active .site-title,
@@ -288,6 +258,9 @@ Template Name: Not Forgotten
 				.page-template-page-not-forgotten .page-header img {
 					width: 50%;
 				}
+				.article-player-wrap {
+					float: left;
+				}
 			}
 			@media screen and (min-width: 64.5em) {
 				.page-template-page-not-forgotten .page-header img {
@@ -300,8 +273,7 @@ Template Name: Not Forgotten
 	<?php if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) : ?>
 		<script>setCookie('inapp','true',1);</script>
 		<style>#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }</style>
-	<?php endif; ?><div id="fb-root"></div>
-		<script>window.fbAsyncInit = function() { FB.init({ appId: '523938487799321', xfbml: true, version: 'v10.0' });}; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+	<?php endif; ?>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
 		<header id="masthead" class="site-header" role="banner">
 			<div class="site-branding">
@@ -316,9 +288,9 @@ Template Name: Not Forgotten
 					<main id="main" class="site-main" role="main">
 						<header class="page-header">
 							<img src="https://cdn.hpm.io/assets/images/NotForgotten_Logo.svg" alt="<?php echo get_the_title() . ": " . get_the_excerpt(); ?>" />
-							<a class="down scrollto" href="#main-content">
+							<button class="down scrollto">
 								<span class="fa fa-angle-double-down"></span>
-							</a>
+							</button>
 						</header><!-- .entry-header -->
 						<div class="page-content" id="main-content">
 							<?php the_content(); ?>
@@ -335,75 +307,99 @@ Template Name: Not Forgotten
 				</div><!-- .content-area -->
 			</div><!-- .site-content -->
 			<script>
-				function nfdimensions($) {
-					$('#main .page-header').css('height', $(window).height() + 'px');
+				function nfdimensions() {
+					document.querySelector('#main .page-header').style.height = window.innerHeight + 'px';
 				}
 				function navSlide() {
-					const scroll_top = jQuery(window).scrollTop();
-					if (scroll_top >= jQuery(window).height()/2) {
-						jQuery('#masthead').addClass('active');
+					const scroll_top = window.scrollY;
+					if (scroll_top >= window.innerHeight / 2) {
+						document.querySelector('#masthead').classList.add('active');
 					} else {
-						jQuery('#masthead').removeClass('active');
+						document.querySelector('#masthead').classList.remove('active');
 					}
 				}
-				jQuery(document).ready(function ($) {
-					nfdimensions($);
-					$(window).on('resize', function () {
-						nfdimensions($);
-					});
-					$( window ).on('scroll', function() { navSlide(); document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`); });
+				document.addEventListener('DOMContentLoaded', () => {
+					nfdimensions();
+					window.addEventListener('scroll', () => { navSlide(); document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`); });
+					window.addEventListener('resize', () => { nfdimensions() });
 					window.eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
-					$('#nf-close').on(eventType, function (event) {
-						event.stopPropagation();
-						$('#nf-msg-overlay').removeClass('nf-active');
-						$('body').removeClass('modal-open');
+					document.querySelector('#nf-close').addEventListener(eventType, (e) => {
+						e.stopPropagation();
+						document.querySelector('#nf-msg-overlay').classList.remove('nf-active');
+						document.body.classList.remove('modal-open');
 						var scroll = document.body.style.top;
 						window.scrollTo(0, parseInt(scroll || '0') * -1);
-						$.jPlayer.pause();
-					});
-					$('a.down').on(eventType, function (event) {
-						event.preventDefault();
-						$('html, body').animate({
-							scrollTop: $('.page-content').offset().top
-						}, 500);
-					});
-					$('.nf-profile').on(eventType, function (event) {
-						event.stopPropagation();
-						const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
-						const body = document.body;
-						body.style.top = `-${scrollY}`;
-						var message = $(this).children('.profile-full').html();
-						var current = $(this).attr('data-profile-num');
-						$('#nf-msg-overlay').addClass('nf-active');
-						$('#nf-msg').html(message);
-						$('#nf-msg').attr('data-current', current);
-						$('body').addClass('modal-open');
-					});
-					$('#nf-next').on(eventType, function (event) {
-						var current = parseInt($('#nf-msg').attr('data-current'));
-						var profiles = document.querySelectorAll('.nf-profile');
-						var next = current + 1;
-						if (next > profiles.length) {
-							next = 1;
+						hpm.players.forEach((player) => {
+							player.pause();
+						});
+						var current = msg.getAttribute('data-current');
+						if (msg.hasChildNodes) {
+							document.querySelector('#nf-profile-'+current).append(msg.firstChild);
 						}
-						$('#nf-msg').attr('data-current', next);
-						var message = $('#nf-profile-'+next).children('.profile-full').html();
-						$('#nf-msg').html(message);
-						$('#nf-msg-wrap').scrollTop(0);
-						$.jPlayer.pause();
 					});
-					$('#nf-previous').on(eventType, function (event) {
-						var current = parseInt($('#nf-msg').attr('data-current'));
-						var profiles = document.querySelectorAll('.nf-profile');
-						var prev = current - 1;
-						if (prev == 0) {
-							prev = profiles.length;
-						}
-						$('#nf-msg').attr('data-current', prev);
-						var message = $('#nf-profile-'+prev).children('.profile-full').html();
-						$('#nf-msg').html(message);
-						$('#nf-msg-wrap').scrollTop(0);
-						$.jPlayer.pause();
+					document.querySelector('button.down').addEventListener(eventType, (e) => {
+						e.preventDefault();
+						var offset = document.querySelector('.page-content').offsetTop;
+						window.scrollTo(0, offset-(4*16));
+					});
+					var profiles = document.querySelectorAll('.nf-profile');
+					var msg = document.querySelector('#nf-msg');
+					var navigation = document.querySelectorAll('#nf-next, #nf-previous');
+					Array.from(navigation).forEach((navi) => {
+						navi.addEventListener(eventType, (e) => {
+							var current = parseInt(msg.getAttribute('data-current'));
+							var next, message;
+							if (navi.id == 'nf-next') {
+								next = current + 1;
+							} else {
+								next = current - 1;
+							}
+							if (next > profiles.length) {
+								next = 1;
+							} else if (next == 0) {
+								next = profiles.length;
+							}
+							msg.setAttribute('data-current', next);
+							var nProf = document.querySelector('#nf-profile-'+next);
+							Array.from(nProf.children).forEach((child) => {
+								if (child.classList.contains('profile-full')) {
+									message = child;
+								}
+							});
+							if (msg.hasChildNodes) {
+								document.querySelector('#nf-profile-'+current).append(msg.firstChild);
+							}
+							msg.append(message);
+							document.querySelector('#nf-msg-wrap').scrollTo(0,0);
+							hpm.players.forEach((player) => {
+								player.pause();
+							});
+						});
+					});
+					Array.from(profiles).forEach((profile) => {
+						profile.addEventListener(eventType, (e) => {
+							e.stopPropagation();
+							const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+							const body = document.body;
+							var message;
+							body.style.top = `-${scrollY}`;
+							Array.from(profile.children).forEach((child) => {
+								if (child.classList.contains('profile-full')) {
+									message = child;
+								}
+							});
+							var currentMsg = msg.getAttribute('data-current');
+							if ( currentMsg !== '') {
+								if (msg.hasChildNodes) {
+									document.querySelector('#nf-profile-'+currentMsg).append(msg.firstChild);
+								}
+							}
+							var current = profile.getAttribute('data-profile-num');
+							document.querySelector('#nf-msg-overlay').classList.add('nf-active');
+							msg.append(message);
+							msg.setAttribute('data-current', current);
+							document.body.classList.add('modal-open');
+						});
 					});
 				});
 			</script>

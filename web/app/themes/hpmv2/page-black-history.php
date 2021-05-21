@@ -2,6 +2,7 @@
 /*
 Template Name: Black History Month
 */
+	wp_enqueue_script('jquery');
 	get_header(); ?>
 	<link rel="stylesheet" href="https://use.typekit.net/wsl1bre.css">
 	<div id="primary" class="content-area">

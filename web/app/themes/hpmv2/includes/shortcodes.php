@@ -48,8 +48,28 @@ function hpm_audio_shortcode( $html, $attr ) {
 	if ( amp_is_request() || is_feed() ) :
 		$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'source=amp-article"></amp-audio></div>';
 	else :
-		/*$html .= '<div class="article-audio" data-audio="'.$audio_url.'source=article-audio"><button><span class="fa fa-play" aria-hidden="true"></span></button> <h2>Click to Queue in Player</h2></div>';*/
-		if ( is_admin() ) :
+		wp_enqueue_script('hpm-plyr');
+		$html .= '<div class="article-player-wrap">'.
+				'<h3>'.htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false ) .'</h3>'.
+				'<audio class="js-player" controls crossorigin preload="metadata">'.
+					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
+				'</audio>';
+		if ( !is_admin() && !empty( $attr['id'] ) ) :
+			$html .= "
+				<button class=\"plyr-audio-embed\" data-id=\"{$attr['id']}\"><span class=\"fas fa-code\"></span></button>
+				<div class=\"plyr-audio-embed-popup\" id=\"plyr-{$audio_id}-popup\">
+					<div class=\"plyr-audio-embed-wrap\">
+						<p>To embed this piece of audio in your site, please use this code:</p>
+						<div class=\"plyr-audio-embed-code\">
+							&lt;iframe src=\"https://embed.hpm.io/{$audio_id}/{$post_id}\" style=\"height: 115px; width: 100%;\"&gt;&lt;/iframe&gt;
+						</div>
+						<div class=\"plyr-audio-embed-close\">X</div>
+					</div>
+				</div>";
+		endif;
+		$html .= '</div>';
+
+		/* if ( is_admin() ) :
 			$html .= '<link rel="stylesheet" id="fontawesome-css" href="https://cdn.hpm.io/assets/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hpmv2-css" href="https://cdn.hpm.io/assets/css/style.css" type="text/css" media="all"><script type="text/javascript" src="/wp/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js"></script>';
 		else :
 			wp_enqueue_script( 'jplayer' );
@@ -145,7 +165,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 		$html .= "
 		});
 	</script>
-</div>";
+</div>"; */
 	endif;
 	return $html;
 }

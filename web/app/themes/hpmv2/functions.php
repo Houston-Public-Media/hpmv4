@@ -51,7 +51,7 @@ add_action( 'init', 'wpcodex_add_excerpt_support_for_pages' );
 add_filter( 'the_content', 'shortcode_unautop');
 
 /*
- * Enqueue Typekit, FontAwesome, jPlayer scripts, stylesheets and some conditional scripts and stylesheets for older versions of IE
+ * Enqueue Typekit, FontAwesome, stylesheets, etc.
  */
 $hpm_test = ( !empty( $_GET['version'] ) ? $_GET['version'] : '' );
 if ( $hpm_test !== '-mod' ) :
@@ -59,26 +59,30 @@ if ( $hpm_test !== '-mod' ) :
 endif;
 //$hpm_test = '-mod';
 define('HPM_TEST', $hpm_test);
-function hpmv2_scripts() {
+function hpm_scripts() {
 	$versions = hpm_versions();
 	// Add custom fonts, used in the main stylesheet.
 	wp_enqueue_style( 'fontawesome', 'https://cdn.hpm.io/assets/fonts/fontawesome/css/all.css', [], '5.14.0' );
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_style( 'hpmv2-style', get_template_directory_uri().'/style'.HPM_TEST.'.css', [], date('Y-m-d-H') );
-		// wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
-		wp_enqueue_script( 'hpmv2-js', get_template_directory_uri().'/js/main'.HPM_TEST.'.js', [ 'jquery' ], date('Y-m-d-H'), false );
+		wp_enqueue_style( 'hpm-style', get_template_directory_uri().'/style'.HPM_TEST.'.css', [], date('Y-m-d-H') );
+		wp_enqueue_script( 'hpm-js', get_template_directory_uri().'/js/main'.HPM_TEST.'.js', [], date('Y-m-d-H'), true );
 	else :
-		wp_enqueue_style( 'hpmv2-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
-		wp_enqueue_script( 'hpmv2-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], false );
+		wp_enqueue_style( 'hpm-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
+		wp_enqueue_script( 'hpm-js', 'https://cdn.hpm.io/assets/js/main.js', [ 'jquery' ], $versions['js'], false );
 	endif;
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], $versions['analytics'], false );
+	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], date('Y-m-d-H'), true );
 
-	wp_register_script( 'jplayer', 'https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js', [ 'jquery' ], '20170928' );
-	wp_register_script( 'hpm-jpp', get_template_directory_uri().'/js/jppTurbo.js', [ 'jquery' ], date('Y-m-d-H') );
+	wp_deregister_script( 'wp-embed' );
+	wp_deregister_script( 'better-image-credits' );
+	wp_deregister_style( 'better-image-credits' );
+	wp_deregister_style( 'gutenberg-pdfjs' );
+	wp_deregister_style( 'wp-block-library' );
+
 }
-add_action( 'wp_enqueue_scripts', 'hpmv2_scripts' );
+add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 
 /*
  * Modifies homepage query
@@ -477,9 +481,9 @@ function remove_plugin_image_sizes() {
 function wpf_dev_char_limit() {
 	?>
 	<script type="text/javascript">
-		jQuery(function($){
-			$('.wpf-char-limit input').attr('maxlength',100);
-			$('.wpf-char-limit textarea').attr('maxlength',1000);
+		var wpfInputs = document.querySelectorAll('.wpf-char-limit input, .wpf-char-limit textarea');
+		Array.from(wpfInputs).forEach((inp) => {
+			inp.setAttribute('maxlength', 1000);
 		});
 	</script>
 	<?php
@@ -514,7 +518,7 @@ function rememberme_checked() {
 
 function hpm_yt_embed_mod( $content ) {
 	global $post;
-	if ( preg_match( '/<iframe.+youtube(-nocookie)?\.com.+><\/iframe>/', $content ) ) :
+	if ( preg_match( '/<iframe.+><\/iframe>/', $content ) ) :
 		$doc = new DOMDocument();
 		$doc->loadHTML( $content );
 		$doc->removeChild( $doc->doctype );
@@ -532,6 +536,10 @@ function hpm_yt_embed_mod( $content ) {
 						$f->setAttribute( 'src', $src . '&enablejsapi=1' );
 					endif;
 				endif;
+			endif;
+			$load = $f->getAttribute('loading');
+			if ( empty( $load ) ) :
+				$f->setAttribute('loading','lazy');
 			endif;
 		endforeach;
 		$content = $doc->saveHTML();

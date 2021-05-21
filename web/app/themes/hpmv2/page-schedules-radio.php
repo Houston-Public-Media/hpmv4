@@ -29,10 +29,10 @@ Template Name: Radio Schedules
 	endif;
 	$today_date = date('Y-m-d', $t);
 	$date = $sched_year."-".$sched_month."-".$sched_day;
+	wp_enqueue_script('jquery-ui-datepicker');
 	get_header();
 ?>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script>
 		jQuery(document).ready(function($) {
 			$( "#datepicker" ).datepicker({
@@ -279,20 +279,13 @@ Template Name: Radio Schedules
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 	<script>
-		jQuery(document).ready(function($){
-			$('.progsegment h4').click(function(event){
-				event.preventDefault();
-				var next = $(this).next('ul');
-				if ( next.hasClass('seg-active') ) {
-					next.removeClass('seg-active');
-				} else {
-					next.addClass('seg-active');
-				}
-				if ( $(this).hasClass('seg-active') ) {
-					$(this).removeClass('seg-active');
-				} else {
-					$(this).addClass('seg-active');
-				}
+		document.addEventListener('DOMContentLoaded', () => {
+			var progSeg = document.querySelectorAll('.progsegment h4');
+			Array.from(progSeg).forEach((ps) => {
+				ps.addEventListener('click', () => {
+					ps.classList.toggle('seg-active');
+					ps.nextElementSibling.classList.toggle('seg-active');
+				});
 			});
 		});
 	</script>

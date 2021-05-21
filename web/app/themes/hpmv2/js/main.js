@@ -50,6 +50,7 @@ hpm.getJSON = function(url, callback) {
 	};
 	xhr.send();
 };
+
 hpm.navHandlers = () => {
 	var navChild = document.querySelectorAll('.nav-top.menu-item-has-children');
 	var navArray = Array.from(navChild);
@@ -71,31 +72,37 @@ hpm.navHandlers = () => {
 	});
 
 	if (!document.body.classList.contains('single-embeds')) {
-		document.querySelector('#top-mobile-menu').addEventListener('click', (event) => {
-			if (window.innerWidth < 801 || document.body.classList.contains('page-template-page-listen')) {
-				if (document.body.classList.contains('nav-active-menu')) {
-					this.innerHTML = '<span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>';
-					document.body.classList.remove('nav-active-menu');
+		var topMenu = document.querySelector('#top-mobile-menu');
+		var topSearch = document.querySelector('#top-search .fa-search');
+		if ( topMenu !== null ) {
+			topMenu.addEventListener('click', (event) => {
+				if (window.innerWidth < 801 || document.body.classList.contains('page-template-page-listen')) {
+					if (document.body.classList.contains('nav-active-menu')) {
+						topMenu.innerHTML = '<span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>';
+						document.body.classList.remove('nav-active-menu');
+					} else {
+						topMenu.innerHTML = '<span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>';
+						document.body.classList.add('nav-active-menu');
+					}
 				} else {
-					this.innerHTML = '<span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>';
-					document.body.classList.add('nav-active-menu');
+					return false;
 				}
-			} else {
-				return false;
-			}
-		});
-		document.querySelector('#top-search .fa-search').addEventListener('click', (event) => {
-			var sForm = document.querySelector('#top-search .search-form');
-			var sField = document.querySelector('#top-search .search-field');
-			if ( window.innerWidth > 800 ) {
-				if ( !sForm.classList.contains('search-active') ) {
-					sField.focus();
+			});
+		}
+		if (topSearch !== null) {
+			topSearch.addEventListener('click', (event) => {
+				var sForm = document.querySelector('#top-search .search-form');
+				var sField = document.querySelector('#top-search .search-field');
+				if ( window.innerWidth > 800 ) {
+					if ( !sForm.classList.contains('search-active') ) {
+						sField.focus();
+					}
+					sForm.classList.toggle('search-active');
+				} else {
+					return false;
 				}
-				sForm.classList.toggle('search-active');
-			} else {
-				return false;
-			}
-		});
+			});
+		}
 		var topSched = document.querySelector('#top-schedule .top-schedule-label button');
 		if (topSched !== null) {
 			topSched.addEventListener('click', (e) => {
@@ -134,6 +141,14 @@ hpm.videoHandlers = () => {
 			iframeClass = 'iframe-embed-tall';
 		} else {
 			if ( frameSrc.indexOf('youtube') !== -1 ) {
+				var query = new URL(frameSrc);
+				if ( query.search.indexOf('enablejsapi') == -1 ) {
+					if (query.search == '') {
+						video.src += '?enablejsapi=1';
+					} else {
+						video.src += '&enablejsapi=1';
+					}
+				}
 				window.ytPlayers.push( video.id );
 				youtube = true;
 			}
@@ -184,49 +199,44 @@ hpm.shareHandlers = () => {
 			}
 		});
 	});
-	if (document.body.classList.contains('single-post')) {
-		var share = document.querySelector('#article-share');
-		if (typeof share == 'object' ) {
-			var e = share.getBoundingClientRect();
-			var p = share.parentNode.getBoundingClientRect().height;
-			var o = p - e.height;
-			window.addEventListener('scroll', () => {
-				if (window.innerWidth > 800) {
-					var a = window.scrollY;
-					if (a > e.top) {
-						var k = a - e.top;
-						if (k < o) {
-							share.style.top = k + 10 + 'px';
-						}
-						else if (k >= o) {
-							share.style.top = o + 'px';
-						}
-					}
-					else {
-						share.style.top = 0 + 'px';
-					}
-				}
-			});
-		}
-	}
 };
 
 hpm.audioEmbeds = () => {
-	var embeds = document.querySelectorAll('.jp-audio-embed')
+	var embeds = document.querySelectorAll('.plyr-audio-embed')
 	Array.from(embeds).forEach((emb) => {
 		emb.addEventListener('click', (e) => {
 			e.preventDefault();
-			var parentID = emb.parentNode.id;
-			document.querySelector('#'+parentID+'-popup').classList.add('jp-audio-embed-active');
+			emb.nextElementSibling.classList.toggle('plyr-audio-embed-active');
 		});
 	});
-	var embC = document.querySelectorAll('.jp-audio-embed-close')
+	var embC = document.querySelectorAll('.plyr-audio-embed-close')
 	Array.from(embC).forEach((emC) => {
 		emC.addEventListener('click', () => {
-			var parentID = emC.parentNode.parentNode.id;
-			document.querySelector('#'+parentID).classList.remove('jp-audio-embed-active');
+			emC.parentNode.parentNode.classList.remove('plyr-audio-embed-active');
 		});
 	});
+};
+
+hpm.audioPlayers = () => {
+	var jsPlay = document.querySelectorAll('.js-player');
+	if (jsPlay !== null) {
+		const players = Array.from(jsPlay).map(p => new Plyr(p));
+		hpm.players = players;
+		hpm.players.forEach((player) => {
+			player.on('play', (event) => {
+				var mediaName = event.detail.plyr.media.currentSrc;
+				ga('hpmprod.send', 'event', 'Plyr', 'Play', mediaName);
+				ga('hpmRollupprod.send', 'event', 'Plyr', 'Play', mediaName);
+				ga('hpmWebAmpprod.send', 'event', 'Plyr', 'Play', mediaName);
+			});
+			player.on('ended', (event) => {
+				var mediaName = event.detail.plyr.media.currentSrc;
+				ga('hpmprod.send', 'event', 'Plyr', 'Ended', mediaName);
+				ga('hpmRollupprod.send', 'event', 'Plyr', 'Ended', mediaName);
+				ga('hpmWebAmpprod.send', 'event', 'Plyr', 'Ended', mediaName);
+			});
+		});
+	}
 };
 
 hpm.contentToggles = () => {
@@ -273,121 +283,85 @@ hpm.contentToggles = () => {
 		});
 	});
 };
+
 hpm.stationIds = {
-	'news': 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json&show_song=true',
-	'classical': 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
-	'mixtape': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
-	'tv81': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
-	'tv82': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
-	'tv83': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-	'tv84': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json'
-}
-hpm.stationLoad = [];
-var hpmNowPlaying = (station,next) => {
-	let check = {
-		'station': station,
-		'next': next
-	};
-	if (hpm.stationLoad.length > 0) {
-		let match = false;
-		for (let s in hpm.stationLoad) {
-			if ( hpm.stationLoad[s].station == station && hpm.stationLoad[s].next == next ) {
-				match = true;
-			}
-		}
-		if (!match) {
-			hpm.stationLoad.push(check);
-		}
-	} else {
-		hpm.stationLoad.push(check);
-	}
-	if (hpm.stationLoad.length == 1) {
-		document.addEventListener("DOMContentLoaded", () => {
-			hpm.updateStations();
-			timeOuts.push(setInterval("hpm.updateStations()", 60000));
-		});
-	}
-}
-hpm.updateStations = () => {
-	for (let s in hpm.stationLoad) {
-		if ( hpm.stationLoad[s].station !== 'all' ) {
-			hpm.getJSON( hpm.stationIds[hpm.stationLoad[s].station], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,hpm.stationLoad[s].station,hpm.stationLoad[s].next);
-				}
-			});
-		} else {
-			for (let st in hpm.stationIds) {
-				hpm.getJSON( hpm.stationIds[st], (err, data) => {
-					if (err !== null) {
-						console.log(err);
-					} else {
-						hpm.updateData(data,st,hpm.stationLoad[s].next);
-					}
-				});
-			}
-			/* hpm.getJSON( hpm.stationIds['news'], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,'news',hpm.stationLoad[s].next);
-				}
-			});
-			hpm.getJSON( hpm.stationIds['classical'], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,'classical',hpm.stationLoad[s].next);
-				}
-			});
-			hpm.getJSON( hpm.stationIds['mixtape'], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,'mixtape',hpm.stationLoad[s].next);
-				}
-			});
-			hpm.getJSON( hpm.stationIds['tv81'], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,'tv81',hpm.stationLoad[s].next);
-				}
-			});
-			hpm.getJSON( hpm.stationIds['tv82'], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,'tv82',hpm.stationLoad[s].next);
-				}
-			});
-			hpm.getJSON( hpm.stationIds['tv83'], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,'tv83',hpm.stationLoad[s].next);
-				}
-			});
-			hpm.getJSON( hpm.stationIds['tv84'], (err, data) => {
-				if (err !== null) {
-					console.log(err);
-				} else {
-					hpm.updateData(data,'tv84',hpm.stationLoad[s].next);
-				}
-			}); */
-		}
+	'news': {
+		'feed': 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json&show_song=true',
+		'nowPlaying': {}
+	},
+	'classical': {
+		'feed': 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
+		'nowPlaying': {}
+	},
+	'mixtape': {
+		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
+		'nowPlaying': {}
+	},
+	'tv81': {
+		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
+		'nowPlaying': {}
+	},
+	'tv82': {
+		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
+		'nowPlaying': {}
+	},
+	'tv83': {
+		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
+		'nowPlaying': {}
+	},
+	'tv84': {
+		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
+		'nowPlaying': {}
 	}
 };
-
-hpm.updateData = (data,station,next) => {
+hpm.stationLoad = {};
+hpm.npSearch = () => {
+	hpm.stationLoad = {};
+	var nowPlay = document.querySelectorAll('.hpm-nowplay');
+	Array.from(nowPlay).forEach((np) => {
+		var station = np.getAttribute('data-station');
+		var next = np.getAttribute('data-upnext');
+		hpm.stationLoad[ station ] = { 'next': next, 'obj': np };
+	});
+	hpm.npDataDownload();
+	timeOuts.push(setInterval('hpm.npDataDownload()',60000));
+};
+hpm.npDataDownload = () => {
+	for (let st in hpm.stationLoad) {
+		hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				hpm.npUpdateData(data,st);
+			}
+		});
+	}
+};
+hpm.npUpdateData = (data, station) => {
+	if (JSON.stringify(data) !== JSON.stringify(hpm.stationIds[station]['nowPlaying']) ) {
+		hpm.stationIds[station]['nowPlaying'] = data;
+		let hpmUpdate = new CustomEvent('hpm:npUpdate', {
+			'detail': {
+				'updated': station
+			}
+		});
+		document.dispatchEvent(hpmUpdate);
+	}
+};
+document.addEventListener('hpm:npUpdate', (event) => {
+	var station = event['detail']['updated'];
+	if ( typeof hpm.stationLoad[ station ] == 'object' ) {
+		hpm.npUpdateHtml(hpm.stationLoad[ station ]['obj'], station, hpm.stationLoad[ station ]['next']);
+	}
+});
+hpm.npUpdateHtml = (object,station,next) => {
 	var output = '';
-	if (next) {
+	var data = hpm.stationIds[station]['nowPlaying'];
+	if (next == 'true') {
 		output = '<h2>On Now</h2>';
 	}
 	if ( station.startsWith('tv') ) {
-		if (next) {
+		if (next == 'true') {
 			output += '<ul>';
 			for ( var al = 0; al < data['airlist'].length; al++ ) {
 				if (al == 1) {
@@ -421,24 +395,67 @@ hpm.updateData = (data,station,next) => {
 			extra = descs.join(', ');
 			output = "<h3>"+data.onNow.song.trackName.replace('&','&amp;')+"</h3><p>"+extra+"</p>";
 		}
-		if (next) {
+		if (next == 'true') {
 			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].fullstart)+': '+data.nextUp[0].program.name+'</li></ul>';
 		}
 	}
-	var nps;
-	if (next) {
-		nps = document.querySelectorAll('.nowplay-'+station+'-next');
-	} else {
-		nps = document.querySelectorAll('.nowplay-'+station);
-	}
-	for (var n in nps) {
-		nps[n].innerHTML = output;
-	}
+	object.innerHTML = output;
 };
+
 document.addEventListener('DOMContentLoaded', () => {
 	hpm.navHandlers();
 	hpm.videoHandlers();
 	hpm.shareHandlers();
 	hpm.audioEmbeds();
 	hpm.contentToggles();
+	hpm.npSearch();
+	hpm.audioPlayers();
+});
+document.addEventListener('turbo:before-fetch-response', () => {
+	if ( timeOuts.length > 0 ) {
+		Array.from(timeOuts).forEach((item) => {
+			clearInterval(item);
+		});
+	}
+	hpm.npSearch();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+	var setupOverlay = (overlay,target) => {
+		var contain = document.createElement('div');
+		contain.classList.add('credits-container');
+		Array.from(target.classList).forEach((tCl) => {
+			contain.classList.add(tCl);
+		});
+		var styles = [];
+		styles.push('width: ' + target.width + 'px' );
+		styles.push('margin-right: ' + (target.style['margin-right'] == '' ? '0' : target.style['margin-right']) + 'px');
+		styles.push('margin-left: ' + (target.style['margin-left'] == '' ? '0' : target.style['margin-left']) + 'px');
+		styles.push('margin-bottom: ' + (target.style['margin-bottom'] == '' ? '0' : target.style['margin-bottom']) + 'px');
+		styles.push('border-bottom-left-radius: ' + (target.style['border-bottom-left-radius'] == '' ? '0' : target.style['border-bottom-left-radius']) + 'px');
+		styles.push('border-bottom-right-radius: ' + (target.style['border-bottom-right-radius'] == '' ? '0' : target.style['border-bottom-right-radius']) + 'px');
+		overlay.setAttribute('style',styles.join('; '));
+		var parent = target.parentNode;
+		contain.innerHTML = target.outerHTML + overlay.outerHTML;
+		if (parent.nodeName == 'a') {
+			parent.outerHTML = contain.outerHTML;
+		} else {
+			target.outerHTML = contain.outerHTML;
+		}
+	};
+	var credits = document.querySelectorAll('.credits-overlay');
+	var targets = [];
+	Array.from(credits).forEach((cred) => {
+		targets.push( {'target': 'img' + cred.getAttribute('data-target'), 'overlay': cred } );
+	});
+	targets.forEach((target) => {
+		var t = document.querySelector(target.target);
+		if (t.complete) {
+			setupOverlay( target.overlay, t );
+		} else {
+			t.addEventListener('load', () => {
+				setupOverlay( target.overlay, t );
+			});
+		}
+	});
 });

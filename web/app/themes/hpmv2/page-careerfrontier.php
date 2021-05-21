@@ -33,15 +33,12 @@ Template Name: Career Frontier
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 	<script>
-		jQuery(document).ready(function($){
-			$('.cf-eps-wrap article header').click(function(){
-				var par = $(this).parents('article');
-				if (par.hasClass('topic-active'))
-				{
-					par.removeClass('topic-active');
-				} else  {
-					par.addClass('topic-active');
-				}
+		document.addEventListener('DOMContentLoaded', () => {
+			var artHeads = document.querySelectorAll('.cf-eps-wrap article header');
+			Array.from(artHeads).forEach((art) => {
+				art.addEventListener('click', () => {
+					art.parentNode.classList.toggle('topic-active');
+				});
 			});
 		});
 	</script>

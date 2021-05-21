@@ -176,18 +176,26 @@ Template Name: Arts Virtual
 		}
 	</style>
 	<script>
-		jQuery(document).ready(function($){
-			$('.hvas-select div').click(function(e){
-				e.preventDefault();
-				var id = $(this).attr('id');
-				if ( !$(this).hasClass('hvas-active') ) {
-					$('.hvas-select div').removeClass('hvas-active');
-					$('.hvas-contain').removeClass('hvas-active');
-					$(this).addClass('hvas-active');
-					$('#'+id+'-tab').addClass('hvas-active');
-				} else {
-					return false;
-				}
+		document.addEventListener('DOMContentLoaded', () => {
+			var hvas = document.querySelectorAll('.hvas-select div');
+			var contain = document.querySelectorAll('.hvas-contain');
+			Array.from(hvas).forEach((hva) => {
+				hva.addEventListener('click', () => {
+					var id = hva.id;
+					if (hva.classList.contains('hvas-active')) {
+						return false;
+					} else {
+						Array.from(hvas).forEach((hv) => {
+							hv.classList.remove('hvas-active');
+						});
+						hva.classList.add('hvas-active');
+						Array.from(contain).forEach((con) => {
+							con.classList.remove('hvas-active');
+						});
+						document.querySelector('#'+id+'-tab').classList.add('hvas-active');
+					}
+				});
 			});
-		});</script>
+		});
+	</script>
 <?php get_footer(); ?>

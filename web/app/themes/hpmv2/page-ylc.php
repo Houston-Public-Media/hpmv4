@@ -13,9 +13,9 @@ get_header(); ?>
 							<a href="/" rel="home" title="Houston Public Media homepage"><img src="https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Reverse.png" alt="Houston Public Media, a service of the University of Houston" /></a>
 						</div>
 						<h1 class="page-title"><?php the_title(); ?></h1>
-						<a class="down scrollto" href="#main-content">
+						<button class="down scrollto">
 							<i class="fas fa-chevron-down" aria-hidden="true"></i>
-						</a>
+						</button>
 					</header><!-- .entry-header -->
 					<div class="page-content">
 						<?php echo get_the_content(); ?>
@@ -40,7 +40,7 @@ get_header(); ?>
 		function modalSwitch(dataId,modal) {
 			var dIndexSp = dataId.split('-');
 			var dInt = parseInt(dIndexSp[2]);
-			var roster = document.getElementsByClassName(dIndexSp[0]+'-'+dIndexSp[1]);
+			var roster = document.querySelectorAll('.'+dIndexSp[0]+'-'+dIndexSp[1]);
 			if ( dInt - 1 == 0 ) {
 				var prev = roster.length;
 			} else {
@@ -51,67 +51,68 @@ get_header(); ?>
 			} else {
 				var next = dInt + 1;
 			}
-			var current = jQuery('#'+dataId);
-			jQuery('#ylc-prev').attr('data-item', 'ylc-'+dIndexSp[1]+'-'+prev);
-			jQuery('#ylc-next').attr('data-item', 'ylc-'+dIndexSp[1]+'-'+next);
-			var name = current.attr('data-name');
-			var title = current.attr('data-title');
-			var quote = current.attr('data-quote');
+			var current = document.querySelector('#'+dataId);
+			document.querySelector('#ylc-prev').setAttribute('data-item', 'ylc-'+dIndexSp[1]+'-'+prev);
+			document.querySelector('#ylc-next').setAttribute('data-item', 'ylc-'+dIndexSp[1]+'-'+next);
+			var name = current.getAttribute('data-name');
+			var title = current.getAttribute('data-title');
+			var quote = current.getAttribute('data-quote');
 			var fTitle = title.replace(/\|\|/g, '<br />');
-			jQuery('#ylc-overlay-person h1').html(name);
-			jQuery('#ylc-overlay-person h3').html(fTitle);
-			jQuery('#ylc-overlay-quote blockquote').html(quote);
-			var image = current.children('img');
-			jQuery('#ylc-overlay-img').html('<img src="'+image.attr('src')+'" alt="'+image.attr('alt')+'" title="'+image.attr('title')+'">');
+			document.querySelector('#ylc-overlay-person > h1').innerHTML = name;
+			document.querySelector('#ylc-overlay-person > h3').innerHTML = fTitle;
+			document.querySelector('#ylc-overlay-quote > blockquote').innerHTML = quote;
+			var image = current.children[0];
+			document.querySelector('#ylc-overlay-img').innerHTML = '<img src="'+image.getAttribute('src')+'" alt="'+image.getAttribute('alt')+'" title="'+image.getAttribute('title')+'">';
 			if (modal) {
-				jQuery('#ylc-overlay').addClass('ylc-active');
+				document.querySelector('#ylc-overlay').classList.add('ylc-active');
 			}
 		}
-		jQuery(document).ready(function($){
-			var main = $('#main').offset();
-			window.winhigh = $(window).height();
-			var header_height = winhigh - main.top;
-			$('.page-template-page-ylc .page-header').height(header_height);
-			$('a.down').on('click', function (event) {
-				event.preventDefault();
-				$('html, body').animate({scrollTop: $('#main-content').offset().top}, 500);
+		document.addEventListener('DOMContentLoaded', () => {
+			var main = document.querySelector('#main').getBoundingClientRect();
+			var winhigh = window.innerHeight;
+			var header_height = winhigh - main.top - window.scrollY;
+			document.querySelector('.page-template-page-ylc .page-header').style.height = header_height+'px';
+			document.querySelector('button.down').addEventListener('click', (e) => {
+				e.preventDefault();
+				var offset = document.querySelector('.page-content').offsetTop;
+				window.scrollTo(0, offset-(4*16));
 			});
-			$('.ylc-roster-item').on('click', function (event) {
-				var dIndex = $(this).attr('id');
-				modalSwitch(dIndex,true);
+			Array.from(document.querySelectorAll('#ylc-close,#ylc-overlay')).forEach((navC) => {
+				navC.addEventListener('click', (e) => {
+					e.preventDefault();
+					document.querySelector('#ylc-overlay').classList.remove('ylc-active');
+				});
 			});
-			$('#ylc-close,#ylc-overlay').on('click', function(event) {
-				event.preventDefault();
-				$('#ylc-overlay').removeClass('ylc-active');
+			document.querySelector('#ylc-overlay-wrap').addEventListener('click', (e) => {
+				e.stopPropagation();
 			});
-			$('#ylc-overlay-wrap').on('click', function(event) {
-				event.stopPropagation();
+			Array.from(document.querySelectorAll('#ylc-next,#ylc-prev')).forEach((navB) => {
+				navB.addEventListener('click', (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					modalSwitch(navB.getAttribute('data-item'), false);
+				});
 			});
-			$('#ylc-next,#ylc-prev').on('click', function(event) {
-				event.preventDefault();
-				event.stopPropagation();
-				var dIndex = $(this).attr('data-item');
-				modalSwitch(dIndex,false);
+			var members = document.querySelectorAll('.ylc-roster-item');
+			Array.from(members).forEach((member) => {
+				member.addEventListener('click', (e) => {
+					modalSwitch(member.id, true);
+				});
 			});
-			$(document).on('keyup', function(event) {
-				if ($('#ylc-overlay').hasClass('ylc-active')) {
-					if (event.which == 37) {
+			document.querySelector('#ylc-prev-class').addEventListener('click', (e) => {
+				document.querySelector('.ylc-prev-class').classList.toggle('active');
+			});
+			document.addEventListener('keyup', (e) => {
+				if (document.querySelector('#ylc-overlay').classList.contains('ylc-active')) {
+					if (e.which == 37) {
 						console.log( 'Keyboard Previous' );
-						var dIndex = $('#ylc-prev').attr('data-item');
+						var dIndex = document.querySelector('#ylc-prev').getAttribute('data-item');
 						modalSwitch(dIndex,false);
-					} else if (event.which == 39) {
+					} else if (e.which == 39) {
 						console.log( 'Keyboard Next' );
-						var dIndex = $('#ylc-next').attr('data-item');
+						var dIndex = document.querySelector('#ylc-next').getAttribute('data-item');
 						modalSwitch(dIndex,false);
 					}
-				}
-			});
-			$('#ylc-prev-class').on('click', function(event) {
-				event.preventDefault();
-				if ( $('.ylc-prev-class').hasClass('active') ) {
-					$('.ylc-prev-class').removeClass('active');
-				} else {
-					$('.ylc-prev-class').addClass('active');
 				}
 			});
 		});

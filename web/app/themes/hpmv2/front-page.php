@@ -25,36 +25,35 @@ $articles = hpm_homepage_articles(); ?>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8</a></h5>
-								<div class="nowplay-tv81"></div>
+								<div class="hpm-nowplay" data-station="tv81" data-upnext="false"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
-								<div class="nowplay-tv82"></div>
+								<div class="hpm-nowplay" data-station="tv82" data-upnext="false"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
-								<div class="nowplay-tv83"></div>
+								<div class="hpm-nowplay" data-station="tv83" data-upnext="false"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/tv8">TV 8.4 (World)</a></h5>
-								<div class="nowplay-tv84"></div>
+								<div class="hpm-nowplay" data-station="tv84" data-upnext="false"></div>
 							</div>
 						</div>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
 								<h5><a href="/news887">News 88.7</a></h5>
-								<div class="nowplay-news"></div>
+								<div class="hpm-nowplay" data-station="news" data-upnext="false"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/classical">Classical</a></h5>
-								<div class="nowplay-classical"></div>
+								<div class="hpm-nowplay" data-station="classical" data-upnext="false"></div>
 							</div>
 							<div class="station-now-play">
 								<h5><a href="/mixtape">Mixtape</a></h5>
-								<div class="nowplay-mixtape"></div>
+								<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"></div>
 							</div>
 						</div>
-						<script>hpmNowPlaying('all',false);</script>
 					</div>
 					<div id="in-depth">
 						<h4>News 88.7 In-Depth</h4>

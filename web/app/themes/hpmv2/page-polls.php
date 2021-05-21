@@ -4,18 +4,31 @@ Template Name: Polls
 */
 
 get_header(); ?>
-	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$(".acc-section").hide();
-			$(".featured").show();
-			$('h3').click(function(e) {
-				$(this).next(".acc-section").slideToggle('slow');
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			var sections = document.querySelectorAll('.acc-section');
+			var h3s = document.querySelectorAll('.acc li h3');
+			var featured = document.querySelectorAll('.featured');
+			Array.from(sections).forEach((section) => {
+				section.classList.add('screen-reader-text');
 			});
-			$('#expand').click(function(e) {
-				$(".acc-section").slideDown('slow');
+			Array.from(featured).forEach((feat) => {
+				feat.classList.remove('screen-reader-text');
 			});
-			$('#collapse').click(function(e) {
-				$(".acc-section").slideUp('slow');
+			Array.from(h3s).forEach((h3) => {
+				h3.addEventListener('click', () => {
+					h3.nextElementSibling.classList.toggle('screen-reader-text');
+				});
+			});
+			document.querySelector('#expand').addEventListener('click', () => {
+				Array.from(sections).forEach((sec) => {
+					sec.classList.remove('screen-reader-text');
+				});
+			});
+			document.querySelector('#collapse').addEventListener('click', () => {
+				Array.from(sections).forEach((sec) => {
+					sec.classList.add('screen-reader-text');
+				});
 			});
 		});
 	</script>
@@ -24,7 +37,7 @@ get_header(); ?>
 		<?PHP while ( have_posts() ) : the_post(); $current_page = get_the_ID(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
-					<?php 						
+					<?php
 						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 				</header><!-- .entry-header -->
 				<div class="entry-content">
@@ -32,7 +45,7 @@ get_header(); ?>
 						if ( has_post_thumbnail() ) :
 					?>
 					<div class="post-thumbnail">
-						<?php 
+						<?php
 							the_post_thumbnail( 'hpm-large' );
 							$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
 							if (!empty($thumb_caption)) :
@@ -50,7 +63,7 @@ get_header(); ?>
 				</div><!-- .entry-content -->
 
 				<footer class="entry-footer">
-				<?PHP	
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
 					if ( $tags_list ) {
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
@@ -71,7 +84,7 @@ get_header(); ?>
 
 				if ($tags) :
 					$tag_ids = array();
-					foreach($tags as $individual_tag): 
+					foreach($tags as $individual_tag):
 						$tag_ids[] = $individual_tag->term_id;
 					endforeach;
 					$args = array(

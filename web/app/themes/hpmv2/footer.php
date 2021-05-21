@@ -26,9 +26,11 @@
 						</div>
 					</div>
 					<div class="foot-newsletter">
-						<h3>Subscribe to Our Newsletter</h3>
-						<p>Get highlights, trending news and behind-the-scenes insights from Houston Public Media delivered to your inbox each week.</p>
-						<p><iframe style="border: 0 none transparent;" src="https://cdn.hpm.io/assets/enewsletter_signup_new.html" width="100%" height="115" frameborder="no" allowfullscreen="allowfullscreen"></iframe></p>
+						<h3>Subscribe to Our Newsletters</h3>
+						<h4><a href="https://www.houstonpublicmedia.org/news/today-in-houston-newsletter/">Today in Houston</a></h4>
+						<p>Let the Houston Public Media newsroom help you start your day.</p>
+						<h4><a href="https://www.houstonpublicmedia.org/support/newslettereguide-signup/">This Week</a></h4>
+						<p>Get highlights, trending news, and behind-the-scenes insights from Houston Public Media delivered to your inbox each week.</p>
 					</div>
 					<div class="foot-contact">
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
