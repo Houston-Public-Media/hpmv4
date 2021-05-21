@@ -1,7 +1,30 @@
 <?php
 	$cat = get_term_by('name', single_cat_title('',false), 'category');
-	if ( $cat->parent == 9 && empty( $wp_query->query_vars['paged'] ) ) :
-		$series_page = new WP_query( array( 'meta_key' => 'hpm_series_cat', 'meta_value' => $cat->term_id, 'post_type' => 'page' ) );
+	if ( ( $cat->parent == 9 || $cat->parent == 5 ) && empty( $wp_query->query_vars['paged'] ) ) :
+		if ( $cat->parent == 9 ) :
+			$args = [
+				'post_type' => 'page',
+				'post_status' => 'publish',
+				'posts_per_page' => -1,
+				'meta_query' => [[
+					'key' => 'hpm_series_cat',
+					'compare' => '=',
+					'value' => $cat->term_id
+				]]
+			];
+		else :
+			$args = [
+				'post_type' => 'shows',
+				'post_status' => 'publish',
+				'posts_per_page' => -1,
+				'meta_query' => [[
+					'key' => 'hpm_shows_cat',
+					'compare' => '=',
+					'value' => $cat->term_id
+				]]
+			];
+		endif;
+		$series_page = new WP_query( $args );
 		if ( $series_page->have_posts() ) :
 			while( $series_page->have_posts() ) :
 				$series_page->the_post();
@@ -26,7 +49,7 @@
 			<?php
 			// Start the loop.
 			while ( have_posts() ) : the_post();
-				get_template_part( 'content', get_post_format() );			
+				get_template_part( 'content', get_post_format() );
 			endwhile;
 
 			// Previous/next page navigation.
