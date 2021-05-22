@@ -70,7 +70,7 @@ function hpm_scripts() {
 		wp_enqueue_script( 'hpm-js', get_template_directory_uri().'/js/main'.HPM_TEST.'.js', [], date('Y-m-d-H'), true );
 	else :
 		wp_enqueue_style( 'hpm-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
-		wp_enqueue_script( 'hpm-js', 'https://cdn.hpm.io/assets/js/main.js', [], $versions['js'], false );
+		wp_enqueue_script( 'hpm-js', 'https://cdn.hpm.io/assets/js/main.js', [], $versions['js'], true );
 	endif;
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], $versions['analytics'], false );
 	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], date('Y-m-d-H'), true );
