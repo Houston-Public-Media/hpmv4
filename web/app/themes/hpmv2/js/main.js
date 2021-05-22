@@ -450,9 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	targets.forEach((target) => {
 		var t = document.querySelector(target.target);
-		if (t.complete) {
-			setupOverlay( target.overlay, t );
-		} else {
+		if (t !== null) {
 			t.addEventListener('load', () => {
 				setupOverlay( target.overlay, t );
 			});

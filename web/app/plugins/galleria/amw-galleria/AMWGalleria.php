@@ -215,7 +215,7 @@ class AMWGalleria {
 		$theme_js    = sprintf("%s/galleria/themes/%s/galleria.%s.min.js",  $this->url, $theme, $theme);
 		// galleria JavaScript output
 		// NOTE: WordPress disables the use of the dollar-sign function ($) for compatibility
-		$output .= '<div class="screen-reader-text"><script type="text/javascript">jQuery(document).ready(function(){Galleria.loadTheme(\''.$theme_js.'\');Galleria.run(\'#'. $domId .'\',' . $options . '); });</script></div></div>';
+		$output .= '<div class="screen-reader-text"><script type="text/javascript">document.addEventListener(\'DOMContentLoaded\', () => { Galleria.loadTheme(\''.$theme_js.'\');Galleria.run(\'#'. $domId .'\',' . $options . '); });</script></div></div>';
 		wp_enqueue_script( 'amw-galleria' );
 		//wp_enqueue_style( 'amw-galleria-style' );
 		return $output;
