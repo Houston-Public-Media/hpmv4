@@ -3376,7 +3376,7 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
  */
 
 /* Text meant only for screen readers */
-.says, .screen-reader-text {
+.says, .screen-reader-text, .hidden {
 	clip: rect(1px, 1px, 1px, 1px);
 	height: 1px;
 	overflow: hidden;
@@ -6324,12 +6324,6 @@ ul.passport-drop li.passport-hidden {
 	text-align:  center;
 	font: 100 1.25em/1.125em var(--hpm-font-main);
 	margin-bottom: 1em;
-}
-#vehicle-form {
-	display: none;
-}
-#vehicle-form.active {
-	display: block;
 }
 .page-template-page-support-sub .page-content #vehicle-donation-main h2 {
 	color: #52C2DD;
