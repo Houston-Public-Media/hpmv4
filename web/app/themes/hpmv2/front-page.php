@@ -87,6 +87,7 @@ $articles = hpm_homepage_articles(); ?>
 <?php
 		endif;
 		$postClass = get_post_class( $va->ID );
+		$alt_headline = get_post_meta( $va->ID, 'hpm_alt_headline', true );
 		$search = 'felix-type-';
 		$felix_type = array_filter($postClass, function($el) use ($search) {
 			return ( strpos($el, $search) !== false );
@@ -117,7 +118,7 @@ $articles = hpm_homepage_articles(); ?>
 						endif; ?>
 					<header class="entry-header">
 						<h3><?php echo hpm_top_cat( $va->ID ); ?></h3>
-						<h2 class="entry-title"><a href="<?php the_permalink( $va->ID ); ?>" rel="bookmark"><?php echo $va->post_title; ?></a></h2>
+						<h2 class="entry-title"><a href="<?php the_permalink( $va->ID ); ?>" rel="bookmark"><?php echo ( !empty( $alt_headline ) ? $alt_headline : $va->post_title); ?></a></h2>
 						<div class="screen-reader-text">
 							<?PHP
 								coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true );
