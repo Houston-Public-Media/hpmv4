@@ -110,10 +110,6 @@ hpm.navHandlers = () => {
 				document.querySelector('#top-schedule .top-schedule-link-wrap').classList.toggle('top-sched-active');
 			});
 		}
-		var passport = document.querySelector('.nav-passport > .nav-item-head-main');
-		if (passport !== null) {
-			passport.innerHTML = '<img src="https://cdn.hpm.io/assets/images/icons/Passport-Icon-Head.png" class="nav-passport-icon"> Passport';
-		}
 	}
 };
 
