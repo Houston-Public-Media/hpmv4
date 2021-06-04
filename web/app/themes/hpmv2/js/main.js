@@ -195,6 +195,28 @@ hpm.shareHandlers = () => {
 			}
 		});
 	});
+	var share = document.querySelector('#article-share');
+	if (share !== null) {
+		var shareD = share.getBoundingClientRect();
+		var entry = document.querySelector('article.post .entry-content');
+		var footer = document.querySelector('footer#colophon');
+		window.addEventListener('scroll', () => {
+			if (window.innerWidth > 840) {
+				var entryD = entry.getBoundingClientRect();
+				var footD = footer.getBoundingClientRect();
+				if (entryD.top < 0 && footD.top > window.innerHeight) {
+					if ( !share.classList.contains('fixed') ) {
+						share.classList.add('fixed');
+						share.style.width = shareD.width + 'px'
+						share.style.left = shareD.left + 'px';
+					}
+				} else {
+					share.classList.remove('fixed');
+					share.removeAttribute('style');
+				}
+			}
+		});
+	}
 };
 
 hpm.audioEmbeds = () => {

@@ -4216,9 +4216,6 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	#masthead nav#site-navigation .nav-top.nav-active ul {
 		display: block;
 	}
-	#masthead nav#site-navigation .nav-top.nav-top-mobile {
-		display: none;
-	}
 	#masthead nav#site-navigation ul li ul {
 		display: none;
 		position: absolute;
@@ -5303,6 +5300,10 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	}
 	body.page-template-page-schedules-tv #main .column-left {
 		padding-left: 1em;
+	}
+	#article-share.fixed {
+		position: fixed;
+		top: 0.5em;
 	}
 }
 
@@ -9935,6 +9936,308 @@ body.single-embeds .container {
 		padding: 0 0 0 1em;
 	}
 }
+
+/* pride Heritage Month */
+:root {
+	--pride-blue: #68a7cd;
+	--pride-red: #dc6a3f;
+	--pride-light-blue: #c7e8ea;
+	--pride-yellow: #ebca6a;
+	--pride-green: #6db399;
+	--pride-purple: #9a74ab;
+	--pride-pink: #eab9c6;
+	--pride-light-pink: #f7e5e7;
+	--pride-gray: #56585a;
+}
+.pride #div-gpt-ad-1488818411584-0 {
+	display: none;
+}
+.pride aside.column-right {
+	margin: 0 0 2em 0;
+	width: 100%;
+}
+.pride section,
+.pride aside {
+	padding: 1em;
+}
+.pride section.column-left {
+	width: 100%;
+	padding: 2.5em 1em;
+	margin: 0;
+}
+.pride .pride-program {
+	padding: 0 0 2em 0;
+}
+.pride .pride-program:nth-child(n+4) {
+	border-top: 1px solid white;
+	padding: 2em 0;
+}
+.pride section:nth-child(n+2) {
+	background-repeat: no-repeat;
+	background-size: 66%;
+	background-image: url(https://cdn.hpm.io/assets/images/pride-rainbow-upper.png), url(https://cdn.hpm.io/assets/images/pride-rainbow-lower.png);
+	background-position: top right, bottom right;
+}
+.pride a,
+.pride article .entry-content p a {
+	color: var(--pride-blue);
+	text-decoration: none;
+}
+.pride section.column-left:nth-child(3n+1) {
+	background-color: var(--pride-light-blue);
+}
+.pride section.column-left:nth-child(3n+2) {
+	background-color: var(--pride-light-pink);
+}
+.pride section.column-left p {
+	color: var(--pride-gray);
+}
+.pride section.column-left h1,
+.pride section.column-left h2 {
+	color: var(--pride-red);
+}
+.pride section.column-left:nth-child(3n+1) a {
+	color: var(--pride-purple);
+}
+.pride h4 {
+	margin-bottom: 0.5em;
+	font-weight: 700;
+	font-size: 1.25em;
+}
+.pride section.column-left h1 {
+	margin-bottom: 0;
+	font-family: 'Generica-Bold',var(--hpm-font-main);
+	letter-spacing: 1px;
+	font-weight: 400;
+}
+.pride h1 {
+	font-weight: 900;
+	margin-bottom: 0.5em;
+	color: var(--pride-red);
+}
+.pride aside h1 {
+	font-size: 1.5em;
+	margin-bottom: 0;
+	font-family: 'Generica-Bold',var(--hpm-font-main);
+	letter-spacing: 1px;
+	font-weight: 400;
+}
+.pride #page {
+	background-color: var(--pride-light-pink);
+}
+.pride h2 {
+	font-weight: 900;
+	margin-bottom: 0;
+	font-size: 1.5em;
+	color: var(--pride-red);
+	font-family: 'Generica-Bold',var(--hpm-font-main);
+	letter-spacing: 1px;
+}
+.pride section.column-left ul {
+	margin-bottom: 2em;
+}
+.pride section.column-left h2,
+.pride section.column-left h2 a {
+	font-family: var(--hpm-font-main);
+	letter-spacing: initial;
+	font-weight: 700;
+}
+.pride article {
+	padding: 0;
+	margin-top: 0;
+}
+.pride article .entry-content {
+	padding: 1em 0;
+}
+.pride .pride-split:nth-child(1) {
+	margin-bottom: 1em;
+}
+.pride-series {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-flow: row wrap;
+}
+.pride-series div {
+	width: 48%;
+	margin: 0 1% 2em;
+}
+.pride #pride-top {
+	text-align: center;
+	max-width: 50em;
+	margin: 0 auto 2em;
+	width: 100%;
+}
+.pride #pride-top span.highlight {
+	color: var(--pride-purple);
+	font-family: 'Generica-Bold',var(--hpm-font-main);
+	font-weight: 400;
+	font-size: 1.25em;
+}
+.pride #definition {
+	width: 100%;
+	max-width: 45em;
+	margin: 0 auto 1em;
+	overflow: hidden;
+}
+.pride #definition .letter-wrap {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: baseline;
+}
+.pride #definition .letter-wrap span {
+	font-size: 250%;
+	font-weight: 400;
+	padding: 0 0.125em;
+	border-bottom: 0.125em solid transparent;
+	transition: all .2s ease-out;
+	font-family: 'Generica-Bold',var(--hpm-font-main);
+}
+.pride #definition .letter-wrap span:hover {
+	cursor: pointer;
+	opacity: 0.75;
+}
+.pride #definition .letter-wrap span:nth-child(6n+1),
+.pride #def-wrap #lesbian h1,
+.pride #def-wrap #intersex h1 {
+	color: var(--pride-pink);
+}
+.pride #definition .letter-wrap span:nth-child(6n+2),
+.pride #def-wrap #gay h1,
+.pride #def-wrap #pansexual h1 {
+	color: var(--pride-purple);
+}
+.pride #definition .letter-wrap span:nth-child(6n+3),
+.pride #def-wrap #bisexual h1,
+.pride #def-wrap #two-spirit h1 {
+	color: var(--pride-blue);
+}
+.pride #definition .letter-wrap span:nth-child(6n+4),
+.pride #def-wrap #trans h1,
+.pride #def-wrap #asexual h1 {
+	color: var(--pride-green);
+}
+.pride #definition .letter-wrap span:nth-child(6n+5),
+.pride #def-wrap #queer h1,
+.pride #def-wrap #ally h1 {
+	color: var(--pride-yellow);
+}
+.pride #definition .letter-wrap span:nth-child(6),
+.pride #def-wrap #questioning h1 {
+	color: var(--pride-red);
+}
+.pride #definition .letter-wrap span.letter-focus {
+	font-size: 300%;
+	border-bottom: 0.125em solid;
+}
+.pride #definition .def-overall {
+    padding: 1em;
+    border: 0.5em solid var(--pride-pink);
+    transition: color .5s ease-out;
+}
+.pride #def-wrap {
+	max-width: 30em;
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	flex-flow: row nowrap;
+	overflow: hidden;
+	position: relative;
+	height: 12em;
+	justify-content: center;
+	align-items: center;
+}
+.pride #def-wrap div {
+	opacity: 0;
+	transition: all .2s ease-out;
+	width: 100%;
+	flex: 0 0 auto;
+	position: absolute;
+	left: 0;
+}
+.pride #def-wrap div.letter-focus {
+	opacity: 1;
+}
+.pride #def-wrap div h1 {
+	margin-bottom: 0;
+	font-family: 'Generica-Bold',var(--hpm-font-main);
+}
+.pride .plyr--audio .plyr__controls {
+	color: var(--pride-purple) !important;
+}
+.pride .article-player-wrap {
+	padding: 0;
+}
+.pride .iframe-embed-pbs {
+	padding-bottom: calc(100% / 1.777778) !important;
+}
+@media screen and (min-width: 34em) {
+	.pride .pride-split {
+		float: left;
+		width: 60%;
+		margin-bottom: 0;
+	}
+	.pride .pride-split:nth-child(2) {
+		width: 40%;
+		padding-left: 1em;
+	}
+	.pride section:nth-child(n+2) {
+		background-size: 45%;
+	}
+}
+@media screen and (min-width: 52.5em) {
+	.pride .pride-split,
+	.pride .pride-split:nth-child(1),
+	.pride .pride-split:nth-child(2) {
+		float: none;
+		width: 100%;
+		margin-bottom: 1em;
+		padding: 0;
+	}
+	.pride section:nth-child(n+2) {
+		background-size: 35%;
+	}
+	.pride aside.column-right {
+		margin: 0 0 2em;
+		width: 28%;
+	}
+	.pride section.column-left {
+		width: 70%;
+		margin: 0 1%;
+	}
+	.pride .pride-program.pride-flip {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	.pride .pride-program.pride-flip div {
+		display: flex;
+		justify-content: center;
+		flex-flow: column nowrap;
+	}
+	.pride .pride-program.pride-flip .pride-video {
+		width: 40%;
+		padding: 0 1em 0 0;
+	}
+	.pride .pride-program.pride-flip .pride-desc {
+		width: 60%;
+	}
+	.pride .pride-program p {
+		padding: 0;
+	}
+	.pride #pov-playlist .pride-program.pride-flip {
+		flex-flow: row-reverse nowrap;
+	}
+	.pride #pov-playlist .pride-program.pride-flip .pride-video {
+		padding: 0 0 0 1em;
+	}
+	.pride #pride-about.fixed {
+		position: fixed;
+		top: 0.5em;
+	}
+}
+
 .search-active {
 	display: block;
 }
