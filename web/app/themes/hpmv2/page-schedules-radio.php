@@ -33,26 +33,6 @@ Template Name: Radio Schedules
 	get_header();
 ?>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script>
-		jQuery(document).ready(function($) {
-			$( "#datepicker" ).datepicker({
-				dateFormat: "yy/mm/dd",
-				onSelect: function(date) {
-					location.href = '/<?PHP echo $sched_station; ?>/schedule/'+ date;
-				}
-			});
-			$( "#tv-search-box" ).submit(function( event ) {
-				event.preventDefault();
-				var text = $('#searchtext').val();
-				location.href = '/<?php echo $sched_station; ?>/schedule/search/'+encodeURI(text);
-			});
-			$("#tv-channel-drop").change(function(){
-				var channel = $(this).val();
-				$('.schedule-column, .time-column').hide();
-				$('#'+channel).show().prev('.time-column').show();
-			});
-		});
-	</script>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
@@ -286,6 +266,12 @@ Template Name: Radio Schedules
 					ps.classList.toggle('seg-active');
 					ps.nextElementSibling.classList.toggle('seg-active');
 				});
+			});
+			jQuery( "#datepicker" ).datepicker({
+				dateFormat: "yy/mm/dd",
+				onSelect: function(date) {
+					location.href = '/<?PHP echo $sched_station; ?>/schedule/'+ date;
+				}
 			});
 		});
 	</script>

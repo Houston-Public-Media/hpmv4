@@ -1233,7 +1233,7 @@ span.edit-link {
 	position: relative;
 	width: 100%;
 	padding: 0 !important;
-	padding-bottom: calc(100% / 1.489999) !important;
+	padding-bottom: calc(100% / 1.425) !important;
 	display: block;
 	margin-bottom: 1em;
 }
@@ -9969,7 +9969,7 @@ body.single-embeds .container {
 	padding: 0 0 2em 0;
 }
 .pride .pride-program:nth-child(n+4) {
-	border-top: 1px solid white;
+	border-top: 1px solid var(--accent-black-3);
 	padding: 2em 0;
 }
 .pride section:nth-child(n+2) {
@@ -9989,8 +9989,15 @@ body.single-embeds .container {
 .pride section.column-left:nth-child(3n+2) {
 	background-color: var(--pride-light-pink);
 }
+.pride section.column-left:nth-child(3n+1) .pride-program:nth-child(n+4),
+.pride section.column-left:nth-child(3n+2) .pride-program:nth-child(n+4) {
+	border-top: 1px solid white;
+}
 .pride section.column-left p {
 	color: var(--pride-gray);
+}
+.pride .pride-program p:last-child {
+    margin: 0;
 }
 .pride section.column-left h1,
 .pride section.column-left h2 {
@@ -10169,9 +10176,6 @@ body.single-embeds .container {
 }
 .pride .article-player-wrap {
 	padding: 0;
-}
-.pride .iframe-embed-pbs {
-	padding-bottom: calc(100% / 1.777778) !important;
 }
 @media screen and (min-width: 34em) {
 	.pride .pride-split {
