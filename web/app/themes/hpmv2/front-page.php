@@ -107,7 +107,8 @@ $articles = hpm_homepage_articles(); ?>
 			$postClass[$key[0]] = $felix;
 		else :
 			$postClass[] = $felix;
-		endif; ?>
+		endif;
+		$post = $va; ?>
 				<article id="post-<?php echo $va->ID; ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
 					<?php
 						if ( has_post_thumbnail( $va->ID ) ) : ?>

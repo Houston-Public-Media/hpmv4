@@ -18,6 +18,7 @@ web/app/themes/hpmv2/front-page-*
 web/app/themes/hpmv2/js/main-*
 web/app/themes/hpmv2/js/experiments*
 web/app/themes/hpmv2/includes/head-*
+web/test*
 
 # WordPress
 web/wp
