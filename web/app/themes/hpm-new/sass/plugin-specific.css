@@ -1,0 +1,14 @@
+/* Plugin-Specific */
+
+#emergency {
+	padding: 0.25em 1em;
+	text-align: center;
+	color: var(--main-red);
+	font: 400 1.25em/1.25em var(--hpm-font-main);
+	background-color: white;
+}
+#emergency a {
+	font: 400 1em/1em var(--hpm-font-main);
+	color: var(--main-red);
+	text-decoration: none;
+}

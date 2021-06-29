@@ -1,0 +1,19 @@
+#footer-social .footer-social-icon {
+	a {
+		display: block;
+		width: 2em;
+		height: 2em;
+		background-color: #808184;
+		margin-right: 0.5em;
+		text-align: center;
+	}
+	&:last-child a {
+		margin-right: 0;
+	}
+	.fab {
+		font-size: 1.5em;
+		line-height: 1.25em;
+		color: white;
+	}
+}
+

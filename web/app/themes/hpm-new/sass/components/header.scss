@@ -1,0 +1,309 @@
+#masthead {
+	width: 100%;
+	position: relative;
+	&:before, &:after {
+		content: '';
+	}
+	.site-branding {
+		background-color: var(--main-red);
+		.site-logo {
+			padding: 0.375em 0 0.375em 0;
+			width: 9.75em;
+			height: 5em;
+			margin-left: 1.5em;
+			a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				background-position: left center;
+				background-repeat: no-repeat;
+				background-image: url( https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Reverse.png );
+				background-size: contain;
+				font: normal 1em/1em arial;
+			}
+		}
+	}
+	.top-mobile-text {
+		font-size: 60%;
+		text-transform: uppercase;
+	}
+	#top-donate {
+		position: absolute;
+		right: 5em;
+		top: 0;
+		height: 5em;
+		width: 5em;
+		background-color: #A40E26;
+		text-align: center;
+		color: #fff;
+		padding: 1em;
+		a {
+			color: white;
+		}
+		.fas {
+			font: 900 2.5em/0.9em 'Font Awesome 5 Free';
+			margin: 0;
+		}
+	}
+	section {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+	}
+	#top-listen,
+	#top-watch {
+		text-align: center;
+		width: 33.3333%;
+		button {
+			padding: 0.5em 0;
+			display: block;
+			font: 400 1.25em/1em var(--hpm-font-condensed);
+			width: 100%;
+			background: #404040;
+			color: white;
+			border: 0;
+			border-radius: 0;
+		}
+		.fas {
+			padding-right: 0.25em;
+		}
+	}
+	#top-watch button {
+		background:#00566C;
+	}
+	#top-schedule {
+		width: 33.33333%;
+		position: relative;
+		.top-schedule-link-wrap {
+			position: absolute;
+			top: 100%;
+			display: none;
+			width: 300%;
+			justify-content: center;
+			align-items: center;
+			transition: opacity .2s ease-out;
+			&.top-sched-active {
+				display: flex;
+			}
+		}
+		.top-schedule-links {
+			width: 25%;
+			text-align: center;
+			a {
+				font: 400 0.925em/2em var(--hpm-font-condensed);
+				color: white;
+				display: block;
+				padding: 0.25em;
+				border-left: 1px solid white;
+				background-color: var(--accent-light-blue-1);
+			}
+			&:nth-child(1) a {
+				border-left: 0;
+			}
+		}
+		div.top-schedule-label {
+			width: 100%;
+			display: block;
+			text-align: center;
+			button {
+				color: white;
+				font: 400 1.25em/1em var(--hpm-font-condensed);
+				padding: 0.5em 0;
+				width: 100%;
+				display: block;
+				background-color: var(--accent-light-blue-1);
+				border: 0;
+				border-radius: 0;
+			}
+		}
+		.fas {
+			padding-right: 0.25em;
+		}
+	}
+	#top-search {
+		width: 100%;
+		background-color: rgb(242,243,243);
+		padding: 1.5em;
+		position: relative;
+		.fas {
+			position: absolute;
+			left: 0.25em;
+			color: rgb(81,82,86);
+			font-size: 2.5em;
+		}
+		.search-field {
+			border: 0;
+			outline: 0;
+			background-color: transparent;
+			padding: 0 0 0 1.25em;
+			text-transform: lowercase;
+			font: 400 2em/1em var(--hpm-font-main);
+		}
+	}
+}
+nav#site-navigation {
+	position: fixed;
+	background-color: rgb(255,255,255);
+	height: 100%;
+	z-index: 900;
+	top: 0;
+	left: 100%;
+	border-left: 0.25em solid rgb(153,197,211);
+	overflow-y: scroll;
+	overflow-x: hidden;
+	transition: all .2s ease-out;
+	width: calc(100% - 80px);
+	.nav-top {
+		a, div {
+			font: 700 1.375em/1em var(--hpm-font-main);
+			text-decoration: none;
+			color: var(--accent-black-2);
+			display: block;
+			padding: 0.75em;
+		}
+		&.nav-uh div,
+		&.nav-uh a {
+			color: var(--main-red);
+		}
+		&.nav-uh .nav-back div {
+			color: var(--accent-black-2);
+		}
+		&.nav-kids a {
+			color: #df8d29;
+		}
+		&.nav-passport {
+			a {
+				display: flex;
+				align-items: center;
+				svg {
+					width: 7em;
+				}
+			}
+		}
+		&.nav-donate a {
+			background-color: var(--main-red);
+			color: white;
+		}
+		&:hover {
+			opacity: 0.75;
+			transition: opacity .2s ease-out;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		ul li a {
+			padding: 0.5em 0.25em 0.5em 1em;
+		}
+		&.menu-item-has-children div:after {
+			content: '\f0da';
+			display: block;
+			float: right;
+			-webkit-font-smoothing: antialiased;
+			font: 900 0.75em/1em 'Font Awesome 5 Free';
+			padding-right: 0.5em;
+		}
+		&.menu-item-has-children .nav-back div:after,
+		&.menu-item-has-children div.nav-top-head:after {
+			display: none;
+		}
+		&.menu-item-has-children a {
+			font-weight: 400;
+		}
+	}
+	ul {
+		margin: 0;
+		li {
+			&.nav-active ul {
+				display: block;
+				transform: translate3d(0,0,0);
+				transition: transform .2s ease-out;
+				li ul {
+					left: auto;
+				}
+			}
+			ul {
+				position: absolute;
+				top: 0;
+				display: none;
+				background-color: white;
+				margin: 0;
+				width: 100%;
+				padding: 0;
+				height: 100%;
+				transform: translate3d(100%,0,0);
+				transition: transform .2s ease-out;
+				z-index: 9999;
+				li {
+					&.nav-back div {
+						width: 100%;
+						background-color: rgb(242,243,243);
+						color: var(--accent-black-2);
+						padding: 1em 1em 1em 1.75em;
+						font: 400 1.75em/1em var(--hpm-font-main);
+						position: relative;
+						transition: opacity .2s ease-out;
+						&:before {
+							content: '<';
+							display: inline-block;
+							font: 400 1.75em/0.625em var(--hpm-font-main);
+							position: absolute;
+							left: 0.125em;
+							padding-right: 0.5em;
+							color: var(--accent-black-2);
+						}
+						&:hover {
+							opacity: 0.75;
+							cursor: pointer;
+						}
+					}
+					&.nav-subhead {
+						padding: 0.5em 0 1.5em;
+					}
+					ul {
+						position: initial;
+						left: auto;
+						top: auto;
+					}
+					div.nav-top-head {
+						font: 700 1.25em/1.25em var(--hpm-font-main);
+						text-decoration: none;
+						color: var(--accent-dark-blue-2);
+						display: block;
+						padding: 0 0 0 1em;
+						text-transform: uppercase;
+					}
+				}
+			}
+		}
+	}
+}
+body {
+	#top-mobile-menu {
+		position: absolute;
+		left: calc(100% - 80px);
+		top: 0;
+		height: 5em;
+		width: 5em;
+		background-color: #C8102E;
+		text-align: center;
+		color: #fff;
+		padding: 1em;
+		transition: all .2s ease-out;
+		&:hover {
+			cursor: pointer;
+		}
+		.fas {
+			font: 900 2.5em/0.9em 'Font Awesome 5 Free';
+			margin: 0;
+		}
+	}
+	&.nav-active-menu {
+		position: fixed;
+		#top-mobile-menu {
+			left: 0;
+		}
+		nav#site-navigation {
+			left: 5em;
+		}
+	}
+}
