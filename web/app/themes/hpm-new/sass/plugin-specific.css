@@ -12,3 +12,347 @@
 	color: var(--main-red);
 	text-decoration: none;
 }
+
+#shows-youtube {
+	width: 100%;
+	margin: 1em 0;
+	padding: 1em;
+	overflow: hidden;
+}
+#shows-youtube h3 {
+	font: 400 2.5em/1em var(--hpm-font-condensed);
+	color: rgb(63,24,24);
+	text-transform: uppercase;
+}
+#shows-youtube #youtube-main {
+	width: 100%;
+	margin: 1em 0;
+	padding: 2em;
+	background-color: white;
+}
+#shows-youtube #youtube-upcoming {
+	width: 95%;
+	margin: 1em 2.5%;
+	background-color: white;
+	overflow: hidden;
+}
+#shows-youtube #youtube-upcoming .youtube {
+	width: 100%;
+	border-bottom: 0.125em solid #f5f5f5;
+	padding: 1em;
+	overflow: hidden;
+}
+#shows-youtube #youtube-upcoming .youtube:last-child {
+	border-bottom: 0;
+}
+#shows-youtube #youtube-upcoming .youtube img {
+	display: block;
+	float: left;
+	width: 40%;
+	padding: 0 1em 1em 0;
+}
+#shows-youtube #youtube-upcoming .youtube h2 {
+	font: 100 1.5em/1em var(--hpm-font-main);
+}
+#shows-youtube #youtube-upcoming .youtube p.date {
+	text-transform: uppercase;
+	font: 700 1em/1em var(--hpm-font-main);
+	color: rgb(131,133,133);
+}
+#shows-youtube #youtube-upcoming h4 {
+	text-transform: uppercase;
+	font: 700 1.25em/1em var(--hpm-font-main);
+	color: rgb(131,133,133);
+	padding: 1em 0 0 1em;
+}
+#shows-youtube #youtube-main h2 {
+	font: 400 2.25em/1em var(--hpm-font-condensed);
+	text-transform: uppercase;
+}
+#shows-youtube #youtube-main p {
+	font: 100 1.5em/1.25em var(--hpm-font-main);
+	color: rgb(131,133,133);
+}
+#shows-youtube #youtube-main p.date {
+	text-transform: uppercase;
+	font: 700 1.25em/1em var(--hpm-font-main);
+	color: rgb(131,133,133);
+}
+#shows-youtube #youtube-main #youtube-player {
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	margin: 0 0 1em 0;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	display: flex;
+}
+#shows-youtube #youtube-main #youtube-player:hover {
+	cursor: pointer;
+}
+#shows-youtube #youtube-main #youtube-player .fa,
+#shows-youtube #youtube-main #youtube-player .fab,
+#shows-youtube #youtube-main #youtube-player .fas {
+	color: white;
+	font-size: 4em;
+}
+#yt-nowplay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	display: flex;
+	background-color: rgba(0,0,0,0.75);
+	font: 400 2em/1.75em var(--hpm-font-main);
+	color: white;
+}
+body.single-shows aside h3,
+body.page-template-page-series-tiles aside h3 {
+	padding: 0.75em 1em;
+	border-bottom: 0.125em solid rgb(63,24,24);
+	color: rgb(118,123,126);
+	text-transform: uppercase;
+	font: 400 2em/1em var(--hpm-font-condensed);
+}
+body.single-shows aside .show-content,
+body.page-template-page-series-tiles aside .show-content {
+	padding: 1em 1.25em;
+}
+body.single-shows aside .show-content p,
+body.page-template-page-series-tiles aside .show-content p {
+	color: rgb(76,76,80);
+	font: 400 1.25em/1.25em var(--hpm-font-main);
+	padding-bottom: 1em;
+}
+.column-right div.upcoming-eps {
+	padding: 0.5em;
+	overflow: scroll;
+	height: 25em;
+}
+.column-right div.upcoming-eps div {
+	padding: 0.5em 0;
+	border-bottom: 0.125em solid #ddd;
+	margin: 0.5em 0;
+}
+.column-right div.upcoming-eps div:first-child {
+	padding: 0 0 0.5em;
+	margin: 0 0 0.5em;
+}
+
+
+
+
+#campaign {
+	margin: 1em 0;
+	overflow: hidden;
+	background-color: white;
+}
+.top-banner {
+	padding: 1em;
+	overflow: hidden;
+	width: 100%;
+}
+.top-banner img {
+	width: 100%
+}
+#campaign .campaign-left {
+	width: 100%;
+	padding: 0.5em;
+	text-align: center;
+}
+#campaign .campaign-left img {
+	width: 100%;
+	margin: 0 0 1em 0;
+}
+#campaign .campaign-right {
+	width: 100%;
+	padding: 1em 1.5em;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	display: flex;
+}
+#campaign .campaign-right p {
+	margin-bottom: 1em;
+}
+#campaign-splash,
+#thisiswhy-splash {
+	width: 95%;
+	margin: 1em 2.5%;
+}
+#campaign-splash.lightbox,
+#thisiswhy-splash.lightbox {
+	display: flex;
+	background-color: rgba(0,0,0,0.75);
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 20000;
+	margin: 0;
+	justify-content: center;
+	justify-items: center;
+	align-content: center;
+	align-items: center;
+}
+#campaign-splash.lightbox #splash {
+	z-index: 10001;
+	width: 85%;
+	position: relative;
+}
+#splash,
+#tiw-splash {
+	width: 100%;
+	background-color: white;
+}
+#splash img {
+	width: 100%;
+}
+#tiw-splash {
+	text-align: center;
+}
+#tiw-splash p img {
+	max-width: 100%;
+}
+#campaign-splash #campaign-close,
+#thisiswhy-splash #tiw-close {
+	/* display: none; */
+	position: absolute;
+	top: -0.75em;
+	right: -0.75em;
+	background-color: rgb(224,17,42);
+	z-index: 10002;
+	width: 1.5em;
+	color: white;
+	font: 400 1.5em/1.5em var(--hpm-font-main);
+	height: 1.5em;
+	text-align: center;
+	border-radius: 0.75em;
+}
+#campaign-splash #campaign-close:hover,
+#thisiswhy-splash #tiw-close:hover {
+	opacity: 0.75;
+	cursor: pointer;
+}
+#campaign-splash .campaign-push {
+	padding: 0.5em 1em;
+}
+#campaign-splash .campaign-push p {
+	font: 100 1.125em/1.25em var(--hpm-font-main);
+	margin-bottom: 1em;
+}
+#campaign-splash .campaign-push p strong {
+	font-family: var(--hpm-font-main);
+	font-weight: 500;
+}
+#campaign-splash .campaign-push a {
+	display: block;
+	background-color: rgb(224,17,42);
+	width: 75%;
+	text-align: center;
+	margin: 0 auto 0.5em;
+	color: white;
+	font: 700 1.25em/1em var(--hpm-font-main);
+	text-transform: uppercase;
+	padding: 0.5em;
+}
+#campaign-splash .campaign-total h4 {
+	margin: 0;
+	text-align: center;
+	color: white;
+	font: 500 2.5em/1.125em var(--hpm-font-main);
+}
+#campaign-splash .campaign-total h5 {
+	color: white;
+	text-align: center;
+	font: 100 1em/1em var(--hpm-font-main);
+	margin: 0 0 0.25em 0;
+	text-transform: uppercase;
+}
+#campaign-splash .campaign-total {
+	background: rgb(224,17,42);
+	padding: 0.5em 2em;
+}
+#campaign-splash .campaign-push h3 {
+	font: italic 100 1.25em/1em var(--hpm-font-main);
+	color: black;
+	text-align: center;
+}
+#campaign-splash .campaign-total-bar {
+	width: 100%;
+	height: 3em;
+	background-color: #eee;
+	position: relative;
+}
+#campaign-splash .campaign-total-bar .campaign-total-ticks {
+	height: 3em;
+	width: 20%;
+	position: absolute;
+	border-right: 1px solid black;
+	z-index: 9997;
+	top: 0;
+}
+#campaign-splash .campaign-total-bar .campaign-total-ticks:nth-child(2) {
+	left: 0;
+}
+#campaign-splash .campaign-total-bar .campaign-total-ticks:nth-child(3) {
+	left: 20%;
+}
+#campaign-splash .campaign-total-bar .campaign-total-ticks:nth-child(4) {
+	left: 40%;
+}
+#campaign-splash .campaign-total-bar .campaign-total-ticks:nth-child(5) {
+	left: 60%;
+}
+#campaign-splash .campaign-push h4 {
+	color: black;
+	font: 700 1.5em/1em var(--hpm-font-main);
+	text-align: center;
+	margin-bottom: 0.25em;
+	text-transform: uppercase;
+}
+#campaign-splash .campaign-push h4 span {
+	color: rgb(224,17,42);
+	font-size: 150%;
+}
+#campaign-splash .campaign-total-bar #campaign-percentage-bar {
+	height: 3em;
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	background-color: rgb(224,17,42);
+}
+#campaign-splash .campaign-total-bar #campaign-percentage-display {
+	position: absolute;
+	right: 10px;
+	color: white;
+	font: 500 1.5em/2em var(--hpm-font-main);
+}
+#campaign-splash .campaign-total-bar #campaign-percentage-display.low {
+	right: -40px;
+	color: black;
+}
+#campaign-donate img {
+	max-width: 100%;
+}
+.page .smaller {
+	display: block;
+	text-align: right;
+	font: 100 0.75em/1em var(--hpm-font-main);
+	font-style: italic;
+}
