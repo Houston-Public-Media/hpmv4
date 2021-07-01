@@ -4,7 +4,7 @@ function author_footer( $id ) {
 	$coauthors = get_coauthors( $id );
 	foreach ( $coauthors as $k => $coa ) :
 		$temp = '';
-		$author_trans = get_transient( 'hpm_author_'.$coa->user_nicename );
+		$author_trans = "";//get_transient( 'hpm_author_'.$coa->user_nicename );
 		if ( !empty( $author_trans ) ) :
 			$output .= $author_trans;
 			continue;
@@ -39,15 +39,13 @@ function author_footer( $id ) {
 			$meta = $author->post->hpm_staff_meta;
 		endif;
 		$temp .= "
-	<div class=\"author-inner-wrap\">
-		<div class=\"author-info-wrap\">
-			<div class=\"author-image\">" .
-		         ( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
-		         "</div>
-			<div class=\"author-info\">
-				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
-				<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
-				<div class=\"author-social\">";
+	<div class=\"author-info\">
+		<div class=\"author-image\">" .
+		    ( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
+		"</div>
+		<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
+		<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
+		<div class=\"author-social\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :
 				$temp .= '<div class="social-icon"><a href="'.$meta['facebook'].'" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></div>';
@@ -74,12 +72,11 @@ function author_footer( $id ) {
 			endif;
 		endif;
 		$temp .= "
-				</div>
-				<p>" . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . "</p>
-				<p>" . ( $local ? '<a href="' . get_the_permalink( $author->post->ID ) . '">More Information</a>' : '' ) ."</p>
-			</div>
 		</div>
-		<div class=\"highlights\">";
+		<p>" . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . "</p>
+		<p>" . ( $local ? '<a href="' . get_the_permalink( $author->post->ID ) . '">More Information</a>' : '' ) ."</p>
+	</div>
+	<div class=\"highlights\">";
 		$q = new WP_query([
 			'posts_per_page' => 4,
 			'post_type' => 'post',
@@ -98,7 +95,6 @@ function author_footer( $id ) {
 			<p><a href=\"/articles/author/".$coa->user_nicename."\">More Articles by This Author</a></p>";
 		endif;
 		$temp .= "
-		</div>
 	</div>";
 		set_transient( 'hpm_author_'.$coa->user_nicename, $temp, 7200 );
 		$output .= $temp;

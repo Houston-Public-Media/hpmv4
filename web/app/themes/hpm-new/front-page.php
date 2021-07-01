@@ -32,7 +32,7 @@ $articles = hpm_homepage_articles(); ?>
 			text-transform: uppercase;
 		}
 		#station-schedules .station-now-play h3 {
-			font: 100 1.25em/1.25em var(--hpm-font-main);
+			font: 100 1.25em/1.5em var(--hpm-font-main);
 			padding: 0.25em 0;
 			margin: 0;
 			color: #55565a;
@@ -56,10 +56,15 @@ $articles = hpm_homepage_articles(); ?>
 			margin-bottom: 0.5em;
 		}
 		#in-depth article .entry-header {
-			padding: 1em;
+			padding: 1em 1em 0.5em 1em;
 		}
-		#in-depth article .entry-header p {
+		#in-depth article .entry-summary {
+			padding: 0 1em 1em 1em;
+		}
+		#in-depth article .entry-summary p {
 			margin: 0;
+			font: 500 1.25em/1.25em var(--hpm-font-main);
+			color: #646464;
 		}
 		#in-depth h4 {
 			background-color: var(--main-red);
@@ -87,8 +92,8 @@ $articles = hpm_homepage_articles(); ?>
 	foreach ( $articles as $ka => $va ) :
 		if ( $ka == 4 ) : ?>
 				</div>
-				<div id="top-schedule-wrap" class="column-right">
-					<div id="station-schedules">
+				<aside id="top-schedule-wrap" class="column-right">
+					<section id="station-schedules">
 						<h4>ON AIR</h4>
 						<div class="station-now-play-wrap">
 							<div class="station-now-play">
@@ -122,52 +127,37 @@ $articles = hpm_homepage_articles(); ?>
 								<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"></div>
 							</div>
 						</div>
-					</div>
-					<div id="in-depth">
+					</section>
+					<section id="in-depth">
 						<h4>News 88.7 In-Depth</h4>
 						<?php hpm_priority_indepth(); ?>
-					</div>
+					</section>
 					<?php hpm_top_posts(); ?>
-					<div class="sidebar-ad">
+					<section class="sidebar-ad">
 						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-1">
 							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
 						</div>
-					</div>
-				</div>
+					</section>
+				</aside>
 				<div class="article-cards column-left">
 <?php
 		elseif ( $ka == 12 ) : ?>
 				</div>
-				<div id="npr-side" class="column-right">
-					<div class="highlights">
+				<aside id="npr-side" class="column-right">
+					<section class="highlights">
 						<h4>News from NPR</h4>
 						<?php echo hpm_nprapi_output(); ?>
-					</div>
-					<div class="sidebar-ad">
+					</section>
+					<section class="sidebar-ad">
 						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-2">
 							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
 						</div>
-					</div>
-				</div>
+					</section>
+				</aside>
 				<div class="article-cards column-left">
 <?php
-		endif;
-		$postClass = get_post_class( $va->ID );
-		$alt_headline = get_post_meta( $va->ID, 'hpm_alt_headline', true );
-		if ( $ka == 0 ) :
-			$felix = 'felix-type-a';
-			$thumb = get_the_post_thumbnail_url( $va->ID, 'large' );
-		elseif ( $ka == 1 ) :
-			$felix = 'felix-type-b';
-			$thumb = get_the_post_thumbnail_url( $va->ID, 'thumbnail' );
-		else :
-			$felix = '';
-			$thumb = get_the_post_thumbnail_url( $va->ID, 'thumbnail' );
-		endif;
-		if ( !empty( $felix ) ) :
-			$postClass[] = $felix;
 		endif;
 		$post = $va;
 		get_template_part( 'content', get_post_format() );

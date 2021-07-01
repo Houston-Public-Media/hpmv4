@@ -4,38 +4,19 @@
  * @subpackage HPMv2
  * @since HPMv2 1.0
  */
-global $ka;
-$extra = '';
-$size = 'thumbnail';
-if ( !empty( $ka ) || $ka == 0 ) :
-	if ( $ka == 0 ) :
-		$extra = 'card-large';
-		$size = 'large';
-	elseif ( $ka == 1 ) :
-		$extra = 'card-medium';
-	endif;
-endif; ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
+$pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true );
+?>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<?php
 		if ( has_post_thumbnail() ) : ?>
-	<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url( $size ); ?>)">
-		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
+	<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url( 'thumbnail' ); ?>)">
+		<a class="post-thumbnail" href="<?php echo $pod_link['page']; ?>" aria-hidden="true"></a>
 	</div>
 	<?php endif; ?>
 	<div class="card-content">
 		<header class="entry-header">
 			<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-			<h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php
-				if ( is_front_page() ) :
-					$alt_headline = get_post_meta( get_the_ID(), 'hpm_alt_headline', true );
-					if ( !empty( $alt_headline ) ) :
-						echo $alt_headline;
-					else :
-						the_title();
-					endif;
-				else :
-					the_title();
-				endif; ?></a></h2>
+			<h2 class="entry-title"><a href="<?php echo $pod_link['page']; ?>" rel="bookmark"><?php	the_title(); ?></a></h2>
             <div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
 		</header>
 		<div class="entry-summary">

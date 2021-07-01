@@ -2,79 +2,78 @@
 /*
 Template Name: Main Categories
 */
-if ( !empty( $_GET ) ) :
-	if ( !empty( $_GET['q'] ) ) :
+	if ( !empty( $_GET ) && !empty( $_GET['q'] ) ) :
 		$q = $_GET['q'];
 		if ( preg_match( '/^source/', $q ) || preg_match( '/^by/', $q ) ) :
-			$q_a = str_replace( array('source:','by','+'),array('','',' '),$q );
-			$q_a = sanitize_title($q_a);
-			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: //www.houstonpublicmedia.org/articles/author/'.$q_a);
+			$q_a = str_replace( [ 'source:', 'by', '+' ], [ '', '', ' ' ], $q );
+			$q_a = sanitize_title( $q_a );
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: /articles/author/' . $q_a );
 			exit;
 		elseif ( preg_match( '/^tag/', $q ) ) :
-			$tag = str_replace( array('tag:',' '),array('','-'),$q );
-			$tag = sanitize_title($tag);
-			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: //www.houstonpublicmedia.org/tag/'.$tag);
+			$tag = str_replace( [ 'tag:',' ' ], [ '', '-' ], $q );
+			$tag = sanitize_title( $tag );
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: /tag/' . $tag );
 			exit;
 		elseif ( preg_match( '/^category/', $q ) ) :
-			$tag = str_replace( array('category:',' '),array('','-'),$q );
-			$tag = sanitize_title($tag);
-			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: //www.houstonpublicmedia.org/tag/'.$tag);
+			$tag = str_replace( [ 'category:', ' ' ], [ '', '-' ], $q );
+			$tag = sanitize_title( $tag );
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: /tag/' . $tag );
 			exit;
 		endif;
 	endif;
-endif;
+	get_header();
+	$main_cat = $wp_query->query_vars['pagename'];
+	$main_cat_name = $main_cat;
+	$main_cat_pull = $main_cat;
+	if ( $main_cat == 'education' ) :
+		$main_cat_name .= '-news';
+		$main_cat_pull = 'education-news,education,uh-moment';
+	endif;
 
-get_header(); ?>
-	<style>
-		.news .page-header .page-title {
-			color: rgb(0,98,136);
-			font: 400 2.5em/2em var(--hpm-font-condensed);
-			text-transform: uppercase;
-			margin: 0;
-		}
-		.arts-culture .page-header .page-title {
-			color: rgb(158,199,49);
-			font: 400 2em/1.5em var(--hpm-font-condensed);
-			text-transform: uppercase;
-			margin: 0;
-		}
-		.education .page-header .page-title {
-			color: rgb(239,168,49);
-			font: 400 2em/1.5em var(--hpm-font-condensed);
-			text-transform: uppercase;
-			margin: 0;
-		}
-	</style>
+	$cats = new WP_Query( [
+		'category_name' => $main_cat_pull,
+		'post_type' => 'post',
+		'post_status' => 'publish',
+		'category__not_in' => 0,
+		'ignore_sticky_posts' => 1,
+		'posts_per_page' => 21
+	] );
+	if ( $cats->have_posts() ) :
+		foreach ( $cats->posts as $wpp ) :
+			$articles[] = $wpp;
+		endforeach;
+	endif;
+
+	$pod = new WP_Query( [
+		'post_type' => 'podcasts',
+		'post_status' => 'publish',
+		'tag' => $main_cat
+	]);
+	if ( have_posts() ) : the_post(); ?>
 	<div id="primary" class="content-area">
-<?php
-				$c = 0;
-				$exclude = array();
-				if ( have_posts() ) :
-					the_post();
-					$main_cat = $wp_query->query_vars['pagename']; ?>
-		<main id="main" class="site-main <?php echo $main_cat; ?>" role="main">
-
+		<main id="main" class="site-main" role="main" style="background-color: transparent;">
 			<header class="page-header">
 				<h1 class="page-title"><?php the_title(); ?></h1>
 			</header>
-			<div id="float-wrap">
-			<?php
-				endif;
-				if ( $main_cat == 'education' ) :
-					$main_cat .= '-news';
-				endif; ?>
-			<div id="top-schedule-wrap" class="column-right">
-				<nav id="category-navigation" class="category-navigation" role="navigation">
-					<h4><?php echo str_replace('-news','',$main_cat); ?> Features and Series</h4>
+<?php
+	endif; ?>
+			<div class="article-cards column-left">
+<?php
+	foreach ( $articles as $ka => $va ) :
+		if ( $ka == 3 ) : ?>
+			</div>
+			<aside class="column-right">
+				<nav id="category-navigation" class="category-navigation highlights" role="navigation">
+					<h4><?php echo $main_cat; ?> Features and Series</h4>
 					<?php
-						if ( $main_cat == 'news' ) :
+						if ( $main_cat_name == 'news' ) :
 							$nav_id = 2184;
-						elseif ( $main_cat == 'arts-culture' ) :
+						elseif ( $main_cat_name == 'arts-culture' ) :
 							$nav_id = 2185;
-						elseif ( $main_cat == 'education-news' ) :
+						elseif ( $main_cat_name == 'education-news' ) :
 							$nav_id = 2186;
 						endif;
 						wp_nav_menu( array(
@@ -83,111 +82,45 @@ get_header(); ?>
 						) );
 					?>
 				</nav>
-                <div class="sidebar-ad">
+                <section class="sidebar-ad">
 					<h4>Support Comes From</h4>
                     <div id="div-gpt-ad-1394579228932-1">
                         <script type='text/javascript'>
                             googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
                         </script>
                     </div>
-                </div>
+				</section>
+			<?php if ( $pod->have_posts() ) : ?>
+				<section class="highlights podcasts">
+					<h4><?php echo $main_cat; ?> Podcasts</h4>
 				<?php
-						$pod = new WP_Query( array(
-								'post_type' => 'podcasts',
-								'tag' => str_replace('-news','',$main_cat)
-							)
-						);
-						if ( $pod->have_posts() ) : ?>
-				<div class="podcasts">
-					<h4><?php echo str_replace('-news','',$main_cat); ?> Podcasts</h4>
-						<?php
-							while ( $pod->have_posts() ) :
-								$pod->the_post();
-								$postClass = get_post_class();
-								$postClass = implode( ' ', $postClass );
-								$postClass = str_replace( ' felix-type-d', '', $postClass );
-								$pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true ); ?>
-					<article id="post-<?php the_ID(); ?>" class="<?php echo $postClass; ?>">
-						<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url(); ?>)">
-							<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-						</div>
-						<header class="entry-header">
-							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( $pod_link['page'] ) ), '</a></h2>' ); ?>
-						</header><!-- .entry-header -->
-					</article>
-							<?php
-								endwhile; ?>
-				</div>
-						<?php
-							endif; ?>
-				<div class="sidebar-ad">
+					while ( $pod->have_posts() ) : $pod->the_post();
+						get_template_part( 'content', 'podcasts' );
+					endwhile; ?>
+				</section>
+			<?php
+				endif;
+				wp_reset_query(); ?>
+				<section class="sidebar-ad">
 					<h4>Support Comes From</h4>
 					<div id="div-gpt-ad-1394579228932-2">
 						<script type='text/javascript'>
 							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
 						</script>
 					</div>
-				</div>
+				</section>
+			</aside>
+			<div class="article-cards column-left">
+<?php
+		endif;
+		$post = $va;
+		get_template_part( 'content', get_post_format() );
+	endforeach;
+	wp_reset_query(); ?>
 			</div>
-			<div class="article-wrap">
-			<?php
-				if ( $main_cat == 'education-news' ) :
-					$main_cat_pull = 'education-news,texas-originals,uh-moment';
-				else :
-					$main_cat_pull = $main_cat;
-				endif;
-				$args = array(
-					'category_name' => $main_cat_pull,
-					'post_type' => 'post',
-					'post_status' => 'publish',
-					'category__not_in' => 0,
-					'ignore_sticky_posts' => 1,
-					'posts_per_page' => 20
-				);
-
-				$orig_post = $post;
-				global $post;
-				$q = new WP_Query( $args );
-				while ( $q->have_posts() ) :
-					$q->the_post();
-					if ( !in_array( get_the_ID(), $exclude ) ) :
-						$postClass = get_post_class();
-						$search = 'felix-type-';
-						$felix_type = array_filter($postClass, function($el) use ($search) {
-							return ( strpos($el, $search) !== false );
-						});
-						if ( !empty( $felix_type ) ) :
-							$key = array_keys( $felix_type );
-							$postClass[$key[0]] = 'felix-type-d';
-						else :
-							$postClass[] = 'felix-type-d';
-						endif; ?>
-				<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-					<?php
-						if ( in_array( 'has-post-thumbnail', $postClass ) ) : ?>
-					<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-						<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-					</div>
-					<?php
-						endif;
-					?>
-					<header class="entry-header">
-						<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-						<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-					</header><!-- .entry-header -->
-				</article>
-			<?php
-						$c++;
-					endif;
-				endwhile;
-				$post = $orig_post;
-				wp_reset_query();
-			?>
-				</div>
-			</div><!-- #float-wrap -->
 			<div class="readmore">
 				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
 			</div>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 <?php get_footer(); ?>

@@ -16,4 +16,132 @@
 		color: white;
 	}
 }
-
+h2#foot-banner {
+	width: 100%;
+	border: 0;
+	text-align: center;
+	padding: 1em;
+	color: white;
+	background: rgb(165,17,41);
+	background: linear-gradient(90deg, rgba(165,17,41,1) 0%, rgba(200,16,46,1) 35%, rgba(64,128,145,1) 100%);
+	margin: 0;
+	clear: both;
+	font-size: 150%;
+	line-height: 1.25em;
+	font-family: $hpm-font-main;
+	font-weight: 900;
+	order: 10;
+	a {
+		color: white;
+	}
+	span.donate {
+		background-color: white;
+		color: #434343;
+		padding: 0.5em 1em;
+		border-radius: 5px;
+		display: inline-block;
+	}
+	.fas {
+		color: rgb(200,16,46);
+	}
+}
+@media screen and (min-width: 34em) {
+	h2#foot-banner {
+		padding: 1em 5em;
+	}
+}
+footer#colophon {
+	width: 100%;
+	background-color: #404040;
+	text-align: center;
+	section {
+		max-width: 75em;
+		margin: 0 auto;
+		padding: 0 1em;
+	}
+	.foot-nav {
+		overflow: hidden;
+		padding-bottom: 1em;
+		font-size: 90%;
+	}
+	.foot-hpm {
+		float: left;
+		padding: 1em 0.5em 1em 0;
+		width: 50%;
+		text-align: left;
+	}
+	.foot-comply {
+		float: left;
+		padding: 1em 0 1em 0.5em;
+		width: 50%;
+		text-align: left;
+	}
+	.foot-logo {
+		padding: 1em 0;
+		img {
+			width: 75%;
+			margin: 0 auto;
+			display: block;
+		}
+	}
+	#footer-social {
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		display: flex;
+		margin-bottom: 1em;
+	}
+	p {
+		padding: 0 0 1em;
+		font: 400 0.85em/1.25em $hpm-font-main;
+		margin: 0;
+		color: #fff;
+		 a {
+			font-weight: 700;
+			color: #fff;
+		}
+	}
+	.foot-tag {
+		padding: 1em 2em 0;
+		text-align: center;
+		border-top: 1px solid #fff;
+	}
+	.site-info {
+		padding: 1em 0;
+	}
+	.foot-contact {
+		border-top: 1px solid rgba(255,255,255,0.25);
+		padding-top: 1.5em;
+		p {
+			padding: 0 0 1em;
+			&.foot-button {
+				margin-bottom: 0.5em;
+				font-size: 1em;
+				a {
+					padding: 0.5em;
+					background-color: $main-red;
+					font-size: 1.125em;
+				}
+			}
+		}
+	}
+	h3 {
+		color: white;
+		border-bottom: 1px solid #fff;
+		padding-bottom: 0.5em;
+		margin-bottom: 0.5em;
+	}
+	ul {
+		padding: 0;
+		margin: 0;
+		li {
+			padding: 0.25em 0;
+			color: white;
+			a {
+				color: white;
+				text-decoration: none;
+			}
+		}
+	}
+}

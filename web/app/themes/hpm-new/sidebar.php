@@ -5,7 +5,7 @@
  * @since HPMv2 1.0
  */
 ?>
-<div class="sidebar-ad">
+<section class="sidebar-ad">
 	<h4>Support Comes From</h4>
 <?php
 	if ( $pagename == 'about' ) : ?>
@@ -23,7 +23,7 @@
 	</div>
 <?php
 	endif; ?>
-</div>
+</section>
 <?php
 	global $post;
 	$tags = wp_get_post_tags($post->ID);
@@ -41,7 +41,7 @@
 		);
 		$my_query = new wp_query( $args );
 		if ( $my_query->have_posts() ) : ?>
-			<div class="highlights">
+			<section class="highlights">
 				<h4>Related</h4>
 				<?php
 				while( $my_query->have_posts() ) :
@@ -55,11 +55,11 @@
 	wp_reset_query();
 	hpm_top_posts();
 ?>
-<div class="sidebar-ad">
+<section class="sidebar-ad">
 	<h4>Support Comes From</h4>
 	<div id="div-gpt-ad-1394579228932-2">
 		<script type='text/javascript'>
 			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
 		</script>
 	</div>
-</div>
+</section>

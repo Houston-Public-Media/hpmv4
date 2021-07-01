@@ -95,14 +95,14 @@ get_header(); ?>
 			</article><!-- .error-404 -->
 			<aside class="column-right">
 				<?php hpm_top_posts(); ?>
-				<div class="sidebar-ad">
+				<section class="sidebar-ad">
 					<h4>Support Comes From</h4>
 					<div id="div-gpt-ad-1394579228932-1">
 						<script type='text/javascript'>
 							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
 						</script>
 					</div>
-				</div>
+				</section>
 			</aside>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->

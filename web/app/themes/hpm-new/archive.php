@@ -43,7 +43,7 @@ if ( is_category() ) :
 	endif;
 endif;
 get_header(); ?>
-	<section id="primary" class="content-area">
+	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php if ( have_posts() ) : ?>
 			<header class="page-header">
@@ -52,7 +52,7 @@ get_header(); ?>
 					the_archive_description( '<div class="taxonomy-description">', '</div>' );
 				?>
 			</header>
-			<section class="article-cards card-wide">
+			<div class="article-cards card-wide">
 			<?php
 			while ( have_posts() ) : the_post();
 				get_template_part( 'content', get_post_format() );
@@ -69,10 +69,10 @@ get_header(); ?>
 			get_template_part( 'content', 'none' );
 		endif;
 		?>
-			</section>
+			</div>
 			<aside class="column-right">
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 		</main>
-	</section>
+	</div>
 <?php get_footer(); ?>

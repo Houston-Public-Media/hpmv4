@@ -651,45 +651,7 @@ function hpm_priority_indepth() {
 	$indepth_query = new WP_Query( $indepth );
 	if ( $indepth_query->have_posts() ) :
 		while ( $indepth_query->have_posts() ) : $indepth_query->the_post();
-			$postClass = get_post_class();
-			$search = 'felix-type-';
-			$felix_type = array_filter($postClass, function($el) use ($search) {
-				return ( strpos($el, $search) !== false );
-			});
-			if ( !empty( $felix_type ) ) :
-				$key = array_keys( $felix_type );
-				unset( $postClass[$key[0]] );
-			endif; ?>
-			<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-				<?php
-				if ( has_post_thumbnail() ) : ?>
-					<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-						<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-					</div>
-				<?php
-				endif; ?>
-				<header class="entry-header">
-				<?php
-					the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' );
-					the_excerpt(); ?>
-					<div class="screen-reader-text">
-					<?php
-						coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true );
-						$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-						$time_string = sprintf( $time_string,
-							esc_attr( get_the_date( 'c' ) ),
-							get_the_date( 'F j, Y' )
-						);
-
-						printf( '<span class="posted-on"><span class="screen-reader-text">%1$s </span>%2$s</span>',
-							_x( 'Posted on', 'Used before publish date.', 'hpmv2' ),
-							$time_string
-						); ?>
-					</div>
-				</header>
-			</article>
-<?php
+			get_template_part( 'content', get_post_format() );
 		endwhile;
 	endif;
 	wp_reset_query();
