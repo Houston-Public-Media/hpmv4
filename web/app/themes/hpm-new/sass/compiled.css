@@ -146,89 +146,81 @@ Text Domain: hpmv2
   font-style: italic;
 }
 /* Normalize and Defaults */
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
-  border: 0;
-  font-family: inherit;
-  font-size: 100%;
-  font-style: inherit;
-  font-weight: inherit;
-  margin: 0;
-  outline: 0;
-  padding: 0;
-  vertical-align: baseline;
-}
-
-html {
+/* Box sizing rules */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  font-size: 62.5%;
-  overflow-y: scroll;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  width: 100%;
-  height: 100%;
 }
 
-*, *:before, *:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit;
-}
-
-article, aside, details, figcaption, figure, footer, header, main, nav, section {
-  display: block;
-}
-
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-caption, th, td {
-  font-weight: normal;
-  text-align: left;
-}
-
-blockquote:before, blockquote:after {
-  content: "";
-}
-
-blockquote {
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-  quotes: none;
-}
-
-blockquote {
-  padding: 0.25em 0 0.25em 1.5em;
-  margin: 0 0 1em 0;
-  border-left: 0.125em solid #f5f5f5;
-}
-blockquote * {
-  padding: 0;
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
   margin: 0;
 }
 
-abbr[title] {
-  border-bottom: none;
-  text-decoration: underline;
-  text-decoration: underline dotted;
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role=list],
+ol[role=list] {
+  list-style: none;
 }
 
-b, strong {
-  font-weight: bolder;
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
 }
 
-em, i {
-  font-style: italic;
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
 }
 
-code, kbd, samp, pre {
-  font-family: monospace, monospace;
-  font-size: 1em;
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
 }
 
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+*::before,
+*::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 small {
   font-size: 80%;
 }
@@ -248,24 +240,6 @@ sup {
   top: -0.5em;
 }
 
-img {
-  border-style: none;
-  max-width: 100%;
-  height: auto !important;
-}
-
-a:focus {
-  outline: 2px solid rgba(51, 51, 51, 0.3);
-}
-
-a:hover, a:active {
-  outline: 0;
-}
-
-a img {
-  border: 0;
-}
-
 button {
   transition: opacity 0.2s ease-out;
 }
@@ -276,14 +250,10 @@ button:hover {
 }
 
 body {
-  font: normal 16px/1.25 var(--hpm-font-main) !important;
-  margin: 0;
-  width: 100%;
-  height: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: var(--hpm-font-main);
   background-color: #f5f5f5;
-  -moz-font-feature-settings: "lnum";
-  -webkit-font-feature-settings: "lnum";
-  font-feature-settings: "lnum";
 }
 
 input[type=search] {
@@ -316,10 +286,17 @@ a:hover {
   text-decoration: underline;
 }
 
+a:focus {
+  outline: 2px solid rgba(51, 51, 51, 0.3);
+}
+
+a:hover, a:active {
+  outline: 0;
+}
+
 h1, h2, h3, h4, h5 {
   color: var(--main-black);
   margin-bottom: 1em;
-  line-height: 1.25em;
   font-weight: 500;
 }
 
@@ -352,34 +329,7 @@ h2 a {
 p {
   color: #000000;
   font-weight: 400;
-  line-height: 1.125em;
   font-size: 1em;
-}
-
-ul,
-ol {
-  margin: 0 0 1em 2em;
-  list-style: none;
-}
-
-ol {
-  list-style-type: decimal;
-}
-
-ol[type=a] {
-  list-style-type: lower-alpha;
-}
-
-ol[type=A] {
-  list-style-type: upper-alpha;
-}
-
-ol[type=I] {
-  list-style-type: upper-roman;
-}
-
-ol[type=i] {
-  list-style-type: lower-roman;
 }
 
 @media print {
@@ -542,7 +492,6 @@ a[href^="javascript:"]::after {
   background-repeat: no-repeat;
   background-image: url("https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Reverse.png");
   background-size: contain;
-  font: normal 1em/1em arial;
 }
 #masthead .top-mobile-text {
   font-size: 60%;
@@ -563,7 +512,8 @@ a[href^="javascript:"]::after {
   color: white;
 }
 #masthead #top-donate .fas {
-  font: 900 2.5em/0.9em "Font Awesome 5 Free";
+  font-size: 2.5em;
+  line-height: 0.9em;
   margin: 0;
 }
 #masthead section {
@@ -581,7 +531,8 @@ a[href^="javascript:"]::after {
 #masthead #top-watch button {
   padding: 0.5em 0;
   display: block;
-  font: 400 1.25em/1em var(--hpm-font-condensed);
+  font-size: 1.25em;
+  font-family: var(--hpm-font-condensed);
   width: 100%;
   background: #404040;
   color: white;
@@ -616,7 +567,8 @@ a[href^="javascript:"]::after {
   text-align: center;
 }
 #masthead #top-schedule .top-schedule-links a {
-  font: 400 0.925em/2em var(--hpm-font-condensed);
+  font-size: 0.925em;
+  font-family: var(--hpm-font-condensed);
   color: white;
   display: block;
   padding: 0.25em;
@@ -633,7 +585,8 @@ a[href^="javascript:"]::after {
 }
 #masthead #top-schedule div.top-schedule-label button {
   color: white;
-  font: 400 1.25em/1em var(--hpm-font-condensed);
+  font-size: 1.25em;
+  font-family: var(--hpm-font-condensed);
   padding: 0.5em 0;
   width: 100%;
   display: block;
@@ -662,7 +615,7 @@ a[href^="javascript:"]::after {
   background-color: transparent;
   padding: 0 0 0 1.25em;
   text-transform: lowercase;
-  font: 400 2em/1em var(--hpm-font-main);
+  font-size: 2em;
 }
 
 nav#site-navigation {
@@ -678,8 +631,12 @@ nav#site-navigation {
   transition: all 0.2s ease-out;
   width: calc(100% - 80px);
 }
+nav#site-navigation ul {
+  list-style: none;
+}
 nav#site-navigation .nav-top a, nav#site-navigation .nav-top div {
-  font: 700 1.375em/1em var(--hpm-font-main);
+  font-weight: 700;
+  font-size: 1.375em;
   text-decoration: none;
   color: var(--accent-black-2);
   display: block;
@@ -757,14 +714,15 @@ nav#site-navigation ul li ul li.nav-back div {
   background-color: #f2f3f3;
   color: var(--accent-black-2);
   padding: 1em 1em 1em 1.75em;
-  font: 400 1.75em/1em var(--hpm-font-main);
+  font-size: 1.75em;
   position: relative;
   transition: opacity 0.2s ease-out;
 }
 nav#site-navigation ul li ul li.nav-back div:before {
   content: "<";
   display: inline-block;
-  font: 400 1.75em/0.625em var(--hpm-font-main);
+  font-size: 1.75em;
+  line-height: 0.625em;
   position: absolute;
   left: 0.125em;
   padding-right: 0.5em;
@@ -783,7 +741,8 @@ nav#site-navigation ul li ul li ul {
   top: auto;
 }
 nav#site-navigation ul li ul li div.nav-top-head {
-  font: 700 1.25em/1.25em var(--hpm-font-main);
+  font-weight: 700;
+  font-size: 1.25em;
   text-decoration: none;
   color: var(--accent-dark-blue-2);
   display: block;
@@ -807,7 +766,8 @@ body #top-mobile-menu:hover {
   cursor: pointer;
 }
 body #top-mobile-menu .fas {
-  font: 900 2.5em/0.9em "Font Awesome 5 Free";
+  font-size: 2.5em;
+  line-height: 0.9em;
   margin: 0;
 }
 body.nav-active-menu {
@@ -834,7 +794,7 @@ body.nav-active-menu nav#site-navigation {
 }
 #hm-top p {
   padding: 0.5em;
-  font: 400 1.125em/1.25em var(--hpm-font-main);
+  font-size: 1.125em;
   color: #ecf6fb;
   text-align: center;
 }
@@ -843,12 +803,12 @@ body.nav-active-menu nav#site-navigation {
   display: block;
 }
 #hm-top p strong {
-  font: 700 100%/1em var(--hpm-font-main);
+  font-weight: 700;
 }
 #hm-top p a {
   text-decoration: underline;
   color: #e88d3d;
-  font: 700 100%/1em var(--hpm-font-main);
+  font-weight: 700;
 }
 
 @media screen and (min-width: 52.5em) {
@@ -859,7 +819,7 @@ body.nav-active-menu nav#site-navigation {
 }
 @media screen and (min-width: 64.0625em) {
   #hm-top p {
-    font: 400 1.375em/1.25em var(--hpm-font-main);
+    font-size: 1.375em;
   }
 }
 #footer-social .footer-social-icon a {
@@ -875,7 +835,6 @@ body.nav-active-menu nav#site-navigation {
 }
 #footer-social .footer-social-icon .fab {
   font-size: 1.5em;
-  line-height: 1.25em;
   color: white;
 }
 
@@ -891,7 +850,6 @@ h2#foot-banner {
   clear: both;
   font-size: 150%;
   line-height: 1.25em;
-  font-family: var(--hpm-font-main);
   font-weight: 900;
   order: 10;
 }
@@ -959,7 +917,7 @@ footer#colophon #footer-social {
 }
 footer#colophon p {
   padding: 0 0 1em;
-  font: 400 0.85em/1.25em var(--hpm-font-main);
+  font-size: 0.85em;
   margin: 0;
   color: #fff;
 }
@@ -998,6 +956,7 @@ footer#colophon h3 {
   margin-bottom: 0.5em;
 }
 footer#colophon ul {
+  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -1057,7 +1016,8 @@ footer#colophon ul li a {
 }
 
 .readmore a, .readmore span {
-  font: 700 1.5em/1em var(--hpm-font-main);
+  font-weight: 700;
+  font-size: 1.5em;
   text-transform: uppercase;
   width: 95%;
   display: block;
@@ -1158,7 +1118,9 @@ ul.timeline li:last-child {
 }
 ul.timeline li:before {
   content: "";
-  font: 900 1em/1em "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+  font-family: "Font Awesome 5 Free";
   position: absolute;
   left: -0.45em;
   top: -0.0625em;
@@ -1170,7 +1132,8 @@ ul.timeline li:hover:before {
   transition: background-color 0.5s;
 }
 ul.timeline li .timeline-date {
-  font: 700 1.25em/1em var(--hpm-font-main);
+  font-weight: 700;
+  font-size: 1.25em;
 }
 
 span.edit-link {
@@ -1193,7 +1156,9 @@ span.edit-link {
   content: "";
   display: inline-block;
   -webkit-font-smoothing: antialiased;
-  font: 900 1em/1 "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+  font-family: "Font Awesome 5 Free";
   margin-left: 0.375em;
   color: #00aaeb;
 }
@@ -1310,7 +1275,6 @@ article header.entry-header h1 {
   margin: 0 0 0.375em 0;
   font-family: var(--hpm-font-condensed);
   font-weight: 100;
-  font-size: 2.5em;
   color: var(--main-black);
 }
 article header.entry-header h2 {
@@ -1322,12 +1286,14 @@ article header.entry-header h2 a {
   font-weight: 100;
 }
 article header.entry-header p {
-  font: 500 1.25em/1.25em var(--hpm-font-main);
+  font-weight: 500;
+  font-size: 1.25em;
   color: #646464;
   margin-bottom: 0.75em;
 }
 article header.entry-header .byline-date {
-  font: 400 1em/1.25em var(--hpm-font-main);
+  font-weight: 400;
+  font-size: 1em;
   padding: 0.25em 0;
   text-transform: uppercase;
   color: #646464;
@@ -1339,7 +1305,6 @@ article header.entry-header .byline-date .byline {
   padding-right: 0.125em;
 }
 article header.entry-header .byline-date a {
-  font-family: var(--hpm-font-main);
   font-weight: 500;
 }
 article header.entry-header .byline-date address {
@@ -1351,12 +1316,16 @@ article blockquote.pullquote {
 }
 article blockquote.pullquote p {
   color: #757575;
-  font: 400 1.5em/1.5em var(--hpm-font-condensed);
+  font-weight: 400;
+  font-size: 1.5em;
+  font-family: var(--hpm-font-condensed);
   margin: 0 0 1em 0;
   padding: 0;
 }
 article blockquote.pullquote p a {
-  font: italic 700 1em/1em var(--hpm-font-main);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1em;
 }
 article .entry-content img {
   margin: 0;
@@ -1367,18 +1336,21 @@ article .entry-content #map-canvas img {
 }
 article .entry-content .post-thumbnail p {
   padding: 0.75em 0;
-  font: italic 0.925em/1.25em var(--hpm-font-main);
+  font-style: italic;
+  font-size: 0.925em;
   margin: 0 0 1em;
   text-align: center;
 }
 article .entry-content .caption {
   background-color: #eeeeee;
   padding: 0.75em;
-  font: italic 0.925em/1.25em var(--hpm-font-main);
+  font-style: italic;
+  font-size: 0.925em;
   text-align: center;
 }
 article .entry-content p {
-  font: 400 1em/1.5em var(--hpm-font-main);
+  font-weight: 400;
+  font-size: 1em;
   padding: 0.5em 0;
 }
 article .entry-content p a {
@@ -1387,7 +1359,8 @@ article .entry-content p a {
 article .entry-content h2 {
   margin-bottom: 0;
   padding: 0.5em 0;
-  font: 500 1.5em/1.25em var(--hpm-font-main);
+  font-weight: 500;
+  font-size: 1.5em;
 }
 article .entry-content h2 a {
   font-weight: 100;
@@ -1404,18 +1377,21 @@ article div.post-thumbnail img {
   max-width: 100%;
 }
 article .entry-summary p {
-  font: 500 1.125em/1em var(--hpm-font-main);
+  font-weight: 500;
+  font-size: 1.125em;
   color: #8e9090;
 }
 article .entry-summary .posted-on {
   color: #bbbcbd;
-  font: 700 1em/1em var(--hpm-font-main);
+  font-weight: 700;
+  font-size: 1em;
 }
 article .entry-summary .fas, article .entry-summary .fa {
   color: #bbbcbd;
 }
 article .entry-footer .tags-links a {
-  font: 100 1em/1.25em var(--hpm-font-main);
+  font-weight: 100;
+  font-size: 1em;
   padding: 0.625em;
   background-color: #f4f4f4;
   text-transform: capitalize;
@@ -1437,9 +1413,6 @@ article .card-content h3 {
   padding: 1em;
 }
 
-.entry-content ul {
-  list-style: disc outside none;
-}
 .entry-content li {
   clear: both;
   margin: 0.5em 0;
@@ -1469,11 +1442,7 @@ article .card-content h3 {
 }
 #article-share .article-share-icon .fab, #article-share .article-share-icon .fas {
   font-size: 3.25em;
-  line-height: 1.25em;
   color: white;
-}
-#article-share .article-share-icon .fa-envelope {
-  line-height: 1.125em;
 }
 
 figure.wp-caption {
@@ -1484,7 +1453,8 @@ figure.wp-caption {
   clear: both;
 }
 figure.wp-caption figcaption.wp-caption-text {
-  font: normal 0.75em/1.125em var(--hpm-font-main);
+  font-weight: 400;
+  font-size: 0.75em;
   color: #404144;
 }
 figure img, figure iframe {
@@ -1539,7 +1509,8 @@ nav.pagination .nav-links {
   margin: 1em auto;
 }
 nav.pagination .page-numbers {
-  font: 400 2em/1em var(--hpm-font-main);
+  font-weight: 400;
+  font-size: 2em;
   text-transform: uppercase;
   padding: 0 0.125em;
 }
@@ -1554,7 +1525,7 @@ nav.pagination a.page-numbers.next {
   padding: 0.5em;
   border: 0.125em solid red;
   background-color: white;
-  font: 400 1.5em/1em var(--hpm-font-main);
+  font-size: 1.5em;
 }
 
 .page-header {
@@ -1581,7 +1552,6 @@ nav.pagination a.page-numbers.next {
   padding: 1em;
 }
 .article-cards article .entry-header h2 {
-  font-family: var(--hpm-font-main);
   font-size: 1.5em;
 }
 .article-cards article .entry-footer {
@@ -1596,11 +1566,11 @@ nav.pagination a.page-numbers.next {
   padding: 0.3125em;
   text-transform: uppercase;
   color: white;
-  font-family: var(--hpm-font-main);
   font-weight: 700;
   margin: 0;
 }
 .highlights ul {
+  list-style: none;
   margin: 0;
   padding: 1em 0;
 }
@@ -1610,7 +1580,6 @@ nav.pagination a.page-numbers.next {
 }
 .highlights h2 a {
   font-weight: 100;
-  font-family: var(--hpm-font-main);
 }
 .highlights article {
   display: flex;
@@ -1647,7 +1616,8 @@ nav.pagination a.page-numbers.next {
 }
 .highlights ul.nav-menu li a {
   color: #838585;
-  font: 500 1.25em/1.25em var(--hpm-font-main);
+  font-weight: 500;
+  font-size: 1.25em;
 }
 
 .post-type-archive-podcasts .articles-list-wide article .thumbnail-wrap {
@@ -1668,7 +1638,7 @@ nav.pagination a.page-numbers.next {
   margin-bottom: 0.25em;
 }
 #author-wrap .author-info p {
-  font: normal 1.125em/1.25em var(--hpm-font-main);
+  font-size: 1.125em;
   padding: 0.5em 0;
 }
 #author-wrap .author-info .author-image {
@@ -1693,7 +1663,6 @@ nav.pagination a.page-numbers.next {
 }
 #author-wrap .author-info .author-social .social-icon .fab, #author-wrap .author-info .author-social .social-icon .fas {
   font-size: 2.5em;
-  line-height: 1.25em;
   color: #00b0bc;
 }
 
@@ -1786,7 +1755,8 @@ nav.pagination a.page-numbers.next {
   box-sizing: border-box;
   display: block;
   overflow: hidden;
-  font: italic 0.75em/1.125em var(--hpm-font-main);
+  font-style: italic;
+  font-size: 0.75em;
   color: #404144;
   max-width: 100% !important;
 }
@@ -1857,7 +1827,7 @@ nav.pagination a.page-numbers.next {
 :root {
   --plyr-control-icon-size: 1.5em;
   --plyr-control-spacing: 0.625em;
-  --plyr-audio-control-color: $main-red;
+  --plyr-audio-control-color: var(--main-red);
   --plyr-audio-controls-background: #eee;
 }
 
@@ -1906,7 +1876,8 @@ nav.pagination a.page-numbers.next {
   position: relative;
 }
 .plyr-audio-embed-popup p {
-  font: 100 0.875em/1em var(--hpm-font-main);
+  font-weight: 100;
+  font-size: 0.875em;
   padding-top: 0;
 }
 .plyr-audio-embed-popup .plyr-audio-embed-code {

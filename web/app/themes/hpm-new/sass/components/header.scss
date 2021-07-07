@@ -5,7 +5,7 @@
 		content: '';
 	}
 	.site-branding {
-		background-color: $main-red;
+		background-color: var(--main-red);
 		.site-logo {
 			padding: 0.375em 0 0.375em 0;
 			width: 9.75em;
@@ -19,7 +19,6 @@
 				background-repeat: no-repeat;
 				background-image: url('https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Reverse.png');
 				background-size: contain;
-				font: normal 1em/1em arial;
 			}
 		}
 	}
@@ -41,7 +40,8 @@
 			color: white;
 		}
 		.fas {
-			font: 900 2.5em/0.9em 'Font Awesome 5 Free';
+			font-size: 2.5em;
+			line-height: 0.9em;
 			margin: 0;
 		}
 	}
@@ -58,7 +58,8 @@
 		button {
 			padding: 0.5em 0;
 			display: block;
-			font: 400 1.25em/1em $hpm-font-condensed;
+			font-size: 1.25em;
+			font-family: var(--hpm-font-condensed);
 			width: 100%;
 			background: #404040;
 			color: white;
@@ -91,12 +92,13 @@
 			width: 25%;
 			text-align: center;
 			a {
-				font: 400 0.925em/2em $hpm-font-condensed;
+				font-size: 0.925em;
+				font-family: var(--hpm-font-condensed);
 				color: white;
 				display: block;
 				padding: 0.25em;
 				border-left: 1px solid white;
-				background-color: $accent-light-blue-1;
+				background-color: var(--accent-light-blue-1);
 			}
 			&:nth-child(1) a {
 				border-left: 0;
@@ -108,11 +110,12 @@
 			text-align: center;
 			button {
 				color: white;
-				font: 400 1.25em/1em $hpm-font-condensed;
+				font-size: 1.25em;
+				font-family: var(--hpm-font-condensed);
 				padding: 0.5em 0;
 				width: 100%;
 				display: block;
-				background-color: $accent-light-blue-1;
+				background-color: var(--accent-light-blue-1);
 				border: 0;
 				border-radius: 0;
 			}
@@ -138,7 +141,7 @@
 			background-color: transparent;
 			padding: 0 0 0 1.25em;
 			text-transform: lowercase;
-			font: 400 2em/1em $hpm-font-main;
+			font-size: 2em;
 		}
 	}
 }
@@ -154,20 +157,24 @@ nav#site-navigation {
 	overflow-x: hidden;
 	transition: all .2s ease-out;
 	width: calc(100% - 80px);
+	ul {
+		list-style: none;
+	}
 	.nav-top {
 		a, div {
-			font: 700 1.375em/1em $hpm-font-main;
+			font-weight: 700;
+			font-size: 1.375em;
 			text-decoration: none;
-			color: $accent-black-2;
+			color: var(--accent-black-2);
 			display: block;
 			padding: 0.75em;
 		}
 		&.nav-uh div,
 		&.nav-uh a {
-			color: $main-red;
+			color: var(--main-red);
 		}
 		&.nav-uh .nav-back div {
-			color: $accent-black-2;
+			color: var(--accent-black-2);
 		}
 		&.nav-kids a {
 			color: #df8d29;
@@ -182,7 +189,7 @@ nav#site-navigation {
 			}
 		}
 		&.nav-donate a {
-			background-color: $main-red;
+			background-color: var(--main-red);
 			color: white;
 		}
 		&:hover {
@@ -237,19 +244,20 @@ nav#site-navigation {
 					&.nav-back div {
 						width: 100%;
 						background-color: rgb(242,243,243);
-						color: $accent-black-2;
+						color: var(--accent-black-2);
 						padding: 1em 1em 1em 1.75em;
-						font: 400 1.75em/1em $hpm-font-main;
+						font-size: 1.75em;
 						position: relative;
 						transition: opacity .2s ease-out;
 						&:before {
 							content: '<';
 							display: inline-block;
-							font: 400 1.75em/0.625em $hpm-font-main;
+							font-size: 1.75em;
+							line-height: 0.625em;
 							position: absolute;
 							left: 0.125em;
 							padding-right: 0.5em;
-							color: $accent-black-2;
+							color: var(--accent-black-2);
 						}
 						&:hover {
 							opacity: 0.75;
@@ -265,9 +273,10 @@ nav#site-navigation {
 						top: auto;
 					}
 					div.nav-top-head {
-						font: 700 1.25em/1.25em $hpm-font-main;
+						font-weight: 700;
+						font-size: 1.25em;
 						text-decoration: none;
-						color: $accent-dark-blue-2;
+						color: var(--accent-dark-blue-2);
 						display: block;
 						padding: 0 0 0 1em;
 						text-transform: uppercase;
@@ -293,7 +302,8 @@ body {
 			cursor: pointer;
 		}
 		.fas {
-			font: 900 2.5em/0.9em 'Font Awesome 5 Free';
+			font-size: 2.5em;
+			line-height: 0.9em;
 			margin: 0;
 		}
 	}
@@ -314,13 +324,13 @@ body {
 		p {
 			color: rgb(47,47,47);
 			a {
-				color: $main-red;
+				color: var(--main-red);
 			}
 		}
 	}
 	p {
 		padding: 0.5em;
-		font: 400 1.125em/1.25em $hpm-font-main;
+		font-size: 1.125em;
 		color: rgb(236,246,251);
 		text-align: center;
 		span::after {
@@ -328,12 +338,12 @@ body {
 			display: block;
 		}
 		strong {
-			font: 700 100%/1em $hpm-font-main;
+			font-weight: 700;
 		}
 		a {
 			text-decoration: underline;
 			color: rgb(232,141,61);
-			font: 700 100%/1em $hpm-font-main;
+			font-weight: 700;
 		}
 	}
 }
@@ -345,6 +355,6 @@ body {
 }
 @media screen and (min-width: 64.0625em) {
 	#hm-top p {
-		font: 400 1.375em/1.25em $hpm-font-main;
+		font-size: 1.375em;
 	}
 }

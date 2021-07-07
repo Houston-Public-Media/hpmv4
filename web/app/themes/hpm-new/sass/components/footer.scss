@@ -12,7 +12,6 @@
 	}
 	.fab {
 		font-size: 1.5em;
-		line-height: 1.25em;
 		color: white;
 	}
 }
@@ -28,7 +27,6 @@ h2#foot-banner {
 	clear: both;
 	font-size: 150%;
 	line-height: 1.25em;
-	font-family: $hpm-font-main;
 	font-weight: 900;
 	order: 10;
 	a {
@@ -94,7 +92,7 @@ footer#colophon {
 	}
 	p {
 		padding: 0 0 1em;
-		font: 400 0.85em/1.25em $hpm-font-main;
+		font-size: 0.85em;
 		margin: 0;
 		color: #fff;
 		 a {
@@ -120,7 +118,7 @@ footer#colophon {
 				font-size: 1em;
 				a {
 					padding: 0.5em;
-					background-color: $main-red;
+					background-color: var(--main-red);
 					font-size: 1.125em;
 				}
 			}
@@ -133,6 +131,7 @@ footer#colophon {
 		margin-bottom: 0.5em;
 	}
 	ul {
+		list-style: none;
 		padding: 0;
 		margin: 0;
 		li {

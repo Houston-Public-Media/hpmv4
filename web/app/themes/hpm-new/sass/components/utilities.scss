@@ -2,6 +2,9 @@
 [hidden] {
 	display: none !important;
 }
+:last-child {
+	margin-bottom: 0;
+}
 %screen-reader {
 	border: 0;
 	clip: rect(0, 0, 0, 0);
@@ -42,7 +45,8 @@
 	clear: both;
 }
 .readmore a, .readmore span {
-	font: 700 1.5em/1em $hpm-font-main;
+	font-weight: 700;
+	font-size: 1.5em;
 	text-transform: uppercase;
 	width: 95%;
 	display: block;
@@ -130,7 +134,9 @@ ul.timeline {
 		}
 		&:before {
 			content: '\f111';
-			font: 900 1em/1em 'Font Awesome 5 Free';
+			font-weight: 900;
+			font-size: 1em;
+			font-family: 'Font Awesome 5 Free';
 			position: absolute;
 			left: -0.45em;
 			top: -0.0625em;
@@ -142,7 +148,8 @@ ul.timeline {
 			transition: background-color 0.5s;
 		}
 		.timeline-date {
-			font: 700 1.25em/1em $hpm-font-main;
+			font-weight: 700;
+			font-size: 1.25em;
 		}
 	}
 }
@@ -164,7 +171,9 @@ span.edit-link {
 		content: '\f0da';
 		display: inline-block;
 		-webkit-font-smoothing: antialiased;
-		font: 900 1em/1 'Font Awesome 5 Free';
+		font-weight: 900;
+		font-size: 1em;
+		font-family: 'Font Awesome 5 Free';
 		margin-left: 0.375em;
 		color: rgb(0,170,235);
 	}
@@ -224,7 +233,7 @@ span.edit-link {
 #options {
 	text-align: right;
 	#expand, #collapse {
-		color: $main-red;
+		color: var(--main-red);
 		&:hover {
 			cursor: pointer;
 			color: #950000;

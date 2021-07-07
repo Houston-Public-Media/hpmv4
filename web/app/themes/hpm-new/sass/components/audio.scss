@@ -1,7 +1,7 @@
 :root {
 	--plyr-control-icon-size: 1.5em;
 	--plyr-control-spacing: 0.625em;
-	--plyr-audio-control-color: $main-red;
+	--plyr-audio-control-color: var(--main-red);
 	--plyr-audio-controls-background: #eee;
 }
 .plyr-audio-embed {
@@ -11,7 +11,7 @@
 	top: 1em;
 	background-color: white;
 	padding: 0.25em;
-	color: $main-red;
+	color: var(--main-red);
 	.fas {
 		font-weight: bolder;
 		font-size: 16px;
@@ -46,7 +46,8 @@
 		position: relative;
 	}
 	p {
-		font: 100 0.875em/1em $hpm-font-main;
+		font-weight: 100;
+		font-size: 0.875em;
 		padding-top: 0;
 	}
 	.plyr-audio-embed-code {
@@ -59,7 +60,7 @@
 		position: absolute;
 		top: -17px;
 		right: -17px;
-		background-color: $main-red;
+		background-color: var(--main-red);
 		text-align: center;
 		font-size: 18px;
 		width: 25px;

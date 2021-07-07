@@ -23,26 +23,27 @@ article {
 			padding: 1em 0;
 			h1 {
 				margin: 0 0 0.375em 0;
-				font-family: $hpm-font-condensed;
+				font-family: var(--hpm-font-condensed);
 				font-weight: 100;
-				font-size: 2.5em;
-				color: $main-black;
+				color: var(--main-black);
 			}
 			h2 {
 				margin-bottom: 0;
-				font-family: $hpm-font-condensed;
+				font-family: var(--hpm-font-condensed);
 				font-weight: 100;
 				a {
 					font-weight: 100;
 				}
 			}
 			p {
-				font: 500 1.25em/1.25em $hpm-font-main;
+				font-weight: 500;
+				font-size: 1.25em;
 				color: #646464;
 				margin-bottom: 0.75em;
 			}
 			.byline-date {
-				font: 400 1em/1.25em $hpm-font-main;
+				font-weight: 400;
+				font-size: 1em;
 				padding: 0.25em 0;
 				text-transform: uppercase;
 				color: #646464;
@@ -53,7 +54,6 @@ article {
 					padding-right: 0.125em;
 				}
 				a {
-					font-family: $hpm-font-main;
 					font-weight: 500;
 				}
 				address {
@@ -68,11 +68,15 @@ article {
 		margin: 2.5em;
 		p {
 			color: #757575;
-			font: 400 1.5em/1.5em $hpm-font-condensed;
+			font-weight: 400;
+			font-size: 1.5em;
+			font-family: var(--hpm-font-condensed);
 			margin: 0 0 1em 0;
 			padding: 0;
 			a {
-				font: italic 700 1em/1em $hpm-font-main;
+				font-style: italic;
+				font-weight: 700;
+				font-size: 1em;
 			}
 		}
 	}
@@ -86,18 +90,21 @@ article {
 		}
 		.post-thumbnail p {
 			padding: 0.75em 0;
-			font: italic 0.925em/1.25em $hpm-font-main;
+			font-style: italic;
+			font-size: 0.925em;
 			margin: 0 0 1em;
 			text-align: center;
 		}
 		.caption {
 			background-color: #eeeeee;
 			padding: 0.75em;
-			font: italic 0.925em/1.25em $hpm-font-main;
+			font-style: italic;
+			font-size: 0.925em;
 			text-align: center;
 		}
 		p {
-			font: 400 1em/1.5em $hpm-font-main;
+			font-weight: 400;
+			font-size: 1em;
 			padding: 0.5em 0;
 			a {
 				text-decoration: underline;
@@ -106,7 +113,8 @@ article {
 		h2 {
 			margin-bottom: 0;
 			padding: 0.5em 0;
-			font: 500 1.5em/1.25em $hpm-font-main;
+			font-weight: 500;
+			font-size: 1.5em;
 			a {
 				font-weight: 100;
 				font-size: 1.25em;
@@ -125,19 +133,22 @@ article {
 	}
 	.entry-summary {
 		p {
-			font: 500 1.125em/1em $hpm-font-main;
+			font-weight: 500;
+			font-size: 1.125em;
 			color: rgb(142,144,144);
 		}
 		.posted-on {
 			color: rgb(187,188,189);
-			font: 700 1em/1em $hpm-font-main;
+			font-weight: 700;
+			font-size: 1em;
 		}
 		.fas, .fa {
 			color: rgb(187,188,189);
 		}
 	}
 	.entry-footer .tags-links a {
-		font: 100 1em/1.25em $hpm-font-main;
+		font-weight: 100;
+		font-size: 1em;
 		padding: 0.625em;
 		background-color: rgb(244,244,244);
 		text-transform: capitalize;
@@ -158,9 +169,6 @@ article {
 	padding: 1em;
 }
 .entry-content {
-	ul {
-		list-style: disc outside none;
-	}
 	li {
 		clear: both;
 		margin: 0.5em 0;
@@ -188,11 +196,7 @@ article {
 		}
 		.fab, .fas {
 			font-size: 3.25em;
-			line-height: 1.25em;
 			color: white;
-		}
-		.fa-envelope {
-			line-height: 1.125em;
 		}
 	}
 }
@@ -204,7 +208,8 @@ figure {
 		max-width: 100%;
 		clear: both;
 		figcaption.wp-caption-text {
-			font: normal 0.75em/1.125em $hpm-font-main;
+			font-weight: 400;
+			font-size: 0.75em;
 			color: #404144;
 		}
 	}
@@ -256,7 +261,8 @@ nav.pagination {
 		margin: 1em auto;
 	}
 	.page-numbers {
-		font: 400 2em/1em $hpm-font-main;
+		font-weight: 400;
+		font-size: 2em;
 		text-transform: uppercase;
 		padding: 0 0.125em;
 	}
@@ -271,7 +277,7 @@ nav.pagination {
 	padding: 0.5em;
 	border: 0.125em solid red;
 	background-color: white;
-	font: 400 1.5em/1em $hpm-font-main;
+	font-size: 1.5em;
 }
 .page-header {
 	background-color: white;
@@ -293,7 +299,6 @@ nav.pagination {
 		.entry-header {
 			padding: 1em;
 			h2 {
-				font-family: $hpm-font-main;
 				font-size: 1.5em;
 			}
 		}
@@ -308,16 +313,16 @@ nav.pagination {
 .highlights {
 	margin-bottom: 1em;
 	h4 {
-		background-color: $main-red;
+		background-color: var(--main-red);
 		display: inline-block;
 		padding: 0.3125em;
 		text-transform: uppercase;
 		color: white;
-		font-family: $hpm-font-main;
 		font-weight: 700;
 		margin: 0;
 	}
 	ul {
+		list-style: none;
 		margin: 0;
 		padding: 1em 0;
 	}
@@ -326,7 +331,6 @@ nav.pagination {
 		font-size: 1.25em;
 		a {
 			font-weight: 100;
-			font-family: $hpm-font-main;
 		}
 	}
 	article {
@@ -369,7 +373,8 @@ nav.pagination {
 			padding: 0.5em 0;
 			a {
 				color: rgb(131,133,133);
-				font: 500 1.25em/1.25em $hpm-font-main;
+				font-weight: 500;
+				font-size: 1.25em;
 			}
 		}
 	}
@@ -389,7 +394,7 @@ nav.pagination {
 			margin-bottom: 0.25em;
 		}
 		p {
-			font: normal 1.125em/1.25em $hpm-font-main;
+			font-size: 1.125em;
 			padding: 0.5em 0;
 		}
 		.author-image {
@@ -414,7 +419,6 @@ nav.pagination {
 				}
 				.fab, .fas {
 					font-size: 2.5em;
-					line-height: 1.25em;
 					color: #00b0bc;
 				}
 			}
@@ -445,7 +449,7 @@ nav.pagination {
 	font-size: 90%;
 	h2 {
 		padding: 0;
-		color: $main-red;
+		color: var(--main-red);
 	}
 	.revue-small {
 		display: inline-block;
@@ -470,7 +474,7 @@ nav.pagination {
 			&[type="submit"] {
 				border: 0;
 				outline: 0;
-				background-color: $main-red;
+				background-color: var(--main-red);
 				color: white;
 				font-weight: bolder;
 				font-size: 125%;
@@ -509,7 +513,8 @@ nav.pagination {
 		box-sizing: border-box;
 		display: block;
 		overflow: hidden;
-		font: italic 0.75em/1.125em $hpm-font-main;
+		font-style: italic;
+		font-size: 0.75em;
 		color: #404144;
 		max-width: 100% !important;
 		p {
