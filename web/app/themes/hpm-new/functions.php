@@ -66,7 +66,7 @@ function hpm_scripts() {
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
-		wp_enqueue_style( 'hpm-style', get_template_directory_uri().'/sass/compiled.css', [], date('Y-m-d-H') );
+		wp_enqueue_style( 'hpm-style', get_template_directory_uri().'/sass/compiled.css', [], time() );
 		wp_enqueue_script( 'hpm-js', get_template_directory_uri().'/js/main'.HPM_TEST.'.js', [], date('Y-m-d-H'), true );
 	else :
 		wp_enqueue_style( 'hpm-style', 'https://cdn.hpm.io/assets/css/style.css', [], $versions['css'] );
@@ -160,7 +160,7 @@ class HPMv2_Menu_Walker extends Walker_Nav_Menu {
 			// elseif ( $depth > 0 && in_array('nav-back', $classes ) ) :
 			// 	$item_output .= '<div>';
 			else :
-				$item_output .= '<div>';
+				$item_output .= '<button>';
 			endif;
 		else :
 			$item_output .= '<a'. $attributes .'>';
@@ -171,7 +171,7 @@ class HPMv2_Menu_Walker extends Walker_Nav_Menu {
 			$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
 		endif;
 		if ( $item->url == '#' ) :
-			$item_output .= '</div>';
+			$item_output .= '</button>';
 		else :
 			$item_output .= '</a>';
 		endif;
@@ -578,10 +578,10 @@ function hpm_footer_ads() {
 			echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '<h2 id=\"foot-banner\">These services are brought to you by our community of donors, foundations, and partners.</h2>');</script>";
 		endif;
 	elseif ( $type === 'post' ) :
-		echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '<h2 id=\"foot-banner\"><a href=\"/donate\">Stories like this are made possible by the generosity of our community of donors, foundations and corporate partners. If you value our reporting, join others and make a gift to Houston Public Media.<br /><br /><span class=\"donate\"><span class=\"fas fa-heart\"></span> DONATE</span></h2>');</script>";
+		echo "<script>document.getElementById('main').insertAdjacentHTML('beforeend', '');</script>";
 	endif;
 }
-add_action( 'wp_footer', 'hpm_footer_ads', 100 );
+//add_action( 'wp_footer', 'hpm_footer_ads', 100 );
 
 function skip_apple_news( $post_id, $post ) {
 	if ( WP_ENV !== 'production' ) :
@@ -672,27 +672,27 @@ function hpm_article_share($nprdata = null) {
 		$linkedin_link = rawurlencode( $nprdata['permalink'].'?utm_source=linked-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
 		$uri_excerpt = rawurlencode( $nprdata['excerpt'] );
 	endif; ?>
-	<div id="article-share">
+	<div id="article-share" class="social-wrap">
 		<h4>Share</h4>
-		<div class="article-share-icon">
+		<div class="social-icon facebook">
 			<button data-href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" data-dialog="400:368">
 				<span class="fab fa-facebook-f" aria-hidden="true"></span>
 			</button>
 		</div>
-		<div class="article-share-icon">
+		<div class="social-icon twitter">
 			<button data-href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
 				<span class="fab fa-twitter" aria-hidden="true"></span>
 			</button>
 		</div>
-		<div class="article-share-icon">
-			<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
-				<span class="fas fa-envelope" aria-hidden="true"></span>
-			</a>
-		</div>
-		<div class="article-share-icon">
+		<div class="social-icon linkedin">
 			<button data-href="https://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
 				<span class="fab fa-linkedin-in" aria-hidden="true"></span>
 			</button>
+		</div>
+		<div class="social-icon">
+			<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
+				<span class="fas fa-envelope" aria-hidden="true"></span>
+			</a>
 		</div>
 	</div><?php
 }

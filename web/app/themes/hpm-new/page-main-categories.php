@@ -39,7 +39,7 @@ Template Name: Main Categories
 		'post_status' => 'publish',
 		'category__not_in' => 0,
 		'ignore_sticky_posts' => 1,
-		'posts_per_page' => 21
+		'posts_per_page' => 20
 	] );
 	if ( $cats->have_posts() ) :
 		foreach ( $cats->posts as $wpp ) :
@@ -60,11 +60,9 @@ Template Name: Main Categories
 			</header>
 <?php
 	endif; ?>
-			<div class="article-cards column-left">
 <?php
 	foreach ( $articles as $ka => $va ) :
 		if ( $ka == 3 ) : ?>
-			</div>
 			<aside class="column-right">
 				<nav id="category-navigation" class="category-navigation highlights" role="navigation">
 					<h4><?php echo $main_cat; ?> Features and Series</h4>
@@ -110,14 +108,12 @@ Template Name: Main Categories
 					</div>
 				</section>
 			</aside>
-			<div class="article-cards column-left">
 <?php
 		endif;
 		$post = $va;
 		get_template_part( 'content', get_post_format() );
 	endforeach;
 	wp_reset_query(); ?>
-			</div>
 			<div class="readmore">
 				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
 			</div>

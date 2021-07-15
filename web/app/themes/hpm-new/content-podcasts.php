@@ -7,15 +7,11 @@
 $pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true );
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php
-		if ( has_post_thumbnail() ) : ?>
-	<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url( 'thumbnail' ); ?>)">
-		<a class="post-thumbnail" href="<?php echo $pod_link['page']; ?>" aria-hidden="true"></a>
-	</div>
+	<?php if ( has_post_thumbnail() ) : ?>
+	<a class="post-thumbnail" href="<?php echo $pod_link['page']; ?>" aria-hidden="true"><?php the_post_thumbnail( 'thumbnail' ); ?></a>
 	<?php endif; ?>
 	<div class="card-content">
 		<header class="entry-header">
-			<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 			<h2 class="entry-title"><a href="<?php echo $pod_link['page']; ?>" rel="bookmark"><?php	the_title(); ?></a></h2>
             <div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
 		</header>

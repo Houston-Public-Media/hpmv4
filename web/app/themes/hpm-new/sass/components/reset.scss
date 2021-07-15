@@ -83,10 +83,10 @@ sub, sup {
 	vertical-align: baseline;
 }
 sub {
-	bottom: -0.25em;
+	bottom: -0.25rem;
 }
 sup {
-	top: -0.5em;
+	top: -0.5rem;
 }
 button {
 	transition: opacity .2s ease-out;
@@ -100,6 +100,7 @@ body {
 	font-size: 16px;
 	font-family: var(--hpm-font-main);
 	background-color: #f5f5f5;
+	min-height: 100vh;
 }
 input[type="search"] {
 	-webkit-appearance: none;
@@ -109,12 +110,17 @@ input[type="search"] {
 }
 #main {
 	overflow: hidden;
-	min-height: 40em;
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: flex-start;
 	background: transparent;
+	padding: 1rem;
+}
+#content {
+	position: relative;
+	max-width: var(--max-width);
+	margin: 0 auto;
 }
 a {
 	text-decoration: none;
@@ -134,24 +140,24 @@ a:hover, a:active {
 }
 h1, h2, h3, h4, h5 {
 	color: var(--main-black);
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 	font-weight: 500;
 }
 h1 {
 	font-weight: 100;
-	font-size: 2em;
+	font-size: 2rem;
 }
 h2 {
-	font-size: 1.75em;
+	font-size: 1.75rem;
 }
 h3 {
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 h4 {
-	font-size: 1.25em;
+	font-size: 1.25rem;
 }
 h5 {
-	font-size: 1.125em;
+	font-size: 1.125rem;
 }
 h1 a,
 h2 a {
@@ -160,7 +166,7 @@ h2 a {
 p {
 	color: #000000;
 	font-weight: 400;
-	font-size: 1em;
+	font-size: 1rem;
 }
 @media print {
 	*, *::before, *::after {
@@ -267,4 +273,10 @@ p {
 		margin: 7.6923% 0 0;
 		padding: 0;
 	}
+}
+@-ms-viewport {
+	width: device-width;
+}
+@viewport {
+	width: device-width;
 }

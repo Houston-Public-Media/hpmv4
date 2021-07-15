@@ -29,6 +29,7 @@ web/.htaccess
 env.production
 .idea
 .nova
+.DS_Store
 
 # Composer
 /vendor

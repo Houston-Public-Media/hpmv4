@@ -356,3 +356,94 @@ body.page-template-page-series-tiles aside .show-content p {
 	font: 100 0.75em/1em var(--hpm-font-main);
 	font-style: italic;
 }
+
+
+
+
+
+.post-type-archive-staff h1,
+.tax-staff_category h1 {
+	margin: 0;
+}
+.post-type-archive-staff select#hpm-staff-cat,
+.tax-staff_category select#hpm-staff-cat {
+	outline: 0;
+	background-color: rgb(243,244,244);
+	color: #00b0bc;
+	font: 500 1.25em/1.25em var(--hpm-font-main);
+	padding: 0.5em;
+	margin: 0.5em 0;
+}
+.post-type-archive-staff #search-results,
+.tax-staff_category #search-results {
+	width: 100%;
+	background-color: transparent;
+	padding: 1em 0.25em;
+	float: none;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-flow: row wrap;
+}
+.post-type-archive-staff #search-results h2,
+.tax-staff_category #search-results h2 {
+	width: 100%;
+}
+.post-type-archive-staff #search-results h2.top-pad,
+.tax-staff_category #search-results h2.top-pad {
+	padding-top: 2em;
+}
+.post-type-archive-staff #search-results article,
+.tax-staff_category #search-results article {
+	width: 100%;
+	border: 0;
+	padding: 1em;
+	margin: 0 0 1em;
+	background-color: white;
+	height: 8em;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	display: flex;
+}
+.post-type-archive-staff #search-results article .staff-thumb,
+.tax-staff_category #search-results article .staff-thumb {
+	float: left;
+	width: 25%;
+	padding: 0 0.5em 0 0;
+}
+.post-type-archive-staff #search-results article .staff-wrap,
+.tax-staff_category #search-results article .staff-wrap {
+	width: 100%;
+}
+.post-type-archive-staff #search-results article.has_post_thumbnail .staff-wrap,
+.tax-staff_category #search-results article.has_post_thumbnail .staff-wrap {
+	width: 75%;
+}
+.post-type-archive-staff #search-results article .social-icon,
+.tax-staff_category #search-results article .social-icon {
+	float: right;
+	padding: 0.25em;
+}
+.post-type-archive-staff #search-results article h2,
+.tax-staff_category #search-results article h2 {
+	margin-bottom: 0.5em;
+	padding: 0;
+	display: inline-block;
+}
+.post-type-archive-staff #search-results article h2 a,
+.tax-staff_category #search-results article h2 a {
+	color: #00b0bc;
+	font-family: var(--hpm-font-main);
+	font-weight: 500;
+}
+.post-type-archive-staff #search-results .entry-summary,
+.tax-staff_category #search-results .entry-summary {
+	padding: 0;
+}
+.post-type-archive-staff #search-results .entry-summary p,
+.tax-staff_category #search-results .entry-summary p {
+	margin: 0;
+	font-size: 110%;
+}

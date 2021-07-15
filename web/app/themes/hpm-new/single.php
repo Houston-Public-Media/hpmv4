@@ -73,13 +73,11 @@ if ( is_preview() ) : ?>
 					edit_post_link(__('Edit', 'hpmv2'), '<span class="edit-link">', '</span>');
 				?>
 				</div>
+				<div id="author-wrap"><?php echo author_footer( get_the_ID() ); ?></div>
 			</footer>
 		</article>
-		<div id="author-wrap">
-			<?php echo author_footer( get_the_ID() ); ?>
-		</div>
 <?php endwhile; ?>
-		<aside class="column-right">
+		<aside>
 			<?php
 			$categories = get_the_category( get_the_ID() );
 			foreach ( $categories as $cats ) :

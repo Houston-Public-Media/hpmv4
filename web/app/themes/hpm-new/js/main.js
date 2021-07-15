@@ -409,23 +409,16 @@ hpm.npUpdateHtml = (object,station,next) => {
 			output += '<h3>'+data['airlist'][0]['version']['series']['series-title']+'</h3>';
 		}
 	} else if ( station === 'mixtape' ) {
-		output = '<h3>'+data[0]+' - '+data[1]+'</h3><p>Album: '+data[2]+'</p>';
+		output += '<h3>'+data[0]+' - '+data[1]+'</h3>';
 	} else {
 		if ( typeof data.onNow.song !== 'object') {
-			output = '<h3>'+data.onNow.program.name+'</h3>';
+			output += '<h3>'+data.onNow.program.name+'</h3>';
 		} else {
-			var descs = [];
+			output += '<h3>';
 			if (data.onNow.song.composerName.length > 0) {
-				descs.push("Composer: "+data.onNow.song.composerName );
+				output += data.onNow.song.composerName + ' - ';
 			}
-			if (data.onNow.song.conductor.length > 0) {
-				descs.push("Conductor: "+data.onNow.song.conductor);
-			}
-			if (data.onNow.song.copyright.length > 0 && data.onNow.song.catalogNumber.length > 0) {
-				descs.push("Catalog Number: "+data.onNow.song.copyright+" "+data.onNow.song.catalogNumber);
-			}
-			extra = descs.join(', ');
-			output = "<h3>"+data.onNow.song.trackName.replace('&','&amp;')+"</h3><p>"+extra+"</p>";
+			output += data.onNow.song.trackName.replace('&','&amp;') + "</h3>";
 		}
 		if (next == 'true') {
 			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].fullstart)+': '+data.nextUp[0].program.name+'</li></ul>';

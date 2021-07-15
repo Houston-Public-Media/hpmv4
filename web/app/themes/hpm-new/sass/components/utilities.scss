@@ -46,26 +46,26 @@
 }
 .readmore a, .readmore span {
 	font-weight: 700;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	text-transform: uppercase;
 	width: 95%;
 	display: block;
 	text-align: center;
-	padding: 1em;
-	margin: 1em 2.5%;
+	padding: 1rem;
+	margin: 1rem 2.5%;
 	background-color: rgb(219,229,233);
 	color: rgb(16,165,177);
 	clear: both;
 }
 .wide-table {
 	width: 100%;
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 	border: 1px solid #ddd;
 }
 .wide-table td, .wide-table th {
 	text-align: center;
 	vertical-align: middle;
-	padding: 0.5em;
+	padding: 0.5rem;
 }
 .wide-table th {
 	border: 1px solid #ddd;
@@ -80,7 +80,7 @@
 	padding: 0 !important;
 	padding-bottom: calc(100% / 1.777778) !important;
 	display: block;
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 }
 .iframe-embed-tall {
 	position: relative;
@@ -88,7 +88,7 @@
 	padding: 0 !important;
 	padding-bottom: calc(100% / 1.25) !important;
 	display: block;
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 }
 .iframe-embed-vert {
 	position: relative;
@@ -96,7 +96,7 @@
 	padding: 0 !important;
 	padding-bottom: calc(100% / 0.5625) !important;
 	display: block;
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 }
 .iframe-embed-pbs {
 	position: relative;
@@ -104,7 +104,7 @@
 	padding: 0 !important;
 	padding-bottom: calc(100% / 1.425) !important;
 	display: block;
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 }
 .iframe-embed iframe,
 .iframe-embed-tall iframe,
@@ -118,16 +118,16 @@
 	height: 100%;
 }
 .galleria {
-	margin-bottom: 2em;
+	margin-bottom: 2rem;
 }
 ul.timeline {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	li {
-		padding: 0 0 1em 1.125em;
+		padding: 0 0 1rem 1.125rem;
 		position: relative;
-		border-left: 0.0625em solid rgba(0,0,0,0.25);
+		border-left: 0.0625rem solid rgba(0,0,0,0.25);
 		margin: 0;
 		&:last-child {
 			border-left: 0;
@@ -135,11 +135,11 @@ ul.timeline {
 		&:before {
 			content: '\f111';
 			font-weight: 900;
-			font-size: 1em;
+			font-size: 1rem;
 			font-family: 'Font Awesome 5 Free';
 			position: absolute;
-			left: -0.45em;
-			top: -0.0625em;
+			left: -0.45rem;
+			top: -0.0625rem;
 			color: #C2C2C2;
 			transition: color 0.5s;
 		}
@@ -149,19 +149,19 @@ ul.timeline {
 		}
 		.timeline-date {
 			font-weight: 700;
-			font-size: 1.25em;
+			font-size: 1.25rem;
 		}
 	}
 }
 span.edit-link {
 	display: block;
 	clear: both;
-	margin: 1em 0;
+	margin: 1rem 0;
 }
 .info-toggle {
 	width: 100%;
 	font-weight: bolder;
-	padding: 0 0.5em 0.25em;
+	padding: 0 0.5rem 0.25rem;
 	&:hover {
 		cursor: pointer;
 		opacity: 0.75;
@@ -172,9 +172,9 @@ span.edit-link {
 		display: inline-block;
 		-webkit-font-smoothing: antialiased;
 		font-weight: 900;
-		font-size: 1em;
+		font-size: 1rem;
 		font-family: 'Font Awesome 5 Free';
-		margin-left: 0.375em;
+		margin-left: 0.375rem;
 		color: rgb(0,170,235);
 	}
 	&.info-toggle-active:after {
@@ -184,15 +184,15 @@ span.edit-link {
 .info-toggle-hidden {
 	display: none;
 	background-color: #f5f5f5;
-	padding: 0.5em;
+	padding: 0.5rem;
 }
 .acc {
 	list-style: none;
 	margin-left: 0;
 	li {
-		margin: 1em 0 0;
+		margin: 1rem 0 0;
 		h3 {
-			padding: 0.5em;
+			padding: 0.5rem;
 			background: #ddd;
 			border: 1px solid black;
 			&:hover {
@@ -203,16 +203,16 @@ span.edit-link {
 	}
 	.acc-content {
 		border: 1px dotted #808080;
-		padding: 1em;
+		padding: 1rem;
 		p {
 			font-style: italic;
 		}
 		table {
 			width: 100%;
-			margin: 0 0 2em 0;
+			margin: 0 0 2rem 0;
 			td {
 				width: 21%;
-				padding: 0.5em 2%;
+				padding: 0.5rem 2%;
 				&.header2 {
 					font-weight: bolder;
 					border-bottom: 1px solid black;
@@ -243,17 +243,72 @@ span.edit-link {
 .table-striped {
 	width: 100%;
 	th {
-		padding: 0.5em;
+		padding: 0.5rem;
 		text-align: center;
 		font-size: 85%;
 	}
 	td {
-		padding: 0.5em;
+		padding: 0.5rem;
 	}
 	tbody tr td:nth-child(n+2) {
 		text-align: center;
 	}
 	& > tbody > tr:nth-of-type(odd) {
 		background-color: #f9f9f9;
+	}
+}
+.social-wrap {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	justify-content: flex-start;
+	margin-bottom: 0;
+	h1, h2, h3, h4, h5 {
+		width: 100%;
+		margin: 0;
+	}
+}
+.social-icon {
+	--unit: 3rem;
+	a, button {
+		display: block;
+		background-color: var(--accent-black-3);
+		padding: 0;
+		margin: 0 1rem 1rem 0;
+		border: 0;
+		width: var(--unit);
+		height: var(--unit);
+		text-align: center;
+		border-radius: 0.5rem;
+		.fab, .fas {
+			line-height: 1.375rem;
+			color: white;
+			font-size: calc(var(--unit) - 0.75rem);
+		}
+	}
+	&.facebook a,
+	&.facebook button {
+		background: rgb(59,89,152);
+	}
+	&.twitter a,
+	&.twitter button {
+		background: rgb(29,161,242);
+	}
+	&.youtube a,
+	&.youtube button {
+		background: rgb(234,50,35);
+	}
+	&.instagram a,
+	&.instagram button {
+		background: rgb(81,91,212);
+		background: linear-gradient(135deg, rgba(81,91,212,1) 0%, rgba(129,52,175,1) 20%, rgba(221,42,123,1) 50%, rgba(254,218,119,1) 70%, rgba(245,133,41,1) 90%);
+	}
+	&.linkedin a,
+	&.linkedin button {
+		background: rgb(40,103,178);
+	}
+	&:last-child a,
+	&:last-child button {
+		margin-right: 0;
 	}
 }

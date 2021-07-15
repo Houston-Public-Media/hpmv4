@@ -5,22 +5,19 @@
  * @since HPMv2 1.0
  */
 global $ka;
-$extra = '';
+$extra = 'card';
 $size = 'thumbnail';
 if ( !empty( $ka ) || $ka == 0 ) :
 	if ( $ka == 0 ) :
-		$extra = 'card-large';
+		$extra .= ' card-large';
 		$size = 'large';
 	elseif ( $ka == 1 ) :
-		$extra = 'card-medium';
+		$extra .= ' card-medium';
 	endif;
 endif; ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
-	<?php
-		if ( has_post_thumbnail() ) : ?>
-	<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url( $size ); ?>)">
-		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-	</div>
+	<?php if ( has_post_thumbnail() ) : ?>
+	<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"><?php the_post_thumbnail( $size ) ?></a>
 	<?php endif; ?>
 	<div class="card-content">
 		<header class="entry-header">

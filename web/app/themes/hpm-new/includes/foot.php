@@ -39,22 +39,20 @@ function author_footer( $id ) {
 			$meta = $author->post->hpm_staff_meta;
 		endif;
 		$temp .= "
-	<div class=\"author-info\">
-		<div class=\"author-image\">" .
-		    ( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
-		"</div>
-		<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
+	<div class=\"author-info\">" .
+		( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
+		"<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
 		<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
-		<div class=\"author-social\">";
+		<div class=\"social-wrap\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :
-				$temp .= '<div class="social-icon"><a href="'.$meta['facebook'].'" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon facebook"><a href="'.$meta['facebook'].'" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['twitter'] ) ) :
-				$temp .= '<div class="social-icon"><a href="'.$meta['twitter'].'" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon twitter"><a href="'.$meta['twitter'].'" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['linkedin'] ) ) :
-				$temp .= '<div class="social-icon"><a href="'.$meta['linkedin'].'" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon linkedin"><a href="'.$meta['linkedin'].'" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['email'] ) ) :
 				$temp .= '<div class="social-icon"><a href="mailto:'.$meta['email'].'" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a></div>';
@@ -73,8 +71,7 @@ function author_footer( $id ) {
 		endif;
 		$temp .= "
 		</div>
-		<p>" . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . "</p>
-		<p>" . ( $local ? '<a href="' . get_the_permalink( $author->post->ID ) . '">More Information</a>' : '' ) ."</p>
+		<p>" . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . ( $local ? ' <a href="' . get_the_permalink( $author->post->ID ) . '">More &gt;</a>' : '' ) ."</p>
 	</div>
 	<div class=\"highlights\">";
 		$q = new WP_query([
@@ -180,41 +177,6 @@ function hpm_chartbeat() {
 	endif;
 }
 
-function hpm_hm_banner() {
-	wp_reset_query();
-	global $wp_query;
-	$t = time();
-	$offset = get_option('gmt_offset')*3600;
-	$t = $t + $offset;
-	$now = getdate($t);
-	if ( !empty( $_GET['testtime'] ) ) :
-		$tt = explode( '-', $_GET['testtime'] );
-		$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) );
-	endif;
-	$anc = get_post_ancestors( get_the_ID() );
-	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
-	$hm_air = hpm_houston_matters_check();
-	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && $wp_query->post->post_type !== 'embeds' ) :
-		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && $hm_air[ $now['hours'] ] ) : ?>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var topBanner = document.getElementById('hm-top');
-			topBanner.innerHTML = '<?php echo ( $now['hours'] == 15 ? '<p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong>888.486.9677</strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p>': '<p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Call <strong>713.440.8870</strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a></p>' ); ?>';
-			<?php echo ( $now['hours'] == 15 ? 'topBanner.classList.add(\'townsquare\');' : '' ); ?>
-			for (i = 0; i < topBanner.length; ++i) {
-				topBanner[i].addEventListener('click', function() {
-					var attr = this.id;
-					if ( typeof attr !== typeof undefined && attr !== false) {
-						gaAll('send', 'event', 'Top Banner', 'click', attr);
-					}
-				});
-			}
-		});
-	</script>
-<?php
-		endif;
-	endif;
-}
 /* **
  * Persistent Player Setup
  */
@@ -248,5 +210,5 @@ function hpm_persistent_player() {
 	endif;
 }
 add_action( 'wp_footer', 'hpm_chartbeat', 100 );
-add_action( 'wp_footer', 'hpm_hm_banner', 100 );
+//add_action( 'wp_footer', 'hpm_hm_banner', 100 );
 //add_action( 'wp_footer', 'hpm_persistent_player', 101 );

@@ -41,20 +41,19 @@
 		);
 		$my_query = new wp_query( $args );
 		if ( $my_query->have_posts() ) : ?>
-			<section class="highlights">
-				<h4>Related</h4>
-				<?php
-				while( $my_query->have_posts() ) :
-					$my_query->the_post();
-					get_template_part( 'content', get_post_format() );
-				endwhile; ?>
-			</div>
+<section class="highlights">
+	<h4>Related</h4>
+	<?php
+	while( $my_query->have_posts() ) :
+		$my_query->the_post();
+		get_template_part( 'content', get_post_format() );
+	endwhile; ?>
+</section>
 			<?php
 		endif;
 	endif;
 	wp_reset_query();
-	hpm_top_posts();
-?>
+	hpm_top_posts(); ?>
 <section class="sidebar-ad">
 	<h4>Support Comes From</h4>
 	<div id="div-gpt-ad-1394579228932-2">

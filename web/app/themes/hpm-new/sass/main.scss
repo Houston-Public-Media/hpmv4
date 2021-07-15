@@ -10,10 +10,19 @@ Text Domain: hpmv2
 */
 
 /* Variables */
+$tablet: 34rem;
+$desktop: 58rem;
+$largeDesktop: 64rem;
 :root {
+	--hpm-font-main: 'PBS-Sans',helvetica,arial,sans-serif;
+	--hpm-font-condensed: 'PBS-Sans-Condensed',helvetica,arial,sans-serif;
+	--max-width: 100rem;
+}
+body {
 	--main-red: #C8102E;
 	--main-black: #000000;
 	--main-blue: #00566C;
+	--main-white: #FFFFFF;
 	--accent-black-1: #404040;
 	--accent-black-2: #808080;
 	--accent-black-3: #BFBFBF;
@@ -42,8 +51,6 @@ Text Domain: hpmv2
 	--accent-yellow-3: #FFE496;
 	--accent-yellow-4: #FFEFC8;
 	--accent-yellow-5: #FFF7E6;
-	--hpm-font-main: 'PBS-Sans',helvetica,arial,sans-serif;
-	--hpm-font-condensed: 'PBS-Sans-Condensed',helvetica,arial,sans-serif;
 }
 
 /* Typography */

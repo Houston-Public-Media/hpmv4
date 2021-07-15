@@ -101,6 +101,181 @@ get_header(); ?>
             width: 100%;
             background: url(https://cms-tc.pbskids.org/nationalvideoplayer/resources/img/antenna.svg) no-repeat center top;
         }
+		#kids-younger, #kids-older {
+			overflow: hidden;
+			padding: 1em;
+			width: 100%;
+			border-top: 0.125em solid white;
+		}
+		#kids-younger ul, #kids-older ul {
+			margin: 0;
+		}
+		#kids-older {
+			background-color: rgb(241,168,47);
+		}
+		#kids-younger {
+			background-color: rgb(118,199,219);
+		}
+		#kids-older h3 {
+			text-align: center;
+			color: white;
+			font-size: 2em;
+		}
+		#kids-younger ul li, #kids-older ul li {
+			text-align: center;
+			float: left;
+		}
+		#kids-younger ul li {
+			width: 50%;
+		}
+		#kids-older ul {
+			border: 0.5em solid rgb(231,228,57);
+			overflow: hidden;
+			background-color: rgb(231,228,57);
+		}
+		#kids-older ul li {
+			width: 50%;
+			border: 0.5em solid rgb(231,228,57);
+		}
+		#kids-older ul li a {
+			display: block;
+			line-height: 0;
+		}
+		#kids-younger ul li img, #kids-older ul li img {
+			width: 100%;
+		}
+		body.page.page-template-page-kids #main {
+			background-color: rgb(166,239,24);
+			position: relative;
+		}
+		body.page.page-template-page-kids .page-header {
+			background-color: transparent;
+			background-image: url('https://cdn.hpm.io/wp-content/uploads/2016/01/14164222/White-lines-2.png');
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: 110% auto;
+			position: relative;
+			height: 10em;
+			border-bottom: 0.25em solid white;
+		}
+		body.page.page-template-page-kids .page-header #head-logo {
+			position: absolute;
+			top: 1em;
+			left: 25%;
+			max-height: 8em;
+			z-index: 100;
+		}
+		body.page.page-template-page-kids .page-header #head-cat {
+			position: absolute;
+			bottom: 0;
+			left: 0.5em;
+			max-height: 6.5em;
+			z-index: 95;
+		}
+		body.page.page-template-page-kids .page-header #head-kids {
+			position: absolute;
+			bottom: 0;
+			right: 0.5em;
+			max-height: 6.5em;
+			z-index: 95;
+		}
+		.column-right.kids-sidebar {
+			background-color: white;
+			padding: 2em 1em 1em;
+			margin: 0;
+			width: 100%;
+		}
+		.column-right.kids-sidebar .sidebar-ad {
+			padding: 0;
+			margin: 0;
+		}
+		#kids-nav {
+			background-color: rgb(231,228,57);
+			width: 100%;
+			padding: 0 0.5em;
+			overflow: hidden;
+		}
+		#kids-nav .kids-nav-container {
+			width: 85%;
+			margin: 0 auto;
+		}
+		#kids-nav .kids-nav-container a {
+			width: 50%;
+			float: left;
+			padding: 0 2em;
+		}
+		body.page.page-template-page-kids table {
+			width: 100%;
+			background-color: white;
+			margin-bottom: 1em;
+		}
+		body.page.page-template-page-kids table tr td,
+		body.page.page-template-page-kids table tr th {
+			padding: 0.5em;
+			margin: 0;
+			text-align: center;
+		}
+		body.page.page-template-page-kids table tbody tr td:nth-child(1) {
+			width: 25%;
+			color: rgb(37,158,163);
+			font: normal 1.25em/1.25em 'PBSKids',arial,sans-serif;
+		}
+		body.page.page-template-page-kids table tbody tr td:nth-child(2) {
+			width: 75%;
+			font: 400 1.25em/1.25em var(--hpm-font-main);
+		}
+		body.page.page-template-page-kids table thead tr {
+			background-color: rgb(37,158,163);
+		}
+		body.page.page-template-page-kids table thead tr th {
+			color: white;
+			font: normal 1.25em/1.25em 'PBSKids',var(--hpm-font-main);
+		}
+		body.page.page-template-page-kids table tbody tr:nth-child(2n+0) {
+			background-color: rgb(218,236,234);
+		}
+		body.page.page-template-page-kids table tbody tr:nth-child(2n+1) > td:nth-child(1) {
+			background-color: rgb(197,224,222);
+		}
+		body.page.page-template-page-kids .kids-schedule {
+			background-color: rgb(23,177,189);
+			margin: 0;
+			width: 100%;
+		}
+		.kids-schedule h1 {
+			width: 90%;
+			margin: 0.5em 5%;
+			font-family: 'PBSKids',var(--hpm-font-main);
+			color: white;
+		}
+		body.page.page-template-page-kids .kids-schedule p {
+			color: white;
+			padding-bottom: 1em;
+			font-size: 112.5%;
+		}
+		body.page.page-template-page-kids .kids-schedule a {
+			color: white;
+			text-decoration: underline
+		}
+		body.page.page-template-page-kids .kids-schedule ul {
+			list-style: disc outside none;
+		}
+		body.page.page-template-page-kids .kids-schedule ul li {
+			padding-bottom: 0.5em;
+		}
+		body.page.page-template-page-kids .kids-schedule ul li a {
+			color: rgb(23,177,189);
+			text-decoration: none;
+		}
+		body.page.page-template-page-kids .kids-schedule .felix-type-b a,
+		body.page.page-template-page-kids .kids-schedule .felix-type-b p,
+		body.page.page-template-page-kids .kids-schedule .felix-type-b ul,
+		body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
+			color:#55565a;
+			text-decoration: none;
+			margin-bottom: 0;
+			font-size: 100%;
+		}
 		@media screen and (min-width: 30.0625em) {
 			#station-module {
 				height: 650px;

@@ -52,7 +52,7 @@ get_header(); ?>
 					the_archive_description( '<div class="taxonomy-description">', '</div>' );
 				?>
 			</header>
-			<div class="article-cards card-wide">
+			<div class="card-wide">
 			<?php
 			while ( have_posts() ) : the_post();
 				get_template_part( 'content', get_post_format() );
