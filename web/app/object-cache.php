@@ -3,7 +3,7 @@
  * Plugin Name: Redis Object Cache Drop-In
  * Plugin URI: http://wordpress.org/plugins/redis-cache/
  * Description: A persistent object cache backend powered by Redis. Supports Predis, PhpRedis, Credis, HHVM, replication, clustering and WP-CLI.
- * Version: 2.0.19-dev
+ * Version: 2.0.21
  * Author: Till Krüss
  * Author URI: https://objectcache.pro
  * License: GPLv3
@@ -163,6 +163,11 @@ function wp_cache_init() {
     // Backwards compatibility: map `WP_CACHE_KEY_SALT` constant to `WP_REDIS_PREFIX`.
     if ( defined( 'WP_CACHE_KEY_SALT' ) && ! defined( 'WP_REDIS_PREFIX' ) ) {
         define( 'WP_REDIS_PREFIX', WP_CACHE_KEY_SALT );
+    }
+
+    // Set unique prefix for sites hosted on Cloudways
+    if ( ! defined( 'WP_REDIS_PREFIX' ) && isset( $_SERVER['cw_allowed_ip'] ) )  {
+        define( 'WP_REDIS_PREFIX', getenv( 'HTTP_X_APP_USER' ) );
     }
 
     if ( ! ( $wp_object_cache instanceof WP_Object_Cache ) ) {
@@ -1931,6 +1936,19 @@ LUA;
     }
 
     /**
+     * Alias of `decrement()`.
+     *
+     * @see self::decrement()
+     * @param  string $key    The key name.
+     * @param  int    $offset Optional. The decrement. Defaults to 1.
+     * @param  string $group  Optional. The key group. Default is 'default'.
+     * @return int|bool
+     */
+    public function decr( $key, $offset = 1, $group = 'default' ) {
+        return $this->decrement( $key, $offset, $group );
+    }
+
+    /**
      * Render data about current cache requests
      * Used by the Debug bar plugin
      *
@@ -1974,8 +1992,6 @@ LUA;
         );
 
         return (object) [
-            // Connected, Disabled, Unknown, Not connected
-            // 'status' => '...',
             'hits' => $this->cache_hits,
             'misses' => $this->cache_misses,
             'ratio' => $total > 0 ? round( $this->cache_hits / ( $total / 100 ), 1 ) : 100,
