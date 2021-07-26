@@ -19,18 +19,16 @@ function hpm_site_header() { ?>
 						<div id="top-watch"><button data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
 					</section>
 					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div id="top-mobile-menu"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
+					<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><br /><span class="top-mobile-text">Search</span><?php get_search_form(); ?></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
 					<?php
 						// Primary navigation menu.
-						wp_nav_menu( array(
+						wp_nav_menu([
 							'menu_class' => 'nav-menu',
 							'theme_location' => 'head-main',
 							'walker' => new HPMv2_Menu_Walker
-						) );
+						]);
 					?>
-						<div class="clear"></div>
 					</nav>
 				</div>
 			</header><?php
