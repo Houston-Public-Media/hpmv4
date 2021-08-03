@@ -200,7 +200,7 @@ get_header(); ?>
 			}
 			.page-template-page-passport .page-content form button {
 				width: 30%;
-				padding: 0.375em 0.5em;
+				padding: 0.5em;
 				border: 1px solid #464646;
 				color: white;
 				font-family: var(--hpm-font-main); font-weight: 100;
