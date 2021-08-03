@@ -34,7 +34,7 @@ html:focus-within {
 body {
 	min-height: 100vh;
 	text-rendering: optimizeSpeed;
-	line-height: 1.5;
+	line-height: 1.375;
 }
 
 /* A elements that don't have a class get default styles */
@@ -115,7 +115,7 @@ input[type="search"] {
 	justify-content: space-between;
 	align-items: flex-start;
 	background: transparent;
-	padding: 1rem;
+	padding: 1rem 0;
 }
 #content {
 	position: relative;

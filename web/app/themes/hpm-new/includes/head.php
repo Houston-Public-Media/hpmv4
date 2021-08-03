@@ -7,8 +7,8 @@ function hpm_site_header() { ?>
 					</div>
 					<section>
 						<div id="top-schedule">
-							<div class="top-schedule-label"><button data-href="#top-schedule-wrap"><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
-							<div class="top-schedule-link-wrap">
+							<div class="top-schedule-label"><button type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap" ><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
+							<div class="top-schedule-link-wrap" id="top-schedule-link-wrap">
 								<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
 								<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
 								<div class="top-schedule-links"><a href="/classical">Classical</a></div>
@@ -19,16 +19,19 @@ function hpm_site_header() { ?>
 						<div id="top-watch"><button data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
 					</section>
 					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><br /><span class="top-mobile-text">Search</span><?php get_search_form(); ?></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-					<?php
-						// Primary navigation menu.
-						wp_nav_menu([
-							'menu_class' => 'nav-menu',
-							'theme_location' => 'head-main',
-							'walker' => new HPMv2_Menu_Walker
-						]);
-					?>
+						<button id="top-mobile-menu"><span class="icon" aria-hidden="true"></span><br /><span class="top-mobile-text"></span></button>
+						<div class="nav-wrap">
+							<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
+							<?php
+								// Primary navigation menu.
+								wp_nav_menu([
+									'menu_class' => 'nav-menu',
+									'theme_location' => 'head-main',
+									'walker' => new HPMv2_Menu_Walker
+								]);
+							?>
+						</div>
 					</nav>
 				</div>
 			</header><?php

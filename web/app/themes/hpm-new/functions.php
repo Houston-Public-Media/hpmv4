@@ -453,23 +453,6 @@ function wpf_dev_char_limit() {
 }
 add_action( 'wpforms_wp_footer', 'wpf_dev_char_limit' );
 
-function hpm_tvguide_url() {
-	$tvguide = get_transient( 'hpm_tvguide_url' );
-	if ( !empty( $tvguide ) ) :
-		return $tvguide;
-	endif;
-	$remote = wp_remote_get( esc_url_raw( "https://cdn.hpm.io/assets/tvguide.json" ) );
-	if ( is_wp_error( $remote ) ) :
-		return "";
-	else :
-		$api = wp_remote_retrieve_body( $remote );
-		$json = json_decode( $api, TRUE );
-		$tvguide = $json['url'];
-	endif;
-	set_transient( 'hpm_tvguide_url', $tvguide, 900 );
-	return $tvguide;
-}
-
 function login_checked_remember_me() {
 	add_filter( 'login_footer', 'rememberme_checked' );
 }
