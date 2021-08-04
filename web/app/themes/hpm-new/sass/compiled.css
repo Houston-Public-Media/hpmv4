@@ -845,6 +845,93 @@ body.nav-active-menu {
     content: "";
     display: inline;
   }
+
+  nav#site-navigation {
+    grid-column: 1/span 4;
+    grid-row: 2;
+    height: auto;
+    top: initial;
+    left: initial;
+    display: block;
+    overflow: visible;
+    width: 100%;
+  }
+  nav#site-navigation #top-mobile-menu {
+    display: none;
+  }
+  nav#site-navigation > div {
+    box-shadow: none;
+    border-left: 0;
+  }
+  nav#site-navigation > div > div > ul {
+    display: grid;
+    grid-auto-flow: column;
+  }
+  nav#site-navigation > div > div > ul > li > a, nav#site-navigation > div > div > ul > li button {
+    justify-content: center;
+    padding: 0.25rem 0.5rem;
+  }
+  nav#site-navigation > div > div > ul > li > button:after {
+    right: 2rem;
+    top: 0.75rem;
+    border-left-color: transparent;
+    border-top-color: rgba(0, 0, 0, 0.45);
+  }
+  nav#site-navigation > div > div > ul > li > ul {
+    overflow: auto;
+    border-radius: 0.25em;
+    box-shadow: 0 0.15em 0.25em rgba(0, 0, 0, 0.25);
+    padding: 0.75em;
+    height: auto;
+    min-width: max-content;
+    position: absolute;
+    top: calc(100% - 0.25rem);
+    left: 50%;
+    transform: rotateX(-90deg) translateX(-50%);
+    transform-origin: top center;
+    opacity: 0.3;
+    transition: 280ms all 120ms ease-out;
+  }
+  nav#site-navigation > div > div > ul > li:hover > ul, nav#site-navigation > div > div > ul > li:focus-within > ul {
+    opacity: 1;
+    transform: rotateX(0) translateX(-50%);
+    visibility: visible;
+    left: 50%;
+  }
+  nav#site-navigation .nav-back {
+    display: none;
+  }
+  nav#site-navigation #top-search {
+    display: none;
+  }
+  nav#site-navigation:focus-within {
+    position: static;
+    left: initial;
+    height: auto;
+    width: 100%;
+  }
+  nav#site-navigation:focus-within #top-mobile-menu {
+    display: none;
+  }
+
+  .container {
+    width: 100%;
+    background-color: white;
+    border-bottom: 0.25rem solid #a3ccd8;
+  }
+
+  #masthead .site-branding {
+    background-color: transparent;
+    grid-template-columns: 15rem auto 5rem 5rem;
+  }
+  #masthead .site-branding .site-logo a {
+    background-image: url(https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Color.png);
+    background-position: left top;
+  }
+  #masthead .site-branding section {
+    grid-column: 2;
+    grid-row: 1;
+  }
 }
 @media screen and (min-width: 64rem) {
   #hm-top p {

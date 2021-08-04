@@ -68,104 +68,6 @@ function hpm_audio_shortcode( $html, $attr ) {
 				</div>";
 		endif;
 		$html .= '</div>';
-
-		/* if ( is_admin() ) :
-			$html .= '<link rel="stylesheet" id="fontawesome-css" href="https://cdn.hpm.io/assets/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hpmv2-css" href="https://cdn.hpm.io/assets/css/style.css" type="text/css" media="all"><script type="text/javascript" src="/wp/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://cdn.hpm.io/assets/js/jplayer/jquery.jplayer.min.js"></script>';
-		else :
-			wp_enqueue_script( 'jplayer' );
-		endif;
-		if ( in_array( 'small', $attr ) ) :
-			$player_class = 'jp-audio jp-float';
-		else :
-			$player_class = 'jp-audio';
-		endif;
-		$html .= "
-<div id=\"jquery_jplayer_{$audio_id}\" class=\"jp-jplayer\"></div>
-<div id=\"jp_container_{$audio_id}\" class=\"{$player_class}\" role=\"application\" aria-label=\"media player\">
-	<div class=\"jp-type-single\">
-		<div class=\"jp-gui jp-interface\">
-			<div class=\"jp-controls\">
-				<button class=\"jp-play\" role=\"button\" tabindex=\"0\">
-					<span class=\"fa fa-play\" aria-hidden=\"true\"></span>
-				</button>
-				<button class=\"jp-pause\" role=\"button\" tabindex=\"0\">
-					<span class=\"fa fa-pause\" aria-hidden=\"true\"></span>
-				</button>
-			</div>
-			<div class=\"jp-progress-wrapper\">
-				<div class=\"jp-progress\">
-					<div class=\"jp-seek-bar\">
-						<div class=\"jp-play-bar\"></div>
-					</div>
-				</div>
-				<div class=\"jp-details\">
-					<div class=\"jp-title\" aria-label=\"title\">&nbsp;</div>
-				</div>
-				<div class=\"jp-time-holder\">
-					<span class=\"jp-current-time\" role=\"timer\" aria-label=\"time\"></span> /<span class=\"jp-duration\" role=\"timer\" aria-label=\"duration\"></span>
-				</div>
-			</div>
-		</div>
-	</div>";
-	if ( !is_admin() && !empty( $attr['id'] ) ) :
-		$html .= "
-	<a href=\"#\" class=\"jp-audio-embed\"><span class=\"fas fa-code\"></span></a>
-	<div class=\"jp-audio-embed-popup\" id=\"jp_container_{$audio_id}-popup\">
-		<div class=\"jp-audio-embed-wrap\">
-			<p>To embed this piece of audio in your site, please use this code:</p>
-			<div class=\"jp-audio-embed-code\">
-				&lt;iframe src=\"https://embed.hpm.io/{$audio_id}/{$post_id}\" style=\"height: 115px; width: 100%;\"&gt;&lt;/iframe&gt;
-			</div>
-			<div class=\"jp-audio-embed-close\">X</div>
-		</div>
-	</div>";
-	endif;
-	$html .= "
-</div>
-<div class=\"screen-reader-text\">
-	<script type=\"text/javascript\">
-		jQuery(document).ready(function($){
-			$(\"#jquery_jplayer_{$audio_id}\").jPlayer({
-				ready: function () {
-					$(this).jPlayer(\"setMedia\", {
-						title: \"".htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false )."\",
-						mp3: \"{$audio_url}source=jplayer-article\"
-					});
-				},
-				swfPath: \"https://cdn.hpm.io/assets/js/jplayer\",
-				supplied: \"mp3\",
-				preload: \"metadata\",
-				cssSelectorAncestor: \"#jp_container_{$audio_id}\",
-				wmode: \"window\",
-				useStateClassSkin: true,
-				autoBlur: false,
-				smoothPlayBar: true,
-				keyEnabled: true,
-				remainingDuration: false,
-				toggleDuration: true
-			});";
-		if ( !is_admin() ) :
-			$html .= "
-			$(\"#jquery_jplayer_{$audio_id}\").on(
-				$.jPlayer.event.play, function(event) {
-					var mediaName = event.jPlayer.status.src;
-					$(this).jPlayer(\"pauseOthers\");
-					ga('hpmprod.send', 'event', 'jPlayer', 'Play', mediaName);
-					ga('hpmRollupprod.send', 'event', 'jPlayer', 'Play', mediaName);
-				}
-			);
-			$(\"#jquery_jplayer_{$audio_id}\").on(
-				$.jPlayer.event.ended, function(event) {
-					var mediaName = event.jPlayer.status.src;
-					ga('hpmprod.send', 'event', 'jPlayer', 'Ended', mediaName);
-					ga('hpmRollupprod.send', 'event', 'jPlayer', 'Ended', mediaName);
-				}
-			);";
-		endif;
-		$html .= "
-		});
-	</script>
-</div>"; */
 	endif;
 	return $html;
 }
@@ -771,3 +673,51 @@ function hpm_programs_shortcode( $atts ) {
 	return $out;
 }
 add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
+
+function hpm_careers_trans() {
+	$output = get_transient( 'hpm_careers' );
+	if ( !empty( $output ) ) :
+		return $output;
+	endif;
+	$curl = curl_init();
+
+	curl_setopt_array( $curl, [
+		CURLOPT_URL => 'https://uhs.taleo.net/careersection/rest/jobboard/searchjobs?lang=en&portal=8100120292',
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => '',
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => 'POST',
+		CURLOPT_POSTFIELDS =>'{"multilineEnabled":false,"sortingSelection":{"sortBySelectionParam":"3","ascendingSortingOrder":"false"},"fieldData":{"fields":{"KEYWORD":""},"valid":true},"filterSelectionParam":{"searchFilterSelections":[{"id":"POSTING_DATE","selectedValues":[]},{"id":"ORGANIZATION","selectedValues":["14400120292"]},{"id":"JOB_TYPE","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_SCHEDULE","selectedValues":[]}]},"advancedSearchFiltersSelectionParam":{"searchFilterSelections":[{"id":"ORGANIZATION","selectedValues":[]},{"id":"LOCATION","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_NUMBER","selectedValues":[]},{"id":"URGENT_JOB","selectedValues":[]},{"id":"EMPLOYEE_STATUS","selectedValues":[]},{"id":"STUDY_LEVEL","selectedValues":[]},{"id":"JOB_SHIFT","selectedValues":[]}]},"pageNo":1}',
+		CURLOPT_HTTPHEADER => [
+			'Referer: https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)',
+			'Origin: https://uhs.taleo.net',
+			'X-Requested-With: XMLHttpRequest',
+			'tz: GMT-06:00',
+			'tzname: America/Chicago',
+			'Pragma: no-cache',
+			'Content-Type: application/json',
+			'Cookie: locale=en'
+		],
+	]);
+
+	$response = curl_exec( $curl );
+
+	curl_close( $curl );
+	$json = json_decode( $response, true );
+	if ( empty( $json['requisitionList'] ) ) :
+		$output = '<p>Thank you for your interest in Houston Public Media. We do not currently have any job openings. Please check back later, or you can check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
+		set_transient( 'hpm_careers', $output, 3600 );
+		return $output;
+	endif;
+	$output = '<ul>';
+	foreach ( $json['requisitionList'] as $j ) :
+		$output .= "<li><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong> (Posted on " . trim( $j['column'][2] ) . ")</a></li>";
+	endforeach;
+	$output .= '</ul><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
+	set_transient( 'hpm_careers', $output, 3600 );
+	return $output;
+}
+add_shortcode( 'hpm_careers', 'hpm_careers_trans' );
