@@ -211,7 +211,7 @@ get_header(); ?>
 			.page-template-page-passport .page-content form#passport-lookup button {
 				background-color: var(--main-red);
 			}
-			.page-template-page-passport .page-content form input {
+			.page-template-page-passport .page-content form input[type="text"] {
 				width: 70%;
 				padding: 0.5em;
 				border: 1px solid #464646;

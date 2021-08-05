@@ -539,11 +539,12 @@ a[href^="javascript:"]::after {
   width: 100%;
   grid-column: 1/span 3;
   grid-row: 3;
+  display: grid;
+  grid-template-columns: 33.3333% 33.3333% 33.3333%;
 }
 #masthead #top-listen,
 #masthead #top-watch {
   text-align: center;
-  width: 33.3333%;
 }
 #masthead #top-listen button,
 #masthead #top-watch button {
@@ -565,7 +566,6 @@ a[href^="javascript:"]::after {
   background: #00566C;
 }
 #masthead #top-schedule {
-  width: 33.33333%;
   position: relative;
 }
 #masthead #top-schedule .top-schedule-link-wrap {
@@ -647,13 +647,12 @@ nav#site-navigation {
   z-index: 900;
   top: 0;
   left: calc(100% - 5rem);
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
   transition: 280ms left ease-out;
   width: 5em;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 5em calc(100% - 5em);
+  grid-template-columns: 5rem calc(100% - 5rem);
 }
 nav#site-navigation #top-mobile-menu {
   height: 5rem;
@@ -688,6 +687,8 @@ nav#site-navigation:focus-within {
   left: 0;
   height: 100vh;
   width: 100vw;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 nav#site-navigation:focus-within #top-mobile-menu .top-mobile-text::before {
   content: "CLOSE";
@@ -699,6 +700,7 @@ nav#site-navigation > div {
   border-left: 0.25rem solid #99c5d3;
   background-color: white;
   box-shadow: -0.5em 0 0.25em rgba(0, 0, 0, 0.25);
+  width: 100%;
 }
 nav#site-navigation > div > div > ul > li {
   position: relative;
@@ -752,7 +754,7 @@ nav#site-navigation > div > div > ul > li > ul {
   overflow-x: hidden;
   overflow-y: scroll;
   transition: 280ms left ease-out;
-  max-width: 100%;
+  width: 100%;
 }
 nav#site-navigation > div > div > ul > li > ul div.nav-top-head {
   font-weight: 700;
@@ -839,6 +841,20 @@ body.nav-active-menu {
   #masthead .site-branding .site-logo {
     margin: 1rem;
   }
+
+  nav#site-navigation:focus-within {
+    left: 40vw;
+    width: 60vw;
+  }
+  nav#site-navigation > div {
+    border-left: 0.25rem solid #99c5d3;
+    background-color: white;
+    box-shadow: -0.5em 0 0.25em rgba(0, 0, 0, 0.25);
+    width: 100%;
+  }
+  nav#site-navigation > div > div > ul > li:focus-within > ul {
+    left: calc(60vw - 5.25em);
+  }
 }
 @media screen and (min-width: 58rem) {
   #hm-top p span::after {
@@ -870,33 +886,55 @@ body.nav-active-menu {
   nav#site-navigation > div > div > ul > li > a, nav#site-navigation > div > div > ul > li button {
     justify-content: center;
     padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
   }
   nav#site-navigation > div > div > ul > li > button:after {
-    right: 2rem;
+    right: 1.5rem;
     top: 0.75rem;
     border-left-color: transparent;
     border-top-color: rgba(0, 0, 0, 0.45);
   }
   nav#site-navigation > div > div > ul > li > ul {
     overflow: auto;
-    border-radius: 0.25em;
-    box-shadow: 0 0.15em 0.25em rgba(0, 0, 0, 0.25);
-    padding: 0.75em;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.15rem 0.25rem rgba(0, 0, 0, 0.25);
+    padding: 1rem;
     height: auto;
     min-width: max-content;
     position: absolute;
     top: calc(100% - 0.25rem);
-    left: 50%;
-    transform: rotateX(-90deg) translateX(-50%);
+    left: 0;
+    transform: rotateX(-90deg);
     transform-origin: top center;
     opacity: 0.3;
-    transition: 280ms all 120ms ease-out;
+    transition: 280ms all 200ms ease-out;
+    display: grid;
+    grid-auto-flow: column;
+  }
+  nav#site-navigation > div > div > ul > li > ul > li {
+    width: 12rem;
+    padding: 0;
+    grid-column: 1;
+  }
+  nav#site-navigation > div > div > ul > li > ul > li .nav-top-head {
+    padding: 0;
+  }
+  nav#site-navigation > div > div > ul > li > ul > li a {
+    padding: 0 0 0.5rem 0;
+  }
+  nav#site-navigation > div > div > ul > li > ul > li.menu-item-has-children {
+    padding: 0.5rem;
+    grid-column: initial;
   }
   nav#site-navigation > div > div > ul > li:hover > ul, nav#site-navigation > div > div > ul > li:focus-within > ul {
     opacity: 1;
-    transform: rotateX(0) translateX(-50%);
+    transform: rotateX(0);
     visibility: visible;
-    left: 50%;
+    left: 0;
+  }
+  nav#site-navigation > div > div > ul > li:hover:last-child > ul, nav#site-navigation > div > div > ul > li:focus-within:last-child > ul {
+    left: auto;
+    right: 0;
   }
   nav#site-navigation .nav-back {
     display: none;
@@ -922,7 +960,8 @@ body.nav-active-menu {
 
   #masthead .site-branding {
     background-color: transparent;
-    grid-template-columns: 15rem auto 5rem 5rem;
+    grid-template-columns: 15rem auto 9rem 9rem;
+    gap: 1rem;
   }
   #masthead .site-branding .site-logo a {
     background-image: url(https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Color.png);
@@ -931,6 +970,69 @@ body.nav-active-menu {
   #masthead .site-branding section {
     grid-column: 2;
     grid-row: 1;
+    display: grid;
+    grid-template-columns: auto 8rem 8rem;
+    gap: 3rem;
+  }
+  #masthead #top-schedule {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  #masthead #top-schedule div.top-schedule-label {
+    width: max-content;
+  }
+  #masthead #top-schedule div.top-schedule-label button {
+    background-color: transparent;
+    color: black;
+  }
+  #masthead #top-schedule div.top-schedule-label button .fas {
+    display: none;
+  }
+  #masthead #top-schedule div.top-schedule-label button::after {
+    content: ":";
+  }
+  #masthead #top-schedule .top-schedule-link-wrap {
+    width: auto;
+    flex-grow: 3;
+    position: static;
+    transform: rotateX(0);
+    opacity: 1;
+  }
+  #masthead #top-schedule .top-schedule-link-wrap .top-schedule-links {
+    width: max-content;
+  }
+  #masthead #top-schedule .top-schedule-link-wrap .top-schedule-links a {
+    color: var(--accent-light-blue-1);
+    background-color: transparent;
+    font-size: 1.25rem;
+    padding: 0.25rem 1rem;
+  }
+  #masthead #top-schedule .top-schedule-link-wrap .top-schedule-links + .top-schedule-links {
+    border-left: 1px solid #808080;
+  }
+  #masthead #top-donate {
+    height: 3rem;
+    width: 9rem;
+    margin: 1rem 0;
+    background-color: #A40E26;
+    text-align: center;
+    color: #fff;
+    padding: 0.75rem 1rem;
+  }
+  #masthead #top-donate a {
+    color: white;
+  }
+  #masthead #top-donate .fas {
+    font-size: 1.25rem;
+    line-height: 1rem;
+    margin: 0;
+    padding-right: 0.5rem;
+  }
+  #masthead #top-donate br {
+    display: none;
+  }
+  #masthead #top-donate .top-mobile-text {
+    font-size: 1.25rem;
   }
 }
 @media screen and (min-width: 64rem) {
