@@ -53,30 +53,11 @@ hpm.getJSON = function(url, callback) {
 
 hpm.navHandlers = () => {
 	var siteNav = document.querySelector('nav#site-navigation');
-	var topMenu = document.querySelector('#top-mobile-menu');
-	var navBack = document.querySelectorAll('.nav-back > button');
- 	Array.from(navBack).forEach((nB) => {
-		nB.addEventListener('click', () => {
-			topMenu.focus();
-		});
+	siteNav.addEventListener('focusin', (event) => {
+		document.body.classList.add('nav-active-menu');
 	});
-	if (!document.body.classList.contains('single-embeds')) {
-		if ( topMenu !== null ) {
-			topMenu.addEventListener('click', (event) => {
-				if ( document.body.classList.contains('nav-active-menu') ) {
-					document.body.classList.remove('nav-active-menu');
-					document.body.focus();
-				} else {
-					document.body.classList.add('nav-active-menu');
-				}
-			});
-		}
-	}
 	siteNav.addEventListener('focusout', (event) => {
-		if ( !siteNav.matches(':focus-within') ) {
-			document.body.classList.remove('nav-active-menu');
-			topMenu.classList.remove('nav-active');
-		}
+		document.body.classList.remove('nav-active-menu');
 	});
 	// if (!document.body.classList.contains('single-embeds')) {
 		// var topMenu = document.querySelector('#top-mobile-menu');

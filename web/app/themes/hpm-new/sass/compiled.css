@@ -642,6 +642,28 @@ a[href^="javascript:"]::after {
   font-size: 2rem;
 }
 
+.nav-button {
+  height: 5rem;
+  width: 5rem;
+  background-color: #C8102E;
+  text-align: center;
+  color: #fff;
+  padding: 1rem;
+  transition: all 0.2s ease-out;
+  border: 0;
+  outline: 0;
+  z-index: 901;
+}
+.nav-button:hover {
+  cursor: pointer;
+}
+.nav-button .fas {
+  font-size: 2.5rem;
+  line-height: 2rem;
+  margin: 0;
+  font-weight: 900;
+}
+
 nav#site-navigation {
   height: 5rem;
   z-index: 900;
@@ -654,47 +676,17 @@ nav#site-navigation {
   grid-auto-flow: column;
   grid-template-columns: 5rem calc(100% - 5rem);
 }
-nav#site-navigation #top-mobile-menu {
-  height: 5rem;
-  width: 5rem;
-  background-color: #C8102E;
-  text-align: center;
-  color: #fff;
-  padding: 1rem;
-  transition: all 0.2s ease-out;
-  border: 0;
-  outline: 0;
-  z-index: 901;
-}
-nav#site-navigation #top-mobile-menu:hover {
-  cursor: pointer;
-}
-nav#site-navigation #top-mobile-menu .icon::before {
-  content: "";
-  font-size: 2.5rem;
-  line-height: 2rem;
-  margin: 0;
-  display: inline-block;
-  font-weight: 900;
-  font-family: "Font Awesome 5 Free";
-  position: relative;
-}
-nav#site-navigation #top-mobile-menu .top-mobile-text::before {
-  content: "MENU";
-}
 nav#site-navigation:focus-within {
   position: fixed;
-  left: 0;
+  left: 5rem;
   height: 100vh;
-  width: 100vw;
+  width: calc(100% - 5rem);
   overflow-y: scroll;
   overflow-x: hidden;
+  grid-template-columns: 100%;
 }
-nav#site-navigation:focus-within #top-mobile-menu .top-mobile-text::before {
-  content: "CLOSE";
-}
-nav#site-navigation:focus-within #top-mobile-menu .icon::before {
-  content: "";
+nav#site-navigation:focus-within .nav-button {
+  display: none;
 }
 nav#site-navigation > div {
   border-left: 0.25rem solid #99c5d3;
@@ -722,7 +714,7 @@ nav#site-navigation > div > div > ul > li > button {
 nav#site-navigation > div > div > ul > li > button:after {
   content: "";
   border: 0.375rem solid transparent;
-  border-left-color: rgba(0, 0, 0, 0.45);
+  border-top-color: rgba(0, 0, 0, 0.45);
   position: absolute;
   right: 0.5rem;
   top: 1.25rem;
@@ -744,17 +736,15 @@ nav#site-navigation > div > div > ul > li.nav-passport a svg {
   width: 9rem;
 }
 nav#site-navigation > div > div > ul > li > ul {
-  position: fixed;
-  height: 100vh;
-  left: 105%;
   background-color: white;
-  box-shadow: -0.5em 0 0.25em rgba(0, 0, 0, 0.25);
-  top: 0;
-  z-index: 903;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  transition: 280ms left ease-out;
+  transition: 280ms all 200ms ease-out;
   width: 100%;
+  transform: rotateX(-90deg);
+  transform-origin: top center;
+  opacity: 0.3;
+  padding: 1rem;
+  border-bottom: 1px solid #808080;
+  position: absolute;
 }
 nav#site-navigation > div > div > ul > li > ul div.nav-top-head {
   font-weight: 700;
@@ -770,31 +760,21 @@ nav#site-navigation > div > div > ul > li > ul div.nav-top-head li a {
   font-size: 1rem;
 }
 nav#site-navigation > div > div > ul > li:focus-within > ul {
-  left: 5.25em;
+  opacity: 1;
+  transform: rotateX(0);
+  visibility: visible;
+  position: static;
 }
-nav#site-navigation > div li.nav-back > button {
-  width: 100%;
-  background-color: #f2f3f3;
-  color: var(--accent-black-2);
-  padding: 1rem 1rem 1rem 1.75rem;
-  font-size: 1.75rem;
-  position: relative;
-  transition: opacity 0.2s ease-out;
-  border: 0;
-  margin-bottom: 1rem;
-}
-nav#site-navigation > div li.nav-back > button:before {
-  content: "<";
-  display: inline-block;
-  font-size: 1.75rem;
+nav#site-navigation > div > div > ul > li:focus-within > button:after {
+  content: "";
+  border-top-color: transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.45);
   position: absolute;
-  left: 0.125rem;
-  padding-right: 0.5rem;
-  color: var(--accent-black-2);
+  right: 0.5rem;
+  top: 1.25rem;
 }
-nav#site-navigation > div li.nav-back > button:hover {
-  opacity: 0.75;
-  cursor: pointer;
+nav#site-navigation > div li.nav-back {
+  display: none;
 }
 nav#site-navigation ul {
   list-style: none;
@@ -802,8 +782,18 @@ nav#site-navigation ul {
   padding: 0;
 }
 
+body #top-mobile-close {
+  display: none;
+  transition: 280ms left ease-out;
+}
 body.nav-active-menu {
   position: fixed;
+}
+body.nav-active-menu #top-mobile-close {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 #hm-top {

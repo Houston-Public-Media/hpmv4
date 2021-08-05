@@ -14,10 +14,6 @@ get_header(); ?>
 				position: relative;
 				margin: 0;
 			}
-			.page-template-page-passport.passport-faqs .page-header,
-			.page-template-page-passport.passport-donation .page-header{
-				padding-bottom: calc(100%/6);
-			}
 			.page-template-page-passport article {
 				margin: 0 0 1em 0;
 			}
@@ -34,8 +30,8 @@ get_header(); ?>
 				color: white;
 			}
 			.page-template-page-passport .page-header .page-title svg {
-				height: 1.375em;
-				padding: 0 0.375em 0.25em 0;
+				height: 1.22em;
+				padding: 0 1rem 0 0;
 			}
 			.page-template-page-passport.passport-faqs .page-header .page-title,
 			.page-template-page-passport.passport-donation .page-header .page-title {
@@ -273,12 +269,13 @@ get_header(); ?>
 				.page-template-page-passport .page-header {
 					padding-bottom: calc(100%/3.6676);
 				}
+				.page-template-page-passport.passport-faqs .page-header,
+				.page-template-page-passport.passport-donation .page-header{
+					padding-bottom: calc(100%/6);
+				}
 				.page-template-page-passport .page-header .page-title {
 					padding: 0.5em 1em 0.25em 1em;
 					font-size: 2.5em;
-				}
-				.page-template-page-passport .page-header .page-title svg {
-					height: 1.5em;
 				}
 				.page-template-page-passport .page-content p {
 					font-size: 1.0625em;
