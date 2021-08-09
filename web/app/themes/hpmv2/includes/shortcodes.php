@@ -694,9 +694,9 @@ add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
 
 function hpm_careers_trans() {
 	$output = get_transient( 'hpm_careers' );
-	// if ( !empty( $output ) ) :
-	// 	return $output;
-	// endif;
+	if ( !empty( $output ) ) :
+		return $output;
+	endif;
 	$curl = curl_init();
 
 	curl_setopt_array( $curl, [
