@@ -165,6 +165,7 @@
 	border: 0;
 	outline: 0;
 	z-index: 901;
+	position: absolute;
 	&:hover {
 		cursor: pointer;
 	}
@@ -198,70 +199,69 @@ nav#site-navigation {
 			display: none;
 		}
 	}
-	> div {
+	> div.nav-wrap {
 		border-left: 0.25rem solid rgb(153,197,211);
 		background-color: rgb(255,255,255);
 		box-shadow: -0.5em 0 0.25em rgba(0, 0, 0, 0.25);
 		width: 100%;
-		> div > ul {
-			> li {
+		> div > ul > li {
+			position: relative;
+			a, div[tabindex="0"] {
+				font-weight: 700;
+				font-size: 1.25rem;
+				text-decoration: none;
+				color: var(--accent-black-1);
+				display: inline-flex;
+				padding: 0.75rem;
+				border: 0;
+				background-color: transparent;
+				width: 100%;
+			}
+			> div {
 				position: relative;
-				a, button {
-					font-weight: 700;
-					font-size: 1.25rem;
-					text-decoration: none;
-					color: var(--accent-black-2);
-					display: inline-flex;
-					padding: 0.75rem;
-					border: 0;
-					background-color: transparent;
-					width: 100%;
-				}
-				> button {
-					position: relative;
-					&:after {
-						content: "";
-						border: 0.375rem solid transparent;
-						border-top-color: rgba(0, 0, 0, 0.45);
-						position: absolute;
-						right: 0.5rem;
-						top: 1.25rem;
-					}
-				}
-				&.nav-uh button,
-				&.nav-uh a {
-					color: var(--main-red);
-				}
-				&.nav-uh .nav-back button {
-					color: var(--accent-black-2);
-				}
-				&.nav-kids a {
-					color: #df8d29;
-				}
-				&.nav-passport a {
-					display: flex;
-					align-items: center;
-					svg {
-						width: 9rem;
-					}
-				}
-				> ul {
-					background-color: white;
-					transition: 280ms all 200ms ease-out;
-					width: 100%;
-					transform: rotateX(-90deg);
-					transform-origin: top center;
-					opacity: 0.3;
-					padding: 1rem;
-					border-bottom: 1px solid #808080;
+				&:after {
+					content: "";
+					border: 0.375rem solid transparent;
+					border-top-color: rgba(0, 0, 0, 0.45);
 					position: absolute;
+					right: 0.5rem;
+					top: 1.25rem;
+				}
+			}
+			&.nav-uh div[tabindex="0"],
+			&.nav-uh a {
+				color: var(--main-red);
+			}
+			&.nav-uh .nav-back div[tabindex="0"] {
+				color: var(--accent-black-2);
+			}
+			&.nav-kids a {
+				color: #df8d29;
+			}
+			&.nav-passport a {
+				display: flex;
+				align-items: center;
+				svg {
+					width: 9rem;
+				}
+			}
+			> ul {
+				transition: 200ms all ease-out;
+				width: 100%;
+				transform: rotateX(-90deg);
+				transform-origin: top center;
+				opacity: 0.3;
+				padding: 1rem;
+				position: absolute;
+				> li {
+					padding-bottom: 1rem;
 					div.nav-top-head {
 						font-weight: 700;
 						font-size: 1.25rem;
 						text-decoration: none;
 						color: var(--accent-dark-blue-2);
 						display: block;
-						padding: 0 0 1rem 1rem;
+						padding: 0 0 1rem 0;
 						text-transform: uppercase;
 						li a {
 							text-transform: initial;
@@ -269,21 +269,22 @@ nav#site-navigation {
 						}
 					}
 				}
-				&:focus-within {
-					> ul {
-						opacity: 1;
-						transform: rotateX(0);
-						visibility: visible;
-						position: static;
-					}
-					> button:after {
-						content: "";
-						border-top-color: transparent;
-						border-bottom-color: rgba(0, 0, 0, 0.45);
-						position: absolute;
-						right: 0.5rem;
-						top: 1.25rem;
-					}
+			}
+			&:focus-within {
+				background-color: #eee;
+				> ul {
+					opacity: 1;
+					transform: rotateX(0);
+					visibility: visible;
+					position: static;
+				}
+				> div[tabindex="0"]:after {
+					content: "";
+					border-top-color: transparent;
+					border-bottom-color: rgba(0, 0, 0, 0.45);
+					position: absolute;
+					right: 0.5rem;
+					top: 1.25rem;
 				}
 			}
 		}

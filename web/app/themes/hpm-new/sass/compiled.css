@@ -653,6 +653,7 @@ a[href^="javascript:"]::after {
   border: 0;
   outline: 0;
   z-index: 901;
+  position: absolute;
 }
 .nav-button:hover {
   cursor: pointer;
@@ -688,30 +689,30 @@ nav#site-navigation:focus-within {
 nav#site-navigation:focus-within .nav-button {
   display: none;
 }
-nav#site-navigation > div {
+nav#site-navigation > div.nav-wrap {
   border-left: 0.25rem solid #99c5d3;
   background-color: white;
   box-shadow: -0.5em 0 0.25em rgba(0, 0, 0, 0.25);
   width: 100%;
 }
-nav#site-navigation > div > div > ul > li {
+nav#site-navigation > div.nav-wrap > div > ul > li {
   position: relative;
 }
-nav#site-navigation > div > div > ul > li a, nav#site-navigation > div > div > ul > li button {
+nav#site-navigation > div.nav-wrap > div > ul > li a, nav#site-navigation > div.nav-wrap > div > ul > li div[tabindex="0"] {
   font-weight: 700;
   font-size: 1.25rem;
   text-decoration: none;
-  color: var(--accent-black-2);
+  color: var(--accent-black-1);
   display: inline-flex;
   padding: 0.75rem;
   border: 0;
   background-color: transparent;
   width: 100%;
 }
-nav#site-navigation > div > div > ul > li > button {
+nav#site-navigation > div.nav-wrap > div > ul > li > div {
   position: relative;
 }
-nav#site-navigation > div > div > ul > li > button:after {
+nav#site-navigation > div.nav-wrap > div > ul > li > div:after {
   content: "";
   border: 0.375rem solid transparent;
   border-top-color: rgba(0, 0, 0, 0.45);
@@ -719,53 +720,57 @@ nav#site-navigation > div > div > ul > li > button:after {
   right: 0.5rem;
   top: 1.25rem;
 }
-nav#site-navigation > div > div > ul > li.nav-uh button, nav#site-navigation > div > div > ul > li.nav-uh a {
+nav#site-navigation > div.nav-wrap > div > ul > li.nav-uh div[tabindex="0"], nav#site-navigation > div.nav-wrap > div > ul > li.nav-uh a {
   color: var(--main-red);
 }
-nav#site-navigation > div > div > ul > li.nav-uh .nav-back button {
+nav#site-navigation > div.nav-wrap > div > ul > li.nav-uh .nav-back div[tabindex="0"] {
   color: var(--accent-black-2);
 }
-nav#site-navigation > div > div > ul > li.nav-kids a {
+nav#site-navigation > div.nav-wrap > div > ul > li.nav-kids a {
   color: #df8d29;
 }
-nav#site-navigation > div > div > ul > li.nav-passport a {
+nav#site-navigation > div.nav-wrap > div > ul > li.nav-passport a {
   display: flex;
   align-items: center;
 }
-nav#site-navigation > div > div > ul > li.nav-passport a svg {
+nav#site-navigation > div.nav-wrap > div > ul > li.nav-passport a svg {
   width: 9rem;
 }
-nav#site-navigation > div > div > ul > li > ul {
-  background-color: white;
-  transition: 280ms all 200ms ease-out;
+nav#site-navigation > div.nav-wrap > div > ul > li > ul {
+  transition: 200ms all ease-out;
   width: 100%;
   transform: rotateX(-90deg);
   transform-origin: top center;
   opacity: 0.3;
   padding: 1rem;
-  border-bottom: 1px solid #808080;
   position: absolute;
 }
-nav#site-navigation > div > div > ul > li > ul div.nav-top-head {
+nav#site-navigation > div.nav-wrap > div > ul > li > ul > li {
+  padding-bottom: 1rem;
+}
+nav#site-navigation > div.nav-wrap > div > ul > li > ul > li div.nav-top-head {
   font-weight: 700;
   font-size: 1.25rem;
   text-decoration: none;
   color: var(--accent-dark-blue-2);
   display: block;
-  padding: 0 0 1rem 1rem;
+  padding: 0 0 1rem 0;
   text-transform: uppercase;
 }
-nav#site-navigation > div > div > ul > li > ul div.nav-top-head li a {
+nav#site-navigation > div.nav-wrap > div > ul > li > ul > li div.nav-top-head li a {
   text-transform: initial;
   font-size: 1rem;
 }
-nav#site-navigation > div > div > ul > li:focus-within > ul {
+nav#site-navigation > div.nav-wrap > div > ul > li:focus-within {
+  background-color: #eee;
+}
+nav#site-navigation > div.nav-wrap > div > ul > li:focus-within > ul {
   opacity: 1;
   transform: rotateX(0);
   visibility: visible;
   position: static;
 }
-nav#site-navigation > div > div > ul > li:focus-within > button:after {
+nav#site-navigation > div.nav-wrap > div > ul > li:focus-within > div[tabindex="0"]:after {
   content: "";
   border-top-color: transparent;
   border-bottom-color: rgba(0, 0, 0, 0.45);
@@ -773,7 +778,7 @@ nav#site-navigation > div > div > ul > li:focus-within > button:after {
   right: 0.5rem;
   top: 1.25rem;
 }
-nav#site-navigation > div li.nav-back {
+nav#site-navigation > div.nav-wrap li.nav-back {
   display: none;
 }
 nav#site-navigation ul {

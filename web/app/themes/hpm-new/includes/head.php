@@ -19,9 +19,9 @@ function hpm_site_header() { ?>
 						<div id="top-watch"><button data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
 					</section>
 					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<button id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></button>
+					<div tabindex="0" id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<button id="top-mobile-menu" class="nav-button"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">MENU</span></button>
+						<div tabindex="0" id="top-mobile-menu" class="nav-button"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">MENU</span></div>
 						<div class="nav-wrap">
 							<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
 							<?php

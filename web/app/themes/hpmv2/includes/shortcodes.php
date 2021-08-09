@@ -175,16 +175,34 @@ function article_display_shortcode( $atts ) {
 	], $atts, 'multilink' ) );
 	$args = [
 		'posts_per_page' => $num,
-		'ignore_sticky_posts' => 1
+		'ignore_sticky_posts' => 1,
+		'post_type' => 'post',
+		'post_status' => 'publish'
 	];
 	if ( !empty( $hpm_constants ) ) :
 		$args['post__not_in'] = $hpm_constants;
 	endif;
-	if ( !empty( $category ) ) :
-		$args['category_name'] = $category;
-	endif;
-	if ( !empty( $tag ) ) :
-		$args['tag_slug__in'][] = $tag;
+	if ( !empty( $category ) && !empty( $tag ) ) :
+		$args['tax_query'] = [
+			'relation' => 'OR',
+			[
+				'taxonomy' => 'category',
+				'field'    => 'slug',
+				'terms'    => [ $category ],
+			],
+			[
+				'taxonomy' => 'post_tag',
+				'field'    => 'slug',
+				'terms'    => [ $tag ],
+			],
+		];
+	else:
+		if ( !empty( $category ) ) :
+			$args['category_name'] = $category;
+		endif;
+		if ( !empty( $tag ) ) :
+			$args['tag_slug__in'][] = $tag;
+		endif;
 	endif;
 	if ( !empty( $post_id ) ) :
 		$i_exp = explode( ',', $post_id );
@@ -676,9 +694,9 @@ add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
 
 function hpm_careers_trans() {
 	$output = get_transient( 'hpm_careers' );
-	if ( !empty( $output ) ) :
-		return $output;
-	endif;
+	// if ( !empty( $output ) ) :
+	// 	return $output;
+	// endif;
 	$curl = curl_init();
 
 	curl_setopt_array( $curl, [
@@ -707,17 +725,73 @@ function hpm_careers_trans() {
 
 	curl_close( $curl );
 	$json = json_decode( $response, true );
+	$desc = json_decode( file_get_contents( 'https://cdn.hpm.io/assets/taleo.json' ), true );
 	if ( empty( $json['requisitionList'] ) ) :
 		$output = '<p>Thank you for your interest in Houston Public Media. We do not currently have any job openings. Please check back later, or you can check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 		set_transient( 'hpm_careers', $output, 3600 );
 		return $output;
 	endif;
-	$output = '<ul>';
+	$output = '<ul class="job-listings">';
 	foreach ( $json['requisitionList'] as $j ) :
-		$output .= "<li><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong> (Posted on " . trim( $j['column'][2] ) . ")</a></li>";
+		$output .= "<li><h2><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong></a></h2>";
+		if ( !empty( $desc[ $j['contestNo'] ] ) ) :
+			$output .= '<div class="info-toggle"><em><strong>More</strong></em></div>
+			<div class="info-toggle-hidden">' . $desc[ $j['contestNo'] ] . '</div>';
+		endif;
+		$output .= '</li>';
 	endforeach;
-	$output .= '</ul><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
+	$output .= '</ul><p><em>The University of Houston is an Equal Opportunity/Affirmative Action institution. Minorities, women, veterans and persons with disabilities are encouraged to apply. Additionally, the University prohibits discrimination in employment on the basis of sexual orientation, gender identity or gender expression.</em></p><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 	set_transient( 'hpm_careers', $output, 3600 );
 	return $output;
 }
 add_shortcode( 'hpm_careers', 'hpm_careers_trans' );
+
+function hpm_townsquare_covid( $atts ) {
+	global $hpm_constants;
+	if ( empty( $hpm_constants ) ) :
+		$hpm_constants = [];
+	endif;
+	extract( shortcode_atts( [], $atts, 'multilink' ) );
+	$args = [
+		'posts_per_page' => 1,
+		'ignore_sticky_posts' => 1,
+		'category_name' => 'town-square+coronavirus',
+		'post_type' => 'post',
+		'post_status' => 'publish',
+		'meta_query' => [[
+			'key' => 'hpm_podcast_enclosure',
+			'compare' => 'EXISTS'
+		]]
+	];
+	$art = new WP_query( $args );
+	$output = '';
+	if ( $art->have_posts() ) :
+		while ( $art->have_posts() ) : $art->the_post();
+			$postClass = get_post_class();
+			$fl_array = preg_grep("/felix-type-/", $postClass);
+			$fl_arr = array_keys( $fl_array );
+			$postClass[$fl_arr[0]] = 'felix-type-b';
+			$postClass[] = 'town-square-feature';
+			$hpm_constants[] = get_the_ID();
+			$podcast = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );
+			wp_enqueue_script('hpm-plyr');
+			$output .= '<article class="'.implode( ' ', $postClass ).'">'.
+				'<div class="thumbnail-wrap" style="background-image: url(https://cdn.hpm.io/assets/images/town-square-logo.webp);">'.
+					'<a class="post-thumbnail" href="/shows/town-square/" aria-hidden="true"></a>'.
+				'</div>'.
+				'<header class="entry-header">'.
+					'<h3><a href="/shows/town-square/">Town Square with Ernie Manouse</a></h3>'.
+					'<p></p>'.
+					'<h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2>'.
+					'<div class="article-player-wrap">'.
+						'<audio class="js-player" controls crossorigin preload="metadata">'.
+							'<source src="'.$podcast['url'].'source=plyr-article" type="audio/mpeg" />'.
+						'</audio>'.
+					'</header>'.
+				'</article>';
+		endwhile;
+	endif;
+	wp_reset_query();
+	return $output;
+}
+add_shortcode( 'covid_ts', 'hpm_townsquare_covid' );

@@ -160,7 +160,7 @@ class HPMv2_Menu_Walker extends Walker_Nav_Menu {
 			// elseif ( $depth > 0 && in_array('nav-back', $classes ) ) :
 			// 	$item_output .= '<div>';
 			else :
-				$item_output .= '<button type="button" aria-expanded="false" aria-controls="'.$item->post_name.'-dropdown">';
+				$item_output .= '<div tabindex="0" aria-expanded="false" aria-controls="'.$item->post_name.'-dropdown">';
 			endif;
 		else :
 			$item_output .= '<a'. $attributes .'>';
@@ -171,7 +171,7 @@ class HPMv2_Menu_Walker extends Walker_Nav_Menu {
 			$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
 		endif;
 		if ( $item->url == '#' ) :
-			$item_output .= '</button>';
+			$item_output .= '</div>';
 		else :
 			$item_output .= '</a>';
 		endif;
