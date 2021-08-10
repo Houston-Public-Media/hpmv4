@@ -50,6 +50,7 @@ hpm.getJSON = function(url, callback) {
 	};
 	xhr.send();
 };
+var eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
 
 hpm.navHandlers = () => {
 	var siteNav = document.querySelector('nav#site-navigation');

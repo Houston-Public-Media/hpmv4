@@ -579,6 +579,7 @@ a[href^="javascript:"]::after {
   opacity: 0.3;
   transition: 280ms all 120ms ease-out;
   display: flex;
+  z-index: 50;
 }
 #masthead #top-schedule:hover .top-schedule-link-wrap, #masthead #top-schedule:focus-within .top-schedule-link-wrap {
   opacity: 1;
@@ -667,7 +668,7 @@ a[href^="javascript:"]::after {
 
 nav#site-navigation {
   height: 5rem;
-  z-index: 900;
+  z-index: 9000;
   top: 0;
   left: calc(100% - 5rem);
   overflow: hidden;
@@ -2196,9 +2197,6 @@ article .post-thumbnail img {
   height: max(18vh, 12rem);
   object-fit: cover;
   width: 100%;
-}
-article.podcasts .post-thumbnail img {
-  aspect-ratio: 1;
 }
 article.card {
   margin: 1rem;

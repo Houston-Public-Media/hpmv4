@@ -776,14 +776,14 @@ function hpm_townsquare_covid( $atts ) {
 			$podcast = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );
 			wp_enqueue_script('hpm-plyr');
 			$output .= '<article class="'.implode( ' ', $postClass ).'">'.
-				'<div class="thumbnail-wrap" style="background-image: url(https://cdn.hpm.io/assets/images/town-square-logo.webp);">'.
-					'<a class="post-thumbnail" href="/shows/town-square/" aria-hidden="true"></a>'.
+				'<div class="img-wrap">'.
+					'<p><a href="/shows/town-square/" aria-hidden="true"><img src="https://cdn.hpm.io/assets/images/town-square-logo.webp" alt="Town Square with Ernie Manouse logo" /></a></p>'.
+					'<p><a href="/listen-live/">Listen Live</a> at 3pm or<br /><a href="/podcasts/town-square/">Download the Podcast</a></p>' .
 				'</div>'.
 				'<header class="entry-header">'.
-					'<h3><a href="/shows/town-square/">Town Square with Ernie Manouse</a></h3>'.
-					'<p></p>'.
-					'<h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2>'.
+					'<h3><a href="/shows/town-square/">The Latest from Town Square</a></h3>'.
 					'<div class="article-player-wrap">'.
+						'<h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2>'.
 						'<audio class="js-player" controls crossorigin preload="metadata">'.
 							'<source src="'.$podcast['url'].'source=plyr-article" type="audio/mpeg" />'.
 						'</audio>'.

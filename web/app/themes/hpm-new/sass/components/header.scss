@@ -87,6 +87,7 @@
 			opacity: 0.3;
 			transition: 280ms all 120ms ease-out;
 			display: flex;
+			z-index: 50;
 		}
 		&:hover,
 		&:focus-within {
@@ -178,7 +179,7 @@
 }
 nav#site-navigation {
 	height: 5rem;
-	z-index: 900;
+	z-index: 9000;
 	top: 0;
 	left: calc(100% - 5rem);
 	overflow: hidden;

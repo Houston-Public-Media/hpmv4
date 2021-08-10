@@ -3,38 +3,19 @@
 Template Name: Corona
 */
 get_header(); ?>
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-			<?PHP while ( have_posts() ) : the_post(); ?>
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="page-header">
-					<h1 class="page-title screen-reader-text"><?php echo get_the_title(); ?></h1>
-				</header><!-- .entry-header -->
-				<div class="page-content">
-					<?php the_content(); ?>
-				</div><!-- .entry-content -->
-				<footer class="page-footer">
-					<?PHP
-					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
-					if ( $tags_list ) {
-						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
-							_x( 'Tags', 'Used before tag names.', 'hpmv2' ),
-							$tags_list
-						);
-					}
-					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
-		<?php endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
 	<style>
+		:root {
+			--plyr-audio-control-color: #ed1c24;
+		}
 		#div-gpt-ad-1488818411584-0 {
 			display: none !important;
 		}
 		.page-content {
 			overflow: hidden;
-			padding: 2.5em 1em 1em;
+			padding: 1em 0;
+		}
+		body.page #main {
+			background-color: transparent;
 		}
 		.page-content p {
 			margin-bottom: 1em;
@@ -137,6 +118,54 @@ get_header(); ?>
 			justify-content: center;
 			align-content: center;
 			align-items: center;
+			flex-flow: column nowrap;
+		}
+		#search-results article .thumbnail-wrap {
+			padding: 0 0 calc(100%/1.5) 0;
+			width: 100%;
+			height: 0;
+		}
+		#search-results article.town-square-feature {
+			background-color: #005790;
+			padding: 1em;
+			display: flex;
+			align-items: center;
+		}
+		#search-results article.town-square-feature a {
+			color: #ffce16;
+		}
+		#search-results article.town-square-feature .img-wrap {
+			width: 100%;
+			padding-bottom: 1em;
+		}
+		#search-results article.town-square-feature .img-wrap p {
+			margin: 0;
+			padding: 0;
+			color: white;
+			text-align: center;
+		}
+		#search-results article.town-square-feature .img-wrap img {
+			height: max(18vh, 12rem);
+			object-fit: cover;
+			width: 100%;
+		}
+		@supports (aspect-ratio: 1) {
+			#search-results article.town-square-feature .img-wrap img {
+				aspect-ratio: 3/2;
+				height: auto;
+			}
+		}
+		#search-results article.town-square-feature .article-player-wrap {
+			background: var(--plyr-audio-controls-background,#fff);
+			padding: 0;
+		}
+		#search-results article.town-square-feature .article-player-wrap h2 {
+			padding: 0.5em 1.125em 0;
+			margin: 0;
+			font-size: 100%;
+		}
+		#search-results article.town-square-feature .article-player-wrap h2 a {
+			color: #005790;
 		}
 		.corona-local {
 			background-color: rgba(255,0,0,0.1);
@@ -175,6 +204,25 @@ get_header(); ?>
 				padding-bottom: calc(100%/4);
 				background-image: url(https://cdn.hpm.io/assets/images/covid19_Tablet.png);
 			}
+			#search-results article .thumbnail-wrap {
+				float: left;
+				width: 33%;
+				padding: 0 0 calc(33%/1.5) 0;
+				margin: 0;
+			}
+			#search-results article.town-square-feature .img-wrap {
+				float: left;
+				width: 33%;
+				padding-bottom: 0;
+			}
+			#search-results article {
+				flex-flow: row nowrap;
+			}
+			#search-results article.town-square-feature .entry-header {
+				float: right;
+				width: 67%;
+				padding-left: 1em;
+			}
 		}
 		@media screen and (min-width: 52.5em) {
 			.page-template-page-corona article {
@@ -191,4 +239,29 @@ get_header(); ?>
 			}
 		}
 	</style>
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+			<?PHP while ( have_posts() ) : the_post(); ?>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="page-header">
+					<h1 class="page-title screen-reader-text"><?php echo get_the_title(); ?></h1>
+				</header><!-- .entry-header -->
+				<div class="page-content">
+					<?php the_content(); ?>
+				</div><!-- .entry-content -->
+				<footer class="page-footer">
+					<?PHP
+					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
+					if ( $tags_list ) {
+						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
+							_x( 'Tags', 'Used before tag names.', 'hpmv2' ),
+							$tags_list
+						);
+					}
+					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
+				</footer><!-- .entry-footer -->
+			</article><!-- #post-## -->
+		<?php endwhile; ?>
+		</main><!-- .site-main -->
+	</div><!-- .content-area -->
 <?php get_footer(); ?>
