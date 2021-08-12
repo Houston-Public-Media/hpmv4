@@ -2,23 +2,47 @@
 	width: 100%;
 	max-width: var(--max-width);
 	margin: 0 auto;
-	&:before, &:after {
-		content: '';
-	}
 	.site-branding {
 		background-color: var(--main-red);
 		display: grid;
 		grid-template-columns: auto 5rem 5rem;
 		.site-logo {
-			margin: 0.375rem 1rem;
+			margin: 0 1rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			a {
 				display: block;
 				width: 100%;
-				height: 100%;
-				background-position: left center;
-				background-repeat: no-repeat;
-				background-image: url('https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Reverse.png');
-				background-size: contain;
+				svg {
+					max-height: 3.5rem;
+					path {
+						fill: white;
+					}
+					.cls-1 {
+						fill: white;
+					}
+					.cls-2 {
+						fill:#da252b;
+					}
+					.cls-3 {
+						fill:#1e7fc3;
+					}
+					.cls-4,
+					.cls-6 {
+						fill:#fff;
+					}
+					.cls-5 {
+						fill: white;
+					}
+					.cls-5,
+					.cls-6 {
+						fill-rule:evenodd;
+					}
+					.cls-6 {
+						fill: var(--main-blue);
+					}
+				}
 			}
 		}
 	}
@@ -27,14 +51,14 @@
 		text-transform: uppercase;
 	}
 	#top-donate {
-		height: 5rem;
-		width: 5rem;
-		background-color: #A40E26;
-		text-align: center;
-		color: #fff;
-		padding: 1rem;
-		a {
-			color: white;
+		> a {
+			height: 5rem;
+			width: 5rem;
+			background-color: #A40E26;
+			text-align: center;
+			color: #fff;
+			padding: 1rem;
+			display: block;
 		}
 		.fas {
 			font-size: 2.5rem;
@@ -220,14 +244,14 @@ nav#site-navigation {
 			}
 			> div {
 				position: relative;
-				&:after {
-					content: "";
-					border: 0.375rem solid transparent;
-					border-top-color: rgba(0, 0, 0, 0.45);
-					position: absolute;
-					right: 0.5rem;
-					top: 1.25rem;
-				}
+			}
+			> div[tabindex="0"]:after {
+				content: "";
+				border: 0.375rem solid transparent;
+				border-top-color: rgba(0, 0, 0, 0.45);
+				position: absolute;
+				right: 0.5rem;
+				top: 1.25rem;
 			}
 			&.nav-uh div[tabindex="0"],
 			&.nav-uh a {
@@ -283,7 +307,6 @@ nav#site-navigation {
 					content: "";
 					border-top-color: transparent;
 					border-bottom-color: rgba(0, 0, 0, 0.45);
-					position: absolute;
 					right: 0.5rem;
 					top: 1.25rem;
 				}
@@ -345,31 +368,67 @@ body {
 	}
 }
 @media screen and (min-width: $tablet) {
-	#masthead .site-branding .site-logo {
-		margin: 1rem;
-	}
 	nav#site-navigation {
 		&:focus-within {
 			left: 40vw;
 			width: 60vw;
 		}
 		> div {
-			border-left: 0.25rem solid rgb(153,197,211);
-			background-color: rgb(255,255,255);
-			box-shadow: -0.5em 0 0.25em rgba(0, 0, 0, 0.25);
-			width: 100%;
 			> div > ul > li {
 				&:focus-within > ul {
-					left: calc(60vw - 5.25em);
+					left: calc(60vw - 5.25rem);
 				}
+			}
+		}
+	}
+	body {
+		&.nav-active-menu {
+			#top-mobile-close {
+				left: calc(40vw - 5rem);
 			}
 		}
 	}
 }
 @media screen and (min-width: $desktop) {
-	#hm-top p span::after {
-		content: "";
-		display: inline;
+	nav#site-navigation {
+		&:focus-within {
+			left: 60vw;
+			width: 40vw;
+		}
+		> div {
+			> div > ul > li {
+				&:focus-within > ul {
+					left: calc(40vw - 5.25rem);
+				}
+			}
+		}
+	}
+	body {
+		&.nav-active-menu {
+			#top-mobile-close {
+				left: calc(60vw - 5rem);
+			}
+		}
+	}
+}
+@media screen and (min-width: $largeDesktop) {
+	#hm-top p {
+		font-size: 1.375rem;
+		span::after {
+			content: "";
+			display: inline;
+		}
+	}
+	body {
+		#top-mobile-close {
+			display: none;
+		}
+		&.nav-active-menu {
+			position: static;
+			#top-mobile-close {
+				display: none;
+			}
+		}
 	}
 	nav#site-navigation {
 		grid-column: 1/span 4;
@@ -383,28 +442,31 @@ body {
 		#top-mobile-menu {
 			display: none;
 		}
-		> div {
+		> div.nav-wrap {
 			box-shadow: none;
 			border-left: 0;
 			> div > ul {
 				display: grid;
 				grid-auto-flow: column;
 				> li {
-					> a,button {
+					> a, div[tabindex="0"] {
+						font-weight: 500;
+						font-size: 1rem;
+						color: var(--accent-black-2);
 						justify-content: center;
-						padding: 0.25rem 0.5rem;
-						text-transform: uppercase;
+						padding: 0.5rem;
 					}
-					> button:after {
-						right: 1.5rem;
-						top: 0.75rem;
+					> div[tabindex="0"]:after {
+						right: -0.25rem;
+						top: 0.5rem;
+						position: relative;
 						border-left-color: transparent;
 						border-top-color: rgba(0,0,0, 0.45);
 					}
 					> ul {
 						overflow: auto;
 						border-radius: 0.25rem;
-						box-shadow: 0 0.15rem 0.25rem rgba(black, 0.25);
+						box-shadow: 0 0 0.5rem rgba(black, 0.25);
 						padding: 1rem;
 						height: auto;
 						min-width: max-content;
@@ -417,15 +479,18 @@ body {
 						transition: 280ms all 200ms ease-out;
 						display: grid;
 						grid-auto-flow: column;
+						background-color: white;
 						> li {
 							width: 12rem;
 							padding: 0;
 							grid-column: 1;
 							.nav-top-head {
 								padding: 0;
+								font-size: 1.125rem;
 							}
 							a {
 								padding: 0 0 0.5rem 0;
+								font-size: 1rem;
 							}
 							&.menu-item-has-children {
 								padding: 0.5rem;
@@ -433,18 +498,51 @@ body {
 							}
 						}
 					}
+					&:last-child > ul {
+						left: auto;
+						right: 0;
+					}
 					&:hover,
 					&:focus-within {
+						cursor: pointer;
+						background-color: #eee;
 						> ul {
 							opacity: 1;
 							transform: rotateX(0);
 							visibility: visible;
 							left: 0;
+							position: absolute;
 						}
 						&:last-child > ul {
 							left: auto;
 							right: 0;
 						}
+						> div[tabindex="0"]:after {
+							border-bottom-color: transparent;
+							border-top-color: rgba(0, 0, 0, 0.45);
+							right: -0.25rem;
+							top: 0.5rem;
+						}
+						&.menu-item-has-children:after {
+							transform: translateX(0);
+							opacity: 1;
+						}
+					}
+					&.nav-passport a svg {
+						width: auto;
+						height: 1.25rem;
+					}
+					&.menu-item-has-children:after {
+						content: "";
+						border: 0.5rem solid transparent;
+						border-bottom-color: #fff;
+						position: absolute;
+						top: calc(100% - 1.25rem);
+						left: 50%;
+						transform: translateX(-50%);
+						transition: 280ms all 200ms ease-out;
+						opacity: 0;
+						will-change: opacity;
 					}
 				}
 			}
@@ -453,13 +551,43 @@ body {
 			display: none;
 		}
 		#top-search {
-			display: none;
+			display: block;
+			position: absolute;
+			right: 0.25rem;
+			background-color: transparent;
+			width: auto;
+			top: -0.75rem;
+			form {
+				top: 1.5rem;
+				right: 3rem;
+				transform: rotateX(-90deg);
+				transform-origin: top center;
+				opacity: 0.3;
+				transition: 280ms all 200ms ease-out;
+				position: absolute;
+				width: 13rem;
+				background-color: #f2f3f3;
+				box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
+			}
+			.search-field {
+				font-size: 1.25rem;
+				padding: 0.5rem;
+			}
+			&:hover {
+				cursor: pointer;
+			}
+			&:focus-within form {
+				opacity: 1;
+				transform: rotateX(0);
+				visibility: visible;
+			}
 		}
 		&:focus-within {
 			position: static;
 			left: initial;
 			height: auto;
 			width: 100%;
+			overflow: visible;
 			#top-mobile-menu {
 				display: none;
 			}
@@ -471,20 +599,37 @@ body {
 		border-bottom: 0.25rem solid rgb(163,204,216);
 	}
 	#masthead {
+		position: relative;
 		.site-branding {
 			background-color: transparent;
-			grid-template-columns: 15rem auto 9rem 9rem;
-			gap: 1rem;
-			.site-logo a {
-				background-image: url( https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Color.png );
-				background-position: left top;
+			grid-template-columns: 12rem auto 8rem 5rem;
+			gap: 0 1rem;
+			.site-logo a svg {
+				path {
+					fill: black;
+				}
+				.cls-1{
+					fill: var(--main-red);
+				}
+				.cls-4,
+				.cls-6{
+					fill:#fff;
+				}
+				.cls-5{
+					fill: var(--main-blue);
+				}
+				.cls-5,
+				.cls-6{
+					fill-rule: evenodd;
+				}
 			}
 			section {
 				grid-column: 2;
 				grid-row: 1;
 				display: grid;
-				grid-template-columns: auto 8rem 8rem;
-				gap: 3rem;
+				grid-template-columns: auto 5rem 6rem;
+				gap: clamp(1rem, 2rem, 3rem);
+				min-height: 4.5rem;
 			}
 		}
 		#top-schedule {
@@ -493,6 +638,7 @@ body {
 			div.top-schedule-label {
 				width: max-content;
 				button {
+					font-size: 1rem;
 					background-color: transparent;
 					color: black;
 					.fas {
@@ -514,8 +660,8 @@ body {
 					a {
 						color: var(--accent-light-blue-1);
 						background-color: transparent;
-						font-size: 1.25rem;
-						padding: 0.25rem 1rem;
+						font-size: 1rem;
+						padding: 0.25rem 0.5rem;
 					}
 				}
 				.top-schedule-links + .top-schedule-links {
@@ -524,18 +670,16 @@ body {
 			}
 		}
 		#top-donate {
-			height: 3rem;
-			width: 9rem;
-			margin: 1rem 0;
-			background-color: #A40E26;
-			text-align: center;
-			color: #fff;
-			padding: 0.75rem 1rem;
-			a {
-				color: white;
+			display: flex;
+			align-items: center;
+			> a {
+				height: auto;
+				width: 8rem;
+				padding: 0.25rem 0;
+				border: 1px solid #a40e26;
 			}
 			.fas {
-				font-size: 1.25rem;
+				font-size: 1rem;
 				line-height: 1rem;
 				margin: 0;
 				padding-right: 0.5rem;
@@ -544,15 +688,23 @@ body {
 				display: none;
 			}
 			.top-mobile-text {
-				font-size: 1.25rem;
+				font-size: 1rem;
+			}
+		}
+		#top-listen,
+		#top-watch {
+			button {
+				padding: 0.25rem 0.5rem;
+				color: var(--accent-light-blue-1);
+				background-color: transparent;
+				border: 1px solid var(--accent-light-blue-1);
+				font-size: 1rem;
 			}
 		}
 	}
 }
 @media screen and (min-width: $largeDesktop) {
-	#hm-top p {
-		font-size: 1.375rem;
-	}
+
 }
 
 

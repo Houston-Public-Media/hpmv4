@@ -54,11 +54,31 @@ var eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
 
 hpm.navHandlers = () => {
 	var siteNav = document.querySelector('nav#site-navigation');
-	siteNav.addEventListener('focusin', (event) => {
+	var buttonDiv = document.querySelectorAll('div[tabindex="0"]');
+	var menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
+	siteNav.addEventListener('focusin', () => {
 		document.body.classList.add('nav-active-menu');
 	});
-	siteNav.addEventListener('focusout', (event) => {
+	siteNav.addEventListener('focusout', () => {
 		document.body.classList.remove('nav-active-menu');
+	});
+	if ( menuWithChildren !== null ) {
+		Array.from(menuWithChildren).forEach((menuC) => {
+			menuC.addEventListener('focusin', () => {
+				menuC.firstElementChild.setAttribute('aria-expanded', 'true');
+			});
+			menuC.addEventListener('focusout', () => {
+				menuC.firstElementChild.setAttribute('aria-expanded', 'false');
+			});
+		});
+	}
+	Array.from(buttonDiv).forEach((bD) => {
+		bD.addEventListener('focusin', () => {
+			bD.setAttribute('aria-expanded', 'true');
+		});
+		bD.addEventListener('focusout', () => {
+			bD.setAttribute('aria-expanded', 'false');
+		});
 	});
 	// if (!document.body.classList.contains('single-embeds')) {
 		// var topMenu = document.querySelector('#top-mobile-menu');
@@ -346,7 +366,6 @@ hpm.npSearch = () => {
 	timeOuts.push(setInterval('hpm.npDataDownload()',60000));
 };
 hpm.npDataDownload = () => {
-	console.log( 'Now Playing load fired' )
 	for (let st in hpm.stationLoad) {
 		hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
 			if (err !== null) {
@@ -418,7 +437,7 @@ hpm.npUpdateHtml = (object,station,next) => {
 document.addEventListener('DOMContentLoaded', () => {
 	hpm.navHandlers();
 	hpm.videoHandlers();
-	hpm.shareHandlers();
+	//hpm.shareHandlers();
 	hpm.audioEmbeds();
 	hpm.contentToggles();
 	hpm.npSearch();

@@ -44,9 +44,28 @@ footer#colophon {
 			margin-top: 2rem;
 		}
 	}
-	.foot-logo img {
+	.foot-logo a {
 		width: 75%;
 		margin: 0 auto;
+		display: block;
+		svg {
+			path {
+				fill: white;
+			}
+			.cls-2 {
+				fill:#da252b;
+			}
+			.cls-3 {
+				fill:#1e7fc3;
+			}
+			.cls-5,
+			.cls-6 {
+				fill-rule:evenodd;
+			}
+			.cls-6 {
+				fill: var(--main-blue);
+			}
+		}
 	}
 	.social-wrap {
 		justify-content: center;
@@ -121,6 +140,9 @@ footer#colophon {
 				}
 			}
 		}
+		.foot-logo a {
+			width: 50%;
+		}
 		.foot-contact {
 			width: 100%;
 			margin: 0 auto;
@@ -152,8 +174,8 @@ footer#colophon {
 			width: 23%;
 			&.foot-logo {
 				width: 23%;
-				img {
-					width: 80%;
+				a {
+					width: 90%;
 				}
 			}
 		}

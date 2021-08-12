@@ -12,11 +12,11 @@ Text Domain: hpmv2
 /* Variables */
 $tablet: 34rem;
 $desktop: 58rem;
-$largeDesktop: 64rem;
+$largeDesktop: 64.25rem;
 :root {
 	--hpm-font-main: 'PBS-Sans',helvetica,arial,sans-serif;
 	--hpm-font-condensed: 'PBS-Sans-Condensed',helvetica,arial,sans-serif;
-	--max-width: 100rem;
+	--max-width: 75rem;
 }
 body {
 	--main-red: #C8102E;

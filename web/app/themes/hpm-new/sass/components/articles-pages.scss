@@ -3,6 +3,11 @@
 .error404 #main {
 	background-color: white;
 }
+/*
+	TODO: figure out if I can use position: sticky on article share buttons
+	TODO: maybe use grid layout in article display to reposition everything
+
+*/
 article {
 	max-width: 100%;
 	padding: 1rem;
@@ -645,9 +650,9 @@ aside {
 		> aside {
 			align-content: flex-start;
 			grid-column: 3;
-			grid-row: 6 / span 6;
+			grid-row: 7 / span 5;
 			&:first-of-type {
-				grid-row: 1 / span 5;
+				grid-row: 1 / span 6;
 				padding-top: 0;
 				padding-bottom: 2rem;
 			}

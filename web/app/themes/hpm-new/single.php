@@ -51,13 +51,9 @@ if ( is_preview() ) : ?>
 					?>
 				</div>
 			</header>
+			<?php hpm_article_share(); ?>
 			<div class="entry-content">
-				<?php
-				the_content( sprintf(
-					__( 'Continue reading %s', 'hpmv2' ),
-					the_title( '<span class="screen-reader-text">', '</span>', false )
-				));
-				hpm_article_share(); ?>
+				<?php the_content(); ?>
 			</div>
 			<footer class="entry-footer">
 				<div class="tags-links">
