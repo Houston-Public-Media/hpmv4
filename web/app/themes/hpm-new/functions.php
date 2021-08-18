@@ -655,27 +655,29 @@ function hpm_article_share($nprdata = null) {
 		$linkedin_link = rawurlencode( $nprdata['permalink'].'?utm_source=linked-share-attachment&utm_medium=button&utm_campaign=hpm-share-link' );
 		$uri_excerpt = rawurlencode( $nprdata['excerpt'] );
 	endif; ?>
-	<div id="article-share" class="social-wrap">
-		<h4>Share</h4>
-		<div class="social-icon facebook">
-			<button data-href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" data-dialog="400:368">
-				<span class="fab fa-facebook-f" aria-hidden="true"></span>
-			</button>
-		</div>
-		<div class="social-icon twitter">
-			<button data-href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
-				<span class="fab fa-twitter" aria-hidden="true"></span>
-			</button>
-		</div>
-		<div class="social-icon linkedin">
-			<button data-href="https://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
-				<span class="fab fa-linkedin-in" aria-hidden="true"></span>
-			</button>
-		</div>
-		<div class="social-icon">
-			<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
-				<span class="fas fa-envelope" aria-hidden="true"></span>
-			</a>
+	<div id="article-share">
+		<div class="social-wrap">
+			<h4>Share</h4>
+			<div class="social-icon facebook">
+				<button data-href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" data-dialog="400:368">
+					<span class="fab fa-facebook-f" aria-hidden="true"></span>
+				</button>
+			</div>
+			<div class="social-icon twitter">
+				<button data-href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
+					<span class="fab fa-twitter" aria-hidden="true"></span>
+				</button>
+			</div>
+			<div class="social-icon linkedin">
+				<button data-href="https://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
+					<span class="fab fa-linkedin-in" aria-hidden="true"></span>
+				</button>
+			</div>
+			<div class="social-icon">
+				<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
+					<span class="fas fa-envelope" aria-hidden="true"></span>
+				</a>
+			</div>
 		</div>
 	</div><?php
 }

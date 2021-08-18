@@ -67,7 +67,32 @@ function hpm_header_info() {
 	else :
 		$ID = $wp_query->queried_object_id;
 
-		if ( is_archive() ) :
+		if ( is_author() ) :
+			global $curauth;
+			global $author_check;
+			$reqs['og_type'] = 'profile';
+			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
+			$reqs['title'] = $curauth->display_name." | Houston Public Media";
+			if ( !empty( $author_check ) ) :
+				while ( $author_check->have_posts() ) :
+					$author_check->the_post();
+					$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
+					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) :
+						$reqs['description'] = $head_excerpt;
+					endif;
+					$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
+					$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
+					if ( !empty( $head_categories ) ) :
+						$reqs['keywords'] = [];
+						foreach( $head_categories as $hcat ) :
+							$reqs['keywords'][] = $hcat->name;
+						endforeach;
+					endif;
+					$reqs['title'] = $curauth->display_name.", ".$author['title']." | Houston Public Media";
+				endwhile;
+				wp_reset_query();
+			endif;
+		elseif ( is_archive() ) :
 			if ( is_post_type_archive() ) :
 				$obj = get_post_type_object( get_post_type() );
 				$reqs['permalink'] = get_post_type_archive_link( get_post_type() );
@@ -160,31 +185,6 @@ function hpm_header_info() {
 			elseif ( get_post_type() === 'staff' ) :
 				$reqs['og_type'] = 'profile';
 			endif;
-		elseif ( is_author() ) :
-			global $curauth;
-			global $author_check;
-			$reqs['og_type'] = 'profile';
-			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
-			$reqs['title'] = $curauth->display_name." | Houston Public Media";
-			if ( !empty( $author_check ) ) :
-				while ( $author_check->have_posts() ) :
-					$author_check->the_post();
-					$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
-					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) :
-						$reqs['description'] = $head_excerpt;
-					endif;
-					$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
-					$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
-					if ( !empty( $head_categories ) ) :
-						$reqs['keywords'] = [];
-						foreach( $head_categories as $hcat ) :
-							$reqs['keywords'][] = $hcat->name;
-						endforeach;
-					endif;
-					$reqs['title'] = $curauth->display_name.", ".$author['title']." | Houston Public Media";
-				endwhile;
-				wp_reset_query();
-			endif;
 		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
 			global $nprdata;
 			$reqs['title'] = $nprdata['title'];
@@ -210,7 +210,7 @@ function hpm_header_info() {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="bitly-verification" content="7777946f1a0a"/>
 		<meta name="google-site-verification" content="WX07OGEaNirk2km8RjRBernE0mA7_QL6ywgu6NXl1TM" />
-		<meta name="theme-color" content="#00566C">
+		<meta name="theme-color" content="#f5f5f5">
 		<link rel="icon" sizes="48x48" href="https://cdn.hpm.io/assets/images/favicon/icon-48.png">
 		<link rel="icon" sizes="96x96" href="https://cdn.hpm.io/assets/images/favicon/icon-96.png">
 		<link rel="icon" sizes="144x144" href="https://cdn.hpm.io/assets/images/favicon/icon-144.png">

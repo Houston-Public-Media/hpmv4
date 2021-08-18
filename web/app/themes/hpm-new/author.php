@@ -40,22 +40,22 @@
 					while ( $author_check->have_posts() ) :
 						$author_check->the_post();
 						$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE ); ?>
-					<div class="author-wrap-left">
-						<?PHP the_post_thumbnail( 'medium', array( 'alt' => get_the_title(), 'class' => 'author-thumb' ) ); ?>
-						<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
+					<div class="author-info">
+						<?PHP the_post_thumbnail( 'medium', [ 'alt' => get_the_title() ] ); ?>
+						<h2><?php echo $curauth->display_name; ?></h2>
 						<h3><?php echo $author['title']; ?></h3>
 				<?php
 						if ( !empty($author['facebook'] ) || !empty( $author['twitter'] ) ) :?>
-						<div class="author-social">
+						<div class="social-wrap">
 					<?php
-							if (!empty($author['facebook'])) : ?>
-							<div class="social-icon">
+							if ( !empty($author['facebook'] ) ) : ?>
+							<div class="social-icon facebook">
 								<a href="<?php echo $author['facebook']; ?>" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif;
-							if (!empty($author['twitter'])) : ?>
-							<div class="social-icon">
+							if ( !empty( $author['twitter'] ) ) : ?>
+							<div class="social-icon twitter">
 								<a href="<?php echo $author['twitter']; ?>" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
 							</div>
 				<?php
@@ -69,8 +69,6 @@
 						</div>
 				<?php
 						endif; ?>
-					</div>
-					<div class="author-info-wrap">
 				<?php
 	                    $author_bio = get_the_content();
 	                    if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) :
@@ -81,7 +79,7 @@
 			<?php
 					endwhile;
 				else : ?>
-					<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
+					<h2><?php echo $curauth->display_name; ?></h2>
 			<?php
 					if ( !empty( $curauth->user_email ) || !empty( $curauth->website ) ) : ?>
 					<ul>
@@ -99,7 +97,7 @@
 					endif;
 				endif;
 			else : ?>
-					<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
+					<h2><?php echo $curauth->display_name; ?></h2>
 			<?php
 					if ( !empty( $curauth->user_email ) || !empty( $curauth->website ) ) : ?>
 					<ul>
@@ -120,10 +118,10 @@
 			wp_reset_query(); ?>
 				</div>
 			</header><!-- .page-header -->
-			<aside class="column-right">
+			<aside>
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-			<section id="search-results">
+			<section class="archive">
 		<?php
 		if ( have_posts() ) :
 			while ( have_posts() ) : the_post();

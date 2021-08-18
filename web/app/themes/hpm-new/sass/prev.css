@@ -1,34 +1,4 @@
-.author .page-header,
-.single-staff .page-header {
-	width: 100%;
-	padding: 1em;
-}
-.single-staff h1,
-.author h1 {
-	margin-bottom: 0.25em;
-}
-.page-header #author-wrap {
-	background-color: transparent;
-	overflow: hidden;
-}
-.page-header #author-wrap .author-info-wrap {
-	width: 100%;
-}
-.page-header #author-wrap .author-wrap-left {
-	width: 100%;
-	text-align: center;
-}
-#author-wrap .author-inner-wrap {
-	border-bottom: 1px solid #808080;
-	overflow: hidden;
-}
-#author-wrap .author-inner-wrap:last-child {
-	border-bottom: 0;
-}
-#author-wrap .author-thumb {
-	width: 66%;
-	padding: 0.75em 1em 0.5em 0;
-}
+
 
 
 

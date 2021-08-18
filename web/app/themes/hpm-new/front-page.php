@@ -49,7 +49,7 @@ $articles = hpm_homepage_articles(); ?>
 	<div id="primary" class="content-area">
 	<?php election_homepage(); ?>
 		<main id="main" class="site-main" role="main">
-
+			<section>
 <?php
 	$artnum = count( $articles );
 	if ( $artnum % 2 !== 0 ) :
@@ -57,7 +57,7 @@ $articles = hpm_homepage_articles(); ?>
 	endif;
 	foreach ( $articles as $ka => $va ) :
 		if ( $ka == 4 ) : ?>
-
+			</section>
 			<aside id="top-schedule-wrap">
 				<section id="station-schedules">
 					<h4>ON AIR</h4>
@@ -100,10 +100,6 @@ $articles = hpm_homepage_articles(); ?>
 						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
 					</div>
 				</section>
-			</aside>
-<?php
-		elseif ( $ka == 12 ) : ?>
-			<aside id="npr-side">
 				<section class="highlights">
 					<h4>News from NPR</h4>
 					<?php echo hpm_nprapi_output(); ?>
@@ -115,11 +111,13 @@ $articles = hpm_homepage_articles(); ?>
 					</div>
 				</section>
 			</aside>
+			<section>
 <?php
 		endif;
 		$post = $va;
 		get_template_part( 'content', get_post_format() );
 	endforeach; ?>
+			</section>
 		</main>
 	</div>
 <?php get_footer(); ?>

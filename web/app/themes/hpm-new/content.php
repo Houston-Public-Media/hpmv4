@@ -7,14 +7,15 @@
 global $ka;
 $extra = 'card';
 $size = 'thumbnail';
-if ( !empty( $ka ) || $ka == 0 ) :
+if ( $ka !== null ) :
 	if ( $ka == 0 ) :
 		$extra .= ' card-large';
 		$size = 'large';
 	elseif ( $ka == 1 ) :
 		$extra .= ' card-medium';
 	endif;
-endif; ?>
+endif;
+?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
 	<?php if ( has_post_thumbnail() ) : ?>
 	<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"><?php the_post_thumbnail( $size ) ?></a>

@@ -183,7 +183,7 @@ hpm.videoHandlers = () => {
 hpm.shareHandlers = () => {
 	var popOut = document.querySelectorAll(".article-share-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
 	Array.from(popOut).forEach((pop) => {
-		pop.addEventListener('click', (e) =>{
+		pop.addEventListener(eventType, (e) =>{
 			var attr = pop.getAttribute('data-dialog');
 			var hrefCheck = pop.getAttribute('data-href');
 			if ( hrefCheck.includes('mailto:') ) {
@@ -202,12 +202,12 @@ hpm.shareHandlers = () => {
 			}
 		});
 	});
-	window.addEventListener('scroll', () => {
-		hpm.shareButtons();
-	});
-	window.addEventListener('resize', () => {
-		hpm.shareButtons();
-	});
+	// window.addEventListener('scroll', () => {
+	// 	hpm.shareButtons();
+	// });
+	// window.addEventListener('resize', () => {
+	// 	hpm.shareButtons();
+	// });
 };
 
 hpm.shareButtons = () => {
@@ -216,7 +216,7 @@ hpm.shareButtons = () => {
 		var entry = document.querySelector('#main article .entry-content');
 		var footer = document.querySelector('footer#colophon');
 		var post = document.querySelector('#main article');
-		if (window.innerWidth > 840) {
+		if (window.innerWidth > 1024) {
 			var shareD = share.getBoundingClientRect();
 			var entryD = entry.getBoundingClientRect();
 			var footD = footer.getBoundingClientRect();
@@ -437,7 +437,7 @@ hpm.npUpdateHtml = (object,station,next) => {
 document.addEventListener('DOMContentLoaded', () => {
 	hpm.navHandlers();
 	hpm.videoHandlers();
-	//hpm.shareHandlers();
+	hpm.shareHandlers();
 	hpm.audioEmbeds();
 	hpm.contentToggles();
 	hpm.npSearch();

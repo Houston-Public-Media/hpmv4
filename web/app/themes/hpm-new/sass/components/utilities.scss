@@ -260,12 +260,12 @@ span.edit-link {
 .social-wrap {
 	display: flex;
 	flex-flow: row wrap;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: flex-start;
-	margin-bottom: 0;
+	margin-bottom: 1rem;
 	h1, h2, h3, h4, h5 {
-		width: 100%;
 		margin: 0;
+		padding-right: 1rem;
 	}
 }
 .social-icon {
@@ -274,7 +274,7 @@ span.edit-link {
 		display: block;
 		background-color: var(--accent-black-3);
 		padding: 0;
-		margin: 0 1rem 1rem 0;
+		margin: 0 1rem 0 0;
 		border: 0;
 		width: var(--unit);
 		height: var(--unit);
@@ -310,5 +310,21 @@ span.edit-link {
 	&:last-child a,
 	&:last-child button {
 		margin-right: 0;
+	}
+}
+@media screen and (min-width: $largeDesktop) {
+	.social-wrap {
+		align-items: flex-start;
+		margin-bottom: 0;
+		h1, h2, h3, h4, h5 {
+			padding: 0;
+			width: 100%;
+		}
+	}
+	.social-icon {
+		--unit: 3.5rem;
+		a, button {
+			margin: 0 1rem 1rem 0;
+		}
 	}
 }

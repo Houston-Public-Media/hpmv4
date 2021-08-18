@@ -733,12 +733,14 @@ function hpm_careers_trans() {
 	endif;
 	$output = '<ul class="job-listings">';
 	foreach ( $json['requisitionList'] as $j ) :
-		$output .= "<li><h2><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong></a></h2>";
-		if ( !empty( $desc[ $j['contestNo'] ] ) ) :
-			$output .= '<div class="info-toggle"><em><strong>More</strong></em></div>
-			<div class="info-toggle-hidden">' . $desc[ $j['contestNo'] ] . '</div>';
+		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) :
+			$output .= "<li><h2><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong></a></h2>";
+			if ( !empty( $desc[ $j['contestNo'] ] ) ) :
+				$output .= '<div class="info-toggle"><em><strong>More</strong></em></div>
+				<div class="info-toggle-hidden">' . $desc[ $j['contestNo'] ] . '</div>';
+			endif;
+			$output .= '</li>';
 		endif;
-		$output .= '</li>';
 	endforeach;
 	$output .= '</ul><p><em>The University of Houston is an Equal Opportunity/Affirmative Action institution. Minorities, women, veterans and persons with disabilities are encouraged to apply. Additionally, the University prohibits discrimination in employment on the basis of sexual orientation, gender identity or gender expression.</em></p><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 	set_transient( 'hpm_careers', $output, 3600 );
