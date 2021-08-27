@@ -52,12 +52,10 @@ get_header(); ?>
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-
 			<article class="error-404 not-found">
 				<header class="entry-header">
 					<h1 class="entry-title"><?php _e( 'The page you requested can&rsquo;t be found [error 404]', 'hpmv2test' ); ?></h1>
-				</header><!-- .page-header -->
-
+				</header>
 				<div class="entry-content">
 				<?php
 					$ref = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
@@ -80,29 +78,21 @@ get_header(); ?>
 					<div class="search-results-form"><?php get_search_form(); ?></div>
 					<p><?php _e( 'We suggest you try one of the links below:' ,'hpmv2' ); ?></p>
 					<ul>
-						<li><a href="//www.houstonpublicmedia.org/"><?php _e( 'Houston Public Media Homepage' ,'hpmv2' ); ?></a></li>
-						<li><a href="//www.houstonpublicmedia.org/news"><?php _e( 'HPM News' ,'hpmv2' ); ?></a></li>
-						<li><a href="//www.houstonpublicmedia.org/arts"><?php _e( 'HPM Arts &amp; Culture' ,'hpmv2' ); ?></a></li>
-						<li><a href="//www.houstonpublicmedia.org/education"><?php _e( 'HPM Education' ,'hpmv2' ); ?></a></li>
-						<li><a href="//www.houstonpublicmedia.org/tv8"><?php _e( 'TV 8 Schedule' ,'hpmv2' ); ?></a></li>
-						<li><a href="//www.houstonpublicmedia.org/news887"><?php _e( 'News 88.7 Schedule' ,'hpmv2' ); ?></a></li>
-						<li><a href="//www.houstonpublicmedia.org/classical"><?php _e( 'Classical Schedule' ,'hpmv2' ); ?></a></li>
+						<li><a href="/"><?php _e( 'Houston Public Media Homepage' ,'hpmv2' ); ?></a></li>
+						<li><a href="/news/"><?php _e( 'HPM News' ,'hpmv2' ); ?></a></li>
+						<li><a href="/arts-culture/"><?php _e( 'HPM Arts &amp; Culture' ,'hpmv2' ); ?></a></li>
+						<li><a href="/education/"><?php _e( 'HPM Education' ,'hpmv2' ); ?></a></li>
+						<li><a href="/tv8/"><?php _e( 'TV 8 Schedule' ,'hpmv2' ); ?></a></li>
+						<li><a href="/news887/"><?php _e( 'News 88.7 Schedule' ,'hpmv2' ); ?></a></li>
+						<li><a href="/classical/"><?php _e( 'Classical Schedule' ,'hpmv2' ); ?></a></li>
 					</ul>
 					<h3>Help us to help you ...</h3>
 					<p>In order to improve our site, you can inform us that someone else has an incorrect link to our site, or that one of our links is broken. We will do our best to address the issue.</p>
 					<p><a href="mailto:webmaster@houstonpublicmedia.org?subject=Page%20Not%20Found&body=<?PHP echo str_replace($url_find,$url_replace,$text); ?>">Report this broken link &gt;&gt;</a></p>
-				</div><!-- .page-content -->
-			</article><!-- .error-404 -->
-			<aside class="column-right">
-				<?php hpm_top_posts(); ?>
-				<section class="sidebar-ad">
-					<h4>Support Comes From</h4>
-					<div id="div-gpt-ad-1394579228932-1">
-						<script type='text/javascript'>
-							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-						</script>
-					</div>
-				</section>
+				</div>
+			</article>
+			<aside>
+				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->

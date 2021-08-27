@@ -60,10 +60,12 @@ Template Name: Main Categories
 			</header>
 <?php
 	endif; ?>
+			<section>
 <?php
 	foreach ( $articles as $ka => $va ) :
-		if ( $ka == 3 ) : ?>
-			<aside class="column-right">
+		if ( $ka == 4 ) : ?>
+			</section>
+			<aside>
 				<nav id="category-navigation" class="category-navigation highlights" role="navigation">
 					<h4><?php echo $main_cat; ?> Features and Series</h4>
 					<?php
@@ -108,12 +110,14 @@ Template Name: Main Categories
 					</div>
 				</section>
 			</aside>
+			<section>
 <?php
 		endif;
 		$post = $va;
 		get_template_part( 'content', get_post_format() );
 	endforeach;
 	wp_reset_query(); ?>
+			</section>
 			<div class="readmore">
 				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
 			</div>

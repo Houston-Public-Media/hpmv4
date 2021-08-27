@@ -10,7 +10,7 @@ get_header(); ?>
                     <h1 class="page-title"><?php _e( 'Nothing Found', 'hpmv2' ); ?></h1>
 				<?php endif; ?>
             </header><!-- .page-header -->
-			<section id="search-results" class="articles-list-wide">
+			<section class="archive">
             <?php
 				if ( have_posts() ) :
 					while ( have_posts() ) : the_post();
@@ -30,7 +30,7 @@ get_header(); ?>
 					get_search_form();
 				endif; ?>
 			</section>
-			<aside class="column-right">
+			<aside>
                 <?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 		</main><!-- .site-main -->

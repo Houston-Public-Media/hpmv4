@@ -8,26 +8,28 @@ $embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
 if ( !empty( $embeds ) ) :
 	echo $embeds['bottom'];
 endif; ?>
-
+	<style>
+		@media screen and (min-width: 34rem) {
+			#main > article {
+    			grid-column: 1 / -1 !important;
+				grid-row: -2;
+			}
+		}
+		@media screen and (min-width: 64.25rem) {
+			#main > aside {
+				grid-row: 2;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-			<?php $page_head_class = hpm_head_banners( get_the_ID() ); ?>
-			<div class="column-span">
-			<?PHP while ( have_posts() ) : the_post(); ?>
+			<?php
+				echo hpm_head_banners( get_the_ID() );
+				while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header<?php echo $page_head_class; ?>">
-				<?php
-					the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-				</header><!-- .entry-header -->
 				<div class="entry-content">
-					<?php
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
-					?>
-				</div><!-- .entry-content -->
-
+					<?php the_content(); ?>
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -38,12 +40,10 @@ endif; ?>
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
-				endwhile; ?>
-		</div>
-			<?php
+				endwhile;
 				$cat_no = get_post_meta( get_the_ID(), 'hpm_series_cat', true );
 				if ( !empty( $cat_no ) ) :
 					$terms = get_terms( array( 'include'  => $cat_no, 'taxonomy' => 'category' ) );
@@ -54,24 +54,22 @@ endif; ?>
 						'order'   => 'DESC',
 					) );
 					if ( $cat->have_posts() ) : ?>
-				<section id="search-results">
+				<section class="archive">
 		<?php
 						while ( $cat->have_posts() ) : $cat->the_post();
 							get_template_part( 'content', get_post_format() );
 						endwhile;
 						wp_reset_postdata(); ?>
-					<div class="readmore">
-						<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
-					</div>
 				</section>
+				<aside>
+					<?php get_template_part( 'sidebar', 'none' ); ?>
+				</aside>
+				<div class="readmore">
+					<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
+				</div>
 			<?php
 					endif;
 				endif; ?>
-
-			<aside class="column-right">
-				<?php get_template_part( 'sidebar', 'none' ); ?>
-			</aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

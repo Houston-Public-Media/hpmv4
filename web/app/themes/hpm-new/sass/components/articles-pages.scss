@@ -2,12 +2,8 @@
 .page #main,
 .error404 #main {
 	background-color: white;
+	padding-top: 0;
 }
-/*
-	TODO: figure out if I can use position: sticky on article share buttons
-	TODO: maybe use grid layout in article display to reposition everything
-
-*/
 article {
 	max-width: 100%;
 	padding: 1rem;
@@ -126,6 +122,9 @@ article {
 				font-size: 1.25rem;
 			}
 		}
+		aside {
+			margin: 0;
+		}
 	}
 	.entry-summary {
 		p {
@@ -214,12 +213,6 @@ article {
 		}
 	}
 }
-.page article header.entry-header h1 {
-	margin: 0;
-}
-.page .entry-content {
-	padding: 1rem;
-}
 .entry-content {
 	li {
 		clear: both;
@@ -298,6 +291,9 @@ nav.pagination {
 	width: 100%;
 	h1 {
 		margin: 0;
+	}
+	&.banner {
+		padding: 0;
 	}
 }
 .highlights {
@@ -541,6 +537,52 @@ aside {
 		}
 	}
 }
+.podcast-badges {
+	list-style: none;
+	margin: 0;
+	padding: 0.5rem;
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat( auto-fill, minmax(3rem, 1fr) );
+	.social-icon {
+		--unit: 3.5rem;
+		a,
+		button {
+			margin: 0;
+		}
+	}
+}
+.podcast-episode-info {
+	background-color: #eee;
+	padding: 1rem;
+}
+.single.single-shows #main {
+	background-color: transparent;
+	padding: 0;
+	> aside {
+		background-color: white;
+		padding: 1rem;
+		align-self: start;
+		> section > * + * {
+			margin-top: 1rem;
+		}
+	}
+}
+#station-social h3 {
+	padding: 0.5rem;
+	margin: 0;
+}
+body.page-template-page-blank {
+	background-color: transparent;
+	#content {
+		max-width: 100%;
+		#main {
+			display: block;
+			background-color: transparent;
+			padding: 0;
+		}
+	}
+}
 @media screen and (min-width: $tablet) {
 	.page-banner.ssac-banner {
 		padding-bottom: calc(100%/5.419);
@@ -556,7 +598,8 @@ aside {
 	aside section {
 		width: 49%;
 	}
-	.single aside section {
+	.single aside section,
+	.page-template-page-npr-articles aside section {
 		width: 100%;
 	}
 	#main {
@@ -621,6 +664,10 @@ aside {
 				}
 			}
 			&.archive {
+				> h2 {
+					margin: 0;
+					grid-column: 1 / -1;
+				}
 				> article {
 					grid-column: 1 / span 2;
 					&.card,
@@ -653,6 +700,9 @@ aside {
 							white-space: initial;
 							width: auto;
 						}
+						&.podcasts {
+							align-items: flex-start;
+						}
 					}
 				}
 			}
@@ -669,20 +719,39 @@ aside {
 	.readmore {
 		grid-column: 1 / -1;
 	}
+	body.page-template-page-blank {
+		#content {
+			#main {
+				display: block;
+				padding: 0;
+			}
+		}
+	}
 }
 @media screen and (min-width: $largeDesktop) {
 	.page-banner.ssac-banner .page-title {
 		font-size: 300%;
 	}
-	// .column-left {
-	// 	width: 67%;
-	// }
-	// .column-half {
-	// 	width: 49%;
-	// }
-	// .column-third {
-	// 	width: 32%;
-	// }
+	.column-left {
+		width: 67%;
+		float: left;
+		padding: 1rem;
+	}
+	.column-half {
+		width: 49%;
+		float: left;
+		padding: 1rem;
+	}
+	.column-third {
+		width: 33%;
+		float: left;
+		padding: 1rem;
+	}
+	.column-right {
+		width: 33%;
+		float: right;
+		padding: 1rem;
+	}
 	#main {
 		grid-template-columns: 1fr 1fr 1fr;
 		padding: 1rem 0;
@@ -701,9 +770,13 @@ aside {
 			&.card.category-in-depth {
 				margin-top: 0;
 			}
+			&.attachment-full {
+				grid-column: 1 / -1;
+			}
 		}
 	}
-	.single {
+	.single,
+	.page-template-page-npr-articles {
 		#main {
 			article {
 				display: grid;
@@ -721,6 +794,34 @@ aside {
 						top: 1rem;
 					}
 				}
+			}
+		}
+	}
+	.full-width #main article,
+	.page-template-page-wide #main article,
+	.post-template-single-full-width #main article {
+		grid-column: 1 / -1;
+	}
+	body.page-template-page-blank {
+		#content {
+			#main {
+				display: block;
+				padding: 0;
+			}
+		}
+	}
+	.single.single-shows #main article {
+		display: block;
+	}
+	#station-social {
+		display: grid;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		grid-template-columns: max-content 1fr;
+		.podcast-badges {
+			.social-icon {
+				--unit: 3.25rem;
 			}
 		}
 	}

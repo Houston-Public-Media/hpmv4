@@ -66,7 +66,8 @@ Template Name: NPR Content
 		foreach ( $node['audio'] as $audio ) :
 			if ( $audio['type'] == "primary" ) :
 				if ( !empty( $audio['format']['mp3'] ) ) :
-					$mp3 = $audio['format']['mp3'][0]['$text'];
+					$audioxp = explode( '?', $audio['format']['mp3'][0]['$text'] );
+					$mp3 = $audioxp[0];
 				else :
 					$mp3 = '';
 				endif;
@@ -331,6 +332,7 @@ Template Name: NPR Content
 
 		if ( !empty( $inserts ) && in_array( $i, $inserts ) ) :
 			if ( !empty($slidepic ) ) :
+				wp_enqueue_script('jquery');
 				$body_text .= "<div id=\"amw_galleria_slideshow_1\">";
 
 				foreach ( $slidepic as $slide ) :
@@ -405,7 +407,7 @@ get_header(); ?>
 	endif; ?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class('single'); ?>>
 				<header class="entry-header">
 					<h3>NPR</h3>
 					<h1 class="entry-title"><?php echo $headline; ?></h1>
@@ -426,7 +428,8 @@ get_header(); ?>
 						);
 					?>
 					</div>
-				</header><!-- .entry-header -->
+				</header>
+				<?php hpm_article_share( $nprdata ); ?>
 				<div class="entry-content">
 					<?php
 						if ( !empty( $audio )) :
@@ -441,25 +444,23 @@ get_header(); ?>
 								echo "<p>".$image_caption."</p>";
 							endif;
 						?>
-					</div><!-- .post-thumbnail -->
+					</div>
 					<?PHP
 						endif;
 						echo $body_text;
-						hpm_article_share($nprdata);
 					?>
-				</div><!-- .entry-content -->
-
+				</div>
 				<footer class="entry-footer">
-					<p class="screen-reader-text"><span class="tags-links">
+					<div class="tags-links">
 						<span class="screen-reader-text">Tags </span>
 						<?php echo $npr_tags; ?>
-					</p>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
-			<aside class="column-right">
+					</div>
+				</footer>
+			</article>
+			<aside>
 			<?php
 				if ( !empty( $item_array['related_links'] ) ) : ?>
-				<div id="related-posts">
+				<section class="highlights">
 					<h4>Related</h4>
 					<ul>
 				<?php
@@ -468,12 +469,11 @@ get_header(); ?>
 				<?php
 					endforeach; ?>
 					</ul>
-				</div>
+				</section>
 			<?php
 				endif;
 				get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

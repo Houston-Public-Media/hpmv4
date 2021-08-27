@@ -20,12 +20,11 @@
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
-			$page_head_class = hpm_head_banners( get_the_ID() );
+			$banners = hpm_head_banners( get_the_ID() );
+			echo $banners;
 			while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header<?php echo $page_head_class; ?>">
-					<?php
-						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+				<header class="entry-header<?php echo ( !empty( $banners ) ? ' screen-reader-text' : '' ); ?>">
 					<p class="byline-date screen-reader-text">
 					<?PHP
 						coauthors_posts_links( ', ', ', ', '', '', true );
@@ -49,16 +48,10 @@
 						);
 					?>
 					</p>
-				</header><!-- .entry-header -->
+				</header>
 				<div class="entry-content">
-					<?php
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
-					?>
-				</div><!-- .entry-content -->
-
+					<?php the_content(); ?>
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -69,50 +62,39 @@
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile; ?>
-			<aside class="column-right">
+			<aside>
 			<?php
 				if ( $pagename == 'spelling-bee' ) : ?>
-				<div class="sidebar-ad">
+				<section class="sidebar-ad">
 					<h4>Presented By</h4>
 					<a href="http://www.texaschildrens.org/" target="_blank" class="beesponsor" id="texas-childrens-hospital">
 						<img src="https://cdn.hpm.io/assets/images/TCH_sponsor-01.png" alt="Texas Children's Hospital" style="margin: 0 12.5%; width: 75%; ">
 					</a>
-				</div>
+				</section>
 			<?php
 				elseif ( $pagename == 'about' || in_array( 61381, $anc ) ) : ?>
-				<div id="top-schedule-wrap">
+				<section>
 					<nav id="category-navigation" class="category-navigation" role="navigation" style="padding: 0;">
 						<h4>About HPM</h4>
-				<?php
-					wp_nav_menu( array(
-						'menu_class' => 'nav-menu',
-						'menu' => 2379
-					) );
-				?>
+						<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 2379 ] ); ?>
 					</nav>
-				</div>
+				</section>
 			<?php
 				elseif ( $pagename == 'support' || in_array( 61383, $anc ) ) : ?>
-				<div id="top-schedule-wrap">
+				<section>
 					<nav id="category-navigation" class="category-navigation" role="navigation" style="padding: 0;">
 						<h4>Support HPM</h4>
-				<?php
-					wp_nav_menu( array(
-						'menu_class' => 'nav-menu',
-						'menu' => 2560
-					) );
-				?>
+						<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 2560 ] ); ?>
 					</nav>
-				</div>
+				</section>
 			<?php
 				endif;
 			    get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

@@ -11,37 +11,10 @@ if ( !empty( $embeds ) ) :
 endif; ?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
-	<?php
-		$page_head_class = hpm_head_banners( get_the_ID() );
-		while ( have_posts() ) : the_post(); ?>
+	<?php while ( have_posts() ) :
+		the_post();
+		echo hpm_head_banners( get_the_ID() ); ?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-			<header class="entry-header<?php echo $page_head_class; ?>">
-				<?php
-					the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-				<p class="byline-date screen-reader-text">
-				<?PHP
-					coauthors_posts_links( ', ', ', ', '', '', true );
-					echo " | ";
-					$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-					if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-						$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time> (Updated: <time class="updated" datetime="%3$s">%4$s</time>';
-					}
-
-					$time_string = sprintf( $time_string,
-						esc_attr( get_the_date( 'c' ) ),
-						get_the_date(),
-						esc_attr( get_the_modified_date( 'c' ) ),
-						get_the_modified_date()
-					);
-
-					printf( '<span class="posted-on"><span class="screen-reader-text">%1$s </span>%2$s</span>',
-						_x( 'Posted on', 'Used before publish date.', 'hpmv2' ),
-						$time_string
-					);
-				?>
-				</p>
-			</header><!-- .entry-header -->
 			<div class="entry-content">
 				<?php
 					the_content( sprintf(
@@ -49,8 +22,7 @@ endif; ?>
 						the_title( '<span class="screen-reader-text">', '</span>', false )
 					) );
 				?>
-			</div><!-- .entry-content -->
-
+			</div>
 			<footer class="entry-footer">
 			<?PHP
 				$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -61,10 +33,9 @@ endif; ?>
 					);
 				}
 				edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-			</footer><!-- .entry-footer -->
-		</article><!-- #post-## -->
-		<?php
-			endwhile; ?>
-	</main><!-- .site-main -->
-</div><!-- .content-area -->
+			</footer>
+		</article>
+	<?php endwhile; ?>
+	</main>
+</div>
 <?php get_footer(); ?>

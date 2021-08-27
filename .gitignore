@@ -6,7 +6,6 @@ web/app/plugins/*
 !web/app/plugins/kera-passport-tools/
 !web/app/plugins/ludicrousdb/
 !web/app/plugins/npr-story-api/
-web/app/mu-plugins/*/
 web/app/debug.log
 web/app/upgrade
 web/app/uploads/*

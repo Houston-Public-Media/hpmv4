@@ -274,7 +274,7 @@ span.edit-link {
 		display: block;
 		background-color: var(--accent-black-3);
 		padding: 0;
-		margin: 0 1rem 0 0;
+		margin: 0 calc(var(--unit)/3) 0 0;
 		border: 0;
 		width: var(--unit);
 		height: var(--unit);
@@ -324,7 +324,54 @@ span.edit-link {
 	.social-icon {
 		--unit: 3.5rem;
 		a, button {
-			margin: 0 1rem 1rem 0;
+			margin: 0 calc(var(--unit)/3) 1rem 0;
+		}
+	}
+	.social-icon:last-child {
+		a, button {
+			margin: 0 0 1rem 0;
+		}
+	}
+	.site-footer .social-icon {
+		--unit: 3rem;
+	}
+}
+.wp-video {
+	width: 100% !important;
+	max-width: 100% !important;
+}
+.grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+	> section {
+		align-content: start;
+	}
+	> aside {
+		align-content: start;
+	}
+}
+@media screen and (min-width: $tablet) {
+	.grid {
+		grid-template-columns: 1fr 1fr;
+		> section,
+		> aside {
+			grid-column: 1 / span 2;
+		}
+	}
+}
+@media screen and (min-width: $largeDesktop) {
+	.grid {
+		grid-template-columns: 1fr 1fr 1fr;
+		> section {
+			grid-row: 1;
+		}
+		> aside {
+			grid-column: 3;
+			grid-row: 1;
+			> section {
+				width: 100%;
+			}
 		}
 	}
 }
