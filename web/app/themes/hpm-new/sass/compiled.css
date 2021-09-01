@@ -1336,26 +1336,6 @@ footer#colophon ul li a {
   footer#colophon .foot-logo a {
     width: 50%;
   }
-  footer#colophon .foot-contact {
-    width: 100%;
-    margin: 0 auto;
-    flex-flow: row wrap;
-    align-items: center;
-    align-content: space-between;
-    justify-content: space-between;
-    display: flex;
-    padding: 1.5rem 1rem;
-  }
-  footer#colophon .foot-contact p, footer#colophon .foot-contact p.foot-button {
-    padding: 0;
-    margin: 0;
-  }
-  footer#colophon .foot-contact .social-wrap {
-    margin: 0;
-  }
-  footer#colophon .foot-contact .social-wrap .social-icon a {
-    margin-bottom: 0;
-  }
   footer#colophon #footer-social {
     margin-bottom: 0;
   }
@@ -1369,6 +1349,28 @@ footer#colophon ul li a {
   }
   footer#colophon section > div.foot-logo a {
     width: 90%;
+  }
+  footer#colophon .foot-contact {
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  footer#colophon .foot-contact p, footer#colophon .foot-contact p.foot-button {
+    padding: 0;
+    margin: 0;
+  }
+  footer#colophon .foot-contact p.foot-button {
+    text-align: left;
+  }
+  footer#colophon .foot-contact .social-wrap {
+    margin: 0;
+    justify-content: end;
+  }
+  footer#colophon .foot-contact .social-wrap .social-icon a {
+    margin-bottom: 0;
   }
 }
 .hidden,
@@ -1653,10 +1655,11 @@ span.edit-link {
 }
 
 .social-wrap {
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 3rem);
   align-items: center;
-  justify-content: flex-start;
+  justify-content: start;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 .social-wrap h1, .social-wrap h2, .social-wrap h3, .social-wrap h4, .social-wrap h5 {
@@ -1671,7 +1674,6 @@ span.edit-link {
   display: block;
   background-color: var(--accent-black-3);
   padding: 0;
-  margin: 0 calc(var(--unit)/3) 0 0;
   border: 0;
   width: var(--unit);
   height: var(--unit);
@@ -1703,25 +1705,121 @@ span.edit-link {
   margin-right: 0;
 }
 
+#shows-youtube {
+  width: 100%;
+  margin: 1em 0;
+  padding: 1em;
+  overflow: hidden;
+}
+#shows-youtube h3 {
+  font: 400 2.5em/1em var(--hpm-font-condensed);
+  color: #3f1818;
+  text-transform: uppercase;
+}
+#shows-youtube #youtube-main {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 2rem;
+  background-color: white;
+}
+#shows-youtube #youtube-main h2 {
+  font-weight: 400;
+  font-family: var(--hpm-font-condensed);
+  text-transform: uppercase;
+}
+#shows-youtube #youtube-main p {
+  font-weight: 100;
+  color: #838585;
+}
+#shows-youtube #youtube-main p.date {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #838585;
+}
+#shows-youtube #youtube-main #youtube-player {
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  margin: 0 0 1em 0;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+}
+#shows-youtube #youtube-main #youtube-player:hover {
+  cursor: pointer;
+}
+#shows-youtube #youtube-main #youtube-player .fab {
+  color: white;
+  font-size: 4em;
+}
+#shows-youtube #youtube-upcoming {
+  width: 95%;
+  margin: 1rem 2.5%;
+  background-color: white;
+  overflow: hidden;
+}
+#shows-youtube #youtube-upcoming .youtube {
+  width: 100%;
+  border-bottom: 0.125rem solid #f5f5f5;
+  padding: 1rem;
+  overflow: hidden;
+}
+#shows-youtube #youtube-upcoming .youtube:last-child {
+  border-bottom: 0;
+}
+#shows-youtube #youtube-upcoming .youtube img {
+  display: block;
+  float: left;
+  width: 40%;
+  padding: 0 1rem 1rem 0;
+}
+#shows-youtube #youtube-upcoming .youtube h2 {
+  font-weight: 100;
+  font-size: 1.5rem;
+}
+#shows-youtube #youtube-upcoming .youtube p.date {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #838585;
+}
+#shows-youtube #youtube-upcoming h4 {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #838585;
+  padding: 1rem 0 0 1rem;
+}
+
+#yt-nowplay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.75);
+  font: 400 2em/1.75em var(--hpm-font-main);
+  color: white;
+}
+
 @media screen and (min-width: 64.25rem) {
   .social-wrap {
-    align-items: flex-start;
+    align-items: start;
     margin-bottom: 0;
   }
   .social-wrap h1, .social-wrap h2, .social-wrap h3, .social-wrap h4, .social-wrap h5 {
     padding: 0;
-    width: 100%;
+    grid-column: 1/-1;
   }
 
   .social-icon {
     --unit: 3.5rem;
-  }
-  .social-icon a, .social-icon button {
-    margin: 0 calc(var(--unit)/3) 1rem 0;
-  }
-
-  .social-icon:last-child a, .social-icon:last-child button {
-    margin: 0 0 1rem 0;
   }
 
   .site-footer .social-icon {
@@ -1773,7 +1871,7 @@ span.edit-link {
 .page #main,
 .error404 #main {
   background-color: white;
-  padding-top: 0;
+  padding: 0;
 }
 
 article {
@@ -2314,6 +2412,8 @@ aside #in-depth > article .entry-summary {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+  grid-column: 2;
+  justify-self: end;
 }
 .podcast-badges .social-icon {
   --unit: 3.5rem;
@@ -2577,6 +2677,7 @@ body.page-template-page-blank #content #main {
 .page-template-page-npr-articles #main article #article-share > .social-wrap {
     position: sticky;
     top: 1rem;
+    grid-template-columns: 3.5rem 3.5rem;
   }
 
   .full-width #main article,

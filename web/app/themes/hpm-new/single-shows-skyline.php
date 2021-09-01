@@ -11,56 +11,188 @@ Template Post Type: shows
  * @since HPMv2 1.0
  */
 
+/*
+	TODO: YouTube player styling
+	TODO: CSS-based replacement for Slick (https://smolcss.dev/#smol-scroll-snap)
+
+*/
 wp_enqueue_script('jquery');
 get_header(); ?>
+	<style>
+		#main > section#country-covers {
+			max-width: 100%;
+			background-color: rgb(181,159,109);
+			background-image: url(https://cdn.hpm.io/assets/images/tan_mobile.png);
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			grid-column: 1 / -1 !important;
+			grid-template-columns: 1fr !important;
+		}
+		#main > aside {
+			grid-row: auto;
+		}
+		section#country-covers #shows-youtube {
+			margin: 0;
+		}
+		section#country-covers .column-right {
+			width: 100%;
+			margin: 0;
+		}
+		section#country-covers .column-right img {
+			margin-bottom: 0.5em;
+		}
+		section#country-covers .column-right .show-content p {
+			color: #1F2F42;
+			font-family: var(--hpm-font-main);
+			font-size: 112.5%;
+		}
+		section#country-covers .column-right .show-content h2 {
+			color: #f5f5f5;
+			font-family: var(--hpm-font-main);
+			font-weight: bolder;
+			padding-bottom: 0.25em;
+			border-bottom: 1px solid #f5f5f5;
+		}
+		section#country-covers #shows-youtube #youtube-main {
+			padding: 0;
+			background-color: transparent;
+		}
+		section#country-covers #shows-youtube #youtube-main h2 {
+			text-transform: none;
+			color: #1F2F42;
+			margin-bottom: 0.25em;
+		}
+		section#country-covers #shows-youtube #youtube-main p {
+			color: #f5f5f5;
+			font: normal 1.125em/1.25em var(--hpm-font-main);
+		}
+		section#country-covers #shows-youtube #youtube-upcoming {
+			margin: 1em 2.5%;
+			width: 95%;
+			background-color: transparent;
+			overflow: visible;
+		}
+		section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+			color: #1F2F42;
+		}
+		section#country-covers #shows-youtube #youtube-upcoming .youtube {
+			padding: 1em 0;
+			flex-flow: row nowrap;
+			justify-content: left;
+			align-content: center;
+			align-items: center;
+			display: flex;
+			position: relative;
+		}
+		section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+			font-family: var(--hpm-font-condensed);
+		}
+		section#country-music {
+			background-color: #1C2329;
+			padding: 2em;
+		}
+		section#country-music img {
+			width: 75%;
+			margin: 0 12.5% 1em;
+		}
+		section#country-music p {
+			color: #f5f5f5;
+			font: normal 1.125em/1.25em var(--hpm-font-main);
+		}
+		section#country-covers .slick-prev:before,
+		section#country-covers .slick-next:before {
+			color: white !important;
+		}
+		@media screen and (min-width: 34em) {
+			section#country-covers .column-right {
+				float: right;
+				width: 31%;
+				margin: 0 0 1em 3%;
+			}
+			section#country-covers #youtube-main {
+				float: left;
+				width: 66%;
+				margin: 0 0 1em 0;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming {
+				clear: both;
+				border: 0;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming .youtube {
+				width: 100%;
+				float: none;
+				display: block;
+				padding: 1em;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming .youtube img {
+				width: 100%;
+				float: none;
+				padding: 0 0 0.5em 0;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+				margin: 0;
+			}
+			section#country-covers #shows-youtube {
+				margin: 0;
+				padding: 2em;
+			}
+			section#country-music {
+				flex-flow: row nowrap;
+				justify-content: left;
+				align-content: center;
+				align-items: center;
+				display: flex;
+				position: relative;
+			}
+			section#country-music img {
+				width: 40%;
+				padding: 0 4em 0 0;
+				margin: 0;
+			}
+			section#country-covers .slick-prev:before,
+			section#country-covers .slick-next:before {
+				font-size: 40px !important;
+			}
+			section#country-covers .slick-prev,
+			section#country-covers .slick-next {
+				width: 40px !important;
+				height: 40px !important;
+			}
+			section#country-covers .slick-prev,
+			section#country-covers .slick-next {
+				width: 40px !important;
+				height: 40px !important;
+			}
+			section#country-covers .slick-next {
+				right: -40px !important;
+			}
+			section#country-covers .slick-prev {
+				left: -40px !important;
+			}
+		}
+		@media screen and (min-width: 52.5em) {
+			section#country-covers #shows-youtube #youtube-wrap {
+				background-color: transparent;
+				overflow: visible;
+			}
+			section#country-music {
+				padding: 3em 4em;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post();
 				$show_name = $post->post_name;
-				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
-				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
-				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+				$show_id = get_the_ID();
+				$show = get_post_meta( $show_id, 'hpm_show_meta', true );
 				$show_title = get_the_title();
 				$show_content = get_the_content();
-				$page_head_class = HPM_Podcasts::show_banner( get_the_ID() ); ?>
-			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title"><?php the_title(); ?></h1>
-			</header>
-			<?php
-				$no = $sp = $c = 0;
-				foreach( $show as $sk => $sh ) :
-					if ( !empty( $sh ) && $sk != 'banners' ) :
-						$no++;
-					endif;
-				endforeach;
-				foreach( $social as $soc ) :
-					if ( !empty( $soc ) ) :
-						$no++;
-					endif;
-				endforeach;
-				if ( $no > 0 ) : ?>
-			<div id="station-social">
-			<?php
-					if ( !empty( $show['times'] ) ) : ?>
-				<h3><?php echo $show['times']; ?></h3>
-			<?php
-					endif;
-					echo HPM_Podcasts::show_social( $show['podcast'], false, get_the_ID() ); ?>
-			</div>
-			<?php
-				endif;?>
-		<?php
-			endwhile;
-			$t = time();
-			$offset = get_option('gmt_offset')*3600;
-			$t = $t + $offset;
-			$now = getdate($t);
-			if ( !empty( $_GET['testtime'] ) ) :
-				$tt = explode( '-', $_GET['testtime'] );
-				$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) );
-			endif;
-			if ( $now[0] > mktime( 17, 0, 0, 8, 19, 2019 ) ) :?>
+				$episodes = HPM_Podcasts::list_episodes( $show_id );
+				echo HPM_Podcasts::show_header( $show_id );
+			endwhile; ?>
 			<section id="country-covers">
 				<div id="shows-youtube">
 					<div id="youtube-wrap">
@@ -73,10 +205,8 @@ get_header(); ?>
 								</p>
 							</div>
 						</div>
-<?php
-					// PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB
-					$json = hpm_youtube_playlist( 'PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB', 50 );
-					$r = rand( 0, count( $json ) - 1 ); ?>
+<?php			$json = hpm_youtube_playlist( 'PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB', 50 );
+				$r = rand( 0, count( $json ) - 1 ); ?>
 						<div id="youtube-main">
 							<div id="youtube-player" style="background-image: url( '<?php echo $json[$r]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[$r]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $json[$r]['snippet']['title'], ENT_COMPAT ); ?>">
 								<span class="fab fa-youtube" id="play-button"></span>
@@ -89,7 +219,7 @@ get_header(); ?>
 						foreach ( $json as $tubes ) : ?>
 							<div>
 								<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
-									<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $tubes['snippet']['title']; ?>" />
+									<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" />
 									<h2><?php echo $tubes['snippet']['title']; ?></h2>
 								</div>
 							</div>
@@ -99,34 +229,21 @@ get_header(); ?>
 					</div>
 				</div>
 			</section>
-			<section id="country-music">
-				<img src="https://cdn.hpm.io/assets/images/cm_kenburns_logo2x.png" alt="Country Music, a Film by Ken Burns">
-				<p>The first 4 episodes will air nightly from Sunday, September 15, through Wednesday, September 18, and the final four episodes will air nightly from Sunday, September 22, through Wednesday, September 25. Each episode will premiere at 7:00pm.</p>
-			</section>
-<?php
-			endif; ?>
-			<aside class="column-right">
-				<h3>About <?php echo $show_title; ?></h3>
-				<div class="show-content">
+			<aside>
+				<section>
+					<h3>About <?php echo $show_title; ?></h3>
 					<?php echo apply_filters( 'the_content', $show_content ); ?>
-				</div>
-			<?php
-						if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
-							$googletag = 'div-gpt-ad-1470409396951-0';
-						else :
-							$googletag = 'div-gpt-ad-1394579228932-1';
-						endif; ?>
-				<div class="sidebar-ad">
+				</section>
+				<section class="sidebar-ad">
 					<h4>Support Comes From</h4>
-					<div id="<?php echo $googletag; ?>">
+					<div id="div-gpt-ad-1470409396951-0">
 						<script type='text/javascript'>
-							googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
+							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1470409396951-0'); });
 						</script>
 					</div>
-				</div>
+				</section>
 			</aside>
-			<div id="float-wrap">
-				<div class="article-wrap">
+			<section>
 		<?php
 			$studio = new WP_Query([
 				'category__in' => [ 38141 ],
@@ -142,75 +259,35 @@ get_header(); ?>
 
 			if ( $studio->have_posts() ) :
 				while ( $studio->have_posts() ) : $studio->the_post();
-					$postClass = get_post_class(); ?>
-					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-						<?php
-						if ( has_post_thumbnail() ) : ?>
-							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-							</div>
-						<?php
-						endif; ?>
-						<header class="entry-header">
-							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-							<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-						</header><!-- .entry-header -->
-					</article>
-				<?PHP
+					get_template_part( 'content', get_post_format() );
 				endwhile;
 			endif;
 			wp_reset_query(); ?>
-				<div class="readmore" style="clear: both; width: 100%">
-					<a href="/topics/in-studio/page/2">View More Performances</a>
-				</div>
+			</section>
+			<div class="readmore">
+				<a href="/topics/in-studio/page/2">View More Performances</a>
+			</div>
+			<section>
 <?php
 			if ( $others->have_posts() ) :
 				while ( $others->have_posts() ) : $others->the_post();
-					$postClass = get_post_class(); ?>
-					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-						<?php
-						if ( has_post_thumbnail() ) : ?>
-							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-							</div>
-						<?php
-						endif; ?>
-						<header class="entry-header">
-							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-							<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-						</header><!-- .entry-header -->
-					</article>
-				<?PHP
+					get_template_part( 'content', get_post_format() );
 				endwhile;
 			endif;
 			wp_reset_query(); ?>
-			<div class="readmore" style="clear: both; width: 100%">
+			</section>
+			<div class="readmore">
 				<a href="/topics/skyline-sessions/page/2">View More Related Articles</a>
 			</div>
-			</div>
-		</div>
-
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-	<style>
-		.single.shows-template-single-shows-skyline #main aside,
-		.single.shows-template-single-shows-skyline #main article.post {
-			-webkit-box-ordinal-group: initial;
-			-moz-box-ordinal-group: initial;
-			-ms-flex-order: initial;
-			-webkit-order: initial;
-			order: initial;
-		}
-	</style>
+		</main>
+	</div><?php /* ?>
 	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick.min.css" />
-			<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
-			<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
-			<script>
-				jQuery(document).ready(function($){
-					var options = { slidesToShow: 3, rows: 1, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 3, slidesToScroll: 3, rows: 1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 3 } }] };
-					$('#youtube-upcoming').slick(options);
-				});
-			</script>
+	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
+	<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
+	<script>
+		jQuery(document).ready(function($){
+			var options = { slidesToShow: 3, rows: 1, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 3, slidesToScroll: 3, rows: 1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 3 } }] };
+			$('#youtube-upcoming').slick(options);
+		});
+	</script><?php */ ?>
 <?php get_footer(); ?>

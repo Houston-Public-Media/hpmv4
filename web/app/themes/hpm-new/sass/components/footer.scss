@@ -143,26 +143,6 @@ footer#colophon {
 		.foot-logo a {
 			width: 50%;
 		}
-		.foot-contact {
-			width: 100%;
-			margin: 0 auto;
-			flex-flow: row wrap;
-			align-items: center;
-			align-content: space-between;
-			justify-content: space-between;
-			display: flex;
-			padding: 1.5rem 1rem;
-			p, p.foot-button {
-				padding: 0;
-				margin: 0;
-			}
-			.social-wrap {
-				margin: 0;
-				.social-icon a {
-					margin-bottom: 0;
-				}
-			}
-		}
 		#footer-social {
 			margin-bottom: 0;
 		}
@@ -176,6 +156,28 @@ footer#colophon {
 				width: 23%;
 				a {
 					width: 90%;
+				}
+			}
+		}
+		.foot-contact {
+			width: 100%;
+			margin: 0 auto;
+			align-items: center;
+			display: grid;
+			gap: 1rem;
+			grid-template-columns: 1fr 1fr 1fr;
+			p, p.foot-button {
+				padding: 0;
+				margin: 0;
+			}
+			p.foot-button {
+				text-align: left;
+			}
+			.social-wrap {
+				margin: 0;
+				justify-content: end;
+				.social-icon a {
+					margin-bottom: 0;
 				}
 			}
 		}

@@ -29,17 +29,11 @@ get_header(); ?>
 					<h3>About <?php echo $show_title; ?></h3>
 					<?php echo apply_filters( 'the_content', $show_content ); ?>
 				</section>
-			<?php
-				if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
-					$googletag = 'div-gpt-ad-1470409396951-0';
-				else :
-					$googletag = 'div-gpt-ad-1394579228932-1';
-				endif; ?>
 				<section class="sidebar-ad">
 					<h4>Support Comes From</h4>
-					<div id="<?php echo $googletag; ?>">
+					<div id="div-gpt-ad-1394579228932-1">
 						<script type='text/javascript'>
-							googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
+							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
 						</script>
 					</div>
 				</section>
