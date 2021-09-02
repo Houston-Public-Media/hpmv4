@@ -10,13 +10,6 @@ Template Post Type: shows
  * @subpackage HPMv2
  * @since HPMv2 1.0
  */
-
-/*
-	TODO: YouTube player styling
-	TODO: CSS-based replacement for Slick (https://smolcss.dev/#smol-scroll-snap)
-
-*/
-wp_enqueue_script('jquery');
 get_header(); ?>
 	<style>
 		#main > section#country-covers {
@@ -67,42 +60,30 @@ get_header(); ?>
 			color: #f5f5f5;
 			font: normal 1.125em/1.25em var(--hpm-font-main);
 		}
-		section#country-covers #shows-youtube #youtube-upcoming {
-			margin: 1em 2.5%;
-			width: 95%;
-			background-color: transparent;
-			overflow: visible;
-		}
 		section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
 			color: #1F2F42;
-		}
-		section#country-covers #shows-youtube #youtube-upcoming .youtube {
-			padding: 1em 0;
-			flex-flow: row nowrap;
-			justify-content: left;
-			align-content: center;
-			align-items: center;
-			display: flex;
-			position: relative;
 		}
 		section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
 			font-family: var(--hpm-font-condensed);
 		}
-		section#country-music {
-			background-color: #1C2329;
-			padding: 2em;
+		#shows-youtube #youtube-upcoming {
+			display: grid;
+			grid-auto-flow: column;
+			grid-gap: 1rem;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			padding: 0 0 1.5rem;
+			-webkit-overflow-scrolling: touch;
+			background-color: transparent;
+			margin: 0;
+			width: 100%;
 		}
-		section#country-music img {
-			width: 75%;
-			margin: 0 12.5% 1em;
-		}
-		section#country-music p {
-			color: #f5f5f5;
-			font: normal 1.125em/1.25em var(--hpm-font-main);
-		}
-		section#country-covers .slick-prev:before,
-		section#country-covers .slick-next:before {
-			color: white !important;
+
+		#shows-youtube #youtube-upcoming > .youtube {
+			width: min(55ch, 60vw);
+			scroll-snap-align: center;
+			scroll-snap-stop: always;
+			border: 0 !important;
 		}
 		@media screen and (min-width: 34em) {
 			section#country-covers .column-right {
@@ -114,16 +95,6 @@ get_header(); ?>
 				float: left;
 				width: 66%;
 				margin: 0 0 1em 0;
-			}
-			section#country-covers #shows-youtube #youtube-upcoming {
-				clear: both;
-				border: 0;
-			}
-			section#country-covers #shows-youtube #youtube-upcoming .youtube {
-				width: 100%;
-				float: none;
-				display: block;
-				padding: 1em;
 			}
 			section#country-covers #shows-youtube #youtube-upcoming .youtube img {
 				width: 100%;
@@ -137,47 +108,11 @@ get_header(); ?>
 				margin: 0;
 				padding: 2em;
 			}
-			section#country-music {
-				flex-flow: row nowrap;
-				justify-content: left;
-				align-content: center;
-				align-items: center;
-				display: flex;
-				position: relative;
-			}
-			section#country-music img {
-				width: 40%;
-				padding: 0 4em 0 0;
-				margin: 0;
-			}
-			section#country-covers .slick-prev:before,
-			section#country-covers .slick-next:before {
-				font-size: 40px !important;
-			}
-			section#country-covers .slick-prev,
-			section#country-covers .slick-next {
-				width: 40px !important;
-				height: 40px !important;
-			}
-			section#country-covers .slick-prev,
-			section#country-covers .slick-next {
-				width: 40px !important;
-				height: 40px !important;
-			}
-			section#country-covers .slick-next {
-				right: -40px !important;
-			}
-			section#country-covers .slick-prev {
-				left: -40px !important;
-			}
 		}
 		@media screen and (min-width: 52.5em) {
 			section#country-covers #shows-youtube #youtube-wrap {
 				background-color: transparent;
 				overflow: visible;
-			}
-			section#country-music {
-				padding: 3em 4em;
 			}
 		}
 	</style>
@@ -197,12 +132,9 @@ get_header(); ?>
 				<div id="shows-youtube">
 					<div id="youtube-wrap">
 						<div class="column-right">
-							<a href="http://claimittexas.org" target="_blank"><img src="https://cdn.hpm.io/assets/images/cc_logo_sponsor2x.png" alt="Skyline Sessions Country Covers" class="" /></a>
+							<a href="http://claimittexas.org" target="_blank"><img src="https://cdn.hpm.io/assets/images/cc_logo_sponsor2x.png" alt="Skyline Sessions Country Covers" /></a>
 							<div class="show-content">
-								<p><em>Country Covers</em> is a spin-off of our digital music series <em>Skyline Sessions</em> and features a variety of musicians performing their favorite country classics and sharing personal stories of their love for country music. <em>Country Covers</em> is Houston Public Media's companion piece to Ken Burns' new documentary series <em>Country Music</em>.</p>
-								<h2>Watch on TV 8</h2>
-								<p><strong>Thursday, September 8</strong> | 9pm & 11:30pm<br /><strong>Sunday, September 15</strong> | 3:30pm<br /><strong>Tuesday, September 17</strong> | 11pm
-								</p>
+								<p><em>Country Covers</em> is a spin-off of our digital music series <em>Skyline Sessions</em> and features a variety of musicians performing their favorite country classics and sharing personal stories of their love for country music.</p>
 							</div>
 						</div>
 <?php			$json = hpm_youtube_playlist( 'PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB', 50 );
@@ -215,16 +147,12 @@ get_header(); ?>
 							<p class="desc"><?php echo $json[$r]['snippet']['description']; ?></p>
 						</div>
 						<div id="youtube-upcoming">
-<?php
-						foreach ( $json as $tubes ) : ?>
-							<div>
-								<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
-									<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" />
-									<h2><?php echo $tubes['snippet']['title']; ?></h2>
-								</div>
+						<?php foreach ( $json as $tubes ) : ?>
+							<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
+								<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" />
+								<h2><?php echo $tubes['snippet']['title']; ?></h2>
 							</div>
-						<?php
-						endforeach; ?>
+						<?php endforeach; ?>
 						</div>
 					</div>
 				</div>
@@ -280,14 +208,5 @@ get_header(); ?>
 				<a href="/topics/skyline-sessions/page/2">View More Related Articles</a>
 			</div>
 		</main>
-	</div><?php /* ?>
-	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick.min.css" />
-	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
-	<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
-	<script>
-		jQuery(document).ready(function($){
-			var options = { slidesToShow: 3, rows: 1, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 3, slidesToScroll: 3, rows: 1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 3 } }] };
-			$('#youtube-upcoming').slick(options);
-		});
-	</script><?php */ ?>
+	</div>
 <?php get_footer(); ?>

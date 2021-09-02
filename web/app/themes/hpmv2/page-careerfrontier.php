@@ -43,6 +43,9 @@ Template Name: Career Frontier
 		});
 	</script>
 	<style>
+		:root {
+			--plyr-audio-control-color: rgb(80, 127, 145);
+		}
 		.page-content {
 			overflow: hidden;
 			padding: 1em 0 0;
@@ -168,41 +171,8 @@ Template Name: Career Frontier
 		.cf-eps-wrap article.topic-active header h1:after {
 			content: '\f0d8';
 		}
-		.cf-eps-wrap .jp-type-single {
-			background-color: transparent;
-		}
-		.cf-eps-wrap .jp-gui.jp-interface .jp-controls button {
-			background-color: transparent;
-			width: 4em;
-			height: 4em;
-		}
-		.cf-eps-wrap .jp-gui.jp-interface .jp-controls button .fa {
-			font-size: 3.25em;
-			color: rgb(80, 127, 145);
-		}
-		.cf-eps-wrap .jp-gui.jp-interface .jp-progress-wrapper {
-			position: relative;
-			padding: 1em 0.5em;
-		}
-		.cf-eps-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
-			margin: 0;
-			background-color: rgb(79, 79, 79);
-			z-index: 9;
-			position: relative;
-		}
-		.cf-eps-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
-			z-index: 11;
-		}
-		.cf-eps-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-			position: absolute;
-			top: 1.5em;
-			right: 1em;
-			z-index: 10;
-			float: none;
-			width: initial;
-			display: inline;
-			padding: 0;
-			color: white;
+		.article-player-wrap h3 {
+			display: none;
 		}
 		.cf-eps-wrap article .episode-content {
 			clip: rect(1px, 1px, 1px, 1px);
@@ -267,12 +237,6 @@ Template Name: Career Frontier
 				padding: 0 1em;
 				order: 2;
 				min-width: 250px;
-			}
-			.cf-eps-wrap .jp-gui.jp-interface .jp-details {
-				display: none;
-			}
-			.cf-eps-wrap .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-				top: 1.25em;
 			}
 			.cf-guest-wrap article {
 				width: 45%;

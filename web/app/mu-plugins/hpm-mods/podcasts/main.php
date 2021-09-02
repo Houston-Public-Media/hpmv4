@@ -522,7 +522,7 @@ class HPM_Podcasts {
 	public function meta_query( $query ) {
 		if ( $query->is_archive() && $query->is_main_query() && !is_admin() ) :
 			if ( $query->get( 'post_type' ) == 'podcasts' || $query->get( 'post_type' ) == 'shows' ) :
-				$query->set( 'tag__not_in', [ 48089 ] );
+				$query->set( 'tag__not_in', [ 48498 ] );
 			endif;
 		endif;
 	}

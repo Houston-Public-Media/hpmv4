@@ -12,18 +12,70 @@ Template Post Type: shows
  * @since HPMv2 1.0
  */
 
-get_header();?>
+get_header(); ?>
+<style>
+	#div-gpt-ad-1488818411584-0 {
+		display: none !important;
+	}
+	.article-player-wrap h3 {
+		display: none;
+	}
+	#main > section {
+		display: block !important;
+	}
+	#videos-nav {
+		margin-top: 1rem;
+	}
+	#videos-nav nav {
+		background-color: #808080;
+	}
+	#videos-nav ul {
+		margin: 0;
+		padding: 0;
+		max-height: 60vh;
+		list-style: none;
+		overflow-y: scroll;
+	}
+	#videos-nav ul li {
+		padding: 1em;
+		font-weight: 100;
+		width: 100%;
+		color: white;
+	}
+	#videos-nav ul > li + li {
+		border-top: 1px solid white;
+	}
+	#videos-nav ul li:hover {
+		cursor: pointer;
+	}
+	#videos-nav ul li.current {
+		background-color: var(--main-red);
+		font-weight: 700;
+	}
+	#videos-nav .videos-playlist {
+		padding: 1em;
+		border-bottom: 1px solid white;
+		background-color: var(--main-blue);
+	}
+	#videos-nav .videos-playlist p {
+		font-weight: 500;
+		color: white;
+
+	}
+	#yt-title {
+		text-align: center;
+	}
+</style>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
 		<?php
 		while (have_posts()) : the_post();
 			$show_name = $post->post_name;
-			$social = get_post_meta(get_the_ID(), 'hpm_show_social', true);
-			$show = get_post_meta(get_the_ID(), 'hpm_show_meta', true);
-			$header_back = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
+			$show_id = get_the_ID();
+			$show = get_post_meta( $show_id, 'hpm_show_meta', true );
 			$show_title = get_the_title();
 			$show_content = get_the_content();
-			$categories = get_the_category();
+			echo HPM_Podcasts::show_header( $show_id );
 			$atts = [
 				[ 'id' => '372956', 'title' => 'Episode 76: COVID-19 Testing (Dr. Brian Reed)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/28165247/UHCM_Ep076_COVID_COVIDtesting_DrReed.mp3' ],
 				[ 'id' => '372955', 'title' => 'Episode 75: Common Mask Mistakes (Dr. Ruth Bush)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/28165241/UHCM_Ep075_COVID_WearingMasks_DrBush.mp3' ],
@@ -121,42 +173,13 @@ get_header();?>
 					array_unshift( $atts, $temp );
 				endif;
 			endforeach;
-
-			$page_head_class = HPM_Podcasts::show_banner( get_the_ID() );?>
-			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title"><?php the_title(); ?></h1>
-			</header>
-			<?php
-			$no = $sp = $c = 0;
-			foreach ($show as $sk => $sh) :
-				if (!empty($sh) && $sk != 'banners') :
-					$no++;
-				endif;
-			endforeach;
-			foreach ($social as $soc) :
-				if (!empty($soc)) :
-					$no++;
-				endif;
-			endforeach;
-			if ($no > 0) : ?>
-				<div id="station-social">
-					<?php
-					if (!empty($show['times'])) : ?>
-						<h3><?php echo $show['times']; ?></h3>
-					<?php
-					endif;
-					echo HPM_Podcasts::show_social($show['podcast'], false, get_the_ID()); ?>
-				</div>
-			<?php
-			endif; ?>
-		<?php
 		endwhile; ?>
-		<section id="stories-from-the-storm" class="alignleft">
-			<div class="hah-split sfts-interviews-video">
+		<section>
+			<div>
 				<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'" id="'.$atts[0]['id'].'"][/audio]' ); ?>
-				<h3 id="sfts-yt-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
+				<h3 id="yt-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
 			</div>
-			<aside id="videos-nav">
+			<div id="videos-nav">
 				<nav id="videos">
 					<div class="videos-playlist">
 						<p><?php echo $show_title; ?> Episodes</p>
@@ -171,16 +194,16 @@ get_header();?>
 						endforeach; ?>
 					</ul>
 				</nav>
-			</aside>
-		</section>
-		<aside class="alignleft">
-			<h3>About <?php echo $show_title; ?></h3>
-			<div class="show-content">
-				<?php echo apply_filters('the_content', $show_content); ?>
 			</div>
+		</section>
+		<aside>
+			<section>
+				<h3>About <?php echo $show_title; ?></h3>
+				<?php echo apply_filters('the_content', $show_content); ?>
+			</section>
 		</aside>
-	</main><!-- .site-main -->
-</div><!-- .content-area -->
+	</main>
+</div>
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		var navs = document.querySelectorAll('#videos-nav ul li');
@@ -188,7 +211,7 @@ get_header();?>
 			nav.addEventListener('click', () => {
 				var ytid = nav.getAttribute('data-ytid');
 				var yttitle = nav.getAttribute('data-yttitle');
-				var stTitle = document.querySelector('#sfts-yt-title');
+				var stTitle = document.querySelector('#yt-title');
 				if (ytid === null) {
 					return false;
 				} else {
@@ -218,7 +241,7 @@ get_header();?>
 		});
 		setTimeout(() => {
 			hpm.players[0].on('ended', (event) => {
-				var stTitle = document.querySelector('#sfts-yt-title');
+				var stTitle = document.querySelector('#yt-title');
 				var nextId = stTitle.getAttribute('data-next-id');
 				var nextEp = document.querySelector('#' + nextId);
 				var ytid = nextEp.getAttribute('data-ytid');
@@ -251,12 +274,4 @@ get_header();?>
 		}, 500);
 	});
 </script>
-<style>
-	#div-gpt-ad-1488818411584-0 {
-		display: none !important;
-	}
-	.article-player-wrap h3 {
-		display: none;
-	}
-</style>
 <?php get_footer(); ?>

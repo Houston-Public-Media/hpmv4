@@ -1709,10 +1709,10 @@ span.edit-link {
   width: 100%;
   margin: 1em 0;
   padding: 1em;
-  overflow: hidden;
 }
 #shows-youtube h3 {
-  font: 400 2.5em/1em var(--hpm-font-condensed);
+  font-weight: 400;
+  font-family: var(--hpm-font-condensed);
   color: #3f1818;
   text-transform: uppercase;
 }
@@ -1754,26 +1754,12 @@ span.edit-link {
   color: white;
   font-size: 4em;
 }
-#shows-youtube #youtube-upcoming {
-  width: 95%;
-  margin: 1rem 2.5%;
-  background-color: white;
-  overflow: hidden;
-}
 #shows-youtube #youtube-upcoming .youtube {
-  width: 100%;
-  border-bottom: 0.125rem solid #f5f5f5;
   padding: 1rem;
-  overflow: hidden;
-}
-#shows-youtube #youtube-upcoming .youtube:last-child {
-  border-bottom: 0;
+  position: relative;
 }
 #shows-youtube #youtube-upcoming .youtube img {
-  display: block;
-  float: left;
-  width: 40%;
-  padding: 0 1rem 1rem 0;
+  width: 100%;
 }
 #shows-youtube #youtube-upcoming .youtube h2 {
   font-weight: 100;
@@ -1783,6 +1769,9 @@ span.edit-link {
   text-transform: uppercase;
   font-weight: 700;
   color: #838585;
+}
+#shows-youtube #youtube-upcoming .youtube + .youtube {
+  border-top: 0.125rem solid #f5f5f5;
 }
 #shows-youtube #youtube-upcoming h4 {
   text-transform: uppercase;
@@ -2404,16 +2393,22 @@ aside #in-depth > article .entry-summary {
   font-weight: 700;
   margin: 0;
 }
+.page-banner img, .page-banner picture {
+  width: 100%;
+}
 
 .podcast-badges {
   list-style: none;
   margin: 0;
   padding: 0.5rem;
-  display: grid;
+  display: flex;
+  flex-flow: row wrap;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
   grid-column: 2;
-  justify-self: end;
+  justify-content: flex-end;
+}
+.podcast-badges li {
+  width: 3.5rem;
 }
 .podcast-badges .social-icon {
   --unit: 3.5rem;
@@ -2700,7 +2695,10 @@ body.page-template-page-blank #content #main {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: 1fr max-content;
+  }
+  #station-social .podcast-badges li {
+    width: 3.25rem;
   }
   #station-social .podcast-badges .social-icon {
     --unit: 3.25rem;

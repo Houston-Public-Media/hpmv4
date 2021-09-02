@@ -316,9 +316,9 @@ span.edit-link {
 	width: 100%;
 	margin: 1em 0;
 	padding: 1em;
-	overflow: hidden;
-	 h3 {
-		font: 400 2.5em/1em var(--hpm-font-condensed);
+	h3 {
+		font-weight: 400;
+		font-family: var(--hpm-font-condensed);
 		color: rgb(63,24,24);
 		text-transform: uppercase;
 	}
@@ -361,23 +361,11 @@ span.edit-link {
 		}
 	}
 	#youtube-upcoming {
-		width: 95%;
-		margin: 1rem 2.5%;
-		background-color: white;
-		overflow: hidden;
 		.youtube {
-			width: 100%;
-			border-bottom: 0.125rem solid #f5f5f5;
 			padding: 1rem;
-			overflow: hidden;
-			&:last-child {
-				border-bottom: 0;
-			}
+			position: relative;
 			img {
-				display: block;
-				float: left;
-				width: 40%;
-				padding: 0 1rem 1rem 0;
+				width: 100%;
 			}
 			h2 {
 				font-weight: 100;
@@ -387,6 +375,9 @@ span.edit-link {
 				text-transform: uppercase;
 				font-weight: 700;
 				color: rgb(131,133,133);
+			}
+			+ .youtube {
+				border-top: 0.125rem solid #f5f5f5;
 			}
 		}
 		h4 {
