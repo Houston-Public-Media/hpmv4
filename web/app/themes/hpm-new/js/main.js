@@ -80,44 +80,6 @@ hpm.navHandlers = () => {
 			bD.setAttribute('aria-expanded', 'false');
 		});
 	});
-	// if (!document.body.classList.contains('single-embeds')) {
-		// var topMenu = document.querySelector('#top-mobile-menu');
-		// var topSearch = document.querySelector('#top-search .fa-search');
-		// if ( topMenu !== null ) {
-		// 	topMenu.addEventListener('click', (event) => {
-		// 		if (window.innerWidth < 801 || document.body.classList.contains('page-template-page-listen')) {
-		// 			if (document.body.classList.contains('nav-active-menu')) {
-		// 				document.body.classList.remove('nav-active-menu');
-		// 			} else {
-		// 				document.body.classList.add('nav-active-menu');
-		// 			}
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 	});
-		// }
-		// if (topSearch !== null) {
-		// 	topSearch.addEventListener('click', (event) => {
-		// 		var sForm = document.querySelector('#top-search .search-form');
-		// 		var sField = document.querySelector('#top-search .search-field');
-		// 		if ( window.innerWidth > 800 ) {
-		// 			if ( !sForm.classList.contains('search-active') ) {
-		// 				sField.focus();
-		// 			}
-		// 			sForm.classList.toggle('search-active');
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 	});
-		// }
-		// var topSched = document.querySelector('#top-schedule .top-schedule-label button');
-		// if (topSched !== null) {
-		// 	topSched.addEventListener('click', (e) => {
-		// 		e.preventDefault();
-		// 		document.querySelector('#top-schedule .top-schedule-link-wrap').classList.toggle('top-sched-active');
-		// 	});
-		// }
-	// }
 };
 
 hpm.videoHandlers = () => {

@@ -32,7 +32,7 @@
 	right: 0;
 	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
 	transition: bottom .5s ease-out;
-	.plyr-audio-embed-active {
+	&.plyr-audio-embed-active {
 		bottom: 0;
 	}
 	.plyr-audio-embed-wrap {

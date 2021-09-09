@@ -772,7 +772,7 @@ body.page-template-page-blank {
 				width: 100%;
 			}
 		}
-		article {
+		> article {
 			min-width: 66%;
 			flex: 1;
 			&.card.category-in-depth {
@@ -786,7 +786,7 @@ body.page-template-page-blank {
 	.single,
 	.page-template-page-npr-articles {
 		#main {
-			article {
+			> article {
 				display: grid;
 				grid-template-columns: 10rem 1fr;
 				.entry-header {
@@ -806,9 +806,9 @@ body.page-template-page-blank {
 			}
 		}
 	}
-	.full-width #main article,
-	.page-template-page-wide #main article,
-	.post-template-single-full-width #main article {
+	.full-width #main > article,
+	.page-template-page-wide #main > article,
+	.post-template-single-full-width #main > article {
 		grid-column: 1 / -1;
 	}
 	body.page-template-page-blank {

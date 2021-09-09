@@ -1705,98 +1705,6 @@ span.edit-link {
   margin-right: 0;
 }
 
-#shows-youtube {
-  width: 100%;
-  margin: 1em 0;
-  padding: 1em;
-}
-#shows-youtube h3 {
-  font-weight: 400;
-  font-family: var(--hpm-font-condensed);
-  color: #3f1818;
-  text-transform: uppercase;
-}
-#shows-youtube #youtube-main {
-  width: 100%;
-  margin: 1rem 0;
-  padding: 2rem;
-  background-color: white;
-}
-#shows-youtube #youtube-main h2 {
-  font-weight: 400;
-  font-family: var(--hpm-font-condensed);
-  text-transform: uppercase;
-}
-#shows-youtube #youtube-main p {
-  font-weight: 100;
-  color: #838585;
-}
-#shows-youtube #youtube-main p.date {
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #838585;
-}
-#shows-youtube #youtube-main #youtube-player {
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  margin: 0 0 1em 0;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  display: flex;
-}
-#shows-youtube #youtube-main #youtube-player:hover {
-  cursor: pointer;
-}
-#shows-youtube #youtube-main #youtube-player .fab {
-  color: white;
-  font-size: 4em;
-}
-#shows-youtube #youtube-upcoming .youtube {
-  padding: 1rem;
-  position: relative;
-}
-#shows-youtube #youtube-upcoming .youtube img {
-  width: 100%;
-}
-#shows-youtube #youtube-upcoming .youtube h2 {
-  font-weight: 100;
-  font-size: 1.5rem;
-}
-#shows-youtube #youtube-upcoming .youtube p.date {
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #838585;
-}
-#shows-youtube #youtube-upcoming .youtube + .youtube {
-  border-top: 0.125rem solid #f5f5f5;
-}
-#shows-youtube #youtube-upcoming h4 {
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #838585;
-  padding: 1rem 0 0 1rem;
-}
-
-#yt-nowplay {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  display: flex;
-  background-color: rgba(0, 0, 0, 0.75);
-  font: 400 2em/1.75em var(--hpm-font-main);
-  color: white;
-}
-
 @media screen and (min-width: 64.25rem) {
   .social-wrap {
     align-items: start;
@@ -1854,6 +1762,115 @@ span.edit-link {
   }
   .grid > aside > section {
     width: 100%;
+  }
+}
+#shows-youtube {
+  background-color: white;
+}
+#shows-youtube h3 {
+  font-weight: 400;
+  font-family: var(--hpm-font-condensed);
+  color: #3f1818;
+  text-transform: uppercase;
+}
+#shows-youtube #youtube-main {
+  padding: 1rem;
+}
+#shows-youtube #youtube-main h2 {
+  font-weight: 400;
+  font-family: var(--hpm-font-condensed);
+  text-transform: uppercase;
+}
+#shows-youtube #youtube-main p {
+  font-weight: 100;
+  color: #838585;
+}
+#shows-youtube #youtube-main p.date {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #838585;
+}
+#shows-youtube #youtube-main #youtube-player {
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  margin: 0 0 1rem 0;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+}
+#shows-youtube #youtube-main #youtube-player:hover {
+  cursor: pointer;
+}
+#shows-youtube #youtube-main #youtube-player .fab,
+#shows-youtube #youtube-main #youtube-player .fas {
+  color: white;
+  font-size: 4em;
+}
+#shows-youtube #youtube-upcoming .youtube {
+  padding: 1rem;
+  position: relative;
+}
+#shows-youtube #youtube-upcoming .youtube img {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+#shows-youtube #youtube-upcoming .youtube h2 {
+  font-weight: 100;
+  font-size: 1.5rem;
+}
+#shows-youtube #youtube-upcoming .youtube p.date {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #838585;
+}
+#shows-youtube #youtube-upcoming .youtube + .youtube {
+  border-top: 0.125rem solid #f5f5f5;
+}
+#shows-youtube #youtube-upcoming h4 {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #838585;
+  padding: 1rem 0 0 1rem;
+}
+
+#yt-nowplay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.75);
+  font: 400 2em/1.75em var(--hpm-font-main);
+  color: white;
+}
+
+@media screen and (min-width: 34rem) {
+  #shows-youtube #youtube-upcoming .youtube {
+    display: grid;
+    grid-template-columns: 40% 60%;
+  }
+  #shows-youtube #youtube-upcoming .youtube img {
+    grid-row: 1/span 2;
+    align-self: center;
+    padding-right: 1rem;
+  }
+  #shows-youtube #youtube-upcoming .youtube h2 {
+    margin: 0;
+  }
+}
+@media screen and (min-width: 64.25rem) {
+  #main > section#shows-youtube {
+    grid-column: 1/-1;
+    grid-template-columns: 2fr 1fr;
   }
 }
 .single #main,
@@ -2640,44 +2657,44 @@ body.page-template-page-blank #content #main {
   #main > aside section {
     width: 100%;
   }
-  #main article {
+  #main > article {
     min-width: 66%;
     flex: 1;
   }
-  #main article.card.category-in-depth {
+  #main > article.card.category-in-depth {
     margin-top: 0;
   }
-  #main article.attachment-full {
+  #main > article.attachment-full {
     grid-column: 1/-1;
   }
 
-  .single #main article,
-.page-template-page-npr-articles #main article {
+  .single #main > article,
+.page-template-page-npr-articles #main > article {
     display: grid;
     grid-template-columns: 10rem 1fr;
   }
-  .single #main article .entry-header,
-.page-template-page-npr-articles #main article .entry-header {
+  .single #main > article .entry-header,
+.page-template-page-npr-articles #main > article .entry-header {
     grid-column: 1/span 2;
   }
-  .single #main article .entry-footer,
-.page-template-page-npr-articles #main article .entry-footer {
+  .single #main > article .entry-footer,
+.page-template-page-npr-articles #main > article .entry-footer {
     grid-column: 2;
   }
-  .single #main article #article-share,
-.page-template-page-npr-articles #main article #article-share {
+  .single #main > article #article-share,
+.page-template-page-npr-articles #main > article #article-share {
     grid-row: 2/span 2;
   }
-  .single #main article #article-share > .social-wrap,
-.page-template-page-npr-articles #main article #article-share > .social-wrap {
+  .single #main > article #article-share > .social-wrap,
+.page-template-page-npr-articles #main > article #article-share > .social-wrap {
     position: sticky;
     top: 1rem;
     grid-template-columns: 3.5rem 3.5rem;
   }
 
-  .full-width #main article,
-.page-template-page-wide #main article,
-.post-template-single-full-width #main article {
+  .full-width #main > article,
+.page-template-page-wide #main > article,
+.post-template-single-full-width #main > article {
     grid-column: 1/-1;
   }
 
@@ -2742,7 +2759,7 @@ body.page-template-page-blank #content #main {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
   transition: bottom 0.5s ease-out;
 }
-.plyr-audio-embed-popup .plyr-audio-embed-active {
+.plyr-audio-embed-popup.plyr-audio-embed-active {
   bottom: 0;
 }
 .plyr-audio-embed-popup .plyr-audio-embed-wrap {

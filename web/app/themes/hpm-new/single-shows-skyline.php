@@ -20,7 +20,7 @@ get_header(); ?>
 			background-repeat: no-repeat;
 			background-size: cover;
 			grid-column: 1 / -1 !important;
-			grid-template-columns: 1fr !important;
+			display: block !important;
 		}
 		#main > aside {
 			grid-row: auto;

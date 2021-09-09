@@ -12,6 +12,6 @@
  *
  * Works best with Wordpress 4.6.0+
 */
-if ( defined( 'WP_ENV' ) && WP_ENV !== 'production' ) :
+if ( wp_get_theme() == 'HPM-Sassy' ) :
 	require( 'hpm-mods/hpm_mods.php' );
 endif;
