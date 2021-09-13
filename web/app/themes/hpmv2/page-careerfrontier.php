@@ -4,44 +4,6 @@ Template Name: Career Frontier
 */
 	get_header(); ?>
 	<link rel="stylesheet" href="https://use.typekit.net/qmq1vwk.css">
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post(); ?>
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="page-header">
-					<?php
-						the_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
-				</header><!-- .entry-header -->
-				<div class="page-content">
-					<?php the_content(); ?>
-				</div><!-- .entry-content -->
-
-				<footer class="entry-footer">
-				<?PHP
-					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
-					if ( $tags_list ) {
-						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
-							_x( 'Tags', 'Used before tag names.', 'hpmv2' ),
-							$tags_list
-						);
-					}
-					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
-			<?php
-				endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-	<script>
-		document.addEventListener('DOMContentLoaded', () => {
-			var artHeads = document.querySelectorAll('.cf-eps-wrap article header');
-			Array.from(artHeads).forEach((art) => {
-				art.addEventListener('click', () => {
-					art.parentNode.classList.toggle('topic-active');
-				});
-			});
-		});
-	</script>
 	<style>
 		:root {
 			--plyr-audio-control-color: rgb(80, 127, 145);
@@ -105,7 +67,6 @@ Template Name: Career Frontier
 		}
 		.page-content h2 {
 			font-size: 200%;
-			border-bottom: 1px solid #00566d;
 			padding: 0 0 0.25em 0;
 			margin-bottom: 1em;
 			color: #00566d;
@@ -113,34 +74,40 @@ Template Name: Career Frontier
 			font-family: Montserrat,Arial, Helvetica, sans-serif;
 			font-weight: 800;
 		}
+		.page-content > div > h2 {
+			border-bottom: 1px solid #00566d;
+		}
 		.cf-content {
 			padding-bottom: 2.5em;
 		}
-		.cf-content-wrap img,
-		.cf-guest-wrap article img {
+		.cf-content-wrap img {
 			width: 70%;
 			margin: 0 15% 1em;
 		}
 		.cf-eps-wrap,
 		.cf-guest-wrap {
-			display: flex;
-			flex-flow: row wrap;
-			justify-content: space-evenly;
-			align-content: flex-start;
-			align-items: flex-start;
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
 		}
-		.cf-eps-wrap article {
-			width: 100%;
-			margin-bottom: 1em;
+		.cf-eps-wrap > article {
 			border-bottom: 1px solid #b1b1b1;
 			background-color: #fff;
 		}
-		.cf-guest-wrap article {
-			width: 100%;
-			margin-bottom: 2em;
-			border-bottom: 1px solid #b1b1b1;
+		.cf-guest-wrap > article {
 			background-color: #fff;
-			padding: 0 1em 1em;
+		}
+		.cf-guest-wrap p,
+		.cf-guest-wrap br {
+			display: none;
+		}
+		.cf-eps.cf-breakouts > h2 {
+			color: white;
+			margin-bottom: 1rem;
+		}
+		.cf-eps.cf-breakouts > p {
+			color: white;
+			margin-bottom: 1.25rem;
 		}
 		.cf-eps-wrap article h1 {
 			margin-bottom: 0em;
@@ -153,11 +120,31 @@ Template Name: Career Frontier
 			padding: 0.5em 1em 0.5em 0.5em;
 			color: white;
 		}
-		.cf-guest-wrap article h1 {
-			margin-bottom: 0.75em;
-			font-size: 200%;
+		.cf-guest-wrap > article > header {
+			display: grid;
+			grid-template-columns: 33% 67%;
+			gap: 1rem;
+		}
+		.cf-guest-wrap > article > header > img {
+			grid-row: 1 / span 2;
+			grid-column: 1;
+		}
+		.cf-guest-wrap > article > header > h1 {
+			margin-bottom: 0;
+			font-size: 2rem;
 			font-family: Montserrat,Arial, Helvetica, sans-serif;
 			font-weight: 800;
+			grid-column: 2;
+			align-self: end;
+		}
+		.cf-guest-wrap > article > header > h3 {
+			padding: 0;
+			font-size: 1.5rem;
+			grid-column: 2;
+			display: block;
+			margin: 0;
+			align-self: start;
+			text-transform: initial;
 		}
 		.cf-eps-wrap article header h1:after {
 			content: '\f0d7';
@@ -201,12 +188,12 @@ Template Name: Career Frontier
 			background-repeat: no-repeat;
 			background-size: contain;
 		}
-		.cf-eps {
+		.page-content > div:nth-child(even) {
 			background-color: #00566d;
 		}
-		.cf-eps h2 {
-			border-bottom: 1px solid #fff;
+		.page-content > div:nth-child(even) > h2 {
 			color: #fff;
+			border-color: #fff;
 		}
 		.cf-eps article h2 {
 			display: none;
@@ -238,16 +225,12 @@ Template Name: Career Frontier
 				order: 2;
 				min-width: 250px;
 			}
-			.cf-guest-wrap article {
-				width: 45%;
-				margin: 0 2.5% 2em;
+			.cf-guest-wrap {
+				grid-template-columns: 1fr 1fr;
 			}
 			.cf-eps-wrap article header:hover {
 				cursor: pointer;
 				opacity: 0.75;
-			}
-			.cf-guest-wrap article {
-				min-height: 46.375em;
 			}
 		}
 		@media screen and (min-width: 52.5em) {
@@ -265,12 +248,6 @@ Template Name: Career Frontier
 				border-right: 0;
 				float: none;
 			}
-			.page-template-page-careerfrontier .cf-eps-wrap article,
-			.page-template-page-careerfrontier .cf-guest-wrap article {
-				width: 32%;
-				padding: 1em;
-				margin: 0 0.6% 2em;
-			}
 			.cf-eps-wrap article .episode-content,
 			.cf-eps-wrap article.topic-active .episode-content {
 				clip: initial !important;
@@ -282,9 +259,6 @@ Template Name: Career Frontier
 			.cf-content-wrap {
 				max-width: 75%;
 				margin: 0 12.5%;
-			}
-			.cf-eps-wrap article {
-				min-height: 42em;
 			}
 			.cf-eps-wrap article h1 {
 				padding: 0.5em;
@@ -298,6 +272,65 @@ Template Name: Career Frontier
 			.cf-full-title {
 				display: none;
 			}
+			.cf-guest-wrap,
+			.cf-eps-wrap {
+				grid-template-columns: repeat(6, 1fr);
+			}
+			.cf-guest-wrap > article,
+			.cf-eps-wrap > article {
+				grid-column-end: span 2;
+			}
+			.cf-eps-wrap > article:nth-child(4),
+			.cf-guest-wrap > article:nth-child(19) {
+				grid-column-start: 2;
+			}
+			.cf-eps-wrap > article:nth-child(5),
+			.cf-guest-wrap > article:nth-child(20) {
+				grid-column-start: 4;
+			}
+			.cf-breakouts > .cf-eps-wrap > article:nth-child(4),
+			.cf-breakouts > .cf-eps-wrap > article:nth-child(5) {
+				grid-column-start: auto;
+			}
 		}
 	</style>
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+		<?PHP while ( have_posts() ) : the_post(); ?>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="page-header">
+					<?php
+						the_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
+				</header><!-- .entry-header -->
+				<div class="page-content">
+					<?php the_content(); ?>
+				</div><!-- .entry-content -->
+
+				<footer class="entry-footer">
+				<?PHP
+					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
+					if ( $tags_list ) {
+						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
+							_x( 'Tags', 'Used before tag names.', 'hpmv2' ),
+							$tags_list
+						);
+					}
+					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
+				</footer><!-- .entry-footer -->
+			</article><!-- #post-## -->
+			<?php
+				endwhile; ?>
+		</main><!-- .site-main -->
+	</div><!-- .content-area -->
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			var artHeads = document.querySelectorAll('.cf-eps-wrap article header');
+			Array.from(artHeads).forEach((art) => {
+				art.addEventListener('click', () => {
+					art.parentNode.classList.toggle('topic-active');
+				});
+			});
+		});
+	</script>
+
 <?php get_footer(); ?>
