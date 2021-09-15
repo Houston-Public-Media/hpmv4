@@ -484,6 +484,9 @@ body {
 							border-left-color: transparent;
 							border-top-color: rgba(0,0,0, 0.45);
 						}
+						&.nav-kids a {
+							color: #df8d29;
+						}
 						> ul {
 							overflow: auto;
 							border-radius: 0.25rem;

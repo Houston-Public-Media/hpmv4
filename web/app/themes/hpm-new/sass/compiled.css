@@ -260,6 +260,7 @@ body {
   font-family: var(--hpm-font-main);
   background-color: #f5f5f5;
   min-height: 100vh;
+  accent-color: var(--main-red);
 }
 
 input[type=search] {
@@ -960,6 +961,9 @@ body.nav-active-menu #top-mobile-close {
     position: relative;
     border-left-color: transparent;
     border-top-color: rgba(0, 0, 0, 0.45);
+  }
+  body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-kids a {
+    color: #df8d29;
   }
   body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li > ul {
     overflow: auto;
