@@ -53,26 +53,12 @@ function hpm_priority_settings_page() {
 			$recent_id = get_the_ID();
 			$recents[ $recent_id ] = get_the_title();
 		endwhile;
-	endif;
-
-	$indepth = new WP_Query([
-		'post_status' => 'publish',
-		'posts_per_page' => 50,
-		'post_type' => 'post',
-		'order' => 'DESC',
-		'orderby' => 'date',
-		'category_name' => 'in-depth'
-	]);
-	if ( $indepth->have_posts() ) :
-		while( $indepth->have_posts() ) : $indepth->the_post();
-			$indepth_id = get_the_ID();
-			$indepths[ $indepth_id ] = get_the_title();
-		endwhile;
 	endif; ?>
 	<div class="wrap">
 		<?php settings_errors(); ?>
 		<h1><?php _e('Post Prioritization', 'hpmv2' ); ?></h1>
 		<p><?php _e('This page displays the posts that are currently set as "Priority Posts" on the homepage and main landing pages.', 'hpmv2' ); ?></p>
+		<p style="background-color: yellow; font-style: italic; font-size: 1rem;"><?php _e('<strong>NOTE:</strong> If position #2 is left blank, that slot will show the latest inDepth article. Otherwise, the slot will show the selected article.', 'hpmv2' ); ?></p>
 		<form method="post" action="options.php" id="hpm-priority-slots">
 			<?php settings_fields( 'hpm-priority-settings-group' ); ?>
 			<?php do_settings_sections( 'hpm-priority-settings-group' ); ?>
@@ -81,8 +67,7 @@ function hpm_priority_settings_page() {
 					<div id="post-body-content">
 						<div class="meta-box-sortables ui-sortable">
 							<div class="postbox">
-								<div class="handlediv" title="Click to toggle"><br></div>
-								<h2 class="hndle"><span><?php _e('Homepage/News', 'hpmv2' ); ?></span></h2>
+								<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Homepage', 'hpm-podcasts' ); ?></h2></div>
 								<div class="inside">
 									<table class="wp-list-table widefat fixed striped posts">
 										<thead>
@@ -90,14 +75,20 @@ function hpm_priority_settings_page() {
 												<th scope="col" class="manage-column column-author">Position</th>
 												<th scope="col" class="manage-column">Current Post</th>
 												<th scope="col" class="manage-column column-tags">Change to ID?</th>
+												<th scope="col" class="manage-column column-author">Clear?</th>
 											</tr>
 										</thead>
 										<tbody>
 									<?php
 										foreach ( $priority['homepage'] as $kp => $vp ) :
-											$position = $kp + 1; ?>
+											$position = $kp + 1;
+											if ( $kp == 1 ) : ?>
+											<tr valign="top" style="border: 0.25rem solid #00566c;">
+												<th scope="row">Position <?PHP echo $position; ?><br /><strong>inDepth Position</strong></th>
+											<?php else : ?>
 											<tr valign="top">
 												<th scope="row">Position <?PHP echo $position; ?></th>
+											<?php endif; ?>
 												<td>
 													<label class="screen-reader-text"><?php _e( "Current Article in Homepage Position ".$position.":", 'hpmv2' ); ?></label>
 													<select id="hpm_priority-homepage-<?php echo $kp; ?>" class="hpm-priority-select homepage-select">
@@ -111,45 +102,10 @@ function hpm_priority_settings_page() {
 													</select>
 												</td>
 												<td><label for="hpm_priority[homepage][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv2' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
+												<td><button class="hpm-clear button button-primary" data-position="<?php echo $kp; ?>">Reset</button></td>
 											</tr>
 									<?php
 										endforeach; ?>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div class="meta-box-sortables ui-sortable">
-							<div class="postbox">
-								<div class="handlediv" title="Click to toggle"><br></div>
-								<h2 class="hndle"><span><?php _e('In-Depth', 'hpmv2' ); ?></span></h2>
-								<div class="inside">
-									<p>Choose an article to feature in the In-Depth box on the homepage. If left blank, the box will default to the most recent In-Depth article.</p>
-									<table class="wp-list-table widefat fixed striped posts">
-										<thead>
-											<tr>
-												<th scope="col" class="manage-column">Current Post</th>
-												<th scope="col" class="manage-column column-tags">Change to ID?</th>
-												<th scope="col" class="manage-column column-author">Clear?</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr valign="top">
-												<td>
-													<label class="screen-reader-text"><?php _e( "Current Article for In-Depth box:", 'hpmv2' ); ?></label>
-													<select id="hpm_priority-indepth-1" class="hpm-priority-select indepth-select">
-														<option value=""></option>
-														<?php
-														foreach( $indepths as $k => $v ) : ?>
-															<option value="<?php echo $k; ?>"<?php selected( $priority['indepth'], $k, TRUE ); ?>><?php echo
-																$v; ?></option>
-															<?php
-														endforeach; ?>
-													</select>
-												</td>
-												<td><label for="hpm_priority[indepth]" class="screen-reader-text"><?php _e('Change To?', 'hpmv2' ); ?></label><input type="number" name="hpm_priority[indepth]" id="indepth-1" class="indepth-select-input" value="<?php echo $priority['indepth']; ?>" style="max-width: 100%;" /></td>
-												<td><a href="#" id="hpm-indepth-clear">Reset</a></td>
-											</tr>
 										</tbody>
 									</table>
 								</div>

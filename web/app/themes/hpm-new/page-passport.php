@@ -5,6 +5,9 @@ Template Name: Passport
 get_header(); ?>
 	<div id="primary" class="content-area">
 		<style>
+			#main > article {
+				grid-column: 1 / -1 !important;
+			}
 			.page-template-page-passport .page-header {
 				padding: 0;
 				height: 0;

@@ -1,5 +1,5 @@
 /*
-Theme Name: HPM-Redux
+Theme Name: HPM-Sassy
 Author: Jared Counts
 Author URI: https://www.houstonpublicmedia.org
 Description: Starting into a theme overhaul to emphasize easier maintenance and faster iteration.
@@ -187,4 +187,5 @@ body {
 @import 'components/utilities.scss';
 @import 'components/articles-pages.scss';
 @import 'components/audio.scss';
+@import 'components/plyr/plyr.scss';
 @import 'components/ads.scss';

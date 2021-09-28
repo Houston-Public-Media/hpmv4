@@ -229,37 +229,26 @@ function article_display_shortcode( $atts ) {
 	endif;
 	$article[] = new WP_query( $args );
 	$output = '';
+	global $ka;
 	ob_start();
 	foreach ( $article as $art ) :
 		if ( $art->have_posts() ) :
 			while ( $art->have_posts() ) : $art->the_post();
-				if ( $type == 'search' ) :
-					get_template_part( 'content', get_post_format() );
+				if ( $type == 'a' ) :
+					$ka = 0;
+				elseif ( $type == 'b' ) :
+					$ka = 1;
 				else :
-					$postClass = get_post_class();
-					$fl_array = preg_grep("/felix-type-/", $postClass);
-					$fl_arr = array_keys( $fl_array );
-					$postClass[$fl_arr[0]] = 'felix-type-'.$type;
-					if ( $type == 'a' ) :
-						$thumbnail_type = 'large';
-					elseif ( $type == 'b' ) :
-						$thumbnail_type = 'thumbnail';
-					else :
-						$thumbnail_type = 'thumbnail';
-					endif;
-					$hpm_constants[] = get_the_ID();
-					$overline = hpm_top_cat( get_the_ID() );
-					$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
+					$ka = null;
 				endif;
+				get_template_part( 'content', get_post_format() );
 			endwhile;
 		endif;
 	endforeach;
 	wp_reset_query();
 	$getContent = ob_get_contents();
 	ob_end_clean();
-	if ( $type == 'search' ) :
-		$output = $getContent;
-	endif;
+	$output = $getContent;
 	return $output;
 }
 add_shortcode( 'hpm_articles', 'article_display_shortcode' );
@@ -375,32 +364,7 @@ function hpm_npr_article_shortcode( $atts ) {
 		'category' => 1001,
 		'num' => 4
 	], $atts, 'multilink' ) );
-	$npr = get_transient( 'hpm_nprapi_'.$category );
-	if ( !empty( $npr ) ) :
-		return $npr;
-	endif;
-	$output = '';
-	$api_key = get_option( 'ds_npr_api_key' );
-	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $category . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=4&apiKey=" . $api_key ) );
-	if ( is_wp_error( $remote ) ) :
-		return "<p></p>";
-	else :
-		$npr = wp_remote_retrieve_body( $remote );
-		$npr_json = json_decode( $npr, TRUE );
-	endif;
-	foreach ( $npr_json['list']['story'] as $story ) :
-		$npr_date = strtotime($story['storyDate']['$text']);
-		$output .= '<article class="national-content">';
-		if ( !empty( $story['image'][0]['src'] ) ) :
-			$output .= '<div class="national-image" style="background-image: url('.$story['image'][0]['src'].')"><a href="//www.houstonpublicmedia.org/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"></a></div><div class="national-text">';
-		else :
-			$output .= '<div class="national-text-full">';
-		endif;
-		$output .= '<h2><a href="//www.houstonpublicmedia.org/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/">'.$story['title']['$text'].'</a></h2><p class="screen-reader-text">'
-		           .$story['teaser']['$text'].'</p></div></article>';
-	endforeach;
-	set_transient( 'hpm_nprapi_'.$category, $output, 600 );
-	return $output;
+	return hpm_nprapi_output( $category, $num );
 }
 add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
 

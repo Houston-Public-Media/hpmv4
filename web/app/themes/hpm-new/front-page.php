@@ -90,9 +90,6 @@ $articles = hpm_homepage_articles(); ?>
 						<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"><?php echo hpmv2_nowplaying( 'mixtape' ); ?></div>
 					</div>
 				</section>
-				<section id="in-depth">
-					<?php hpm_priority_indepth(); ?>
-				</section>
 				<?php hpm_top_posts(); ?>
 				<section class="sidebar-ad">
 					<h4>Support Comes From</h4>

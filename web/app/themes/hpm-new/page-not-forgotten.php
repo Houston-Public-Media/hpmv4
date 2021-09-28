@@ -14,7 +14,7 @@ Template Name: Not Forgotten
 			.page-template-page-not-forgotten #masthead {
 				width: 100%;
 				max-width: 100% !important;
-				position: fixed;
+				position: fixed !important;
 				padding: 0.5em;
 				z-index: 9999;
 				border: 0;
@@ -25,6 +25,7 @@ Template Name: Not Forgotten
 				align-items: center;
 				display: flex;
 				justify-content: space-between;
+				top: 0;
 			}
 			.page-template-page-not-forgotten #masthead .site-title,
 			.page-template-page-not-forgotten #masthead .site-nav {
@@ -88,6 +89,18 @@ Template Name: Not Forgotten
 				align-items: center;
 				display: flex;
 				position: relative;
+			}
+			#main {
+				display: block !important;
+			}
+			#nf-head {
+				padding-bottom: 2rem;
+			}
+			#nf-head p + p {
+				margin-top: 1rem;
+			}
+			#foot-banner {
+				display: none !important;
 			}
 			.page-template-page-not-forgotten .page-header .down {
 				width: 100%;
@@ -200,9 +213,13 @@ Template Name: Not Forgotten
 			.modal-open {
 				position: fixed;
 				height: 100vh;
+				width: 100vw;
 			}
 			.article-player-wrap {
 				margin-bottom: 1em;
+			}
+			.article-player-wrap h3 {
+				display: none;
 			}
 			@media screen and (min-width: 34em) {
 				.page-template-page-not-forgotten #masthead.active .site-title,

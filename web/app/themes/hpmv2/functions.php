@@ -384,6 +384,9 @@ function prefix_insert_post_bug( $content ) {
 		elseif ( in_category( 'texas-legislature' ) ) :
 			$bug_code = '<div class="in-post-bug"><a href="/news/politics/texas-legislature/"><img src="https://cdn.hpm.io/assets/images/TX_Lege_Article_Bug.jpg" alt="Special Coverage Of The 85th Texas Legislative Session"></a><h3><a href="/news/politics/texas-legislature/">Special Coverage Of The 85th Texas Legislative Session</a></h3></div>';
 			return prefix_insert_after_paragraph( $bug_code, 2, $content );
+		elseif ( in_category( 'in-depth' ) ) :
+			$bug_code = '<div class="in-post-bug in-depth"><a href="/topics/in-depth/"><img src="https://cdn.hpm.io/assets/images/inDepth-white-arrows.png" alt="inDepth logo with arrows" /></a><h3><a href="/topics/in-depth/">This story is part of our ongoing News&nbsp;88.7 inDepth initiative</a></h3></div>';
+			return prefix_insert_after_paragraph( $bug_code, 5, $content );
 		endif;
 	endif;
 	return $content;
@@ -625,6 +628,17 @@ function hpm_homepage_articles() {
 	$articles = [];
 	$hpm_priority = get_option( 'hpm_priority' );
 	if ( !empty( $hpm_priority['homepage'] ) ) :
+		if ( empty( $hpm_priority['homepage'][1] ) ) :
+			$indepth = new WP_Query([
+				'posts_per_page' => 1,
+				'cat' => 29328,
+				'ignore_sticky_posts' => 1,
+				'post_status' => 'publish'
+			]);
+			if ( $indepth->have_posts() ) :
+				$hpm_priority['homepage'][1] = $indepth->post->ID;
+			endif;
+		endif;
 		$sticknum = count( $hpm_priority['homepage'] );
 		$sticky_args = [
 			'posts_per_page' => $sticknum,

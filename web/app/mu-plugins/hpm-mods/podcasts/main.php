@@ -663,12 +663,7 @@ class HPM_Podcasts {
 	public function generate( WP_REST_Request $request = null ) {
 		$pods = $this->options;
 		$ds = DIRECTORY_SEPARATOR;
-		if ( !empty( $pods['https'] ) ) :
-			$protocol = 'https://';
-			$_SERVER['HTTPS'] = 'on';
-		else :
-			$protocol = 'http://';
-		endif;
+		$protocol = 'https://';
 		$error = '';
 		$dir = wp_upload_dir();
 		if ( class_exists( 'feed_json' ) ) :
@@ -849,7 +844,7 @@ class HPM_Podcasts {
 				endforeach;
 				$pod_desc = get_post_meta( $epid, 'hpm_podcast_ep_meta', true );
 
-				$media_file = str_replace( [ 'http://', 'https://' ], [ $protocol, $protocol ], $a_meta['url'] );
+				$media_file = str_replace( 'http://', $protocol, $a_meta['url'] );
 
 				if ( !empty( $pod_desc['title'] ) ) :
 					$item_title = $pod_desc['title'];
@@ -1332,7 +1327,7 @@ class HPM_Podcasts {
 				$temp['name'] = get_the_title();
 				$temp['description'] = get_the_content();
 				$a_meta = get_post_meta( $last_id['id'], 'hpm_podcast_enclosure', true );
-				$temp['latest_episode']['audio'] = str_replace( [ 'http://', 'https://' ], [ $protocol, $protocol ], $a_meta['url'] );
+				$temp['latest_episode']['audio'] = str_replace( 'http://', $protocol, $a_meta['url'] );
 				$temp['latest_episode']['title'] = get_the_title( $last_id['id'] );
 				$temp['latest_episode']['link'] = get_the_permalink( $last_id['id'] );
 				$temp['feed_json'] = WP_HOME.'/wp-json/hpm-podcast/v1/list/'.$post->post_name;

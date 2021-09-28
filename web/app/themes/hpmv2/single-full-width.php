@@ -10,9 +10,10 @@ if ( is_preview() ) : ?>
 <?php endif; ?>
 	<div id="primary" class="content-area">
 		<div id="main" class="site-main" role="main">
-			<?PHP while ( have_posts() ) : the_post(); ?>
+			<?PHP while ( have_posts() ) : the_post(); $postClass = get_post_class(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
+					<?php echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 					<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 					<?php
 						the_title( '<h1 class="entry-title">', '</h1>' );

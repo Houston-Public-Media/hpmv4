@@ -29,38 +29,12 @@ get_header(); ?>
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 	<style>
-		.page-content {
+		.entry-content {
 			overflow: hidden;
 			padding: 2.5em 1em 1em;
 		}
-		.page-content p {
+		.entry-content p {
 			margin-bottom: 1em;
-		}
-		.page-header {
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-			height: 0;
-			margin: 0 !important;
-			padding-right: 0;
-			padding-left: 0;
-			padding-top: 0;
-			padding-bottom: calc(100%/1.5);
-			position: relative;
-			background-image: url(https://cdn.hpm.io/assets/images/Election-2020_mobile-2x.jpg);
-		}
-		.page-template-page-election2020 article {
-			padding: 0;
-			margin: 0;
-		}
-		#search-results article .entry-summary {
-			padding: 0;
-		}
-		#search-results article {
-			display: flex;
-			justify-content: center;
-			align-content: center;
-			align-items: center;
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {

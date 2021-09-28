@@ -10,8 +10,9 @@
 get_header(); ?>
 	<style>
 		.search-results-form {
-			margin: 1em 0;
-			font: 100 1.5em/1em var(--hpm-font-main);
+			margin: 1rem 0;
+			font-weight: 100;
+			font-size: 1.5rem;
 			color: rgb(161,161,162);
 		}
 		.search-results-form .search-form {
@@ -29,16 +30,17 @@ get_header(); ?>
 			outline: 0;
 			background-color: rgb(243,244,244);
 			color: rgb(142,144,144);
-			font: 500 1.125em/1.25em var(--hpm-font-main);
-			padding: 0.25em 0.125em;
+			font-weight: 500;
+			padding: 0.5rem;
 			width: 100%;
+			height: 3.25rem;
 		}
 		.search-results-form button.search-submit.screen-reader-text {
 			display: block;
 			background-color: rgb(180,213,223);
 			overflow: initial;
-			width: 3.5em;
-			height: 3.5em;
+			width: 3.25rem;
+			height: 3.25rem;
 			color: #00b0bc;
 			clip: initial;
 			position: initial !important;

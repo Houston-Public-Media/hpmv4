@@ -55,22 +55,24 @@ var eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
 hpm.navHandlers = () => {
 	var siteNav = document.querySelector('nav#site-navigation');
 	var buttonDiv = document.querySelectorAll('div[tabindex="0"]');
-	var menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
-	siteNav.addEventListener('focusin', () => {
-		document.body.classList.add('nav-active-menu');
-	});
-	siteNav.addEventListener('focusout', () => {
-		document.body.classList.remove('nav-active-menu');
-	});
-	if ( menuWithChildren !== null ) {
-		Array.from(menuWithChildren).forEach((menuC) => {
-			menuC.addEventListener('focusin', () => {
-				menuC.firstElementChild.setAttribute('aria-expanded', 'true');
-			});
-			menuC.addEventListener('focusout', () => {
-				menuC.firstElementChild.setAttribute('aria-expanded', 'false');
-			});
+	if ( siteNav !== null ) {
+		var menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
+		siteNav.addEventListener('focusin', () => {
+			document.body.classList.add('nav-active-menu');
 		});
+		siteNav.addEventListener('focusout', () => {
+			document.body.classList.remove('nav-active-menu');
+		});
+		if ( menuWithChildren !== null ) {
+			Array.from(menuWithChildren).forEach((menuC) => {
+				menuC.addEventListener('focusin', () => {
+					menuC.firstElementChild.setAttribute('aria-expanded', 'true');
+				});
+				menuC.addEventListener('focusout', () => {
+					menuC.firstElementChild.setAttribute('aria-expanded', 'false');
+				});
+			});
+		}
 	}
 	Array.from(buttonDiv).forEach((bD) => {
 		bD.addEventListener('focusin', () => {
@@ -101,7 +103,11 @@ hpm.videoHandlers = () => {
 		video.removeAttribute('height');
 		video.removeAttribute('width');
 		var frameSrc = video.src;
-		var ratio = vidWide/vidHigh;
+		if ( vidWide == '100%' && vidHigh == '100%' ) {
+			var ratio = 1.6667;
+		} else {
+			var ratio = vidWide/vidHigh;
+		}
 		if ( frameSrc.indexOf('google.com/maps') !== -1 || frameSrc.indexOf('googleusercontent.com') !== -1 || frameSrc.indexOf('houstontranstar.org') !== -1 ) {
 			iframeClass = 'iframe-embed-tall';
 		} else {

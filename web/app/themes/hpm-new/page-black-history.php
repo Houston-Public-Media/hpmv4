@@ -5,38 +5,6 @@ Template Name: Black History Month
 	wp_enqueue_script('jquery');
 	get_header(); ?>
 	<link rel="stylesheet" href="https://use.typekit.net/wsl1bre.css">
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post(); ?>
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="page-header">
-					<?php the_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
-					<h2>Houston Public Media Celebrates</h2>
-					<h1>Black History</h1>
-				</header><!-- .entry-header -->
-				<div class="page-content">
-					<?php the_content(); ?>
-				</div><!-- .entry-content -->
-
-				<footer class="entry-footer">
-				<?PHP
-					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
-					if ( $tags_list ) {
-						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
-							_x( 'Tags', 'Used before tag names.', 'hpmv2' ),
-							$tags_list
-						);
-					}
-					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
-			<?php
-				endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-	<link rel="stylesheet" href="https://cdn.hpm.io/static/js/slick/slick.min.css" />
-	<link rel="stylesheet" href="https://cdn.hpm.io/static/js/slick/slick-theme.css" />
-	<script src="https://cdn.hpm.io/static/js/slick/slick.min.js"></script>
 	<style>
 		#div-gpt-ad-1488818411584-0 {
 			display: none;
@@ -92,10 +60,17 @@ Template Name: Black History Month
 		.page-template-page-black-history article {
 			padding: 0;
 			margin: 0;
+			background-color: transparent !important;
 		}
 		.bhm-section-wrap {
 			background-color: white;
 			margin-bottom: 2em;
+		}
+		#main > article {
+			grid-column: 1 / -1 !important;
+		}
+		#foot-banner {
+			display: none;
 		}
 		body.page-template-page-black-history #main {
 			background-color: transparent !important;
@@ -350,6 +325,38 @@ Template Name: Black History Month
 			}
 		}
 	</style>
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+		<?PHP while ( have_posts() ) : the_post(); ?>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="page-header">
+					<?php the_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
+					<h2>Houston Public Media Celebrates</h2>
+					<h1>Black History</h1>
+				</header><!-- .entry-header -->
+				<div class="page-content">
+					<?php the_content(); ?>
+				</div><!-- .entry-content -->
+
+				<footer class="entry-footer">
+				<?PHP
+					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
+					if ( $tags_list ) {
+						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
+							_x( 'Tags', 'Used before tag names.', 'hpmv2' ),
+							$tags_list
+						);
+					}
+					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
+				</footer><!-- .entry-footer -->
+			</article><!-- #post-## -->
+			<?php
+				endwhile; ?>
+		</main><!-- .site-main -->
+	</div><!-- .content-area -->
+	<link rel="stylesheet" href="https://cdn.hpm.io/static/js/slick/slick.min.css" />
+	<link rel="stylesheet" href="https://cdn.hpm.io/static/js/slick/slick-theme.css" />
+	<script src="https://cdn.hpm.io/static/js/slick/slick.min.js"></script>
 	<script>
 		jQuery(document).ready(function($){
 			var options = {

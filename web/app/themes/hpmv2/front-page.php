@@ -55,10 +55,6 @@ $articles = hpm_homepage_articles(); ?>
 							</div>
 						</div>
 					</div>
-					<div id="in-depth">
-						<h4>News 88.7 In-Depth</h4>
-						<?php hpm_priority_indepth(); ?>
-					</div>
 					<?php hpm_top_posts(); ?>
 					<div class="sidebar-ad">
 						<h4>Support Comes From</h4>
@@ -86,7 +82,7 @@ $articles = hpm_homepage_articles(); ?>
 				<div class="article-wrap">
 <?php
 		endif;
-		$postClass = get_post_class( $va->ID );
+		$postClass = get_post_class( '', $va->ID );
 		$alt_headline = get_post_meta( $va->ID, 'hpm_alt_headline', true );
 		$search = 'felix-type-';
 		$felix_type = array_filter($postClass, function($el) use ($search) {
@@ -118,6 +114,7 @@ $articles = hpm_homepage_articles(); ?>
 					<?php
 						endif; ?>
 					<header class="entry-header">
+						<?php echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 						<h3><?php echo hpm_top_cat( $va->ID ); ?></h3>
 						<h2 class="entry-title"><a href="<?php the_permalink( $va->ID ); ?>" rel="bookmark"><?php echo ( !empty( $alt_headline ) ? $alt_headline : $va->post_title); ?></a></h2>
 						<div class="screen-reader-text">

@@ -5,6 +5,7 @@
  * @since HPMv2 1.0
  */
 global $ka;
+$indepth = false;
 $extra = 'card';
 $size = 'thumbnail';
 if ( $ka !== null ) :
@@ -15,13 +16,17 @@ if ( $ka !== null ) :
 		$extra .= ' card-medium';
 	endif;
 endif;
-?>
+$postClass = get_post_class();
+if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null && $ka == 1 ) ) :
+	$indepth = true;
+endif; ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
 	<?php if ( has_post_thumbnail() ) : ?>
 	<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"><?php the_post_thumbnail( $size ) ?></a>
 	<?php endif; ?>
 	<div class="card-content">
 		<header class="entry-header">
+			<?php echo ( $indepth ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 			<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 			<h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php
 				if ( is_front_page() ) :

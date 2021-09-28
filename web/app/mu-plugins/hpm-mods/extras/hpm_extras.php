@@ -435,14 +435,14 @@ endif;
  * @return mixed|string
  * Pull NPR API articles and save them to a transient
  */
-function hpm_nprapi_output() {
-	$npr = get_transient( 'hpm_nprapi' );
+function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
+	$npr = get_transient( 'hpm_nprapi_'.$api_id );
 	if ( !empty( $npr ) ) :
 		return $npr;
 	endif;
 	$output = '';
 	$api_key = get_option( 'ds_npr_api_key' );
-	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=1001&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=4&apiKey=" . $api_key ) );
+	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
 	if ( is_wp_error( $remote ) ) :
 		return "<p></p>";
 	else :
@@ -457,7 +457,7 @@ function hpm_nprapi_output() {
 		endif;
 		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" rel="bookmark">'.$story['title']['$text'].'</a></h2></div><div class="entry-summary screen-reader-text">'.$story['teaser']['$text'].'</div></div></article>';
 	endforeach;
-	set_transient( 'hpm_nprapi', $output, 300 );
+	set_transient( 'hpm_nprapi_'.$api_id, $output, 300 );
 	return $output;
 }
 

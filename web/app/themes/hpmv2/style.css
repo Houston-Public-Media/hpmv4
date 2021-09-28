@@ -1189,6 +1189,24 @@ span.edit-link {
 .in-post-bug h3 {
 	margin: 0;
 }
+.in-post-bug.in-depth {
+	padding: 0;
+	background-color: #00566c;
+	margin: 1rem 0;
+	display: grid;
+	grid-template-columns: 33% 66%;
+}
+.in-post-bug.in-depth img {
+	padding: 0;
+	display: block;
+}
+.in-post-bug.in-depth h3 {
+	font-size: 1em;
+	padding: 0.25rem;
+}
+.in-post-bug.in-depth a {
+	color: white;
+}
 .thumbnail-wrap {
 	position: relative;
 	width: 100%;
@@ -1845,6 +1863,36 @@ body.single #author-wrap .author-other-stories h2 a,
 #twitter-home .tweet p.tweet-rt {
 	font-size: 0.75em;
 	margin: 1em 0;
+}
+.article-wrap article.category-in-depth {
+	border: 0.5rem solid #00566c;
+}
+.article-wrap article.category-in-depth .indepth img {
+	width: 50%;
+	margin-right: 50%;
+}
+.article-wrap article.category-in-depth.felix-type-d .entry-header {
+	/* padding-bottom: 2rem; */
+}
+.article-wrap article.category-in-depth.felix-type-d {
+	position: relative;
+}
+.article-wrap article.category-in-depth.felix-type-d .entry-header .indepth img {
+	position: absolute;
+	bottom: 0.5rem;
+	right: 0.5rem;
+	margin: 0;
+	width: 25%;
+}
+.single article.category-in-depth .entry-header .indepth img {
+	width: 20rem;
+	margin-right: 1rem;
+}
+@media screen and (min-width: 34em) {
+	.single article.category-in-depth .entry-header .indepth + h3 {
+		position: relative;
+		bottom: 1.25rem;
+	}
 }
 #in-depth {
 	border: 2px solid var(--main-red);
@@ -3551,6 +3599,16 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 		float: right;
 		width: 45%;
 		margin: 0 0 1em 1em;
+	}
+	.in-post-bug.in-depth {
+		margin: 1rem 0;
+		display: grid;
+		grid-template-columns: 33% 66%;
+		float: none;
+		width: 100%;
+	}
+	.in-post-bug.in-depth h3 {
+		font-size: 1.25em;
 	}
 	article .entry-content,
 	article .entry-footer,
@@ -8607,7 +8665,7 @@ section#country-covers .slick-next:before {
 /**
  * At-Home Learning Schedule
  */
- .lah-schedule .lah-wrap {
+.lah-schedule .lah-wrap {
 	display: flex;
 }
 .lah-schedule {
