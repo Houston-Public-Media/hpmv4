@@ -14,15 +14,16 @@ $articles = hpm_homepage_articles(); ?>
 			border-bottom: 0.125em solid var(--main-red);
 			padding: 0.25em 1em;
 			margin: 0;
-			font: 400 1.75em/1.75em var(--hpm-font-condensed);
+			font: 400 2rem var(--hpm-font-condensed);
 		}
 		#station-schedules .station-now-play {
 			padding: 0.5em 1em;
 			border-bottom: 0.125em solid #f5f5f5;
-			min-height: 4.5em;
-			display: flex;
-			flex-flow: row wrap;
+			min-height: 5em;
+			display: grid;
+			grid-template-columns: 25% 75%;
 			align-items: center;
+			gap: 1rem;
 		}
 		#station-schedules .station-now-play:last-child {
 			border: 0;
@@ -30,18 +31,21 @@ $articles = hpm_homepage_articles(); ?>
 		#station-schedules .station-now-play > * {
 			width: 100%;
 		}
-
 		#station-schedules .station-now-play h5 {
 			padding: 0;
-			margin: 0 1em 0 0;
+			margin: 0;
+			font-size: 1rem;
+			text-align: right;
 		}
 		#station-schedules .station-now-play h5 a {
-			font: 700 1em/1em var(--hpm-font-main);
+			font-weight: 700;
 			text-transform: uppercase;
 		}
 		#station-schedules .station-now-play h3 {
-			font: 100 1.25em/1.5em var(--hpm-font-main);
-			padding: 0;
+			font-weight: 100;
+			font-size: 1.25rem;
+			font-family: var(--hpm-font-condensed);
+			padding: 0 0.5rem 0 0;
 			margin: 0;
 			color: #55565a;
 		}
@@ -59,6 +63,7 @@ $articles = hpm_homepage_articles(); ?>
 		if ( $ka == 4 ) : ?>
 			</section>
 			<aside id="top-schedule-wrap">
+				<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 				<section id="station-schedules">
 					<h4>ON AIR</h4>
 					<div class="station-now-play">

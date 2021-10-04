@@ -168,10 +168,16 @@ article {
 		object-fit: cover;
 		width: 100%;
 	}
-	&.category-in-depth .entry-header .indepth img {
-		width: 12.5rem;
-		margin-right: 1rem;
-		display: inline-block;
+	&.category-in-depth:not(.card) .entry-header .indepth {
+		& + h3 {
+			position: relative;
+			bottom: 1rem;
+		}
+		img {
+			width: 12.5rem;
+			margin-right: 1rem;
+			display: inline-block;
+		}
 	}
 	&.card {
 		margin: 1rem;
@@ -249,17 +255,16 @@ figure {
 		padding: 0;
 		background-color: #00566c;
 		margin: 1rem 0;
-		display: grid;
-		grid-template-columns: 33% 66%;
-		img {
-			padding: 0;
-		}
-		h3 {
+		background-image: url(https://cdn.hpm.io/assets/images/inDepth-white-arrows.png);
+		background-position: -10px center;
+		background-size: 54%;
+		background-repeat: no-repeat;
+		a {
+		 	color: white;
 			font-size: 1rem;
-			padding: 0.25rem;
-			a {
-				color: white;
-			}
+			padding: 0.25rem 0.25rem 0.25rem 50%;
+			display: block;
+			width: 100%;
 		}
 	}
 }
@@ -601,12 +606,13 @@ body.home article.category-in-depth {
 		margin: 0 0 1rem 1rem;
 		&.in-depth {
 			margin: 1rem 0;
-			display: grid;
-			grid-template-columns: 33% 66%;
 			float: none;
 			width: 100%;
-			h3 {
+			background-position: left center;
+			background-size: 33%;
+			a {
 				font-size: 1.25rem;
+				padding: 1rem 1rem 1rem 35%;
 			}
 		}
 	}

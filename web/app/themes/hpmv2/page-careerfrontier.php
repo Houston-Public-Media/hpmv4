@@ -280,13 +280,14 @@ Template Name: Career Frontier
 			.cf-eps-wrap > article {
 				grid-column-end: span 2;
 			}
-			.cf-eps-wrap > article:nth-child(4),
-			.cf-guest-wrap > article:nth-child(16) {
+			.cf-eps-wrap > article:nth-child(4) {
 				grid-column-start: 2;
 			}
-			.cf-eps-wrap > article:nth-child(5),
-			.cf-guest-wrap > article:nth-child(17) {
+			.cf-eps-wrap > article:nth-child(5) {
 				grid-column-start: 4;
+			}
+			.cf-guest-wrap > article:nth-child(16) {
+				grid-column-start: 3;
 			}
 			.cf-breakouts > .cf-eps-wrap > article:nth-child(4),
 			.cf-breakouts > .cf-eps-wrap > article:nth-child(5) {

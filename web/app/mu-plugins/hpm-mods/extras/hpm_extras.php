@@ -1184,7 +1184,7 @@ function hpm_alt_headline_setup() {
 function hpm_alt_headline_add_meta() {
 	add_meta_box(
 		'hpm-alt-headline-meta-class',
-		esc_html__( 'Alternate Headline for Homepage', 'example' ),
+		esc_html__( 'Alternate Headlines', 'example' ),
 		'hpm_alt_headline_meta_box',
 		'post',
 		'normal',
@@ -1212,10 +1212,14 @@ function hpm_alt_headline_meta_box( $object, $box ) {
 		'Miracle cure kills fifth patient'
 	];
 	$rand = rand( 0, count( $placeholder ) );
+	$rand2 = rand( 0, count( $placeholder ) );
 	wp_nonce_field( basename( __FILE__ ), 'hpm_alt_headline_class_nonce' );
-	$alt_headline = get_post_meta( $object->ID, 'hpm_alt_headline', true ); ?>
+	$alt_headline = get_post_meta( $object->ID, 'hpm_alt_headline', true );
+	$seo_headline = get_post_meta( $object->ID, 'hpm_seo_headline', true ); ?>
 	<p>If you would like to provide an alternate headline for use on the homepage, please enter it here.</p>
 	<label for="hpm-alt-headline"><strong><?php _e( "Headline:", 'hpm-podcasts' ); ?></strong></label><br /><textarea id="hpm-alt-headline" name="hpm-alt-headline" placeholder="<?php echo $placeholder[$rand]; ?>" style="width: 100%;" rows="2"><?PHP echo $alt_headline; ?></textarea>
+	<p>If you would like to provide an alternate headline for SEO/Facebook OpenGraph/Twitter/etc., please enter it here.</p>
+	<label for="hpm-seo-headline"><strong><?php _e( "Headline:", 'hpm-podcasts' ); ?></strong></label><br /><textarea id="hpm-seo-headline" name="hpm-seo-headline" placeholder="<?php echo $placeholder[$rand2]; ?>" style="width: 100%;" rows="2"><?PHP echo $seo_headline; ?></textarea>
 <?php
 }
 
@@ -1236,8 +1240,30 @@ function hpm_alt_headline_save_meta( $post_id, $post ) {
 		elseif ( empty( $_POST['hpm-alt-headline'] ) && !empty( $alt ) ) :
 			delete_post_meta( $post_id, 'hpm_alt_headline', '' );
 		endif;
+
+		$seo = get_post_meta( $post_id, 'hpm_seo_headline', true );
+		if ( !empty( $_POST['hpm-seo-headline'] ) ) :
+			update_post_meta( $post_id, 'hpm_seo_headline', sanitize_text_field( $_POST['hpm-seo-headline'] ) );
+		elseif ( empty( $_POST['hpm-seo-headline'] ) && !empty( $seo ) ) :
+			delete_post_meta( $post_id, 'hpm_seo_headline', '' );
+		endif;
 	endif;
 }
+
+/*
+ * Modify page title for articles with alternate SEO headlines
+ */
+function hpmv2_article_seo_title( $title ) {
+	global $wp_query;
+	if ( $wp_query->is_single() ) :
+		$seo_headline = get_post_meta( $wp_query->post->ID, 'hpm_seo_headline', true );
+		if ( !empty( $seo_headline ) ) :
+			return wp_strip_all_tags( $seo_headline ) . ' | Houston Public Media';
+		endif;
+	endif;
+	return $title;
+}
+add_filter( 'pre_get_document_title', 'hpmv2_article_seo_title' );
 
 add_action( 'load-post.php', 'hpm_page_script_setup' );
 add_action( 'load-post-new.php', 'hpm_page_script_setup' );

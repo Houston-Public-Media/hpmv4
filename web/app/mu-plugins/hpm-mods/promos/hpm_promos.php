@@ -24,7 +24,7 @@ class HPM_Promos {
 		add_filter( 'manage_edit-promos_columns', [ $this, 'edit_columns' ] );
 		add_action( 'manage_promos_posts_custom_column', [ $this, 'manage_columns' ], 10, 2 );
 		add_action( 'wp_footer', function() {
-			echo $this->generate();
+			echo $this->generate_lightbox();
 		}, 100 );
 
 		// Create menu in Admin Dashboard
@@ -163,7 +163,7 @@ class HPM_Promos {
 				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth', TRUE ); ?>>Full-Width Banner</option>
 			</select>
 		</p>
-		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>>
+		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>><?php /* ?>
 			<h3><?php _e( "Sidebar Banner Options", 'hpmv2' ); ?></h3>
 			<p><?php _e( "The Sidebar banner allows for alternate image versions for mobile, tablet, and desktop, if
 				desired. If you only wish to use a single image size, you can just include it in the HTML. If you
@@ -174,8 +174,8 @@ class HPM_Promos {
 				<li><label for="hpm_promo[options][sidebar][tablet]"><?php _e('Tablet: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][tablet]" value="<?php echo $hpm_promo['options']['sidebar']['tablet']; ?>" style="max-width: 100%; width: 800px;" /></li>
 				<li><label for="hpm_promo[options][sidebar][desktop]"><?php _e('Desktop: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][desktop]" value="<?php echo $hpm_promo['options']['sidebar']['desktop']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
-		</div>
-		<div id="hpm-fullwidth" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'fullwidth' ? '' : ' style="display: none;"' ); ?>>
+		<?php */ ?></div>
+		<div id="hpm-fullwidth" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'fullwidth' ? '' : ' style="display: none;"' ); ?>><?php /* ?>
 			<h3><?php _e( "Full-Width Banner Options", 'hpmv2' ); ?></h3>
 			<p><?php _e( "The Full-Width banner allows for alternate image versions for mobile, tablet, and desktop, if
 				desired. If you only wish to use a single image size, you can just include it in the HTML. If you
@@ -186,7 +186,7 @@ class HPM_Promos {
 				<li><label for="hpm_promo[options][fullwidth][tablet]"><?php _e('Tablet: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][fullwidth][tablet]" value="<?php echo $hpm_promo['options']['fullwidth']['tablet']; ?>" style="max-width: 100%; width: 800px;" /></li>
 				<li><label for="hpm_promo[options][fullwidth][desktop]"><?php _e('Desktop: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][fullwidth][desktop]" value="<?php echo $hpm_promo['options']['fullwidth']['desktop']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
-		</div>
+		<?php */ ?></div>
 		<div id="hpm-lightbox" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'lightbox' ? '' : ' style="display: none;"'); ?>>
 			<h3><?php _e( "Lightbox Options", 'hpmv2' ); ?></h3>
 			<p><?php _e( "The Lightbox allows for A/B testing of images, text, and links, and has an option for showing a
@@ -426,12 +426,11 @@ class HPM_Promos {
 		endif;
 	}
 
-	public function generate() {
+	public function generate_lightbox() {
 		global $wp_query;
 		$wp_global = $wp_query;
 		$output = '';
-		$dont = [];
-		$lightbox = $fullwidth = 0;
+		$lightbox = 0;
 		if ( $wp_query->post->post_type == 'embeds' ) :
 			return $output;
 		endif;
@@ -460,24 +459,20 @@ class HPM_Promos {
 			$offset = get_option( 'gmt_offset' ) * 3600;
 			$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) + $offset );
 			$args['post_status'] = [ 'publish', 'future' ];
-			$args['date_query'] = [
-				[
-					'before' => [
-						'year' => $now['year'],
-						'month' => $now['mon'],
-						'day' => $now['mday']
-					],
-					'inclusive' => true
-				]
-			];
+			$args['date_query'] = [[
+				'before' => [
+					'year' => $now['year'],
+					'month' => $now['mon'],
+					'day' => $now['mday']
+				],
+				'inclusive' => true
+			]];
 		endif;
-		$args['meta_query'] = [
-			[
-				'key'     => 'hpm_promos_end_time',
-				'value'   => $now[0],
-				'compare' => '>=',
-			]
-		];
+		$args['meta_query'] = [[
+			'key'     => 'hpm_promos_end_time',
+			'value'   => $now[0],
+			'compare' => '>=',
+		]];
 		$promos = new WP_Query( $args );
 		if ( $promos->have_posts() ) :
 			while ( $promos->have_posts() ) :
@@ -492,165 +487,173 @@ class HPM_Promos {
 				$content = do_shortcode( get_the_content(), false );
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
-				if ( $meta['type'] == 'sidebar' ) :
-					preg_match( '/<script.+>(.+)?<\/script>/', $content, $match );
-					if ( !empty( $match[0] ) ) :
-						echo $content;
-						continue;
-					endif;
-					$sizing = [];
-					if ( !empty( $meta['options']['sidebar']['mobile'] ) ) :
-						$sizing[] = "if ( wide <= 480 ) { var image = '".$meta['options']['sidebar']['mobile']."'; }";
-					endif;
-					if ( !empty( $meta['options']['sidebar']['tablet'] ) ) :
-						$sizing[] = "if ( wide > 480 && wide <= 800 ) { var image = '".$meta['options']['sidebar']['tablet']."'; }";
-					endif;
-					if ( !empty( $meta['options']['sidebar']['desktop'] ) ) :
-						$sizing[] = "if ( wide > 800 ) { var image = '".$meta['options']['sidebar']['desktop']."'; }";
-					endif;
-					if ( !empty( $sizing ) ) :
-						$output .= implode( ' else ', $sizing );
-					endif;
-					$content_esc = str_replace( "[[image]]", "'+image+'", $content_esc  );
-					if ( $wp_global->is_home || ( !empty( $page_id ) && get_page_template_slug( $page_id ) == 'page-main-categories.php' ) ) :
-						$output .= "if ( document.getElementById('top-schedule-wrap') !== null ) { document.getElementById('top-schedule-wrap').insertAdjacentHTML('afterbegin', '<div class=\"hpm-promo-mobile-hide\">".$content_esc."</div>'); }";
-					else :
-						$output .= "if ( document.querySelector( 'aside.column-right' ) !== null ) {document.querySelector('aside.column-right').insertAdjacentHTML('afterbegin', '<div class=\"hpm-promo-mobile-hide\">".$content_esc."</div>'); }";
-					endif;
-					$output .= "document.getElementById('primary').insertAdjacentHTML('afterbegin', '<div class=\"hpm-promo-mobile-show\">".$content_esc ."</div>');";
-				elseif ( $meta['type'] == 'fullwidth' ) :
-					if ( $fullwidth == 0 ) :
-						$sizing = [];
-						if ( !empty( $meta['options']['fullwidth']['mobile'] ) ) :
-							$sizing[] = "if ( wide <= 480 ) { var image = '".$meta['options']['fullwidth']['mobile']."'; }";
-						endif;
-						if ( !empty( $meta['options']['fullwidth']['tablet'] ) ) :
-							$sizing[] = "if ( wide > 480 && wide <= 800 ) { var image = '".$meta['options']['fullwidth']['tablet']."'; }";
-						endif;
-						if ( !empty( $meta['options']['fullwidth']['desktop'] ) ) :
-							$sizing[] = "if ( wide > 800 ) { var image = '".$meta['options']['fullwidth']['desktop']."'; }";
-						endif;
-						if ( !empty( $sizing ) ) :
-							$output .= implode( ' else ', $sizing );
-						endif;
-						$content_esc = str_replace( "[[image]]", "'+image+'", $content_esc  );
-						$output .= "document.getElementById('primary').insertAdjacentHTML('afterbegin', '".$content_esc ."');";
-						$fullwidth++;
-					else :
-						continue;
-					endif;
-				elseif ( $meta['type'] == 'lightbox' ) :
+				if ( $meta['type'] == 'lightbox' ) :
 					if ( $lightbox == 0 ) :
-						$output .= "
-		var visited = getCookie('visited');";
+						$output .= "var visited = getCookie('visited');";
 						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) :
 							$content_esc = str_replace(
 								[ "[[link]]", "[[image]]", "[[text]]" ],
 								[ "'+lblink+'", "'+lbimage+'", "'+lbtext+'" ],
 								$content_esc );
-							$output .= "
-		var rand = Math.floor(Math.random() * 20);
-		var lbtext, lblink, lbimage, lbox, primary;
-		if ( rand > 9 ) {
-			lbtext = '".$meta['options']['lightbox']['a']['text']."';
-			lblink = '".$meta['options']['lightbox']['a']['link']."';
-			lbimage = '".$meta['options']['lightbox']['a']['image']."';
-		} else {
-			lbtext = '".$meta['options']['lightbox']['b']['text']."';
-			lblink = '".$meta['options']['lightbox']['b']['link']."';
-			lbimage = '".$meta['options']['lightbox']['b']['image']."';
-		}";
+							$output .= "var rand = Math.floor(Math.random() * 20);".
+							"var lbtext, lblink, lbimage, lbox, primary;".
+							"if ( rand > 9 ) {".
+								"lbtext = '".$meta['options']['lightbox']['a']['text']."';".
+								"lblink = '".$meta['options']['lightbox']['a']['link']."';".
+								"lbimage = '".$meta['options']['lightbox']['a']['image']."';".
+							"} else {".
+								"lbtext = '".$meta['options']['lightbox']['b']['text']."';".
+								"lblink = '".$meta['options']['lightbox']['b']['link']."';".
+								"lbimage = '".$meta['options']['lightbox']['b']['image']."';".
+							"}";
 						endif;
 						if ( !empty( $meta['options']['lightbox']['total'] ) ) :
 							$remote = file_get_contents( $meta['options']['lightbox']['total'] );
 							$total = json_decode( $remote, true );
 							$content_esc = str_replace( "[[total]]", $total['total'], $content_esc );
 						endif;
-						$output .= "
-		var lightBox = '".$content_esc."';";
-						$output .= "
-		if (visited === null) {
-			setCookie('visited','true',4);";
-						$output .= "document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);";
-						$output .= "
-			var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');
-			for (i = 0; i < campaign.length; ++i) {
-				campaign[i].addEventListener('click', function() {
-					document.getElementById('campaign-splash').style.display = 'none';
-				});
-			}
-		}
-";
+						$output .= "var lightBox = '".$content_esc."';".
+						"if (visited === null) {".
+							"setCookie('visited','true',4);".
+							"document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);".
+							"var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');".
+							"for (i = 0; i < campaign.length; ++i) {".
+								"campaign[i].addEventListener('click', function() {".
+									"document.getElementById('campaign-splash').style.display = 'none';".
+								"});".
+							"}".
+						"}";
 						$lightbox++;
 					else :
 						continue;
 					endif;
-				elseif ( $meta['type'] == 'emergency' ) :
-					$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
-					$output .= "document.body.insertAdjacentHTML('afterbegin', '<div id=\"emergency\"><span class=\"fas fa-exclamation-circle\" aria-hidden=\"true\"></span> ".$content_esc."</div>');";
-				elseif ( $meta['type'] == 'dont-miss' ) :
-					$dont[] = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
+				endif;
+			endwhile;
+		endif;
+		if ( !empty( $output ) ) :
+			$output = "<script>".
+				"(function(){".
+					"var wide = window.innerWidth;".
+					$output .
+					"var lBox = document.querySelectorAll('#campaign-splash a');".
+					"if (lBox !== null) {".
+						"Array.from(lBox).forEach((item) => {".
+							"item.addEventListener('click', () => {".
+								"var campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
+								"if ( typeof campaign !== typeof undefined && campaign !== false) {".
+									"ga('hpmprod.send', 'event', 'Lightbox', 'click', campaign);".
+									"ga('hpmRollupprod.send', 'event', 'Lightbox', 'click', campaign);".
+									"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'click', campaign);".
+								"}".
+							"});".
+						"});".
+					"}".
+				"}());".
+			"</script>";
+		endif;
+		return $output;
+	}
+
+	public static function generate_static( $position ) {
+		global $wp_query;
+		$wp_global = $wp_query;
+		$output = '';
+		$dont = [];
+		$fullwidth = $sidebar = false;
+		$positions = [
+			'top' => [
+				'sidebar', 'fullwidth', 'dont-miss'
+			],
+			'emergency' => [
+				'emergency'
+			],
+			'sidebar' => [
+				'sidebar'
+			]
+		];
+		if ( $wp_query->post->post_type == 'embeds' ) :
+			return $output;
+		endif;
+		if ( $wp_global->is_page || $wp_global->is_single ) :
+			$page_id = $wp_global->get_queried_object_id();
+			$anc = get_post_ancestors( $page_id );
+			$opts = get_option( 'hpm_promos_settings' );
+			$bans = explode( ',', $opts['bans']['ids'] );
+			$pt_slug = explode( ',', $opts['bans']['templates'] );
+			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
+				return $output;
+			elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
+				return $output;
+			endif;
+		endif;
+		$args = [
+			'post_type' => 'promos',
+			'posts_per_page' => -1,
+			'post_status' => 'publish',
+			'order' => 'ASC'
+		];
+		$t = time();
+		$now = getdate($t);
+		if ( !empty( $_GET['testtime'] ) ) :
+			$tt = explode( '-', $_GET['testtime'] );
+			$offset = get_option( 'gmt_offset' ) * 3600;
+			$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) + $offset );
+			$args['post_status'] = [ 'publish', 'future' ];
+			$args['date_query'] = [[
+				'before' => [
+					'year' => $now['year'],
+					'month' => $now['mon'],
+					'day' => $now['mday']
+				],
+				'inclusive' => true
+			]];
+		endif;
+		$args['meta_query'] = [[
+			'key'     => 'hpm_promos_end_time',
+			'value'   => $now[0],
+			'compare' => '>=',
+		]];
+		$promos = new WP_Query( $args );
+		if ( $promos->have_posts() ) :
+			while ( $promos->have_posts() ) :
+				$promos->the_post();
+				$meta = get_post_meta( get_the_ID(), 'hpm_promos_meta', true );
+				if ( empty( $meta ) ) :
+					continue;
+				endif;
+				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) :
+					continue;
+				endif;
+				$content = do_shortcode( get_the_content(), false );
+				$content_esc = str_replace( "'", "\'", $content );
+				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
+				if ( in_array( $meta['type'], $positions[ $position ] ) ) :
+					if ( $meta['type'] == 'sidebar' ) :
+						$output .= $content_esc;
+						$sidebar = true;
+					elseif ( $meta['type'] == 'fullwidth' ) :
+						if ( !$fullwidth ) :
+							$output .= $content_esc;
+							$fullwidth = true;
+						else :
+							continue;
+						endif;
+					elseif ( $meta['type'] == 'emergency' ) :
+						$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
+						$output .= '<div id="emergency"><span class="fas fa-exclamation-circle" aria-hidden="true"></span> '.$content_esc . '</div>';
+					elseif ( $meta['type'] == 'dont-miss' ) :
+						$dont[] = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
+					endif;
 				endif;
 			endwhile;
 		endif;
 		if ( !empty( $dont ) ) :
-			$output .= "document.getElementById('main').insertAdjacentHTML('beforebegin', '<div id=\"hpm-promo-bullets\"><h2>Don&#39;t Miss:</h2><ul>";
+			$output .= '<div id="hpm-promo-bullets"><h2>Don&#39;t Miss:</h2><ul>';
 			foreach ( $dont as $d ) :
 				$output .= "<li>" . $d . "</li>";
 			endforeach;
-			$output .= "</ul></div>');";
-		endif;
-		if ( !empty( $output ) ) :
-			$output = "
-<script>
-	(function(){
-		var wide = window.innerWidth;
-		".$output."
-		var topBanner = document.querySelectorAll('.top-banner');
-		if (topBanner !== null) {
-			Array.from(topBanner).forEach((item) => {
-				item.addEventListener('click', () => {
-					var attr = item.id;
-					if ( typeof attr !== typeof undefined && attr !== false) {
-						ga('hpmprod.send', 'event', 'Top Banner', 'click', attr);
-						ga('hpmRollupprod.send', 'event', 'Top Banner', 'click', attr);
-						ga('hpmWebAmpprod.send', 'event', 'Top Banner', 'click', attr);
-					}
-				});
-			});
-		}
-		var lBox = document.querySelectorAll('#campaign-splash a');
-		if (lBox !== null) {
-			Array.from(lBox).forEach((item) => {
-				item.addEventListener('click', () => {
-					var campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');
-					if ( typeof campaign !== typeof undefined && campaign !== false) {
-						ga('hpmprod.send', 'event', 'Lightbox', 'click', campaign);
-						ga('hpmRollupprod.send', 'event', 'Lightbox', 'click', campaign);
-						ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'click', campaign);
-					}
-				});
-			});
-		}
-	}());
-</script>
+			$output .= "</ul></div>
 <style>
-	#emergency {
-		transition-property: all;
-		transition-duration: .5s;
-		transform: translateY(-100%);
-	}
-	#emergency.displayed {
-		transform: translateY(0);
-	}
-	.hpm-promo-mobile-hide {
-		display: none;
-	}
-	.hpm-promo-mobile-show {
-		margin: 0 auto;
-		float: left;
-		width: 50%;
-	}
 	#hpm-promo-bullets {
 		display: flex;
 		justify-content: center;
@@ -686,9 +689,6 @@ class HPM_Promos {
 		position: relative;
 		left: -0.5em;
 	}
-	#main {
-		clear: both;
-	}
 	@media screen and (min-width: 34em) {
 		#hpm-promo-bullets {
 			flex-flow: row nowrap;
@@ -706,16 +706,6 @@ class HPM_Promos {
 		}
 	}
 	@media screen and (min-width: 52.5em) {
-		.hpm-promo-mobile-hide,
-		.column-right div.hpm-promo-mobile-hide {
-			display: block;
-			margin: 0 auto 1em;
-			background-color: white;
-			width: 100%;
-		}
-		.column-right div.hpm-promo-mobile-hide:nth-last-child(5) {
-			margin-bottom: 1em;
-		}
 		.hpm-promo-mobile-show {
 			display: none;
 		}
@@ -725,6 +715,9 @@ class HPM_Promos {
 		}
 	}
 </style>";
+		endif;
+		if ( $sidebar ) :
+			$output = '<div class="hpm-promo-wrap">' . $output . '</div>';
 		endif;
 		return $output;
 	}
@@ -747,6 +740,7 @@ class HPM_Promos {
 		$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
 		$offset = get_option('gmt_offset')*3600;
 		$t = $endtime + $offset;
+		$now = time() + $offset;
 		$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
 		switch( $column ) {
 			case 'promo_type' :
@@ -764,7 +758,11 @@ class HPM_Promos {
 				endif;
 				break;
 			case 'promo_expiration' :
-				echo date( 'F j, Y, g:i A', $t );
+				if ( $now > $t ) :
+					echo "<strong>EXPIRED</strong>";
+				else :
+					echo date( 'F j, Y, g:i A', $t );
+				endif;
 				break;
 			default :
 				break;

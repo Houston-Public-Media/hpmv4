@@ -1193,19 +1193,17 @@ span.edit-link {
 	padding: 0;
 	background-color: #00566c;
 	margin: 1rem 0;
-	display: grid;
-	grid-template-columns: 33% 66%;
-}
-.in-post-bug.in-depth img {
-	padding: 0;
-	display: block;
-}
-.in-post-bug.in-depth h3 {
-	font-size: 1em;
-	padding: 0.25rem;
+	background-image: url(https://cdn.hpm.io/assets/images/inDepth-white-arrows.png);
+	background-position: -10px center;
+	background-size: 54%;
+	background-repeat: no-repeat;
 }
 .in-post-bug.in-depth a {
 	color: white;
+	font-size: 1.25em;
+	padding: 0.25em 0.25em 0.25em 50%;
+	display: block;
+	width: 100%;
 }
 .thumbnail-wrap {
 	position: relative;
@@ -1864,7 +1862,7 @@ body.single #author-wrap .author-other-stories h2 a,
 	font-size: 0.75em;
 	margin: 1em 0;
 }
-.article-wrap article.category-in-depth {
+.article-wrap article.category-in-depth.felix-type-b {
 	border: 0.5rem solid #00566c;
 }
 .article-wrap article.category-in-depth .indepth img {
@@ -3602,13 +3600,13 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	}
 	.in-post-bug.in-depth {
 		margin: 1rem 0;
-		display: grid;
-		grid-template-columns: 33% 66%;
 		float: none;
 		width: 100%;
+		background-position: left center;
+		background-size: 33%;
 	}
-	.in-post-bug.in-depth h3 {
-		font-size: 1.25em;
+	.in-post-bug.in-depth a {
+		padding: 1em 1em 1em 35%;
 	}
 	article .entry-content,
 	article .entry-footer,

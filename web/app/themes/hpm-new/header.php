@@ -14,4 +14,4 @@
 		<?php wp_head(); ?>
 	</head>
 	<body <?php body_class(); ?> tabindex="-1">
-		<?php do_action( 'body_open' ); ?>
+		<?php echo HPM_Promos::generate_static( 'emergency' ); do_action( 'body_open' ); ?>

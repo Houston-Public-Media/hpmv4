@@ -113,7 +113,12 @@ function hpm_header_info() {
 				];
 				$reqs['thumb'] = $feature_img[0];
 			endif;
-			$reqs['title'] = wp_strip_all_tags( get_the_title( $ID ), true ) . ' | Houston Public Media';
+			$seo_headline = get_post_meta( $ID, 'hpm_seo_headline', true );
+			if ( !empty( $seo_headline ) ) :
+				$reqs['title'] = wp_strip_all_tags( $seo_headline ) . ' | Houston Public Media';
+			else :
+				$reqs['title'] = wp_strip_all_tags( get_the_title( $ID ), true ) . ' | Houston Public Media';
+			endif;
 			$reqs['permalink'] = get_the_permalink( $ID );
 			$reqs['description'] = htmlentities( wp_strip_all_tags( get_excerpt_by_id( $ID ), true ), ENT_QUOTES );
 			$reqs['og_type'] = 'article';
@@ -352,6 +357,7 @@ function hpm_body_open() {
 				</div>
 <?php
 	endif;
+	echo HPM_Promos::generate_static( 'top' );
 }
 add_action( 'body_open', 'hpm_body_open' );
 
@@ -369,9 +375,9 @@ function hpm_talkshows() {
 	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && $wp_query->post->post_type !== 'embeds' ) :
 		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && $hm_air[ $now['hours'] ] ) :
 			if ( $now['hours'] == 15 ) :
-				$output .= '<div id="hm-top" class="townsquare"><p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong>888.486.9677</strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
+				$output .= '<div id="hm-top" class="townsquare"><p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://8884869677">888.486.9677</a></strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
 			else :
-				$output .= '<div id="hm-top"><p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Call <strong>713.440.8870</strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
+				$output .= '<div id="hm-top"><p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://7134408870">713.440.8870</a></strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
 			endif;
 		endif;
 	endif;

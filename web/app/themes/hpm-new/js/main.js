@@ -188,6 +188,22 @@ hpm.audioEmbeds = () => {
 	});
 };
 
+hpm.localBanners = () => {
+	var topBanner = document.querySelectorAll('.top-banner');
+	if (topBanner !== null) {
+		Array.from(topBanner).forEach((item) => {
+			item.addEventListener('click', () => {
+				var attr = item.id;
+				if ( typeof attr !== typeof undefined && attr !== false) {
+					ga('hpmprod.send', 'event', 'Top Banner', 'click', attr);
+					ga('hpmRollupprod.send', 'event', 'Top Banner', 'click', attr);
+					ga('hpmWebAmpprod.send', 'event', 'Top Banner', 'click', attr);
+				}
+			});
+		});
+	}
+}
+
 hpm.audioPlayers = () => {
 	var jsPlay = document.querySelectorAll('.js-player');
 	if (jsPlay !== null) {
@@ -413,6 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.contentToggles();
 	hpm.npSearch();
 	hpm.audioPlayers();
+	hpm.localBanners();
 });
 document.addEventListener('turbo:before-fetch-response', () => {
 	if ( timeOuts.length > 0 ) {

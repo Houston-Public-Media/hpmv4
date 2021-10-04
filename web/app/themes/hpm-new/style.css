@@ -3,7 +3,7 @@
 Theme Name: HPM-Sassy
 Author: Jared Counts
 Author URI: https://www.houstonpublicmedia.org
-Description: Starting into a theme overhaul to emphasize easier maintenance and faster iteration.
+Description: Houston Public Media's front-end theme, rebuilt in Sass with a generous application of CSS Grid. Now with less CSS shipped per page, and keyboard-accessible navigation! Also now directly includes the HPM-Mods plugin, since it doesn't make sense to keep them separate anymore.
 Version: 2.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -855,8 +855,8 @@ body.nav-active-menu #top-mobile-close {
 }
 
 #emergency {
-  background-color: var(--main-red);
-  color: white;
+  color: var(--main-red);
+  background-color: white;
   max-width: 100%;
   animation-name: slideDown;
   animation-duration: 0.5s;
@@ -868,8 +868,8 @@ body.nav-active-menu #top-mobile-close {
   font-size: 1.25rem;
 }
 #emergency a {
-  background-color: var(--main-red);
-  color: white;
+  color: var(--main-red);
+  background-color: white;
 }
 
 @keyframes slideDown {
@@ -915,6 +915,15 @@ body.nav-active-menu #top-mobile-close {
   #hm-top p span::after {
     content: "";
     display: inline;
+  }
+
+  #emergency {
+    background-color: var(--main-red);
+    color: white;
+  }
+  #emergency a {
+    background-color: var(--main-red);
+    color: white;
   }
 
   body:not(.page-template-page-listen) #top-mobile-close {
@@ -1861,15 +1870,6 @@ span.edit-link {
   max-width: 100%;
 }
 
-.top-banner {
-  padding: 1em;
-  overflow: hidden;
-  width: 100%;
-}
-.top-banner img {
-  width: 100%;
-}
-
 #shows-youtube {
   background-color: white;
 }
@@ -2158,7 +2158,11 @@ article .post-thumbnail img {
   object-fit: cover;
   width: 100%;
 }
-article.category-in-depth .entry-header .indepth img {
+article.category-in-depth:not(.card) .entry-header .indepth + h3 {
+  position: relative;
+  bottom: 1rem;
+}
+article.category-in-depth:not(.card) .entry-header .indepth img {
   width: 12.5rem;
   margin-right: 1rem;
   display: inline-block;
@@ -2234,18 +2238,17 @@ figure img, figure iframe {
   padding: 0;
   background-color: #00566c;
   margin: 1rem 0;
-  display: grid;
-  grid-template-columns: 33% 66%;
+  background-image: url(https://cdn.hpm.io/assets/images/inDepth-white-arrows.png);
+  background-position: -10px center;
+  background-size: 54%;
+  background-repeat: no-repeat;
 }
-.in-post-bug.in-depth img {
-  padding: 0;
-}
-.in-post-bug.in-depth h3 {
-  font-size: 1rem;
-  padding: 0.25rem;
-}
-.in-post-bug.in-depth h3 a {
+.in-post-bug.in-depth a {
   color: white;
+  font-size: 1rem;
+  padding: 0.25rem 0.25rem 0.25rem 50%;
+  display: block;
+  width: 100%;
 }
 
 nav.pagination {
@@ -2601,13 +2604,14 @@ body.home article.category-in-depth .entry-header .indepth img {
   }
   .in-post-bug.in-depth {
     margin: 1rem 0;
-    display: grid;
-    grid-template-columns: 33% 66%;
     float: none;
     width: 100%;
+    background-position: left center;
+    background-size: 33%;
   }
-  .in-post-bug.in-depth h3 {
+  .in-post-bug.in-depth a {
     font-size: 1.25rem;
+    padding: 1rem 1rem 1rem 35%;
   }
 
   #revue-embed #revue-form .revue-form-group:nth-child(n+2) {
@@ -4235,6 +4239,60 @@ a.plyr__control::after, a.plyr__control::before {
 @media screen and (min-width: 58rem) {
   #div-gpt-ad-1488818411584-0 {
     height: 4.625rem;
+  }
+}
+.top-banner {
+  width: 100%;
+}
+.top-banner img, .top-banner picture {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+.hpm-promo-wrap {
+  display: grid;
+  padding: 1rem;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+#content > .hpm-promo-wrap > .column-one {
+  grid-column-start: 1;
+}
+
+#content > .hpm-promo-wrap > .column-two {
+  grid-column-start: 2;
+}
+
+#content > .hpm-promo-wrap > .row-one {
+  grid-row-start: 1;
+}
+
+#content > .hpm-promo-wrap > .row-two {
+  grid-row-start: 2;
+}
+
+#content > .hpm-promo-wrap > .row-span {
+  grid-row: 1/span 2;
+}
+
+#content > .hpm-promo-wrap > .column-span {
+  grid-column: 1/span 2;
+}
+
+#main .hpm-promo-wrap {
+  display: none;
+}
+
+@media screen and (min-width: 64.25rem) {
+  #content > .hpm-promo-wrap {
+    display: none;
+  }
+
+  #main .hpm-promo-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
 

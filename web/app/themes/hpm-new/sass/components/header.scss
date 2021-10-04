@@ -368,8 +368,8 @@ body {
 	}
 }
 #emergency {
-	background-color: var(--main-red);
-	color: white;
+	color: var(--main-red);
+	background-color: white;
 	max-width: 100%;
 	animation-name: slideDown;
 	animation-duration: 0.5s;
@@ -380,8 +380,8 @@ body {
 	text-align: center;
 	font-size: 1.25rem;
 	a {
-		background-color: var(--main-red);
-		color: white;
+		color: var(--main-red);
+		background-color: white;
 	}
 }
 @keyframes slideDown {
@@ -438,6 +438,14 @@ body {
 		span::after {
 			content: "";
 			display: inline;
+		}
+	}
+	#emergency {
+		background-color: var(--main-red);
+		color: white;
+		a {
+			background-color: var(--main-red);
+			color: white;
 		}
 	}
 	body:not(.page-template-page-listen) {

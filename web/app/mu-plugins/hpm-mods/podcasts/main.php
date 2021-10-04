@@ -1071,8 +1071,11 @@ class HPM_Podcasts {
 	public static function show_social( $pod_id = '', $lede = false, $show_id = '' ) {
 		$temp = $output = '';
 		$badges = HPM_PODCAST_PLUGIN_URL.'badges/';
+		if ( !empty( $show_id ) ) :
+			$template = get_post_meta( $show_id, '_wp_page_template', true );
+		endif;
 
-		if ( !empty( $pod_id ) ) :
+		if ( !empty( $pod_id ) && $template !== 'single-shows-podcast.php' ) :
 			$pod_link = get_post_meta( $pod_id, 'hpm_pod_link', true );
 			if ( !empty( $pod_link['itunes'] ) ) :
 				$temp .= '<li><a href="'.$pod_link['itunes'].'" target="_blank" title="Subscribe on Apple Podcasts"><img src="'.$badges.'apple.png" alt="Subscribe on Apple Podcasts" title="Subscribe on Apple Podcasts"></a></li>';

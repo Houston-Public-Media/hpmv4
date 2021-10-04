@@ -84,7 +84,12 @@ function hpm_header_info() {
 				];
 				$reqs['thumb'] = $feature_img[0];
 			endif;
-			$reqs['title'] = wp_strip_all_tags( get_the_title( $ID ), true ) . ' | Houston Public Media';
+			$seo_headline = get_post_meta( $ID, 'hpm_seo_headline', true );
+			if ( !empty( $seo_headline ) ) :
+				$reqs['title'] = wp_strip_all_tags( $seo_headline ) . ' | Houston Public Media';
+			else :
+				$reqs['title'] = wp_strip_all_tags( get_the_title( $ID ), true ) . ' | Houston Public Media';
+			endif;
 			$reqs['permalink'] = get_the_permalink( $ID );
 			$reqs['description'] = htmlentities( wp_strip_all_tags( get_excerpt_by_id( $ID ), true ), ENT_QUOTES );
 			$reqs['og_type'] = 'article';
