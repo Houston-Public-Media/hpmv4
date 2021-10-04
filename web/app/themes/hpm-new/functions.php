@@ -598,13 +598,17 @@ function hpm_homepage_articles() {
 		$sticknum = count( $hpm_priority['homepage'] );
 		if ( empty( $hpm_priority['homepage'][1] ) ) :
 			$indepth = new WP_Query([
-				'posts_per_page' => 1,
+				'posts_per_page' => 2,
 				'cat' => 29328,
 				'ignore_sticky_posts' => 1,
 				'post_status' => 'publish'
 			]);
 			if ( $indepth->have_posts() ) :
-				$hpm_priority['homepage'][1] = $indepth->post->ID;
+				if ( $hpm_priority['homepage'][0] == $indepth->posts[0]->ID ) :
+					$hpm_priority['homepage'][1] = $indepth->posts[1]->ID;
+				else :
+					$hpm_priority['homepage'][1] = $indepth->posts[0]->ID;
+				endif;
 			endif;
 		endif;
 		$sticky_args = [

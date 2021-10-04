@@ -2583,13 +2583,16 @@ body.page-template-page-blank #content #main {
 
 body.home article.category-in-depth {
   border: 0.5rem solid #00566c;
-  position: relative;
-  padding-bottom: 2rem;
 }
-body.home article.category-in-depth .entry-header .indepth img {
+body.home article.category-in-depth.card-medium .entry-header .indepth img {
   width: 50%;
   margin: 0 50% 0.5rem 0;
   display: block;
+}
+body.home article.category-in-depth.card-large .entry-header .indepth {
+  width: 20%;
+  margin: 0 1rem 0 0;
+  display: inline-block;
 }
 
 @media screen and (min-width: 34rem) {
@@ -2685,6 +2688,10 @@ body.home article.category-in-depth .entry-header .indepth img {
     bottom: 1rem;
     position: absolute;
   }
+  #main > section > article.card.card-large header h2,
+.grid > section > article.card.card-large header h2 {
+    font-size: 1.75rem;
+  }
   #main > section > article.card.card-large header h2 a,
 .grid > section > article.card.card-large header h2 a {
     font-family: var(--hpm-font-condensed);
@@ -2712,13 +2719,10 @@ body.home article.category-in-depth .entry-header .indepth img {
 .grid > section > article.card.card-medium .entry-header {
     padding: 0;
   }
-  #main > section > article.card.category-in-depth:not(.card-medium) .entry-header .indepth img,
-.grid > section > article.card.category-in-depth:not(.card-medium) .entry-header .indepth img {
-    position: absolute;
+  #main > section > article.card.category-in-depth.card-large .entry-header .indepth + h3,
+.grid > section > article.card.category-in-depth.card-large .entry-header .indepth + h3 {
+    position: relative;
     bottom: 0.5rem;
-    right: 0.5rem;
-    margin: 0;
-    width: 25%;
   }
   #main > section.archive > h2,
 .grid > section.archive > h2 {

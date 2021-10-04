@@ -17,7 +17,7 @@ if ( $ka !== null ) :
 	endif;
 endif;
 $postClass = get_post_class();
-if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null && $ka == 1 ) ) :
+if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null && $ka < 2 ) ) :
 	$indepth = true;
 endif; ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
