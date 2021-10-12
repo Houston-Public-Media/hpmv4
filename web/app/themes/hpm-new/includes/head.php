@@ -21,7 +21,7 @@ function hpm_site_header() { ?>
 					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
 					<div tabindex="0" id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">MENU</span></div>
+						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tabindex="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
 						<div class="nav-wrap">
 							<div id="top-search" tabindex="0" aria-expanded="false"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
 							<?php
@@ -326,7 +326,7 @@ function hpm_body_open() {
 						<?php echo hpm_site_logo(); ?>
 					</div>
 					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div tabindex="0" id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></div>
+					<div tabindex="0" id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></div><div id="focus-sink" tabindex="0" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
 						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">MENU</span></div>
 						<div class="nav-wrap">

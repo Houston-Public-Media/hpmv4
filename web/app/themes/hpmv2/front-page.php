@@ -104,6 +104,10 @@ $articles = hpm_homepage_articles(); ?>
 		else :
 			$postClass[] = $felix;
 		endif;
+		$indepth = false;
+		if ( is_home() && in_array( 'category-in-depth', $postClass ) && $ka < 2 ) :
+			$indepth = true;
+		endif;
 		$post = $va; ?>
 				<article id="post-<?php echo $va->ID; ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
 					<?php
@@ -114,7 +118,7 @@ $articles = hpm_homepage_articles(); ?>
 					<?php
 						endif; ?>
 					<header class="entry-header">
-						<?php echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
+						<?php echo ( $indepth ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 						<h3><?php echo hpm_top_cat( $va->ID ); ?></h3>
 						<h2 class="entry-title"><a href="<?php the_permalink( $va->ID ); ?>" rel="bookmark"><?php echo ( !empty( $alt_headline ) ? $alt_headline : $va->post_title); ?></a></h2>
 						<div class="screen-reader-text">
