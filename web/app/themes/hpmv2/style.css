@@ -1205,6 +1205,26 @@ span.edit-link {
 	display: block;
 	width: 100%;
 }
+.in-post-bug.newsletter {
+	padding: 0.5rem 1rem;
+	background-color: var(--main-red);
+	margin: 1rem 0;
+	background-image: url(https://cdn.hpm.io/assets/images/today-in-houston-skyline.webp);
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.in-post-bug.newsletter a {
+	color: white;
+	font-size: 1em;
+	display: block;
+	text-align: center;
+}
+.in-post-bug.newsletter a span {
+	font-size: 1.5em;
+	font-weight: 900;
+	text-transform: uppercase;
+}
 .thumbnail-wrap {
 	position: relative;
 	width: 100%;
@@ -1864,7 +1884,7 @@ body.single #author-wrap .author-other-stories h2 a,
 }
 .article-wrap article.category-in-depth.felix-type-b,
 .article-wrap article.category-in-depth.felix-type-a {
-	border: 0.5rem solid #00566c;
+	border: 0.375rem solid #00566c;
 }
 .article-wrap article.category-in-depth .indepth img {
 	width: 50%;
@@ -1886,6 +1906,12 @@ body.single #author-wrap .author-other-stories h2 a,
 	.article-wrap article.category-in-depth.felix-type-a .indepth + h3 {
 		position: relative;
 		bottom: 0.75rem;
+	}
+	.article-wrap article.category-in-depth.felix-type-a {
+		border: 0;
+	}
+	.article-wrap article.category-in-depth.felix-type-a header {
+		border: 0.375rem solid #00566c;
 	}
 }
 #in-depth {
@@ -3603,6 +3629,17 @@ body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
 	}
 	.in-post-bug.in-depth a {
 		padding: 1em 1em 1em 35%;
+	}
+	.in-post-bug.newsletter {
+		margin: 1rem 0;
+		float: none;
+		width: 100%;
+	}
+	.in-post-bug.newsletter a {
+		font-size: 1em;
+	}
+	.in-post-bug.newsletter a span {
+		font-size: 1.5em;
 	}
 	article .entry-content,
 	article .entry-footer,

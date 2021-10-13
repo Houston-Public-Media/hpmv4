@@ -267,6 +267,26 @@ figure {
 			width: 100%;
 		}
 	}
+	&.newsletter {
+		padding: 0.5rem 1rem;
+		background-color: var(--main-red);
+		margin: 1rem 0;
+		background-image: url(https://cdn.hpm.io/assets/images/today-in-houston-skyline.webp);
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		a {
+			color: white;
+			font-size: 1rem;
+			display: block;
+			text-align: center;
+			span {
+				font-size: 1.5rem;
+				font-weight: 900;
+				text-transform: uppercase;
+			}
+		}
+	}
 }
 nav.pagination {
 	width: 100%;
@@ -587,7 +607,7 @@ body.page-template-page-blank {
 	}
 }
 body.home article.category-in-depth {
-	border: 0.5rem solid #00566c;
+	border: 0.375rem solid #00566c;
 	&.card-medium .entry-header .indepth img {
 		width: 50%;
 		margin: 0 50% 0.5rem 0;
@@ -616,6 +636,17 @@ body.home article.category-in-depth {
 			a {
 				font-size: 1.25rem;
 				padding: 1rem 1rem 1rem 35%;
+			}
+		}
+		&.newsletter {
+			margin: 1rem 0;
+			float: none;
+			width: 100%;
+			a {
+				font-size: 1rem;
+				span {
+					font-size: 1.5rem;
+				}
 			}
 		}
 	}
@@ -699,9 +730,15 @@ body.home article.category-in-depth {
 							padding: 0;
 						}
 					}
-					&.category-in-depth.card-large .entry-header .indepth + h3 {
-						position: relative;
-						bottom: 0.5rem;
+					&.category-in-depth.card-large {
+						border: 0;
+						.entry-header {
+							border: 0.375rem solid #00566c;
+							.indepth + h3 {
+								position: relative;
+								bottom: 0.5rem;
+							}
+						}
 					}
 				}
 			}

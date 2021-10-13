@@ -2250,6 +2250,26 @@ figure img, figure iframe {
   display: block;
   width: 100%;
 }
+.in-post-bug.newsletter {
+  padding: 0.5rem 1rem;
+  background-color: var(--main-red);
+  margin: 1rem 0;
+  background-image: url(https://cdn.hpm.io/assets/images/today-in-houston-skyline.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.in-post-bug.newsletter a {
+  color: white;
+  font-size: 1rem;
+  display: block;
+  text-align: center;
+}
+.in-post-bug.newsletter a span {
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
 
 nav.pagination {
   width: 100%;
@@ -2582,7 +2602,7 @@ body.page-template-page-blank #content #main {
 }
 
 body.home article.category-in-depth {
-  border: 0.5rem solid #00566c;
+  border: 0.375rem solid #00566c;
 }
 body.home article.category-in-depth.card-medium .entry-header .indepth img {
   width: 50%;
@@ -2615,6 +2635,17 @@ body.home article.category-in-depth.card-large .entry-header .indepth {
   .in-post-bug.in-depth a {
     font-size: 1.25rem;
     padding: 1rem 1rem 1rem 35%;
+  }
+  .in-post-bug.newsletter {
+    margin: 1rem 0;
+    float: none;
+    width: 100%;
+  }
+  .in-post-bug.newsletter a {
+    font-size: 1rem;
+  }
+  .in-post-bug.newsletter a span {
+    font-size: 1.5rem;
   }
 
   #revue-embed #revue-form .revue-form-group:nth-child(n+2) {
@@ -2718,6 +2749,14 @@ body.home article.category-in-depth.card-large .entry-header .indepth {
   #main > section > article.card.card-medium .entry-header,
 .grid > section > article.card.card-medium .entry-header {
     padding: 0;
+  }
+  #main > section > article.card.category-in-depth.card-large,
+.grid > section > article.card.category-in-depth.card-large {
+    border: 0;
+  }
+  #main > section > article.card.category-in-depth.card-large .entry-header,
+.grid > section > article.card.category-in-depth.card-large .entry-header {
+    border: 0.375rem solid #00566c;
   }
   #main > section > article.card.category-in-depth.card-large .entry-header .indepth + h3,
 .grid > section > article.card.category-in-depth.card-large .entry-header .indepth + h3 {

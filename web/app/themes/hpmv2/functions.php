@@ -385,8 +385,10 @@ function prefix_insert_post_bug( $content ) {
 			$bug_code = '<div class="in-post-bug"><a href="/news/politics/texas-legislature/"><img src="https://cdn.hpm.io/assets/images/TX_Lege_Article_Bug.jpg" alt="Special Coverage Of The 85th Texas Legislative Session"></a><h3><a href="/news/politics/texas-legislature/">Special Coverage Of The 85th Texas Legislative Session</a></h3></div>';
 			return prefix_insert_after_paragraph( $bug_code, 2, $content );
 		elseif ( in_category( 'in-depth' ) ) :
-			$bug_code = '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
-			return prefix_insert_after_paragraph( $bug_code, 5, $content );
+			if ( !preg_match( '/\[hpm_indepth\/\]/', $content ) ) :
+				$bug_code = '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
+				return prefix_insert_after_paragraph( $bug_code, 5, $content );
+			endif;
 		endif;
 	endif;
 	return $content;

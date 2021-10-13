@@ -761,3 +761,13 @@ function hpm_townsquare_covid( $atts ) {
 	return $output;
 }
 add_shortcode( 'covid_ts', 'hpm_townsquare_covid' );
+
+function hpm_indepth_bug() {
+	return '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
+}
+add_shortcode( 'hpm_indepth', 'hpm_indepth_bug' );
+
+function hpm_newsletter_bug() {
+	return '<div class="in-post-bug newsletter"><a href="#revue-embed">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
+}
+add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
