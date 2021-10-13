@@ -753,6 +753,7 @@ class HPM_Promos {
 		$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
 		$offset = get_option('gmt_offset')*3600;
 		$t = $endtime + $offset;
+		$now = time() + $offset;
 		$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
 		switch( $column ) {
 			case 'promo_type' :
@@ -770,7 +771,11 @@ class HPM_Promos {
 				endif;
 				break;
 			case 'promo_expiration' :
-				echo date( 'F j, Y, g:i A', $t );
+				if ( $now > $t ) :
+					echo "<strong>EXPIRED</strong>";
+				else :
+					echo date( 'F j, Y, g:i A', $t );
+				endif;
 				break;
 			default :
 				break;
