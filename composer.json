@@ -56,7 +56,7 @@
 		"wpackagist-plugin/amp": "2.1.4",
 		"wpackagist-plugin/better-image-credits": "2.0.3",
 		"wpackagist-plugin/classic-editor": "1.6.2",
-		"wpackagist-plugin/co-authors-plus": "3.4.91",
+		"wpackagist-plugin/co-authors-plus": "3.4.92",
 		"wpackagist-plugin/documentcloud": "0.5.1",
 		"wpackagist-plugin/easy-primary-category": "1.1.1",
 		"wpackagist-plugin/feed-json": "1.0.10",
@@ -72,6 +72,7 @@
 		"wpackagist-plugin/tinymce-advanced": "5.6.0",
 		"wpackagist-plugin/redis-cache": "^2.0.17",
 		"wpackagist-plugin/wp-ses": "*",
+		"wpackagist-plugin/webp-express": "*",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
 		"jwcounts/wp-missed-schedule": "1.0.1"
