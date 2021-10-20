@@ -1070,7 +1070,7 @@ class HPM_Podcasts {
 
 	public static function show_social( $pod_id = '', $lede = false, $show_id = '' ) {
 		$temp = $output = '';
-		$badges = HPM_PODCAST_PLUGIN_URL.'badges/';
+		$badges = 'https://cdn.hpm.io/assets/images/podcasts/';
 		if ( !empty( $show_id ) ) :
 			$template = get_post_meta( $show_id, '_wp_page_template', true );
 		endif;
@@ -1135,10 +1135,6 @@ class HPM_Podcasts {
 		return $output;
 	}
 
-	/*
-		TODO: Figure out how to include page-banner inside header.page-header
-		TODO: Extend this to hpm_series also
-	*/
 	public static function show_header( $id ) {
 		$temp = '';
 		$options = get_post_meta( $id, 'hpm_show_meta', true );

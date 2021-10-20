@@ -1096,7 +1096,7 @@ class HPM_Podcasts {
 
 	public static function show_social( $pod_id = '', $lede = false, $show_id = '' ) {
 		$temp = $output = '';
-		$badges = HPM_PODCAST_PLUGIN_URL.'badges/';
+		$badges = 'https://cdn.hpm.io/assets/images/podcasts/';
 
 		if ( !empty( $pod_id ) ) :
 			$pod_link = get_post_meta( $pod_id, 'hpm_pod_link', true );
