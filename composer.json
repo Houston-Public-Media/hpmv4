@@ -37,10 +37,6 @@
 	},
 	{
 		"type": "git",
-		"url": "https://github.com/jwcounts/hpm-mods.git"
-	},
-	{
-		"type": "git",
 		"url": "https://github.com/jwcounts/wp-missed-schedule.git"
 	}
 	],
@@ -72,7 +68,7 @@
 		"wpackagist-plugin/tinymce-advanced": "5.6.0",
 		"wpackagist-plugin/redis-cache": "^2.0.17",
 		"wpackagist-plugin/wp-ses": "*",
-		"wpackagist-plugin/webp-express": "*",
+		"wpackagist-plugin/ewww-image-optimizer": "^6.3.0",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
 		"jwcounts/wp-missed-schedule": "1.0.1"
