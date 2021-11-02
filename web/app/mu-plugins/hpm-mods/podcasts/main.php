@@ -666,27 +666,22 @@ class HPM_Podcasts {
 		$protocol = 'https://';
 		$error = '';
 		$dir = wp_upload_dir();
-		if ( class_exists( 'feed_json' ) ) :
-			$feed_json = true;
-			$json = [
-				'version' => 'https://jsonfeed.org/version/1',
-				'title' => '',
-				'home_page_url' => '',
-				'feed_url' => '',
-				'description' => '',
-				'icon' => '',
-				'favicon' => '',
-				'categories' => [],
-				'keywords' => [],
-				'author' => [
-					'name' => '',
-					'email' => ''
-				],
-				'items' => []
-			];
-		else :
-			$feed_json = false;
-		endif;
+		$json = [
+			'version' => 'https://jsonfeed.org/version/1',
+			'title' => '',
+			'home_page_url' => '',
+			'feed_url' => '',
+			'description' => '',
+			'icon' => '',
+			'favicon' => '',
+			'categories' => [],
+			'keywords' => [],
+			'author' => [
+				'name' => '',
+				'email' => ''
+			],
+			'items' => []
+		];
 
 		$podcasts = new WP_Query([
 			'post_type' => 'podcasts',
@@ -759,23 +754,22 @@ class HPM_Podcasts {
 					$pod_tag_array[] = $t->name;
 				endforeach;
 
-				if ( $feed_json ) :
-					$json['title'] = get_the_title();
-					$json['home_page_url'] = $podlink['page'];
-					$json['feed_url'] = get_the_permalink().'feed/json';
-					$json['description'] = get_the_content();
-					$json['icon'] = $main_image[0];
-					$json['favicon'] = $favicon[0];
-					$json['author']['name'] = $pods['owner']['name'];
-					$json['author']['email'] = $pods['owner']['email'];
-					$json['keywords'] = $pod_tag_array;
-					foreach ( $categories as $cats ) :
-						foreach ( $cats as $ca ) :
-							$json['categories'][] = $ca;
-						endforeach;
+
+				$json['title'] = get_the_title();
+				$json['home_page_url'] = $podlink['page'];
+				$json['feed_url'] = get_the_permalink().'feed/json';
+				$json['description'] = get_the_content();
+				$json['icon'] = $main_image[0];
+				$json['favicon'] = $favicon[0];
+				$json['author']['name'] = $pods['owner']['name'];
+				$json['author']['email'] = $pods['owner']['email'];
+				$json['keywords'] = $pod_tag_array;
+				foreach ( $categories as $cats ) :
+					foreach ( $cats as $ca ) :
+						$json['categories'][] = $ca;
 					endforeach;
-					$json['items'] = [];
-				endif;
+				endforeach;
+				$json['items'] = [];
 
 				ob_start();
 				echo "<?xml version=\"1.0\" encoding=\"".get_option('blog_charset')."\"?>\n<?xml-stylesheet type=\"application/xml\" media=\"screen\" href=\"".$xsl."\"?>\n";
@@ -853,29 +847,27 @@ class HPM_Podcasts {
 				endif;
 
 				$content = "<p>".strip_shortcodes( get_the_content() )."</p>";
-				if ( $feed_json ) :
-					$json['items'][] = [
-						'id' => $epid,
-						'title' => $item_title,
-						'permalink' => get_permalink(),
-						'content_html' => $content,
-						'content_text' => strip_shortcodes( wp_strip_all_tags( get_the_content() ) ),
-						'excerpt' => get_the_excerpt(),
-						'date_published' => get_the_date( 'c', '', '', false),
-						'date_modified' => get_the_modified_date( 'c', '', '', false),
-						'author' => coauthors( '; ', '; ', '', '', false ),
-						'thumbnail' => $pod_image[0],
-						'attachments' => [
-							'url' => $media_file,
-							'mime_type' => $a_meta['mime'],
-							'filesize' => $a_meta['filesize'],
-							'duration_in_seconds' => $a_meta['length']
-						],
-						'season' => ( !empty( $pod_desc['season'] ) ? $pod_desc['season'] : '' ),
-						'episode' => ( !empty( $pod_desc['episode'] ) ? $pod_desc['episode'] : '' ),
-						'episodeType' => ( !empty( $pod_desc['episodeType'] ) ? $pod_desc['episodeType'] : '' )
-					];
-				endif; ?>
+				$json['items'][] = [
+					'id' => $epid,
+					'title' => $item_title,
+					'permalink' => get_permalink(),
+					'content_html' => $content,
+					'content_text' => strip_shortcodes( wp_strip_all_tags( get_the_content() ) ),
+					'excerpt' => get_the_excerpt(),
+					'date_published' => get_the_date( 'c', '', '', false),
+					'date_modified' => get_the_modified_date( 'c', '', '', false),
+					'author' => coauthors( '; ', '; ', '', '', false ),
+					'thumbnail' => $pod_image[0],
+					'attachments' => [
+						'url' => $media_file,
+						'mime_type' => $a_meta['mime'],
+						'filesize' => $a_meta['filesize'],
+						'duration_in_seconds' => $a_meta['length']
+					],
+					'season' => ( !empty( $pod_desc['season'] ) ? $pod_desc['season'] : '' ),
+					'episode' => ( !empty( $pod_desc['episode'] ) ? $pod_desc['episode'] : '' ),
+					'episodeType' => ( !empty( $pod_desc['episodeType'] ) ? $pod_desc['episodeType'] : '' )
+				]; ?>
 		<item>
 			<title><?php echo $item_title; ?></title>
 			<link><?php the_permalink(); ?></link>
@@ -934,9 +926,7 @@ class HPM_Podcasts {
 				$getContent = ob_get_contents();
 				ob_end_clean();
 				update_option( 'hpm_podcast-'.$podcast_title, $getContent, false );
-				if ( $feed_json ) :
-					update_option( 'hpm_podcast-json-'.$podcast_title, json_encode( $json ), false );
-				endif;
+				update_option( 'hpm_podcast-json-'.$podcast_title, json_encode( $json ), false );
 				sleep(5);
 			endwhile;
 			if ( !empty( $error ) ) :
