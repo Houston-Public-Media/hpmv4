@@ -467,9 +467,9 @@ class HPM_Podcasts {
 			$hpm_podcast = [
 				'feed' => ( !empty( $_POST['hpm-podcast-ep-feed'] ) ? $_POST['hpm-podcast-ep-feed'] : '' ),
 				'title' => ( !empty( $_POST['hpm-podcast-title'] ) ? preg_replace( '/(&)([^amp])/', '&amp;$2', $_POST['hpm-podcast-title'] ) : '' ),
-				'description' => balanceTags( strip_shortcodes( $_POST['hpm-podcast-description'] ), true ),
+				'description' => ( !empty( $_POST['hpm-podcast-description'] ) ? balanceTags( strip_shortcodes( $_POST['hpm-podcast-description'] ), true ) : '' ),
 				'episode' => ( isset( $_POST['hpm-podcast-episode'] ) ? sanitize_text_field( $_POST['hpm-podcast-episode'] ) :	'' ),
-				'episodeType' => $_POST['hpm-podcast-episodetype'],
+				'episodeType' => ( !empty( $_POST['hpm-podcast-episodetype'] ) ? $_POST['hpm-podcast-episodetype'] : 'full' ),
 				'season' => ( isset( $_POST['hpm-podcast-season'] ) ? sanitize_text_field( $_POST['hpm-podcast-season'] ) : '' ),
 			];
 
