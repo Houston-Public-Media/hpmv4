@@ -471,7 +471,7 @@ function hpm_yt_embed_mod( $content ) {
 	global $post;
 	if ( preg_match( '/<iframe.+><\/iframe>/', $content ) ) :
 		$doc = new DOMDocument();
-		$doc->loadHTML( $content );
+		$doc->loadHTML( $content, LIBXML_NOWARNING | LIBXML_NOERROR );
 		$doc->removeChild( $doc->doctype );
 		$frame = $doc->getElementsByTagName( 'iframe' );
 		foreach ( $frame as $f ) :
