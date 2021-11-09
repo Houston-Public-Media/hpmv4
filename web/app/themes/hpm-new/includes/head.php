@@ -372,7 +372,7 @@ function hpm_talkshows() {
 	$anc = get_post_ancestors( get_the_ID() );
 	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
 	$hm_air = hpm_houston_matters_check();
-	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && $wp_query->post->post_type !== 'embeds' ) :
+	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && !empty( $wp_query->post ) && $wp_query->post->post_type !== 'embeds' ) :
 		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && $hm_air[ $now['hours'] ] ) :
 			if ( $now['hours'] == 15 ) :
 				$output .= '<div id="hm-top" class="townsquare"><p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://8884869677">888.486.9677</a></strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';

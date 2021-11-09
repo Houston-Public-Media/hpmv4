@@ -1161,11 +1161,13 @@ class HPM_Podcasts {
 		$options = get_post_meta( $id, 'hpm_show_meta', true );
 		$page_head_style = $page_head_class = '';
 		$count = 0;
-		foreach ( $options['banners'] as $op ) :
-			if ( !empty( $op ) ) :
-				$count++;
-			endif;
-		endforeach;
+		if ( !empty( $options['banners'] ) ) :
+			foreach ( $options['banners'] as $op ) :
+				if ( !empty( $op ) ) :
+					$count++;
+				endif;
+			endforeach;
+		endif;
 		if ( $count > 1 ) :
 			echo '<div class="page-banner"></div>';
 			$page_head_class = ' screen-reader-text';

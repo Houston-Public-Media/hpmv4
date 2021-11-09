@@ -712,7 +712,7 @@ function hpm_segments( $name, $date ) {
 					$json = json_decode( json_encode( $dom ), true );
 					$title = strtolower( 'Texas Standard For ' . date( 'F j, Y', $du ) );
 					$set = false;
-					if ( !empty( $json ) ) :
+					if ( !empty( $json ) && !empty( $json['channel']['item'] ) ) :
 						foreach ( $json['channel']['item'] as $item ) :
 							if ( !$set ) :
 								if ( strtolower( $item['title'] ) === $title ) :
