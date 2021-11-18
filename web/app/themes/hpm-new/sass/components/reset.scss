@@ -198,7 +198,7 @@ p {
 	thead {
 		display: table-header-group;
 	}
-	tr, img {
+	tr, img, picture {
 		page-break-inside: avoid;
 	}
 	p, h2, h3 {

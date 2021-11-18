@@ -423,12 +423,14 @@ span.edit-link {
 #splash {
 	width: 100%;
 	background-color: white;
-	img {
+	img, picture {
 		width: 100%;
 	}
 }
-#campaign-donate img {
-	max-width: 100%;
+#campaign-donate {
+	img, picture {
+		max-width: 100%;
+	}
 }
 #shows-youtube {
 	background-color: white;
@@ -478,7 +480,7 @@ span.edit-link {
 		.youtube {
 			padding: 1rem;
 			position: relative;
-			img {
+			img, picture {
 				width: 100%;
 				margin-bottom: 1rem;
 			}
@@ -525,7 +527,7 @@ span.edit-link {
 			.youtube {
 				display: grid;
 				grid-template-columns: 40% 60%;
-				img {
+				img, picture {
 					grid-row: 1 / span 2;
 					align-self: center;
 					padding-right: 1rem;

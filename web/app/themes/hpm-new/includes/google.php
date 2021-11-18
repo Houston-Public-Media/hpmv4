@@ -1,6 +1,6 @@
 <?php
 function hpm_google_tracker() {
-	if ( WP_ENV !== 'development' ) : ?>
+	//if ( WP_ENV !== 'development' ) : ?>
 		<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
 		<script>
 			var googletag = googletag || {};
@@ -54,7 +54,7 @@ function hpm_google_tracker() {
 		<script>addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)});</script>
 		<script async src='https://www.google-analytics.com/analytics.js'></script>
 <?php
-	endif;
+	//endif;
 }
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
 add_filter( 'gtm_post_category', 'gtm_populate_category_items', 10, 3 );

@@ -382,7 +382,7 @@ a[href^="javascript:"]::after {
     display: table-header-group;
   }
 
-  tr, img {
+  tr, img, picture {
     page-break-inside: avoid;
   }
 
@@ -1370,7 +1370,7 @@ footer#colophon ul li a {
   footer#colophon section > div.foot-logo {
     width: 100%;
   }
-  footer#colophon section > div.foot-logo img {
+  footer#colophon section > div.foot-logo img, footer#colophon section > div.foot-logo picture {
     width: 50%;
   }
   footer#colophon .foot-logo a {
@@ -1862,11 +1862,11 @@ span.edit-link {
   width: 100%;
   background-color: white;
 }
-#splash img {
+#splash img, #splash picture {
   width: 100%;
 }
 
-#campaign-donate img {
+#campaign-donate img, #campaign-donate picture {
   max-width: 100%;
 }
 
@@ -1919,7 +1919,7 @@ span.edit-link {
   padding: 1rem;
   position: relative;
 }
-#shows-youtube #youtube-upcoming .youtube img {
+#shows-youtube #youtube-upcoming .youtube img, #shows-youtube #youtube-upcoming .youtube picture {
   width: 100%;
   margin-bottom: 1rem;
 }
@@ -1964,7 +1964,7 @@ span.edit-link {
     display: grid;
     grid-template-columns: 40% 60%;
   }
-  #shows-youtube #youtube-upcoming .youtube img {
+  #shows-youtube #youtube-upcoming .youtube img, #shows-youtube #youtube-upcoming .youtube picture {
     grid-row: 1/span 2;
     align-self: center;
     padding-right: 1rem;
@@ -2074,11 +2074,11 @@ article blockquote.pullquote p a {
   font-weight: 700;
   font-size: 1rem;
 }
-article .entry-content img {
+article .entry-content img, article .entry-content picture {
   margin: 0;
   max-width: 100%;
 }
-article .entry-content #map-canvas img {
+article .entry-content #map-canvas img, article .entry-content #map-canvas picture {
   max-width: initial;
 }
 article .entry-content .post-thumbnail p {
@@ -2153,7 +2153,7 @@ article .card-content {
 article .card-content h3 {
   margin: 0;
 }
-article .post-thumbnail img {
+article .post-thumbnail img, article .post-thumbnail picture {
   height: max(18vh, 12rem);
   object-fit: cover;
   width: 100%;
@@ -2162,7 +2162,7 @@ article.category-in-depth:not(.card) .entry-header .indepth + h3 {
   position: relative;
   bottom: 1rem;
 }
-article.category-in-depth:not(.card) .entry-header .indepth img {
+article.category-in-depth:not(.card) .entry-header .indepth img, article.category-in-depth:not(.card) .entry-header .indepth picture {
   width: 12.5rem;
   margin-right: 1rem;
   display: inline-block;
@@ -2182,11 +2182,11 @@ article.card .entry-footer {
 }
 
 @supports (aspect-ratio: 1) {
-  article .post-thumbnail img {
+  article .post-thumbnail img, article .post-thumbnail picture {
     aspect-ratio: 3/2;
     height: auto;
   }
-  article.podcasts .post-thumbnail img {
+  article.podcasts .post-thumbnail img, article.podcasts .post-thumbnail picture {
     aspect-ratio: 1;
   }
 }
@@ -2209,7 +2209,7 @@ figure.wp-caption figcaption.wp-caption-text {
   font-size: 0.75rem;
   color: #404144;
 }
-figure img, figure iframe {
+figure img, figure iframe, figure picture {
   max-width: 100%;
 }
 
@@ -2227,7 +2227,7 @@ figure img, figure iframe {
   justify-content: center;
   display: flex;
 }
-.in-post-bug img {
+.in-post-bug img, .in-post-bug picture {
   padding: 0 1rem 0 0;
 }
 .in-post-bug h3 {
@@ -2398,7 +2398,8 @@ nav.pagination a.page-numbers.next {
   font-size: 1.125rem;
   padding: 0.5rem 0;
 }
-#author-wrap .author-info > img {
+#author-wrap .author-info > img,
+#author-wrap .author-info > picture {
   width: 40%;
   padding: 0 0 1rem 1rem;
   float: right;
@@ -2601,13 +2602,16 @@ body.page-template-page-blank #content #main {
   padding: 0;
 }
 
-body.home article.category-in-depth {
+body.home article.category-in-depth.card-medium {
   border: 0.375rem solid #00566c;
 }
-body.home article.category-in-depth.card-medium .entry-header .indepth img {
+body.home article.category-in-depth.card-medium .entry-header .indepth img, body.home article.category-in-depth.card-medium .entry-header .indepth picture {
   width: 50%;
   margin: 0 50% 0.5rem 0;
   display: block;
+}
+body.home article.category-in-depth.card-large {
+  border: 0.375rem solid #00566c;
 }
 body.home article.category-in-depth.card-large .entry-header .indepth {
   width: 20%;
