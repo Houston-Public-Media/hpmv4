@@ -1898,10 +1898,14 @@ body.single #author-wrap .author-other-stories h2 a,
 	width: 20rem;
 	margin-right: 1rem;
 }
+.single article.category-in-depth .entry-header .indepth + h3 {
+	width: 100%;
+}
 @media screen and (min-width: 34em) {
 	.single article.category-in-depth .entry-header .indepth + h3 {
 		position: relative;
 		bottom: 1.25rem;
+		width: auto;
 	}
 	.article-wrap article.category-in-depth.felix-type-a .indepth + h3 {
 		position: relative;

@@ -73,6 +73,33 @@ select {
 		scroll-behavior: auto !important;
 	}
 }
+html {
+	scrollbar-color: var(--main-blue) var(--accent-black-4);
+}
+::-webkit-scrollbar {
+	background-color: var(--accent-black-4);
+}
+::-webkit-scrollbar-thumb {
+	background-color: var(--main-blue);
+	color: var(--main-blue);
+	border-radius: 10px;
+	border: 3px solid var(--accent-black-4);
+}
+::-webkit-scrollbar-corner {
+	background-color: var(--accent-black-3);
+}
+:root { accent-color: var(--main-blue); }
+:focus-visible { outline-color: var(--main-blue); }
+::selection { background-color: var(--main-blue); }
+::marker { color: var(--main-blue); }
+:is(
+	::-webkit-calendar-picker-indicator,
+	::-webkit-clear-button,
+	::-webkit-inner-spin-button,
+	::-webkit-outer-spin-button
+) {
+	color: var(--main-blue);
+}
 small {
 	font-size: 80%;
 }

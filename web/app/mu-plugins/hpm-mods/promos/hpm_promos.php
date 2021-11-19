@@ -719,6 +719,7 @@ class HPM_Promos {
 		if ( $sidebar ) :
 			$output = '<div class="hpm-promo-wrap">' . $output . '</div>';
 		endif;
+		wp_reset_query();
 		return $output;
 	}
 

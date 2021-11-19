@@ -27,9 +27,20 @@
 		endif;
 	else :
 		$author_check = '';
-    endif;
+	endif;
 	get_header();
 ?>
+	<style>
+		.author-info h3 {
+			font-size: 1.125rem;
+		}
+		@media screen and (min-width: 64.25rem) {
+			.page-header {
+				grid-column: 1 / span 2;
+				grid-row-start: -2;
+			}
+		}
+	</style>
 	<section id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 			<header class="page-header">

@@ -1,13 +1,23 @@
 <?php
-/**
- * The template for displaying show pages
- *
- * @package WordPress
- * @subpackage HPMv2
- * @since HPMv2 1.0
- */
-
-get_header(); ?>
+	$staff = get_post_meta( $wp_query->queried_object->ID, 'hpm_staff_meta', true );
+	$staff_authid = get_post_meta( $wp_query->queried_object->ID, 'hpm_staff_authid', true );
+	if ( !empty( $staff_authid ) ) :
+		$curstaff = [
+			'first_name' => get_the_author_meta( 'first_name', $staff_authid ),
+			'last_name' => get_the_author_meta( 'last_name', $staff_authid ),
+			'user_nicename' => get_the_author_meta( 'user_nicename', $staff_authid )
+		];
+	else :
+		$staff_name = explode( ' ', $wp_query->queried_object->post_title );
+		$staff_first_name = array_shift( $staff_name );
+		$staff_last_name = implode( ' ', $staff_name );
+		$curstaff = [
+			'first_name' => $staff_first_name,
+			'last_name' => $staff_last_name,
+			'user_nicename' => $wp_query->queried_object->post_name
+		];
+	endif;
+	get_header(); ?>
 	<style>
 		.author-info h3 {
 			font-size: 1.125rem;
@@ -22,9 +32,7 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
-			while ( have_posts() ) : the_post();
-				$staff = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
-				$staff_authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', true ); ?>
+			while ( have_posts() ) : the_post(); ?>
 			<header class="page-header">
 				<div id="author-wrap">
 					<div class="author-info">

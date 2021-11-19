@@ -16,7 +16,7 @@ Text Domain: hpmv2
   --max-width: 75rem;
 }
 
-body {
+html {
   --main-red: #C8102E;
   --main-black: #000000;
   --main-blue: #00566C;
@@ -226,6 +226,48 @@ select {
     scroll-behavior: auto !important;
   }
 }
+html {
+  scrollbar-color: var(--main-blue) var(--accent-black-4);
+}
+
+::-webkit-scrollbar {
+  background-color: var(--accent-black-4);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-blue);
+  color: var(--main-blue);
+  border-radius: 10px;
+  border: 3px solid var(--accent-black-4);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: var(--accent-black-3);
+}
+
+:root {
+  accent-color: var(--main-blue);
+}
+
+:focus-visible {
+  outline-color: var(--main-blue);
+}
+
+::selection {
+  background-color: var(--main-blue);
+}
+
+::marker {
+  color: var(--main-blue);
+}
+
+:is(::-webkit-calendar-picker-indicator,
+::-webkit-clear-button,
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button) {
+  color: var(--main-blue);
+}
+
 small {
   font-size: 80%;
 }
@@ -1992,7 +2034,7 @@ span.edit-link {
     max-width: 48rem;
   }
 }
-.single #main,
+.single:not(.single-staff) #main,
 .page #main,
 .error404 #main {
   background-color: white;
@@ -2385,7 +2427,7 @@ nav.pagination a.page-numbers.next {
   background-color: #f5f5f5;
 }
 #author-wrap .author-info {
-  padding-bottom: 1rem;
+  overflow: hidden;
 }
 #author-wrap .author-info h3 {
   text-transform: uppercase;
@@ -2409,7 +2451,8 @@ nav.pagination a.page-numbers.next {
   margin-bottom: 2rem;
 }
 
-.author #author-wrap {
+.author #author-wrap,
+.single-staff #author-wrap {
   background-color: transparent;
 }
 
@@ -2549,22 +2592,26 @@ aside section, aside nav {
 .podcast-badges {
   list-style: none;
   margin: 0;
-  padding: 0.5rem;
+  padding: 0.25rem;
   display: flex;
   flex-flow: row wrap;
-  gap: 1rem;
+  gap: 0.5rem 1rem;
   grid-column: 2;
   justify-content: flex-end;
 }
 .podcast-badges li {
-  width: 3.5rem;
+  width: 3rem;
 }
 .podcast-badges .social-icon {
-  --unit: 3.5rem;
+  --unit: 3rem;
 }
 .podcast-badges .social-icon a,
 .podcast-badges .social-icon button {
   margin: 0;
+}
+
+.single:not(.single-shows) .podcast-badges {
+  justify-content: flex-start;
 }
 
 .podcast-episode-info {
@@ -2825,6 +2872,10 @@ body.home article.category-in-depth.card-large .entry-header .indepth {
 .grid > section.archive > article.card-large.podcasts,
 .grid > section.archive > article.card-medium.podcasts {
     align-items: flex-start;
+  }
+  #main > section.archive > article.card,
+.grid > section.archive > article.card {
+    margin: 1rem 0;
   }
   #main > aside,
 .grid > aside {

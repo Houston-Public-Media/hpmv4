@@ -272,10 +272,16 @@ function hpm_header_info() {
 <?php
 		endforeach;
 	endif;
-	if ( is_author() || ( is_single() && get_post_type() === 'staff' ) ) : ?>
+	if ( is_author() ) : ?>
 		<meta property="profile:first_name" content="<?php echo $curauth->first_name; ?>">
 		<meta property="profile:last_name" content="<?php echo $curauth->last_name; ?>">
 		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>">
+<?php
+	elseif ( is_single() && get_post_type() === 'staff' ) :
+		global $curstaff; ?>
+		<meta property="profile:first_name" content="<?php echo $curstaff['first_name']; ?>">
+		<meta property="profile:last_name" content="<?php echo $curstaff['last_name']; ?>">
+		<meta property="profile:username" content="<?php echo $curstaff['user_nicename']; ?>">
 <?php
 	endif; ?>
 		<meta name="twitter:card" content="summary_large_image" />
