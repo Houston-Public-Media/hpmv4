@@ -51,14 +51,6 @@ function hpm_versions() {
 }
 
 /*
- * Add script so that javascript is detected and saved as a class on the body element
- */
-function hpmv2_javascript_detection() {
-	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
-}
-add_action( 'wp_head', 'hpmv2_javascript_detection', 0 );
-
-/*
  * Removes unnecessary metadata from the document head
  */
 remove_action( 'wp_head', 'wlwmanifest_link' );
@@ -674,7 +666,7 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api, TRUE );
 					if ( !empty( $json['list']['story'] ) ) :
-						$output .= "<div class=\"progsegment\"><button>Segments for {$date}</button><ul>";
+						$output .= "<div class=\"progsegment\"><button aria-label=\"Programming Segments for {$date}\">Segments for {$date}</button><ul>";
 						foreach ( $json['list']['story'] as $j ) :
 							foreach ( $j['link'] as $jl ) :
 								if ( $jl['type'] == 'html' ) :
@@ -691,7 +683,7 @@ function hpm_segments( $name, $date ) {
 		elseif ( $shows[$name]['source'] == 'regex' ) :
 			if ( $name == 'BBC World Service' ) :
 				$offset = str_replace( '-', '', get_option( 'gmt_offset' ) );
-				$output .= "<div class=\"progsegment\"><button>Schedule</button><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></div>";
+				$output .= "<div class=\"progsegment\"><button aria-label=\"BBC World Service Schedule\">Schedule</button><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></div>";
 				return $output;
 			endif;
 		elseif ( $shows[$name]['source'] == 'wp-rss' ) :
@@ -712,7 +704,7 @@ function hpm_segments( $name, $date ) {
 						foreach ( $json['channel']['item'] as $item ) :
 							if ( !$set ) :
 								if ( strtolower( $item['title'] ) === $title ) :
-									$output .= '<div class="progsegment"><button>Program for '. $date . '</button><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></div>';
+									$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></div>';
 									$set = true;
 								endif;
 							endif;
@@ -734,7 +726,7 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api );
 					if ( !empty( $json ) ) :
-						$output .= "<div class=\"progsegment\"><button>Segments for {$date}</button><ul>";
+						$output .= "<div class=\"progsegment\"><button aria-label=\"Segments for {$date}\">Segments for {$date}</button><ul>";
 						foreach ( $json as $j ) :
 							$output .= '<li><a href="'.$j->link.'" target="_blank">'.$j->title->rendered.'</a></li>';
 						endforeach;
@@ -755,7 +747,7 @@ function hpm_segments( $name, $date ) {
 					'ignore_sticky_posts' => 1
 				] );
 				if ( $hm->have_posts() ) :
-					$output .= "<div class=\"progsegment\"><button>Segments for {$date}</button><ul>";
+					$output .= "<div class=\"progsegment\"><button aria-label=\"Segments for {$date}\">Segments for {$date}</button><ul>";
 					while( $hm->have_posts() ) :
 						$hm->the_post();
 						$output .= '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';
@@ -1406,3 +1398,60 @@ $timestamp = wp_next_scheduled( 'hpm_nowplay_update' );
 if ( empty( $timestamp ) ) :
 	wp_schedule_event( time(), 'hpm_2min', 'hpm_nowplay_update' );
 endif;
+
+add_action( 'init', function() { ob_start(); });
+add_action( 'shutdown', function() {
+	$final = '';
+	$levels = ob_get_level();
+	for ( $i = 0; $i < $levels; $i++ ) :
+		$final .= ob_get_clean();
+	endfor;
+	echo apply_filters( 'final_output', $final );
+}, 0);
+
+add_filter( 'final_output', function( $output ) {
+	$content = $output;
+	preg_match_all( '/<script([a-zA-Z0-9 \-\.\&#\?\/:=\'"]+)?>/', $content, $scripts );
+	preg_match_all( '/<iframe.+>/', $content, $iframes );
+	foreach ( $scripts[0] as $s ) :
+		if ( strpos( $s, 'nonce' ) === false && strpos( $s, 'text/template') === false ) :
+			$new = str_replace( '<script', '<script nonce="'.CSP_NONCE.'"', $s );
+			$content = str_replace( $s, $new, $content );
+		endif;
+	endforeach;
+	foreach ( $iframes[0] as $i ) :
+		$new = $i;
+		if ( strpos( $new, 'loading="lazy"' ) === false ) :
+			$new = str_replace( '<iframe', '<iframe loading="lazy"', $new );
+		endif;
+		if ( strpos( $new, 'youtube.com' ) !== false ) :
+			preg_match( '/src="(https:\/\/w?w?w?\.?youtube.com\/embed\/[a-zA-Z0-9\.\/:\-_#;\?&=]+)"/', $new, $src );
+			if ( !empty( $src ) ) :
+				$parse = parse_url( html_entity_decode( $src[1] ) );
+				if ( !empty( $parse['query'] ) ) :
+					$exp = explode( '&', $parse['query'] );
+					if ( !in_array( 'enablejsapi=1', $exp ) ) :
+						$exp[] = 'enablejsapi=1';
+						$parse['query'] = implode( '&', $exp );
+					endif;
+				else :
+					$parse['query'] = 'enablejsapi=1';
+				endif;
+				$url = $parse['scheme'] . '://' . $parse['host'] . $parse['path'] . '?' . $parse['query'];
+				$new = str_replace( $src[1], $url, $new );
+				$ytid = str_replace( '/embed/', '', $parse['path'] );
+				if ( strpos( $new, 'id="' ) === false ) :
+					$new = str_replace( '<iframe', '<iframe id="'.$ytid.'"', $new );
+				endif;
+			endif;
+		endif;
+		if ( strpos( $new, 'title="' ) === false ) :
+			preg_match( '/src="https:\/\/([a-zA-Z0-9_\-\.]+)\//', $new, $domain );
+			if ( !empty( $domain ) ) :
+				$new = str_replace( '<iframe', '<iframe title="'.$domain[1].' embed"', $new );
+			endif;
+		endif;
+		$content = str_replace( $i, $new, $content );
+	endforeach;
+	return $content;
+});

@@ -46,16 +46,16 @@ function author_footer( $id ) {
 		<div class=\"social-wrap\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :
-				$temp .= '<div class="social-icon facebook"><a href="'.$meta['facebook'].'" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon facebook"><a href="'.$meta['facebook'].'" rel="noopener" title="'.( $local ? $author->post->post_title : $coa->display_name ).' on Facebook" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['twitter'] ) ) :
-				$temp .= '<div class="social-icon twitter"><a href="'.$meta['twitter'].'" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon twitter"><a href="'.$meta['twitter'].'" rel="noopener" title="'.( $local ? $author->post->post_title : $coa->display_name ).' on Twitter" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['linkedin'] ) ) :
-				$temp .= '<div class="social-icon linkedin"><a href="'.$meta['linkedin'].'" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon linkedin"><a href="'.$meta['linkedin'].'" rel="noopener" title="'.( $local ? $author->post->post_title : $coa->display_name ).' on LinkedIn" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a></div>';
 			endif;
 			if ( !empty( $meta['email'] ) ) :
-				$temp .= '<div class="social-icon"><a href="mailto:'.$meta['email'].'" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a></div>';
+				$temp .= '<div class="social-icon"><a href="mailto:'.$meta['email'].'" rel="noopener" title="Email '.( $local ? $author->post->post_title : $coa->display_name ).'" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a></div>';
 			endif;
 			$author_bio = $author->post->post_content;
 			if ( preg_match( '/Biography pending/', $author_bio ) ) :
@@ -209,5 +209,5 @@ function hpm_persistent_player() {
 		</div><?php
 	endif;
 }
-//add_action( 'wp_footer', 'hpm_chartbeat', 100 );
+add_action( 'wp_footer', 'hpm_chartbeat', 100 );
 //add_action( 'wp_footer', 'hpm_persistent_player', 101 );

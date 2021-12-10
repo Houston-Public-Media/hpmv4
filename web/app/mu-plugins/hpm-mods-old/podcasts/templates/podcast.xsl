@@ -74,7 +74,7 @@
 							<a href="/" rel="home" title="Houston Public Media"></a>
 						</div>
 						<div id="top-schedule">
-							<div class="top-schedule-label"><button data-href="#top-schedule-wrap"><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
+							<div class="top-schedule-label"><button aria-label="View Schedules" data-href="#top-schedule-wrap"><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
 							<div class="top-schedule-link-wrap">
 								<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
 								<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
@@ -82,8 +82,8 @@
 								<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 							</div>
 						</div>
-						<div id="top-listen"><button data-href="/listen-live" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</button></div>
-						<div id="top-watch"><button data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
+						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</button></div>
+						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
 						<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
 						<div id="top-mobile-menu" style=""><span class="fas fa-bars" aria-hidden="true"></span></div>
 						<nav id="site-navigation" class="main-navigation" role="navigation">

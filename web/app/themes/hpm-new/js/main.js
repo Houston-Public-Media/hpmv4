@@ -13,7 +13,7 @@ var getCookie = (cname) => {
 	}
 	return null;
 }
-
+var timeOuts = [];
 var setCookie = (cname, cvalue, exhours) => {
 	var d = new Date();
 	d.setTime(d.getTime() + (exhours*60*60*1000));

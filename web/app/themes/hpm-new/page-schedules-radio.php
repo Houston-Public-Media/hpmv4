@@ -262,7 +262,7 @@ Template Name: Radio Schedules
 					echo hpm_segments( $prog['name'], $date );
 					if ( !empty( $prog['sub'] ) ) : ?>
 						<div class="progsegment">
-							<button>Interstitials</button>
+							<button aria-label="Program Interstitials">Interstitials</button>
 							<ul>
 <?PHP
 						foreach( $prog['sub'] as $ksu => $vsu ) : ?>
@@ -277,7 +277,7 @@ Template Name: Radio Schedules
 					endif;
 					if ( !empty( $prog['playlist'] ) ) : ?>
 						<div class="progsegment">
-							<button>Program Playlist</button>
+							<button aria-label="Program Playlist">Program Playlist</button>
 							<ul class="progplay">
 <?PHP
 						foreach( $prog['playlist'] as $ks => $song ) :

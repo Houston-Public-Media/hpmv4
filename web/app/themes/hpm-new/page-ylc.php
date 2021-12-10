@@ -499,7 +499,7 @@ get_header(); ?>
 							<a href="/" rel="home" title="Houston Public Media homepage"><img src="https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Reverse.png" alt="Houston Public Media, a service of the University of Houston" /></a>
 						</div>
 						<h1 class="page-title"><?php the_title(); ?></h1>
-						<button class="down scrollto">
+						<button aria-label="Skip to Content" class="down scrollto">
 							<i class="fas fa-chevron-down" aria-hidden="true"></i>
 						</button>
 					</header>

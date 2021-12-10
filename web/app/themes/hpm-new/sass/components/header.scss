@@ -131,7 +131,7 @@
 				display: block;
 				padding: 0.25rem;
 				border-left: 1px solid white;
-				background-color: var(--accent-light-blue-1);
+				background-color: var(--accent-dark-blue-1);
 			}
 			&:nth-child(1) a {
 				border-left: 0;
@@ -148,7 +148,7 @@
 				padding: 0.5rem 0;
 				width: 100%;
 				display: block;
-				background-color: var(--accent-light-blue-1);
+				background-color: var(--accent-dark-blue-1);
 				border: 0;
 				border-radius: 0;
 			}
@@ -718,7 +718,7 @@ body {
 					.top-schedule-links {
 						width: max-content;
 						a {
-							color: var(--accent-light-blue-1);
+							color: var(--accent-dark-blue-1);
 							background-color: transparent;
 							font-size: 1.25rem;
 							padding: 0.25rem 0.5rem;
@@ -755,9 +755,9 @@ body {
 			#top-watch {
 				button {
 					padding: 0.25rem 0.5rem;
-					color: var(--accent-light-blue-1);
+					color: var(--accent-dark-blue-1);
 					background-color: transparent;
-					border: 1px solid var(--accent-light-blue-1);
+					border: 1px solid var(--accent-dark-blue-1);
 					font-size: 1.25rem;
 				}
 			}

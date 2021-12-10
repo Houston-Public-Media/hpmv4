@@ -8,7 +8,7 @@ $social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
 $show = get_post_meta( get_the_ID(), 'hpm_show_meta', true ); ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'card' ); ?>>
 <?php if ( has_post_thumbnail() ) : ?>
-	<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
+	<a class="post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
 	<?php endif; ?>
 	<div class="card-content">
 		<header class="entry-header">

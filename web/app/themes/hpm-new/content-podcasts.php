@@ -7,7 +7,7 @@
 $pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true ); ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'card' ); ?>>
 	<?php if ( has_post_thumbnail() ) : ?>
-	<a class="post-thumbnail" href="<?php echo $pod_link['page']; ?>" aria-hidden="true"><?php the_post_thumbnail( 'thumbnail' ); ?></a>
+	<a class="post-thumbnail" href="<?php echo $pod_link['page']; ?>"><?php the_post_thumbnail( 'thumbnail' ); ?></a>
 	<?php endif; ?>
 	<div class="card-content">
 		<header class="entry-header">

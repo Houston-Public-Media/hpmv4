@@ -7,7 +7,7 @@ function hpm_site_header() { ?>
 					</div>
 					<section>
 						<div id="top-schedule">
-							<div class="top-schedule-label"><button type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap" ><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
+							<div class="top-schedule-label"><button aria-label="View Schedules" type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap" ><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
 							<div class="top-schedule-link-wrap" id="top-schedule-link-wrap">
 								<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
 								<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
@@ -15,8 +15,8 @@ function hpm_site_header() { ?>
 								<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 							</div>
 						</div>
-						<div id="top-listen"><button data-href="/listen-live" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</button></div>
-						<div id="top-watch"><button data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
+						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</button></div>
+						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
 					</section>
 					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
 					<div tabindex="0" id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></div>
@@ -209,7 +209,7 @@ function hpm_header_info() {
 		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime();</script>
 		<meta charset="<?php bloginfo( 'charset' ); ?>">
 		<link rel="profile" href="http://gmpg.org/xfn/11">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
 		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -252,7 +252,6 @@ function hpm_header_info() {
 		<meta property="og:image:width" content="<?php echo $reqs['thumb_meta']['width']; ?>" />
 		<meta property="og:image:type" content="<?php echo $reqs['thumb_meta']['mime-type']; ?>" />
 		<meta property="og:image:secure_url" content="<?php echo $reqs['thumb']; ?>" />
-		<script>var timeOuts = [];</script>
 <?php
 	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta property="article:content_tier" content="free" />

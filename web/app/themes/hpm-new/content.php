@@ -22,7 +22,7 @@ if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null 
 endif; ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
 	<?php if ( has_post_thumbnail() ) : ?>
-	<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"><?php the_post_thumbnail( $size ) ?></a>
+	<a class="post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( $size ) ?></a>
 	<?php endif; ?>
 	<div class="card-content">
 		<header class="entry-header">

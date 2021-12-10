@@ -59,21 +59,27 @@
 						if ( !empty($author['facebook'] ) || !empty( $author['twitter'] ) ) :?>
 						<div class="social-wrap">
 					<?php
-							if ( !empty($author['facebook'] ) ) : ?>
+							if ( !empty( $author['facebook'] ) ) : ?>
 							<div class="social-icon facebook">
-								<a href="<?php echo $author['facebook']; ?>" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
+								<a href="<?php echo $author['facebook']; ?>" rel="noopener" title="<?php echo $curauth->display_name; ?> on Facebook" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif;
 							if ( !empty( $author['twitter'] ) ) : ?>
 							<div class="social-icon twitter">
-								<a href="<?php echo $author['twitter']; ?>" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
+								<a href="<?php echo $author['twitter']; ?>" rel="noopener" title="<?php echo $curauth->display_name; ?> on Twitter" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif;
+							if ( !empty( $author['linkedin'] ) ) : ?>
+								<div class="social-icon linkedin">
+									<a href="<?php echo $author['linkedin']; ?>" rel="noopener" title="<?php echo $curauth->display_name; ?> on LinkedIn" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
+								</div>
+					<?php
+								endif;
 							if (!empty($author['email'])) : ?>
 							<div class="social-icon">
-								<a href="mailto:<?php echo $author['email']; ?>" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a>
+								<a href="mailto:<?php echo $author['email']; ?>" rel="noopener" title="Email <?php echo $curauth->display_name; ?>" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a>
 							</div>
 				<?php
 							endif; ?>

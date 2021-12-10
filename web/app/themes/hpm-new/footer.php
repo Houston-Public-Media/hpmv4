@@ -34,25 +34,25 @@
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
 						<div class="social-wrap">
 							<div class="social-icon facebook">
-								<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
+								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
 							</div>
 							<div class="social-icon twitter">
-								<a href="https://twitter.com/houstonpubmedia" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
+								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
 							</div>
 							<div class="social-icon instagram">
-								<a href="https://instagram.com/houstonpubmedia" target="_blank"><span class="fab fa-instagram" aria-hidden="true"></span></a>
+								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><span class="fab fa-instagram" aria-hidden="true"></span></a>
 							</div>
 							<div class="social-icon youtube">
-								<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fab fa-youtube" aria-hidden="true"></span></a>
+								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><span class="fab fa-youtube" aria-hidden="true"></span></a>
 							</div>
 							<div class="social-icon linkedin">
-								<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
+								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
 							</div>
 						</div>
 					</div>
 				</section>
 				<div class="foot-tag">
-					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" target="_blank">University of Houston</a></p>
+					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" rel="noopener" target="_blank">University of Houston</a></p>
 					<p>Copyright &copy; <?php echo date('Y'); ?></p>
 				</div>
 			</footer>

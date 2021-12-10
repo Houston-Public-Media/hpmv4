@@ -500,39 +500,6 @@ function rememberme_checked() {
 	echo "<script>var rem = document.getElementById('rememberme');rem.checked = true;rem.labels[0].textContent = 'Stay Logged in for 2 Weeks';</script>";
 }
 
-function hpm_yt_embed_mod( $content ) {
-	global $post;
-	if ( preg_match( '/<iframe.+><\/iframe>/', $content ) ) :
-		$doc = new DOMDocument();
-		$doc->loadHTML( $content, LIBXML_NOWARNING | LIBXML_NOERROR );
-		$doc->removeChild( $doc->doctype );
-		$frame = $doc->getElementsByTagName( 'iframe' );
-		foreach ( $frame as $f ) :
-			$src = $f->getAttribute('src');
-			if ( strpos( $src, 'youtube' ) !== false ) :
-				$url = parse_url( $src );
-				$ytid = str_replace( '/embed/', '', $url['path'] );
-				$f->setAttribute( 'id', $ytid );
-				if ( empty( $url['query'] ) ) :
-					$f->setAttribute( 'src', $src . '?enablejsapi=1' );
-				else :
-					if ( strpos( $url['query'], 'enablejsapi' ) === false ) :
-						$f->setAttribute( 'src', $src . '&enablejsapi=1' );
-					endif;
-				endif;
-			endif;
-			$load = $f->getAttribute('loading');
-			if ( empty( $load ) ) :
-				$f->setAttribute('loading','lazy');
-			endif;
-		endforeach;
-		$content = $doc->saveHTML();
-	endif;
-	$content = str_replace( [ '<html><body>', '</body></html>' ], [ '', '' ], $content );
-	return $content;
-}
-add_filter( 'the_content', 'hpm_yt_embed_mod', 999 );
-
 function hpm_charset_clean( $content ) {
 	$find = [ ' ', '…', '’', '“', '”' ];
 	$replace = [ ' ', '...', "'", '"', '"' ];
@@ -557,7 +524,6 @@ function hpm_revue_signup( $content ) {
 	return $content;
 }
 add_filter( 'the_content', 'hpm_revue_signup', 8 );
-
 
 function hpm_nprone_check( $post_id, $post ) {
 	if ( !empty( $_POST ) && $_POST['post_type'] === 'post' ) :

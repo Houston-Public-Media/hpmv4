@@ -56,7 +56,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 				'</audio>';
 		if ( !is_admin() && !empty( $attr['id'] ) ) :
 			$html .= "
-				<button class=\"plyr-audio-embed\" data-id=\"{$attr['id']}\"><span class=\"fas fa-code\"></span></button>
+				<button aria-label=\"Show audio embed code\" class=\"plyr-audio-embed\" data-id=\"{$attr['id']}\"><span class=\"fas fa-code\"></span></button>
 				<div class=\"plyr-audio-embed-popup\" id=\"plyr-{$audio_id}-popup\">
 					<div class=\"plyr-audio-embed-wrap\">
 						<p>To embed this piece of audio in your site, please use this code:</p>
@@ -734,9 +734,6 @@ function hpm_townsquare_covid( $atts ) {
 	if ( $art->have_posts() ) :
 		while ( $art->have_posts() ) : $art->the_post();
 			$postClass = get_post_class();
-			$fl_array = preg_grep("/felix-type-/", $postClass);
-			$fl_arr = array_keys( $fl_array );
-			$postClass[$fl_arr[0]] = 'felix-type-b';
 			$postClass[] = 'town-square-feature';
 			$hpm_constants[] = get_the_ID();
 			$podcast = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );

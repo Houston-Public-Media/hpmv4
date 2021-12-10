@@ -42,12 +42,6 @@ function hpm_google_tracker() {
 				}
 				googletag.enableServices();
 			});
-			function hpmKimbiaComplete(kimbiaData) {
-				var charge = kimbiaData['initialCharge'];
-				var amount = Number(charge.replace(/[^0-9\.]+/g,""));
-				ga('hpmprod.send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
-				ga('hpmWebAmpprod.send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
-			}
 		</script>
 		<?php $versions = hpm_versions(); ?>
 		<script type="text/javascript" src="https://cdn.hpm.io/assets/js/analytics/index.js?ver=<?php echo $versions['analytics']; ?>" id="hpm-analytics-js"></script>
@@ -57,12 +51,3 @@ function hpm_google_tracker() {
 	//endif;
 }
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
-add_filter( 'gtm_post_category', 'gtm_populate_category_items', 10, 3 );
-
-function gtm_populate_category_items( $total_match, $match, $post_id ) {
-	$terms = wp_get_object_terms( $post_id, 'category', [ 'fields' => 'slugs' ] );
-	if ( is_wp_error( $terms ) || empty( $terms ) ) :
-		return '';
-	endif;
-	return $terms;
-}

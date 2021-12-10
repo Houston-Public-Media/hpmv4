@@ -330,7 +330,7 @@ input[type=search] {
 
 a {
   text-decoration: none;
-  color: var(--accent-light-blue-1);
+  color: var(--accent-dark-blue-1);
   font-weight: 500;
 }
 
@@ -661,7 +661,7 @@ a[href^="javascript:"]::after {
   display: block;
   padding: 0.25rem;
   border-left: 1px solid white;
-  background-color: var(--accent-light-blue-1);
+  background-color: var(--accent-dark-blue-1);
 }
 #masthead #top-schedule .top-schedule-links:nth-child(1) a {
   border-left: 0;
@@ -678,7 +678,7 @@ a[href^="javascript:"]::after {
   padding: 0.5rem 0;
   width: 100%;
   display: block;
-  background-color: var(--accent-light-blue-1);
+  background-color: var(--accent-dark-blue-1);
   border: 0;
   border-radius: 0;
 }
@@ -1235,7 +1235,7 @@ body:not(.page-template-page-listen) #masthead .site-branding .site-logo a svg .
     width: max-content;
   }
   body:not(.page-template-page-listen) #masthead #top-schedule .top-schedule-link-wrap .top-schedule-links a {
-    color: var(--accent-light-blue-1);
+    color: var(--accent-dark-blue-1);
     background-color: transparent;
     font-size: 1.25rem;
     padding: 0.25rem 0.5rem;
@@ -1268,9 +1268,9 @@ body:not(.page-template-page-listen) #masthead .site-branding .site-logo a svg .
   body:not(.page-template-page-listen) #masthead #top-listen button,
 body:not(.page-template-page-listen) #masthead #top-watch button {
     padding: 0.25rem 0.5rem;
-    color: var(--accent-light-blue-1);
+    color: var(--accent-dark-blue-1);
     background-color: transparent;
-    border: 1px solid var(--accent-light-blue-1);
+    border: 1px solid var(--accent-dark-blue-1);
     font-size: 1.25rem;
   }
 }
@@ -1380,6 +1380,9 @@ footer#colophon .foot-contact p.foot-button a {
   background-color: var(--main-red);
   font-size: 1.125rem;
 }
+footer#colophon .foot-newsletter a {
+  color: var(--accent-light-blue-1);
+}
 footer#colophon h3 {
   color: white;
   border-bottom: 1px solid #fff;
@@ -1396,12 +1399,14 @@ footer#colophon ul {
   margin: 0;
 }
 footer#colophon ul li {
-  padding: 0.25rem 0;
   color: white;
+  padding: 0.25rem 0;
 }
 footer#colophon ul li a {
   color: white;
   text-decoration: none;
+  display: block;
+  padding: 0.25rem 0;
 }
 
 @media screen and (min-width: 34rem) {
