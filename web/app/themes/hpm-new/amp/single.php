@@ -1,4 +1,8 @@
-<!doctype html>
+<?php
+	wp_deregister_style( 'gutenberg-pdfjs' );
+	wp_deregister_style( 'wp-block-library' );
+	wp_deregister_style( 'wp-block-library-theme' );
+?><!doctype html>
 <html amp <?php language_attributes(); ?>>
 <head>
 	<meta charset="utf-8">
@@ -15,9 +19,13 @@
 <?php $this->load_parts( [ 'header-bar' ] ); ?>
 
 <article class="amp-wp-article">
-
+<?php
+	$amp_title = $this->post->post_title;
+	if ( empty( $amp_title ) ) :
+		$amp_title = $this->post->post_excerpt;
+	endif; ?>
 	<header class="amp-wp-article-header">
-		<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
+		<h1 class="amp-wp-title"><?php echo wp_kses_data( $amp_title ); ?></h1>
 		<div class="amp-wp-meta amp-wp-byline">
 			<?PHP coauthors_posts_links( ', ', ', ', '<span class="amp-wp-author author vcard">', '</span>', true ); ?>
 		</div>
@@ -85,9 +93,9 @@
 			"vars": {
 				"uid": "33583",
 				"domain": "houstonpublicmedia.org",
-				"sections": "<?php echo str_replace( '&amp;', '&', wp_strip_all_tags( get_the_category_list( ', ', 'multiple', $this->ID	) ) ); ?>",
+				"sections": "<?php echo str_replace( '&amp;', '&', wp_strip_all_tags( get_the_category_list( ', ', 'multiple', $this->ID ) ) ); ?>",
 				"authors": "<?php coauthors( ',', ',', '', '', true ); ?>",
-				"title": "<?php echo wp_kses_data( $this->get( 'post_title' ) ); ?>",
+				"title": "<?php echo wp_kses_data( $amp_title ); ?>",
 				"canonicalPath": "<?php echo get_the_permalink(); ?>"
 			}
 		}

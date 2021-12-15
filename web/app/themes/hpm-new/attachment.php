@@ -25,7 +25,12 @@ get_header(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
 				<header class="entry-header">
 					<?php
-						the_title( '<h1 class="entry-title">', '</h1>' );
+						$attach_title = get_the_title();
+						if ( empty( $attach_title ) && preg_match( '/image/', $mime ) ) :
+							$attach_title = get_post_meta( get_the_ID(), '_wp_attachment_image_alt', true );
+						endif; ?>
+						<h1 class="entry-title"><?php echo $attach_title; ?></h1>
+					<?php
 						if ( preg_match( '/image/', $mime ) ) :
 							the_excerpt();
 						else :
@@ -168,7 +173,7 @@ get_header(); ?>
 			<?php
 				endwhile;
 				if ( !preg_match( '/image/', $mime ) ) : ?>
-			<aside class="column-right">
+			<aside>
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 			<?php endif; ?>

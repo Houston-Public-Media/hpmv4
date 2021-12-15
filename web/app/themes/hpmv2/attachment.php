@@ -12,27 +12,31 @@
  */
 
 get_header(); ?>
-
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?PHP
 			while ( have_posts() ) :
 				the_post();
 				$mime = get_post_mime_type();
-				$postClass = get_post_class();
+				$extra = '';
 				if ( preg_match( '/image/', $mime ) ) :
-					$postClass[] = 'attachment-full';
+					$extra = 'attachment-full';
 				endif; ?>
-			<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
 				<header class="entry-header">
 					<?php
-						the_title( '<h1 class="entry-title">', '</h1>' );
+						$attach_title = get_the_title();
+						if ( empty( $attach_title ) && preg_match( '/image/', $mime ) ) :
+							$attach_title = get_post_meta( get_the_ID(), '_wp_attachment_image_alt', true );
+						endif; ?>
+						<h1 class="entry-title"><?php echo $attach_title; ?></h1>
+					<?php
 						if ( preg_match( '/image/', $mime ) ) :
 							the_excerpt();
 						else :
 							echo "<p>".get_excerpt_by_id( wp_get_post_parent_id( $post_ID ) )."</p>";
 						endif; ?>
-				</header><!-- .entry-header -->
+				</header>
 				<div class="entry-content">
 					<?php
 						$attach = get_post_meta( get_the_ID(), '_wp_attachment_metadata', true );
@@ -101,41 +105,10 @@ get_header(); ?>
 					</ul>
 					<?php
 						elseif ( preg_match( '/video/', $mime ) ) :
-							if ( $mime == 'video/quicktime' || $mime == 'video/mp4' ) : ?>
-					<link rel="stylesheet" href="https://cdn.hpm.io/static/js/flowplayer/skin/functional.css">
-					<script src="https://cdn.hpm.io/static/js/flowplayer/flowplayer.min.js"></script>
-					<div id="videodisplay" class="player"></div>
-					<style>
-						#videodisplay {
-							background-color: black;
-						}
-					</style>
-					<script>
-						flowplayer.conf = {
-							ratio: 9/16,
-							splash: true,
-							analytics: "UA-3106036-9",
-							live: true,
-							embed: false,
-							wmode: 'transparent',
-							fullscreen: false
-						};
-						flowplayer("#videodisplay", {
-							clip: {
-								title: '<?php echo get_the_title(); ?>',
-								sources: [
-									{
-										type: '<?PHP echo $mime; ?>',
-										src: '<?PHP echo wp_get_attachment_url( get_the_ID() ); ?>?source=flowplayer-attachment'
-									}
-								]
-							}
-						});
-					</script>
-					<?php
+							if ( $mime == 'video/quicktime' || $mime == 'video/mp4' ) :
+								echo do_shortcode('[video src="' . wp_get_attachment_url( get_the_ID() ) .'"][/video]');
 							endif; ?>
-					<p><a href="<?PHP echo wp_get_attachment_url( get_the_ID() ); ?>?source=download-attachment">Download the
-                            file</a></p>
+					<p><a href="<?PHP echo wp_get_attachment_url( get_the_ID() ); ?>?source=download-attachment">Download the file</a></p>
 					<p>File Information:</p>
 						<?PHP
 							$bitrate_vid = ($attach['bitrate']/1000).'kbps '.strtoupper($attach['bitrate_mode']);
@@ -184,8 +157,7 @@ get_header(); ?>
 						) );
 						hpm_article_share();
 					?>
-				</div><!-- .entry-content -->
-
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -196,8 +168,8 @@ get_header(); ?>
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile;
 				if ( !preg_match( '/image/', $mime ) ) : ?>
@@ -205,7 +177,6 @@ get_header(); ?>
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 			<?php endif; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

@@ -16,17 +16,27 @@ add_filter( 'amp_post_template_metadata', 'hpm_amp_modify_json_metadata', 10, 2 
 function hpm_amp_modify_json_metadata( $metadata, $post ) {
 	$metadata['@type'] = 'NewsArticle';
 
-	$metadata['publisher']['logo'] = array(
+	$metadata['publisher']['logo'] = [
 		'@type' => 'ImageObject',
 		'url' => 'https://cdn.hpm.io/wp-content/uploads/2019/01/20130758/HPM_podcast-tile.jpg'
-	);
+	];
 	if ( empty( $metadata['image'] ) ) :
-		$metadata['image'] = array(
+		$metadata['image'] = [
 			'@type' => 'ImageObject',
 			'url' => 'https://cdn.hpm.io/wp-content/uploads/2019/01/20130758/HPM_podcast-tile.jpg',
 			'height' => 1600,
 			'width' => 1600
-		);
+		];
+	endif;
+	if ( empty( $metadata['headline'] ) ) :
+		if ( $post->post_type == 'attachment' && strpos( $post->post_mime_type, 'image' ) !== false ) :
+			$headline = get_post_meta( $post->ID, '_wp_attachment_image_alt', true );
+			if ( !empty( $headline ) ) :
+				$metadata['headline'] = $headline;
+				return $metadata;
+			endif;
+		endif;
+		$metadata['headline'] = $post->post_excerpt;
 	endif;
 	return $metadata;
 }
@@ -115,6 +125,55 @@ function hpm_amp_additional_css( $amp_template ) {
 	}
 	.amp-audio-wrap {
 		text-align: center;
+	}
+	.amp-wp-article-content p,
+	.amp-wp-article-content img {
+		max-width: 100%;
+		height: auto;
+	}
+	#revue-embed {
+		margin: 3rem 0;
+		padding: 1rem;
+		background-color: #f5f5f5;
+		font-size: 90%;
+	}
+	#revue-embed h2 {
+		padding: 0;
+		color: #C8102E;
+	}
+	#revue-embed .revue-small {
+		display: inline-block;
+		font-style: italic;
+		font-size: 95%;
+	}
+	#revue-embed #revue-form {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+	}
+	#revue-embed #revue-form .revue-form-group {
+		width: 100%;
+		padding-bottom: 0.5rem;
+		display: flex;
+		flex-flow: row nowrap;
+		align-content: center;
+		align-items: center;
+	}
+	#revue-embed #revue-form label {
+		padding-right: 0.5rem;
+	}
+	#revue-embed #revue-form input {
+		flex-grow: 2;
+	}
+	#revue-embed #revue-form input[type=submit] {
+		border: 0;
+		outline: 0;
+		background-color: #C8102E;
+		color: white;
+		font-weight: bolder;
+		font-size: 125%;
+		padding: 0.5rem;
+		float: right;
 	}
 	<?php
 }
