@@ -52,8 +52,8 @@ else :
 endif;
 
 // Generate CSP Nonce
-$nonce = hash( 'sha256', microtime() . rand( 0, 10000 ) );
-define('CSP_NONCE', $nonce);
+// $nonce = hash( 'sha256', microtime() . rand( 0, 10000 ) );
+// define('CSP_NONCE', $nonce);
 //header("Content-Security-Policy: script-src 'nonce-$nonce' 'strict-dynamic' https: 'unsafe-inline' 'unsafe-eval'; object-src 'none'; base-uri 'none';");
 
 /**

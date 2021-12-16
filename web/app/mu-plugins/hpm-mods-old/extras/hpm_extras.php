@@ -1423,14 +1423,14 @@ add_action( 'shutdown', function() {
 
 add_filter( 'final_output', function( $output ) {
 	$content = $output;
-	preg_match_all( '/<script([a-zA-Z0-9 \-\.\&#\?\/:=\'"]+)?>/', $content, $scripts );
+	/* preg_match_all( '/<script([a-zA-Z0-9 \-\.\&#\?\/:=\'"]+)?>/', $content, $scripts ); */
 	preg_match_all( '/<iframe.+>/', $content, $iframes );
-	foreach ( $scripts[0] as $s ) :
+	/* foreach ( $scripts[0] as $s ) :
 		if ( strpos( $s, 'nonce' ) === false && strpos( $s, 'text/template') === false ) :
 			$new = str_replace( '<script', '<script nonce="'.CSP_NONCE.'"', $s );
 			$content = str_replace( $s, $new, $content );
 		endif;
-	endforeach;
+	endforeach; */
 	foreach ( $iframes[0] as $i ) :
 		$new = $i;
 		if ( strpos( $new, 'loading="lazy"' ) === false ) :
