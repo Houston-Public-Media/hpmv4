@@ -468,6 +468,47 @@ function rememberme_checked() {
 	echo "<script>var rem = document.getElementById('rememberme');rem.checked = true;rem.labels[0].textContent = 'Stay Logged in for 2 Weeks';</script>";
 }
 
+function hpm_yt_embed_mod( $content ) {
+	global $post;
+	preg_match_all( '/<iframe.+>/', $content, $iframes );
+	foreach ( $iframes[0] as $i ) :
+		$new = $i;
+		if ( strpos( $new, 'loading="lazy"' ) === false ) :
+			$new = str_replace( '<iframe', '<iframe loading="lazy"', $new );
+		endif;
+		if ( strpos( $new, 'youtube.com' ) !== false ) :
+			preg_match( '/src="(https:\/\/w?w?w?\.?youtube.com\/embed\/[a-zA-Z0-9\.\/:\-_#;\?&=]+)"/', $new, $src );
+			if ( !empty( $src ) ) :
+				$parse = parse_url( html_entity_decode( $src[1] ) );
+				if ( !empty( $parse['query'] ) ) :
+					$exp = explode( '&', $parse['query'] );
+					if ( !in_array( 'enablejsapi=1', $exp ) ) :
+						$exp[] = 'enablejsapi=1';
+						$parse['query'] = implode( '&', $exp );
+					endif;
+				else :
+					$parse['query'] = 'enablejsapi=1';
+				endif;
+				$url = $parse['scheme'] . '://' . $parse['host'] . $parse['path'] . '?' . $parse['query'];
+				$new = str_replace( $src[1], $url, $new );
+				$ytid = str_replace( '/embed/', '', $parse['path'] );
+				if ( strpos( $new, 'id="' ) === false ) :
+					$new = str_replace( '<iframe', '<iframe id="'.$ytid.'"', $new );
+				endif;
+			endif;
+		endif;
+		if ( strpos( $new, 'title="' ) === false ) :
+			preg_match( '/src="https:\/\/([a-zA-Z0-9_\-\.]+)\//', $new, $domain );
+			if ( !empty( $domain ) ) :
+				$new = str_replace( '<iframe', '<iframe title="'.$domain[1].' embed"', $new );
+			endif;
+		endif;
+		$content = str_replace( $i, $new, $content );
+	endforeach;
+	return $content;
+}
+add_filter( 'the_content', 'hpm_yt_embed_mod', 999 );
+
 function hpm_charset_clean( $content ) {
 	$find = [ ' ', '…', '’', '“', '”' ];
 	$replace = [ ' ', '...', "'", '"', '"' ];
