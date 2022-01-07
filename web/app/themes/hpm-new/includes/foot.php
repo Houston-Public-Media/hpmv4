@@ -42,7 +42,7 @@ function author_footer( $id ) {
 	<div class=\"author-info\">" .
 		( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
 		"<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
-		<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
+		<h4>" . ( $local ? $meta['title'] : '' ) . "</h4>
 		<div class=\"social-wrap\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :

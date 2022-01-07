@@ -27,20 +27,9 @@ get_header(); ?>
 			<section id="search-results">
 		<?php
 			hpm_staff_echo( $wp_query );
-
-			// Previous/next page navigation.
-			the_posts_pagination( [
-				'prev_text' => __( '&lt;', 'hpmv2' ),
-				'next_text' => __( '&gt;', 'hpmv2' ),
-				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'hpmv2' ) . ' </span>',
-			 ] );
-
-		// If no content, include the "No posts found" template.
 		else :
 			get_template_part( 'content', 'none' );
-
-		endif;
-		?>
+		endif; ?>
 			</section>
 		</main>
 	</section>

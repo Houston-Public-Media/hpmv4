@@ -46,6 +46,8 @@ get_header(); ?>
 			position: absolute;
 			bottom: 0.5rem;
 			right: 0.5rem;
+			display: flex;
+			gap: 0;
 		}
 		article.staff .entry-summary p {
 			font-size: 1rem;
@@ -55,6 +57,10 @@ get_header(); ?>
 		}
 		article.staff .entry-header {
 			padding: 0;
+		}
+		article.staff .post-thumbnail img,
+		article.staff .post-thumbnail picture {
+			aspect-ratio: 4/5;
 		}
 		@media screen and (min-width: 34rem) {
 			#main > section {
@@ -116,20 +122,9 @@ get_header(); ?>
 			<section>
 		<?php
 			hpm_staff_echo( $wp_query );
-
-			// Previous/next page navigation.
-			the_posts_pagination( [
-				'prev_text' => __( '&lt;', 'hpmv2' ),
-				'next_text' => __( '&gt;', 'hpmv2' ),
-				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'hpmv2' ) . ' </span>',
-			 ] );
-
-		// If no content, include the "No posts found" template.
 		else :
 			get_template_part( 'content', 'none' );
-
-		endif;
-		?>
+		endif; ?>
 			</section>
 		</main>
 	</div>

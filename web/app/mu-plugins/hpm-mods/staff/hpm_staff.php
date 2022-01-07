@@ -294,13 +294,13 @@ function staff_meta_query( $query ) {
 		$query->set( 'orderby', 'meta_value' );
 		$query->set( 'order', 'ASC' );
 		if ( !is_admin() ) :
-			$query->set( 'posts_per_page', 30 );
+			$query->set( 'posts_per_page', -1 );
 		endif;
 		if ( !is_admin() && empty( $query->get( 'staff_category' ) ) ) :
 			$query->set( 'tax_query', [[
 				'taxonomy' => 'staff_category',
 				'field' => 'slug',
-				'terms' => [ 'department-leaders', 'executive-team' ],
+				'terms' => [ 'hosts', 'executive-team', 'department-leaders', 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations' ],
 				'operator' => 'NOT IN'
 			]] );
 		endif;
@@ -321,7 +321,7 @@ function hpm_staff_echo( $query ) {
 	$main_query = $query;
 	$cat = $main_query->get( 'staff_category' );
 	$exempt = [ 'hosts', 'executive-team', 'department-leaders' ];
-	if ( empty( $main_query->query['paged'] ) && empty( $cat ) ) :
+	if ( empty( $cat ) ) :
 		echo '<h2>Executive Team</h2>';
 		$args = [
 			'post_type' => 'staff',
@@ -341,19 +341,72 @@ function hpm_staff_echo( $query ) {
 		while ( $el->have_posts() ) : $el->the_post();
 			get_template_part( 'content', 'staff' );
 		endwhile;
-		echo '<h2>Department Leaders</h2>';
 
-		$args['tax_query'][0]['terms'] = [ 'department-leaders' ];
-		$dh = new WP_Query($args);
+		echo '</section><section><h2>Department Leaders</h2>';
+		$args['tax_query'] = [
+			'relation' => 'AND',
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'department-leaders' ]
+			],
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'executive-team' ],
+				'operator' => 'NOT IN'
+			]
+		];
+		$dh = new WP_Query( $args );
 		while ( $dh->have_posts() ) : $dh->the_post();
 			get_template_part( 'content', 'staff' );
 		endwhile;
-		echo '<h2>HPM Staff</h2>';
+
+		echo '</section><section><h2>Talk Show Hosts</h2>';
+		$args['tax_query'] = [
+			'relation' => 'AND',
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'hosts' ]
+			],
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'executive-team', 'department-leaders' ],
+				'operator' => 'NOT IN'
+			]
+		];
+		$ts = new WP_Query( $args );
+		while ( $ts->have_posts() ) : $ts->the_post();
+			get_template_part( 'content', 'staff' );
+		endwhile;
+
+		echo '</section><section><h2>News &amp; On-Air Staff</h2>';
+		$args['tax_query'] = [
+			'relation' => 'AND',
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations' ]
+			],
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'executive-team', 'department-leaders', 'hosts' ],
+				'operator' => 'NOT IN'
+			]
+		];
+		$ts = new WP_Query( $args );
+		while ( $ts->have_posts() ) : $ts->the_post();
+			get_template_part( 'content', 'staff' );
+		endwhile;
+
+		echo '</section><section><h2>Houston Public Media Staff</h2>';
 	elseif ( !empty( $cat ) && !in_array( $cat, $exempt ) ) :
 		$main_query->posts = hpm_staff_sort( $main_query->posts );
 	endif;
-	while ( $main_query->have_posts() ) :
-		$main_query->the_post();
+	while ( $main_query->have_posts() ) : $main_query->the_post();
 		get_template_part( 'content', 'staff' );
 	endwhile;
 	wp_reset_query();
