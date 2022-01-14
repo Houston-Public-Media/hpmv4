@@ -774,3 +774,14 @@ function hpm_article_share($nprdata = null) {
 		</div>
 	</div><?php
 }
+
+add_filter( 'the_excerpt', 'hpm_remove_autop', 0 );
+add_filter( 'the_content', 'hpm_remove_autop', 0 );
+
+function hpm_remove_autop( $content ) {
+	if ( get_post_type() !== 'post' ) :
+		remove_filter( 'the_content', 'wpautop' );
+		remove_filter( 'the_excerpt', 'wpautop' );
+	endif;
+	return $content;
+}
