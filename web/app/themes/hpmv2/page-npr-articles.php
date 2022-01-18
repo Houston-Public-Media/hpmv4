@@ -405,7 +405,7 @@ get_header(); ?>
 	endif; ?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class('post'); ?>>
 				<header class="entry-header">
 					<h3>NPR</h3>
 					<h1 class="entry-title"><?php echo $headline; ?></h1>
