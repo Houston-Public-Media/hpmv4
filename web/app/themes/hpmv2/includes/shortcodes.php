@@ -740,7 +740,7 @@ function hpm_careers_trans() {
 				$title = trim( $j['column'][0] );
 			endif;
 			$output .= "<li><h2><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . $title . "</strong></a></h2>";
-			if ( !empty( $desc[ $j['contestNo'] ] ) ) :
+			if ( !empty( $desc[ $j['contestNo'] ]['description'] ) ) :
 				$output .= '<div class="info-toggle"><em><strong>More</strong></em></div>
 				<div class="info-toggle-hidden">' . $desc[ $j['contestNo'] ]['description'] . '</div>';
 			endif;
