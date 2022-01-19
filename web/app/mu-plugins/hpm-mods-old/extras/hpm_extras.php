@@ -219,6 +219,22 @@ function save_hpm_no_mod_time( ) {
 }
 
 /*
+ *  If post is in "Houston" or "Harris County" category, add "Local" category
+ */
+add_action( 'save_post', 'hpm_local_cat_check');
+function hpm_local_cat_check() {
+	global $post;
+	if ( empty( $post ) || $post->post_type != 'post' ) return false;
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return false;
+	if ( empty( $post->ID ) ) return false;
+	$cat = wp_get_post_categories( $post->ID );
+	if ( ( in_array( 36052, $cat ) || in_array( 32567, $cat ) ) && !in_array( 2113, $cat ) ) :
+		$cat[] = 2113;
+		wp_set_object_terms( $post->ID, $cat, 'category' );
+	endif;
+}
+
+/*
  * Disallow certain MIME types from being accepted by the media uploader
  */
 function custom_upload_mimes ( $existing_mimes = [] ) {
