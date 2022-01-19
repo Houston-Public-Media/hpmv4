@@ -692,16 +692,21 @@ function hpm_careers_trans() {
 	$desc = json_decode( file_get_contents( 'https://cdn.hpm.io/assets/taleo.json' ), true );
 	if ( empty( $json['requisitionList'] ) ) :
 		$output = '<p>Thank you for your interest in Houston Public Media. We do not currently have any job openings. Please check back later, or you can check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
-		set_transient( 'hpm_careers', $output, 3600 );
+		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
 	endif;
 	$output = '<ul class="job-listings">';
 	foreach ( $json['requisitionList'] as $j ) :
 		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) :
-			$output .= "<li><h2><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . trim( $j['column'][0] ) . "</strong></a></h2>";
+			if ( !empty( $desc[ $j['contestNo'] ]['title'] ) ) :
+				$title = $desc[ $j['contestNo'] ]['title'];
+			else :
+				$title = trim( $j['column'][0] );
+			endif;
+			$output .= "<li><h2><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . $title . "</strong></a></h2>";
 			if ( !empty( $desc[ $j['contestNo'] ] ) ) :
 				$output .= '<div class="info-toggle"><em><strong>More</strong></em></div>
-				<div class="info-toggle-hidden">' . $desc[ $j['contestNo'] ] . '</div>';
+				<div class="info-toggle-hidden">' . $desc[ $j['contestNo'] ]['description'] . '</div>';
 			endif;
 			$output .= '</li>';
 		endif;
@@ -747,7 +752,7 @@ function hpm_townsquare_covid( $atts ) {
 					'<h3><a href="/shows/town-square/">The Latest from Town Square</a></h3>'.
 					'<div class="article-player-wrap">'.
 						'<h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2>'.
-						'<audio class="js-player" controls crossorigin preload="metadata">'.
+						'<audio class="js-player" controls preload="metadata">'.
 							'<source src="'.$podcast['url'].'source=plyr-article" type="audio/mpeg" />'.
 						'</audio>'.
 					'</header>'.
