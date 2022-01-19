@@ -51,7 +51,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.
 				'<h3>'.htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false ) .'</h3>'.
-				'<audio class="js-player" controls crossorigin preload="metadata">'.
+				'<audio class="js-player" controls preload="metadata">'.
 					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
 				'</audio>';
 		if ( !is_admin() && !empty( $attr['id'] ) ) :
