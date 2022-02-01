@@ -23,7 +23,10 @@ class HPM_Embeds {
 		add_action( 'rest_api_init', function() {
 			register_rest_route( 'hpm-embeds/v1', '/list', [
 				'methods'  => 'GET',
-				'callback' => [ $this, 'list' ]
+				'callback' => [ $this, 'list' ],
+				'permission_callback' => function() {
+					return true;
+				}
 			]);
 		});
 	}

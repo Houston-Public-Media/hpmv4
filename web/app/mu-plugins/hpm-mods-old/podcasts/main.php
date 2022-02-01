@@ -71,12 +71,18 @@ class HPM_Podcasts {
 		add_action( 'rest_api_init', function() {
 			register_rest_route( 'hpm-podcast/v1', '/refresh', [
 				'methods'  => 'GET',
-				'callback' => [ $this, 'generate' ]
+				'callback' => [ $this, 'generate' ],
+				'permission_callback' => function() {
+					return true;
+				}
 			] );
 
 			register_rest_route( 'hpm-podcast/v1', '/list', [
 				'methods'  => 'GET',
-				'callback' => [ $this, 'list' ]
+				'callback' => [ $this, 'list' ],
+				'permission_callback' => function() {
+					return true;
+				}
 			] );
 
 			register_rest_route( 'hpm-podcast/v1', '/list/(?P<feed>[a-zA-Z0-9\-_]+)', [
@@ -86,7 +92,10 @@ class HPM_Podcasts {
 					'feed' => [
 						'required' => true
 					]
-				]
+				],
+				'permission_callback' => function() {
+					return true;
+				}
 			] );
 
 			register_rest_route( 'hpm-podcast/v1', '/upload/(?P<feed>[a-zA-Z0-9\-_]+)/(?P<id>[\d]+)/(?P<attach>[\d]+)', [
@@ -99,7 +108,10 @@ class HPM_Podcasts {
 					'feed' => [
 						'required' => true
 					]
-				]
+				],
+				'permission_callback' => function() {
+					return true;
+				}
 			 ] );
 
 			register_rest_route( 'hpm-podcast/v1', '/upload/(?P<id>[\d]+)/progress', [
@@ -109,7 +121,10 @@ class HPM_Podcasts {
 					'id' => [
 						'required' => true
 					]
-				]
+				],
+				'permission_callback' => function() {
+					return true;
+				}
 			] );
 		} );
 

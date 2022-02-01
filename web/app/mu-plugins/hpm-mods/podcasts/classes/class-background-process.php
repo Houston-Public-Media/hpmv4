@@ -31,7 +31,10 @@ class HPM_Media_Upload {
 						'attach' => [
 							'required' => true
 						]
-					]
+					],
+					'permission_callback' => function() {
+						return true;
+					}
 				]
 			);
 		});

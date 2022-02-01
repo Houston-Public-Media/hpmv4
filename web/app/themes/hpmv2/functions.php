@@ -567,7 +567,7 @@ function hpm_revue_signup( $content ) {
 add_filter( 'the_content', 'hpm_revue_signup', 8 );
 
 function hpm_nprone_check( $post_id, $post ) {
-	if ( !empty( $_POST ) && $_POST['post_type'] === 'post' ) :
+	if ( !empty( $_POST ) && !empty( $_POST['post_type'] ) && $_POST['post_type'] === 'post' ) :
 		$coauthors = get_coauthors( $post_id );
 		$local = false;
 		foreach ( $coauthors as $coa ) :

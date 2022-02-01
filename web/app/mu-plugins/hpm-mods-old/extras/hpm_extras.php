@@ -1231,8 +1231,9 @@ function hpm_alt_headline_meta_box( $object, $box ) {
 		'Woman missing since she got lost',
 		'Miracle cure kills fifth patient'
 	];
-	$rand = rand( 0, count( $placeholder ) );
-	$rand2 = rand( 0, count( $placeholder ) );
+	$max = count( $placeholder ) - 1;
+	$rand = rand( 0, $max );
+	$rand2 = rand( 0, $max );
 	wp_nonce_field( basename( __FILE__ ), 'hpm_alt_headline_class_nonce' );
 	$alt_headline = get_post_meta( $object->ID, 'hpm_alt_headline', true );
 	$seo_headline = get_post_meta( $object->ID, 'hpm_seo_headline', true ); ?>
