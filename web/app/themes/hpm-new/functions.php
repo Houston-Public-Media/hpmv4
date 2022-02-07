@@ -563,10 +563,12 @@ function hpm_nprone_check( $post_id, $post ) {
 add_action( 'save_post', 'hpm_nprone_check', 2, 2 );
 add_action( 'publish_post', 'hpm_nprone_check', 2, 2 );
 
-function skip_apple_news( $post_id, $post ) {
+add_filter( 'apple_news_skip_push', 'hpm_skip_apple_news', 10, 2);
+function hpm_skip_apple_news( $skip = false ) {
 	if ( WP_ENV !== 'production' ) :
-		apply_filters( 'apple_news_skip_push', true, $post_id );
+		$skip = true;
 	endif;
+	return $skip;
 }
 
 function election_homepage() {
