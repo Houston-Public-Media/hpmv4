@@ -73,6 +73,19 @@ function hpm_header_info() {
 				$reqs['permalink'] = get_the_permalink( $ID );
 				$reqs['title'] = $wp_query->queried_object->name . ' | Houston Public Media';
 			endif;
+		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
+			global $nprdata;
+			$reqs['title'] = $nprdata['title'];
+			$reqs['permalink'] = $nprdata['permalink'];
+			$reqs['description'] = htmlentities( wp_strip_all_tags( $nprdata['excerpt'], true ), ENT_QUOTES );
+			$reqs['keywords'] = $nprdata['keywords'];
+			$reqs['thumb'] = $nprdata['image']['src'];
+			$reqs['thumb_meta'] = [
+				'width' => $nprdata['image']['width'],
+				'height' => $nprdata['image']['height'],
+				'mime-type' => $nprdata['image']['mime-type']
+			];
+			$reqs['publish_date'] = $nprdata['date'];
 		elseif ( is_single() || is_page() || get_post_type() == 'embeds' ) :
 			$attach_id = get_post_thumbnail_id( $ID );
 			if ( !empty( $attach_id ) ) :
@@ -186,29 +199,14 @@ function hpm_header_info() {
 				endwhile;
 				wp_reset_query();
 			endif;
-		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
-			global $nprdata;
-			$reqs['title'] = $nprdata['title'];
-			$reqs['permalink'] = $nprdata['permalink'];
-			$reqs['description'] = htmlentities( wp_strip_all_tags( $nprdata['excerpt'], true ), ENT_QUOTES );
-			$reqs['keywords'] = $nprdata['keywords'];
-			$reqs['thumb'] = $nprdata['image']['src'];
-			$reqs['thumb_meta'] = [
-				'width' => $nprdata['image']['width'],
-				'height' => $nprdata['image']['height'],
-				'mime-type' => $nprdata['image']['mime-type']
-			];
-			$reqs['publish_date'] = $nprdata['date'];
 		endif;
 	endif;
 ?>
 		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime();</script>
-		<meta charset="<?php bloginfo( 'charset' ); ?>">
 		<link rel="profile" href="http://gmpg.org/xfn/11">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
 		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="bitly-verification" content="7777946f1a0a"/>
 		<meta name="google-site-verification" content="WX07OGEaNirk2km8RjRBernE0mA7_QL6ywgu6NXl1TM" />
 		<link rel="icon" sizes="48x48" href="https://cdn.hpm.io/assets/images/favicon/icon-48.png">
@@ -297,7 +295,6 @@ function hpm_header_info() {
 	endif;
 }
 add_action( 'wp_head', 'hpm_header_info', 1 );
-add_action( 'wp_head', 'hpm_google_tracker', 100 );
 
 function hpm_body_open() {
 	global $wp_query;

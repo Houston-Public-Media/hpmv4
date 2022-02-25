@@ -711,3 +711,219 @@ function hpm_remove_autop( $content ) {
 	endif;
 	return $content;
 }
+
+function hpm_link_extract( $links ) {
+	$output = '';
+	if ( !empty( $links ) ) :
+		if ( is_string( $links ) ) :
+			$output = $links;
+		elseif ( is_array( $links ) ) :
+			foreach ( $links as $link ) :
+				if ( empty( $link->type ) ) {
+					continue;
+				}
+				if ( 'html' === $link->type ) :
+					$output = $link->value;
+				endif;
+			endforeach;
+		elseif ( $links instanceof NPRMLElement && !empty( $links->value ) ) :
+			$output = $links->value;
+		endif;
+	endif;
+	return $output;
+}
+
+function hpm_npr_byline( $author ) {
+	$output = [];
+	if ( !$author instanceof NPRMLElement && !empty( $author ) ) :
+		return $output;
+	endif;
+	$output = [
+		'name' => ( !empty( $author->name->value ) ? $author->name->value : '' ),
+		'link' => ( !empty( $author->link ) ? hpm_link_extract( $author->link ) : '' )
+	];
+	return $output;
+}
+
+function hpm_pull_npr_story( $npr_id ) {
+	$nprdata = [
+		'title' => '',
+		'excerpt' => '',
+		'keywords' => [],
+		'keywords_html' => [],
+		'date' => '',
+		'bylines' => [],
+		'body' => '',
+		'related' => [],
+		'permalink' => '',
+		'slug' => '',
+		'audio' => [],
+		'image' => [
+			'src' => 'https://cdn.hpm.io/assets/images/NPR-NEWS.gif',
+			'width' => 600,
+			'height' => 293,
+			'mime-type' => 'image/gif'
+		]
+	];
+	$npr = new NPRAPIWordpress();
+	$npr->request([
+		'id' => $npr_id,
+		'fields' => 'all'
+	]);
+	$npr->parse();
+	if ( !empty( $npr->stories[0] ) ) :
+		$story = $npr->stories[0];
+	endif;
+
+	$use_npr_layout = ( !empty( get_option( 'dp_npr_query_use_layout' ) ) ? TRUE : FALSE );
+
+	$npr_layout = $npr->get_body_with_layout( $story, $use_npr_layout );
+	if ( !empty( $npr_layout['body'] ) ) :
+		$nprdata['body'] = $npr_layout['body'];
+	endif;
+
+	// add the transcript
+	$nprdata['body'] .= $npr->get_transcript_body( $story );
+
+	// Use oEmbed to flesh out external embeds
+	preg_match_all( '/<div class\="wp\-block\-embed__[ \-a-z0-9]+">\s+(.+)\s+<\/div>/', $nprdata['body'], $match );
+	if ( !empty( $match[1] ) ) :
+		foreach ( $match[1] as $k => $v ) :
+			$embed = wp_oembed_get( $v );
+			if ( strpos( $embed, '<iframe ' ) !== false ) :
+				$embed = '<p>' . $embed . '</p>';
+			endif;
+			$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
+		endforeach;
+	endif;
+
+	// Add Slideshow
+	preg_match_all( '/<\!-- \|\| SLIDESHOW \|\| (.+) \|\| -->/', $nprdata['body'], $match_slide );
+	if ( !empty( $match_slide[0] ) ) :
+		wp_enqueue_script( 'amw-galleria' );
+		foreach ( $match_slide[0] as $k => $v ) :
+			$json = json_decode( $match_slide[1][ $k ], true );
+			$slideshow = '';
+			if ( !empty( $json['title'] ) ) :
+				$slideshow .= '<h3>' . $json['title'] . '</h3>';
+			endif;
+			if ( !empty( $json['intro'] ) ) :
+				$slideshow .= '<p>' . $json['intro'] . '</p>';
+			endif;
+			$slideshow .= '<div id="amw_galleria_slideshow_' . $k . '" class="galleria">';
+			foreach ( $json['members'] as $member ) :
+
+				$slideshow .= '<a href="' . $member['src'] . '"><img src="' . $member['src'] . '" data-title="' . $member['text'] . '" data-description="" /></a>';
+			endforeach;
+
+			/**
+			 * Load JS theme
+			 * serialize slideshow options into JSON
+			 */
+			$options = json_encode([
+				'theme' => 'classic',
+				'width'             => 'auto',
+				'height'            => '0.76',
+				'autoplay'          => false,
+				'transition'        => 'fade',
+				'lightbox'          => (boolean) true,
+				'showInfo'          => (boolean) true,
+				'wait'              => (boolean) true
+			]);
+			$theme_js = WP_PLUGIN_URL . '/galleria/galleria/themes/classic/galleria.classic.min.js';
+			$slideshow .= '</div><script type="text/javascript">document.addEventListener(\'DOMContentLoaded\', () => { Galleria.loadTheme(\'' . $theme_js . '\');Galleria.run(\'#amw_galleria_slideshow_'. $k .'\',' . $options . '); });</script>';
+			$nprdata['body'] = str_replace( $v, $slideshow, $nprdata['body'] );
+		endforeach;
+	endif;
+
+	$story_date = new DateTime( $story->storyDate->value );
+	$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
+	$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';
+
+	if ( is_array( $story->byline ) ) :
+		foreach( $story->byline as $single ) :
+			$nprdata['bylines'][] = hpm_npr_byline( $single );
+		endforeach;
+	else :
+		$nprdata['bylines'][] = hpm_npr_byline( $story->byline );
+	endif;
+
+	$nprdata['title'] = $story->title->value;
+	if ( !empty( $story->teaser->value ) ) :
+		$nprdata['excerpt'] = $story->teaser->value;
+	elseif ( !empty( $story->miniTeaser->value ) ) :
+		$nprdata['excerpt'] = $story->miniTeaser->value;
+	endif;
+
+	$slug = [];
+	if ( !empty( $story->slug->value ) ) :
+		$slug[] = $story->slug->value;
+	endif;
+	if ( !empty( $story->organization ) ) :
+		if ( is_array( $story->organization ) ) :
+			foreach ( $story->organization as $org ) :
+				$slug[] = $org->name->value;
+			endforeach;
+		else :
+			$slug[] = $story->organization->name->value;
+		endif;
+	endif;
+	$nprdata['slug'] = implode( " | ", $slug );
+
+	if ( !empty( $story->relatedLink ) ) :
+		if ( is_array( $story->relatedLink ) ) :
+			foreach( $story->relatedLink as $link ) :
+				$nprdata['related'][] = [
+					'text' => $link->caption->value,
+					'link' => hpm_link_extract( $link->link )
+				];
+			endforeach;
+		else :
+			$nprdata['related'][] = [
+				'text' => $story->relatedLink->caption->value,
+				'link' => hpm_link_extract( $story->relatedLink->link )
+			];
+		endif;
+	endif;
+
+	if ( isset( $story->parent ) ) :
+		foreach ( (array)$story->parent as $parent ) :
+			if ( $parent->type == 'topic' || $parent->type == 'program' ) :
+				$nprdata['keywords'][] = $parent->title->value;
+				$nprdata['keywords_html'][] = '<a href="' . hpm_link_extract( $parent->link ) . '">' . $parent->title->value . '</a>';
+			endif;
+		endforeach;
+	endif;
+
+	// get audio
+	if ( isset( $story->audio ) ) :
+		foreach ( (array)$story->audio as $n => $audio ) :
+			if ( !empty( $audio->format->mp3['mp3'] ) && $audio->permissions->download->allow == 'true' ) :
+				if ( $audio->format->mp3['mp3']->type == 'mp3' ) :
+					$nprdata['audio'][] = $audio->format->mp3['mp3']->value;
+				endif;
+			endif;
+		endforeach;
+	endif;
+
+	if ( !empty( $story->image ) ) :
+		foreach ( (array)$story->image as $image ) :
+			if ( $image->type == 'primary' ) :
+				if ( !empty( $image->crop ) ) :
+					foreach ( $image->crop as $crop ) :
+						if ( !empty( $crop->primary ) && $crop->primary == true ) :
+							$nprdata['image']['src'] = $crop->src;
+							$nprdata['image']['width'] = $crop->width;
+							$nprdata['image']['height'] = $crop->height;
+							$parse_url = parse_url( $crop->src );
+							$ext = wp_check_filetype( $parse_url['path'] );
+							$nprdata['image']['mime-type'] = $ext['type'];
+						endif;
+					endforeach;
+				endif;
+			endif;
+		endforeach;
+	endif;
+
+	return $nprdata;
+}

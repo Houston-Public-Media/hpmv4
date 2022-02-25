@@ -1,7 +1,7 @@
 <?php
 function hpm_google_tracker() {
 	//if ( WP_ENV !== 'development' ) : ?>
-		<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+		<script async="true" src='https://www.googletagservices.com/tag/js/gpt.js'></script>
 		<script>
 			var googletag = googletag || {};
 			googletag.cmd = googletag.cmd || [];
@@ -44,10 +44,19 @@ function hpm_google_tracker() {
 			});
 		</script>
 		<?php $versions = hpm_versions(); ?>
-		<script type="text/javascript" src="https://cdn.hpm.io/assets/js/analytics/index.js?ver=<?php echo $versions['analytics']; ?>" id="hpm-analytics-js"></script>
+		<script async="true" type="text/javascript" src="https://cdn.hpm.io/assets/js/analytics/index.js?ver=<?php echo $versions['analytics']; ?>" id="hpm-analytics-js"></script>
 		<script>addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)});</script>
-		<script async src='https://www.google-analytics.com/analytics.js'></script>
+		<script async="true" src='https://www.google-analytics.com/analytics.js'></script>
 <?php
 	//endif;
 }
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
+add_filter( 'gtm_post_category', 'gtm_populate_category_items', 10, 3 );
+
+function gtm_populate_category_items( $total_match, $match, $post_id ) {
+	$terms = wp_get_object_terms( $post_id, 'category', [ 'fields' => 'slugs' ] );
+	if ( is_wp_error( $terms ) || empty( $terms ) ) :
+		return '';
+	endif;
+	return $terms;
+}

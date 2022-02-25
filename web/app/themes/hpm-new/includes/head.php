@@ -102,6 +102,19 @@ function hpm_header_info() {
 				$reqs['permalink'] = get_the_permalink( $ID );
 				$reqs['title'] = $wp_query->queried_object->name . ' | Houston Public Media';
 			endif;
+		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
+				global $nprdata;
+				$reqs['title'] = $nprdata['title'];
+				$reqs['permalink'] = $nprdata['permalink'];
+				$reqs['description'] = htmlentities( wp_strip_all_tags( $nprdata['excerpt'], true ), ENT_QUOTES );
+				$reqs['keywords'] = $nprdata['keywords'];
+				$reqs['thumb'] = $nprdata['image']['src'];
+				$reqs['thumb_meta'] = [
+					'width' => $nprdata['image']['width'],
+					'height' => $nprdata['image']['height'],
+					'mime-type' => $nprdata['image']['mime-type']
+				];
+				$reqs['publish_date'] = $nprdata['date'];
 		elseif ( is_single() || is_page() || get_post_type() == 'embeds' ) :
 			$attach_id = get_post_thumbnail_id( $ID );
 			if ( !empty( $attach_id ) ) :
@@ -190,51 +203,36 @@ function hpm_header_info() {
 			elseif ( get_post_type() === 'staff' ) :
 				$reqs['og_type'] = 'profile';
 			endif;
-		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
-			global $nprdata;
-			$reqs['title'] = $nprdata['title'];
-			$reqs['permalink'] = $nprdata['permalink'];
-			$reqs['description'] = htmlentities( wp_strip_all_tags( $nprdata['excerpt'], true ), ENT_QUOTES );
-			$reqs['keywords'] = $nprdata['keywords'];
-			$reqs['thumb'] = $nprdata['image']['src'];
-			$reqs['thumb_meta'] = [
-				'width' => $nprdata['image']['width'],
-				'height' => $nprdata['image']['height'],
-				'mime-type' => $nprdata['image']['mime-type']
-			];
-			$reqs['publish_date'] = $nprdata['date'];
 		endif;
 	endif;
 ?>
 		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime();</script>
-		<meta charset="<?php bloginfo( 'charset' ); ?>">
-		<link rel="profile" href="http://gmpg.org/xfn/11">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+		<link rel="profile" href="http://gmpg.org/xfn/11" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
 		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="bitly-verification" content="7777946f1a0a"/>
+		<meta name="bitly-verification" content="7777946f1a0a" />
 		<meta name="google-site-verification" content="WX07OGEaNirk2km8RjRBernE0mA7_QL6ywgu6NXl1TM" />
-		<meta name="theme-color" content="#f5f5f5">
-		<link rel="icon" sizes="48x48" href="https://cdn.hpm.io/assets/images/favicon/icon-48.png">
-		<link rel="icon" sizes="96x96" href="https://cdn.hpm.io/assets/images/favicon/icon-96.png">
-		<link rel="icon" sizes="144x144" href="https://cdn.hpm.io/assets/images/favicon/icon-144.png">
-		<link rel="icon" sizes="192x192" href="https://cdn.hpm.io/assets/images/favicon/icon-192.png">
-		<link rel="icon" sizes="256x256" href="https://cdn.hpm.io/assets/images/favicon/icon-256.png">
-		<link rel="icon" sizes="384x384" href="https://cdn.hpm.io/assets/images/favicon/icon-384.png">
-		<link rel="icon" sizes="512x512" href="https://cdn.hpm.io/assets/images/favicon/icon-512.png">
-		<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-152.png">
-		<link rel="apple-touch-icon" sizes="167x167" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-167.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-180.png">
-		<link rel="mask-icon" href="https://cdn.hpm.io/assets/images/favicon/safari-pinned-tab.svg" color="#ff0000">
+		<meta name="theme-color" content="#f5f5f5" />
+		<link rel="icon" sizes="48x48" href="https://cdn.hpm.io/assets/images/favicon/icon-48.png" />
+		<link rel="icon" sizes="96x96" href="https://cdn.hpm.io/assets/images/favicon/icon-96.png" />
+		<link rel="icon" sizes="144x144" href="https://cdn.hpm.io/assets/images/favicon/icon-144.png" />
+		<link rel="icon" sizes="192x192" href="https://cdn.hpm.io/assets/images/favicon/icon-192.png" />
+		<link rel="icon" sizes="256x256" href="https://cdn.hpm.io/assets/images/favicon/icon-256.png" />
+		<link rel="icon" sizes="384x384" href="https://cdn.hpm.io/assets/images/favicon/icon-384.png" />
+		<link rel="icon" sizes="512x512" href="https://cdn.hpm.io/assets/images/favicon/icon-512.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-57.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-120.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-152.png" />
+		<link rel="apple-touch-icon" sizes="167x167" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-167.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-180.png" />
+		<link rel="mask-icon" href="https://cdn.hpm.io/assets/images/favicon/safari-pinned-tab.svg" color="#ff0000" />
 		<meta name="msapplication-config" content="https://cdn.hpm.io/assets/images/favicon/config.xml" />
-		<link rel="manifest" href="/manifest.webmanifest">
+		<link rel="manifest" href="/manifest.webmanifest" />
 		<meta name="apple-itunes-app" content="app-id=1549226694,app-argument=<?php echo $reqs['permalink']; ?>" />
 		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />
 		<meta property="fb:app_id" content="523938487799321" />
@@ -272,15 +270,15 @@ function hpm_header_info() {
 		endforeach;
 	endif;
 	if ( is_author() ) : ?>
-		<meta property="profile:first_name" content="<?php echo $curauth->first_name; ?>">
-		<meta property="profile:last_name" content="<?php echo $curauth->last_name; ?>">
-		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>">
+		<meta property="profile:first_name" content="<?php echo $curauth->first_name; ?>" />
+		<meta property="profile:last_name" content="<?php echo $curauth->last_name; ?>" />
+		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>" />
 <?php
 	elseif ( is_single() && get_post_type() === 'staff' ) :
 		global $curstaff; ?>
-		<meta property="profile:first_name" content="<?php echo $curstaff['first_name']; ?>">
-		<meta property="profile:last_name" content="<?php echo $curstaff['last_name']; ?>">
-		<meta property="profile:username" content="<?php echo $curstaff['user_nicename']; ?>">
+		<meta property="profile:first_name" content="<?php echo $curstaff['first_name']; ?>" />
+		<meta property="profile:last_name" content="<?php echo $curstaff['last_name']; ?>" />
+		<meta property="profile:username" content="<?php echo $curstaff['user_nicename']; ?>" />
 <?php
 	endif; ?>
 		<meta name="twitter:card" content="summary_large_image" />
@@ -289,10 +287,10 @@ function hpm_header_info() {
 		<meta name="twitter:title" content="<?php echo $reqs['title']; ?>" />
 		<meta name="twitter:image" content="<?php echo $reqs['thumb']; ?>" />
 		<meta name="twitter:url" content="<?php echo $reqs['permalink']; ?>" />
-		<meta name="twitter:description" content="<?php echo $reqs['description']; ?>">
-		<meta name="twitter:widgets:link-color" content="#000000">
-		<meta name="twitter:widgets:border-color" content="#000000">
-		<meta name="twitter:partner" content="tfwp">
+		<meta name="twitter:description" content="<?php echo $reqs['description']; ?>" />
+		<meta name="twitter:widgets:link-color" content="#000000" />
+		<meta name="twitter:widgets:border-color" content="#000000" />
+		<meta name="twitter:partner" content="tfwp" />
 <?php
 	if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta name="datePublished" content="<?php echo $reqs['publish_date']; ?>" />

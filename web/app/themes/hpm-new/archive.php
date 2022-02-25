@@ -6,7 +6,7 @@
  */
 if ( is_category() ) :
 	$cat = get_term_by( 'name', single_cat_title( '', false ), 'category' );
-	if ( ( $cat->parent == 9 || $cat->parent == 5 ) && empty( $wp_query->query_vars['paged'] ) ) :
+	if ( empty( $wp_query->query_vars['paged'] ) ) :
 		if ( $cat->parent == 9 ) :
 			$args = [
 				'post_type' => 'page',
@@ -18,7 +18,7 @@ if ( is_category() ) :
 					'value' => $cat->term_id
 				]]
 			];
-		else :
+		elseif ( $cat->parent == 5 ) :
 			$args = [
 				'post_type' => 'shows',
 				'post_status' => 'publish',
@@ -34,11 +34,16 @@ if ( is_category() ) :
 		if ( $series_page->have_posts() ) :
 			while( $series_page->have_posts() ) :
 				$series_page->the_post();
-				header("HTTP/1.1 301 Moved Permanently");
-				header('Location: '.get_the_permalink());
+				header( "HTTP/1.1 301 Moved Permanently" );
+				header( 'Location: ' . get_the_permalink() );
 				exit;
 			endwhile;
 			wp_reset_postdata();
+		endif;
+		if ( $cat->term_id == 29328 ) :
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: /news/indepth/' );
+			exit;
 		endif;
 	endif;
 endif;

@@ -731,7 +731,7 @@ function hpm_careers_trans() {
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
 	endif;
-	$output = '<ul class="job-listings">';
+	$output = '';
 	foreach ( $json['requisitionList'] as $j ) :
 		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) :
 			if ( !empty( $desc[ $j['contestNo'] ]['title'] ) ) :
@@ -739,15 +739,14 @@ function hpm_careers_trans() {
 			else :
 				$title = trim( $j['column'][0] );
 			endif;
-			$output .= "<li><h2><a href=\"https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=" . $j['contestNo'] . "&tz=GMT-06%3A00&tzname=America%2FChicago\"><strong>" . $title . "</strong></a></h2>";
+			$output .= "<details><summary>" . $title . "</strong></summary>";
 			if ( !empty( $desc[ $j['contestNo'] ]['description'] ) ) :
-				$output .= '<div class="info-toggle"><em><strong>More</strong></em></div>
-				<div class="info-toggle-hidden">' . $desc[ $j['contestNo'] ]['description'] . '</div>';
+				$output .= $desc[ $j['contestNo'] ]['description'];
 			endif;
-			$output .= '</li>';
+			$output .= '<p><a href="https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=' . $j['contestNo'] . '&tz=GMT-06%3A00&tzname=America%2FChicago">Click here to apply</a></p></details>';
 		endif;
 	endforeach;
-	$output .= '</ul><p><em>The University of Houston is an Equal Opportunity/Affirmative Action institution. Minorities, women, veterans and persons with disabilities are encouraged to apply. Additionally, the University prohibits discrimination in employment on the basis of sexual orientation, gender identity or gender expression.</em></p><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
+	$output .= '<p><em>The University of Houston is an Equal Opportunity/Affirmative Action institution. Minorities, women, veterans and persons with disabilities are encouraged to apply. Additionally, the University prohibits discrimination in employment on the basis of sexual orientation, gender identity or gender expression.</em></p><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 	set_transient( 'hpm_careers', $output, 900 );
 	return $output;
 }

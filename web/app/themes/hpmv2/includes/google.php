@@ -1,6 +1,6 @@
 <?php
 function hpm_google_tracker() {
-?>		<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+?>		<script async="true" src='https://www.googletagservices.com/tag/js/gpt.js'></script>
 		<script>
 			var googletag = googletag || {};
 			googletag.cmd = googletag.cmd || [];
@@ -41,15 +41,9 @@ function hpm_google_tracker() {
 				}
 				googletag.enableServices();
 			});
-			function hpmKimbiaComplete(kimbiaData) {
-				var charge = kimbiaData['initialCharge'];
-				var amount = Number(charge.replace(/[^0-9\.]+/g,""));
-				ga('hpmprod.send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
-				ga('hpmWebAmpprod.send', 'event', { eventCategory: 'Button', eventAction: 'Submit', eventLabel: 'Donation', eventValue: amount });
-			}
 		</script>
 		<script>addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)});</script>
-		<script async src='https://www.google-analytics.com/analytics.js'></script>
+		<script async="true" src='https://www.google-analytics.com/analytics.js'></script>
 <?php
 }
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
