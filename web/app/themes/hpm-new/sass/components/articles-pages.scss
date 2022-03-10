@@ -82,6 +82,7 @@ article {
 		img, picture {
 			margin: 0;
 			max-width: 100%;
+			width: 100%;
 		}
 		#map-canvas {
 			img, picture {
@@ -219,21 +220,29 @@ article {
 	li {
 		clear: both;
 		margin: 0.5rem 0;
+		.splide__slide {
+			margin: 0;
+		}
 	}
 	.k_jquery-ui ul li {
 		clear: none;
 	}
 }
 figure {
-	&.wp-caption {
-		width: 100% !important;
-		margin: 0 auto 1rem;
-		max-width: 100%;
-		clear: both;
-		figcaption.wp-caption-text {
-			font-weight: 400;
-			font-size: 0.75rem;
-			color: #404144;
+	width: 100% !important;
+	margin: 0 auto 1rem;
+	max-width: 100%;
+	clear: both;
+	figcaption {
+		font-weight: 400;
+		font-size: 0.75rem;
+		color: #404144;
+		background-color: #f5f5f5;
+		padding: 1rem;
+		cite {
+			font-style: italic;
+			display: block;
+			text-align: right;
 		}
 	}
 	img, iframe, picture {
@@ -638,6 +647,10 @@ body.home article.category-in-depth {
 			display: inline-block;
 		}
 	}
+}
+.fullattribution > img {
+	width: 1px;
+	height: 1px;
 }
 @media screen and (min-width: $tablet) {
 	.page-banner.ssac-banner {

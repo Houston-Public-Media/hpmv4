@@ -77,32 +77,28 @@
 .iframe-embed {
 	position: relative;
 	width: 100%;
-	padding: 0 !important;
-	padding-bottom: calc(100% / 1.777778) !important;
+	padding: 0 0 calc(100% / 1.777778) 0 !important;
 	display: block;
 	margin-bottom: 1rem;
 }
 .iframe-embed-tall {
 	position: relative;
 	width: 100%;
-	padding: 0 !important;
-	padding-bottom: calc(100% / 1.25) !important;
+	padding: 0 0 calc(100% / 1.25) 0 !important;
 	display: block;
 	margin-bottom: 1rem;
 }
 .iframe-embed-vert {
 	position: relative;
 	width: 100%;
-	padding: 0 !important;
-	padding-bottom: calc(100% / 0.5625) !important;
+	padding: 0 0 calc(100% / 0.5625) 0 !important;
 	display: block;
 	margin-bottom: 1rem;
 }
 .iframe-embed-pbs {
 	position: relative;
 	width: 100%;
-	padding: 0 !important;
-	padding-bottom: calc(100% / 1.425) !important;
+	padding: 0 0 calc(100% / 1.425) 0 !important;
 	display: block;
 	margin-bottom: 1rem;
 }
@@ -206,6 +202,9 @@ details {
 		margin-top: 1rem;
 	}
 	> * + * {
+		margin-top: 1rem;
+	}
+	> summary + * {
 		margin-top: 1rem;
 	}
 }

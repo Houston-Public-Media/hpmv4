@@ -90,7 +90,7 @@ html {
 }
 :root { accent-color: var(--main-blue); }
 :focus-visible { outline-color: var(--main-blue); }
-::selection { background-color: var(--main-blue); }
+::selection { background-color: var(--main-blue); color: white; }
 ::marker { color: var(--main-blue); }
 :is(
 	::-webkit-calendar-picker-indicator,

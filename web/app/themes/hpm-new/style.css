@@ -255,6 +255,7 @@ html {
 
 ::selection {
   background-color: var(--main-blue);
+  color: white;
 }
 
 ::marker {
@@ -1548,8 +1549,7 @@ footer#colophon ul li a {
 .iframe-embed {
   position: relative;
   width: 100%;
-  padding: 0 !important;
-  padding-bottom: 56.2499929688% !important;
+  padding: 0 0 56.2499929688% 0 !important;
   display: block;
   margin-bottom: 1rem;
 }
@@ -1557,8 +1557,7 @@ footer#colophon ul li a {
 .iframe-embed-tall {
   position: relative;
   width: 100%;
-  padding: 0 !important;
-  padding-bottom: 80% !important;
+  padding: 0 0 80% 0 !important;
   display: block;
   margin-bottom: 1rem;
 }
@@ -1566,8 +1565,7 @@ footer#colophon ul li a {
 .iframe-embed-vert {
   position: relative;
   width: 100%;
-  padding: 0 !important;
-  padding-bottom: 177.7777777778% !important;
+  padding: 0 0 177.7777777778% 0 !important;
   display: block;
   margin-bottom: 1rem;
 }
@@ -1575,8 +1573,7 @@ footer#colophon ul li a {
 .iframe-embed-pbs {
   position: relative;
   width: 100%;
-  padding: 0 !important;
-  padding-bottom: 70.1754385965% !important;
+  padding: 0 0 70.1754385965% 0 !important;
   display: block;
   margin-bottom: 1rem;
 }
@@ -1688,6 +1685,9 @@ details + details {
   margin-top: 1rem;
 }
 details > * + * {
+  margin-top: 1rem;
+}
+details > summary + * {
   margin-top: 1rem;
 }
 
@@ -2148,6 +2148,7 @@ article blockquote.pullquote p a {
 article .entry-content img, article .entry-content picture {
   margin: 0;
   max-width: 100%;
+  width: 100%;
 }
 article .entry-content #map-canvas img, article .entry-content #map-canvas picture {
   max-width: initial;
@@ -2265,20 +2266,30 @@ article.card .entry-footer {
   clear: both;
   margin: 0.5rem 0;
 }
+.entry-content li .splide__slide {
+  margin: 0;
+}
 .entry-content .k_jquery-ui ul li {
   clear: none;
 }
 
-figure.wp-caption {
+figure {
   width: 100% !important;
   margin: 0 auto 1rem;
   max-width: 100%;
   clear: both;
 }
-figure.wp-caption figcaption.wp-caption-text {
+figure figcaption {
   font-weight: 400;
   font-size: 0.75rem;
   color: #404144;
+  background-color: #f5f5f5;
+  padding: 1rem;
+}
+figure figcaption cite {
+  font-style: italic;
+  display: block;
+  text-align: right;
 }
 figure img, figure iframe, figure picture {
   max-width: 100%;
@@ -2693,6 +2704,11 @@ body.home article.category-in-depth.card-large .entry-header .indepth {
   width: 20%;
   margin: 0 1rem 0 0;
   display: inline-block;
+}
+
+.fullattribution > img {
+  width: 1px;
+  height: 1px;
 }
 
 @media screen and (min-width: 34rem) {

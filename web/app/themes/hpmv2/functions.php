@@ -873,45 +873,6 @@ function hpm_pull_npr_story( $npr_id ) {
 		endforeach;
 	endif;
 
-	// Add Slideshow
-	preg_match_all( '/<\!-- \|\| SLIDESHOW \|\| (.+) \|\| -->/', $nprdata['body'], $match_slide );
-	if ( !empty( $match_slide[0] ) ) :
-		wp_enqueue_script( 'amw-galleria' );
-		foreach ( $match_slide[0] as $k => $v ) :
-			$json = json_decode( $match_slide[1][ $k ], true );
-			$slideshow = '';
-			if ( !empty( $json['title'] ) ) :
-				$slideshow .= '<h3>' . $json['title'] . '</h3>';
-			endif;
-			if ( !empty( $json['intro'] ) ) :
-				$slideshow .= '<p>' . $json['intro'] . '</p>';
-			endif;
-			$slideshow .= '<div id="amw_galleria_slideshow_' . $k . '" class="galleria">';
-			foreach ( $json['members'] as $member ) :
-
-				$slideshow .= '<a href="' . $member['src'] . '"><img src="' . $member['src'] . '" data-title="' . $member['text'] . '" data-description="" /></a>';
-			endforeach;
-
-			/**
-			 * Load JS theme
-			 * serialize slideshow options into JSON
-			 */
-			$options = json_encode([
-				'theme' => 'classic',
-				'width'             => 'auto',
-				'height'            => '0.76',
-				'autoplay'          => false,
-				'transition'        => 'fade',
-				'lightbox'          => (boolean) true,
-				'showInfo'          => (boolean) true,
-				'wait'              => (boolean) true
-			]);
-			$theme_js = WP_PLUGIN_URL . '/galleria/galleria/themes/classic/galleria.classic.min.js';
-			$slideshow .= '</div><script type="text/javascript">document.addEventListener(\'DOMContentLoaded\', () => { Galleria.loadTheme(\'' . $theme_js . '\');Galleria.run(\'#amw_galleria_slideshow_'. $k .'\',' . $options . '); });</script>';
-			$nprdata['body'] = str_replace( $v, $slideshow, $nprdata['body'] );
-		endforeach;
-	endif;
-
 	$story_date = new DateTime( $story->storyDate->value );
 	$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
 	$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';

@@ -49,8 +49,8 @@ Template Name: NPR Content
 				<?php hpm_article_share( $nprdata ); ?>
 				<div class="entry-content">
 					<?php
-						if ( !empty( $audio )) :
-							echo do_shortcode( '[audio mp3="'.$audio.'"][/audio]' );
+						if ( !empty( $nprdata['audio'][0] )) :
+							echo do_shortcode( '[audio mp3="' . $nprdata['audio'][0] . '"][/audio]' );
 						endif;
 						echo $nprdata['body'];
 					?>
@@ -65,7 +65,7 @@ Template Name: NPR Content
 			<aside>
 			<?php
 				if ( !empty( $nprdata['related'] ) ) : ?>
-				<div id="related-posts">
+				<section class="highlights">
 					<h4>Related</h4>
 					<ul>
 				<?php
@@ -74,7 +74,7 @@ Template Name: NPR Content
 				<?php
 					endforeach; ?>
 					</ul>
-				</div>
+				</section>
 			<?php
 				endif;
 				get_template_part( 'sidebar', 'none' ); ?>
