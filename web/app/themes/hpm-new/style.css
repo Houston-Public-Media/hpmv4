@@ -2176,6 +2176,10 @@ article .entry-content p {
 article .entry-content p a {
   text-decoration: underline;
 }
+article .entry-content p.correction {
+  background-color: #f5f5f5;
+  padding: 1rem;
+}
 article .entry-content > * + * {
   margin-top: 1rem;
 }
@@ -2191,6 +2195,13 @@ article .entry-content h2 a {
 }
 article .entry-content aside {
   margin: 0;
+}
+article .entry-content .npr-transcript {
+  background-color: #f5f5f5;
+  padding: 1rem;
+}
+article .entry-content .npr-transcript > * + * {
+  margin-top: 1rem;
 }
 article .entry-summary p {
   font-weight: 500;
