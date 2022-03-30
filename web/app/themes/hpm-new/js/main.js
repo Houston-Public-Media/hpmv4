@@ -455,14 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		Array.from(target.classList).forEach((tCl) => {
 			contain.classList.add(tCl);
 		});
-		var styles = [];
-		styles.push('width: ' + target.width + 'px' );
-		styles.push('margin-right: ' + (target.style['margin-right'] == '' ? '0' : target.style['margin-right']) + 'px');
-		styles.push('margin-left: ' + (target.style['margin-left'] == '' ? '0' : target.style['margin-left']) + 'px');
-		styles.push('margin-bottom: ' + (target.style['margin-bottom'] == '' ? '0' : target.style['margin-bottom']) + 'px');
-		styles.push('border-bottom-left-radius: ' + (target.style['border-bottom-left-radius'] == '' ? '0' : target.style['border-bottom-left-radius']) + 'px');
-		styles.push('border-bottom-right-radius: ' + (target.style['border-bottom-right-radius'] == '' ? '0' : target.style['border-bottom-right-radius']) + 'px');
-		overlay.setAttribute('style',styles.join('; '));
 		var parent = target.parentNode;
 		contain.innerHTML = target.outerHTML + overlay.outerHTML;
 		if (parent.nodeName == 'a') {

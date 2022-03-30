@@ -80,7 +80,6 @@ function hpm_scripts() {
 	wp_deregister_style( 'better-image-credits' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
 	wp_deregister_style( 'wp-block-library' );
-
 }
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 
@@ -757,7 +756,6 @@ function hpm_pull_npr_story( $npr_id ) {
 		'related' => [],
 		'permalink' => '',
 		'slug' => '',
-		'audio' => [],
 		'image' => [
 			'src' => 'https://cdn.hpm.io/assets/images/NPR-NEWS.gif',
 			'width' => 600,
@@ -768,7 +766,8 @@ function hpm_pull_npr_story( $npr_id ) {
 	$npr = new NPRAPIWordpress();
 	$npr->request([
 		'id' => $npr_id,
-		'fields' => 'all'
+		'fields' => 'all',
+		'profileTypeId' => '1,15'
 	]);
 	$npr->parse();
 	if ( !empty( $npr->stories[0] ) ) :
@@ -852,17 +851,6 @@ function hpm_pull_npr_story( $npr_id ) {
 			if ( $parent->type == 'topic' || $parent->type == 'program' ) :
 				$nprdata['keywords'][] = $parent->title->value;
 				$nprdata['keywords_html'][] = '<a href="' . hpm_link_extract( $parent->link ) . '">' . $parent->title->value . '</a>';
-			endif;
-		endforeach;
-	endif;
-
-	// get audio
-	if ( isset( $story->audio ) ) :
-		foreach ( (array)$story->audio as $n => $audio ) :
-			if ( !empty( $audio->format->mp3['mp3'] ) && $audio->permissions->download->allow == 'true' ) :
-				if ( $audio->format->mp3['mp3']->type == 'mp3' ) :
-					$nprdata['audio'][] = $audio->format->mp3['mp3']->value;
-				endif;
 			endif;
 		endforeach;
 	endif;

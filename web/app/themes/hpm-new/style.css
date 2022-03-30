@@ -2289,12 +2289,12 @@ figure {
   margin: 0 auto 1rem;
   max-width: 100%;
   clear: both;
+  background-color: #f5f5f5;
 }
 figure figcaption {
   font-weight: 400;
   font-size: 0.75rem;
   color: #404144;
-  background-color: #f5f5f5;
   padding: 1rem;
 }
 figure figcaption cite {
@@ -2305,7 +2305,20 @@ figure figcaption cite {
 figure img, figure iframe, figure picture {
   max-width: 100%;
 }
+figure h2 {
+  padding: 0;
+}
+figure.npr-container {
+  padding: 1rem;
+}
 
+@media screen and (min-width: 34rem) {
+  figure.npr-container.npr-container-col-1 {
+    width: 40% !important;
+    float: right;
+    margin: 0 0 1rem 1rem;
+  }
+}
 #embeds {
   margin: 0 0 2rem 0;
 }
@@ -2576,7 +2589,7 @@ aside section, aside nav {
 }
 .credits-container .credits-overlay {
   margin: 0;
-  padding: 0 0 0.25rem 0;
+  padding: 0 0.25rem 0.25rem 0;
   background-color: transparent;
   text-align: right;
   box-sizing: border-box;

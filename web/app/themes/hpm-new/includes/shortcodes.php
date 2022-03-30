@@ -46,7 +46,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 	endif;
 	$html = '';
 	if ( amp_is_request() || is_feed() ) :
-		$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'source=amp-article"><div fallback><p>Your browser doesn’t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'source=amp-article"></amp-audio></div>';
+		$html .= '<div class="amp-audio-wrap"><amp-audio width="360" height="33" src="'.$audio_url.'source=amp-article"><div fallback><p>Your browser doesn\'t support HTML5 audio</p></div><source type="audio/mpeg" src="'.$audio_url.'source=amp-article"></amp-audio></div>';
 	else :
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.

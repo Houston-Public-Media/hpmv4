@@ -6,7 +6,7 @@
 <h3><?PHP _e( "Feed-Specific Excerpt", 'hpm-podcasts' ); ?></h3>
 <p><?PHP _e( "If this post is part of a podcast, and you would like something other than the content of this post to appear in iTunes, put your content here.", 'hpm-podcasts' ); ?></p>
 <p>
-	<label for="hpm-podcast-description"><?php _e( "Feed-Specific Description:", 'hpm-podcasts' ); ?></label><br />
+	<label for="hpm-podcast-description"><?php _e( "Feed-Specific Description", 'hpm-podcasts' ); ?> <strong>(<span id="excerpt_counter"></span><?php _e( "/4000 character remaining)", 'hpm-podcasts' ); ?></strong>:</label><br />
 	<?php
 		$editor_opts = [
 			'editor_height' => 150,
@@ -100,9 +100,7 @@ endif; ?>
 	}
 
 	jQuery(document).ready(function($){
-		var metaClass = $('#hpm-podcast-meta-class');
 		var desc = $("#hpm-podcast-description");
-		metaClass.find(".handlediv").after("<div style=\"position:absolute;top:12px;right:34px;color:#666;\"><small>Excerpt length: </small><span id=\"excerpt_counter\"></span><span style=\"font-weight:bold; padding-left:7px;\">/ 4000</span><small><span style=\"font-weight:bold; padding-left:7px;\">character(s).</span></small></div>");
 		$("span#excerpt_counter").text(desc.val().length);
 		desc.keyup( function() {
 			if($(this).val().length > 4000){

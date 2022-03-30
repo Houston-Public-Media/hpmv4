@@ -48,12 +48,7 @@ Template Name: NPR Content
 				</header>
 				<?php hpm_article_share( $nprdata ); ?>
 				<div class="entry-content">
-					<?php
-						if ( !empty( $nprdata['audio'][0] )) :
-							echo do_shortcode( '[audio mp3="' . $nprdata['audio'][0] . '"][/audio]' );
-						endif;
-						echo $nprdata['body'];
-					?>
+					<?php echo do_shortcode( $nprdata['body'] ); ?>
 				</div>
 				<footer class="entry-footer">
 					<div class="tags-links">
