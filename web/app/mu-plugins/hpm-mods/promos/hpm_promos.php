@@ -739,27 +739,33 @@ class HPM_Promos {
 	public function manage_columns( $column, $post_id ) {
 		global $post;
 		$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
-		$offset = get_option('gmt_offset')*3600;
-		$t = $endtime + $offset;
+		if ( empty( $endtime ) ) :
+			$t = 'unset';
+		else :
+			$offset = get_option( 'gmt_offset' ) * 3600;
+			$t = $endtime + $offset;
+		endif;
 		$now = time() + $offset;
 		$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
 		switch( $column ) {
 			case 'promo_type' :
-				if ( empty( $meta['type'] ) ) :
+				if ( empty( $meta ) || empty( $meta['type'] ) ) :
 					echo __( 'None' );
 				else :
 					echo __( ucwords( $meta['type'] ) );
 				endif;
 				break;
 			case 'promo_location' :
-				if ( empty( $meta['location'] ) ) :
+				if ( empty( $meta ) || empty( $meta['location'] ) ) :
 					echo __( 'None' );
 				else :
 					echo __( ucwords( $meta['location'] ) );
 				endif;
 				break;
 			case 'promo_expiration' :
-				if ( $now > $t ) :
+				if ( $t == 'unset' ) :
+					echo "<strong>NOT SET</strong>";
+				elseif ( $now > $t ) :
 					echo "<strong>EXPIRED</strong>";
 				else :
 					echo date( 'F j, Y, g:i A', $t );
