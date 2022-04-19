@@ -1,9 +1,8 @@
 <?php
 /*
-Template Name: Health Matters
+Template Name: Default Show
 Template Post Type: shows
 */
-
 /**
  * The template for displaying show pages
  *
@@ -12,18 +11,161 @@ Template Post Type: shows
  * @since HPMv2 1.0
  */
 
-get_header();?>
-<div id="primary" class="content-area">
-	<main id="main" class="site-main" role="main">
+get_header(); ?>
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
 		<?php
-		while (have_posts()) : the_post();
-			$show_name = $post->post_name;
-			$social = get_post_meta(get_the_ID(), 'hpm_show_social', true);
-			$show = get_post_meta(get_the_ID(), 'hpm_show_meta', true);
-			$header_back = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
-			$show_title = get_the_title();
-			$show_content = get_the_content();
-			$categories = get_the_category();
+			while ( have_posts() ) : the_post();
+				$show_name = $post->post_name;
+				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
+				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
+				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+				$show_title = get_the_title();
+				$show_content = get_the_content();
+				$page_head_class = HPM_Podcasts::show_banner( get_the_ID() ); ?>
+			<header class="page-header<?php echo $page_head_class; ?>">
+				<h1 class="page-title"><?php the_title(); ?></h1>
+			</header>
+			<?php
+				$no = $sp = $c = 0;
+				foreach( $show as $sk => $sh ) :
+					if ( !empty( $sh ) && $sk != 'banners' ) :
+						$no++;
+					endif;
+				endforeach;
+				foreach( $social as $soc ) :
+					if ( !empty( $soc ) ) :
+						$no++;
+					endif;
+				endforeach;
+				if ( $no > 0 ) : ?>
+			<div id="station-social">
+			<?php
+					if ( !empty( $show['times'] ) ) : ?>
+				<h3><?php echo $show['times']; ?></h3>
+			<?php
+					endif;
+					echo HPM_Podcasts::show_social( $show['podcast'], false, get_the_ID() ); ?>
+			</div>
+			<?php
+				endif;?>
+		<?php
+			endwhile; ?>
+			<div id="float-wrap">
+				<aside class="column-right">
+					<h3>About <?php echo $show_title; ?></h3>
+					<div class="show-content">
+						<?php echo apply_filters( 'the_content', $show_content ); ?>
+					</div>
+			<?php
+						if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
+							$googletag = 'div-gpt-ad-1470409396951-0';
+						else :
+							$googletag = 'div-gpt-ad-1394579228932-1';
+						endif; ?>
+					<div class="sidebar-ad">
+						<h4>Support Comes From</h4>
+						<div id="<?php echo $googletag; ?>">
+							<script type='text/javascript'>
+								googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
+							</script>
+						</div>
+					</div>
+				</aside>
+				<div class="article-wrap">
+		<?php
+			$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
+			$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
+			$terms = get_terms( array( 'include'  => $cat_no, 'taxonomy' => 'category' ) );
+			$term = reset( $terms );
+			$cat_args = array(
+				'cat' => $cat_no,
+				'orderby' => 'date',
+				'order'   => 'DESC',
+				'posts_per_page' => 15,
+				'ignore_sticky_posts' => 1
+			);
+			if ( !empty( $top ) && $top !== 'None' ) :
+				$top_art = new WP_query( [ 'p' => $top ] );
+				$cat_args['posts_per_page'] = 14;
+				$cat_args['post__not_in'] = [ $top ];
+				if ( $top_art->have_posts() ) :
+					while ( $top_art->have_posts() ) : $top_art->the_post();
+						$postClass = get_post_class();
+						$fl_array = preg_grep("/felix-type-/", $postClass);
+						$fl_arr = array_keys( $fl_array );
+						if ( has_post_thumbnail() ) :
+							$postClass[$fl_arr[0]] = 'felix-type-a';
+						else :
+							$postClass[$fl_arr[0]] = 'felix-type-b';
+						endif;
+						$thumbnail_type = 'large'; ?>
+						<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
+							<?php
+							if ( has_post_thumbnail() ) : ?>
+								<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
+									<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
+								</div>
+							<?php
+							endif; ?>
+							<header class="entry-header">
+								<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
+								<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+								<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
+							</header><!-- .entry-header -->
+						</article>
+					<?PHP
+					endwhile;
+					$post_num = 14;
+				endif;
+				wp_reset_query();
+			endif;
+			$cat = new WP_query( $cat_args );
+			if ( $cat->have_posts() ) :
+				while ( $cat->have_posts() ) : $cat->the_post();
+					$postClass = get_post_class();
+					$fl_array = preg_grep("/felix-type-/", $postClass);
+					$fl_arr = array_keys( $fl_array );
+					if ( $cat->current_post == 0 && empty( $top_art ) ) :
+						if ( has_post_thumbnail() ) :
+							$postClass[$fl_arr[0]] = 'felix-type-a';
+						else :
+							$postClass[$fl_arr[0]] = 'felix-type-b';
+						endif;
+					else :
+						$postClass[$fl_arr[0]] = 'felix-type-d';
+					endif;
+					if ( in_array( 'felix-type-a', $postClass ) ) :
+						$thumbnail_type = 'large';
+					else :
+						$thumbnail_type = 'thumbnail';
+					endif; ?>
+					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
+						<?php
+						if ( has_post_thumbnail() ) : ?>
+							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
+								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
+							</div>
+						<?php
+						endif; ?>
+						<header class="entry-header">
+							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
+							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+							<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
+						</header><!-- .entry-header -->
+					</article>
+				<?PHP
+				endwhile;
+			endif; ?>
+				</div>
+			</div>
+		<?php
+			if ( $cat->found_posts > 15 ) : ?>
+			<div class="readmore">
+				<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
+			</div>
+		<?php
+			endif;
 			$atts = [
 				[ 'id' => '372956', 'title' => 'Episode 76: COVID-19 Testing (Dr. Brian Reed)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/28165247/UHCM_Ep076_COVID_COVIDtesting_DrReed.mp3' ],
 				[ 'id' => '372955', 'title' => 'Episode 75: Common Mask Mistakes (Dr. Ruth Bush)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/28165241/UHCM_Ep075_COVID_WearingMasks_DrBush.mp3' ],
@@ -101,162 +243,107 @@ get_header();?>
 				[ 'id' => '315980', 'title' => 'Episode 3: Managing Migraines (Dr. Stephen J. Spann, M.B.A.)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/19113459/UHCM_Ep003_Migranes01.mp3' ],
 				[ 'id' => '315979', 'title' => 'Episode 2: Combatting High Blood Pressure (Dr. Kathryn Horn)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/19113456/UHCM_Ep002_HighBloodPressure01.mp3' ],
 				[ 'id' => '315978', 'title' => 'Episode 1: Sadness vs. Depression (Dr. Kathryn Horn)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/19113453/UHCM_Ep001_MentalHealth01.mp3' ],
-			];
-			$med = new WP_Query([
-				'post_type' => 'post',
-				'category_name' => 'health-matters',
-				'posts_per_page' => -1,
-				'orderby' => 'date',
-				'order' => 'ASC',
-				'post_status' => 'publish'
-			]);
-			foreach ( $med->posts as $m ) :
-				preg_match( '/\[audio mp3="(.+)" id="([0-9]+)"\]\[\/audio\]/', $m->post_content, $match );
-				if ( !empty( $match ) ) :
-					$temp = [
-						'id' => $match[2],
-						'title' => get_the_title( $match[2] ),
-						'url' => wp_get_attachment_url( $match[2] )
-					];
-					array_unshift( $atts, $temp );
-				endif;
-			endforeach;
-
-			$page_head_class = HPM_Podcasts::show_banner( get_the_ID() );?>
-			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title"><?php the_title(); ?></h1>
-			</header>
-			<?php
-			$no = $sp = $c = 0;
-			foreach ($show as $sk => $sh) :
-				if (!empty($sh) && $sk != 'banners') :
-					$no++;
-				endif;
-			endforeach;
-			foreach ($social as $soc) :
-				if (!empty($soc)) :
-					$no++;
-				endif;
-			endforeach;
-			if ($no > 0) : ?>
-				<div id="station-social">
-					<?php
-					if (!empty($show['times'])) : ?>
-						<h3><?php echo $show['times']; ?></h3>
-					<?php
-					endif;
-					echo HPM_Podcasts::show_social($show['podcast'], false, get_the_ID()); ?>
+			]; ?>
+			<section id="stories-from-the-storm" class="column-left">
+				<div class="hah-split sfts-interviews-video">
+					<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'" id="'.$atts[0]['id'].'"][/audio]' ); ?>
+					<h3 id="sfts-yt-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
 				</div>
-			<?php
-			endif; ?>
-		<?php
-		endwhile; ?>
-		<section id="stories-from-the-storm" class="alignleft">
-			<div class="hah-split sfts-interviews-video">
-				<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'" id="'.$atts[0]['id'].'"][/audio]' ); ?>
-				<h3 id="sfts-yt-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
-			</div>
-			<aside id="videos-nav">
-				<nav id="videos">
-					<div class="videos-playlist">
-						<p><?php echo $show_title; ?> Episodes</p>
-					</div>
-					<ul>
-						<?php
-						foreach ($atts as $a) : ?>
-							<li <?php echo ($a['id'] == $atts[0]['id'] ? 'class="current" ' : ''); ?>id="hm<?php echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
-								<div class="videos-info"><?php echo $a['title']; ?></div>
-							</li>
-						<?php
-						endforeach; ?>
-					</ul>
-				</nav>
-			</aside>
-		</section>
-		<aside class="alignleft">
-			<h3>About <?php echo $show_title; ?></h3>
-			<div class="show-content">
-				<?php echo apply_filters('the_content', $show_content); ?>
-			</div>
-		</aside>
-	</main><!-- .site-main -->
-</div><!-- .content-area -->
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		var navs = document.querySelectorAll('#videos-nav ul li');
-		Array.from(navs).forEach((nav) => {
-			nav.addEventListener('click', () => {
-				var ytid = nav.getAttribute('data-ytid');
-				var yttitle = nav.getAttribute('data-yttitle');
-				var stTitle = document.querySelector('#sfts-yt-title');
-				if (ytid === null) {
-					return false;
-				} else {
-					stTitle.innerHTML = yttitle;
-					if (nav.nextElementSibling !== null) {
-						var next = nav.nextElementSibling.getAttribute('id');
+				<aside id="videos-nav">
+					<nav id="videos">
+						<div class="videos-playlist">
+							<p>Archived Episodes</p>
+						</div>
+						<ul>
+							<?php
+							foreach ($atts as $a) : ?>
+								<li <?php echo ($a['id'] == $atts[0]['id'] ? 'class="current" ' : ''); ?>id="hm<?php echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
+									<div class="videos-info"><?php echo $a['title']; ?></div>
+								</li>
+							<?php
+							endforeach; ?>
+						</ul>
+					</nav>
+				</aside>
+			</section>
+		</main><!-- .site-main -->
+	</div><!-- .content-area -->
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			var navs = document.querySelectorAll('#videos-nav ul li');
+			Array.from(navs).forEach((nav) => {
+				nav.addEventListener('click', () => {
+					var ytid = nav.getAttribute('data-ytid');
+					var yttitle = nav.getAttribute('data-yttitle');
+					var stTitle = document.querySelector('#sfts-yt-title');
+					if (ytid === null) {
+						return false;
 					} else {
-						var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
+						stTitle.innerHTML = yttitle;
+						if (nav.nextElementSibling !== null) {
+							var next = nav.nextElementSibling.getAttribute('id');
+						} else {
+							var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
+						}
+						hpm.players[0].pause();
+						hpm.players[0].source = {
+							'type': 'audio',
+							'title': yttitle,
+							'sources': [{
+								'src': ytid + '?source=plyr-article',
+								'type': 'audio/mpeg'
+							}]
+						};
+						hpm.players[0].play();
+						stTitle.setAttribute('data-next-id', next);
+						Array.from(navs).forEach((nas) => {
+							nas.classList.remove('current');
+						});
+						nav.classList.add('current');
 					}
-					hpm.players[0].pause();
-					hpm.players[0].source = {
-						'type': 'audio',
-						'title': yttitle,
-						'sources': [{
-							'src': ytid + '?source=plyr-article',
-							'type': 'audio/mpeg'
-						}]
-					};
-					hpm.players[0].play();
-					stTitle.setAttribute('data-next-id', next);
-					Array.from(navs).forEach((nas) => {
-						nas.classList.remove('current');
-					});
-					nav.classList.add('current');
-				}
+				});
 			});
+			setTimeout(() => {
+				hpm.players[0].on('ended', (event) => {
+					var stTitle = document.querySelector('#sfts-yt-title');
+					var nextId = stTitle.getAttribute('data-next-id');
+					var nextEp = document.querySelector('#' + nextId);
+					var ytid = nextEp.getAttribute('data-ytid');
+					if (ytid === null) {
+						return false;
+					} else {
+						var yttitle = nextEp.getAttribute('data-yttitle');
+						if (nextEp.nextElementSibling !== null) {
+							var next = nextEp.nextElementSibling.getAttribute('id');
+						} else {
+							var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
+						}
+						stTitle.innerHTML = yttitle;
+						hpm.players[0].source = {
+							'type': 'audio',
+							'title': yttitle,
+							'sources': [{
+								'src': ytid + '?source=plyr-article',
+								'type': 'audio/mpeg'
+							}]
+						};
+						hpm.players[0].play();
+						stTitle.setAttribute('data-next-id', next);
+						Array.from(navs).forEach((nas) => {
+							nas.classList.remove('current');
+						});
+						nextEp.classList.add('current');
+					}
+				});
+			}, 500);
 		});
-		setTimeout(() => {
-			hpm.players[0].on('ended', (event) => {
-				var stTitle = document.querySelector('#sfts-yt-title');
-				var nextId = stTitle.getAttribute('data-next-id');
-				var nextEp = document.querySelector('#' + nextId);
-				var ytid = nextEp.getAttribute('data-ytid');
-				if (ytid === null) {
-					return false;
-				} else {
-					var yttitle = nextEp.getAttribute('data-yttitle');
-					if (nextEp.nextElementSibling !== null) {
-						var next = nextEp.nextElementSibling.getAttribute('id');
-					} else {
-						var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
-					}
-					stTitle.innerHTML = yttitle;
-					hpm.players[0].source = {
-						'type': 'audio',
-						'title': yttitle,
-						'sources': [{
-							'src': ytid + '?source=plyr-article',
-							'type': 'audio/mpeg'
-						}]
-					};
-					hpm.players[0].play();
-					stTitle.setAttribute('data-next-id', next);
-					Array.from(navs).forEach((nas) => {
-						nas.classList.remove('current');
-					});
-					nextEp.classList.add('current');
-				}
-			});
-		}, 500);
-	});
-</script>
-<style>
-	#div-gpt-ad-1488818411584-0 {
-		display: none !important;
-	}
-	.article-player-wrap h3 {
-		display: none;
-	}
-</style>
+	</script>
+	<style>
+		#div-gpt-ad-1488818411584-0 {
+			display: none !important;
+		}
+		.article-player-wrap h3 {
+			display: none;
+		}
+	</style>
 <?php get_footer(); ?>

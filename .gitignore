@@ -3,7 +3,7 @@ web/app/plugins/*
 !web/app/plugins/.gitkeep
 !web/app/plugins/galleria/
 !web/app/plugins/kera-passport-tools/
-!web/app/plugins/google-sitemap-tools/
+!web/app/plugins/google-sitemap-generator/
 web/app/debug.log
 web/app/upgrade
 web/app/uploads/*
