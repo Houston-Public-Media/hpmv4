@@ -1,8 +1,9 @@
 <?php
 /*
-Template Name: Default Show
+Template Name: Health Matters
 Template Post Type: shows
 */
+
 /**
  * The template for displaying show pages
  *
