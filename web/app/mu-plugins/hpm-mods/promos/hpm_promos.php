@@ -26,6 +26,7 @@ class HPM_Promos {
 		add_action( 'wp_footer', function() {
 			echo $this->generate_lightbox();
 		}, 100 );
+		add_action('admin_head', [ $this, 'hide_publish_button' ] );
 
 		// Create menu in Admin Dashboard
 		add_action( 'admin_menu', [ $this, 'create_menu' ] );
@@ -35,6 +36,18 @@ class HPM_Promos {
 		if ( ! wp_next_scheduled( 'hpm_promo_cleanup' ) ) :
 			wp_schedule_event( time(), 'daily', 'hpm_promo_cleanup' );
 		endif;
+	}
+
+	public function hide_publish_button() {
+		global $post;
+		$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
+		if ( !empty( $meta ) && !empty( $meta['type'] ) ) :
+			return;
+		endif; ?>
+		<script type="text/javascript">
+		window.onload = function() { document.getElementById('publish').disabled = true; }
+		</script>
+		<?php
 	}
 
 	public function create_type() {
@@ -110,8 +123,8 @@ class HPM_Promos {
 		$hpm_promo = get_post_meta( $object->ID, 'hpm_promos_meta', true );
 		if ( empty( $hpm_promo ) ) :
 			$hpm_promo = [
-				'location' => 'homepage',
-				'type' => 'sidebar',
+				'location' => 'any',
+				'type' => '',
 				'options' => [
 					'sidebar' => [
 						'mobile' => '',
@@ -146,16 +159,10 @@ class HPM_Promos {
 			'media_buttons' => false,
 			'teeny' => true
 		]; ?>
-		<h3><?PHP _e( "Where do you want your element to show up?", 'hpmv2' ); ?></h3>
-		<p><label for="hpm_promo[location]"><?php _e( "Location:", 'hpmv2' ); ?></label>
-			<select id="hpm_promo[location]" name="hpm_promo[location]">
-				<option value="any" <?PHP selected( $hpm_promo['location'], 'any', TRUE ); ?>>Any Page</option>
-				<option value="homepage" <?PHP selected( $hpm_promo['location'], 'homepage', TRUE ); ?>>Homepage Only</option>
-			</select>
-		</p>
-		<h3><?PHP _e( "What type of banner are you creating?", 'hpmv2' ); ?></h3>
+		<h3><?PHP _e( "What type of banner are you creating?", 'hpmv2' ); ?> <span style="font-weight: bolder; font-style: italic; color: red;"><?PHP _e( "REQUIRED", 'hpmv2' ); ?></span></h3>
 		<p><label for="hpm_promo[type]"><?php _e( "Type:", 'hpmv2' ); ?></label>
 			<select id="hpm_promo_type" name="hpm_promo[type]">
+				<option value="">Select Type</option>
 				<option value="sidebar" <?PHP selected( $hpm_promo['type'], 'sidebar', TRUE ); ?>>Sidebar Banner/Poll</option>
 				<option value="dont-miss" <?PHP selected( $hpm_promo['type'], 'dont-miss', TRUE ); ?>>Don't Miss Bullet Point</option>
 				<option value="lightbox" <?PHP selected( $hpm_promo['type'], 'lightbox', TRUE ); ?>>Lightbox</option>
@@ -163,30 +170,15 @@ class HPM_Promos {
 				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth', TRUE ); ?>>Full-Width Banner</option>
 			</select>
 		</p>
-		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>><?php /* ?>
-			<h3><?php _e( "Sidebar Banner Options", 'hpmv2' ); ?></h3>
-			<p><?php _e( "The Sidebar banner allows for alternate image versions for mobile, tablet, and desktop, if
-				desired. If you only wish to use a single image size, you can just include it in the HTML. If you
-				want to use multiple versions, paste the image URLs in the boxes below, and place [[image]] in the
-				image source in your HTML.", 'hpmv2' ); ?></p>
-			<ul>
-				<li><label for="hpm_promo[options][sidebar][mobile]"><?php _e('Mobile: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][mobile]" value="<?php echo $hpm_promo['options']['sidebar']['mobile']; ?>" style="max-width: 100%; width: 800px;" /></li>
-				<li><label for="hpm_promo[options][sidebar][tablet]"><?php _e('Tablet: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][tablet]" value="<?php echo $hpm_promo['options']['sidebar']['tablet']; ?>" style="max-width: 100%; width: 800px;" /></li>
-				<li><label for="hpm_promo[options][sidebar][desktop]"><?php _e('Desktop: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][sidebar][desktop]" value="<?php echo $hpm_promo['options']['sidebar']['desktop']; ?>" style="max-width: 100%; width: 800px;" /></li>
-			</ul>
-		<?php */ ?></div>
-		<div id="hpm-fullwidth" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'fullwidth' ? '' : ' style="display: none;"' ); ?>><?php /* ?>
-			<h3><?php _e( "Full-Width Banner Options", 'hpmv2' ); ?></h3>
-			<p><?php _e( "The Full-Width banner allows for alternate image versions for mobile, tablet, and desktop, if
-				desired. If you only wish to use a single image size, you can just include it in the HTML. If you
-				want to use multiple versions, paste the image URLs in the boxes below, and place [[image]] in the
-				image source in your HTML.", 'hpmv2' ); ?></p>
-			<ul>
-				<li><label for="hpm_promo[options][fullwidth][mobile]"><?php _e('Mobile: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][fullwidth][mobile]" value="<?php echo $hpm_promo['options']['fullwidth']['mobile']; ?>" style="max-width: 100%; width: 800px;" /></li>
-				<li><label for="hpm_promo[options][fullwidth][tablet]"><?php _e('Tablet: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][fullwidth][tablet]" value="<?php echo $hpm_promo['options']['fullwidth']['tablet']; ?>" style="max-width: 100%; width: 800px;" /></li>
-				<li><label for="hpm_promo[options][fullwidth][desktop]"><?php _e('Desktop: ', 'hpmv2' ); ?></label><input type="text" name="hpm_promo[options][fullwidth][desktop]" value="<?php echo $hpm_promo['options']['fullwidth']['desktop']; ?>" style="max-width: 100%; width: 800px;" /></li>
-			</ul>
-		<?php */ ?></div>
+		<h3><?PHP _e( "Where do you want your element to show up?", 'hpmv2' ); ?></h3>
+		<p><label for="hpm_promo[location]"><?php _e( "Location:", 'hpmv2' ); ?></label>
+			<select id="hpm_promo[location]" name="hpm_promo[location]">
+				<option value="any" <?PHP selected( $hpm_promo['location'], 'any', TRUE ); ?>>Any Page</option>
+				<option value="homepage" <?PHP selected( $hpm_promo['location'], 'homepage', TRUE ); ?>>Homepage Only</option>
+			</select>
+		</p>
+		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>></div>
+		<div id="hpm-fullwidth" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'fullwidth' ? '' : ' style="display: none;"' ); ?>></div>
 		<div id="hpm-lightbox" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'lightbox' ? '' : ' style="display: none;"'); ?>>
 			<h3><?php _e( "Lightbox Options", 'hpmv2' ); ?></h3>
 			<p><?php _e( "The Lightbox allows for A/B testing of images, text, and links, and has an option for showing a
@@ -221,6 +213,18 @@ class HPM_Promos {
 					var typeVal = $(this).val();
 					$('.hpm-promo-types').hide();
 					$('#hpm-'+typeVal).show();
+					if (typeVal == 'sidebar') {
+						send_to_editor("<div id=\"[[ CAMPAIGN ID ]]\" class=\"top-banner\">\n\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n</div>\n");
+					} else if (typeVal == 'fullwidth') {
+						send_to_editor("<div id=\"[[ CAMPAIGN ID ]]\" class=\"top-banner\">\n\t<a href=\"[[ CLICKTHROUGH LINK ]]\">\n\t\t<picture>\n\t\t\t<source srcset=\"[[ MOBILE IMAGE URL ]]\" media=\"(max-width: 34em)\" />\n\t\t\t<source srcset=\"[[ TABLET IMAGE URL ]]\" media=\"(max-width: 52.5em)\" />\n\t\t\t<source srcset=\"[[ DESKTOP IMAGE URL ]]\" />\n\t\t\t<img src=\"[[ DESKTOP IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" />\n\t\t</picture>\n\t</a>\n</div>\n");
+					} else if (typeVal == 'lightbox') {
+						send_to_editor("<div id=\"campaign-splash\" data-campaign=\"[[ LIGHTBOX DESCRIPTION ]]\" class=\"lightbox\">\n\t<div id=\"splash\">\n\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n\t\t<div class=\"campaign-push\">\n\t\t\t<p>[[ LIGHTBOX COPY ]]</p>\n\t\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><i class=\"fas fa-heart\"></i> [[ BUTTON TEXT ]]</a>\n\t\t</div>\n\t\t<div id=\"campaign-close\">X</div>\n\t</div>\n</div>\n");
+					}
+					if (typeVal !== '') {
+						document.getElementById('publish').disabled = false;
+					} else {
+						document.getElementById('publish').disabled = true;
+					}
 				});
 			});
 		</script>
@@ -739,10 +743,10 @@ class HPM_Promos {
 	public function manage_columns( $column, $post_id ) {
 		global $post;
 		$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
+		$offset = get_option( 'gmt_offset' ) * 3600;
 		if ( empty( $endtime ) ) :
 			$t = 'unset';
 		else :
-			$offset = get_option( 'gmt_offset' ) * 3600;
 			$t = $endtime + $offset;
 		endif;
 		$now = time() + $offset;
