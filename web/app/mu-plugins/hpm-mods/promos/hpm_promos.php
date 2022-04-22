@@ -26,7 +26,7 @@ class HPM_Promos {
 		add_action( 'wp_footer', function() {
 			echo $this->generate_lightbox();
 		}, 100 );
-		add_action('admin_head', [ $this, 'hide_publish_button' ] );
+		add_action( 'admin_head', [ $this, 'hide_publish_button' ] );
 
 		// Create menu in Admin Dashboard
 		add_action( 'admin_menu', [ $this, 'create_menu' ] );
@@ -40,14 +40,16 @@ class HPM_Promos {
 
 	public function hide_publish_button() {
 		global $post;
-		$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
-		if ( !empty( $meta ) && !empty( $meta['type'] ) ) :
-			return;
-		endif; ?>
-		<script type="text/javascript">
-		window.onload = function() { document.getElementById('publish').disabled = true; }
-		</script>
+		if ( $post !== null && $post->post_type == 'promos' ) :
+			$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
+			if ( !empty( $meta ) && !empty( $meta['type'] ) ) :
+				return;
+			endif; ?>
+			<script type="text/javascript">
+			window.onload = function() { document.getElementById('publish').disabled = true; }
+			</script>
 		<?php
+		endif;
 	}
 
 	public function create_type() {

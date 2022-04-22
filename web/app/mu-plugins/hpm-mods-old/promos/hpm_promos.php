@@ -40,14 +40,16 @@ class HPM_Promos {
 
 	public function hide_publish_button() {
 		global $post;
-		$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
-		if ( !empty( $meta ) && !empty( $meta['type'] ) ) :
-			return;
-		endif; ?>
-		<script type="text/javascript">
-		window.onload = function() { document.getElementById('publish').disabled = true; }
-		</script>
+		if ( $post !== null && $post->post_type == 'promos' ) :
+			$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
+			if ( !empty( $meta ) && !empty( $meta['type'] ) ) :
+				return;
+			endif; ?>
+			<script type="text/javascript">
+			window.onload = function() { document.getElementById('publish').disabled = true; }
+			</script>
 		<?php
+		endif;
 	}
 
 	public function create_type() {
