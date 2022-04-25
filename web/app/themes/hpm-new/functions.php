@@ -73,7 +73,10 @@ function hpm_scripts() {
 		wp_enqueue_script( 'hpm-js', 'https://cdn.hpm.io/assets/js/hpm.js', [], $versions['js'], true );
 	endif;
 
-	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], date('Y-m-d-H'), true );
+	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], $versions['js'], true );
+	wp_register_script( 'hpm-splide', 'https://cdn.hpm.io/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
+	wp_register_script( 'hpm-splide-js', 'https://cdn.hpm.io/assets/js/splide.min.js', [], $versions['js'], true );
+	wp_register_style( 'hpm-splide-css', 'https://cdn.hpm.io/assets/css/splide.min.css', [], $versions['css'] );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_script( 'better-image-credits' );

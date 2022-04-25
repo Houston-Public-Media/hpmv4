@@ -811,3 +811,120 @@ function hpm_newsletter_bug() {
 	return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
 }
 add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
+
+remove_shortcode( 'gallery', 'gallery_shortcode' );
+add_shortcode( 'gallery', 'hpm_splide_gallery' );
+
+function hpm_splide_gallery( $attr ) {
+	global $post;
+	$output = '';
+
+	// We're trusting author input, so let's at least make sure it looks like a valid orderby statement
+	if ( isset( $attr['orderby'] ) ) :
+		$attr['orderby'] = sanitize_sql_orderby( $attr['orderby'] );
+		if ( !$attr['orderby'] ) :
+			unset( $attr['orderby'] );
+		endif;
+	endif;
+
+	// extract the shortcode attributes into the current variable space
+	extract( shortcode_atts([
+		// standard WP [gallery] shortcode options
+		'order'        => 'ASC',
+		'orderby'      => 'menu_order ID',
+		'id'           => $post->ID,
+		'itemtag'      => 'dl',
+		'icontag'      => 'dt',
+		'captiontag'   => 'dd',
+		'columns'      => 3,
+		'size'         => 'thumbnail',
+		'include'      => '',
+		'exclude'      => '',
+		'ids'          => ''
+	], $attr ) );
+
+	// the id of the current post, or a different post if specified in the shortcode
+	$id = intval( $id );
+
+	// random MySQL ordering doesn't need two attributes
+	if ( $order == 'RAND' ) :
+		$orderby = 'none';
+	endif;
+
+	// use the given IDs of images
+	if ( !empty( $ids ) ) :
+		$include = $ids;
+	endif;
+
+	// fetch the images
+	if ( !empty( $include ) ) :
+		// include only the given image IDs
+		$include = preg_replace( '/[^0-9,]+/', '', $include );
+		$_attachments = get_posts( [ 'include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby ] );
+		$attachments = [];
+		foreach ( $_attachments as $key => $val ) :
+			$attachments[ $val->ID ] = $_attachments[ $key ];
+		endforeach;
+		if ( !empty( $ids ) ) :
+			$sortedAttachments = [];
+			$ids = preg_replace( '/[^0-9,]+/', '', $ids );
+			$idsArray = explode( ',', $ids );
+			foreach ( $idsArray as $aid ) :
+				if ( array_key_exists( $aid, $attachments ) ) :
+					$sortedAttachments[ $aid ] = $attachments[ $aid ];
+				endif;
+			endforeach;
+			$attachments = $sortedAttachments;
+		endif;
+	elseif ( !empty( $exclude ) ) :
+		// exclude certain image IDs
+		$exclude = preg_replace( '/[^0-9,]+/', '', $exclude );
+		$attachments = get_children( [ 'post_parent' => $id, 'exclude' => $exclude, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby ] );
+	else :
+		// default: all images attached to this post/page
+		$attachments = get_children( [ 'post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby ] );
+	endif;
+
+	// output nothing if we didn't find any images
+	if ( empty( $attachments ) ) :
+		return $output;
+	endif;
+
+	// output the individual images when displaying as a news feed
+	if ( is_feed() ) :
+		$output .= "\n";
+		foreach ( $attachments as $attachmentId => $attachment ) {
+			list( $src, $w, $h ) = wp_get_attachment_image_src( $attachmentId, 'medium' );
+			$output .= '<img src="' . $src . '" width="' . $w . '" height="' . $h . '">' . "\n";
+		}
+		return $output;
+	endif;
+
+	$output .= '<figure class="wp-block-image"><div class="splide"><div class="splide__track"><ul class="splide__list">';
+	foreach ( $attachments as $attachmentId => $attachment ) :
+		$thumb = wp_get_attachment_image_src( $attachmentId, 'medium' );
+		$big = wp_get_attachment_image_src( $attachmentId, 'full' );
+		$credit = get_post_meta( $attachmentId, '_wp_attachment_source_name', true );
+		$link = get_post_meta( $attachmentId, '_wp_attachment_source_url', true );
+		if ( !empty( $credit ) && !empty( $link ) ) :
+			$mcredit = ' (Photo Credit: <a href="' . $link . '" rel="noopener noreferrer dofollow" target="_blank">' . $credit . '</a>)';
+		elseif ( !empty( $credit ) && empty( $link ) ) :
+			$mcredit = ' (Photo Credit: ' . $credit . ')';
+		else :
+			$mcredit = '';
+		endif;
+		if ( !empty( $attachment->post_excerpt ) ) :
+			$description = $attachment->post_excerpt . $mcredit;
+		elseif ( !empty( $attachment->post_title ) ) :
+			$description = $attachment->post_title . $mcredit;
+		else :
+			$description = $mcredit;
+		endif;
+		$alt = str_replace( '"', '&quot;', strip_tags( $description ) );
+		$output .= '<li class="splide__slide"><a href="' . $big[0] . '" target="_blank" title="Click for full size"><img data-splide-lazy="' . $thumb[0] . '" alt="' . $alt . '"></a><div>' . $description . '</div></li>';
+	endforeach;
+	$output .= '</div></div></ul></figure>';
+	wp_enqueue_script( 'hpm-splide' );
+	wp_enqueue_style( 'hpm-splide-css' );
+	return $output;
+}
