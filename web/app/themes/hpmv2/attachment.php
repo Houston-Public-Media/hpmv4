@@ -135,7 +135,11 @@ get_header(); ?>
 					<?php
 						elseif ( preg_match( '/application/', $mime ) ) :
 							$site_url = site_url();
-							echo do_shortcode('[pdfjs-viewer url='.$site_url.'/'.$s3['key'].' viewer_width=600px viewer_height=700px fullscreen=true download=true print=true openfile=false]');?>
+							if ( !empty( $s3 ) ) :
+								echo do_shortcode('[pdfjs-viewer url='.$site_url.'/'.$s3['key'].' viewer_width=600px viewer_height=700px fullscreen=true download=true print=true openfile=false]');
+							else :
+								echo "<p>We're sorry, this attachment is no longer available.</p>";
+							endif; ?>
 					<p>File Information:</p>
 						<?PHP
 							if ( !empty( $attach['filesize'] ) ) :

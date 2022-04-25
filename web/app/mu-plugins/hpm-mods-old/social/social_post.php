@@ -38,7 +38,7 @@
 				]
 			];
 		endif; ?>
-		<p>Compose your social posts below. A link to the current article will be appended automatically.</p>
+		<p><?php _e( "Compose your social posts below. A link to the current article will be appended automatically.", 'hpm-podcasts' ); ?></p>
 		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_post['twitter']['sent'] == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
 		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_post['facebook']['sent'] == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />

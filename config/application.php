@@ -40,12 +40,12 @@ if (file_exists($env_config)) {
 if ( empty( $_SERVER['HTTP_HOST'] ) && WP_ENV == 'development' ) :
 	$_SERVER['HTTP_HOST'] = 'dev.houstonpublicmedia.org';
 endif;
-if ( empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) :
-	$_SERVER['HTTP_X_ORIGINAL_HOST'] = $_SERVER['HTTP_HOST'];
+if ( empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) ) :
+	$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
 endif;
-if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && strpos( $_SERVER['HTTP_X_ORIGINAL_HOST'], 'ngrok.io' ) !== FALSE ) :
-	define('WP_HOME', 'https://' . $_SERVER['HTTP_X_ORIGINAL_HOST'] );
-	define('WP_SITEURL', 'https://' . $_SERVER['HTTP_X_ORIGINAL_HOST'] . '/wp' );
+if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && strpos( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok.io' ) !== FALSE ) :
+	define('WP_HOME', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] );
+	define('WP_SITEURL', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] . '/wp' );
 else :
 	define('WP_HOME', env('WP_HOME'));
 	define('WP_SITEURL', env('WP_SITEURL'));
