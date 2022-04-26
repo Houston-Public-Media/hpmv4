@@ -437,6 +437,9 @@ class HPM_Promos {
 		$wp_global = $wp_query;
 		$output = '';
 		$lightbox = 0;
+		if ( empty( $wp_query->post ) ) :
+			return $output;
+		endif;
 		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) :
 			return $output;
 		endif;
@@ -577,6 +580,9 @@ class HPM_Promos {
 				'sidebar'
 			]
 		];
+		if ( empty( $wp_query->post ) ) :
+			return $output;
+		endif;
 		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) :
 			return $output;
 		endif;

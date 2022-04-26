@@ -600,6 +600,9 @@ add_action( 'publish_post', 'hpm_nprone_check', 2, 2 );
 
 function hpm_footer_ads() {
 	global $wp_query;
+	if ( empty( $wp_query->post ) ) :
+		return '';
+	endif;
 	$id = $wp_query->post->ID;
 	$type = $wp_query->post->post_type;
 	if ( $type === 'page' ) :

@@ -439,6 +439,9 @@ class HPM_Promos {
 		$output = '';
 		$dont = [];
 		$lightbox = $fullwidth = 0;
+		if ( empty( $wp_query->post ) ) :
+			return $output;
+		endif;
 		if ( $wp_query->post->post_type == 'embeds' ) :
 			return $output;
 		endif;

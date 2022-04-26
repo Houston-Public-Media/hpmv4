@@ -26,22 +26,22 @@
 	function hpm_social_post_meta_box( $object, $box ) {
 		wp_nonce_field( basename( __FILE__ ), 'hpm_social_post_class_nonce' );
 		$social_post = get_post_meta( $object->ID, 'hpm_social_post', true );
+		$social_facebook_sent = get_post_meta( $object->ID, 'hpm_social_facebook_sent', true );
+		$social_twitter_sent = get_post_meta( $object->ID, 'hpm_social_twitter_sent', true );
 		if ( empty( $social_post ) ) :
 			$social_post = [
 				'twitter' => [
-					'data' => '',
-					'sent' => 0
+					'data' => ''
 				],
 				'facebook' => [
-					'data' => '',
-					'sent' => 0
+					'data' => ''
 				]
 			];
 		endif; ?>
 		<p><?php _e( "Compose your social posts below. A link to the current article will be appended automatically.", 'hpm-podcasts' ); ?></p>
-		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_post['twitter']['sent'] == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
+		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_twitter_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
-		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_post['facebook']['sent'] == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />
+		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_facebook_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-facebook" name="hpm-social-post-facebook" placeholder="What would you like to post to Facebook?" style="width: 100%;" rows="2"><?php echo $social_post['facebook']['data']; ?></textarea></p>
 		<script>
 			jQuery(document).ready(function($){
@@ -71,30 +71,27 @@
 		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) :
 			return $post_id;
 		endif;
-		$social_post_current = get_post_meta( $post_id, 'hpm_social_post', true );
 		if ( empty( $social_post_current ) ) :
 			$social_post_current = [
 				'twitter' => [
-					'data' => '',
-					'sent' => 0
+					'data' => ''
 				],
 				'facebook' => [
-					'data' => '',
-					'sent' => 0
+					'data' => ''
 				]
 			];
 		endif;
 		if ( empty( $_POST['hpm-social-post-facebook'] ) && empty( $_POST['hpm-social-post-twitter'] ) ) :
 			delete_post_meta( $post_id, 'hpm_social_post' );
+			delete_post_meta( $post_id, 'hpm_social_facebook_sent' );
+			delete_post_meta( $post_id, 'hpm_social_twitter_sent' );
 		else :
 			$social_post = [
 				'facebook' => [
-					'data' => sanitize_text_field( $_POST['hpm-social-post-facebook'] ),
-					'sent' => $social_post_current['facebook']['sent']
+					'data' => sanitize_text_field( $_POST['hpm-social-post-facebook'] )
 				],
 				'twitter' => [
-					'data' => sanitize_text_field( $_POST['hpm-social-post-twitter'] ),
-					'sent' => $social_post_current['twitter']['sent']
+					'data' => sanitize_text_field( $_POST['hpm-social-post-twitter'] )
 				]
 			];
 			update_post_meta( $post_id, 'hpm_social_post', $social_post );
@@ -106,46 +103,50 @@
 
 	function hpm_social_post_send( $post_id, $post ) {
 		$social_post = get_post_meta( $post_id, 'hpm_social_post', true );
+		$social_facebook_sent = get_post_meta( $post_id, 'hpm_social_facebook_sent', true );
+		$social_twitter_sent = get_post_meta( $post_id, 'hpm_social_twitter_sent', true );
 		if ( empty( $social_post ) ) :
 			return $post_id;
 		endif;
-		if ( !empty( $social_post['twitter']['data'] ) && $social_post['twitter']['sent'] == 0 ) :
-			$account_id = explode( '-', HPM_TW_ACCESS_TOKEN );
-			$settings = [
-				'account_id' => $account_id[0],
-				'consumer_key' => HPM_TW_CONSUMER_KEY,
-				'consumer_secret' => HPM_TW_CONSUMER_SECRET,
-				'bearer_token' => HPM_TW_BEARER_TOKEN,
-				'access_token' => HPM_TW_ACCESS_TOKEN,
-				'access_token_secret' => HPM_TW_ACCESS_TOKEN_SECRET
-			];
+		if ( empty( $social_twitter_sent ) ) :
+			if ( !empty( $social_post['twitter']['data'] ) ) :
+				$account_id = explode( '-', HPM_TW_ACCESS_TOKEN );
+				$settings = [
+					'account_id' => $account_id[0],
+					'consumer_key' => HPM_TW_CONSUMER_KEY,
+					'consumer_secret' => HPM_TW_CONSUMER_SECRET,
+					'bearer_token' => HPM_TW_BEARER_TOKEN,
+					'access_token' => HPM_TW_ACCESS_TOKEN,
+					'access_token_secret' => HPM_TW_ACCESS_TOKEN_SECRET
+				];
 
-			try {
-				$client = new Client( $settings );
-				$return = $client->tweet()->performRequest( 'POST', [ 'text' => $social_post['twitter']['data'] . ' ' . get_the_permalink( $post_id ) ] );
-				$social_post['twitter']['sent'] = 1;
-				update_post_meta( $post_id, 'hpm_social_post', $social_post );
-				log_it( $return );
-			} catch (Exception $e) {
-				log_it( $e );
-			}
+				try {
+					$client = new Client( $settings );
+					$return = $client->tweet()->performRequest( 'POST', [ 'text' => $social_post['twitter']['data'] . ' ' . get_the_permalink( $post_id ) ] );
+					update_post_meta( $post_id, 'hpm_social_twitter_sent', 1 );
+					log_it( $return );
+				} catch (Exception $e) {
+					log_it( $e );
+				}
+			endif;
 		endif;
 
-		if ( !empty( $social_post['facebook']['data'] ) && $social_post['facebook']['sent'] == 0 ) :
-			$url = add_query_arg([
-				'message'  => $social_post['facebook']['data'],
-				'link' => get_the_permalink( $post_id ),
-				'access_token' => HPM_FB_ACCESS_TOKEN,
-				'appsecret_proof' => HPM_FB_APPSECRET
-			],  'https://graph.facebook.com/' . HPM_FB_PAGE_ID . '/feed' );
-			$result = wp_remote_post( $url );
-			if ( !is_wp_error( $result ) ) :
-				if ( $result['response']['code'] == 200 ) :
-					log_it( wp_remote_retrieve_body( $result ) );
-					$social_post['facebook']['sent'] = 1;
-					update_post_meta( $post_id, 'hpm_social_post', $social_post );
-				else :
-					log_it( wp_remote_retrieve_body( $result ) );
+		if ( empty( $social_facebook_sent ) ) :
+			if ( !empty( $social_post['facebook']['data'] ) ) :
+				$url = add_query_arg([
+					'message'  => $social_post['facebook']['data'],
+					'link' => get_the_permalink( $post_id ),
+					'access_token' => HPM_FB_ACCESS_TOKEN,
+					'appsecret_proof' => HPM_FB_APPSECRET
+				],  'https://graph.facebook.com/' . HPM_FB_PAGE_ID . '/feed' );
+				$result = wp_remote_post( $url );
+				if ( !is_wp_error( $result ) ) :
+					if ( $result['response']['code'] == 200 ) :
+						log_it( wp_remote_retrieve_body( $result ) );
+						update_post_meta( $post_id, 'hpm_social_facebook_sent', 1 );
+					else :
+						log_it( wp_remote_retrieve_body( $result ) );
+					endif;
 				endif;
 			endif;
 		endif;
