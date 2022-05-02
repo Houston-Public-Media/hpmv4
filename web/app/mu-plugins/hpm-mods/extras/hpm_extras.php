@@ -459,7 +459,7 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
 	endif;
 	foreach ( $npr_json['list']['story'] as $story ) :
 		$npr_date = strtotime($story['storyDate']['$text']);
-		$output .= '<article>';
+		$output .= '<article class="card">';
 		if ( !empty( $story['image'][0]['src'] ) ) :
 			$output .= '<a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"><img src="'.$story['image'][0]['src'].'" alt="'.$story['title']['$text'].'" loading="lazy" /></a>';
 		endif;
@@ -717,14 +717,21 @@ function hpm_segments( $name, $date ) {
 					$title = strtolower( 'Texas Standard For ' . date( 'F j, Y', $du ) );
 					$set = false;
 					if ( !empty( $json ) ) :
-						foreach ( $json['channel']['item'] as $item ) :
-							if ( !$set ) :
-								if ( strtolower( $item['title'] ) === $title ) :
-									$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></div>';
-									$set = true;
-								endif;
+						if ( isset( $json['channel']['item']['title'] ) ) :
+							if ( strtolower( $json['channel']['item']['title'] ) === $title ) :
+								$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$json['channel']['item']['link'].'" target="_blank">' . $json['channel']['item']['title'] .'</a></li></ul></div>';
+								$set = true;
 							endif;
-						endforeach;
+						else :
+							foreach ( $json['channel']['item'] as $item ) :
+								if ( !$set ) :
+									if ( strtolower( $item['title'] ) === $title ) :
+										$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></div>';
+										$set = true;
+									endif;
+								endif;
+							endforeach;
+						endif;
 					endif;
 				endif;
 				set_transient( $trans, $output, HOUR_IN_SECONDS );

@@ -292,7 +292,7 @@ function hpm_header_info() {
 		<meta name="twitter:widgets:border-color" content="#000000" />
 		<meta name="twitter:partner" content="tfwp" />
 <?php
-	if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
+	/* if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta name="datePublished" content="<?php echo $reqs['publish_date']; ?>" />
 		<meta name="story_id" content="<?php echo $reqs['npr_story_id']; ?>" />
 		<meta name="has_audio" content="<?php echo $reqs['has_audio']; ?>" />
@@ -302,7 +302,7 @@ function hpm_header_info() {
 		<meta name="author" content="<?php echo $reqs['npr_byline']; ?>" />
 		<meta name="wordCount" content="<?php echo $reqs['word_count']; ?>" />
 <?php
-	endif;
+	endif; */
 }
 add_action( 'wp_head', 'hpm_header_info', 1 );
 add_action( 'wp_head', 'hpm_google_tracker', 100 );

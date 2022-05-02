@@ -114,7 +114,7 @@ add_filter( 'pre_get_posts', 'hpm_exclude_category' );
 /**
  * Load extra includes
  */
-require( get_template_directory() . '/includes/amp.php' );
+// require( get_template_directory() . '/includes/amp.php' );
 require( get_template_directory() . '/includes/google.php' );
 if ( WP_ENV == 'development' ) :
 	require( get_template_directory() . '/includes/head'.HPM_TEST.'.php' );

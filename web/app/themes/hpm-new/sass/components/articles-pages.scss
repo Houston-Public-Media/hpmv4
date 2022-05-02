@@ -379,12 +379,17 @@ nav.pagination {
 		color: white;
 		font-weight: 700;
 		margin: 0;
+		a {
+			color: white;
+			text-decoration: underline;
+		}
 	}
 	ul {
 		margin: 0 0 0 1rem;
 		padding: 1rem;
 		h2 {
-			margin-bottom: 0.25rem;
+			margin-bottom: 0.75rem;
+			font-size: 1.0625rem;
 		}
 	}
 	h2 {
@@ -412,6 +417,9 @@ nav.pagination {
 			min-width: 60%;
 			.entry-header {
 				padding: 0;
+				h3 {
+					font-size: 1rem;
+				}
 			}
 		}
 		.entry-summary {
@@ -421,7 +429,7 @@ nav.pagination {
 			margin: 1rem 0;
 			.entry-header h2 {
 				margin: 0;
-				font-size: 1.25rem;
+				font-size: 1.0625rem;
 			}
 		}
 	}
@@ -443,7 +451,6 @@ nav.pagination {
 	padding: 1rem;
 	background-color: #f5f5f5;
 	.author-info {
-		overflow: hidden;
 		h3 {
 			text-transform: uppercase;
 			margin-bottom: 0.25rem;
@@ -457,7 +464,7 @@ nav.pagination {
 		}
 		> img,
 		> picture {
-			width: 40%;
+			width: 35%;
 			padding: 0 0 1rem 1rem;
 			float: right;
 			max-width: 24rem;
@@ -465,6 +472,10 @@ nav.pagination {
 	}
 	.highlights {
 		margin-bottom: 2rem;
+	}
+	> .highlights + .author-info {
+		border-top: 1px solid black;
+		padding-top: 1rem;
 	}
 }
 .author #author-wrap,
@@ -939,6 +950,9 @@ body.home article.category-in-depth {
 				grid-column: 1 / -1;
 			}
 		}
+	}
+	.author #main > aside {
+		grid-row: 1 / span 3;
 	}
 	.single,
 	.page-template-page-npr-articles {

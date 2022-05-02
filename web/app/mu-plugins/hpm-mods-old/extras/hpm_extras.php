@@ -728,15 +728,22 @@ function hpm_segments( $name, $date ) {
 					$json = json_decode( json_encode( $dom ), true );
 					$title = strtolower( 'Texas Standard For ' . date( 'F j, Y', $du ) );
 					$set = false;
-					if ( !empty( $json ) && !empty( $json['channel']['item'] ) ) :
-						foreach ( $json['channel']['item'] as $item ) :
-							if ( !$set ) :
-								if ( strtolower( $item['title'] ) === $title ) :
-									$output .= '<div class="progsegment"><h4>Program for '. $date . '</h4><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></div>';
-									$set = true;
-								endif;
+					if ( !empty( $json ) ) :
+						if ( isset( $json['channel']['item']['title'] ) ) :
+							if ( strtolower( $json['channel']['item']['title'] ) === $title ) :
+								$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$json['channel']['item']['link'].'" target="_blank">' . $json['channel']['item']['title'] .'</a></li></ul></div>';
+								$set = true;
 							endif;
-						endforeach;
+						else :
+							foreach ( $json['channel']['item'] as $item ) :
+								if ( !$set ) :
+									if ( strtolower( $item['title'] ) === $title ) :
+										$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></div>';
+										$set = true;
+									endif;
+								endif;
+							endforeach;
+						endif;
 					endif;
 				endif;
 				set_transient( $trans, $output, HOUR_IN_SECONDS );

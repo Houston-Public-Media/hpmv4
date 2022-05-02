@@ -85,7 +85,7 @@ if ( is_preview() ) : ?>
 						'orderby' => 'date',
 						'order'   => 'ASC',
 						'posts_per_page' => 7,
-						'post__not_in' => get_the_ID()
+						'post__not_in' => [ get_the_ID() ]
 					]);
 					if ( $series->have_posts() ) :
 						$series_page = new WP_query( [ 'meta_key' => 'hpm_series_cat', 'meta_value' => $cats->term_id, 'post_type' => 'page' ] );

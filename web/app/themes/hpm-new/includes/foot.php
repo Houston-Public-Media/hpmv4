@@ -4,12 +4,13 @@ function author_footer( $id ) {
 	$coauthors = get_coauthors( $id );
 	foreach ( $coauthors as $k => $coa ) :
 		$temp = '';
-		$author_trans = "";//get_transient( 'hpm_author_'.$coa->user_nicename );
+		$author_trans = get_transient( 'hpm_author_'.$coa->user_nicename );
 		if ( !empty( $author_trans ) ) :
 			$output .= $author_trans;
 			continue;
 		endif;
 		$local = false;
+		$author = null;
 		if ( is_a( $coa, 'wp_user' ) ) :
 			$author = new WP_Query( [
 				'post_type' => 'staff',
