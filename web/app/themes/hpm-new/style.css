@@ -1784,17 +1784,15 @@ details > summary + * {
 .social-icon a, .social-icon button {
   display: block;
   background-color: var(--accent-black-3);
-  padding: 0;
+  padding: 0.25rem;
   border: 0;
   width: var(--unit);
   height: var(--unit);
   text-align: center;
   border-radius: 0.5rem;
 }
-.social-icon a .fab, .social-icon a .fas, .social-icon button .fab, .social-icon button .fas {
-  line-height: var(--unit);
-  color: white;
-  font-size: calc(var(--unit) - 0.75rem);
+.social-icon a svg, .social-icon button svg {
+  fill: white;
 }
 .social-icon.facebook a, .social-icon.facebook button {
   background: rgb(59, 89, 152);

@@ -3,11 +3,11 @@ function hpm_site_header() { ?>
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
 					<div class="site-logo">
-						<?php echo hpm_site_logo(); ?>
+						<?php echo hpm_svg_output( 'hpm' ); ?>
 					</div>
 					<section>
 						<div id="top-schedule">
-							<div class="top-schedule-label"><button aria-label="View Schedules" type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap" ><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
+							<div class="top-schedule-label"><button aria-label="View Schedules" type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap" ><?php echo hpm_svg_output( 'calendar' ); ?>Schedules</button></div>
 							<div class="top-schedule-link-wrap" id="top-schedule-link-wrap">
 								<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
 								<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
@@ -15,15 +15,15 @@ function hpm_site_header() { ?>
 								<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 							</div>
 						</div>
-						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</button></div>
-						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
+						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" data-dialog="480:855"><?php echo hpm_svg_output( 'microphone' ); ?>Listen</button></div>
+						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" data-dialog="820:850"><?php echo hpm_svg_output( 'tv' ); ?>Watch</button></div>
 					</section>
-					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div tabindex="0" id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></div>
+					<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>
+					<div tabindex="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tabindex="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
+						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tabindex="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
 						<div class="nav-wrap">
-							<div id="top-search" tabindex="0" aria-expanded="false"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
+							<div id="top-search" tabindex="0" aria-expanded="false"><?php echo hpm_svg_output( 'search' ); get_search_form(); ?></div>
 							<?php
 								// Primary navigation menu.
 								wp_nav_menu([
@@ -326,14 +326,14 @@ function hpm_body_open() {
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
 					<div class="site-logo">
-						<?php echo hpm_site_logo(); ?>
+						<?php echo hpm_svg_output( 'hpm' ); ?>
 					</div>
-					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div tabindex="0" id="top-mobile-close" class="nav-button"><span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">CLOSE</span></div><div id="focus-sink" tabindex="0" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
+					<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>
+					<div tabindex="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div><div id="focus-sink" tabindex="0" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">MENU</span></div>
+						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div>
 						<div class="nav-wrap">
-							<div id="top-search" tabindex="0" aria-expanded="false"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
+							<div id="top-search" tabindex="0" aria-expanded="false"><?php echo hpm_svg_output( 'facebook' ); get_search_form(); ?></div>
 							<?php
 								wp_nav_menu( [
 									'menu_class' => 'nav-menu',

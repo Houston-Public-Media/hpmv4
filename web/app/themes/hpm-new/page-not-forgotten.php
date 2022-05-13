@@ -306,19 +306,19 @@ Template Name: Not Forgotten
 						<header class="page-header">
 							<img src="https://cdn.hpm.io/assets/images/NotForgotten_Logo.svg" alt="<?php echo get_the_title() . ": " . get_the_excerpt(); ?>" />
 							<button aria-label="Skip to Content" class="down scrollto">
-								<span class="fa fa-angle-double-down"></span>
+								<?php echo hpm_svg_output( 'angle-double-down' ); ?>
 							</button>
 						</header><!-- .entry-header -->
 						<div class="page-content" id="main-content">
 							<?php the_content(); ?>
 						</div><!-- .entry-content -->
 						<div id="nf-msg-overlay">
-							<div id="nf-previous"><span class="fas fa-chevron-left"></span></div>
+							<div id="nf-previous"><?php echo hpm_svg_output( 'chevron-left' ); ?></div>
 							<div id="nf-msg-wrap">
 								<div id="nf-msg" data-current=""></div>
 							</div>
-							<div id="nf-next"><span class="fas fa-chevron-right"></span></div>
-							<div id="nf-close"><span class="fa fa-times"></span></div>
+							<div id="nf-next"><?php echo hpm_svg_output( 'chevron-right' ); ?></div>
+							<div id="nf-close"><?php echo hpm_svg_output( 'times' ); ?></div>
 						</div>
 					</main><!-- .site-main -->
 				</div><!-- .content-area -->

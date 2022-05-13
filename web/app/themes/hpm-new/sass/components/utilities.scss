@@ -296,16 +296,14 @@ details {
 	a, button {
 		display: block;
 		background-color: var(--accent-black-3);
-		padding: 0;
+		padding: 0.25rem;
 		border: 0;
 		width: var(--unit);
 		height: var(--unit);
 		text-align: center;
 		border-radius: 0.5rem;
-		.fab, .fas {
-			line-height: var(--unit);
-			color: white;
-			font-size: calc(var(--unit) - 0.75rem);
+		svg {
+			fill: white;
 		}
 	}
 	&.facebook a,

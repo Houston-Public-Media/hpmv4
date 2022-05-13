@@ -68,7 +68,7 @@ get_header(); ?>
 					if ( $c == 0 ) : ?>
 				<div id="youtube-main">
 					<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
-						<span class="fas fa-play" id="play-button"></span>
+						<?php echo hpm_svg_output( 'play' ); ?>
 					</div>
 					<h2><?php echo $tubes['snippet']['title']; ?></h2>
 					<p class="desc"><?php echo $tubes['snippet']['description']; ?></p>
