@@ -105,27 +105,27 @@ get_header(); ?>
 			</section>
 <?php
 			endif; ?>
-			<aside class="column-right">
-				<h3>About <?php echo $show_title; ?></h3>
-				<div class="show-content">
-					<?php echo apply_filters( 'the_content', $show_content ); ?>
-				</div>
-			<?php
-						if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
-							$googletag = 'div-gpt-ad-1470409396951-0';
-						else :
-							$googletag = 'div-gpt-ad-1394579228932-1';
-						endif; ?>
-				<div class="sidebar-ad">
-					<h4>Support Comes From</h4>
-					<div id="<?php echo $googletag; ?>">
-						<script type='text/javascript'>
-							googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
-						</script>
-					</div>
-				</div>
-			</aside>
 			<div id="float-wrap">
+				<aside class="column-right">
+					<h3>About <?php echo $show_title; ?></h3>
+					<div class="show-content">
+						<?php echo apply_filters( 'the_content', $show_content ); ?>
+					</div>
+				<?php
+							if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
+								$googletag = 'div-gpt-ad-1470409396951-0';
+							else :
+								$googletag = 'div-gpt-ad-1394579228932-1';
+							endif; ?>
+					<div class="sidebar-ad">
+						<h4>Support Comes From</h4>
+						<div id="<?php echo $googletag; ?>">
+							<script type='text/javascript'>
+								googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
+							</script>
+						</div>
+					</div>
+				</aside>
 				<div class="article-wrap">
 		<?php
 			$studio = new WP_Query([
@@ -194,23 +194,6 @@ get_header(); ?>
 
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
-	<style>
-		.single.shows-template-single-shows-skyline #main aside,
-		.single.shows-template-single-shows-skyline #main article.post {
-			-webkit-box-ordinal-group: initial;
-			-moz-box-ordinal-group: initial;
-			-ms-flex-order: initial;
-			-webkit-order: initial;
-			order: initial;
-		}
-	</style>
-	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick.min.css" />
-			<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
-			<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
-			<script>
-				jQuery(document).ready(function($){
-					var options = { slidesToShow: 3, rows: 1, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 3, slidesToScroll: 3, rows: 1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 3 } }] };
-					$('#youtube-upcoming').slick(options);
-				});
-			</script>
+
+
 <?php get_footer(); ?>
