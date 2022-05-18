@@ -5,6 +5,7 @@
  * @since HPMv2 1.0
  */
 ?>
+<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 <div class="sidebar-ad">
 	<h4>Support Comes From</h4>
 <?php

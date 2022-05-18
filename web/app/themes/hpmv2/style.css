@@ -456,9 +456,6 @@ blockquote * {
 	padding: 0;
 	margin: 0;
 }
-.clear {
-	clear: both;
-}
 .ajax-loader {
 	text-align: center;
 	padding: 1em 0;
@@ -495,13 +492,6 @@ input[type="search"] {
 .wide-table td {
 	border: 1px solid #ddd;
 }
-.wpcf7 input, .wpcf7 textarea, .wpcf7 select {
-	width: 100%;
-	max-width: 100%;
-}
-.wpcf7 input[type="submit"] {
-	width: auto;
-}
 details {
 	padding: 0.5em 1em;
 	margin-bottom: 1em;
@@ -516,6 +506,76 @@ details > summary:hover {
 }
 details > summary + * {
 	margin-top: 1em;
+}
+
+.social-wrap {
+	display: grid;
+	grid-template-columns: repeat(5, 3rem);
+	align-items: center;
+	justify-content: start;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+.social-wrap :is(h1,h2,h3,h4,h5) {
+	margin: 0;
+	padding-right: 1rem;
+}
+.single #main > article #article-share > .social-wrap,
+.page-template-page-npr-articles #main > article #article-share > .social-wrap {
+	grid-template-columns: 3.5rem 3.5rem;
+}
+
+.social-icon {
+	--unit: 3rem;
+}
+.social-icon :is(a,button) {
+	display: block;
+	background-color: var(--accent-black-3);
+	padding: 0.25rem;
+	border: 0;
+	width: var(--unit);
+	height: var(--unit);
+	text-align: center;
+	border-radius: 0.5rem;
+}
+.social-icon :is(a,button) svg {
+	fill: white;
+}
+.social-icon.facebook :is(a,button) {
+	background: rgb(59, 89, 152);
+}
+.social-icon.twitter :is(a,button) {
+	background: rgb(29, 161, 242);
+}
+.social-icon.youtube :is(a,button) {
+	background: rgb(234, 50, 35);
+}
+.social-icon.instagram :is(a,button) {
+	background: rgb(81, 91, 212);
+	background: linear-gradient(135deg, rgb(81, 91, 212) 0%, rgb(129, 52, 175) 20%, rgb(221, 42, 123) 50%, rgb(254, 218, 119) 70%, rgb(245, 133, 41) 90%);
+}
+.social-icon.linkedin :is(a,button) {
+	background: rgb(40, 103, 178);
+}
+.social-icon:last-child :is(a,button) {
+	margin-right: 0;
+}
+
+@media screen and (min-width: 64.25rem) {
+	.social-wrap {
+		align-items: start;
+		margin-bottom: 0;
+	}
+	.social-wrap :is(h1,h2,h3,h4,h5) {
+		padding: 0;
+		grid-column: 1/-1;
+	}
+	.social-icon {
+		--unit: 3.5rem;
+	}
+	.site-footer .social-icon {
+		--unit: 3rem;
+	}
 }
 
 /**
@@ -834,9 +894,7 @@ body.nav-active-menu {
 	padding: 1.5em;
 	position: relative;
 }
-#masthead #top-search .fa,
-#masthead #top-search .fab,
-#masthead #top-search .fas {
+#masthead #top-search :is(.fa,.fab,.fas) {
 	position: absolute;
 	top: 0.375em;
 	left: 0.25em;
@@ -851,61 +909,6 @@ body.nav-active-menu {
 	text-transform: lowercase;
 	font: 400 2em/1em var(--hpm-font-main);
 }
-#masthead #header-social {
-	margin: 0 auto;
-	overflow: hidden;
-	position: absolute;
-	top: 0.5em;
-	right: 0;
-	display: none;
-}
-#masthead #header-social .header-social-icon {
-	float: left;
-}
-#masthead #header-social .header-social-icon a,
-footer#colophon #footer-social .footer-social-icon a {
-	display: block;
-	width: 2em;
-	height: 2em;
-	background-color: #808184;
-	margin-right: 0.5em;
-	text-align: center;
-}
-#masthead #header-social .header-social-icon:last-child a,
-footer#colophon #footer-social .footer-social-icon:last-child a {
-	margin-right: 0;
-}
-#masthead #header-social .header-social-icon .fa,
-footer#colophon #footer-social .footer-social-icon .fa,
-#masthead #header-social .header-social-icon .fab,
-footer#colophon #footer-social .footer-social-icon .fab,
-#masthead #header-social .header-social-icon .fas,
-footer#colophon #footer-social .footer-social-icon .fas {
-	font-size: 1.5em;
-	line-height: 1.25em;
-	color: white;
-}
-#masthead #header-social .header-social-icon.header-facebook a,
-footer#colophon #footer-social .footer-social-icon.footer-facebook a {
-	background-color: rgb(59,89,152);
-}
-#masthead #header-social .header-social-icon.header-instagram a,
-footer#colophon #footer-social .footer-social-icon.footer-instagram a {
-	background-color: rgb(138,58,185);
-}
-#masthead #header-social .header-social-icon.header-twitter a,
-footer#colophon #footer-social .footer-social-icon.footer-twitter a {
-	background-color: rgb(29,161,242);
-}
-#masthead #header-social .header-social-icon.header-youtube a,
-footer#colophon #footer-social .footer-social-icon.footer-youtube a {
-	background-color: rgb(234,50,35);
-}
-#masthead #header-social .header-social-icon.header-linkedin a,
-footer#colophon #footer-social .footer-social-icon.footer-linkedin a {
-	background-color: rgb(40,103,178);
-}
-
 #homepage-header article {
 	border: 0.125em solid rgb(244,244,244) !important;
 	margin: 1em 0;
@@ -1041,15 +1044,9 @@ article .entry-content ul,
 .show-content ul {
 	list-style: disc outside none;
 }
-article .entry-content ol li,
-article .entry-content ul li,
-.page-content ol li,
-.page-content ul li {
+:is(article .entry-content, .page-content) :is(ol li, ul li) {
 	clear: both;
 	margin: 0.5em 0;
-}
-.page-content .k_jquery-ui ul li {
-	clear: none;
 }
 article .entry-content blockquote.pullquote {
 	padding: 0;
@@ -1167,8 +1164,7 @@ span.edit-link {
 #article-share .article-share-icon {
 	float: left;
 }
-#article-share .article-share-icon a,
-#article-share .article-share-icon button {
+#article-share .article-share-icon :is(a,button) {
 	display: block;
 	width: 4em;
 	height: 4em;
@@ -1179,9 +1175,7 @@ span.edit-link {
 	border: 0;
 	font-size: 100%;
 }
-#article-share .article-share-icon .fa,
-#article-share .article-share-icon .fab,
-#article-share .article-share-icon .fas {
+#article-share .article-share-icon :is(.fa,.fab,.fas) {
 	font-size: 3.25em;
 	line-height: 1.25em;
 	color: white;
@@ -1311,10 +1305,7 @@ span.edit-link {
 	display: block;
 	margin-bottom: 1em;
 }
-.iframe-embed iframe,
-.iframe-embed-tall iframe,
-.iframe-embed-vert iframe,
-.iframe-embed-pbs iframe {
+:is(.iframe-embed,.iframe-embed-tall,.iframe-vert,.iframe-embed-pbs) iframe {
 	display: block;
 	top: 0;
 	left: 0;
@@ -1347,6 +1338,9 @@ span.edit-link {
 	background-color: white;
 	padding: 1em;
 	margin: 0.125em 0 0 0;
+}
+.page-header.banner {
+	padding: 0;
 }
 .news .page-header .page-title {
 	color: rgb(0,98,136);
@@ -1659,21 +1653,14 @@ table.gsc-search-box td.gsc-input {
 	width: 90%;
 	background-color: white;
 }
-.column-left article .entry-header,
-.column-span article .entry-header,
-#float-wrap article .entry-header {
+:is(.column-left, .column-span, #float-wrap) article .entry-header {
 	padding: 1em 1.5em;
 }
-.column-left article .entry-header h3,
-.column-span article .entry-header h3,
-#float-wrap article .entry-header h3 {
+:is(.column-left, .column-span, #float-wrap) article .entry-header h3 {
 	text-transform: uppercase;
 }
-.column-left article .entry-header h2 a,
-.column-span article .entry-header h2 a,
-#float-wrap article .entry-header h2 a {
+:is(.column-left, .column-span, #float-wrap) article .entry-header h2 a {
 	font: 100 1.25em/1.25em var(--hpm-font-main);
-	/* color: #55565a; */
 }
 body.page-template-page-main-categories .page-header {
 	margin-bottom: 1em;
@@ -1760,165 +1747,6 @@ body.single #author-wrap .author-other-stories h2 a,
 	width: 100%;
 	background-color: white;
 	padding: 1em;
-}
-#twitter-home {
-	padding: 0 0 1em 0;
-	width: 100%;
-	background-color: white;
-}
-#twitter-home h1 {
-	width: 100%;
-	font-size: 1.25em;
-	padding: 0.5em 0.25em 0.5em 1em;
-	border-bottom: 1px solid #8e9090;
-	margin-bottom: 0;
-}
-#twitter-home h1:after {
-	content: '\f099';
-	display: inline-block;
-	-webkit-font-smoothing: antialiased;
-	font: 900 .75em/1 'Font Awesome 5 Free';
-	float: right;
-	padding-right: 1em;
-	position: relative;
-	top: 0.25em;
-	color: #1da1f2;
-}
-#twitter-home #twitter-wrap {
-	overflow-y: scroll;
-	height: 600px;
-	width: 100%;
-}
-#twitter-home .tweet {
-	padding: 1em;
-	border-bottom: 1px solid #8e9090;
-}
-#twitter-home .tweet .tweet {
-	border: 1px solid #eee;
-	border-radius: 10px;
-	margin: 1em 0;
-	background-color: #eee;
-}
-#twitter-home .tweet .tweet-photos {
-	width: 100%;
-	overflow: hidden;
-	margin-bottom: 1em;
-}
-#twitter-home .tweet .tweet-photos .tweet-photo {
-	height: 0;
-	position: relative;
-	padding: 1em;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	border: 1px solid transparent;
-	border-radius: 10px;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-1 .tweet-photo {
-	width: 100%;
-	padding-bottom: calc( 100%/1.777777778 );
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-2 .tweet-photo {
-	width: 49%;
-	padding-bottom: calc( 49%/0.888888889 );
-	float: left;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-2 .tweet-photo:nth-child(1) {
-	margin-right: 1%;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-2 .tweet-photo:nth-child(2) {
-	margin-left: 1%;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-3 .tweet-photo:nth-child(1) {
-	width: 49%;
-	padding-bottom: calc( 49%/0.83333333 );
-	float: left;
-	margin-right: 1%;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-4 .tweet-photo,
-#twitter-home .tweet .tweet-photos.tweet-photos-3 .tweet-photo:nth-child(2),
-#twitter-home .tweet .tweet-photos.tweet-photos-3 .tweet-photo:nth-child(3) {
-	width: 49%;
-	padding-bottom: calc( 49%/1.777777778 );
-	float: left;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-4 .tweet-photo:nth-child(1) {
-	margin-right: 1%;
-	margin-bottom: 10px;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-4 .tweet-photo:nth-child(2),
-#twitter-home .tweet .tweet-photos.tweet-photos-3 .tweet-photo:nth-child(2) {
-	margin-left: 1%;
-	margin-bottom: 10px;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-4 .tweet-photo:nth-child(3) {
-	margin-right: 1%;
-}
-#twitter-home .tweet .tweet-photos.tweet-photos-4 .tweet-photo:nth-child(4),
-#twitter-home .tweet .tweet-photos.tweet-photos-3 .tweet-photo:nth-child(3) {
-	margin-left: 1%;
-}
-#twitter-home .tweet .tweet-photo a,
-#twitter-home .tweet .tweet-avi a {
-	align-items: center;
-	justify-content: center;
-	align-content: center;
-	display: flex;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	position: absolute;
-}
-#twitter-home .tweet .tweet-photo a .fa,
-#twitter-home .tweet .tweet-photo a .fab,
-#twitter-home .tweet .tweet-photo a .fas {
-	font-size: 5em;
-	color: white;
-}
-#twitter-home .tweet .tweet-avi {
-	width: 48px;
-	height: 48px;
-	border-radius: 24px;
-	border-style: solid;
-	border-color: white;
-	position: relative;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: top center;
-	float: left;
-	margin: 0 0.5em 0.5em 0;
-}
-#twitter-home .tweet .tweet-head {
-	display: flex;
-}
-#twitter-home .tweet .tweet-head .tweet-user {
-	flex-grow: 2;
-	flex: 1;
-}
-#twitter-home .tweet .tweet-head .tweet-time-full {
-	color: #8e9090;
-}
-#twitter-home .tweet .tweet-head h2 {
-	font: 400 1.125em/1.125em var(--hpm-font-main);
-	margin: 0 0 0.125em 0;
-}
-#twitter-home .tweet .tweet-head h2 a {
-	color: #55565a;
-}
-#twitter-home .tweet .tweet-head h3 {
-	font: 400 1em/1.125em var(--hpm-font-main);
-	margin: 0;
-}
-#twitter-home .tweet p {
-	font-size: 0.9em;
-	margin-bottom: 0.75em;
-}
-#twitter-home .tweet p.tweet-rt {
-	font-size: 0.75em;
-	margin: 1em 0;
 }
 .article-wrap article.category-in-depth.felix-type-b,
 .article-wrap article.category-in-depth.felix-type-a {
@@ -2056,27 +1884,6 @@ body.single #author-wrap .author-other-stories h2 a,
 #author-wrap .author-image {
 	display: none;
 }
-#author-wrap .author-social {
-	overflow: hidden;
-}
-#author-wrap .author-social .social-icon {
-	float: left;
-}
-#author-wrap .author-social .social-icon a {
-	display: block;
-	width: 3em;
-	height: 3em;
-	background-color: rgb(227,237,241);
-	margin: 0.5em 1em 0.5em 0;
-	text-align: center;
-}
-#author-wrap .author-social .social-icon .fa,
-#author-wrap .author-social .social-icon .fab,
-#author-wrap .author-social .social-icon .fas {
-	font-size: 2.5em;
-	line-height: 1.25em;
-	color: #00b0bc;
-}
 #top-schedule-wrap nav, #top-schedule-wrap .podcasts {
 	width: 100%;
 	margin: 0 0 1em 0;
@@ -2136,10 +1943,10 @@ body.single #author-wrap .author-other-stories h2 a,
 }
 body.single-shows .page-header,
 body.page-template-page-series-tiles .page-header {
-	padding: 1em;
+	/* padding: 1em;
 	margin: 0;
 	width: 100%;
-	background-color: white;
+	background-color: white; */
 }
 body.single-shows .page-header .page-title,
 body.page-template-page-series-tiles .page-header .page-title {
@@ -2737,12 +2544,7 @@ body.single-shows #station-social .station-social-icon a {
 	margin: 0 0.25em;
 	text-align: center;
 }
-.page-header #station-social .station-social-icon .fa,
-body.single-shows #station-social .station-social-icon .fa,
-.page-header #station-social .station-social-icon .fas,
-body.single-shows #station-social .station-social-icon .fas,
-.page-header #station-social .station-social-icon .fab,
-body.single-shows #station-social .station-social-icon .fab {
+:is(.page-header #station-social .station-social-icon, body.single-shows #station-social .station-social-icon) :is(.fa,.fas,.fab) {
 	font-size: 2em;
 	line-height: 1.25em;
 	color: white;
@@ -2843,11 +2645,6 @@ body.single-shows #station-social .station-social-icon .fab {
 .tax-staff_category #search-results article.has_post_thumbnail .staff-wrap {
 	width: 75%;
 }
-.post-type-archive-staff #search-results article .social-icon,
-.tax-staff_category #search-results article .social-icon {
-	float: right;
-	padding: 0.25em;
-}
 .post-type-archive-staff #search-results article h2,
 .tax-staff_category #search-results article h2 {
 	margin-bottom: 0.5em;
@@ -2911,30 +2708,6 @@ footer#colophon .foot-logo img {
 	margin: 0 auto;
 	display: block;
 }
-footer#colophon #footer-social {
-	flex-flow: row nowrap;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-	display: flex;
-	margin-bottom: 1em;
-}
-/* footer#colophon #footer-social .footer-social-icon a {
-	display: block;
-	width: 2em;
-	height: 2em;
-	background-color: #fff;
-	margin-right: 1em;
-	text-align: center;
-}
-footer#colophon #footer-social .footer-social-icon:last-child a {
-	margin-right: 0;
-}
-footer#colophon #footer-social .footer-social-icon .fa {
-	font-size: 1.5em;
-	line-height: 1.25em;
-	color: #404040;
-} */
 footer#colophon p {
 	padding: 0 0 1em;
 	font: 400 0.85em/1.25em var(--hpm-font-main);
@@ -3205,15 +2978,6 @@ footer#colophon ul li a {
  * 15.0 Accessibility
  */
 
-/* Text meant only for screen readers */
-.says, .screen-reader-text, .hidden {
-	clip: rect(1px, 1px, 1px, 1px);
-	height: 1px;
-	overflow: hidden;
-	width: 1px;
-	position: absolute !important;
-}
-
 /* must have higher specificity than alternative color schemes inline styles */
 .site .skip-link {
 	background-color: #f5f5f5;
@@ -3233,7 +2997,6 @@ footer#colophon ul li a {
 	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
 	font: bold 14px/normal "Open Sans", sans-serif;
 }
-
 .site .skip-link:focus {
 	clip: auto;
 	height: auto;
@@ -3241,6 +3004,49 @@ footer#colophon ul li a {
 	top: 7px;
 	width: auto;
 	z-index: 100000;
+}
+.hidden,
+[hidden] {
+	display: none !important;
+}
+.sr-only,
+.screen-reader-text,
+.says {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+.sr-only.focusable:active,
+.sr-only.focusable:focus,
+.screen-reader-text.focusable:active,
+.screen-reader-text.focusable:focus,
+.says.focusable:active,
+.says.focusable:focus {
+	clip: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	position: static;
+	white-space: inherit;
+	width: auto;
+}
+.invisible {
+	visibility: hidden;
+}
+.clearfix::before,
+.clearfix::after {
+	content: " ";
+	display: table;
+}
+.clearfix::after,
+.clear {
+	clear: both;
 }
 
 /**
@@ -3424,11 +3230,6 @@ footer#colophon ul li a {
 	#top-schedule-wrap #national-news {
 		float: left;
 		width: 50%;
-	}
-	#top-schedule-wrap #twitter-home {
-		float: left;
-		width: 47.5%;
-		margin: 0 0 2em 2.5%;
 	}
 	.column-right .top-banner,
 	#top-schedule-wrap .top-banner {
@@ -4543,14 +4344,6 @@ footer#colophon ul li a {
 		float: none;
 		width: 100%;
 	}
-	#top-schedule-wrap #twitter-home {
-		float: none;
-		width: 100%;
-		margin: 0 0 2em 0;
-	}
-	#twitter-home h1 {
-		font-size: 1.5em;
-	}
 	#top-schedule-wrap #top-posts {
 		float: none;
 		width: 100%;
@@ -5298,12 +5091,6 @@ footer#colophon ul li a {
 	line-height: 0;
 	vertical-align: bottom;
 }
-.page-template-page-support-sub.matching-info .page-header img {
-	width: 60%;
-	margin: 0 20%;
-	padding: 0 0 0.25em 0;
-	line-height: 0;
-}
 .page-template-page-support-sub .page-content h2 {
 	padding: 0;
 	color: var(--main-red);
@@ -5380,9 +5167,6 @@ ul.passport-drop li.passport-hidden {
 	font: 700 1em/1em var(--hpm-font-main);
 	background-color: #59595B;
 }
-.matching-info .support-buttons a {
-	margin: 0 27.5%;
-}
 .support-buttons {
 	margin-bottom: 1em;
 	overflow: hidden;
@@ -5398,138 +5182,20 @@ ul.passport-drop li.passport-hidden {
 }
 .page-template-page-support-sub #vehicle-donation-main p {
 	color: #59595B;
-	text-align:  center;
 	font: 100 1.25em/1.125em var(--hpm-font-main);
 	margin-bottom: 1em;
-}
-.page-template-page-support-sub .page-content #vehicle-donation-main h2 {
-	color: #52C2DD;
-	padding: 1em 0 0.25em;
-	margin-bottom: 1em;
-	border-bottom: 2px solid #52C2DD;
-	text-align: center;
-	font-size: 1.5em;
 }
 .page-template-page-support-sub.matching-info .page-content #vehicle-donation-main h2 {
 	color: #016D94;
 	padding: 1em 0 0.25em;
 	margin-bottom: 1em;
 	border-bottom: 2px solid #016D94;
-	text-align: center;
 	font-size: 1.5em;
-}
-.page-template-page-support-sub .page-content #vehicle-donation-main .vehicle-contact h2 {
-	text-align: left;
-	border: 0;
-	padding: 1em 0 0 30px;
-	background-repeat: no-repeat;
-	background-size: 25px;
-	background-position-x: 0;
-	background-position-y: 20px;
-	background-image: url('https://cdn.hpm.io/assets/images/contact_icon2x.png');
-}
-.page-template-page-support-sub .page-content #vehicle-donation-main .vehicle-contact p {
-	text-align: left;
-}
-.vehicle-donation-how {
-	overflow: hidden;
-	flex-flow: row nowrap;
-	align-content: center;
-	align-items: center;
-	display: flex;
-}
-.vehicle-donation-how .vehicle-how-wrap {
-	padding: 1em;
-	float: left;
-	width: 70%;
-}
-.vehicle-donation-how .vehicle-how-wrap:first-child {
-	width: 30%;
-}
-.page-template-page-support-sub #vehicle-donation-main .vehicle-donation-how .vehicle-how-wrap p,
-.vehicle-donation-how .vehicle-how-wrap h3 {
-	text-align: left;
-}
-.page-template-page-support-sub #vehicle-donation-main .vehicle-donation-how .vehicle-how-wrap p.vehicle-aside {
-	color: #52C2DD;
-	font-size: 90%;
-}
-.vehicle-donation-how .vehicle-how-wrap img {
-	float: right;
-	max-height: 6em;
-}
-.vehicle-donation-how .vehicle-how-wrap h3 {
-	color: #52C2DD;
-	font-size: 1.25em;
-}
-.vehicle-donation-help-wrap {
-	overflow: hidden;
-}
-.vehicle-donation-help-wrap .vehicle-donation-help {
-	padding: 1em;
-}
-.vehicle-donation-help-wrap .vehicle-donation-help img {
-	width: 60%;
-	margin: 0 20% 1em;
-}
-.vehicle-donation-help h3 {
-	text-align: center;
-	color: #52C2DD;
-	text-transform: uppercase;
-}
-.page-template-page-support-sub.matching-info .alignleft {
-	overflow: hidden;
-}
-.page-template-page-support-sub.matching-info .alignleft img {
-	width: 25%;
-	padding: 1em 1em 0 0;
-	float: left;
-}
-.page-template-page-support-sub.matching-info #vehicle-donation-main .alignleft p {
-	text-align: left;
-}
-.page-template-page-support-sub.matching-info .page-content #vehicle-donation-main .vehicle-contact h2 {
-	background-position-y: 26px;
-	margin: 0 0 0.5em 0;
-	color: #52C2DD;
-}
-.page-template-page-support-sub.matching-info .vehicle-contact .contact-email {
-	border: 0;
-	padding: 0 0 0 30px;
-	background-repeat: no-repeat;
-	background-size: 25px;
-	background-position-x: 0;
-	background-position-y: 5px;
-	background-image: url('https://cdn.hpm.io/assets/images/email_icon2x.png');
-}
-.page-template-page-support-sub.matching-info .vehicle-contact .contact-phone {
-	border: 0;
-	padding: 0 0 0 30px;
-	background-repeat: no-repeat;
-	background-size: 19px;
-	background-position-x: 4px;
-	background-position-y: 0px;
-	background-image: url('https://cdn.hpm.io/assets/images/phone_icon2x.png');
 }
 @media screen and (min-width: 34em) {
 	.support-buttons a {
 		width: 35%;
 		margin: 0 7.5% 1em;
-	}
-	.matching-info .support-buttons a {
-		margin: 0 32.5%;
-	}
-	.page-template-page-support-sub .page-content #vehicle-donation-main h2 {
-		width: 75%;
-		margin: 0 12.5% 1em;
-	}
-	.page-template-page-support-sub.matching-info .page-content #vehicle-donation-main h2 {
-		width: 80%;
-		margin: 0 10% 1em;
-	}
-	.vehicle-donation-how {
-		width: 80%;
-		margin: 0 10%;
 	}
 	.page-template-page-support-sub .page-header {
 		flex-flow: row nowrap;
@@ -5547,44 +5213,9 @@ ul.passport-drop li.passport-hidden {
 		width: 70%;
 		padding-bottom: 1em;
 	}
-	.page-template-page-support-sub.matching-info .page-header img {
-		width: 25%;
-		margin: 0;
-		padding: 0 0 0.25em 0;
-	}
-	.page-template-page-support-sub.matching-info .page-header-wrap {
-		width: 75%;
-		padding-bottom: 1em;
-	}
-	.vehicle-donation-help-wrap {
-		overflow: hidden;
-	}
-	.vehicle-donation-help-wrap .vehicle-donation-help {
-		float: left;
-		width: 33.33333%;
-	}
-	.vehicle-donation-how .vehicle-how-wrap {
-		width: 60%;
-	}
-	.vehicle-donation-how .vehicle-how-wrap:first-child {
-		width: 40%;
-	}
-	.vehicle-donation-how .vehicle-how-wrap img {
-		max-width: 7em;
-	}
 	.vehicle-contact, .support-sub-block {
 		width: 80%;
 		margin: 0 10% 1em;
-	}
-	.page-template-page-support-sub .page-content #vehicle-donation-main .vehicle-contact h2 {
-		margin: 0 0 1em 0;
-	}
-	.page-template-page-support-sub.matching-info .alignleft {
-		float: left;
-		width: 45%;
-	}
-	.page-template-page-support-sub.matching-info .alignleft img {
-		width: 30%;
 	}
 }
 @media screen and (min-width: 52.5em) {
@@ -5608,9 +5239,6 @@ ul.passport-drop li.passport-hidden {
 		width: 50%;
 		padding: 0;
 	}
-	.page-template-page-support-sub.matching-info .page-header-wrap {
-		width: 65%;
-	}
 	.page-template-page-support-sub .page-content {
 		width: 80%;
 		margin: 0 10%;
@@ -5627,31 +5255,10 @@ ul.passport-drop li.passport-hidden {
 		width: 80%;
 		margin: 0 10% 1em;
 	}
-	.page-template-page-support-sub .page-content #vehicle-donation-main h2 {
-		width: 60%;
-		margin: 0 20% 1em;
-	}
-	.page-template-page-support-sub.matching-info .page-content #vehicle-donation-main h2 {
-		width: 80%;
-		margin: 0 10% 1em;
-	}
-	.page-template-page-support-sub.matching-info .page-content #vehicle-donation-main .vehicle-contact h2 {
-		margin: 0 0 1em 0;
-		width: 100%;
-	}
 }
 @media screen and (min-width: 64.0625em) {
 	.page-template-page-support-sub .page-header img {
 		width: 30%;
-	}
-	.page-template-page-support-sub.matching-info .page-header img {
-		width: 22%;
-	}
-	.page-template-page-support-sub.matching-info .page-header-wrap {
-		width: 60%;
-	}
-	.page-template-page-support-sub.matching-info .alignleft img {
-		width: 25%;
 	}
 }
 
@@ -6407,48 +6014,6 @@ body.single-embeds .container {
 
 .search-active {
 	display: block;
-}
-.page-banner {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	height: 0;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center center;
-}
-.page-banner.ssac-banner {
-	padding-bottom: calc(100%/3);
-	display: flex;
-	align-items: center;
-	position: relative;
-}
-.page-banner.ssac-banner div {
-	display: flex;
-	align-items: center;
-	padding: 2em;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	width: 100%;
-	height: 100%;
-}
-.page-banner.ssac-banner .page-title {
-	color: white;
-	font-weight: 700;
-	margin: 0;
-}
-@media screen and (min-width: 34em) {
-	.page-banner.ssac-banner {
-		padding-bottom: calc(100%/5.419);
-	}
-}
-@media screen and (min-width: 52.5em) {
-	.page-banner.ssac-banner .page-title {
-		font-size: 300%;
-	}
 }
 .credits-overlay {
 	display: none;

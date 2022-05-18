@@ -18,8 +18,7 @@
 				<div id="post-body-content">
 					<div class="meta-box-sortables ui-sortable">
 						<div class="postbox">
-							<div class="handlediv" title="Click to toggle"><br></div>
-							<h2 class="hndle"><span><?php _e('Ownership Information', 'hpm-podcasts' ); ?></span></h2>
+							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Ownership Information', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('iTunes and other podcasting directories ask for you to give a name and email address of the "owner" of the podcast, which can be a single person or an organization.', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
@@ -37,8 +36,7 @@
 					</div>
 					<div class="meta-box-sortables ui-sortable">
 						<div class="postbox">
-							<div class="handlediv" title="Click to toggle"><br></div>
-							<h2 class="hndle"><span><?php _e('User Roles', 'hpm-podcasts' ); ?></span></h2>
+							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('User Roles', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('Select all of the user roles that you would like to be able to manage your podcast feeds.  Anyone
 										who can create new posts can create an episode of a podcast, but only the roles selected here can
@@ -62,8 +60,7 @@
 					</div>
 					<div class="meta-box-sortables ui-sortable">
 						<div class="postbox">
-							<div class="handlediv" title="Click to toggle"><br></div>
-							<h2 class="hndle"><span><?php _e('Background Tasks', 'hpm-podcasts' ); ?></span></h2>
+							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Background Tasks', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('To save server resources, we use a cron job to generate a flat XML file.  Use the options below to choose how often you want to run that job.', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
@@ -85,8 +82,7 @@
 					</div>
 					<div class="meta-box-sortables ui-sortable">
 						<div class="postbox">
-							<div class="handlediv" title="Click to toggle"><br></div>
-							<h2 class="hndle"><span><?php _e('Upload Options', 'hpm-podcasts' ); ?></span></h2>
+							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Upload Options', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('**NOTE**: Please do not include any leading or trailing slashes in your domains, URLs, folder names, etc. You can include slashes within them (e.g. you might store your files in the "files/podcasts" folder, but the public URL is "http://example.com/podcasts").',
 										'hpm-podcasts' );
@@ -116,8 +112,7 @@
 					</div>
 					<div id="hpm-sftp" class="meta-box-sortables ui-sortable hpm-uploads">
 						<div class="postbox">
-							<div class="handlediv" title="Click to toggle"><br></div>
-							<h2 class="hndle"><span><?php _e('FTP Credentials', 'hpm-podcasts' ); ?></span></h2>
+							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('FTP Credentials', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e("If you aren't comfortable storing your FTP password in your database, you can define it as a Wordpress default.  Add the following line to your wp-config.php file:",	'hpm-podcasts' );
 									?></p>
@@ -157,29 +152,7 @@
 					</div>
 					<div class="meta-box-sortables ui-sortable">
 						<div class="postbox">
-							<div class="handlediv" title="Click to toggle"><br></div>
-							<h2 class="hndle"><span><?php _e('Force HTTPS?', 'hpm-podcasts' ); ?></span></h2>
-							<div class="inside">
-								<p><?php _e('Apple Podcasts/iTunes, as well as other podcasting directories, are starting to favor or even require HTTPS for your feeds and media enclosures.  If you\'re already using HTTPS, or if you want to force your feeds and the associated background processes to use HTTPS, then check the box below.', 'hpm-podcasts' ); ?></p>
-								<table class="form-table">
-									<tr valign="top">
-										<th scope="row"><label for="hpm_podcast_settings[https]"><?php _e('Force HTTPS in Feed?', 'hpm-podcasts' );
-												?></label></th>
-										<td><input type="checkbox" name="hpm_podcast_settings[https]" value="force-https" class="regular-text"<?php
-											if ( !empty( $pods['https'] ) ) :
-												if ( $pods['https'] == 'force-https' ) :
-													echo ' checked';
-												endif;
-											endif; ?>/></td>
-									</tr>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="meta-box-sortables ui-sortable">
-						<div class="postbox">
-							<div class="handlediv" title="Click to toggle"><br></div>
-							<h2 class="hndle"><span><?php _e('Feed Refresh', 'hpm-podcasts' ); ?></span></h2>
+							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Feed Refresh', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e("Made some changes to your podcast feeds and don't want to wait for the cron job to fire? Click the button below to force a refresh.", 'hpm-podcasts'	); ?></p>
 								<p><em>Feeds last refreshed: <span class="hpm-last-refresh-time"><?php echo $last_refresh; ?></span></em></p>

@@ -51,14 +51,6 @@ function hpm_versions() {
 }
 
 /*
- * Add script so that javascript is detected and saved as a class on the body element
- */
-function hpmv2_javascript_detection() {
-	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
-}
-add_action( 'wp_head', 'hpmv2_javascript_detection', 0 );
-
-/*
  * Removes unnecessary metadata from the document head
  */
 remove_action( 'wp_head', 'wlwmanifest_link' );
@@ -383,8 +375,7 @@ function update_post_meta_info( $original_post_id, $revised_post ) {
  * Authorization function for accessing Google Analytics API
  * @return Google_Service_Analytics
  */
-function initializeAnalytics()
-{
+function initializeAnalytics() {
 	$KEY_FILE_LOCATION = SITE_ROOT . '/client_secrets.json';
 
 	// Create and configure a new client object.
@@ -452,14 +443,14 @@ endif;
  * @return mixed|string
  * Pull NPR API articles and save them to a transient
  */
-function hpm_nprapi_output() {
-	$npr = get_transient( 'hpm_nprapi' );
+function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
+	$npr = get_transient( 'hpm_nprapi_'.$api_id );
 	if ( !empty( $npr ) ) :
 		return $npr;
 	endif;
 	$output = '';
 	$api_key = get_option( 'ds_npr_api_key' );
-	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=1001&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=4&apiKey=" . $api_key ) );
+	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
 	if ( is_wp_error( $remote ) ) :
 		return "<p></p>";
 	else :
@@ -477,7 +468,7 @@ function hpm_nprapi_output() {
 		$output .= '<h2><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/">'.$story['title']['$text'].'</a></h2><p class="screen-reader-text">'
 		           .$story['teaser']['$text'].'</p></div></article>';
 	endforeach;
-	set_transient( 'hpm_nprapi', $output, 300 );
+	set_transient( 'hpm_nprapi_'.$api_id, $output, 300 );
 	return $output;
 }
 
@@ -694,7 +685,7 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api, TRUE );
 					if ( !empty( $json['list']['story'] ) ) :
-						$output .= "<div class=\"progsegment\"><h4>Segments for {$date}</h4><ul>";
+						$output .= "<div class=\"progsegment\"><button aria-label=\"Programming Segments for {$date}\">Segments for {$date}</button><ul>";
 						foreach ( $json['list']['story'] as $j ) :
 							foreach ( $j['link'] as $jl ) :
 								if ( $jl['type'] == 'html' ) :
@@ -711,7 +702,7 @@ function hpm_segments( $name, $date ) {
 		elseif ( $shows[$name]['source'] == 'regex' ) :
 			if ( $name == 'BBC World Service' ) :
 				$offset = str_replace( '-', '', get_option( 'gmt_offset' ) );
-				$output .= "<div class=\"progsegment\"><h4>Schedule</h4><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></div>";
+				$output .= "<div class=\"progsegment\"><button aria-label=\"BBC World Service Schedule\">Schedule</button><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></div>";
 				return $output;
 			endif;
 		elseif ( $shows[$name]['source'] == 'wp-rss' ) :
@@ -761,7 +752,7 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api );
 					if ( !empty( $json ) ) :
-						$output .= "<div class=\"progsegment\"><h4>Segments for {$date}</h4><ul>";
+						$output .= "<div class=\"progsegment\"><button aria-label=\"Segments for {$date}\">Segments for {$date}</button><ul>";
 						foreach ( $json as $j ) :
 							$output .= '<li><a href="'.$j->link.'" target="_blank">'.$j->title->rendered.'</a></li>';
 						endforeach;
@@ -782,7 +773,7 @@ function hpm_segments( $name, $date ) {
 					'ignore_sticky_posts' => 1
 				] );
 				if ( $hm->have_posts() ) :
-					$output .= "<div class=\"progsegment\"><h4>Segments for {$date}</h4><ul>";
+					$output .= "<div class=\"progsegment\"><button aria-label=\"Segments for {$date}\">Segments for {$date}</button><ul>";
 					while( $hm->have_posts() ) :
 						$hm->the_post();
 						$output .= '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';

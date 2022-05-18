@@ -70,16 +70,19 @@ function hpm_header_image_meta_box( $object, $box ) {
 			<div class="hpm-page-banner-image" id="hpm-page-banner-mobile"<?php echo $hpm_mobile_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="mobile">Mobile</button>
 			<input value="<?php echo $hpm_page_options['banner']['mobile']; ?>" type="hidden" id="hpm-page-banner-mobile-id" name="hpm-page-banner-mobile-id" />
+			<?php echo ( !empty( $hpm_page_options['banner']['mobile'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="mobile" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-tablet"<?php echo $hpm_tablet_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="tablet">Tablet</button>
 			<input value="<?php echo $hpm_page_options['banner']['tablet']; ?>" type="hidden" id="hpm-page-banner-tablet-id" name="hpm-page-banner-tablet-id" />
+			<?php echo ( !empty( $hpm_page_options['banner']['tablet'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="tablet" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-desktop"<?php echo $hpm_desktop_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="desktop">Desktop</button>
 			<input value="<?php echo $hpm_page_options['banner']['desktop']; ?>" type="hidden" id="hpm-page-banner-desktop-id" name="hpm-page-banner-desktop-id" />
+			<?php echo ( !empty( $hpm_page_options['banner']['desktop'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
 		</div>
 	</div>
 	<script>
@@ -108,6 +111,12 @@ function hpm_header_image_meta_box( $object, $box ) {
 					$('#hpm-page-banner-'+size+'-id').val(attachId);
 				});
 				frame.open();
+			});
+			$('.hpm-page-banner-remove').click(function(e){
+				e.preventDefault();
+				var size = $(this).attr('data-show');
+				$('#hpm-page-banner-'+size).css( 'background-image', '' )
+				$('#hpm-page-banner-'+size+'-id').val('');
 			});
 		});
 	</script>
@@ -247,16 +256,58 @@ function hpm_series_save_meta( $post_id, $post ) {
 		update_post_meta( $post_id, 'hpm_page_options', $hpm_page_options );
 	endif;
 }
+
+// function hpm_head_banners( $id ) {
+// 	$postscript = get_post_meta( $id, 'postscript_meta', true );
+// 	if ( !empty( $postscript ) && $postscript['class_body'] == 'support-ssac' ) :
+// 		$page_head_class = ' screen-reader-text';
+// 		echo '<div class="page-banner ssac-banner"><div><h1 class="page-title">' . get_the_title( $id ) . '</div></div>' .
+// 			'<style>.ssac-banner { background-image: url("' . wp_get_attachment_url( get_post_meta( $id, '_thumbnail_id', true ) ) . '"); }</style>';
+// 		return $page_head_class;
+// 	endif;
+// 	$options = get_post_meta( $id, 'hpm_page_options', true );
+// 	$page_head_style = $page_head_class = '';
+// 	$count = 0;
+// 	if ( !empty( $options ) ) :
+// 		foreach ( $options['banner'] as $op ) :
+// 			if ( !empty( $op ) ) :
+// 				$count++;
+// 			endif;
+// 		endforeach;
+// 	endif;
+// 	if ( $count > 1 ) :
+// 		echo '<div class="page-banner"></div>';
+// 		$page_head_class = ' screen-reader-text';
+// 		foreach ( $options['banner'] as $bk => $bv ) :
+// 			if ( !empty( $bv ) ) :
+// 				if ( $bk == 'mobile' ) :
+// 					$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/1.5); }";
+// 				elseif ( $bk == 'tablet' ) :
+// 					$page_head_style .= " @media screen and (min-width: 34em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/4); } }";
+// 				elseif ( $bk == 'desktop' ) :
+// 					$page_head_style .= " @media screen and (min-width: 52.5em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); } }";
+// 				endif;
+// 			endif;
+// 		endforeach;
+// 	elseif ( $count == 1 ) :
+// 		echo '<div class="page-banner"></div>';
+// 		$page_head_class = ' screen-reader-text';
+// 		foreach ( $options['banner'] as $bk => $bv ) :
+// 			if ( !empty( $bv ) ) :
+// 				$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); }";
+// 			endif;
+// 		endforeach;
+// 	endif;
+// 	if ( !empty( $page_head_style ) ) :
+// 		echo "<style>".$page_head_style."</style>";
+// 	endif;
+// 	return $page_head_class;
+// }
+
 function hpm_head_banners( $id ) {
-	$postscript = get_post_meta( $id, 'postscript_meta', true );
-	if ( !empty( $postscript ) && $postscript['class_body'] == 'support-ssac' ) :
-		$page_head_class = ' screen-reader-text';
-		echo '<div class="page-banner ssac-banner"><div><h1 class="page-title">' . get_the_title( $id ) . '</div></div>' .
-			'<style>.ssac-banner { background-image: url("' . wp_get_attachment_url( get_post_meta( $id, '_thumbnail_id', true ) ) . '"); }</style>';
-		return $page_head_class;
-	endif;
+	$temp = $output = '';
 	$options = get_post_meta( $id, 'hpm_page_options', true );
-	$page_head_style = $page_head_class = '';
+
 	$count = 0;
 	if ( !empty( $options ) ) :
 		foreach ( $options['banner'] as $op ) :
@@ -265,31 +316,28 @@ function hpm_head_banners( $id ) {
 			endif;
 		endforeach;
 	endif;
-	if ( $count > 1 ) :
-		echo '<div class="page-banner"></div>';
-		$page_head_class = ' screen-reader-text';
+
+	if ( $count > 0 ) :
+		$temp .= '<div class="page-banner"><picture>';
 		foreach ( $options['banner'] as $bk => $bv ) :
 			if ( !empty( $bv ) ) :
 				if ( $bk == 'mobile' ) :
-					$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/1.5); }";
+					$temp .= '<source srcset="' . wp_get_attachment_url( $bv ) . '" media="(max-width: 34em)" />';
 				elseif ( $bk == 'tablet' ) :
-					$page_head_style .= " @media screen and (min-width: 34em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/4); } }";
+					$temp .= '<source srcset="' . wp_get_attachment_url( $bv ) . '" media="(max-width: 52.5em)" />';
 				elseif ( $bk == 'desktop' ) :
-					$page_head_style .= " @media screen and (min-width: 52.5em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); } }";
+					$temp .= '<source srcset="' . wp_get_attachment_url( $bv ) . '" />';
 				endif;
 			endif;
 		endforeach;
-	elseif ( $count == 1 ) :
-		echo '<div class="page-banner"></div>';
-		$page_head_class = ' screen-reader-text';
-		foreach ( $options['banner'] as $bk => $bv ) :
-			if ( !empty( $bv ) ) :
-				$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); }";
-			endif;
-		endforeach;
+		$default = $options['banner']['desktop'] ?? $options['banner']['tablet'] ?? $options['banner']['mobile'];
+		$temp .= '<img src="' . wp_get_attachment_url( $default ) . '" alt="' . get_the_title( $id ) . ' page banner" /></picture></div>';
 	endif;
-	if ( !empty( $page_head_style ) ) :
-		echo "<style>".$page_head_style."</style>";
-	endif;
-	return $page_head_class;
+
+	$output =
+		'<header class="page-header' . ( !empty( $temp ) ? ' banner' : '' ) . '">' .
+			'<h1 class="page-title"' . ( !empty( $temp ) ? ' hidden' : '' ) . '>' . get_the_title( $id ) . '</h1>' .
+			$temp .
+		'</header>';
+	return $output;
 }

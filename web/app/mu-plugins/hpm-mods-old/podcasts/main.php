@@ -44,13 +44,14 @@ class HPM_Podcasts {
 		add_action( 'load-post-new.php', [ $this, 'meta_setup' ] );
 
 		// Register page templates
-		add_filter( 'archive_template', [ $this, 'archive_template' ] );
-		add_filter( 'single_template', [ $this, 'single_template' ] );
 		remove_all_actions( 'do_feed_rss2' );
 		add_action( 'do_feed_rss2', [ $this, 'feed_template' ], 10, 1 );
 
 		// Create menu in Admin Dashboard
 		add_action( 'admin_menu', [ $this, 'create_menu' ] );
+
+
+		add_action( 'pre_get_posts', [ $this, 'meta_query' ] );
 
 		// Add filter for the_content to display podcast tune-in/promo
 		add_filter( 'the_content', [ $this, 'article_footer' ] );
@@ -112,7 +113,7 @@ class HPM_Podcasts {
 				'permission_callback' => function() {
 					return true;
 				}
-			 ] );
+			] );
 
 			register_rest_route( 'hpm-podcast/v1', '/upload/(?P<id>[\d]+)/progress', [
 				'methods'  => 'GET',
@@ -178,54 +179,9 @@ class HPM_Podcasts {
 		return $new_value;
 	}
 
-	public function single_template( $single ) {
-		global $post;
-		if ( $post->post_type == "podcasts" ) :
-			if ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-podcasts.php' ) ) :
-				return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-podcasts.php';
-			else :
-				return HPM_PODCAST_PLUGIN_DIR . 'templates' . DIRECTORY_SEPARATOR . 'single-podcasts.php';
-			endif;
-		elseif ( $post->post_type == "shows" ) :
-			$page_temp = get_post_meta( $post->ID, '_wp_page_template', true );
-			if ( !empty( $page_temp ) && file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . $page_temp ) ) :
-				return get_stylesheet_directory() . DIRECTORY_SEPARATOR . $page_temp;
-			elseif ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-shows-' . $post->post_name . '.php' ) ) :
-				return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-shows-' . $post->post_name . '.php';
-			elseif ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-shows.php' ) ) :
-				return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-shows.php';
-			else :
-				return HPM_PODCAST_PLUGIN_DIR . 'templates' . DIRECTORY_SEPARATOR . 'single-shows.php';
-			endif;
-		endif;
-		return $single;
-	}
-
-	public function archive_template( $archive_template ) {
-		global $post;
-		if ( is_post_type_archive ( 'podcasts' ) ) :
-			if ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'archive-podcasts.php' ) ) :
-				return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'archive-podcasts.php';
-			else :
-				return HPM_PODCAST_PLUGIN_DIR . 'templates' . DIRECTORY_SEPARATOR . 'archive-podcasts.php';
-			endif;
-		elseif ( is_post_type_archive ( 'shows' ) ) :
-			if ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'archive-shows.php' ) ) :
-				return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'archive-shows.php';
-			else :
-				return HPM_PODCAST_PLUGIN_DIR . 'templates' . DIRECTORY_SEPARATOR . 'archive-shows.php';
-			endif;
-		endif;
-		return $archive_template;
-	}
-
 	public function feed_template() {
 		if ( 'podcasts' === get_query_var( 'post_type' ) ) :
-			if ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-podcasts.php' ) ) :
-				load_template( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-podcasts.php' );
-			else :
-				load_template( HPM_PODCAST_PLUGIN_DIR . 'templates' . DIRECTORY_SEPARATOR . 'single-podcasts.php' );
-			endif;
+			load_template( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-podcasts.php' );
 		elseif ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'feed-rss2.php' ) ) :
 			load_template( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'feed-rss2.php' );
 		else :
@@ -578,6 +534,32 @@ class HPM_Podcasts {
 		]);
 	}
 
+	public function meta_query( $query ) {
+		if ( $query->is_archive() && $query->is_main_query() && !is_admin() ) :
+			if ( $query->get( 'post_type' ) == 'podcasts' || $query->get( 'post_type' ) == 'shows' ) :
+				$query->set( 'tag__not_in', [ 48498 ] );
+			endif;
+		endif;
+	}
+
+	public static function list_inactive( $type ) {
+		echo '<h2>Inactive</h2>';
+		$items = new WP_Query([
+			'post_type' => $type,
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+			'tag' => 'inactive',
+			'orderby' => 'post_title',
+			'order' => 'ASC'
+		]);
+		if ( $items->have_posts() ) :
+			while ( $items->have_posts() ) :
+				$items->the_post();
+				get_template_part( 'content', $type );
+			endwhile;
+		endif;
+	}
+
 	/**
 	 * Add capabilities to the selected roles (default is admin only)
 	 */
@@ -696,12 +678,7 @@ class HPM_Podcasts {
 	public function generate( WP_REST_Request $request = null ) {
 		$pods = $this->options;
 		$ds = DIRECTORY_SEPARATOR;
-		if ( !empty( $pods['https'] ) ) :
-			$protocol = 'https://';
-			$_SERVER['HTTPS'] = 'on';
-		else :
-			$protocol = 'http://';
-		endif;
+		$protocol = 'https://';
 		$error = '';
 		$dir = wp_upload_dir();
 		$json = [
@@ -731,11 +708,8 @@ class HPM_Podcasts {
 				'value' => 'internal'
 			]]
 		]);
-		if ( file_exists( get_stylesheet_directory() . $ds . 'podcast.xsl' ) ) :
-			$xsl = get_stylesheet_directory() . $ds . 'podcast.xsl';
-		else :
-			$xsl = HPM_PODCAST_PLUGIN_URL . 'templates' . $ds . 'podcast.xsl';
-		endif;
+
+		$xsl = get_stylesheet_directory_uri() . $ds . 'podcast.xsl';
 
 		if ( !empty( $pods['recurrence'] ) ) :
 			if ( $pods['recurrence'] == 'hpm_5min' ) :
@@ -879,7 +853,7 @@ class HPM_Podcasts {
 				endforeach;
 				$pod_desc = get_post_meta( $epid, 'hpm_podcast_ep_meta', true );
 
-				$media_file = str_replace( [ 'http://', 'https://' ], [ $protocol, $protocol ], $a_meta['url'] );
+				$media_file = str_replace( 'http://', $protocol, $a_meta['url'] );
 
 				if ( !empty( $pod_desc['title'] ) ) :
 					$item_title = $pod_desc['title'];
@@ -1100,68 +1074,62 @@ class HPM_Podcasts {
 	}
 
 	public static function show_social( $pod_id = '', $lede = false, $show_id = '' ) {
-		$temp = $output = '';
+		$temp = $output = $template = '';
 		$badges = 'https://cdn.hpm.io/assets/images/podcasts/';
+		if ( !empty( $show_id ) ) :
+			$template = get_post_meta( $show_id, '_wp_page_template', true );
+		endif;
 
-		if ( !empty( $pod_id ) ) :
+		if ( !empty( $pod_id ) && $template !== 'single-shows-podcast.php' ) :
 			$pod_link = get_post_meta( $pod_id, 'hpm_pod_link', true );
 			if ( !empty( $pod_link['itunes'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['itunes'].'" target="_blank" title="Subscribe on Apple Podcasts"><img src="'.$badges.'apple.png" alt="Subscribe on Apple Podcasts" title="Subscribe on Apple Podcasts"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['itunes'].'" rel="noopener" target="_blank" title="Subscribe on Apple Podcasts"><img src="'.$badges.'apple.png" alt="Subscribe on Apple Podcasts" title="Subscribe on Apple Podcasts"></a></li>';
 			endif;
 			if ( !empty( $pod_link['gplay'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['gplay'].'" target="_blank" title="Subscribe on Google Podcasts"><img src="'.$badges.'google_podcasts.png" alt="Subscribe on Google Podcasts" title="Subscribe on Google Podcasts"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['gplay'].'" rel="noopener" target="_blank" title="Subscribe on Google Podcasts"><img src="'.$badges.'google_podcasts.png" alt="Subscribe on Google Podcasts" title="Subscribe on Google Podcasts"></a></li>';
 			endif;
 			if ( !empty( $pod_link['spotify'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['spotify'].'" target="_blank" title="Subscribe on Spotify"><img src="'.$badges.'spotify.png" alt="Subscribe on Spotify" title="Subscribe on Spotify"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['spotify'].'" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="'.$badges.'spotify.png" alt="Subscribe on Spotify" title="Subscribe on Spotify"></a></li>';
 			endif;
 			if ( !empty( $pod_link['stitcher'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['stitcher'].'" target="_blank" title="Subscribe on Stitcher"><img src="'.$badges.'stitcher.png" alt="Subscribe on Stitcher" title="Subscribe on Stitcher"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['stitcher'].'" rel="noopener" target="_blank" title="Subscribe on Stitcher"><img src="'.$badges.'stitcher.png" alt="Subscribe on Stitcher" title="Subscribe on Stitcher"></a></li>';
 			endif;
 			if ( !empty( $pod_link['tunein'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['tunein'].'" target="_blank" title="Subscribe on TuneIn"><img src="'.$badges.'tunein.png" alt="Subscribe on TuneIn" title="Subscribe on TuneIn"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['tunein'].'" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="'.$badges.'tunein.png" alt="Subscribe on TuneIn" title="Subscribe on TuneIn"></a></li>';
 			endif;
 			if ( !empty( $pod_link['iheart'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['iheart'].'" target="_blank" title="Subscribe on iHeart"><img src="'.$badges.'iheart_radio.png" alt="Subscribe on iHeart" title="Subscribe on iHeart"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['iheart'].'" rel="noopener" target="_blank" title="Subscribe on iHeart"><img src="'.$badges.'iheart_radio.png" alt="Subscribe on iHeart" title="Subscribe on iHeart"></a></li>';
 			endif;
 			if ( !empty( $pod_link['pandora'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['pandora'].'" target="_blank" title="Subscribe on Pandora"><img src="'.$badges.'pandora.png" alt="Subscribe on Pandora" title="Subscribe on Pandora"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['pandora'].'" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="'.$badges.'pandora.png" alt="Subscribe on Pandora" title="Subscribe on Pandora"></a></li>';
 			endif;
 			if ( !empty( $pod_link['radiopublic'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['radiopublic'].'" target="_blank" title="Subscribe on RadioPublic"><img src="'.$badges.'radio_public.png" alt="Subscribe on RadioPublic" title="Subscribe on RadioPublic"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['radiopublic'].'" rel="noopener" target="_blank" title="Subscribe on RadioPublic"><img src="'.$badges.'radio_public.png" alt="Subscribe on RadioPublic" title="Subscribe on RadioPublic"></a></li>';
 			endif;
 			if ( !empty( $pod_link['pcast'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['pcast'].'" target="_blank" title="Subscribe on Pocket Casts"><img src="'.$badges.'pocketcasts.png" alt="Subscribe on Pocket Casts" title="Subscribe on Pocket Casts"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['pcast'].'" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="'.$badges.'pocketcasts.png" alt="Subscribe on Pocket Casts" title="Subscribe on Pocket Casts"></a></li>';
 			endif;
 			if ( !empty( $pod_link['overcast'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['overcast'].'" target="_blank" title="Subscribe on Overcast"><img src="'.$badges.'overcast.png" alt="Subscribe on Overcast" title="Subscribe on Overcast"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['overcast'].'" rel="noopener" target="_blank" title="Subscribe on Overcast"><img src="'.$badges.'overcast.png" alt="Subscribe on Overcast" title="Subscribe on Overcast"></a></li>';
 			endif;
 			if ( !empty( $pod_link['amazon'] ) ) :
-				$temp .= '<li><a href="'.$pod_link['amazon'].'" target="_blank" title="Subscribe on Amazon Music"><img src="'.$badges.'amazon.png" alt="Subscribe on Amazon Music" title="Subscribe on Amazon Music"></a></li>';
+				$temp .= '<li><a href="'.$pod_link['amazon'].'" rel="noopener" target="_blank" title="Subscribe on Amazon Music"><img src="'.$badges.'amazon.png" alt="Subscribe on Amazon Music" title="Subscribe on Amazon Music"></a></li>';
 			endif;
 			$temp .= '<li><a href="' . ( !empty( $pod_link['rss-override'] ) ? $pod_link['rss-override'] : get_permalink( $pod_id ) ).'" target="_blank" title="Subscribe via RSS"><img src="'.$badges.'rss.png" alt="Subscribe via RSS" title="Subscribe via RSS"></a></li>';
 		endif;
 		if ( !empty( $show_id ) ) :
 			$social = get_post_meta( $show_id, 'hpm_show_social', true );
-			if ( !empty( $social['snapchat'] ) ) :
-				$temp .= '<li class="station-social-icon"><a href="http://www.snapchat.com/add/'.$social['snapchat'].'" target="_blank" title="Snapchat"><span class="fab fa-snapchat-ghost" aria-hidden="true"></span></a></li>';
-			endif;
-			if ( !empty( $social['tumblr'] ) ) :
-				$temp .= '<li class="station-social-icon"><a href="'.$social['tumblr'].'" target="_blank" title="Tumblr"><span class="fab fa-tumblr" aria-hidden="true"></span></a></li>';
-			endif;
 			if ( !empty( $social['insta'] ) ) :
-				$temp .= '<li class="station-social-icon"><a href="https://instagram.com/' . $social['insta'].'" target="_blank" title="Instagram"><span class="fab fa-instagram" aria-hidden="true"></span></a></li>';
-			endif;
-			if ( !empty( $social['sc'] ) ) :
-				$temp .= '<li class="station-social-icon"><a href="https://soundcloud.com/'.$social['sc'].'" target="_blank" title="SoundCloud"><span class="fab fa-soundcloud" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon instagram"><a href="https://instagram.com/' . $social['insta'].'" rel="noopener" target="_blank" title="Instagram"><span class="fab fa-instagram" aria-hidden="true"></span></a></li>';
 			endif;
 			if ( !empty( $social['yt'] ) ) :
-				$temp .= '<li class="station-social-icon"><a href="'.$social['yt'].'" target="_blank" title="YouTube"><span class="fab fa-youtube" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon youtube"><a href="'.$social['yt'].'" rel="noopener" target="_blank" title="YouTube"><span class="fab fa-youtube" aria-hidden="true"></span></a></li>';
 			endif;
 			if ( !empty( $social['twitter'] ) ) :
-				$temp .= '<li class="station-social-icon"><a href="https://twitter.com/'.$social['twitter'].'" target="_blank" title="Twitter"><span class="fab fa-twitter" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon twitter"><a href="https://twitter.com/'.$social['twitter'].'" rel="noopener" target="_blank" title="Twitter"><span class="fab fa-twitter" aria-hidden="true"></span></a></li>';
 			endif;
 			if ( !empty( $social['fb'] ) ) :
-				$temp .= '<li class="station-social-icon"><a href="https://www.facebook.com/'.$social['fb'].'" target="_blank" title="Facebook"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon facebook"><a href="https://www.facebook.com/'.$social['fb'].'" rel="noopener" target="_blank" title="Facebook"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></li>';
 			endif;
 		endif;
 		if ( !empty( $pod_link ) && $lede ) :
@@ -1172,56 +1140,97 @@ class HPM_Podcasts {
 		return $output;
 	}
 
-	public static function show_banner( $id ) {
+	public static function show_header( $id ) {
+		$temp = '';
 		$options = get_post_meta( $id, 'hpm_show_meta', true );
-		$page_head_style = $page_head_class = '';
+		$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
 		$count = 0;
-		if ( !empty( $options['banners'] ) ) :
-			foreach ( $options['banners'] as $op ) :
-				if ( !empty( $op ) ) :
-					$count++;
-				endif;
-			endforeach;
-		endif;
-		if ( $count > 1 ) :
-			echo '<div class="page-banner"></div>';
-			$page_head_class = ' screen-reader-text';
+		foreach ( $options['banners'] as $op ) :
+			if ( !empty( $op ) ) :
+				$count++;
+			endif;
+		endforeach;
+
+		if ( $count > 0 ) :
+			$temp .= '<div class="page-banner"><picture>';
 			foreach ( $options['banners'] as $bk => $bv ) :
 				if ( !empty( $bv ) ) :
 					if ( $bk == 'mobile' ) :
-						$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/1.5); }";
+						$temp .= '<source srcset="' . wp_get_attachment_url( $bv ) . '" media="(max-width: 34em)" />';
 					elseif ( $bk == 'tablet' ) :
-						$page_head_style .= " @media screen and (min-width: 34em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/4); } }";
+						$temp .= '<source srcset="' . wp_get_attachment_url( $bv ) . '" media="(max-width: 52.5em)" />';
 					elseif ( $bk == 'desktop' ) :
-						$page_head_style .= " @media screen and (min-width: 52.5em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); } }";
+						$temp .= '<source srcset="' . wp_get_attachment_url( $bv ) . '" />';
 					endif;
 				endif;
 			endforeach;
-		elseif ( $count == 1 ) :
-			echo '<div class="page-banner"></div>';
-			$page_head_class = ' screen-reader-text';
-			foreach ( $options['banners'] as $bk => $bv ) :
-				if ( !empty( $bv ) ) :
-					$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); }";
-				endif;
-			endforeach;
+			$default = $options['banners']['desktop'] ?? $options['banners']['tablet'] ?? $options['banners']['mobile'];
+			$temp .= '<img src="' . wp_get_attachment_url( $default ) . '" alt="' . get_the_title( $id ) . ' page banner" /></picture></div>';
 		endif;
-		if ( !empty( $page_head_style ) ) :
-			echo "<style>".$page_head_style."</style>";
+		$output =
+			'<header class="page-header' . ( !empty( $temp ) ? ' banner' : '' ) . '">' .
+				'<h1 class="page-title"' . ( !empty( $temp ) ? ' hidden' : '' ) . '>' . get_the_title( $id ) . '</h1>' .
+				$temp;
+		$no = 0;
+		foreach( $options as $sk => $sh ) :
+			if ( !empty( $sh ) && $sk != 'banners' ) :
+				$no++;
+			endif;
+		endforeach;
+		foreach( $social as $soc ) :
+			if ( !empty( $soc ) ) :
+				$no++;
+			endif;
+		endforeach;
+		if ( $no > 0 ) :
+			$output .= '<div id="station-social">';
+			if ( !empty( $options['times'] ) ) :
+				$output .= '<h3>' . $options['times'] .'</h3>';
+			endif;
+			$output .= HPM_Podcasts::show_social( $options['podcast'], false, $id ) . '</div>';
 		endif;
-		return $page_head_class;
+		$output .= '</header>';
+		return $output;
 	}
 
-	public function remove_foot_filter( $content )
-	{
+	public static function list_episodes( $show_id ) {
+		$episodes = [];
+		$cat_no = get_post_meta( $show_id, 'hpm_shows_cat', true );
+		$top =  get_post_meta( $show_id, 'hpm_shows_top', true );
+		$cat_args = [
+			'cat' => $cat_no,
+			'orderby' => 'date',
+			'order'   => 'DESC',
+			'posts_per_page' => 16,
+			'ignore_sticky_posts' => 1
+		];
+		if ( !empty( $top ) && $top !== 'None' ) :
+			$top_art = new WP_Query( [ 'p' => $top ] );
+			$cat_args['posts_per_page']--;
+			$cat_args['post__not_in'] = [ $top ];
+			if ( $top_art->have_posts() ) :
+				foreach ( $top_art->posts as $tp ) :
+					$episodes[] = $tp;
+				endforeach;
+			endif;
+		endif;
+		$cat = new WP_Query( $cat_args );
+		if ( $cat->have_posts() ) :
+			foreach ( $cat->posts as $cp ) :
+				$episodes[] = $cp;
+			endforeach;
+		endif;
+		return $episodes;
+	}
+
+	public function remove_foot_filter( $content ) {
 		if ( has_filter( 'the_content', [ $this, 'article_footer' ] ) ) :
 			remove_filter( 'the_content', [ $this, 'article_footer' ] );
 		endif;
 		return $content;
 	}
 
-	public function add_foot_filter( $content )
-	{
+	public function add_foot_filter( $content ) {
 		add_filter( 'the_content', [ $this, 'article_footer' ] );
 		return $content;
 	}
@@ -1322,7 +1331,7 @@ class HPM_Podcasts {
 				$temp['name'] = get_the_title();
 				$temp['description'] = get_the_content();
 				$a_meta = get_post_meta( $last_id['id'], 'hpm_podcast_enclosure', true );
-				$temp['latest_episode']['audio'] = str_replace( [ 'http://', 'https://' ], [ $protocol, $protocol ], $a_meta['url'] );
+				$temp['latest_episode']['audio'] = str_replace( 'http://', $protocol, $a_meta['url'] );
 				$temp['latest_episode']['title'] = get_the_title( $last_id['id'] );
 				$temp['latest_episode']['link'] = get_the_permalink( $last_id['id'] );
 				$temp['feed_json'] = WP_HOME.'/wp-json/hpm-podcast/v1/list/'.$post->post_name;

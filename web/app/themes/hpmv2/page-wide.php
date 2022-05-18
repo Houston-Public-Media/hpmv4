@@ -11,13 +11,9 @@ Template Name: Full-Width Page
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?PHP
-			$page_head_class = hpm_head_banners( get_the_ID() );
+			echo hpm_head_banners( get_the_ID() );
 			while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header<?php echo $page_head_class; ?>">
-				<?php
-					the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-				</header><!-- .entry-header -->
 				<div class="entry-content">
 					<?php
 						the_content( sprintf(
@@ -25,7 +21,7 @@ Template Name: Full-Width Page
 							the_title( '<span class="screen-reader-text">', '</span>', false )
 						) );
 					?>
-				</div><!-- .entry-content -->
+				</div>
 
 				<footer class="entry-footer">
 				<?PHP
@@ -37,11 +33,11 @@ Template Name: Full-Width Page
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 
 <?php get_footer(); ?>

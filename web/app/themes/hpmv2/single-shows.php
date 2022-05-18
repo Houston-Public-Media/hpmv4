@@ -16,40 +16,12 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post();
-				$show_name = $post->post_name;
-				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
-				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
-				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-				$show_title = get_the_title();
-				$show_content = get_the_content();
-				$page_head_class = HPM_Podcasts::show_banner( get_the_ID() ); ?>
-			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title"><?php the_title(); ?></h1>
-			</header>
-			<?php
-				$no = $sp = $c = 0;
-				foreach( $show as $sk => $sh ) :
-					if ( !empty( $sh ) && $sk != 'banners' ) :
-						$no++;
-					endif;
-				endforeach;
-				foreach( $social as $soc ) :
-					if ( !empty( $soc ) ) :
-						$no++;
-					endif;
-				endforeach;
-				if ( $no > 0 ) : ?>
-			<div id="station-social">
-			<?php
-					if ( !empty( $show['times'] ) ) : ?>
-				<h3><?php echo $show['times']; ?></h3>
-			<?php
-					endif;
-					echo HPM_Podcasts::show_social( $show['podcast'], false, get_the_ID() ); ?>
-			</div>
-			<?php
-				endif;?>
-		<?php
+			$show_id = get_the_ID();
+			$show = get_post_meta( $show_id, 'hpm_show_meta', true );
+			$show_title = get_the_title();
+			$show_content = get_the_content();
+			$episodes = HPM_Podcasts::list_episodes( $show_id );
+			echo HPM_Podcasts::show_header( $show_id );
 			endwhile; ?>
 			<div id="float-wrap">
 				<aside class="column-right">
@@ -57,17 +29,11 @@ get_header(); ?>
 					<div class="show-content">
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
-			<?php
-						if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
-							$googletag = 'div-gpt-ad-1470409396951-0';
-						else :
-							$googletag = 'div-gpt-ad-1394579228932-1';
-						endif; ?>
 					<div class="sidebar-ad">
 						<h4>Support Comes From</h4>
-						<div id="<?php echo $googletag; ?>">
+						<div id="div-gpt-ad-1394579228932-1">
 							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
+								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
 							</script>
 						</div>
 					</div>

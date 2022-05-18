@@ -35,8 +35,7 @@ function hpm_mods_activate() {
 				'password' => '',
 				'folder' => ''
 			]
-		],
-		'https' => ''
+		]
 	];
 	$old = get_option( 'hpm_podcast_settings' );
 	if ( empty( $old ) ) :

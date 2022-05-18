@@ -308,40 +308,10 @@ function staff_meta_query( $query ) {
 }
 add_action( 'pre_get_posts', 'staff_meta_query' );
 
-function hpm_staff_single_template( $single ) {
-	global $post;
-	if ( $post->post_type == "staff" ) :
-		if ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-staff.php' ) ) :
-			return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'single-staff.php';
-		else :
-			return HPM_MODS_DIR . 'staff' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'single.php';
-		endif;
-	endif;
-	return $single;
-}
-add_filter( 'single_template', 'hpm_staff_single_template' );
-
-function hpm_staff_archive_template( $archive_template ) {
-	global $post;
-	if ( is_post_type_archive( 'staff' ) ) :
-		if ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'archive-staff.php' ) ) :
-			return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'archive-staff.php';
-		else :
-			return HPM_MODS_DIR . 'staff' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'archive.php';
-		endif;
-	endif;
-	return $archive_template;
-}
-add_filter( 'archive_template', 'hpm_staff_archive_template' );
-
 function hpm_staff_tax_template( $taxonomy_template ) {
 	global $post;
 	if ( is_tax( 'staff_category' ) ) :
-		if ( file_exists( get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'taxonomy-staff_category.php' ) ) :
-			return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'taxonomy-staff_category.php';
-		else :
-			return HPM_MODS_DIR . 'staff' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'archive.php';
-		endif;
+		return get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'archive-staff.php';
 	endif;
 	return $taxonomy_template;
 }

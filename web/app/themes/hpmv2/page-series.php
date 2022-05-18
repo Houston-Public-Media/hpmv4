@@ -8,13 +8,9 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
-			$page_head_class = hpm_head_banners( get_the_ID() );
+			echo hpm_head_banners( get_the_ID() );
 			while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header<?php echo $page_head_class; ?>">
-				<?php
-					the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-				</header><!-- .entry-header -->
 				<div class="entry-content">
 					<?php
 						the_content( sprintf(

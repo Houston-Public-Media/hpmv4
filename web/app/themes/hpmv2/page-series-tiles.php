@@ -8,15 +8,11 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post();
-			$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-			$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
-			$show_title = get_the_title();
-			$show_content = get_the_content();
-			$page_head_class = hpm_head_banners( get_the_ID() ); ?>
-		<header class="page-header<?php echo $page_head_class; ?>">
-			<h1 class="page-title"><?php the_title(); ?></h1>
-		</header>
-		<?php
+				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+				$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
+				$show_title = get_the_title();
+				$show_content = get_the_content();
+				echo hpm_head_banners( get_the_ID() );
 			endwhile; ?>
 			<div id="float-wrap">
 				<aside class="column-right">
@@ -118,42 +114,7 @@ get_header(); ?>
 			$cat = new WP_query( $cat_args );
 			if ( $cat->have_posts() ) :
 				while ( $cat->have_posts() ) : $cat->the_post();
-					$postClass = get_post_class();
-					$fl_array = preg_grep("/felix-type-/", $postClass);
-					$fl_arr = array_keys( $fl_array );
-					if ( $cat->current_post == 0 && empty( $top_art ) ) :
-						if ( has_post_thumbnail() ) :
-							$postClass[$fl_arr[0]] = 'felix-type-a';
-						else :
-							$postClass[$fl_arr[0]] = 'felix-type-b';
-						endif;
-					else :
-						$postClass[$fl_arr[0]] = 'felix-type-d';
-					endif;
-					if ( in_array( 'felix-type-a', $postClass ) ) :
-						$thumbnail_type = 'large';
-					else :
-						$thumbnail_type = 'thumbnail';
-					endif; ?>
-				<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-				<?php
-					if ( has_post_thumbnail() ) : ?>
-					<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
-						<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-					</div>
-				<?php
-					endif; ?>
-					<header class="entry-header">
-				<?php
-					if ( $show_title != 'DiverseCity' && $show_title != '#TXDecides' ) : ?>
-						<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-				<?php
-					endif; ?>
-						<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-                        <div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-                    </header><!-- .entry-header -->
-				</article>
-			<?PHP
+					get_template_part( 'content', get_post_type() );
 				endwhile;
 			endif; ?>
 				</div>

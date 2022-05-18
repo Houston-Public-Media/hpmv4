@@ -308,7 +308,7 @@ function hpm_body_open() {
 		<div class="container">
 			<?php hpm_site_header(); ?>
 		</div>
-		<div id="hm-top"></div>
+		<?php echo hpm_talkshows(); ?>
 <?php
 	elseif ( is_page_template( 'page-listen.php' ) ) : ?>
 		<div class="container">
@@ -346,5 +346,32 @@ function hpm_body_open() {
 				</div>
 <?php
 	endif;
+	echo HPM_Promos::generate_static( 'top' );
 }
 add_action( 'body_open', 'hpm_body_open' );
+
+function hpm_talkshows() {
+	wp_reset_query();
+	global $wp_query;
+	$t = time();
+	$offset = get_option('gmt_offset')*3600;
+	$t = $t + $offset;
+	$now = getdate($t);
+	$output = '';
+	$anc = get_post_ancestors( get_the_ID() );
+	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
+	$hm_air = hpm_houston_matters_check();
+	if ( empty( $wp_query->post ) ) :
+		return '';
+	endif;
+	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && !empty( $wp_query->post ) && $wp_query->post->post_type !== 'embeds' ) :
+		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && $hm_air[ $now['hours'] ] ) :
+			if ( $now['hours'] == 15 ) :
+				$output .= '<div id="hm-top" class="townsquare"><p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://8884869677">888.486.9677</a></strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
+			else :
+				$output .= '<div id="hm-top"><p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://7134408870">713.440.8870</a></strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
+			endif;
+		endif;
+	endif;
+	return $output;
+}

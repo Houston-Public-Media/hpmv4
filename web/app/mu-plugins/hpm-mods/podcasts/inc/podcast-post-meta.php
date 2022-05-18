@@ -99,7 +99,7 @@ endif; ?>
 		});
 	}
 
-	jQuery(document).ready(function($){;
+	jQuery(document).ready(function($){
 		var desc = $("#hpm-podcast-description");
 		$("span#excerpt_counter").text(desc.val().length);
 		desc.keyup( function() {

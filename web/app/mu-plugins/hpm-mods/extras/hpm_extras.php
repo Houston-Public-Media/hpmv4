@@ -459,11 +459,14 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
 	endif;
 	foreach ( $npr_json['list']['story'] as $story ) :
 		$npr_date = strtotime($story['storyDate']['$text']);
-		$output .= '<article class="card">';
+		$output .= '<article class="national-content">';
 		if ( !empty( $story['image'][0]['src'] ) ) :
-			$output .= '<a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"><img src="'.$story['image'][0]['src'].'" alt="'.$story['title']['$text'].'" loading="lazy" /></a>';
+			$output .= '<div class="national-image" style="background-image: url('.$story['image'][0]['src'].')"><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"></a></div><div class="national-text">';
+		else :
+			$output .= '<div class="national-text-full">';
 		endif;
-		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" rel="bookmark">'.$story['title']['$text'].'</a></h2></div><div class="entry-summary screen-reader-text">'.$story['teaser']['$text'].'</div></div></article>';
+		$output .= '<h2><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/">'.$story['title']['$text'].'</a></h2><p class="screen-reader-text">'
+		           .$story['teaser']['$text'].'</p></div></article>';
 	endforeach;
 	set_transient( 'hpm_nprapi_'.$api_id, $output, 300 );
 	return $output;
@@ -1233,9 +1236,9 @@ function hpm_alt_headline_meta_box( $object, $box ) {
 	$alt_headline = get_post_meta( $object->ID, 'hpm_alt_headline', true );
 	$seo_headline = get_post_meta( $object->ID, 'hpm_seo_headline', true ); ?>
 	<p>If you would like to provide an alternate headline for use on the homepage, please enter it here.</p>
-	<label for="hpm-alt-headline"><strong><?php _e( "Headline:", 'hpm-podcasts' ); ?></strong></label><br /><textarea id="hpm-alt-headline" name="hpm-alt-headline" placeholder="<?php echo $placeholder[$rand]; ?>" style="width: 100%;" rows="2"><?PHP echo $alt_headline; ?></textarea>
+	<label for="hpm-alt-headline"><strong><?php _e( "Homepage Headline:", 'hpm-podcasts' ); ?></strong></label><br /><textarea id="hpm-alt-headline" name="hpm-alt-headline" placeholder="<?php echo $placeholder[$rand]; ?>" style="width: 100%;" rows="2"><?PHP echo $alt_headline; ?></textarea>
 	<p>If you would like to provide an alternate headline for SEO/Facebook OpenGraph/Twitter/etc., please enter it here.</p>
-	<label for="hpm-seo-headline"><strong><?php _e( "Headline:", 'hpm-podcasts' ); ?></strong></label><br /><textarea id="hpm-seo-headline" name="hpm-seo-headline" placeholder="<?php echo $placeholder[$rand2]; ?>" style="width: 100%;" rows="2"><?PHP echo $seo_headline; ?></textarea>
+	<label for="hpm-seo-headline"><strong><?php _e( "SEO Headline:", 'hpm-podcasts' ); ?></strong></label><br /><textarea id="hpm-seo-headline" name="hpm-seo-headline" placeholder="<?php echo $placeholder[$rand2]; ?>" style="width: 100%;" rows="2"><?PHP echo $seo_headline; ?></textarea>
 <?php
 }
 

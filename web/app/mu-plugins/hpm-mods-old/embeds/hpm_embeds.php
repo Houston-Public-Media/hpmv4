@@ -19,9 +19,6 @@ class HPM_Embeds {
 		add_action( 'load-post.php', [ $this, 'meta_setup' ] );
 		add_action( 'load-post-new.php', [ $this, 'meta_setup' ] );
 
-		// Register page templates
-		add_filter( 'single_template', [ $this, 'single_template' ] );
-
 		// Register WP-REST API endpoints
 		add_action( 'rest_api_init', function() {
 			register_rest_route( 'hpm-embeds/v1', '/list', [
@@ -32,14 +29,6 @@ class HPM_Embeds {
 				}
 			]);
 		});
-	}
-
-	public function single_template( $single ) {
-		global $post;
-		if ( $post->post_type == "embeds" ) :
-			return HPM_EMBEDS_PLUGIN_DIR . 'templates' . DIRECTORY_SEPARATOR . 'single-embeds.php';
-		endif;
-		return $single;
 	}
 
 	public function meta_setup() {

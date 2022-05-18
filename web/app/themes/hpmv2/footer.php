@@ -35,21 +35,21 @@
 					<div class="foot-contact">
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
-						<div id="footer-social">
-							<div class="footer-social-icon footer-facebook">
-								<a href="https://www.facebook.com/houstonpublicmedia" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
+						<div class="social-wrap">
+							<div class="social-icon facebook">
+								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
-							<div class="footer-social-icon footer-twitter">
-								<a href="https://twitter.com/houstonpubmedia" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
+							<div class="social-icon twitter">
+								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></svg></a>
 							</div>
-							<div class="footer-social-icon footer-instagram">
-								<a href="https://instagram.com/houstonpubmedia" target="_blank"><span class="fab fa-instagram" aria-hidden="true"></span></a>
+							<div class="social-icon instagram">
+								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?></a>
 							</div>
-							<div class="footer-social-icon footer-youtube">
-								<a href="https://www.youtube.com/user/houstonpublicmedia" target="_blank"><span class="fab fa-youtube" aria-hidden="true"></span></a>
+							<div class="social-icon youtube">
+								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?></a>
 							</div>
-							<div class="footer-social-icon footer-linkedin">
-								<a href="https://linkedin.com/company/houstonpublicmedia" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
+							<div class="social-icon linkedin">
+								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
 							</div>
 						</div>
 					</div>
