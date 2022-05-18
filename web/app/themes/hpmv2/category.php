@@ -24,15 +24,22 @@
 				]]
 			];
 		endif;
-		$series_page = new WP_query( $args );
-		if ( $series_page->have_posts() ) :
-			while( $series_page->have_posts() ) :
-				$series_page->the_post();
-				header("HTTP/1.1 301 Moved Permanently");
-				header('Location: '.get_the_permalink());
-				exit;
-			endwhile;
-			wp_reset_postdata();
+		if ( !empty( $args ) ) :
+			$series_page = new WP_query( $args );
+			if ( $series_page->have_posts() ) :
+				while( $series_page->have_posts() ) :
+					$series_page->the_post();
+					header("HTTP/1.1 301 Moved Permanently");
+					header('Location: '.get_the_permalink());
+					exit;
+				endwhile;
+				wp_reset_postdata();
+			endif;
+		endif;
+		if ( $cat->term_id == 29328 ) :
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: /news/indepth/' );
+			exit;
 		endif;
 	endif;
 	get_header(); ?>
