@@ -1706,6 +1706,12 @@ body.single #author-wrap .author-other-stories h2 a,
 	font-family: var(--hpm-font-main);
 	font-weight: 700;
 }
+#float-wrap article.felix-type-a.tag-breaking header {
+    background-color: var(--main-red);
+}
+#float-wrap article.felix-type-a.tag-breaking header * {
+    color: white;
+}
 #national-news h4 {
 	margin: 1em;
 }
