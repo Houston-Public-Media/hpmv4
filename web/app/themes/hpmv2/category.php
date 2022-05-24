@@ -36,11 +36,11 @@
 				wp_reset_postdata();
 			endif;
 		endif;
-		if ( $cat->term_id == 29328 ) :
-			header( "HTTP/1.1 301 Moved Permanently" );
-			header( 'Location: /news/indepth/' );
-			exit;
-		endif;
+	endif;
+	if ( $cat->term_id == 29328 ) :
+		header( "HTTP/1.1 301 Moved Permanently" );
+		header( 'Location: /news/indepth/' );
+		exit;
 	endif;
 	get_header(); ?>
 	<section id="primary" class="content-area">
