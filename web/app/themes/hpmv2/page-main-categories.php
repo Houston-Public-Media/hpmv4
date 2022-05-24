@@ -28,6 +28,14 @@ if ( !empty( $_GET ) ) :
 endif;
 
 get_header(); ?>
+	<style>
+		.page.page-template-page-main-categories #main {
+			background-color: transparent;
+		}
+		.page.page-template-page-main-categories .page-header {
+			margin-bottom: 1rem;
+		}
+	</style>
 	<div id="primary" class="content-area">
 <?php
 				$c = 0;
@@ -78,7 +86,7 @@ get_header(); ?>
 							)
 						);
 						if ( $pod->have_posts() ) : ?>
-				<div class="podcasts">
+				<div class="podcasts highlights">
 					<h4><?php echo str_replace('-news','',$main_cat); ?> Podcasts</h4>
 						<?php
 							while ( $pod->have_posts() ) :

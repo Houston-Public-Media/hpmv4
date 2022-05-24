@@ -60,7 +60,7 @@ Template Name: NPR Content
 			<aside class="column-right">
 			<?php
 				if ( !empty( $nprdata['related'] ) ) : ?>
-				<section class="hightlights">
+				<section class="highlights">
 					<h4>Related</h4>
 					<ul>
 				<?php

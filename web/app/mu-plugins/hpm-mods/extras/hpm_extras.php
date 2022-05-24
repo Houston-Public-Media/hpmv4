@@ -682,7 +682,7 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api, TRUE );
 					if ( !empty( $json['list']['story'] ) ) :
-						$output .= "<div class=\"progsegment\"><button aria-label=\"Programming Segments for {$date}\">Segments for {$date}</button><ul>";
+						$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
 						foreach ( $json['list']['story'] as $j ) :
 							foreach ( $j['link'] as $jl ) :
 								if ( $jl['type'] == 'html' ) :
@@ -691,7 +691,7 @@ function hpm_segments( $name, $date ) {
 							endforeach;
 							$output .= '<li><a href="'.$link.'" target="_blank">'.$j['title']['$text'].'</a></li>';
 						endforeach;
-						$output .= "</ul></div>";
+						$output .= "</ul></details>";
 					endif;
 				endif;
 				set_transient( $trans, $output, HOUR_IN_SECONDS );
@@ -699,7 +699,7 @@ function hpm_segments( $name, $date ) {
 		elseif ( $shows[$name]['source'] == 'regex' ) :
 			if ( $name == 'BBC World Service' ) :
 				$offset = str_replace( '-', '', get_option( 'gmt_offset' ) );
-				$output .= "<div class=\"progsegment\"><button aria-label=\"BBC World Service Schedule\">Schedule</button><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></div>";
+				$output .= "<details class=\"progsegment\"><summary>Schedule</summary><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></details>";
 				return $output;
 			endif;
 		elseif ( $shows[$name]['source'] == 'wp-rss' ) :
@@ -719,14 +719,14 @@ function hpm_segments( $name, $date ) {
 					if ( !empty( $json ) ) :
 						if ( isset( $json['channel']['item']['title'] ) ) :
 							if ( strtolower( $json['channel']['item']['title'] ) === $title ) :
-								$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$json['channel']['item']['link'].'" target="_blank">' . $json['channel']['item']['title'] .'</a></li></ul></div>';
+								$output .= '<details class="progsegment"><summary>Program for '. $date . '</summary><ul><li><a href="'.$json['channel']['item']['link'].'" target="_blank">' . $json['channel']['item']['title'] .'</a></li></ul></details>';
 								$set = true;
 							endif;
 						else :
 							foreach ( $json['channel']['item'] as $item ) :
 								if ( !$set ) :
 									if ( strtolower( $item['title'] ) === $title ) :
-										$output .= '<div class="progsegment"><button aria-label="Program for '. $date . '">Program for '. $date . '</button><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></div>';
+										$output .= '<details class="progsegment"><summary>Program for '. $date . '</summary><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></details>';
 										$set = true;
 									endif;
 								endif;
@@ -749,11 +749,11 @@ function hpm_segments( $name, $date ) {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api );
 					if ( !empty( $json ) ) :
-						$output .= "<div class=\"progsegment\"><button aria-label=\"Segments for {$date}\">Segments for {$date}</button><ul>";
+						$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
 						foreach ( $json as $j ) :
 							$output .= '<li><a href="'.$j->link.'" target="_blank">'.$j->title->rendered.'</a></li>';
 						endforeach;
-						$output .= "</ul></div>";
+						$output .= "</ul></details>";
 					endif;
 				endif;
 				set_transient( $trans, $output, HOUR_IN_SECONDS );
@@ -770,12 +770,12 @@ function hpm_segments( $name, $date ) {
 					'ignore_sticky_posts' => 1
 				] );
 				if ( $hm->have_posts() ) :
-					$output .= "<div class=\"progsegment\"><button aria-label=\"Segments for {$date}\">Segments for {$date}</button><ul>";
+					$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
 					while( $hm->have_posts() ) :
 						$hm->the_post();
 						$output .= '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';
 					endwhile;
-					$output .= '</ul></div>';
+					$output .= '</ul></details>';
 				endif;
 				wp_reset_query();
 			else :

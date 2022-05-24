@@ -32,6 +32,216 @@ Template Name: Radio Schedules
 	wp_enqueue_script('jquery-ui-datepicker');
 	get_header();
 ?>
+	<style>
+		ul.proglist {
+			list-style: none;
+		}
+		ul.proglist li {
+			overflow: hidden;
+			list-style: none;
+		}
+		.date-select {
+			padding: 1em 0;
+			overflow: hidden;
+			width: 100%;
+		}
+		.date-select .date-pick-right {
+			font: 700 1em/1em var(--hpm-font-main);
+			text-transform: uppercase;
+			float: right;
+		}
+		.date-select .date-pick-left {
+			font: 700 1em/1em var(--hpm-font-main);
+			text-transform: uppercase;
+			float: left;
+		}
+		#station-schedule-display {
+			width: 96%;
+			margin: 0 2%;
+		}
+		#station-schedule-display ul {
+			list-style: disc outside none;
+			margin: 0;
+			padding: 0;
+		}
+		#station-schedule-display iframe {
+			height: 1000px;
+			overflow: scroll;
+			width: 100%;
+		}
+		#station-schedule-display > ul > li {
+			padding: 1em;
+			background-color: white;
+			border: 1px solid rgba(0,0,0,0.25);
+			margin: 0 0 1em 0;
+		}
+		#station-schedule-display > ul > li > ul > li {
+			border: 0;
+			margin: 0;
+			padding: 0 0 0.5em 0;
+		}
+		#station-schedule-display > ul > li > ul > li.shade {
+			background-color: #ddd;
+		}
+		#station-schedule-display ul li p {
+			font-size: 90%;
+		}
+		#station-schedule-display h3 {
+			margin-bottom: 1rem;
+		}
+		.proglist .progsegment {
+			padding: 0;
+		}
+		.proglist li > * + * {
+			margin-top: 1rem;
+		}
+		.proglist details.progsegment summary::marker {
+			color: white;
+			padding-right: 0.25rem;
+		}
+		.proglist details.progsegment summary {
+			background-color: rgb(0,98,136);
+			color: white;
+			padding: 0.75em;
+			margin: 0;
+			position: relative;
+			font-style: normal;
+		}
+		#station-schedule-display .progsegment li {
+			overflow: visible;
+			padding: 0.5em 0;
+			list-style: disc;
+			margin: 0 0 0 2em;
+		}
+		#station-schedule-display .proglist .progsegment ul.progplay li {
+			list-style: none;
+			margin: 0;
+			padding: 1em;
+		}
+		#station-schedule-display .proglist .progsegment ul.progplay li em {
+			color: rgb(49, 49, 49);
+		}
+		#schedule-search {
+			clear: both;
+		}
+		#schedule-search #day-select {
+			width: 100%;
+			margin: 1em 0;
+		}
+		#schedule-search label {
+			font: 400 1em/1em var(--hpm-font-main);
+			color: #464646;
+		}
+		#schedule-search input {
+			border: 0;
+			outline: 0;
+			-webkit-appearance: none;
+			border-bottom: 0.125em solid #55565a;
+			background-color: transparent;
+			padding: 0 0.25em;
+			width: 11em;
+			font: 100 1em/1em var(--hpm-font-main);
+			text-transform: lowercase;
+		}
+		body.page.page-template-page-schedules-radio #main {
+			margin-bottom: 1em;
+			background-color: transparent;
+		}
+		body.page.page-template-page-schedules-radio .page-header .page-title {
+			color: #00b0bc;
+			text-transform: uppercase;
+			font: 400 2.5em/1.5em var(--hpm-font-condensed);
+			margin-bottom: 0.5em;
+		}
+		body.page.page-template-page-schedules-radio .page-header {
+			overflow: hidden;
+			margin-bottom: 1em;
+		}
+		body.page.page-template-page-schedules-radio .entry-content {
+			padding: 1em;
+		}
+		.page-header #station-social {
+			width: 100%;
+			overflow: hidden;
+		}
+		.page-header #station-social .station-social-icon {
+			float: left;
+		}
+		body.single-shows #station-social .station-social-icon {
+			float: right;
+		}
+		.page-header #station-social .station-printable {
+			float: left;
+			padding: 0.6em;
+		}
+		.page-header #station-social .station-printable a {
+			font: 700 1em/1em var(--hpm-font-main);
+			background-color: transparent;
+			text-transform: uppercase;
+		}
+		@media screen and (min-width: 34rem) {
+			.proglist .progtime {
+				float: left;
+				width: 15%;
+				padding: 1em 1em 1em 0;
+				text-align: right;
+			}
+			.proglist .progname {
+				float: left;
+				border-left: 1px solid #808080;
+				padding: 0.5em 0 0 1em;
+				width: 85%;
+				margin: 0.5em 0 0 0;
+			}
+			#station-schedule-display {
+				padding: 1em;
+				overflow: hidden;
+			}
+			#station-schedule-display .station-search {
+				float: left;
+				width: 46%;
+				padding: 1em;
+				background-color: white;
+				margin: 0 2%;
+			}
+			.page-header #station-social {
+				width: 45%;
+				float: right;
+			}
+			body.page.page-template-page-schedules-radio .page-header .page-title {
+				display: block;
+				float: left;
+				margin-bottom: 0;
+			}
+			body.page.page-template-page-schedules-radio .entry-content {
+				padding: 1em;
+			}
+		}
+		@media screen and (min-width: 52.5rem) {
+			.page-header #station-social {
+				float: right;
+				overflow: hidden;
+				width: auto;
+				padding: 0.5em 0;
+			}
+		}
+		@media screen and (min-width: 64.25rem) {
+			#station-schedule-display.column-left {
+				width: 66%;
+				margin: 0 0 1em;
+			}
+			body.page.page-template-page-schedules-radio .column-right article {
+				width: 100%;
+				padding: 0;
+				background-color: white;
+			}
+			#schedule-search {
+				float: left;
+				width: 50%;
+				margin: 0;
+			}
+		}
+	</style>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
@@ -162,8 +372,8 @@ Template Name: Radio Schedules
 <?PHP
 					echo hpm_segments( $prog['name'], $date );
 					if ( !empty( $prog['sub'] ) ) : ?>
-					<div class="progsegment">
-						<h4>Interstitials</h4>
+					<details class="progsegment">
+						<summary>Interstitials</summary>
 						<ul>
 <?PHP
 						foreach( $prog['sub'] as $ksu => $vsu ) : ?>
@@ -173,12 +383,12 @@ Template Name: Radio Schedules
 <?PHP
 						endforeach; ?>
 						</ul>
-					</div>
+					</details>
 <?php
 					endif;
 					if ( !empty( $prog['playlist'] ) ) : ?>
-					<div class="progsegment">
-						<h4>Program Playlist</h4>
+					<details class="progsegment">
+						<summary>Program Playlist</summary>
 						<ul class="progplay">
 <?PHP
 						foreach( $prog['playlist'] as $ks => $song ) :
@@ -219,6 +429,7 @@ Template Name: Radio Schedules
 <?PHP
 						endforeach; ?>
 							</ul>
+					</details>
 <?PHP
 					endif; ?>
 					</li>
@@ -244,8 +455,6 @@ Template Name: Radio Schedules
 						) );
 					?>
 				</nav>
-			</div>
-			<div class="column-right">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 					<div class="entry-content">
 						<?php the_content(); ?>
@@ -256,17 +465,10 @@ Template Name: Radio Schedules
 		endwhile;
 		?>
 
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			var progSeg = document.querySelectorAll('.progsegment h4');
-			Array.from(progSeg).forEach((ps) => {
-				ps.addEventListener('click', () => {
-					ps.classList.toggle('seg-active');
-					ps.nextElementSibling.classList.toggle('seg-active');
-				});
-			});
 			jQuery( "#datepicker" ).datepicker({
 				dateFormat: "yy/mm/dd",
 				onSelect: function(date) {
