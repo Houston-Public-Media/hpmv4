@@ -83,20 +83,8 @@ get_header(); ?>
 						<?php
 							while ( $pod->have_posts() ) :
 								$pod->the_post();
-								$postClass = get_post_class();
-								$postClass = implode( ' ', $postClass );
-								$postClass = str_replace( ' felix-type-d', '', $postClass );
-								$pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true ); ?>
-					<article id="post-<?php the_ID(); ?>" class="<?php echo $postClass; ?>">
-						<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url(); ?>)">
-							<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-						</div>
-						<header class="entry-header">
-							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( $pod_link['page'] ) ), '</a></h2>' ); ?>
-						</header><!-- .entry-header -->
-					</article>
-							<?php
-								endwhile; ?>
+								get_template_part( 'content', get_post_type() );
+							endwhile; ?>
 				</div>
 						<?php
 							endif; ?>
@@ -131,32 +119,7 @@ get_header(); ?>
 				while ( $q->have_posts() ) :
 					$q->the_post();
 					if ( !in_array( get_the_ID(), $exclude ) ) :
-						$postClass = get_post_class();
-						$search = 'felix-type-';
-						$felix_type = array_filter($postClass, function($el) use ($search) {
-							return ( strpos($el, $search) !== false );
-						});
-						if ( !empty( $felix_type ) ) :
-							$key = array_keys( $felix_type );
-							$postClass[$key[0]] = 'felix-type-d';
-						else :
-							$postClass[] = 'felix-type-d';
-						endif; ?>
-				<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-					<?php
-						if ( in_array( 'has-post-thumbnail', $postClass ) ) : ?>
-					<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-						<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-					</div>
-					<?php
-						endif;
-					?>
-					<header class="entry-header">
-						<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-						<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-					</header><!-- .entry-header -->
-				</article>
-			<?php
+						get_template_part( 'content', get_post_type() );
 						$c++;
 					endif;
 				endwhile;

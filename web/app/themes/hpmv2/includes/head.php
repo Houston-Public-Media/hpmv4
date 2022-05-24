@@ -3,32 +3,36 @@ function hpm_site_header() { ?>
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
 					<div class="site-logo">
-						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
+						<?php echo hpm_svg_output( 'hpm' ); ?>
 					</div>
-					<div id="top-schedule">
-						<div class="top-schedule-label"><button data-href="#top-schedule-wrap"><span class="fas fa-calendar" aria-hidden="true"></span>Schedules</button></div>
-						<div class="top-schedule-link-wrap">
-							<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
-							<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
-							<div class="top-schedule-links"><a href="/classical">Classical</a></div>
-							<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
+					<section>
+						<div id="top-schedule">
+							<div class="top-schedule-label"><button aria-label="View Schedules" type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap" ><?php echo hpm_svg_output( 'calendar' ); ?>Schedules</button></div>
+							<div class="top-schedule-link-wrap" id="top-schedule-link-wrap">
+								<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
+								<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
+								<div class="top-schedule-links"><a href="/classical">Classical</a></div>
+								<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
+							</div>
 						</div>
-					</div>
-					<div id="top-listen"><button data-href="/listen-live" data-dialog="480:855"><span class="fas fa-microphone" aria-hidden="true"></span>Listen</button></div>
-					<div id="top-watch"><button data-href="/watch-live" data-dialog="820:850"><span class="fas fa-tv" aria-hidden="true"></span>Watch</button></div>
-					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div id="top-mobile-menu"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
+						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" data-dialog="480:855"><?php echo hpm_svg_output( 'microphone' ); ?>Listen</button></div>
+						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" data-dialog="820:850"><?php echo hpm_svg_output( 'tv' ); ?>Watch</button></div>
+					</section>
+					<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>
+					<div tabindex="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
-					<?php
-						// Primary navigation menu.
-						wp_nav_menu( array(
-							'menu_class' => 'nav-menu',
-							'theme_location' => 'head-main',
-							'walker' => new HPMv2_Menu_Walker
-						) );
-					?>
-						<div class="clear"></div>
+						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tabindex="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
+						<div class="nav-wrap">
+							<div id="top-search" tabindex="0" aria-expanded="false"><?php echo hpm_svg_output( 'search' ); get_search_form(); ?></div>
+							<?php
+								// Primary navigation menu.
+								wp_nav_menu([
+									'menu_class' => 'nav-menu',
+									'theme_location' => 'head-main',
+									'walker' => new HPMv2_Menu_Walker
+								]);
+							?>
+						</div>
 					</nav>
 				</div>
 			</header><?php
@@ -63,7 +67,32 @@ function hpm_header_info() {
 	else :
 		$ID = $wp_query->queried_object_id;
 
-		if ( is_archive() ) :
+		if ( is_author() ) :
+			global $curauth;
+			global $author_check;
+			$reqs['og_type'] = 'profile';
+			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
+			$reqs['title'] = $curauth->display_name." | Houston Public Media";
+			if ( !empty( $author_check ) ) :
+				while ( $author_check->have_posts() ) :
+					$author_check->the_post();
+					$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
+					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) :
+						$reqs['description'] = $head_excerpt;
+					endif;
+					$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
+					$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
+					if ( !empty( $head_categories ) ) :
+						$reqs['keywords'] = [];
+						foreach( $head_categories as $hcat ) :
+							$reqs['keywords'][] = $hcat->name;
+						endforeach;
+					endif;
+					$reqs['title'] = $curauth->display_name.", ".$author['title']." | Houston Public Media";
+				endwhile;
+				wp_reset_query();
+			endif;
+		elseif ( is_archive() ) :
 			if ( is_post_type_archive() ) :
 				$obj = get_post_type_object( get_post_type() );
 				$reqs['permalink'] = get_post_type_archive_link( get_post_type() );
@@ -74,18 +103,18 @@ function hpm_header_info() {
 				$reqs['title'] = $wp_query->queried_object->name . ' | Houston Public Media';
 			endif;
 		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
-			global $nprdata;
-			$reqs['title'] = $nprdata['title'];
-			$reqs['permalink'] = $nprdata['permalink'];
-			$reqs['description'] = htmlentities( wp_strip_all_tags( $nprdata['excerpt'], true ), ENT_QUOTES );
-			$reqs['keywords'] = $nprdata['keywords'];
-			$reqs['thumb'] = $nprdata['image']['src'];
-			$reqs['thumb_meta'] = [
-				'width' => $nprdata['image']['width'],
-				'height' => $nprdata['image']['height'],
-				'mime-type' => $nprdata['image']['mime-type']
-			];
-			$reqs['publish_date'] = $nprdata['date'];
+				global $nprdata;
+				$reqs['title'] = $nprdata['title'];
+				$reqs['permalink'] = $nprdata['permalink'];
+				$reqs['description'] = htmlentities( wp_strip_all_tags( $nprdata['excerpt'], true ), ENT_QUOTES );
+				$reqs['keywords'] = $nprdata['keywords'];
+				$reqs['thumb'] = $nprdata['image']['src'];
+				$reqs['thumb_meta'] = [
+					'width' => $nprdata['image']['width'],
+					'height' => $nprdata['image']['height'],
+					'mime-type' => $nprdata['image']['mime-type']
+				];
+				$reqs['publish_date'] = $nprdata['date'];
 		elseif ( is_single() || is_page() || get_post_type() == 'embeds' ) :
 			$attach_id = get_post_thumbnail_id( $ID );
 			if ( !empty( $attach_id ) ) :
@@ -174,60 +203,36 @@ function hpm_header_info() {
 			elseif ( get_post_type() === 'staff' ) :
 				$reqs['og_type'] = 'profile';
 			endif;
-		elseif ( is_author() ) :
-			global $curauth;
-			global $author_check;
-			$reqs['og_type'] = 'profile';
-			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
-			$reqs['title'] = $curauth->display_name." | Houston Public Media";
-			if ( !empty( $author_check ) ) :
-				while ( $author_check->have_posts() ) :
-					$author_check->the_post();
-					$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
-					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) :
-						$reqs['description'] = $head_excerpt;
-					endif;
-					$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
-					$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
-					if ( !empty( $head_categories ) ) :
-						$reqs['keywords'] = [];
-						foreach( $head_categories as $hcat ) :
-							$reqs['keywords'][] = $hcat->name;
-						endforeach;
-					endif;
-					$reqs['title'] = $curauth->display_name.", ".$author['title']." | Houston Public Media";
-				endwhile;
-				wp_reset_query();
-			endif;
 		endif;
 	endif;
 ?>
 		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime();</script>
-		<link rel="profile" href="http://gmpg.org/xfn/11">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="profile" href="http://gmpg.org/xfn/11" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
 		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
-		<meta name="bitly-verification" content="7777946f1a0a"/>
+		<meta name="bitly-verification" content="7777946f1a0a" />
 		<meta name="google-site-verification" content="WX07OGEaNirk2km8RjRBernE0mA7_QL6ywgu6NXl1TM" />
-		<link rel="icon" sizes="48x48" href="https://cdn.hpm.io/assets/images/favicon/icon-48.png">
-		<link rel="icon" sizes="96x96" href="https://cdn.hpm.io/assets/images/favicon/icon-96.png">
-		<link rel="icon" sizes="144x144" href="https://cdn.hpm.io/assets/images/favicon/icon-144.png">
-		<link rel="icon" sizes="192x192" href="https://cdn.hpm.io/assets/images/favicon/icon-192.png">
-		<link rel="icon" sizes="256x256" href="https://cdn.hpm.io/assets/images/favicon/icon-256.png">
-		<link rel="icon" sizes="384x384" href="https://cdn.hpm.io/assets/images/favicon/icon-384.png">
-		<link rel="icon" sizes="512x512" href="https://cdn.hpm.io/assets/images/favicon/icon-512.png">
-		<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-152.png">
-		<link rel="apple-touch-icon" sizes="167x167" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-167.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-180.png">
-		<link rel="mask-icon" href="https://cdn.hpm.io/assets/images/favicon/safari-pinned-tab.svg" color="#ff0000">
+		<meta name="theme-color" content="#f5f5f5" />
+		<link rel="icon" sizes="48x48" href="https://cdn.hpm.io/assets/images/favicon/icon-48.png" />
+		<link rel="icon" sizes="96x96" href="https://cdn.hpm.io/assets/images/favicon/icon-96.png" />
+		<link rel="icon" sizes="144x144" href="https://cdn.hpm.io/assets/images/favicon/icon-144.png" />
+		<link rel="icon" sizes="192x192" href="https://cdn.hpm.io/assets/images/favicon/icon-192.png" />
+		<link rel="icon" sizes="256x256" href="https://cdn.hpm.io/assets/images/favicon/icon-256.png" />
+		<link rel="icon" sizes="384x384" href="https://cdn.hpm.io/assets/images/favicon/icon-384.png" />
+		<link rel="icon" sizes="512x512" href="https://cdn.hpm.io/assets/images/favicon/icon-512.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-57.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-120.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-152.png" />
+		<link rel="apple-touch-icon" sizes="167x167" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-167.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-180.png" />
+		<link rel="mask-icon" href="https://cdn.hpm.io/assets/images/favicon/safari-pinned-tab.svg" color="#ff0000" />
 		<meta name="msapplication-config" content="https://cdn.hpm.io/assets/images/favicon/config.xml" />
-		<link rel="manifest" href="/manifest.webmanifest">
+		<link rel="manifest" href="/manifest.webmanifest" />
 		<meta name="apple-itunes-app" content="app-id=1549226694,app-argument=<?php echo $reqs['permalink']; ?>" />
 		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />
 		<meta property="fb:app_id" content="523938487799321" />
@@ -245,7 +250,6 @@ function hpm_header_info() {
 		<meta property="og:image:width" content="<?php echo $reqs['thumb_meta']['width']; ?>" />
 		<meta property="og:image:type" content="<?php echo $reqs['thumb_meta']['mime-type']; ?>" />
 		<meta property="og:image:secure_url" content="<?php echo $reqs['thumb']; ?>" />
-		<script>var timeOuts = [];</script>
 <?php
 	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta property="article:content_tier" content="free" />
@@ -266,9 +270,15 @@ function hpm_header_info() {
 		endforeach;
 	endif;
 	if ( is_author() ) : ?>
-		<meta property="profile:first_name" content="<?php echo $curauth->first_name; ?>">
-		<meta property="profile:last_name" content="<?php echo $curauth->last_name; ?>">
-		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>">
+		<meta property="profile:first_name" content="<?php echo $curauth->first_name; ?>" />
+		<meta property="profile:last_name" content="<?php echo $curauth->last_name; ?>" />
+		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>" />
+<?php
+	elseif ( is_single() && get_post_type() === 'staff' ) :
+		global $curstaff; ?>
+		<meta property="profile:first_name" content="<?php echo $curstaff['first_name']; ?>" />
+		<meta property="profile:last_name" content="<?php echo $curstaff['last_name']; ?>" />
+		<meta property="profile:username" content="<?php echo $curstaff['user_nicename']; ?>" />
 <?php
 	endif; ?>
 		<meta name="twitter:card" content="summary_large_image" />
@@ -277,12 +287,12 @@ function hpm_header_info() {
 		<meta name="twitter:title" content="<?php echo $reqs['title']; ?>" />
 		<meta name="twitter:image" content="<?php echo $reqs['thumb']; ?>" />
 		<meta name="twitter:url" content="<?php echo $reqs['permalink']; ?>" />
-		<meta name="twitter:description" content="<?php echo $reqs['description']; ?>">
-		<meta name="twitter:widgets:link-color" content="#000000">
-		<meta name="twitter:widgets:border-color" content="#000000">
-		<meta name="twitter:partner" content="tfwp">
+		<meta name="twitter:description" content="<?php echo $reqs['description']; ?>" />
+		<meta name="twitter:widgets:link-color" content="#000000" />
+		<meta name="twitter:widgets:border-color" content="#000000" />
+		<meta name="twitter:partner" content="tfwp" />
 <?php
-	if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
+	/* if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
 		<meta name="datePublished" content="<?php echo $reqs['publish_date']; ?>" />
 		<meta name="story_id" content="<?php echo $reqs['npr_story_id']; ?>" />
 		<meta name="has_audio" content="<?php echo $reqs['has_audio']; ?>" />
@@ -292,9 +302,10 @@ function hpm_header_info() {
 		<meta name="author" content="<?php echo $reqs['npr_byline']; ?>" />
 		<meta name="wordCount" content="<?php echo $reqs['word_count']; ?>" />
 <?php
-	endif;
+	endif; */
 }
 add_action( 'wp_head', 'hpm_header_info', 1 );
+add_action( 'wp_head', 'hpm_google_tracker', 100 );
 
 function hpm_body_open() {
 	global $wp_query;
@@ -315,19 +326,22 @@ function hpm_body_open() {
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
 					<div class="site-logo">
-						<a href="/" rel="home" title="<?php bloginfo( 'name' ); ?>">&nbsp;</a>
+						<?php echo hpm_svg_output( 'hpm' ); ?>
 					</div>
-					<div id="top-donate"><a href="/donate"><span class="fas fa-heart" aria-hidden="true"></span><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div id="top-mobile-menu"><span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span></div>
+					<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>
+					<div tabindex="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div><div id="focus-sink" tabindex="0" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div id="top-search"><span class="fas fa-search" aria-hidden="true"></span><?php get_search_form(); ?></div>
-						<?php
-							wp_nav_menu( array(
-								'menu_class' => 'nav-menu',
-								'menu' => 12244,
-								'walker' => new HPMv2_Menu_Walker
-							) ); ?>
-						<div class="clear"></div>
+						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div>
+						<div class="nav-wrap">
+							<div id="top-search" tabindex="0" aria-expanded="false"><?php echo hpm_svg_output( 'facebook' ); get_search_form(); ?></div>
+							<?php
+								wp_nav_menu( [
+									'menu_class' => 'nav-menu',
+									'menu' => 12244,
+									'walker' => new HPMv2_Menu_Walker
+								] );
+							?>
+						</div>
 					</nav>
 				</div>
 			</header>

@@ -45,25 +45,22 @@ Template Name: NPR Content
 						);
 					?>
 					</div>
-				</header><!-- .entry-header -->
+				</header>
+				<?php hpm_article_share( $nprdata ); ?>
 				<div class="entry-content">
-					<?php
-						echo do_shortcode( $nprdata['body'] );
-						hpm_article_share( $nprdata );
-					?>
-				</div><!-- .entry-content -->
-
+					<?php echo do_shortcode( $nprdata['body'] ); ?>
+				</div>
 				<footer class="entry-footer">
 					<div class="tags-links">
 						<span class="screen-reader-text">Tags </span>
 						<?php echo implode( ' ', $nprdata['keywords_html'] ); ?>
 					</div>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<aside class="column-right">
 			<?php
 				if ( !empty( $nprdata['related'] ) ) : ?>
-				<div id="related-posts">
+				<section class="hightlights">
 					<h4>Related</h4>
 					<ul>
 				<?php
@@ -72,12 +69,12 @@ Template Name: NPR Content
 				<?php
 					endforeach; ?>
 					</ul>
-				</div>
+				</section>
 			<?php
 				endif;
 				get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 
 <?php get_footer(); ?>

@@ -37,13 +37,10 @@ get_header(); ?>
 		<?PHP while ( have_posts() ) : the_post(); $current_page = get_the_ID(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
-					<?php
-						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-				</header><!-- .entry-header -->
+					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+				</header>
 				<div class="entry-content">
-					<?php
-						if ( has_post_thumbnail() ) :
-					?>
+					<?php if ( has_post_thumbnail() ) :	?>
 					<div class="post-thumbnail">
 						<?php
 							the_post_thumbnail( 'hpm-large' );
@@ -52,16 +49,12 @@ get_header(); ?>
 								echo "<p>".$thumb_caption."</p>";
 							endif;
 						?>
-					</div><!-- .post-thumbnail -->
+					</div>
 					<?PHP
 						endif;
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
+						the_content();
 					?>
-				</div><!-- .entry-content -->
-
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -72,8 +65,8 @@ get_header(); ?>
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile; ?>
 			<aside class="column-right">
@@ -95,21 +88,12 @@ get_header(); ?>
 					);
 					$my_query = new wp_query( $args );
 					if ( $my_query->have_posts() ) : ?>
-				<div id="related-posts">
+				<div class="highlights">
 					<h4>Related</h4>
 				<?php
-						while( $my_query->have_posts() ) :
-							$my_query->the_post(); ?>
-					<article class="related-content">
-						<div class="related-image">
-							<a href="<?PHP the_permalink(); ?>" class="post-thumbnail"><?PHP the_post_thumbnail( 'thumbnail' ); ?></a>
-						</div>
-						<div class="related-text">
-							<h2><a href="<?php the_permalink(); ?>"><?PHP the_title(); ?></a></h2>
-						</div>
-					</article>
-					<?php
-						endwhile; ?>
+					while( $my_query->have_posts() ) :
+						get_template_part( 'content', 'none');
+					endwhile; ?>
 				</div>
 				<?php
 					endif;
@@ -131,7 +115,7 @@ get_header(); ?>
 			endwhile;
 		endif; ?>
 			</section>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 
 <?php get_footer(); ?>

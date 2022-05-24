@@ -142,22 +142,7 @@ get_header(); ?>
 
 			if ( $studio->have_posts() ) :
 				while ( $studio->have_posts() ) : $studio->the_post();
-					$postClass = get_post_class(); ?>
-					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-						<?php
-						if ( has_post_thumbnail() ) : ?>
-							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-							</div>
-						<?php
-						endif; ?>
-						<header class="entry-header">
-							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-							<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-						</header><!-- .entry-header -->
-					</article>
-				<?PHP
+					get_template_part( 'content', get_post_type() );
 				endwhile;
 			endif;
 			wp_reset_query(); ?>
@@ -167,22 +152,7 @@ get_header(); ?>
 <?php
 			if ( $others->have_posts() ) :
 				while ( $others->have_posts() ) : $others->the_post();
-					$postClass = get_post_class(); ?>
-					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-						<?php
-						if ( has_post_thumbnail() ) : ?>
-							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-							</div>
-						<?php
-						endif; ?>
-						<header class="entry-header">
-							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-							<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-						</header><!-- .entry-header -->
-					</article>
-				<?PHP
+					get_template_part( 'content', get_post_type() );
 				endwhile;
 			endif;
 			wp_reset_query(); ?>

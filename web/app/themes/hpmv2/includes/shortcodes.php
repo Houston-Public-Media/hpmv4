@@ -233,24 +233,7 @@ function article_display_shortcode( $atts ) {
 	foreach ( $article as $art ) :
 		if ( $art->have_posts() ) :
 			while ( $art->have_posts() ) : $art->the_post();
-				if ( $type == 'search' ) :
-					get_template_part( 'content', get_post_format() );
-				else :
-					$postClass = get_post_class();
-					$fl_array = preg_grep("/felix-type-/", $postClass);
-					$fl_arr = array_keys( $fl_array );
-					$postClass[$fl_arr[0]] = 'felix-type-'.$type;
-					if ( $type == 'a' ) :
-						$thumbnail_type = 'large';
-					elseif ( $type == 'b' ) :
-						$thumbnail_type = 'thumbnail';
-					else :
-						$thumbnail_type = 'thumbnail';
-					endif;
-					$hpm_constants[] = get_the_ID();
-					$overline = hpm_top_cat( get_the_ID() );
-					$output .= '<article id="post-'.get_the_ID().'" class="'.implode( ' ', $postClass ).'"><div class="thumbnail-wrap" style="background-image: url('.get_the_post_thumbnail_url(get_the_ID(), $thumbnail_type ).')"><a class="post-thumbnail" href="'.get_permalink().'" aria-hidden="true"></a></div><header class="entry-header"><h3>'.$overline.'</h3><h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2></header></article>';
-				endif;
+				get_template_part( 'content', get_post_format() );
 			endwhile;
 		endif;
 	endforeach;

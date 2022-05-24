@@ -11,10 +11,11 @@ endif; ?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-			<?php echo hpm_head_banners( get_the_ID() ); ?>
+			<?php echo hpm_head_banners( get_the_ID(), 'page' ); ?>
 			<div class="column-span">
 			<?PHP while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content">
 					<?php
 						the_content( sprintf(

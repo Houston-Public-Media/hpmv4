@@ -13,7 +13,7 @@ var getCookie = (cname) => {
 	}
 	return null;
 }
-
+var timeOuts = [];
 var setCookie = (cname, cvalue, exhours) => {
 	var d = new Date();
 	d.setTime(d.getTime() + (exhours*60*60*1000));
@@ -50,67 +50,58 @@ hpm.getJSON = function(url, callback) {
 	};
 	xhr.send();
 };
+var eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
 
 hpm.navHandlers = () => {
-	var navChild = document.querySelectorAll('.nav-top.menu-item-has-children');
-	var navArray = Array.from(navChild);
-	navArray.forEach((nC) => {
-		nC.addEventListener('click', (event) => {
-			navArray.forEach((item) => {
-				if (nC !== item) {
-					item.classList.remove('nav-active');
-				}
-			});
-			nC.classList.toggle('nav-active');
+	var siteNav = document.querySelector('nav#site-navigation');
+	var buttonDiv = document.querySelectorAll('div[tabindex="0"]');
+	var topMenu = document.querySelector('#top-mobile-menu');
+	var closeMenu = document.querySelector('#top-mobile-close');
+	if ( siteNav !== null ) {
+		var menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
+		siteNav.addEventListener('focusin', () => {
+			document.body.classList.add('nav-active-menu');
 		});
-	});
-	var navBack = document.querySelectorAll('li.nav-back');
- 	Array.from(navBack).forEach((nB) => {
-		nB.addEventListener('click', (event) => {
-			nB.classList.remove('nav-active');
+		siteNav.addEventListener('focusout', () => {
+			document.body.classList.remove('nav-active-menu');
 		});
-	});
-
-	if (!document.body.classList.contains('single-embeds')) {
-		var topMenu = document.querySelector('#top-mobile-menu');
-		var topSearch = document.querySelector('#top-search .fa-search');
-		if ( topMenu !== null ) {
-			topMenu.addEventListener('click', (event) => {
-				if (window.innerWidth < 801 || document.body.classList.contains('page-template-page-listen')) {
-					if (document.body.classList.contains('nav-active-menu')) {
-						topMenu.innerHTML = '<span class="fas fa-bars" aria-hidden="true"></span><br /><span class="top-mobile-text">Menu</span>';
-						document.body.classList.remove('nav-active-menu');
-					} else {
-						topMenu.innerHTML = '<span class="fas fa-times" aria-hidden="true"></span><br /><span class="top-mobile-text">Close</span>';
-						document.body.classList.add('nav-active-menu');
+		topMenu.addEventListener(eventType, () => {
+			document.body.classList.add('nav-active-menu');
+		});
+		closeMenu.addEventListener(eventType, () => {
+			document.body.classList.remove('nav-active-menu');
+		});
+		if ( menuWithChildren !== null ) {
+			Array.from(menuWithChildren).forEach((menuC) => {
+				menuC.addEventListener('focusin', () => {
+					menuC.firstElementChild.setAttribute('aria-expanded', 'true');
+				});
+				menuC.addEventListener('focusout', () => {
+					menuC.firstElementChild.setAttribute('aria-expanded', 'false');
+					// menuC.classList.remove('nav-active');
+				});
+				menuC.addEventListener(eventType, () => {
+					menuC.classList.toggle('nav-active');
+				});
+				menuC.firstElementChild.addEventListener(eventType, (event) => {
+					if (window.innerWidth < 1024) {
+						if (event.currentTarget.getAttribute('aria-expanded') == 'true' ) {
+							event.preventDefault();
+							document.getElementById('focus-sink').focus({preventScroll:true});
+						}
 					}
-				} else {
-					return false;
-				}
-			});
-		}
-		if (topSearch !== null) {
-			topSearch.addEventListener('click', (event) => {
-				var sForm = document.querySelector('#top-search .search-form');
-				var sField = document.querySelector('#top-search .search-field');
-				if ( window.innerWidth > 800 ) {
-					if ( !sForm.classList.contains('search-active') ) {
-						sField.focus();
-					}
-					sForm.classList.toggle('search-active');
-				} else {
-					return false;
-				}
-			});
-		}
-		var topSched = document.querySelector('#top-schedule .top-schedule-label button');
-		if (topSched !== null) {
-			topSched.addEventListener('click', (e) => {
-				e.preventDefault();
-				document.querySelector('#top-schedule .top-schedule-link-wrap').classList.toggle('top-sched-active');
+				});
 			});
 		}
 	}
+	Array.from(buttonDiv).forEach((bD) => {
+		bD.addEventListener('focusin', () => {
+			bD.setAttribute('aria-expanded', 'true');
+		});
+		bD.addEventListener('focusout', () => {
+			bD.setAttribute('aria-expanded', 'false');
+		});
+	});
 };
 
 hpm.videoHandlers = () => {
@@ -132,7 +123,11 @@ hpm.videoHandlers = () => {
 		video.removeAttribute('height');
 		video.removeAttribute('width');
 		var frameSrc = video.src;
-		var ratio = vidWide/vidHigh;
+		if ( vidWide == '100%' && vidHigh == '100%' ) {
+			var ratio = 1.6667;
+		} else {
+			var ratio = vidWide/vidHigh;
+		}
 		if ( frameSrc.indexOf('google.com/maps') !== -1 || frameSrc.indexOf('googleusercontent.com') !== -1 || frameSrc.indexOf('houstontranstar.org') !== -1 ) {
 			iframeClass = 'iframe-embed-tall';
 		} else {
@@ -176,7 +171,7 @@ hpm.videoHandlers = () => {
 hpm.shareHandlers = () => {
 	var popOut = document.querySelectorAll(".article-share-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
 	Array.from(popOut).forEach((pop) => {
-		pop.addEventListener('click', (e) =>{
+		pop.addEventListener(eventType, (e) =>{
 			var attr = pop.getAttribute('data-dialog');
 			var hrefCheck = pop.getAttribute('data-href');
 			if ( hrefCheck.includes('mailto:') ) {
@@ -195,42 +190,6 @@ hpm.shareHandlers = () => {
 			}
 		});
 	});
-	window.addEventListener('scroll', () => {
-		hpm.shareButtons();
-	});
-	window.addEventListener('resize', () => {
-		hpm.shareButtons();
-	});
-};
-
-hpm.shareButtons = () => {
-	var share = document.querySelector('#article-share');
-	if (share !== null) {
-		var entry = document.querySelector('#main article .entry-content');
-		var footer = document.querySelector('footer#colophon');
-		var post = document.querySelector('#main article');
-		if (window.innerWidth > 840) {
-			var shareD = share.getBoundingClientRect();
-			var entryD = entry.getBoundingClientRect();
-			var footD = footer.getBoundingClientRect();
-			var postD = post.getBoundingClientRect();
-			if (entryD.top < 0 && footD.top > window.innerHeight) {
-				if ( !share.classList.contains('fixed') ) {
-					share.classList.add('fixed');
-				}
-				var newLeft = postD.left + (1.875 * 16);
-				if (shareD.left !== newLeft) {
-					share.style.left = newLeft + 'px';
-				}
-			} else {
-				share.classList.remove('fixed');
-				share.removeAttribute('style');
-			}
-		} else {
-			share.classList.remove('fixed');
-				share.removeAttribute('style');
-		}
-	}
 };
 
 hpm.audioEmbeds = () => {
@@ -248,6 +207,22 @@ hpm.audioEmbeds = () => {
 		});
 	});
 };
+
+hpm.localBanners = () => {
+	var topBanner = document.querySelectorAll('.top-banner');
+	if (topBanner !== null) {
+		Array.from(topBanner).forEach((item) => {
+			item.addEventListener('click', () => {
+				var attr = item.id;
+				if ( typeof attr !== typeof undefined && attr !== false) {
+					ga('hpmprod.send', 'event', 'Top Banner', 'click', attr);
+					ga('hpmRollupprod.send', 'event', 'Top Banner', 'click', attr);
+					ga('hpmWebAmpprod.send', 'event', 'Top Banner', 'click', attr);
+				}
+			});
+		});
+	}
+}
 
 hpm.audioPlayers = () => {
 	var jsPlay = document.querySelectorAll('.js-player');
@@ -314,6 +289,43 @@ hpm.contentToggles = () => {
 			}
 		});
 	});
+
+	var sections = document.querySelectorAll('.acc-section');
+	var h3s = document.querySelectorAll('.acc li h3');
+	var featured = document.querySelectorAll('.featured');
+	var expand = document.querySelector('#expand');
+	var collapse = document.querySelector('#collapse');
+	if ( sections !== null ) {
+		Array.from(sections).forEach((section) => {
+			section.classList.add('screen-reader-text');
+		});
+	}
+	if ( featured !== null ) {
+		Array.from(featured).forEach((feat) => {
+			feat.classList.remove('screen-reader-text');
+		});
+	}
+	if ( h3s !== null ) {
+		Array.from(h3s).forEach((h3) => {
+			h3.addEventListener('click', () => {
+				h3.nextElementSibling.classList.toggle('screen-reader-text');
+			});
+		});
+	}
+	if ( expand !== null ) {
+		expand.addEventListener('click', () => {
+			Array.from(sections).forEach((sec) => {
+				sec.classList.remove('screen-reader-text');
+			});
+		});
+	}
+	if ( collapse !== null ) {
+		collapse.addEventListener('click', () => {
+			Array.from(sections).forEach((sec) => {
+				sec.classList.add('screen-reader-text');
+			});
+		});
+	}
 };
 
 hpm.stationIds = {
@@ -355,7 +367,9 @@ hpm.npSearch = () => {
 		var next = np.getAttribute('data-upnext');
 		hpm.stationLoad[ station ] = { 'next': next, 'obj': np };
 	});
-	hpm.npDataDownload();
+	if ( document.body.classList.contains('page-template-page-listen') ) {
+		hpm.npDataDownload();
+	}
 	timeOuts.push(setInterval('hpm.npDataDownload()',60000));
 };
 hpm.npDataDownload = () => {
@@ -409,23 +423,16 @@ hpm.npUpdateHtml = (object,station,next) => {
 			output += '<h3>'+data['airlist'][0]['version']['series']['series-title']+'</h3>';
 		}
 	} else if ( station === 'mixtape' ) {
-		output = '<h3>'+data[0]+' - '+data[1]+'</h3><p>Album: '+data[2]+'</p>';
+		output += '<h3>'+data[0]+' - '+data[1]+'</h3>';
 	} else {
 		if ( typeof data.onNow.song !== 'object') {
-			output = '<h3>'+data.onNow.program.name+'</h3>';
+			output += '<h3>'+data.onNow.program.name+'</h3>';
 		} else {
-			var descs = [];
+			output += '<h3>';
 			if (data.onNow.song.composerName.length > 0) {
-				descs.push("Composer: "+data.onNow.song.composerName );
+				output += data.onNow.song.composerName + ' - ';
 			}
-			if (data.onNow.song.conductor.length > 0) {
-				descs.push("Conductor: "+data.onNow.song.conductor);
-			}
-			if (data.onNow.song.copyright.length > 0 && data.onNow.song.catalogNumber.length > 0) {
-				descs.push("Catalog Number: "+data.onNow.song.copyright+" "+data.onNow.song.catalogNumber);
-			}
-			extra = descs.join(', ');
-			output = "<h3>"+data.onNow.song.trackName.replace('&','&amp;')+"</h3><p>"+extra+"</p>";
+			output += data.onNow.song.trackName.replace('&','&amp;') + "</h3>";
 		}
 		if (next == 'true') {
 			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].fullstart)+': '+data.nextUp[0].program.name+'</li></ul>';
@@ -442,6 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.contentToggles();
 	hpm.npSearch();
 	hpm.audioPlayers();
+	hpm.localBanners();
 });
 document.addEventListener('turbo:before-fetch-response', () => {
 	if ( timeOuts.length > 0 ) {
@@ -459,14 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		Array.from(target.classList).forEach((tCl) => {
 			contain.classList.add(tCl);
 		});
-		var styles = [];
-		styles.push('width: ' + target.width + 'px' );
-		styles.push('margin-right: ' + (target.style['margin-right'] == '' ? '0' : target.style['margin-right']) + 'px');
-		styles.push('margin-left: ' + (target.style['margin-left'] == '' ? '0' : target.style['margin-left']) + 'px');
-		styles.push('margin-bottom: ' + (target.style['margin-bottom'] == '' ? '0' : target.style['margin-bottom']) + 'px');
-		styles.push('border-bottom-left-radius: ' + (target.style['border-bottom-left-radius'] == '' ? '0' : target.style['border-bottom-left-radius']) + 'px');
-		styles.push('border-bottom-right-radius: ' + (target.style['border-bottom-right-radius'] == '' ? '0' : target.style['border-bottom-right-radius']) + 'px');
-		overlay.setAttribute('style',styles.join('; '));
 		var parent = target.parentNode;
 		contain.innerHTML = target.outerHTML + overlay.outerHTML;
 		if (parent.nodeName == 'a') {

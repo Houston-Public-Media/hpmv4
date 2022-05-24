@@ -16,9 +16,10 @@
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
-			echo hpm_head_banners( get_the_ID() );
-			while ( have_posts() ) : the_post(); ?>
+			while ( have_posts() ) : the_post();
+				echo hpm_head_banners( get_the_ID(), 'page' ); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content">
 					<?php
 						the_content( sprintf(

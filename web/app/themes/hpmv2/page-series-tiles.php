@@ -12,7 +12,7 @@ get_header(); ?>
 				$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
 				$show_title = get_the_title();
 				$show_content = get_the_content();
-				echo hpm_head_banners( get_the_ID() );
+				echo hpm_head_banners( get_the_ID(), 'series' );
 			endwhile; ?>
 			<div id="float-wrap">
 				<aside class="column-right">
@@ -78,34 +78,7 @@ get_header(); ?>
 				$cat_args['post__not_in'] = array( $top );
 				if ( $top_art->have_posts() ) :
 					while ( $top_art->have_posts() ) : $top_art->the_post();
-						$postClass = get_post_class();
-						$fl_array = preg_grep("/felix-type-/", $postClass);
-						$fl_arr = array_keys( $fl_array );
-						if ( has_post_thumbnail() ) :
-							$postClass[$fl_arr[0]] = 'felix-type-a';
-						else :
-							$postClass[$fl_arr[0]] = 'felix-type-b';
-						endif;
-						$thumbnail_type = 'large'; ?>
-						<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-							<?php
-							if ( has_post_thumbnail() ) : ?>
-								<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
-									<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-								</div>
-							<?php
-							endif; ?>
-							<header class="entry-header">
-								<?php
-								if ( $show_title != 'DiverseCity' && $show_title != '#TXDecides' ) : ?>
-									<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-								<?php
-								endif; ?>
-								<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-								<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-							</header><!-- .entry-header -->
-						</article>
-					<?PHP
+						get_template_part( 'content', get_post_type() );
 					endwhile;
 					$post_num = 14;
 				endif;

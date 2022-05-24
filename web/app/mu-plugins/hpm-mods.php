@@ -12,8 +12,4 @@
  *
  * Works best with Wordpress 4.6.0+
 */
-if ( wp_get_theme() == 'HPM-Sassy' ) :
-	require( 'hpm-mods/hpm_mods.php' );
-elseif ( wp_get_theme() == 'HPMv2' ) :
-	require( 'hpm-mods-old/hpm_mods.php' );
-endif;
+require( 'hpm-mods/hpm_mods.php' );

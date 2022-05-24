@@ -257,25 +257,68 @@ function hpm_series_save_meta( $post_id, $post ) {
 	endif;
 }
 
-function hpm_head_banners( $id ) {
-	$postscript = get_post_meta( $id, 'postscript_meta', true );
+// function hpm_head_banners( $id ) {
+// 	$postscript = get_post_meta( $id, 'postscript_meta', true );
+// 	if ( !empty( $postscript ) && $postscript['class_body'] == 'support-ssac' ) :
+// 		$page_head_class = ' screen-reader-text';
+// 		echo '<div class="page-banner ssac-banner"><div><h1 class="page-title">' . get_the_title( $id ) . '</div></div>' .
+// 			'<style>.ssac-banner { background-image: url("' . wp_get_attachment_url( get_post_meta( $id, '_thumbnail_id', true ) ) . '"); }</style>';
+// 		return $page_head_class;
+// 	endif;
+// 	$options = get_post_meta( $id, 'hpm_page_options', true );
+// 	$page_head_style = $page_head_class = '';
+// 	$count = 0;
+// 	if ( !empty( $options ) ) :
+// 		foreach ( $options['banner'] as $op ) :
+// 			if ( !empty( $op ) ) :
+// 				$count++;
+// 			endif;
+// 		endforeach;
+// 	endif;
+// 	if ( $count > 1 ) :
+// 		echo '<div class="page-banner"></div>';
+// 		$page_head_class = ' screen-reader-text';
+// 		foreach ( $options['banner'] as $bk => $bv ) :
+// 			if ( !empty( $bv ) ) :
+// 				if ( $bk == 'mobile' ) :
+// 					$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/1.5); }";
+// 				elseif ( $bk == 'tablet' ) :
+// 					$page_head_style .= " @media screen and (min-width: 34em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/4); } }";
+// 				elseif ( $bk == 'desktop' ) :
+// 					$page_head_style .= " @media screen and (min-width: 52.5em) { .page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); } }";
+// 				endif;
+// 			endif;
+// 		endforeach;
+// 	elseif ( $count == 1 ) :
+// 		echo '<div class="page-banner"></div>';
+// 		$page_head_class = ' screen-reader-text';
+// 		foreach ( $options['banner'] as $bk => $bv ) :
+// 			if ( !empty( $bv ) ) :
+// 				$page_head_style .= ".page-banner { background-image: url(".wp_get_attachment_url( $bv )."); padding-bottom: calc(100%/6); }";
+// 			endif;
+// 		endforeach;
+// 	endif;
+// 	if ( !empty( $page_head_style ) ) :
+// 		echo "<style>".$page_head_style."</style>";
+// 	endif;
+// 	return $page_head_class;
+// }
+
+function hpm_head_banners( $id, $location ) {
 	$temp = $output = '';
 	$options = get_post_meta( $id, 'hpm_page_options', true );
-	if ( !empty( $postscript ) && $postscript['class_body'] == 'support-ssac' ) :
-		$temp .= '<div class="page-banner ssac-banner"><div><h1 class="page-title">' . get_the_title( $id ) . '</div></div>' .
-			'<style>.ssac-banner { background-image: url("' . wp_get_attachment_url( get_post_meta( $id, '_thumbnail_id', true ) ) . '"); }</style>';
-	else :
 
-		$count = 0;
-		if ( !empty( $options ) ) :
-			foreach ( $options['banner'] as $op ) :
-				if ( !empty( $op ) ) :
-					$count++;
-				endif;
-			endforeach;
-		endif;
+	$count = 0;
+	if ( !empty( $options ) ) :
+		foreach ( $options['banner'] as $op ) :
+			if ( !empty( $op ) ) :
+				$count++;
+			endif;
+		endforeach;
+	endif;
 
-		if ( $count > 0 ) :
+	if ( $count > 0 ):
+		if ( $location == 'page' || $location == 'series' ) :
 			$temp .= '<div class="page-banner"><picture>';
 			foreach ( $options['banner'] as $bk => $bv ) :
 				if ( !empty( $bv ) ) :
@@ -290,13 +333,19 @@ function hpm_head_banners( $id ) {
 			endforeach;
 			$default = $options['banner']['desktop'] ?? $options['banner']['tablet'] ?? $options['banner']['mobile'];
 			$temp .= '<img src="' . wp_get_attachment_url( $default ) . '" alt="' . get_the_title( $id ) . ' page banner" /></picture></div>';
+			$output =
+				'<header class="page-header' . ( !empty( $temp ) ? ' banner' : '' ) . '">' .
+					'<h1 class="page-title"' . ( !empty( $temp ) ? ' hidden' : '' ) . '>' . get_the_title( $id ) . '</h1>' .
+					$temp .
+				'</header>';
+		endif;
+	else :
+		if ( $location == 'entry' || $location == 'series' ) :
+			$output =
+				'<header class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-header">' .
+					'<h1 class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-title">' . get_the_title( $id ) . '</h1>' .
+				'</header>';
 		endif;
 	endif;
-
-	$output =
-		'<header class="page-header' . ( !empty( $temp ) ? ' banner' : '' ) . '">' .
-			'<h1 class="page-title"' . ( !empty( $temp ) ? ' hidden' : '' ) . '>' . get_the_title( $id ) . '</h1>' .
-			$temp .
-		'</header>';
 	return $output;
 }

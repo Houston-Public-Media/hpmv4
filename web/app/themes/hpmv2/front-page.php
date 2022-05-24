@@ -6,6 +6,72 @@
  */
 get_header();
 $articles = hpm_homepage_articles(); ?>
+	<style>
+		#station-schedules {
+			background-color: white;
+		}
+		#station-schedules h4 {
+			border-bottom: 0.125em solid var(--main-red);
+			padding: 0.25em 1em;
+			margin: 0;
+			font: 400 2rem var(--hpm-font-condensed);
+		}
+		#station-schedules .station-now-play {
+			padding: 0.5em 1em;
+			border-bottom: 0.125em solid #f5f5f5;
+			min-height: 5em;
+			display: grid;
+			grid-template-columns: 30% 70%;
+			align-items: center;
+			gap: 1rem;
+		}
+		#station-schedules .station-now-play:last-child {
+			border: 0;
+		}
+		#station-schedules .station-now-play > * {
+			width: 100%;
+		}
+		#station-schedules .station-now-play h5 {
+			padding: 0;
+			margin: 0;
+			font-size: 1rem;
+			text-align: right;
+		}
+		#station-schedules .station-now-play h5 a {
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+		#station-schedules .station-now-play h3 {
+			font-weight: 100;
+			font-size: 1.25rem;
+			font-family: var(--hpm-font-condensed);
+			padding: 0 0.5rem 0 0;
+			margin: 0;
+			color: #55565a;
+		}
+		@media screen and (min-width: 34rem) {
+			#station-schedules {
+				display: grid;
+				grid-template-columns: 50% 50%;
+				width: 100%;
+			}
+			#station-schedules h4 {
+				grid-column: 1/-1;
+			}
+			#station-schedules .station-now-play:nth-child(even) {
+				border-right: 1px solid #808080;
+			}
+		}
+		@media screen and (min-width: 52.5rem) {
+			#station-schedules {
+				display: block;
+				width: 100%;
+			}
+			#station-schedules .station-now-play:nth-child(even) {
+				border-right: 0;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 	<?php election_homepage(); ?>
 		<main id="main" class="site-main" role="main">
@@ -19,117 +85,68 @@ $articles = hpm_homepage_articles(); ?>
 	foreach ( $articles as $ka => $va ) :
 		if ( $ka == 4 ) : ?>
 				</div>
-				<div id="top-schedule-wrap" class="column-right">
+				<aside id="top-schedule-wrap" class="column-right">
+					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 					<div id="station-schedules">
 						<h4>ON AIR</h4>
-						<div class="station-now-play-wrap">
-							<div class="station-now-play">
-								<h5><a href="/tv8">TV 8</a></h5>
-								<div class="hpm-nowplay" data-station="tv81" data-upnext="false"></div>
-							</div>
-							<div class="station-now-play">
-								<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
-								<div class="hpm-nowplay" data-station="tv82" data-upnext="false"></div>
-							</div>
-							<div class="station-now-play">
-								<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
-								<div class="hpm-nowplay" data-station="tv83" data-upnext="false"></div>
-							</div>
-							<div class="station-now-play">
-								<h5><a href="/tv8">TV 8.4 (World)</a></h5>
-								<div class="hpm-nowplay" data-station="tv84" data-upnext="false"></div>
-							</div>
+						<div class="station-now-play">
+							<h5><a href="/tv8">TV 8</a></h5>
+							<div class="hpm-nowplay" data-station="tv81" data-upnext="false"><?php echo hpmv2_nowplaying( 'tv8.1' ); ?></div>
 						</div>
-						<div class="station-now-play-wrap">
-							<div class="station-now-play">
-								<h5><a href="/news887">News 88.7</a></h5>
-								<div class="hpm-nowplay" data-station="news" data-upnext="false"></div>
-							</div>
-							<div class="station-now-play">
-								<h5><a href="/classical">Classical</a></h5>
-								<div class="hpm-nowplay" data-station="classical" data-upnext="false"></div>
-							</div>
-							<div class="station-now-play">
-								<h5><a href="/mixtape">Mixtape</a></h5>
-								<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"></div>
-							</div>
+						<div class="station-now-play">
+							<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
+							<div class="hpm-nowplay" data-station="tv82" data-upnext="false"><?php echo hpmv2_nowplaying( 'tv8.2' ); ?></div>
+						</div>
+						<div class="station-now-play">
+							<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
+							<div class="hpm-nowplay" data-station="tv83" data-upnext="false"><?php echo hpmv2_nowplaying( 'tv8.3' ); ?></div>
+						</div>
+						<div class="station-now-play">
+							<h5><a href="/tv8">TV 8.4 (World)</a></h5>
+							<div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpmv2_nowplaying( 'tv8.4' ); ?></div>
+						</div>
+						<div class="station-now-play">
+							<h5><a href="/news887">News 88.7</a></h5>
+							<div class="hpm-nowplay" data-station="news" data-upnext="false"><?php echo hpmv2_nowplaying( 'news887' ); ?></div>
+						</div>
+						<div class="station-now-play">
+							<h5><a href="/classical">Classical</a></h5>
+							<div class="hpm-nowplay" data-station="classical" data-upnext="false"><?php echo hpmv2_nowplaying( 'classical' ); ?></div>
+						</div>
+						<div class="station-now-play">
+							<h5><a href="/mixtape">Mixtape</a></h5>
+							<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"><?php echo hpmv2_nowplaying( 'mixtape' ); ?></div>
 						</div>
 					</div>
 					<?php hpm_top_posts(); ?>
-					<div class="sidebar-ad">
+					<section class="sidebar-ad">
 						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-1">
 							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
 						</div>
-					</div>
-				</div>
+					</section>
+				</aside>
 				<div class="article-wrap">
 <?php
 		elseif ( $ka == 12 ) : ?>
 				</div>
-				<div id="npr-side" class="column-right">
-					<div id="national-news">
+				<aside id="npr-side" class="column-right">
+					<section class="highlights">
 						<h4>News from NPR</h4>
 						<?php echo hpm_nprapi_output(); ?>
-					</div>
-					<div class="sidebar-ad">
+					</section>
+					<section class="sidebar-ad">
 						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-2">
 							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
 						</div>
-					</div>
-				</div>
+					</section>
+				</aside>
 				<div class="article-wrap">
 <?php
 		endif;
-		$postClass = get_post_class( '', $va->ID );
-		$alt_headline = get_post_meta( $va->ID, 'hpm_alt_headline', true );
-		$search = 'felix-type-';
-		$felix_type = array_filter($postClass, function($el) use ($search) {
-			return ( strpos($el, $search) !== false );
-		});
-		$felix = 'felix-type-d';
-		if ( $ka == 0 ) :
-			$felix = 'felix-type-a';
-			$thumb = get_the_post_thumbnail_url( $va->ID, 'large' );
-		elseif ( $ka == 1 ) :
-			$felix = 'felix-type-b';
-			$thumb = get_the_post_thumbnail_url( $va->ID, 'thumbnail' );
-		else :
-			$thumb = get_the_post_thumbnail_url( $va->ID, 'thumbnail' );
-		endif;
-		if ( !empty( $felix_type ) ) :
-			$key = array_keys( $felix_type );
-			$postClass[$key[0]] = $felix;
-		else :
-			$postClass[] = $felix;
-		endif;
-		$indepth = false;
-		if ( is_home() && in_array( 'category-in-depth', $postClass ) && $ka < 2 ) :
-			$indepth = true;
-		endif;
-		$post = $va; ?>
-				<article id="post-<?php echo $va->ID; ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-					<?php
-						if ( has_post_thumbnail( $va->ID ) ) : ?>
-					<div class="thumbnail-wrap" style="background-image: url(<?php echo $thumb; ?>)">
-						<a class="post-thumbnail" href="<?php the_permalink( $va->ID ); ?>" aria-hidden="true"></a>
-					</div>
-					<?php
-						endif; ?>
-					<header class="entry-header">
-						<?php echo ( $indepth ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
-						<h3><?php echo hpm_top_cat( $va->ID ); ?></h3>
-						<h2 class="entry-title"><a href="<?php the_permalink( $va->ID ); ?>" rel="bookmark"><?php echo ( !empty( $alt_headline ) ? $alt_headline : $va->post_title); ?></a></h2>
-						<div class="screen-reader-text">
-							<?PHP
-								coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true );
-								echo '<p>' . get_the_excerpt( $va->ID ) . '</p>';
-							?>
-						</div>
-					</header>
-				</article>
-<?PHP
+		$post = $va;
+		get_template_part( 'content', get_post_format() );
 	endforeach; ?>
 				</div>
 			</div>

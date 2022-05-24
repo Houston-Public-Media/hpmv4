@@ -195,30 +195,7 @@ get_header(); ?>
 				$cat_args['post__not_in'] = [ $top ];
 				if ( $top_art->have_posts() ) :
 					while ( $top_art->have_posts() ) : $top_art->the_post();
-						$postClass = get_post_class();
-						$fl_array = preg_grep("/felix-type-/", $postClass);
-						$fl_arr = array_keys( $fl_array );
-						if ( has_post_thumbnail() ) :
-							$postClass[$fl_arr[0]] = 'felix-type-a';
-						else :
-							$postClass[$fl_arr[0]] = 'felix-type-b';
-						endif;
-						$thumbnail_type = 'large'; ?>
-						<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-							<?php
-							if ( has_post_thumbnail() ) : ?>
-								<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
-									<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-								</div>
-							<?php
-							endif; ?>
-							<header class="entry-header">
-								<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-								<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-								<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-							</header><!-- .entry-header -->
-						</article>
-					<?PHP
+						get_template_part( 'content', get_post_type() );
 					endwhile;
 					$post_num = 14;
 				endif;
@@ -227,38 +204,7 @@ get_header(); ?>
 			$cat = new WP_query( $cat_args );
 			if ( $cat->have_posts() ) :
 				while ( $cat->have_posts() ) : $cat->the_post();
-					$postClass = get_post_class();
-					$fl_array = preg_grep("/felix-type-/", $postClass);
-					$fl_arr = array_keys( $fl_array );
-					if ( $cat->current_post == 0 && empty( $top_art ) ) :
-						if ( has_post_thumbnail() ) :
-							$postClass[$fl_arr[0]] = 'felix-type-a';
-						else :
-							$postClass[$fl_arr[0]] = 'felix-type-b';
-						endif;
-					else :
-						$postClass[$fl_arr[0]] = 'felix-type-d';
-					endif;
-					if ( in_array( 'felix-type-a', $postClass ) ) :
-						$thumbnail_type = 'large';
-					else :
-						$thumbnail_type = 'thumbnail';
-					endif; ?>
-					<article id="post-<?php the_ID(); ?>" <?php echo "class=\"".implode( ' ', $postClass )."\""; ?>>
-						<?php
-						if ( has_post_thumbnail() ) : ?>
-							<div class="thumbnail-wrap" style="background-image: url(<?php the_post_thumbnail_url($thumbnail_type); ?>)">
-								<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true"></a>
-							</div>
-						<?php
-						endif; ?>
-						<header class="entry-header">
-							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
-							<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-							<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true ); ?> </div>
-						</header><!-- .entry-header -->
-					</article>
-				<?PHP
+					get_template_part( 'content', get_post_type() );
 				endwhile;
 			endif; ?>
 				</div>

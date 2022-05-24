@@ -317,6 +317,57 @@ function hpm_staff_tax_template( $taxonomy_template ) {
 }
 add_filter( 'taxonomy_template', 'hpm_staff_tax_template' );
 
+function hpm_staff_out() {
+	global $wp_query;
+	$staff = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
+	$author_bio = get_the_content();
+	if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" || $author_bio == '' ) :
+		$bio_link = false;
+	else :
+		$bio_link = true;
+	endif; ?>
+	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<?php	if ( has_post_thumbnail() ) : ?>
+			<div class="staff-thumb">
+		<?php echo ( $bio_link ? '<a href="' . get_the_permalink() . '" aria-hidden="true">' : ''); ?>
+				<img src="<?php the_post_thumbnail_url( 'medium' ); ?>" alt="<?php echo get_the_title() . ': ' . $staff['title'] ?>" />
+		<?php echo ( $bio_link ? '</a>' : '' ); ?>
+			</div>
+<?php
+		endif; ?>
+		<div class="staff-wrap">
+			<header class="entry-header">
+				<h2 class="entry-title"><?php echo ( $bio_link ? '<a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_title() . '</a>' : get_the_title() ); ?></h2>
+		<?php
+		if ( !empty( $staff['email'] ) ) : ?>
+				<div class="social-icon">
+					<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a>
+				</div>
+<?php	endif;
+		if ( !empty( $staff['twitter'] ) ) : ?>
+				<div class="social-icon">
+					<a href="<?php echo $staff['twitter']; ?>" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
+				</div>
+<?php	endif;
+		if (!empty( $staff['facebook'] ) ) : ?>
+				<div class="social-icon">
+					<a href="<?php echo $staff['facebook']; ?>" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
+				</div>
+<?php	endif;
+		if (!empty( $staff['linkedin'] ) ) : ?>
+				<div class="social-icon">
+					<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
+				</div>
+<?php	endif; ?>
+			</header>
+			<div class="entry-summary">
+				<p><?php echo $staff['title']; ?></p>
+			</div>
+		</div>
+	</article>
+<?php
+}
+
 function hpm_staff_echo( $query ) {
 	$main_query = $query;
 	$cat = $main_query->get( 'staff_category' );
@@ -339,10 +390,10 @@ function hpm_staff_echo( $query ) {
 		];
 		$el = new WP_Query( $args );
 		while ( $el->have_posts() ) : $el->the_post();
-			get_template_part( 'content', 'staff' );
+			hpm_staff_out();
 		endwhile;
+		echo '<h2 class="top-pad">Department Leaders</h2>';
 
-		echo '</section><section><h2>Department Leaders</h2>';
 		$args['tax_query'] = [
 			'relation' => 'AND',
 			[
@@ -357,12 +408,11 @@ function hpm_staff_echo( $query ) {
 				'operator' => 'NOT IN'
 			]
 		];
-		$dh = new WP_Query( $args );
+		$dh = new WP_Query($args);
 		while ( $dh->have_posts() ) : $dh->the_post();
-			get_template_part( 'content', 'staff' );
+			hpm_staff_out();
 		endwhile;
-
-		echo '</section><section><h2>Talk Show Hosts</h2>';
+		echo '<h2 class="top-pad">Talk Show Hosts</h2>';
 		$args['tax_query'] = [
 			'relation' => 'AND',
 			[
@@ -379,10 +429,10 @@ function hpm_staff_echo( $query ) {
 		];
 		$ts = new WP_Query( $args );
 		while ( $ts->have_posts() ) : $ts->the_post();
-			get_template_part( 'content', 'staff' );
+			hpm_staff_out();
 		endwhile;
 
-		echo '</section><section><h2>News &amp; On-Air Staff</h2>';
+		echo '<h2 class="top-pad">News &amp; On-Air Staff</h2>';
 		$args['tax_query'] = [
 			'relation' => 'AND',
 			[
@@ -399,15 +449,15 @@ function hpm_staff_echo( $query ) {
 		];
 		$ts = new WP_Query( $args );
 		while ( $ts->have_posts() ) : $ts->the_post();
-			get_template_part( 'content', 'staff' );
+			hpm_staff_out();
 		endwhile;
 
-		echo '</section><section><h2>Houston Public Media Staff</h2>';
+		echo '<h2 class="top-pad">Houston Public Media Staff</h2>';
 	elseif ( !empty( $cat ) && !in_array( $cat, $exempt ) ) :
 		$main_query->posts = hpm_staff_sort( $main_query->posts );
 	endif;
 	while ( $main_query->have_posts() ) : $main_query->the_post();
-		get_template_part( 'content', 'staff' );
+		hpm_staff_out();
 	endwhile;
 	wp_reset_query();
 }

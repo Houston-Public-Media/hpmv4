@@ -9,7 +9,7 @@
  */
 
 get_header();
-if (is_preview()) : ?>
+if ( is_preview() ) : ?>
 	<div id="preview-warn">You're viewing a preview. Some things might be a little squirrelly. --The Management</div>
 <?php endif; ?>
 <div id="primary" class="content-area">
@@ -20,9 +20,9 @@ if (is_preview()) : ?>
 					<?php echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 					<h3><?php echo hpm_top_cat(get_the_ID()); ?></h3>
 					<?php
-					the_title('<h1 class="entry-title">', '</h1>');
-					the_excerpt();
-					$single_id = get_the_ID();
+						the_title('<h1 class="entry-title">', '</h1>');
+						the_excerpt();
+						$single_id = get_the_ID();
 					?>
 					<div class="byline-date">
 						<?PHP
@@ -52,17 +52,11 @@ if (is_preview()) : ?>
 						);
 						?>
 					</div>
-				</header><!-- .entry-header -->
+				</header>
+				<?php hpm_article_share(); ?>
 				<div class="entry-content">
-					<?php
-					the_content(sprintf(
-						__('Continue reading %s', 'hpmv2'),
-						the_title('<span class="screen-reader-text">', '</span>', false)
-					));
-					hpm_article_share();
-					?>
-				</div><!-- .entry-content -->
-
+					<?php the_content(); ?>
+				</div>
 				<footer class="entry-footer">
 					<div class="tags-links">
 					<?PHP
@@ -77,26 +71,26 @@ if (is_preview()) : ?>
 						edit_post_link(__('Edit', 'hpmv2'), '<span class="edit-link">', '</span>');
 					?>
 					</div>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 		<?php
 		endwhile; ?>
 		<aside class="column-right">
 			<?php
-			$categories = get_the_category(get_the_ID());
-			foreach ($categories as $cats) :
-				$anc = get_ancestors($cats->term_id, 'category');
-				if (in_array(9, $anc)) :
-					$series = new WP_query(array(
+			$categories = get_the_category( get_the_ID() );
+			foreach ( $categories as $cats ) :
+				$anc = get_ancestors( $cats->term_id, 'category' );
+				if ( in_array( 9, $anc ) ) :
+					$series = new WP_query([
 						'cat' => $cats->term_id,
 						'orderby' => 'date',
 						'order'   => 'ASC',
 						'posts_per_page' => 7
-					));
-					if ($series->have_posts()) :
-						$series_page = new WP_query(array('meta_key' => 'hpm_series_cat', 'meta_value' => $cats->term_id, 'post_type' => 'page'));
-						if ($series_page->have_posts()) :
-							while ($series_page->have_posts()) :
+					]);
+					if ( $series->have_posts() ) :
+						$series_page = new WP_query( [ 'meta_key' => 'hpm_series_cat', 'meta_value' => $cats->term_id, 'post_type' => 'page' ] );
+						if ( $series_page->have_posts() ) :
+							while ( $series_page->have_posts() ) :
 								$series_page->the_post();
 								$series_link = get_the_permalink();
 							endwhile;
@@ -107,24 +101,9 @@ if (is_preview()) : ?>
 						<div id="current-series">
 							<h4><a href="<?php echo $series_link; ?>">More from <?php echo $cats->cat_name; ?></a></h4>
 							<?php
-							while ($series->have_posts()) :
-								$series->the_post(); ?>
-								<article class="related-content<?php echo ($single_id == get_the_ID() ? ' current' : ''); ?>">
-									<?php
-									if (has_post_thumbnail()) : ?>
-										<div class="related-image" style="background-image: url(<?php the_post_thumbnail_url('thumbnail'); ?>)">
-											<a href="<?PHP the_permalink(); ?>" class="post-thumbnail"></a>
-										</div>
-										<div class="related-text">
-										<?php
-									else : ?>
-											<div class="related-text-full">
-											<?php
-										endif; ?>
-											<h2><a href="<?php the_permalink(); ?>"><?PHP the_title(); ?></a></h2>
-											</div>
-								</article>
-							<?php
+							while ( $series->have_posts() ) :
+								$series->the_post();
+								get_template_part( 'content', get_post_type() );
 							endwhile; ?>
 						</div>
 			<?php
@@ -141,9 +120,8 @@ if (is_preview()) : ?>
 			get_template_part('sidebar', 'none'); ?>
 		</aside>
 		<div id="author-wrap">
-			<?php echo author_footer(get_the_ID()); ?>
+			<?php echo author_footer( get_the_ID() ); ?>
 		</div>
-	</main><!-- .site-main -->
-</div><!-- .content-area -->
-
+	</main>
+</div>
 <?php get_footer(); ?>

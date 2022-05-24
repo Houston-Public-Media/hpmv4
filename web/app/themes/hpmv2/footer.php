@@ -1,29 +1,26 @@
-			</div><!-- .site-content -->
+			</div>
 <?php if ( is_page_template( 'page-blank.php' ) ) : ?>
 		</div>
 <?php else : ?>
+			<h2 id="foot-banner"><a href="/donate">Stories like this are made possible by the generosity of our community of donors, foundations and corporate partners. If you value our reporting, join others and make a gift to Houston Public Media.<br /><br /><span class="donate"><?php echo hpm_svg_output( 'heart' ); ?> DONATE</span></a></h2>
 			<footer id="colophon" class="site-footer" role="contentinfo">
 				<section>
-					<div class="site-info">
-						<div class="foot-logo">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>"><img src="https://cdn.hpm.io/assets/images/HPM-PBS-NPR-White.png" alt="<?php bloginfo( 'name' ); ?>" /></a>
-						</div>
+					<div class="foot-logo">
+						<?php echo hpm_svg_output( 'hpm' ); ?>
 					</div>
-					<div class="foot-nav">
-						<div class="foot-hpm">
-							<h3>Houston Public Media</h3>
-							<nav id="second-navigation" class="footer-navigation" role="navigation">
-								<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 1956 ] ); ?>
-								<div class="clear"></div>
-							</nav>
-						</div>
-						<div class="foot-comply">
-							<h3>Compliance</h3>
-							<nav id="third-navigation" class="footer-navigation" role="navigation">
-								<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 42803 ] ); ?>
-								<div class="clear"></div>
-							</nav>
-						</div>
+					<div class="foot-hpm">
+						<h3>Houston Public Media</h3>
+						<nav id="second-navigation" class="footer-navigation" role="navigation">
+							<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 1956 ] ); ?>
+							<div class="clear"></div>
+						</nav>
+					</div>
+					<div class="foot-comply">
+						<h3>Compliance</h3>
+						<nav id="third-navigation" class="footer-navigation" role="navigation">
+							<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 42803 ] ); ?>
+							<div class="clear"></div>
+						</nav>
 					</div>
 					<div class="foot-newsletter">
 						<h3>Subscribe to Our Newsletters</h3>
@@ -36,7 +33,7 @@
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
 						<div class="social-wrap">
-							<div class="social-icon facebook">
+						<div class="social-icon facebook">
 								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
 							<div class="social-icon twitter">
@@ -55,7 +52,7 @@
 					</div>
 				</section>
 				<div class="foot-tag">
-					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" target="_blank">University of Houston</a></p>
+					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" rel="noopener" target="_blank">University of Houston</a></p>
 					<p>Copyright &copy; <?php echo date('Y'); ?></p>
 				</div>
 			</footer>

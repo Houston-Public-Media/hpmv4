@@ -459,14 +459,11 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
 	endif;
 	foreach ( $npr_json['list']['story'] as $story ) :
 		$npr_date = strtotime($story['storyDate']['$text']);
-		$output .= '<article class="national-content">';
+		$output .= '<article class="card">';
 		if ( !empty( $story['image'][0]['src'] ) ) :
-			$output .= '<div class="national-image" style="background-image: url('.$story['image'][0]['src'].')"><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"></a></div><div class="national-text">';
-		else :
-			$output .= '<div class="national-text-full">';
+			$output .= '<a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"><img src="'.$story['image'][0]['src'].'" alt="'.$story['title']['$text'].'" loading="lazy" /></a>';
 		endif;
-		$output .= '<h2><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/">'.$story['title']['$text'].'</a></h2><p class="screen-reader-text">'
-		           .$story['teaser']['$text'].'</p></div></article>';
+		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" rel="bookmark">'.$story['title']['$text'].'</a></h2></div><div class="entry-summary screen-reader-text">'.$story['teaser']['$text'].'</div></div></article>';
 	endforeach;
 	set_transient( 'hpm_nprapi_'.$api_id, $output, 300 );
 	return $output;
