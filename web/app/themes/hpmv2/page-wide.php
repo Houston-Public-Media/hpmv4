@@ -7,7 +7,6 @@ Template Name: Full-Width Page
 	if ( !empty( $embeds ) ) :
 		echo $embeds['bottom'];
 	endif; ?>
-
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?PHP
@@ -16,14 +15,8 @@ Template Name: Full-Width Page
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content">
-					<?php
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
-					?>
+					<?php the_content(); ?>
 				</div>
-
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );

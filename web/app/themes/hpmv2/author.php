@@ -119,7 +119,7 @@
 			endif;
 			wp_reset_query(); ?>
 				</div>
-			</header><!-- .page-header -->
+			</header>
 			<aside class="column-right">
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
@@ -140,11 +140,9 @@
 		// If no content, include the "No posts found" template.
 		else :
 			get_template_part( 'content', 'none' );
-
 		endif;
 		?>
 			</section>
-		</main><!-- .site-main -->
-	</section><!-- .content-area -->
-
+		</main>
+	</section>
 <?php get_footer(); ?>

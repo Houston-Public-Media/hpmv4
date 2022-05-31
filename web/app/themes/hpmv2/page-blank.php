@@ -8,9 +8,8 @@ Template Name: Blank Wrapper
 		<?PHP while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
-					<?php
-						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-				</header><!-- .entry-header -->
+					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+				</header>
 				<div class="entry-content">
 					<?php
 						if ( has_post_thumbnail() ) :
@@ -18,21 +17,17 @@ Template Name: Blank Wrapper
 					<div class="post-thumbnail">
 						<?php
 							the_post_thumbnail( 'hpm-large' );
-							$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
-							if (!empty($thumb_caption)) :
-								echo "<p>".$thumb_caption."</p>";
+							$thumb_caption = get_post( get_post_thumbnail_id() )->post_excerpt;
+							if ( !empty( $thumb_caption ) ) :
+								echo "<p>" . $thumb_caption . "</p>";
 							endif;
 						?>
-					</div><!-- .post-thumbnail -->
+					</div>
 					<?PHP
 						endif;
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
+						the_content();
 					?>
-				</div><!-- .entry-content -->
-
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -43,11 +38,10 @@ Template Name: Blank Wrapper
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

@@ -125,6 +125,7 @@ get_header(); ?>
 		}
 		#kids-younger ul, #kids-older ul {
 			margin: 0;
+			list-style: none;
 		}
 		#kids-older {
 			background-color: rgb(241,168,47);
@@ -283,20 +284,24 @@ get_header(); ?>
 			color: rgb(23,177,189);
 			text-decoration: none;
 		}
-		body.page.page-template-page-kids .kids-schedule .felix-type-b a,
-		body.page.page-template-page-kids .kids-schedule .felix-type-b p,
-		body.page.page-template-page-kids .kids-schedule .felix-type-b ul,
-		body.page.page-template-page-kids .kids-schedule .felix-type-b ul li {
+		body.page.page-template-page-kids .kids-schedule .card.card-medium :is(a,p,ul,ul li) {
 			color:#55565a;
 			text-decoration: none;
 			margin-bottom: 0;
 			font-size: 100%;
 		}
+		body.page.page-template-page-kids .column-left {
+			display: block !important;
+		}
+		.kids-schedule.kids-ahl h1 {
+			margin-top: 0;
+			padding-top: 0.5rem;
+		}
 		@media screen and (min-width: 34em) {
-			.kids-schedule .column-left article.felix-type-b .thumbnail-wrap {
+			.kids-schedule .column-left article.card.card-medium .thumbnail-wrap {
 				order: initial;
 			}
-			.kids-schedule .column-left article.felix-type-b header {
+			.kids-schedule .column-left article.card.card-medium header {
 				order: initial;
 				padding: 0 0 0 1em;
 			}
@@ -383,6 +388,9 @@ get_header(); ?>
 			.kids-schedule h1 {
 				width: 100%;
 				margin: 0.5em 0;
+			}
+			.kids-schedule.kids-ahl h1 {
+				margin-top: 0;
 			}
 			body.page.page-template-page-kids table {
 				width: 50%;

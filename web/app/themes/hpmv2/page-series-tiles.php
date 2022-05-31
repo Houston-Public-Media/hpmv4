@@ -4,6 +4,11 @@ Template Name: Series-Tiles
 */
 
 get_header(); ?>
+	<style>
+		.page #main {
+			background-color: transparent;
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
@@ -23,7 +28,7 @@ get_header(); ?>
 					</div>
 <?php
 	endif; ?>
-					<h3>About <?php echo $show_title; ?></h3>
+					<h2>About <?php echo $show_title; ?></h2>
 					<div class="show-content">
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
@@ -78,6 +83,7 @@ get_header(); ?>
 				$cat_args['post__not_in'] = array( $top );
 				if ( $top_art->have_posts() ) :
 					while ( $top_art->have_posts() ) : $top_art->the_post();
+						$ka = 0;
 						get_template_part( 'content', get_post_type() );
 					endwhile;
 					$post_num = 14;
@@ -86,8 +92,14 @@ get_header(); ?>
 			endif;
 			$cat = new WP_query( $cat_args );
 			if ( $cat->have_posts() ) :
+				if ( isset( $ka ) ) :
+					$ka += 2;
+				else :
+					$ka = 0;
+				endif;
 				while ( $cat->have_posts() ) : $cat->the_post();
 					get_template_part( 'content', get_post_type() );
+					$ka += 2;
 				endwhile;
 			endif; ?>
 				</div>
@@ -102,8 +114,8 @@ get_header(); ?>
 			if ( !empty( $embeds['bottom'] ) ) :
 				echo $embeds['bottom'];
 			endif; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 <?php
 	wp_reset_query();
 	get_footer(); ?>

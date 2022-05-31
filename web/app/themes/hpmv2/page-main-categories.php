@@ -39,12 +39,11 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 <?php
 				$c = 0;
-				$exclude = array();
+				$exclude = [];
 				if ( have_posts() ) :
 					the_post();
 					$main_cat = $wp_query->query_vars['pagename']; ?>
 		<main id="main" class="site-main <?php echo $main_cat; ?>" role="main">
-
 			<header class="page-header">
 				<h1 class="page-title"><?php the_title(); ?></h1>
 			</header>
@@ -80,14 +79,13 @@ get_header(); ?>
                     </div>
                 </div>
 				<?php
-						$pod = new WP_Query( array(
-								'post_type' => 'podcasts',
-								'tag' => str_replace('-news','',$main_cat)
-							)
-						);
+						$pod = new WP_Query([
+							'post_type' => 'podcasts',
+							'tag' => str_replace( '-news', '', $main_cat )
+						]);
 						if ( $pod->have_posts() ) : ?>
 				<div class="podcasts highlights">
-					<h4><?php echo str_replace('-news','',$main_cat); ?> Podcasts</h4>
+					<h4><?php echo str_replace( '-news', '', $main_cat ); ?> Podcasts</h4>
 						<?php
 							while ( $pod->have_posts() ) :
 								$pod->the_post();
@@ -112,33 +110,34 @@ get_header(); ?>
 				else :
 					$main_cat_pull = $main_cat;
 				endif;
-				$args = array(
+				$args = [
 					'category_name' => $main_cat_pull,
 					'post_type' => 'post',
 					'post_status' => 'publish',
 					'category__not_in' => 0,
 					'ignore_sticky_posts' => 1,
 					'posts_per_page' => 20
-				);
+				];
 
 				$orig_post = $post;
 				global $post;
 				$q = new WP_Query( $args );
+				$ka = 0;
 				while ( $q->have_posts() ) :
 					$q->the_post();
 					if ( !in_array( get_the_ID(), $exclude ) ) :
 						get_template_part( 'content', get_post_type() );
+						$ka++;
 						$c++;
 					endif;
 				endwhile;
 				$post = $orig_post;
 				wp_reset_query();
 			?>
-				</div>
-			</div><!-- #float-wrap -->
+			</div>
 			<div class="readmore">
 				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
 			</div>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 <?php get_footer(); ?>

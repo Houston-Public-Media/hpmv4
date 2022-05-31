@@ -8,7 +8,6 @@ $embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
 if ( !empty( $embeds ) ) :
 	echo $embeds['bottom'];
 endif; ?>
-
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 			<?php echo hpm_head_banners( get_the_ID(), 'page' ); ?>
@@ -23,8 +22,7 @@ endif; ?>
 							the_title( '<span class="screen-reader-text">', '</span>', false )
 						) );
 					?>
-				</div><!-- .entry-content -->
-
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -35,8 +33,8 @@ endif; ?>
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile; ?>
 		</div>
@@ -64,11 +62,9 @@ endif; ?>
 			<?php
 					endif;
 				endif; ?>
-
 			<aside class="column-right">
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

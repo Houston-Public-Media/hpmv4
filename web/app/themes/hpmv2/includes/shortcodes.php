@@ -229,11 +229,19 @@ function article_display_shortcode( $atts ) {
 	endif;
 	$article[] = new WP_query( $args );
 	$output = '';
+	if ( $type == 'a' ) :
+		$ka = 0;
+	elseif ( $type == 'b' ) :
+		$ka = 1;
+	endif;
 	ob_start();
 	foreach ( $article as $art ) :
 		if ( $art->have_posts() ) :
 			while ( $art->have_posts() ) : $art->the_post();
 				get_template_part( 'content', get_post_format() );
+				if ( isset( $ka ) ) :
+					$ka += 2;
+				endif;
 			endwhile;
 		endif;
 	endforeach;
@@ -757,9 +765,6 @@ function hpm_townsquare_covid( $atts ) {
 	if ( $art->have_posts() ) :
 		while ( $art->have_posts() ) : $art->the_post();
 			$postClass = get_post_class();
-			$fl_array = preg_grep("/felix-type-/", $postClass);
-			$fl_arr = array_keys( $fl_array );
-			$postClass[$fl_arr[0]] = 'felix-type-b';
 			$postClass[] = 'town-square-feature';
 			$hpm_constants[] = get_the_ID();
 			$podcast = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );

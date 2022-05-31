@@ -9,7 +9,7 @@ get_header(); ?>
 				<?php else : ?>
                     <h1 class="page-title"><?php _e( 'Nothing Found', 'hpmv2' ); ?></h1>
 				<?php endif; ?>
-            </header><!-- .page-header -->
+            </header>
 			<section id="search-results">
             <?php
 				if ( have_posts() ) :
@@ -33,6 +33,6 @@ get_header(); ?>
 			<aside class="column-right">
                 <?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-		</main><!-- .site-main -->
-	</section><!-- .content-area -->
+		</main>
+	</section>
 <?php get_footer(); ?>

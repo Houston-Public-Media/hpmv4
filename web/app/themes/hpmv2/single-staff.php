@@ -8,7 +8,6 @@
  */
 
 get_header(); ?>
-
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
@@ -69,7 +68,7 @@ get_header(); ?>
 				</div>
 			<?php
 				endif; ?>
-			</header><!-- .page-header -->
+			</header>
 		<?php
 			endwhile; ?>
 			<aside class="column-right">
@@ -98,7 +97,6 @@ get_header(); ?>
 				<?php
 					endif;
 				endif; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

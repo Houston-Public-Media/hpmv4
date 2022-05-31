@@ -16,11 +16,10 @@ get_header(); ?>
 						<button class="down scrollto">
 							<i class="fas fa-chevron-down" aria-hidden="true"></i>
 						</button>
-					</header><!-- .entry-header -->
+					</header>
 					<div class="page-content">
 						<?php echo get_the_content(); ?>
-					</div><!-- .entry-content -->
-
+					</div>
 					<footer class="page-footer">
 						<?PHP
 						$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -31,11 +30,11 @@ get_header(); ?>
 							);
 						}
 						edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-					</footer><!-- .entry-footer -->
-				</article><!-- #post-## -->
+					</footer>
+				</article>
 			<?php endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+					</div>
 	<script>
 		function modalSwitch(dataId,modal) {
 			var dIndexSp = dataId.split('-');

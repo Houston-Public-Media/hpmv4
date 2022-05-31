@@ -21,14 +21,8 @@
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content">
-					<?php
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
-					?>
-				</div><!-- .entry-content -->
-
+					<?php the_content(); ?>
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -39,8 +33,8 @@
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile; ?>
 			<aside class="column-right">
@@ -82,7 +76,6 @@
 				endif;
 			    get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

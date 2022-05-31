@@ -4,7 +4,14 @@ Template Name: Series
 */
 
 get_header(); ?>
-
+	<style>
+		.page #main {
+			background-color: transparent;
+		}
+		.page #main article {
+			background-color: white;
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
@@ -19,7 +26,7 @@ get_header(); ?>
 							the_title( '<span class="screen-reader-text">', '</span>', false )
 						) );
 					?>
-				</div><!-- .entry-content -->
+				</div>
 			</article>
 		<?php
 			endwhile;
@@ -72,35 +79,34 @@ get_header(); ?>
 				endif;
 				get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
-			<?php
-				if ( $cat->have_posts() ) : ?>
+		<?php
+			if ( $cat->have_posts() ) : ?>
 			<section id="search-results">
 		<?php
-					if ( !empty( $top_art ) ) :
-						if ( $top_art->have_posts() ) :
-							while ( $top_art->have_posts() ) : $top_art->the_post();
-								get_template_part( 'content', get_post_format() );
-							endwhile;
-							wp_reset_query();
-						endif;
+				if ( !empty( $top_art ) ) :
+					if ( $top_art->have_posts() ) :
+						while ( $top_art->have_posts() ) : $top_art->the_post();
+							get_template_part( 'content', get_post_format() );
+						endwhile;
+						wp_reset_query();
 					endif;
-					while ( $cat->have_posts() ) : $cat->the_post();
-						get_template_part( 'content', get_post_format() );
-					endwhile;
-					if ( $cat->found_posts > 15 ) : ?>
+				endif;
+				while ( $cat->have_posts() ) : $cat->the_post();
+					get_template_part( 'content', get_post_format() );
+				endwhile;
+				if ( $cat->found_posts > 15 ) : ?>
 				<div class="readmore">
 					<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
 				</div>
 		<?php
-					endif;
-					wp_reset_postdata();
-					if ( !empty( $embeds['bottom'] ) ) :
-						echo $embeds['bottom'];
-					endif; ?>
-			</section>
-			<?php
+				endif;
+				wp_reset_postdata();
+				if ( !empty( $embeds['bottom'] ) ) :
+					echo $embeds['bottom'];
 				endif; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+			</section>
+		<?php
+			endif; ?>
+		</main>
+	</div>
 <?php get_footer(); ?>

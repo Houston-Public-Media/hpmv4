@@ -4,21 +4,21 @@ Template Name: Press Room
 */
 
 get_header(); ?>
+<style>
+	.page #main {
+		background-color: transparent;
+	}
+</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post(); ?>
 			<header class="page-header column-left">
-				<h1 class="page-title" style="margin-bottom: 0.5em;"><?php the_title(); ?></h1>
+				<h1 class="page-title"><?php the_title(); ?></h1>
 				<p>The latest press releases and information about Houston Public Media.</p>
-			</header><!-- .entry-header -->
+			</header>
 			<div class="column-right page-content">
-				<?PHP
-					the_content( sprintf(
-						__( 'Continue reading %s', 'hpmv2' ),
-						the_title( '<span class="screen-reader-text">', '</span>', false )
-					) );
-				?>
+				<?PHP the_content(); ?>
 			</div>
 <?php
 				$cat_no = get_post_meta( get_the_ID(), 'hpm_series_cat', true );
@@ -31,57 +31,24 @@ get_header(); ?>
 						'order'   => 'DESC',
 					) );
 					if ( $cat->have_posts() ) : ?>
-				<section id="search-results">
+			<section id="search-results">
 		<?php
 						while ( $cat->have_posts() ) : $cat->the_post();
 							get_template_part( 'content', get_post_format() );
 						endwhile;
 						wp_reset_postdata(); ?>
-					<div class="readmore">
-						<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
-					</div>
-				</section>
+				<div class="readmore">
+					<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
+				</div>
+			</section>
 		<?php
 					endif;
 				endif; ?>
-			<aside class="column-right clear">
-				<div class="sidebar-ad">
-					<h4>Support Comes From</h4>
-					<div id="div-gpt-ad-1394579228932-1">
-						<script type='text/javascript'>
-							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-						</script>
-					</div>
-				</div>
-			</aside>
-			<aside class="column-right clear">
-			<?php
-				$embeds = get_post_meta( get_the_ID(), 'hpm_series_embeds', true );
-				if ( !empty( $embeds['twitter'] ) ) : ?>
-				<section id="embeds">
-				<?php
-					if ( !empty( $embeds['twitter'] ) ) : ?>
-					<h4>Twitter</h4>
-					<?php
-						echo $embeds['twitter'];
-					endif; ?>
-				</section>
-			<?php
-				endif; ?>
+			<aside class="column-right">
+				<?php get_template_part( 'sidebar' ); ?>
 			</aside>
 		<?php
 			endwhile; ?>
-            <aside class="column-right clear">
-                <div class="sidebar-ad">
-					<h4>Support Comes From</h4>
-                    <div id="div-gpt-ad-1394579228932-2">
-                        <script type='text/javascript'>
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
-                        </script>
-                    </div>
-                </div>
-            </aside>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>
