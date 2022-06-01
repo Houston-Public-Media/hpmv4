@@ -228,7 +228,7 @@ function article_display_shortcode( $atts ) {
 		endif;
 	endif;
 	$article[] = new WP_query( $args );
-	$output = '';
+	global $ka;
 	if ( $type == 'a' ) :
 		$ka = 0;
 	elseif ( $type == 'b' ) :
@@ -248,80 +248,9 @@ function article_display_shortcode( $atts ) {
 	wp_reset_query();
 	$getContent = ob_get_contents();
 	ob_end_clean();
-	if ( $type == 'search' ) :
-		$output = $getContent;
-	endif;
-	return $output;
+	return $getContent;
 }
 add_shortcode( 'hpm_articles', 'article_display_shortcode' );
-
-function article_display_shortcode_temp( $atts ) {
-	global $hpm_constants;
-	if ( empty( $hpm_constants ) ) :
-		$hpm_constants = [];
-	endif;
-	$article = [];
-	extract( shortcode_atts( [
-		'num' => 1,
-		'tag' => '',
-		'category' => '',
-		'type' => 'd',
-		'overline' => '',
-		'post_id' => ''
-	], $atts, 'multilink' ) );
-	$args = [
-		'posts_per_page' => $num,
-		'ignore_sticky_posts' => 1
-	];
-	if ( !empty( $hpm_constants ) ) :
-		$args['post__not_in'] = $hpm_constants;
-	endif;
-	if ( !empty( $category ) ) :
-		$args['category_name'] = $category;
-	endif;
-	if ( !empty( $tag ) ) :
-		$args['tag_slug__in'][] = $tag;
-	endif;
-	if ( !empty( $post_id ) ) :
-		$i_exp = explode( ',', $post_id );
-		foreach ( $i_exp as $ik => $iv ) :
-			$i_exp[$ik] = trim( $iv );
-		endforeach;
-		$args['post__in'] = $i_exp;
-		$args['orderby'] = 'post__in';
-		$c = count( $i_exp );
-		if ( $c != $args['posts_per_page'] ) :
-			$diff = $args['posts_per_page'] - $c;
-			$args['posts_per_page'] = $c;
-			unset( $args['category_name'] );
-			$article[] = new WP_Query( $args );
-			unset( $args['post__in'] );
-			$args['orderby'] = 'date';
-			$args['order'] = 'DESC';
-			$args['post__not_in'] = array_merge( $hpm_constants, $i_exp );
-			$args['posts_per_page'] = $diff;
-			if ( !empty( $category ) ) :
-				$args['category_name'] = $category;
-			endif;
-		endif;
-	endif;
-	$article[] = new WP_query( $args );
-	$output = '<div class="grid-sizer"></div>';
-	foreach ( $article as $art ) :
-		if ( $art->have_posts() ) :
-			while ( $art->have_posts() ) : $art->the_post();
-				ob_start();
-				get_template_part( 'content', get_post_format() );
-				$var = ob_get_contents();
-				ob_end_clean();
-				$output .= $var;
-				$hpm_constants[] = get_the_ID();
-			endwhile;
-		endif;
-	endforeach;
-	return $output;
-}
-add_shortcode( 'hpm_articles_temp', 'article_display_shortcode_temp' );
 
 function article_list_shortcode( $atts ) {
 	extract( shortcode_atts( array(
@@ -366,32 +295,7 @@ function hpm_npr_article_shortcode( $atts ) {
 		'category' => 1001,
 		'num' => 4
 	], $atts, 'multilink' ) );
-	$npr = get_transient( 'hpm_nprapi_'.$category );
-	if ( !empty( $npr ) ) :
-		return $npr;
-	endif;
-	$output = '';
-	$api_key = get_option( 'ds_npr_api_key' );
-	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $category . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=4&apiKey=" . $api_key ) );
-	if ( is_wp_error( $remote ) ) :
-		return "<p></p>";
-	else :
-		$npr = wp_remote_retrieve_body( $remote );
-		$npr_json = json_decode( $npr, TRUE );
-	endif;
-	foreach ( $npr_json['list']['story'] as $story ) :
-		$npr_date = strtotime($story['storyDate']['$text']);
-		$output .= '<article class="national-content">';
-		if ( !empty( $story['image'][0]['src'] ) ) :
-			$output .= '<div class="national-image" style="background-image: url('.$story['image'][0]['src'].')"><a href="//www.houstonpublicmedia.org/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"></a></div><div class="national-text">';
-		else :
-			$output .= '<div class="national-text-full">';
-		endif;
-		$output .= '<h2><a href="//www.houstonpublicmedia.org/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/">'.$story['title']['$text'].'</a></h2><p class="screen-reader-text">'
-		           .$story['teaser']['$text'].'</p></div></article>';
-	endforeach;
-	set_transient( 'hpm_nprapi_'.$category, $output, 600 );
-	return $output;
+	return hpm_nprapi_output( $category, $num );
 }
 add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
 

@@ -61,7 +61,7 @@ Template Name: Career Frontier
 			color: white;
 			margin: 0;
 		}
-		.page-template-page-careerfrontier article {
+		.page.page-template-page-careerfrontier #main > article {
 			padding: 0;
 			margin: 0;
 		}
@@ -123,7 +123,7 @@ Template Name: Career Frontier
 		.cf-guest-wrap > article > header {
 			display: grid;
 			grid-template-columns: 33% 67%;
-			gap: 1rem;
+			gap: 0.25rem 1rem;
 		}
 		.cf-guest-wrap > article > header > img {
 			grid-row: 1 / span 2;
@@ -131,7 +131,7 @@ Template Name: Career Frontier
 		}
 		.cf-guest-wrap > article > header > h1 {
 			margin-bottom: 0;
-			font-size: 2rem;
+			font-size: 1.5rem;
 			font-family: Montserrat,Arial, Helvetica, sans-serif;
 			font-weight: 800;
 			grid-column: 2;
@@ -139,7 +139,7 @@ Template Name: Career Frontier
 		}
 		.cf-guest-wrap > article > header > h3 {
 			padding: 0;
-			font-size: 1.5rem;
+			font-size: 1rem;
 			grid-column: 2;
 			display: block;
 			margin: 0;
@@ -241,7 +241,7 @@ Template Name: Career Frontier
 				padding-bottom: calc(100%/6);
 				background-image: url(https://cdn.hpm.io/assets/images/CF-Large-Banner-Desktop-1200x200.jpg);
 			}
-			.page-template-page-careerfrontier article {
+			.page.page-template-page-careerfrontier #main > article {
 				padding: 0;
 				margin: 0;
 				width: 100%;

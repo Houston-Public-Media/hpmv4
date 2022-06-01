@@ -62,30 +62,26 @@ get_header(); ?>
 			color: white;
 			margin: 0;
 		}
-		.page-template-page-corona article {
+		.page.page-template-page-corona #main > article {
 			padding: 0;
 			margin: 0;
 		}
 		.corona-links a {
-			width: 90%;
-			margin: 0 5% 1em;
-			padding: 1em 1em 1em 3em;
+			width: 100%;
+			margin: 0 0 1em;
+			padding: 1em;
 			font-size: 125%;
 			color: #000;
 			background-color: rgba( 255, 0, 0, 0.2 );
 			display: block;
 			position: relative;
 		}
-		.corona-links a:before {
-			color: #cc0000;
-			position: absolute;
-			top: 0.55em;
-			left: 0.375em;
-			text-align: center;
-			width: 1.5em;
-			display: inline-block;
-			-webkit-font-smoothing: antialiased;
-			font: 900 1.5em/1 'Font Awesome 5 Free';
+		.corona-links a svg {
+			width: 2rem;
+			height: 2rem;
+			float: left;
+			margin-right: 0.5rem;
+			fill: var(--main-red);
 		}
 		.corona-links p {
 			margin: 0;
@@ -173,28 +169,13 @@ get_header(); ?>
 		.corona-local h2 {
 			background-color: #cc0000;
 			color: white;
-			padding: 0.5em 1em;
+			padding: 0.5rem 1rem;
+		}
+		.corona-local h3 {
+			padding: 0 1rem;
 		}
 		.corona-local ul {
-			padding: 0 1em 4em 1em;
-		}
-		.corona-links a#cv-spread:before {
-			content: '\f007';
-		}
-		.corona-links a#cv-symptom:before {
-			content: '\f0fa';
-		}
-		.corona-links a#cv-prevent:before {
-			content: '\f21e';
-		}
-		.corona-links a#cv-stigma:before {
-			content: '\f0c0';
-		}
-		.corona-links a#cv-what:before {
-			content: '\f0f1';
-		}
-		.corona-links a#cv-faq:before {
-			content: '\f086';
+			padding: 0 1rem 1rem 2rem;
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {
@@ -225,7 +206,7 @@ get_header(); ?>
 			}
 		}
 		@media screen and (min-width: 52.5em) {
-			.page-template-page-corona article {
+			.page.page-template-page-corona #main > article {
 				width: 100%;
 				float: none;
 				border-right: 0;
