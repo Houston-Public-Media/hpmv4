@@ -96,7 +96,7 @@
 				elseif ( $pagename == 'about' || in_array( 61381, $anc ) ) : ?>
 				<div id="top-schedule-wrap">
 					<nav id="category-navigation" class="category-navigation" role="navigation" style="padding: 0;">
-						<h4>About HPM</h4>
+						<h4>About Houston Public Media</h4>
 				<?php
 					wp_nav_menu( array(
 						'menu_class' => 'nav-menu',
