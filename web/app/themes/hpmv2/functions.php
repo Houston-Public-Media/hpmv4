@@ -809,7 +809,7 @@ function hpm_link_extract( $links ) {
 					$output = $link->value;
 				endif;
 			endforeach;
-		elseif ( $links instanceof NPRMLElement && !empty( $links->value ) ) :
+		elseif ( $links instanceof NPRMLElement && !empty( $links->value ) && $links->type === 'html' ) :
 			$output = $links->value;
 		endif;
 	endif;
@@ -884,12 +884,19 @@ function hpm_pull_npr_story( $npr_id ) {
 	$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
 	$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';
 
-	if ( is_array( $story->byline ) ) :
-		foreach( $story->byline as $single ) :
-			$nprdata['bylines'][] = hpm_npr_byline( $single );
-		endforeach;
+	if ( !empty( $story->byline ) ) :
+		if ( is_array( $story->byline ) ) :
+			foreach( $story->byline as $single ) :
+				$nprdata['bylines'][] = hpm_npr_byline( $single );
+			endforeach;
+		else :
+			$nprdata['bylines'][] = hpm_npr_byline( $story->byline );
+		endif;
 	else :
-		$nprdata['bylines'][] = hpm_npr_byline( $story->byline );
+		$nprdata['bylines'][] = [
+			'name' => 'NPR Staff',
+			'link' => ''
+		];
 	endif;
 
 	$nprdata['title'] = $story->title->value;
