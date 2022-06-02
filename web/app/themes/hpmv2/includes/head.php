@@ -9,7 +9,7 @@ function hpm_site_header() { ?>
 						<div id="top-schedule">
 							<div class="top-schedule-label"><button aria-label="View Schedules" type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap" ><?php echo hpm_svg_output( 'calendar' ); ?>Schedules</button></div>
 							<div class="top-schedule-link-wrap" id="top-schedule-link-wrap">
-								<div class="top-schedule-links"><a href="/tv8">TV 8 Guide</a></div>
+								<div class="top-schedule-links"><a href="/tv8">TV 8</a></div>
 								<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
 								<div class="top-schedule-links"><a href="/classical">Classical</a></div>
 								<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>

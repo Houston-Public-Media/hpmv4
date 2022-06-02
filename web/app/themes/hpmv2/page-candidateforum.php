@@ -112,7 +112,7 @@ get_header(); ?>
 		}
 
 		@media screen and (min-width: 52.5em) {
-			.page-template-page-candidateforum article {
+			.page.page-template-page-candidateforum #main > article {
 				width: 100%;
 				float: none;
 				border-right: 0;

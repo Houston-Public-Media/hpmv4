@@ -9,10 +9,10 @@ get_header(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="page-header">
 					<h1 class="page-title screen-reader-text"><?php echo get_the_title(); ?></h1>
-				</header><!-- .entry-header -->
+				</header>
 				<div class="page-content">
 					<?php the_content(); ?>
-				</div><!-- .entry-content -->
+				</div>
 				<footer class="page-footer">
 					<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -23,12 +23,15 @@ get_header(); ?>
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 		<?php endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 	<style>
+		.page.page-template-page-election2020 #main {
+			background-color: transparent;
+		}
 		.page-content {
 			overflow: hidden;
 			padding: 2.5em 1em 1em;
@@ -73,7 +76,7 @@ get_header(); ?>
 			}
 		}
 		@media screen and (min-width: 52.5em) {
-			.page-template-page-election2020 article {
+			.page.page-template-page-election2020 #main > article {
 				width: 100%;
 				float: none;
 				border-right: 0;

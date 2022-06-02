@@ -93,6 +93,7 @@ get_header(); ?>
 			padding: 0 0 0.5em 0;
 			margin-bottom: 1em;
 			color: #cc0000;
+			width: 100%;
 		}
 		.column-left article h2,
 		#search-results article h2 {
