@@ -1120,22 +1120,24 @@ class HPM_Podcasts {
 		if ( !empty( $show_id ) ) :
 			$social = get_post_meta( $show_id, 'hpm_show_social', true );
 			if ( !empty( $social['insta'] ) ) :
-				$temp .= '<li class="social-icon instagram"><a href="https://instagram.com/' . $social['insta'].'" rel="noopener" target="_blank" title="Instagram"><span class="fab fa-instagram" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon instagram"><a href="https://instagram.com/' . $social['insta'].'" rel="noopener" target="_blank" title="Instagram">' . hpm_svg_output( 'instagram' ) . '</a></li>';
 			endif;
 			if ( !empty( $social['yt'] ) ) :
-				$temp .= '<li class="social-icon youtube"><a href="'.$social['yt'].'" rel="noopener" target="_blank" title="YouTube"><span class="fab fa-youtube" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon youtube"><a href="'.$social['yt'].'" rel="noopener" target="_blank" title="YouTube">' . hpm_svg_output( 'youtube' ) . '</a></li>';
 			endif;
 			if ( !empty( $social['twitter'] ) ) :
-				$temp .= '<li class="social-icon twitter"><a href="https://twitter.com/'.$social['twitter'].'" rel="noopener" target="_blank" title="Twitter"><span class="fab fa-twitter" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon twitter"><a href="https://twitter.com/'.$social['twitter'].'" rel="noopener" target="_blank" title="Twitter">' . hpm_svg_output( 'twitter' ) . '</a></li>';
 			endif;
 			if ( !empty( $social['fb'] ) ) :
-				$temp .= '<li class="social-icon facebook"><a href="https://www.facebook.com/'.$social['fb'].'" rel="noopener" target="_blank" title="Facebook"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon facebook"><a href="https://www.facebook.com/'.$social['fb'].'" rel="noopener" target="_blank" title="Facebook">' . hpm_svg_output( 'facebook' ) . '</a></li>';
 			endif;
 		endif;
 		if ( !empty( $pod_link ) && $lede ) :
 			$output = '<p>&nbsp;</p><div class="podcast-episode-info"><h3>This article is part of the <em><a href="'.$pod_link['page'].'">'.get_the_title( $pod_id ).'</a></em> podcast</h3><ul class="podcast-badges">' . $temp . '</ul></div>';
 		else :
-			$output = '<ul class="podcast-badges">' . $temp . '</ul>';
+			if ( !empty( $temp ) ) :
+				$output = '<ul class="podcast-badges">' . $temp . '</ul>';
+			endif;
 		endif;
 		return $output;
 	}
@@ -1183,11 +1185,10 @@ class HPM_Podcasts {
 			endif;
 		endforeach;
 		if ( $no > 0 ) :
-			$output .= '<div id="station-social">';
-			if ( !empty( $options['times'] ) ) :
-				$output .= '<h3>' . $options['times'] .'</h3>';
-			endif;
-			$output .= HPM_Podcasts::show_social( $options['podcast'], false, $id ) . '</div>';
+			$social = HPM_Podcasts::show_social( $options['podcast'], false, $id );
+			$output .= '<div id="station-social"' . ( empty( $social ) ? ' class="station-no-social"' : '' ) . '>';
+			$output .= '<h3>' . ( !empty( $options['times'] ) ? $options['times'] : '' ) .'</h3>';
+			$output .= $social . '</div>';
 		endif;
 		$output .= '</header>';
 		return $output;

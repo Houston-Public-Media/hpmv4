@@ -318,12 +318,14 @@ function hpm_body_open() {
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv2' ); ?></a>
 <?php
 	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) : ?>
+		<?php echo HPM_Promos::generate_static( 'emergency' ); ?>
 		<div class="container">
 			<?php hpm_site_header(); ?>
 		</div>
 		<?php echo hpm_talkshows(); ?>
 <?php
 	elseif ( is_page_template( 'page-listen.php' ) ) : ?>
+		<?php echo HPM_Promos::generate_static( 'emergency' ); ?>
 		<div class="container">
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">

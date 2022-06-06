@@ -28,29 +28,29 @@ get_header(); ?>
 						<h3><?php echo $staff['title']; ?></h3>
 			<?php
 				if ( !empty( $staff ) ): ?>
-						<div class="author-social">
+						<div class="social-wrap">
 				<?php
-					if (!empty( $staff['facebook'] ) ) : ?>
-							<div class="social-icon">
-								<a href="<?php echo $staff['facebook']; ?>" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
+					if ( !empty( $staff['facebook'] ) ) : ?>
+							<div class="social-icon facebook">
+								<a href="<?php echo $staff['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
 			<?php
 					endif;
 					if ( !empty( $staff['twitter'] ) ) : ?>
-							<div class="social-icon">
-								<a href="<?php echo $staff['twitter']; ?>" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
+							<div class="social-icon twitter">
+								<a href="<?php echo $staff['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></a>
 							</div>
 			<?php
 					endif;
 					if ( !empty( $staff['linkedin'] ) ) : ?>
-							<div class="social-icon">
-								<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><span class="fab fa-linkedin-in" aria-hidden="true"></span></a>
+							<div class="social-icon linkedin">
+								<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
 							</div>
 			<?php
 					endif;
 					if ( !empty( $staff['email'] ) ) : ?>
-							<div class="social-icon">
-								<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a>
+							<div class="social-icon envelope">
+								<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?></a>
 							</div>
 			<?php
 					endif; ?>
@@ -87,7 +87,7 @@ get_header(); ?>
 			<section id="search-results">
 		<?php
 					while ( $auth->have_posts() ) : $auth->the_post();
-						get_template_part( 'content', get_post_format() );
+						get_template_part( 'content', get_post_type() );
 					endwhile;
 						wp_reset_postdata(); ?>
 				<div class="readmore">

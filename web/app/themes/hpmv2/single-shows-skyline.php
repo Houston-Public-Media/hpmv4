@@ -13,54 +13,215 @@ Template Post Type: shows
 
 wp_enqueue_script('jquery');
 get_header(); ?>
+	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick.min.css" />
+	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
+	<style>
+		body.single-shows #station-social {
+			padding: 1em;
+			background-color: white;
+			overflow: hidden;
+			width: 100%;
+		}
+		body.single-shows .page-header {
+			padding: 0;
+		}
+		body.single-shows .page-header .page-title {
+			padding: 1rem;
+		}
+		body.single-shows .page-header.banner #station-social {
+			margin: 0 0 1em 0;
+		}
+		body.single-shows #station-social h3 {
+			font-size: 1.5em;
+			font-family: var(--hpm-font-condensed);
+			color: #3f1818;
+			margin-bottom: 1rem;
+		}
+		#float-wrap aside {
+			background-color: white;
+		}
+		body.single-shows .podcast-badges {
+			justify-content: flex-end;
+		}
+		.show-content > * + * {
+			margin-top: 1rem;
+		}
+		section#country-covers {
+			max-width: 100%;
+			background-color: rgb(181,159,109);
+			background-image: url(https://cdn.hpm.io/assets/images/tan_mobile.png);
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			margin-bottom: 1rem;
+		}
+		section#country-covers #shows-youtube {
+			margin: 0;
+			background-color: transparent !important;
+		}
+		section#country-covers .column-right {
+			width: 100%;
+			margin: 0;
+		}
+		section#country-covers .column-right img {
+			margin-bottom: 0.5em;
+		}
+		section#country-covers .column-right .show-content p {
+			color: #1F2F42;
+			font-family: var(--hpm-font-main);
+			font-size: 112.5%;
+		}
+		section#country-covers .column-right .show-content h2 {
+			color: #f5f5f5;
+			font-family: var(--hpm-font-main);
+			font-weight: bolder;
+			padding-bottom: 0.25em;
+			border-bottom: 1px solid #f5f5f5;
+		}
+		section#country-covers #shows-youtube #youtube-main {
+			padding: 0;
+			background-color: transparent;
+		}
+		section#country-covers #shows-youtube #youtube-main h2 {
+			text-transform: none;
+			color: #1F2F42;
+			margin-bottom: 0.25em;
+		}
+		section#country-covers #shows-youtube #youtube-main p {
+			color: #f5f5f5;
+			font: normal 1.125em/1.25em var(--hpm-font-main);
+		}
+		section#country-covers #shows-youtube #youtube-upcoming {
+			margin: 1em 2.5%;
+			width: 95%;
+			background-color: transparent;
+			overflow: visible;
+		}
+		section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+			color: #1F2F42;
+		}
+		section#country-covers #shows-youtube #youtube-upcoming .youtube {
+			padding: 1em 0;
+			flex-flow: row nowrap;
+			justify-content: left;
+			align-content: center;
+			align-items: center;
+			display: flex;
+			position: relative;
+		}
+		section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+			font-family: var(--hpm-font-condensed);
+		}
+		section#country-covers .slick-prev:before,
+		section#country-covers .slick-next:before {
+			color: white !important;
+		}
+		.single.shows-template-single-shows-skyline #main aside,
+		.single.shows-template-single-shows-skyline #main article.post {
+			order: initial;
+		}
+		#youtube-wrap {
+			display: block !important;
+		}
+		@media screen and (min-width: 34em) {
+			body.single-shows #station-social {
+				display: grid;
+				grid-template-columns: 1fr 1.25fr;
+				align-items: center;
+			}
+			body.single-shows #station-social.station-no-social {
+				grid-template-columns: 1fr !important;
+			}
+			body.single-shows #station-social h3 {
+				margin-bottom: 0;
+			}
+			section#country-covers .column-right {
+				float: right;
+				width: 31%;
+				margin: 0 0 1em 3%;
+			}
+			section#country-covers #youtube-main {
+				float: left;
+				width: 66%;
+				margin: 0 0 1em 0;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming {
+				clear: both;
+				border: 0;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming .youtube {
+				width: 100%;
+				float: none;
+				display: block;
+				padding: 1em;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming .youtube img {
+				width: 100%;
+				float: none;
+				padding: 0 0 0.5em 0;
+			}
+			section#country-covers #shows-youtube #youtube-upcoming .youtube h2 {
+				margin: 0;
+			}
+			section#country-covers #shows-youtube {
+				margin: 0;
+				padding: 2em;
+			}
+			section#country-covers .slick-prev:before,
+			section#country-covers .slick-next:before {
+				font-size: 40px !important;
+			}
+			section#country-covers .slick-prev,
+			section#country-covers .slick-next {
+				width: 40px !important;
+				height: 40px !important;
+			}
+			section#country-covers .slick-prev,
+			section#country-covers .slick-next {
+				width: 40px !important;
+				height: 40px !important;
+			}
+			section#country-covers .slick-next {
+				right: -40px !important;
+			}
+			section#country-covers .slick-prev {
+				left: -40px !important;
+			}
+		}
+		@media screen and (min-width: 52.5em) {
+			body.single-shows #station-social {
+				grid-template-columns: 1fr 2fr;
+			}
+			body.single-shows #station-social.station-no-social {
+				grid-template-columns: 1fr !important;
+			}
+			body.shows-template-single-shows-skyline #float-wrap article.card {
+				margin: 0 0.75% 1em;
+				width: 48.5%;
+				padding: 1em 1.5em;
+			}
+			body.shows-template-single-shows-skyline #float-wrap.column-span article.card {
+				margin: 0 0.75% 1em;
+				width: 31.5%;
+				padding: 1em 1.5em;
+			}
+			section#country-covers #shows-youtube #youtube-wrap {
+				background-color: transparent;
+				overflow: visible;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post();
-				$show_name = $post->post_name;
-				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
-				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
-				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+				$show_id = get_the_ID();
+				$show = get_post_meta( $show_id, 'hpm_show_meta', true );
 				$show_title = get_the_title();
 				$show_content = get_the_content();
-				$page_head_class = HPM_Podcasts::show_banner( get_the_ID() ); ?>
-			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title"><?php the_title(); ?></h1>
-			</header>
-			<?php
-				$no = $sp = $c = 0;
-				foreach( $show as $sk => $sh ) :
-					if ( !empty( $sh ) && $sk != 'banners' ) :
-						$no++;
-					endif;
-				endforeach;
-				foreach( $social as $soc ) :
-					if ( !empty( $soc ) ) :
-						$no++;
-					endif;
-				endforeach;
-				if ( $no > 0 ) : ?>
-			<div id="station-social">
-			<?php
-					if ( !empty( $show['times'] ) ) : ?>
-				<h3><?php echo $show['times']; ?></h3>
-			<?php
-					endif;
-					echo HPM_Podcasts::show_social( $show['podcast'], false, get_the_ID() ); ?>
-			</div>
-			<?php
-				endif;?>
-		<?php
-			endwhile;
-			$t = time();
-			$offset = get_option('gmt_offset')*3600;
-			$t = $t + $offset;
-			$now = getdate($t);
-			if ( !empty( $_GET['testtime'] ) ) :
-				$tt = explode( '-', $_GET['testtime'] );
-				$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) );
-			endif;
-			if ( $now[0] > mktime( 17, 0, 0, 8, 19, 2019 ) ) :?>
+				$episodes = HPM_Podcasts::list_episodes( $show_id );
+				echo HPM_Podcasts::show_header( $show_id );
+			endwhile; ?>
 			<section id="country-covers">
 				<div id="shows-youtube">
 					<div id="youtube-wrap">
@@ -68,9 +229,6 @@ get_header(); ?>
 							<a href="http://claimittexas.org" target="_blank"><img src="https://cdn.hpm.io/assets/images/cc_logo_sponsor2x.png" alt="Skyline Sessions Country Covers" class="" /></a>
 							<div class="show-content">
 								<p><em>Country Covers</em> is a spin-off of our digital music series <em>Skyline Sessions</em> and features a variety of musicians performing their favorite country classics and sharing personal stories of their love for country music. <em>Country Covers</em> is Houston Public Media's companion piece to Ken Burns' new documentary series <em>Country Music</em>.</p>
-								<h2>Watch on TV 8</h2>
-								<p><strong>Thursday, September 8</strong> | 9pm & 11:30pm<br /><strong>Sunday, September 15</strong> | 3:30pm<br /><strong>Tuesday, September 17</strong> | 11pm
-								</p>
 							</div>
 						</div>
 <?php
@@ -79,7 +237,7 @@ get_header(); ?>
 					$r = rand( 0, count( $json ) - 1 ); ?>
 						<div id="youtube-main">
 							<div id="youtube-player" style="background-image: url( '<?php echo $json[$r]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[$r]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $json[$r]['snippet']['title'], ENT_COMPAT ); ?>">
-								<span class="fab fa-youtube" id="play-button"></span>
+								<?php echo hpm_svg_output( 'play' ); ?>
 							</div>
 							<h2><?php echo $json[$r]['snippet']['title']; ?></h2>
 							<p class="desc"><?php echo $json[$r]['snippet']['description']; ?></p>
@@ -99,29 +257,17 @@ get_header(); ?>
 					</div>
 				</div>
 			</section>
-			<section id="country-music">
-				<img src="https://cdn.hpm.io/assets/images/cm_kenburns_logo2x.png" alt="Country Music, a Film by Ken Burns">
-				<p>The first 4 episodes will air nightly from Sunday, September 15, through Wednesday, September 18, and the final four episodes will air nightly from Sunday, September 22, through Wednesday, September 25. Each episode will premiere at 7:00pm.</p>
-			</section>
-<?php
-			endif; ?>
 			<div id="float-wrap">
 				<aside class="column-right">
 					<h3>About <?php echo $show_title; ?></h3>
 					<div class="show-content">
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
-				<?php
-							if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
-								$googletag = 'div-gpt-ad-1470409396951-0';
-							else :
-								$googletag = 'div-gpt-ad-1394579228932-1';
-							endif; ?>
 					<div class="sidebar-ad">
 						<h4>Support Comes From</h4>
-						<div id="<?php echo $googletag; ?>">
+						<div id="div-gpt-ad-1470409396951-0">
 							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
+								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1470409396951-0'); });
 							</script>
 						</div>
 					</div>
@@ -162,8 +308,13 @@ get_header(); ?>
 			</div>
 		</div>
 
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
-
+		</main>
+	</div>
+	<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
+	<script>
+		jQuery(document).ready(function($){
+			var options = { slidesToShow: 3, rows: 1, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 3, slidesToScroll: 3, rows: 1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 3 } }] };
+			$('#youtube-upcoming').slick(options);
+		});
+	</script>
 <?php get_footer(); ?>

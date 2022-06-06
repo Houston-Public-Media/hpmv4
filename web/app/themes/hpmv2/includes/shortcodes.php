@@ -56,7 +56,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 				'</audio>';
 		if ( !is_admin() && !empty( $attr['id'] ) ) :
 			$html .= "
-				<button class=\"plyr-audio-embed\" data-id=\"{$attr['id']}\"><span class=\"fas fa-code\"></span></button>
+				<button class=\"plyr-audio-embed\" data-id=\"{$attr['id']}\">" . hpm_svg_output( 'code' ) . "</button>
 				<div class=\"plyr-audio-embed-popup\" id=\"plyr-{$audio_id}-popup\">
 					<div class=\"plyr-audio-embed-wrap\">
 						<p>To embed this piece of audio in your site, please use this code:</p>

@@ -67,7 +67,7 @@ get_header(); ?>
 			<section id="search-results">
 			<?php
 			while ( have_posts() ) : the_post();
-				get_template_part( 'content', get_post_format() );
+				get_template_part( 'content', get_post_type() );
 			endwhile;
 
 			if ( is_post_type_archive( [ 'podcasts', 'shows' ] ) ) :
@@ -90,5 +90,5 @@ get_header(); ?>
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 		</main>
-	</section>
+	</div>
 <?php get_footer(); ?>

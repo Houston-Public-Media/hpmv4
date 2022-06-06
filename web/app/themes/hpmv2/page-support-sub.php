@@ -3,6 +3,106 @@
 Template Name: Support Sub
 */
 get_header(); ?>
+	<style>
+		.page.page-template-page-support-sub .page-content {
+			padding: 2em;
+			width: 100%;
+			margin: 0;
+		}
+		.page-template-page-support-sub .page-header {
+			padding: 1em !important;
+		}
+		.page.page-template-page-support-sub .page-header-wrap {
+			color: white;
+			flex-grow: 2;
+		}
+		.page-template-page-support-sub .page-content ul {
+			list-style: disc outside none;
+			padding: 0 0 1em 2em;
+		}
+		.page-template-page-support-sub.matching-info .page-content aside {
+			background-color: #f5f5f5;
+		}
+		.page-template-page-support-sub.matching-info .page-content aside h2 {
+			padding-top: 0;
+		}
+		.page.page-template-page-support-sub .page-header {
+			background-color: var(--main-red);
+			padding: 1em 1em 0 1em;
+		}
+		.page.page-template-page-support-sub .page-header .page-title {
+			color: white;
+			margin: 0;
+			font-family: var(--hpm-font-main);
+			font-weight: 700;
+		}
+		.page.page-template-page-support-sub .page-header p {
+			color: white;
+			margin: 0;
+		}
+		.page.page-template-page-support-sub .page-header :is(img,picture) {
+			width: auto;
+			max-width: 300px;
+			padding: 0 1em;
+		}
+		.page.page-template-page-support-sub .page-content h2 {
+			padding: 0;
+			color: var(--main-red);
+			font-family: var(--hpm-font-main); font-weight: 700;
+		}
+		.page.page-template-page-support-sub p {
+			color: #59595B;
+			font: 100 1.25em/1.125em var(--hpm-font-main);
+			margin-bottom: 1em;
+		}
+		.page.page-template-page-support-sub .page-content h2 {
+			color: #016D94;
+			padding: 1em 0 0.25em;
+			margin-bottom: 1em;
+			border-bottom: 2px solid #016D94;
+			font-size: 1.5em;
+		}
+		@media screen and (min-width: 34em) {
+			.page.page-template-page-support-sub .page-header {
+				flex-flow: row nowrap;
+				justify-content: center;
+				align-content: center;
+				align-items: center;
+				display: flex;
+			}
+			.page.page-template-page-support-sub .page-header-wrap {
+				width: 70%;
+				padding-bottom: 1em;
+			}
+			.page-template-page-support-sub .page-content .column-left ul {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+		@media screen and (min-width: 52.5em) {
+			.page.page-template-page-support-sub #main > article {
+				border: 0;
+				width: 100%;
+				float: none;
+				margin: 0;
+			}
+			.page.page-template-page-support-sub .page-header {
+				flex-flow: row nowrap;
+				justify-content: center;
+				align-content: center;
+				align-items: center;
+				display: flex;
+			}
+			.page.page-template-page-support-sub .page-header-wrap {
+				width: 50%;
+				padding: 0;
+			}
+			.page-template-page-support-sub .page-content {
+				width: 80%;
+				margin: 0 10%;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 			<?PHP while ( have_posts() ) : the_post(); ?>
@@ -13,11 +113,10 @@ get_header(); ?>
 						<?php the_excerpt(); ?>
 					</div>
 					<?php the_post_thumbnail(); ?>
-				</header><!-- .entry-header -->
+				</header>
 				<div class="page-content">
 					<?php the_content(); ?>
-				</div><!-- .entry-content -->
-
+				</div>
 				<footer class="page-footer">
 					<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv2' ) );
@@ -28,9 +127,9 @@ get_header(); ?>
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 		<?php endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 <?php get_footer(); ?>

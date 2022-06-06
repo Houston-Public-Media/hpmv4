@@ -3,6 +3,23 @@
 Template Name: Blank Wrapper
 */
 	get_header(); ?>
+	<style>
+		.page.page-template-page-blank #content {
+			width: 100%;
+			max-width: 100%;
+			margin: 0;
+		}
+		body.page.page-template-page-blank {
+			background-color: white;
+		}
+		@media screen and (min-width: 52.5em) {
+			.page.page-template-page-blank #main > article {
+				margin: 0;
+				float: none;
+				width: 100%;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?PHP while ( have_posts() ) : the_post(); ?>
@@ -40,8 +57,7 @@ Template Name: Blank Wrapper
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer>
 			</article>
-			<?php
-				endwhile; ?>
+		<?php endwhile; ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

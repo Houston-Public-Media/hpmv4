@@ -12,57 +12,111 @@ Template Post Type: shows
  */
 
 get_header(); ?>
+	<style>
+		body.single-shows #station-social {
+			padding: 1em;
+			background-color: white;
+			overflow: hidden;
+			width: 100%;
+		}
+		body.single-shows .page-header {
+			padding: 0;
+		}
+		body.single-shows .page-header .page-title {
+			padding: 1rem;
+		}
+		body.single-shows .page-header.banner #station-social {
+			margin: 0 0 1em 0;
+		}
+		body.single-shows #station-social h3 {
+			font-size: 1.5em;
+			font-family: var(--hpm-font-condensed);
+			color: #3f1818;
+			margin-bottom: 1rem;
+		}
+		#float-wrap aside {
+			background-color: white;
+		}
+		body.single-shows .podcast-badges {
+			justify-content: flex-end;
+		}
+		.show-content > * + * {
+			margin-top: 1rem;
+		}
+		#float-wrap article#hpm-show-podcast.card.card-medium {
+			padding: 1em 1.5em;
+			flex-flow: row wrap;
+			margin: 2em 0;
+			width: 100%;
+		}
+		#hpm-show-podcast h2 {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		.podcast-pane {
+			width: 100%;
+			padding: 0.5em 0;
+		}
+		@media screen and (min-width: 34em) {
+			body.single-shows #station-social {
+				display: grid;
+				grid-template-columns: 1fr 1.25fr;
+				align-items: center;
+			}
+			body.single-shows #station-social.station-no-social {
+				grid-template-columns: 1fr !important;
+			}
+			body.single-shows #station-social h3 {
+				margin-bottom: 0;
+			}
+			#float-wrap article#hpm-show-podcast.card.card-medium {
+				padding: 1em;
+				flex-flow: row wrap;
+			}
+			#hpm-show-podcast h2 {
+				padding: 0;
+			}
+			.podcast-pane:nth-child(2) {
+				width: 60%;
+				padding: 1em 1em 0 0;
+			}
+			.podcast-pane:nth-child(3) {
+				width: 40%;
+				padding: 1em 0 0 0;
+			}
+		}
+		@media screen and (min-width: 52.5em) {
+			body.single-shows #station-social {
+				grid-template-columns: 1fr 2fr;
+			}
+			body.single-shows #station-social.station-no-social {
+				grid-template-columns: 1fr !important;
+			}
+			#float-wrap article#hpm-show-podcast.card.card-medium {
+				width: 64.5%;
+				margin: 0 0.75% 1em;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post();
-				$show_name = $post->post_name;
-				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
-				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
-				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-				$show_title = get_the_title();
-				$show_content = get_the_content();
-				$page_head_class = HPM_Podcasts::show_banner( get_the_ID() ); ?>
-			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title"><?php the_title(); ?></h1>
-			</header>
-			<?php
-				$no = $sp = $c = 0;
-				foreach( $show as $sk => $sh ) :
-					if ( !empty( $sh ) && $sk != 'banners' ) :
-						$no++;
-					endif;
-				endforeach;
-				foreach( $social as $soc ) :
-					if ( !empty( $soc ) ) :
-						$no++;
-					endif;
-				endforeach;
-				if ( $no > 0 ) : ?>
-			<div id="station-social">
-			<?php
-					if ( !empty( $show['times'] ) ) : ?>
-				<h3><?php echo $show['times']; ?></h3>
-			<?php
-					endif;
-					echo HPM_Podcasts::show_social( '', false, get_the_ID() ); ?>
-			</div>
-			<?php
-				endif;?>
-		<?php
+			$show_id = get_the_ID();
+			$show = get_post_meta( $show_id, 'hpm_show_meta', true );
+			$show_title = get_the_title();
+			$show_content = get_the_content();
+			$episodes = HPM_Podcasts::list_episodes( $show_id );
+			echo HPM_Podcasts::show_header( $show_id );
 			endwhile; ?>
 			<div id="float-wrap">
-				<div class="grid-sizer"></div>
 <?php
 	if ( !empty( $show['podcast'] ) ) :
-		/* $pod_link = get_post_meta( $show['podcast'], 'hpm_pod_link', true );
-		if ( !empty( $pod_link['itunes'] ) ) :
-			echo '<article class="felix-type-a"><iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" height="450" style="width:100%;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="'.str_replace( 'https://podcasts.apple.com', 'https://embed.podcasts.apple.com', $pod_link['itunes'] ).'"></iframe></article>';
-		endif; */
 		$last_id = get_post_meta( $show['podcast'], 'hpm_pod_last_id', true );
 		$enc = get_post_meta( $last_id['id'], 'hpm_podcast_enclosure', true );
 		$audio = '[audio mp3="' . $enc['url'] . '"][/audio]'; ?>
-				<article class="felix-type-b" id="hpm-show-podcast">
+				<article class="card card-medium" id="hpm-show-podcast">
 					<h2><?php echo $show_title; ?> Podcast</h2>
 					<div class="podcast-pane">
 						<p>Listen to the Latest Episode</p>
@@ -73,87 +127,6 @@ get_header(); ?>
 						<?php echo HPM_Podcasts::show_social( $show['podcast'], false, '' ); ?>
 					</div>
 				</article>
-				<style>
-					#float-wrap article#hpm-show-podcast.felix-type-b {
-						padding: 1em 1.5em;
-						flex-flow: row wrap;
-						margin: 2em 0;
-						width: 100%;
-					}
-					#hpm-show-podcast h2 {
-						width: 100%;
-						margin: 0;
-						padding: 0;
-					}
-					.podcast-pane {
-						width: 100%;
-						padding: 0.5em 0;
-					}
-					#hpm-show-podcast .jp-type-single {
-						background-color: transparent;
-					}
-					#hpm-show-podcast .jp-gui.jp-interface .jp-controls button {
-						background-color: transparent;
-						width: 4em;
-						height: 4em;
-					}
-					#hpm-show-podcast .jp-gui.jp-interface .jp-controls button .fa {
-						font-size: 3.25em;
-					}
-					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper {
-						position: relative;
-						padding: 1em 0.5em;
-					}
-					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
-						margin: 0;
-						background-color: rgb(79, 79, 79);
-						z-index: 9;
-						position: relative;
-					}
-					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
-						z-index: 11;
-					}
-					#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-						position: absolute;
-						top: 1.5em;
-						right: 1em;
-						z-index: 10;
-						float: none;
-						width: auto;
-						display: inline;
-						padding: 0;
-						color: white;
-					}
-					@media screen and (min-width: 34em) {
-						#float-wrap article#hpm-show-podcast.felix-type-b {
-							padding: 1em;
-							flex-flow: row wrap;
-						}
-						#hpm-show-podcast h2 {
-							padding: 0;
-						}
-						.podcast-pane:nth-child(2) {
-							width: 60%;
-							padding: 1em 1em 0 0;
-						}
-						.podcast-pane:nth-child(3) {
-							width: 40%;
-							padding: 1em 0 0 0;
-						}
-						#hpm-show-podcast .jp-gui.jp-interface .jp-details {
-							display: none;
-						}
-						#hpm-show-podcast .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-							top: 1.25em;
-						}
-					}
-					@media screen and (min-width: 52.5em) {
-						#float-wrap article#hpm-show-podcast.felix-type-b {
-							width: 64.5%;
-							margin: 0 0.75% 1em;
-						}
-					}
-				</style>
 <?php
 	endif; ?>
 				<aside class="column-right">
@@ -161,17 +134,11 @@ get_header(); ?>
 					<div class="show-content">
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
-			<?php
-						if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
-							$googletag = 'div-gpt-ad-1470409396951-0';
-						else :
-							$googletag = 'div-gpt-ad-1394579228932-1';
-						endif; ?>
 					<div class="sidebar-ad">
 						<h4>Support Comes From</h4>
-						<div id="<?php echo $googletag; ?>">
+						<div id="div-gpt-ad-1394579228932-1">
 							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('<?php echo $googletag; ?>'); });
+								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
 							</script>
 						</div>
 					</div>
@@ -189,6 +156,8 @@ get_header(); ?>
 				'posts_per_page' => 15,
 				'ignore_sticky_posts' => 1
 			);
+			global $ka;
+			$ka = 0;
 			if ( !empty( $top ) && $top !== 'None' ) :
 				$top_art = new WP_query( [ 'p' => $top ] );
 				$cat_args['posts_per_page'] = 14;
@@ -196,6 +165,7 @@ get_header(); ?>
 				if ( $top_art->have_posts() ) :
 					while ( $top_art->have_posts() ) : $top_art->the_post();
 						get_template_part( 'content', get_post_type() );
+						$ka += 2;
 					endwhile;
 					$post_num = 14;
 				endif;
@@ -205,6 +175,7 @@ get_header(); ?>
 			if ( $cat->have_posts() ) :
 				while ( $cat->have_posts() ) : $cat->the_post();
 					get_template_part( 'content', get_post_type() );
+					$ka += 2;
 				endwhile;
 			endif; ?>
 				</div>
@@ -226,7 +197,7 @@ get_header(); ?>
 						if ( $c == 0 ) : ?>
 					<div id="youtube-main">
 						<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
-							<span class="fa fa-play" id="play-button"></span>
+							<?php echo hpm_svg_output( 'play' ) ?>
 						</div>
 						<h2><?php echo $tubes['snippet']['title']; ?></h2>
 						<p class="desc"><?php echo $tubes['snippet']['description']; ?></p>
@@ -249,6 +220,6 @@ get_header(); ?>
 			</div>
 	<?php
 			endif; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 <?php get_footer(); ?>

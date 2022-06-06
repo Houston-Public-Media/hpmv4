@@ -48,7 +48,7 @@ function author_footer( $id ) {
 			<div class=\"author-info\">
 				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
 				<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
-				<div class=\"author-social\">";
+				<div class=\"social-wrap\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :
 				$temp .= '<div class="social-icon facebook"><a href="'.$meta['facebook'].'" rel="noopener" title="'.( $local ? $author->post->post_title : $coa->display_name ).' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '</a></div>';

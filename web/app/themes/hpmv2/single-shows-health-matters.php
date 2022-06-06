@@ -13,44 +13,160 @@ Template Post Type: shows
  */
 
 get_header(); ?>
+	<style>
+		#div-gpt-ad-1488818411584-0 {
+			display: none !important;
+		}
+		.article-player-wrap h3 {
+			display: none;
+		}
+		body.single-shows #station-social {
+			padding: 1em;
+			margin: 0 0 1em 0;
+			background-color: white;
+			overflow: hidden;
+			width: 100%;
+		}
+		body.single-shows #station-social h3 {
+			font-size: 1.5em;
+			font-family: var(--hpm-font-condensed);
+			color: #3f1818;
+			margin-bottom: 1rem;
+		}
+		#float-wrap aside {
+			background-color: white;
+		}
+		body.single-shows .podcast-badges {
+			justify-content: flex-end;
+		}
+		#audio-nav {
+			margin: 0;
+			width: 100%;
+			padding: 1em 0;
+			position: static;
+			top: auto;
+			left: auto;
+			right: auto;
+			bottom: auto;
+			transform: none;
+		}
+		#audio-nav nav {
+			color: white;
+			height: 100%;
+			overflow: scroll;
+			background-color: #808080;
+		}
+		#audio-nav .audio-playlist {
+			padding: 1em;
+			overflow: hidden;
+			border-bottom: 1px solid white;
+			background-color: rgb(0,98,136);
+		}
+		section#audio-playlist-player #audio-nav .audio-playlist p {
+			color: white;
+			font: 500;
+			font-size: 1.25em;
+			display: block;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		#ap-title {
+			text-align: center;
+		}
+		section #audio-nav ul {
+			margin: 0 0 1em 0;
+			padding: 0;
+			max-height: 28em;
+			overflow-y: scroll;
+			margin-bottom: 0;
+			border-bottom: 1px solid white;
+		}
+		section #audio-nav ul li {
+			border-bottom: 1px solid white;
+			padding: 1em;
+			font: 100 1em/1em var(--hpm-font-main);
+			overflow: hidden;
+			width: 100%;
+			height: auto;
+			float: none;
+			text-align: left;
+			color: white;
+		}
+		section #audio-nav ul li:nth-child(3) img {
+			max-width: 100%;
+		}
+		#audio-nav ul li:hover {
+			cursor: pointer;
+		}
+		#audio-nav ul li.current {
+			background-color: var(--main-red);
+			color: white;
+			font: 700 1em/1em var(--hpm-font-main);
+		}
+		#audio-nav ul li .audio-info {
+			width: 100%;
+			padding: 0.5em 0;
+		}
+		.ap-split {
+			padding: 1em;
+		}
+		.show-content > * + * {
+			margin-top: 1rem;
+		}
+		@media screen and (min-width: 34em) {
+			body.single-shows #station-social {
+				display: grid;
+				grid-template-columns: 1fr 1.25fr;
+				align-items: center;
+			}
+			body.single-shows #station-social h3 {
+				margin-bottom: 0;
+			}
+			aside#audio-nav {
+				padding: 1em;
+				background-color: transparent;
+				margin-bottom: 1em;
+			}
+			#audio-nav {
+				padding: 0;
+			}
+			section #audio-nav ul li {
+				padding: 1em;
+			}
+			section #audio-nav ul li:last-child {
+				border-bottom: 0;
+			}
+			#audio-nav .audio-playlist {
+				display: block;
+			}
+		}
+		@media screen and (min-width: 52.5em) {
+			body.single-shows #station-social {
+				grid-template-columns: 1fr 2fr;
+			}
+			.ap-split {
+				padding: 0;
+			}
+			section #audio-nav ul {
+				float: none;
+				width: 100%;
+			}
+			section #audio-nav ul li {
+				padding: 1em;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
 			while ( have_posts() ) : the_post();
-				$show_name = $post->post_name;
-				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
-				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
-				$header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-				$show_title = get_the_title();
-				$show_content = get_the_content();
-				$page_head_class = HPM_Podcasts::show_banner( get_the_ID() ); ?>
-			<header class="page-header<?php echo $page_head_class; ?>">
-				<h1 class="page-title"><?php the_title(); ?></h1>
-			</header>
-			<?php
-				$no = $sp = $c = 0;
-				foreach( $show as $sk => $sh ) :
-					if ( !empty( $sh ) && $sk != 'banners' ) :
-						$no++;
-					endif;
-				endforeach;
-				foreach( $social as $soc ) :
-					if ( !empty( $soc ) ) :
-						$no++;
-					endif;
-				endforeach;
-				if ( $no > 0 ) : ?>
-			<div id="station-social">
-			<?php
-					if ( !empty( $show['times'] ) ) : ?>
-				<h3><?php echo $show['times']; ?></h3>
-			<?php
-					endif;
-					echo HPM_Podcasts::show_social( $show['podcast'], false, get_the_ID() ); ?>
-			</div>
-			<?php
-				endif;?>
-		<?php
+			$show_id = get_the_ID();
+			$show = get_post_meta( $show_id, 'hpm_show_meta', true );
+			$show_title = get_the_title();
+			$show_content = get_the_content();
+			$episodes = HPM_Podcasts::list_episodes( $show_id );
+			echo HPM_Podcasts::show_header( $show_id );
 			endwhile; ?>
 			<div id="float-wrap">
 				<aside class="column-right">
@@ -58,12 +174,6 @@ get_header(); ?>
 					<div class="show-content">
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
-			<?php
-						if ( $show_name == 'skyline-sessions' || $show_name == 'music-in-the-making' ) :
-							$googletag = 'div-gpt-ad-1470409396951-0';
-						else :
-							$googletag = 'div-gpt-ad-1394579228932-1';
-						endif; ?>
 					<div class="sidebar-ad">
 						<h4>Support Comes From</h4>
 						<div id="<?php echo $googletag; ?>">
@@ -86,6 +196,8 @@ get_header(); ?>
 				'posts_per_page' => 15,
 				'ignore_sticky_posts' => 1
 			);
+			global $ka;
+			$ka = 0;
 			if ( !empty( $top ) && $top !== 'None' ) :
 				$top_art = new WP_query( [ 'p' => $top ] );
 				$cat_args['posts_per_page'] = 14;
@@ -93,6 +205,7 @@ get_header(); ?>
 				if ( $top_art->have_posts() ) :
 					while ( $top_art->have_posts() ) : $top_art->the_post();
 						get_template_part( 'content', get_post_type() );
+						$ka += 2;
 					endwhile;
 					$post_num = 14;
 				endif;
@@ -102,6 +215,7 @@ get_header(); ?>
 			if ( $cat->have_posts() ) :
 				while ( $cat->have_posts() ) : $cat->the_post();
 					get_template_part( 'content', get_post_type() );
+					$ka += 2;
 				endwhile;
 			endif; ?>
 				</div>
@@ -191,21 +305,21 @@ get_header(); ?>
 				[ 'id' => '315979', 'title' => 'Episode 2: Combatting High Blood Pressure (Dr. Kathryn Horn)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/19113456/UHCM_Ep002_HighBloodPressure01.mp3' ],
 				[ 'id' => '315978', 'title' => 'Episode 1: Sadness vs. Depression (Dr. Kathryn Horn)', 'url' => 'https://cdn.hpm.io/wp-content/uploads/2018/12/19113453/UHCM_Ep001_MentalHealth01.mp3' ],
 			]; ?>
-			<section id="stories-from-the-storm" class="column-left">
-				<div class="hah-split sfts-interviews-video">
-					<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'" id="'.$atts[0]['id'].'"][/audio]' ); ?>
-					<h3 id="sfts-yt-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
+			<section id="audio-playlist-player" class="column-left">
+				<div class="ap-split">
+					<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'"][/audio]' ); ?>
+					<h3 id="ap-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
 				</div>
-				<aside id="videos-nav">
-					<nav id="videos">
-						<div class="videos-playlist">
+				<aside id="audio-nav">
+					<nav id="audio">
+						<div class="audio-playlist">
 							<p>Archived Episodes</p>
 						</div>
 						<ul>
 							<?php
 							foreach ($atts as $a) : ?>
 								<li <?php echo ($a['id'] == $atts[0]['id'] ? 'class="current" ' : ''); ?>id="hm<?php echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
-									<div class="videos-info"><?php echo $a['title']; ?></div>
+									<div class="audio-info"><?php echo $a['title']; ?></div>
 								</li>
 							<?php
 							endforeach; ?>
@@ -213,16 +327,16 @@ get_header(); ?>
 					</nav>
 				</aside>
 			</section>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			var navs = document.querySelectorAll('#videos-nav ul li');
+			var navs = document.querySelectorAll('#audio-nav ul li');
 			Array.from(navs).forEach((nav) => {
 				nav.addEventListener('click', () => {
 					var ytid = nav.getAttribute('data-ytid');
 					var yttitle = nav.getAttribute('data-yttitle');
-					var stTitle = document.querySelector('#sfts-yt-title');
+					var stTitle = document.querySelector('#ap-title');
 					if (ytid === null) {
 						return false;
 					} else {
@@ -230,7 +344,7 @@ get_header(); ?>
 						if (nav.nextElementSibling !== null) {
 							var next = nav.nextElementSibling.getAttribute('id');
 						} else {
-							var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
+							var next = document.querySelector('#audio > ul li:first-child').getAttribute('id');
 						}
 						hpm.players[0].pause();
 						hpm.players[0].source = {
@@ -252,7 +366,7 @@ get_header(); ?>
 			});
 			setTimeout(() => {
 				hpm.players[0].on('ended', (event) => {
-					var stTitle = document.querySelector('#sfts-yt-title');
+					var stTitle = document.querySelector('#ap-title');
 					var nextId = stTitle.getAttribute('data-next-id');
 					var nextEp = document.querySelector('#' + nextId);
 					var ytid = nextEp.getAttribute('data-ytid');
@@ -263,7 +377,7 @@ get_header(); ?>
 						if (nextEp.nextElementSibling !== null) {
 							var next = nextEp.nextElementSibling.getAttribute('id');
 						} else {
-							var next = document.querySelector('#videos > ul li:first-child').getAttribute('id');
+							var next = document.querySelector('#audio > ul li:first-child').getAttribute('id');
 						}
 						stTitle.innerHTML = yttitle;
 						hpm.players[0].source = {
@@ -285,12 +399,4 @@ get_header(); ?>
 			}, 500);
 		});
 	</script>
-	<style>
-		#div-gpt-ad-1488818411584-0 {
-			display: none !important;
-		}
-		.article-player-wrap h3 {
-			display: none;
-		}
-	</style>
 <?php get_footer(); ?>

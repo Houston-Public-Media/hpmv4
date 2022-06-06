@@ -155,39 +155,6 @@ Template Name: Mothers First
 		.m1-eps .jp-type-single {
 			background-color: transparent;
 		}
-		.m1-eps .jp-gui.jp-interface .jp-controls button {
-			background-color: transparent;
-			width: 4em;
-			height: 4em;
-		}
-		.m1-eps .jp-gui.jp-interface .jp-controls button .fa {
-			font-size: 3.25em;
-			color: #C9AAAC;
-		}
-		.m1-eps .jp-gui.jp-interface .jp-progress-wrapper {
-			position: relative;
-			padding: 1em 0.5em;
-		}
-		.m1-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
-			margin: 0;
-			background-color: rgb(79, 79, 79);
-			z-index: 9;
-			position: relative;
-		}
-		.m1-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
-			z-index: 11;
-		}
-		.m1-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-			position: absolute;
-			top: 1.5em;
-			right: 1em;
-			z-index: 10;
-			float: none;
-			width: auto;
-			display: inline;
-			padding: 0;
-			color: white;
-		}
 		.m1-resources h2 {
 			text-transform: initial;
 			font-weight: 600;
@@ -254,12 +221,6 @@ Template Name: Mothers First
 				padding-top: 0;
 				padding-bottom: calc(100%/1);
 				background-image: url(https://cdn.hpm.io/assets/images/Mothers-First-Tablet-1600x1600.jpg);
-			}
-			.m1-eps .jp-gui.jp-interface .jp-details {
-				display: none;
-			}
-			.m1-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-				top: 1.25em;
 			}
 			.m1-button-wrap {
 				display: flex;

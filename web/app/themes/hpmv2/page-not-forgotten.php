@@ -104,9 +104,9 @@ Template Name: Not Forgotten
 				cursor: pointer;
 				opacity: 0.75;
 			}
-			.page-template-page-not-forgotten .page-header .down .fa {
-				font-size: 3em;
-				line-height: 0.5em;
+			.page-template-page-not-forgotten .page-header .down svg {
+				width: 4rem;
+				fill: white;
 			}
 			.page-template-page-not-forgotten .page-header img {
 				width: 85%;
@@ -188,21 +188,19 @@ Template Name: Not Forgotten
 			#nf-previous:hover {
 				cursor: pointer;
 			}
-			#nf-msg-overlay .fa,
-			#nf-msg-overlay .fas {
-				color: white;
-				width: 1em;
-				font-size: 2em;
-				display: block;
-				text-align: center;
-				line-height: 1.125em;
-			}
 			.modal-open {
 				position: fixed;
 				height: 100vh;
 			}
 			.article-player-wrap {
 				margin-bottom: 1em;
+			}
+			#nf-msg-overlay svg {
+				width: 3rem;
+				fill: white;
+			}
+			section#nf-head > * + * {
+				margin-top: 1rem;
 			}
 			@media screen and (min-width: 34em) {
 				.page-template-page-not-forgotten #masthead.active .site-title,
@@ -233,12 +231,6 @@ Template Name: Not Forgotten
 				.page-template-page-not-forgotten .page-header img {
 					width: 66%;
 				}
-				#nf-msg .jp-gui.jp-interface .jp-details {
-					display: none;
-				}
-				#nf-msg .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-					top: 1.25em;
-				}
 			}
 			@media screen and (min-width: 52.5em) {
 				section#nf-profiles {
@@ -251,9 +243,6 @@ Template Name: Not Forgotten
 				}
 				#nf-msg-overlay #nf-msg-wrap {
 					max-width: 60em;
-				}
-				#nf-msg-overlay .fa, #nf-msg-overlay .fas {
-					font-size: 3em;
 				}
 				.page-template-page-not-forgotten .page-header img {
 					width: 50%;
@@ -289,23 +278,23 @@ Template Name: Not Forgotten
 						<header class="page-header">
 							<img src="https://cdn.hpm.io/assets/images/NotForgotten_Logo.svg" alt="<?php echo get_the_title() . ": " . get_the_excerpt(); ?>" />
 							<button class="down scrollto">
-								<span class="fa fa-angle-double-down"></span>
+								<?php echo hpm_svg_output( 'angle-double-down' ); ?>
 							</button>
-						</header><!-- .entry-header -->
+						</header>
 						<div class="page-content" id="main-content">
 							<?php the_content(); ?>
-						</div><!-- .entry-content -->
+						</div>
 						<div id="nf-msg-overlay">
-							<div id="nf-previous"><span class="fas fa-chevron-left"></span></div>
+							<div id="nf-previous"><?php echo hpm_svg_output( 'chevron-left' ); ?></div>
 							<div id="nf-msg-wrap">
 								<div id="nf-msg" data-current=""></div>
 							</div>
-							<div id="nf-next"><span class="fas fa-chevron-right"></span></div>
-							<div id="nf-close"><span class="fa fa-times"></span></div>
+							<div id="nf-next"><?php echo hpm_svg_output( 'chevron-right' ); ?></div>
+							<div id="nf-close"><?php echo hpm_svg_output( 'times' ); ?></div>
 						</div>
-					</main><!-- .site-main -->
-				</div><!-- .content-area -->
-			</div><!-- .site-content -->
+					</main>
+				</div>
+			</div>
 			<script>
 				function nfdimensions() {
 					document.querySelector('#main .page-header').style.height = window.innerHeight + 'px';

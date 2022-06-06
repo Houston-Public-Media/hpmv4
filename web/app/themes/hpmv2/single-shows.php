@@ -12,6 +12,59 @@ Template Post Type: shows
  */
 
 get_header(); ?>
+	<style>
+		body.single-shows #station-social {
+			padding: 1em;
+			background-color: white;
+			overflow: hidden;
+			width: 100%;
+		}
+		body.single-shows .page-header {
+			padding: 0;
+		}
+		body.single-shows .page-header .page-title {
+			padding: 1rem;
+		}
+		body.single-shows .page-header.banner #station-social {
+			margin: 0 0 1em 0;
+		}
+		body.single-shows #station-social h3 {
+			font-size: 1.5em;
+			font-family: var(--hpm-font-condensed);
+			color: #3f1818;
+			margin-bottom: 1rem;
+		}
+		#float-wrap aside {
+			background-color: white;
+		}
+		body.single-shows .podcast-badges {
+			justify-content: flex-end;
+		}
+		.show-content > * + * {
+			margin-top: 1rem;
+		}
+		@media screen and (min-width: 34em) {
+			body.single-shows #station-social {
+				display: grid;
+				grid-template-columns: 1fr 1.25fr;
+				align-items: center;
+			}
+			body.single-shows #station-social.station-no-social {
+				grid-template-columns: 1fr !important;
+			}
+			body.single-shows #station-social h3 {
+				margin-bottom: 0;
+			}
+		}
+		@media screen and (min-width: 52.5em) {
+			body.single-shows #station-social {
+				grid-template-columns: 1fr 2fr;
+			}
+			body.single-shows #station-social.station-no-social {
+				grid-template-columns: 1fr !important;
+			}
+		}
+	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
@@ -42,15 +95,17 @@ get_header(); ?>
 		<?php
 			$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
 			$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
-			$terms = get_terms( array( 'include'  => $cat_no, 'taxonomy' => 'category' ) );
+			$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
 			$term = reset( $terms );
-			$cat_args = array(
+			$cat_args = [
 				'cat' => $cat_no,
 				'orderby' => 'date',
 				'order'   => 'DESC',
 				'posts_per_page' => 15,
 				'ignore_sticky_posts' => 1
-			);
+			];
+			global $ka;
+			$ka = 0;
 			if ( !empty( $top ) && $top !== 'None' ) :
 				$top_art = new WP_query( [ 'p' => $top ] );
 				$cat_args['posts_per_page'] = 14;
@@ -58,6 +113,7 @@ get_header(); ?>
 				if ( $top_art->have_posts() ) :
 					while ( $top_art->have_posts() ) : $top_art->the_post();
 						get_template_part( 'content', get_post_type() );
+						$ka += 2;
 					endwhile;
 					$post_num = 14;
 				endif;
@@ -67,6 +123,7 @@ get_header(); ?>
 			if ( $cat->have_posts() ) :
 				while ( $cat->have_posts() ) : $cat->the_post();
 					get_template_part( 'content', get_post_type() );
+					$ka += 2;
 				endwhile;
 			endif; ?>
 				</div>
@@ -78,7 +135,8 @@ get_header(); ?>
 			</div>
 		<?php
 			endif;
-			if ( !empty( $show['ytp'] ) ) : ?>
+			if ( !empty( $show['ytp'] ) ) :
+				$c = 0; ?>
 			<div id="shows-youtube">
 				<div id="youtube-wrap">
 				<?php
@@ -88,7 +146,7 @@ get_header(); ?>
 						if ( $c == 0 ) : ?>
 					<div id="youtube-main">
 						<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
-							<span class="fas fa-play" id="play-button"></span>
+							<?php echo hpm_svg_output( 'play' ); ?>
 						</div>
 						<h2><?php echo $tubes['snippet']['title']; ?></h2>
 						<p class="desc"><?php echo $tubes['snippet']['description']; ?></p>
@@ -111,6 +169,6 @@ get_header(); ?>
 			</div>
 	<?php
 			endif; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 <?php get_footer(); ?>

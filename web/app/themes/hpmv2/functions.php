@@ -62,7 +62,7 @@ define('HPM_TEST', $hpm_test);
 function hpm_scripts() {
 	$versions = hpm_versions();
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'fontawesome', 'https://cdn.hpm.io/assets/fonts/fontawesome/css/all.css', [], '5.14.0' );
+	//wp_enqueue_style( 'fontawesome', 'https://cdn.hpm.io/assets/fonts/fontawesome/css/all.css', [], '5.14.0' );
 
 	// Load our main stylesheet.
 	if ( WP_ENV == 'development' ) :
@@ -84,7 +84,6 @@ function hpm_scripts() {
 	wp_deregister_style( 'better-image-credits' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
 	wp_deregister_style( 'wp-block-library' );
-
 }
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 
@@ -950,7 +949,7 @@ function hpm_svg_output( $icon ) {
 		$output = '<path d="M434.9,219L124.2,35.3C99,20.4,60.3,34.9,60.3,71.8v367.3c0,33.1,35.9,53.1,63.9,36.5l310.7-183.6 C462.6,275.6,462.7,235.3,434.9,219L434.9,219z" />';
 	endif;
 	if ( !empty( $output ) ) :
-		$output = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">' . $output . '</svg>';
+		$output = '<svg version="1.1" ' . ( $icon == 'play' ? 'id="play-button" ' : '' ) . 'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">' . $output . '</svg>';
 	endif;
 	return $output;
 }

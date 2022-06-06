@@ -79,13 +79,10 @@ get_header(); ?>
 								echo "<p>".$thumb_caption."</p>";
 							endif;
 						?>
-					</div><!-- .post-thumbnail -->
+					</div>
 					<?PHP
 						endif;
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
+						the_content();
 					?>
 				</div><!-- .entry-content -->
 
@@ -99,11 +96,10 @@ get_header(); ?>
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv2' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
+				</footer>
+			</article>
 			<?php
 				endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+		</main>
+	</div>
 <?php get_footer(); ?>

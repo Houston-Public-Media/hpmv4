@@ -17,10 +17,7 @@ endif; ?>
 				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content">
 					<?php
-						the_content( sprintf(
-							__( 'Continue reading %s', 'hpmv2' ),
-							the_title( '<span class="screen-reader-text">', '</span>', false )
-						) );
+						the_content();
 					?>
 				</div>
 				<footer class="entry-footer">

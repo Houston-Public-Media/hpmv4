@@ -147,16 +147,16 @@ Template Name: Career Frontier
 			text-transform: initial;
 		}
 		.cf-eps-wrap article header h1:after {
-			content: '\f0d7';
-			display: inline-block;
-			-webkit-font-smoothing: antialiased;
-			font: 900 1em/1 'Font Awesome 5 Free';
+			content: "";
+			border: 0.5rem solid transparent;
+			border-top-color: #fff;
 			position: absolute;
-			top: 0.5em;
-			right: 0.5em;
+			top: 1rem;
+			right: 1rem;
 		}
 		.cf-eps-wrap article.topic-active header h1:after {
-			content: '\f0d8';
+			border-bottom-color: #fff;
+			border-top-color: transparent;
 		}
 		.article-player-wrap h3 {
 			display: none;

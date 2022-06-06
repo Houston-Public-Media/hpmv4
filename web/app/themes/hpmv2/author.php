@@ -45,24 +45,35 @@
 						<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
 						<h3><?php echo $author['title']; ?></h3>
 				<?php
-						if ( !empty($author['facebook'] ) || !empty( $author['twitter'] ) ) :?>
-						<div class="author-social">
+						if (
+							!empty( $author['facebook'] ) ||
+							!empty( $author['twitter'] ) ||
+							!empty( $author['linkedin'] ) ||
+							!empty( $author['email'] )
+						) : ?>
+						<div class="social-wrap">
 					<?php
-							if (!empty($author['facebook'])) : ?>
-							<div class="social-icon">
-								<a href="<?php echo $author['facebook']; ?>" target="_blank"><span class="fab fa-facebook-f" aria-hidden="true"></span></a>
+							if ( !empty( $author['facebook'] ) ) : ?>
+							<div class="social-icon facebook">
+								<a href="<?php echo $author['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
 				<?php
 							endif;
-							if (!empty($author['twitter'])) : ?>
-							<div class="social-icon">
-								<a href="<?php echo $author['twitter']; ?>" target="_blank"><span class="fab fa-twitter" aria-hidden="true"></span></a>
+							if ( !empty( $author['twitter'] ) ) : ?>
+							<div class="social-icon twitter">
+								<a href="<?php echo $author['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></a>
 							</div>
 				<?php
 							endif;
-							if (!empty($author['email'])) : ?>
-							<div class="social-icon">
-								<a href="mailto:<?php echo $author['email']; ?>" target="_blank"><span class="fas fa-envelope" aria-hidden="true"></span></a>
+							if ( !empty( $author['linkedin'] ) ) : ?>
+								<div class="social-icon linkedin">
+									<a href="<?php echo $author['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
+								</div>
+				<?php
+							endif;
+							if ( !empty( $author['email'] ) ) : ?>
+							<div class="social-icon envelope">
+								<a href="mailto:<?php echo $author['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?></a>
 							</div>
 				<?php
 							endif; ?>
@@ -127,7 +138,7 @@
 		<?php
 		if ( have_posts() ) :
 			while ( have_posts() ) : the_post();
-				get_template_part( 'content', get_post_format() );
+				get_template_part( 'content', get_post_type() );
 			endwhile;
 
 			// Previous/next page navigation.
@@ -140,8 +151,7 @@
 		// If no content, include the "No posts found" template.
 		else :
 			get_template_part( 'content', 'none' );
-		endif;
-		?>
+		endif; ?>
 			</section>
 		</main>
 	</section>

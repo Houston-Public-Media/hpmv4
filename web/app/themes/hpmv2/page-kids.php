@@ -15,21 +15,7 @@ get_header(); ?>
 			height: 450px;
 		}
 		.category-list-wrapper {
-			display: -webkit-box;
-			display: -moz-box;
-			display: box;
-			display: -webkit-flex;
-			display: -moz-flex;
-			display: -ms-flexbox;
 			display: flex;
-			-webkit-flex-flow: row nowrap;
-			-webkit-justify-content: center;
-			-webkit-align-content: center;
-			-webkit-align-items: center;
-			-ms-flex-flow: row nowrap;
-			-ms-justify-content: center;
-			-ms-align-content: center;
-			-ms-align-items: center;
 			flex-flow: row nowrap;
 			justify-content: center;
 			align-content: center;

@@ -14,7 +14,7 @@ get_header(); ?>
 						</div>
 						<h1 class="page-title"><?php the_title(); ?></h1>
 						<button class="down scrollto">
-							<i class="fas fa-chevron-down" aria-hidden="true"></i>
+							<?php echo hpm_svg_output( 'chevron-down' ) ?>
 						</button>
 					</header>
 					<div class="page-content">

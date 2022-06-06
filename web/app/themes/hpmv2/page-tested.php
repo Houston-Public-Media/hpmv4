@@ -153,42 +153,6 @@ Template Name: Tested
 			margin: 0;
 			padding: 0;
 		}
-		.tested-eps .jp-type-single {
-			background-color: transparent;
-		}
-		.tested-eps .jp-gui.jp-interface .jp-controls button {
-			background-color: transparent;
-			width: 4em;
-			height: 4em;
-		}
-		.tested-eps .jp-gui.jp-interface .jp-controls button .fa {
-			font-size: 3.25em;
-			color: var(--color-background);
-		}
-		.tested-eps .jp-gui.jp-interface .jp-progress-wrapper {
-			position: relative;
-			padding: 1em 0.5em;
-		}
-		.tested-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-progress {
-			margin: 0;
-			background-color: rgb(79, 79, 79);
-			z-index: 9;
-			position: relative;
-		}
-		.tested-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-progress .jp-seek-bar {
-			z-index: 11;
-		}
-		.tested-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-			position: absolute;
-			top: 1.5em;
-			right: 1em;
-			z-index: 10;
-			float: none;
-			width: auto;
-			display: inline;
-			padding: 0;
-			color: white;
-		}
 		.tested-resources h2 {
 			text-transform: initial;
 			font-weight: 600;
@@ -254,12 +218,6 @@ Template Name: Tested
 				padding-top: 0;
 				padding-bottom: calc(100%/1);
 				background-image: url(https://cdn.hpm.io/assets/images/Tested_Landing-Page_Banner_1600x1600.jpeg);
-			}
-			.tested-eps .jp-gui.jp-interface .jp-details {
-				display: none;
-			}
-			.tested-eps .jp-gui.jp-interface .jp-progress-wrapper .jp-time-holder {
-				top: 1.25em;
 			}
 			.tested-button-wrap {
 				display: flex;
