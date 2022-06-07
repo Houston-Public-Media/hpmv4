@@ -213,7 +213,7 @@ class HPM_Podcasts {
 		);
 		add_meta_box(
 			'hpm-show-meta-class',
-			esc_html__( 'Social and Show Info', 'hpmv2' ),
+			esc_html__( 'Social and Show Info', 'hpmv4' ),
 			[ $this, 'show_meta_box' ],
 			'shows',
 			'normal',

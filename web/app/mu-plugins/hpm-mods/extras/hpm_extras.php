@@ -140,7 +140,7 @@ function hpm_cron_updates( $schedules ) {
 /*
  * Save local copies of today's schedule JSON from NPR Composer2 into site transients
  */
-function hpmv2_schedules( $station, $date ) {
+function hpm_schedules( $station, $date ) {
 	if ( empty( $station ) || empty( $date ) ) :
 		return false;
 	endif;
@@ -815,12 +815,7 @@ function hpm_image_preview_page() {
 	$hook = add_submenu_page( 'edit.php', 'Featured Image Preview', 'Featured Image Preview', 'edit_posts', 'hpm-image-preview', function() {} );
 	add_action('load-' . $hook, function() {
 		$post_id = sanitize_text_field( $_GET['p'] );
-		$versions = hpm_versions();
 		$top_cat = hpm_top_cat( $post_id );
-		$img = [
-			'thumb' => get_the_post_thumbnail_url( $post_id, 'thumbnail' ),
-			'large' => get_the_post_thumbnail_url( $post_id, 'large' )
-		];
 		$title = get_the_title( $post_id );
 		$postClass = get_post_class( '', $post_id ); ?>
 <!DOCTYPE html>
@@ -831,21 +826,20 @@ function hpm_image_preview_page() {
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>HPM Featured Image Preview</title>
-		<link rel="stylesheet" id="hpmv2-style-css"  href="https://cdn.hpm.io/assets/css/style.css?ver=<?php echo $versions['css']; ?>" type="text/css" media="all" />
+		<link rel="stylesheet" id="hpmv4-style-css"  href="/app/themes/hpmv4/style.css" type="text/css" media="all" />
 		<style>
 			@media screen and (min-width: 52.5em) {
-				#float-wrap {
-    				max-width: 50em;
+				.article-wrap {
+    				width: 100%;
 					margin: 1em auto;
 				}
-				#float-wrap article.felix-type-a, #float-wrap article.felix-type-b, #float-wrap article.felix-type-c {
+				.article-wrap :is(article.card.card-large,article.card.card-medium) {
 					width: 95%;
-    				margin: 0 2.5% 1em 2.5%;
+    				margin: 0 2.5% 1em;
 				}
-				#float-wrap article.felix-type-d {
+				.article-wrap article.card {
 					margin: 0 auto 1em;
 					width: 45%;
-					padding: 1em 1.5em;
 				}
 			}
 		</style>
@@ -855,7 +849,7 @@ function hpm_image_preview_page() {
 			<div id="content" class="site-content">
 				<div id="primary" class="content-area">
 					<main id="main" class="site-main" role="main">
-						<div id="float-wrap">
+						<div class="article-wrap">
 <?php
 		if ( empty( $post_id ) ) : ?>
 							<h2 style="width: 100%;">Enter the ID number of the post you want to preview</h2>
@@ -865,44 +859,44 @@ function hpm_image_preview_page() {
 								<input type="submit" value="Submit" />
 							</form>
 <?php
-		elseif ( ! in_array( 'has-post-thumbnail', $postClass ) ) : ?>
+		elseif ( !in_array( 'has-post-thumbnail', $postClass ) ) : ?>
 							<h2 style="width: 100%;">The article you're previewing doesn't have a featured image. Set one in the editor and refresh this page.</h2>
 <?php
 		elseif ( is_user_logged_in() && current_user_can( 'edit_post', $post_id ) ) : ?>
-							<article class="<?php echo implode( ' ', $postClass ); ?> felix-type-a">
-								<div class="thumbnail-wrap" style="background-image: url(<?php echo $img['large']; ?>)">
-									<a class="post-thumbnail" href="#" aria-hidden="true"></a>
+							<article <?php post_class( 'card card-large', $post_id ); ?>>
+								<a class="post-thumbnail" href="#"><?php echo get_the_post_thumbnail( $post_id, 'large' ); ?></a>
+								<div class="card-content">
+									<header class="entry-header">
+										<h3><?php echo $top_cat; ?></h3>
+										<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
+									</header>
 								</div>
-								<header class="entry-header">
-									<h3><?PHP echo $top_cat; ?></h3>
-									<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
-								</header>
 							</article>
-							<article class="<?php echo implode( ' ', $postClass ); ?> felix-type-b">
-								<div class="thumbnail-wrap" style="background-image: url(<?php echo $img['thumb']; ?>)">
-									<a class="post-thumbnail" href="#" aria-hidden="true"></a>
+							<article <?php post_class( 'card card-medium', $post_id ); ?>>
+								<a class="post-thumbnail" href="#"><?php echo get_the_post_thumbnail( $post_id, 'thumb' ); ?></a>
+								<div class="card-content">
+									<header class="entry-header">
+										<h3><?php echo $top_cat; ?></h3>
+										<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
+									</header>
 								</div>
-								<header class="entry-header">
-									<h3><?PHP echo $top_cat; ?></h3>
-									<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
-								</header>
 							</article>
-							<article class="<?php echo implode( ' ', $postClass ); ?> felix-type-d">
-								<div class="thumbnail-wrap" style="background-image: url(<?php echo $img['thumb']; ?>)">
-									<a class="post-thumbnail" href="#" aria-hidden="true"></a>
+							<article <?php post_class( 'card', $post_id ); ?>>
+								<a class="post-thumbnail" href="#"><?php echo get_the_post_thumbnail( $post_id, 'thumb' ); ?></a>
+								<div class="card-content">
+									<header class="entry-header">
+										<h3><?php echo $top_cat; ?></h3>
+										<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
+									</header>
 								</div>
-								<header class="entry-header">
-									<h3><?PHP echo $top_cat; ?></h3>
-									<h2 class="entry-title"><a href="#" rel="bookmark"><?php echo $title; ?></a></h2>
-								</header>
 							</article>
 <?php
 		endif; ?>
 						</div>
-					</main><!-- .site-main -->
-				</div><!-- .content-area -->
-			</div><!-- .site-content -->
-		</div><!-- .site -->
+					</main>
+				</div>
+			</div>
+		</div>
 	</body>
 </html><?php
 		exit;
@@ -1269,7 +1263,7 @@ function hpm_alt_headline_save_meta( $post_id, $post ) {
 /*
  * Modify page title for articles with alternate SEO headlines
  */
-function hpmv2_article_seo_title( $title ) {
+function hpm_article_seo_title( $title ) {
 	global $wp_query;
 	if ( $wp_query->is_single() ) :
 		$seo_headline = get_post_meta( $wp_query->post->ID, 'hpm_seo_headline', true );
@@ -1279,7 +1273,7 @@ function hpmv2_article_seo_title( $title ) {
 	endif;
 	return $title;
 }
-add_filter( 'pre_get_document_title', 'hpmv2_article_seo_title' );
+add_filter( 'pre_get_document_title', 'hpm_article_seo_title' );
 
 add_action( 'load-post.php', 'hpm_page_script_setup' );
 add_action( 'load-post-new.php', 'hpm_page_script_setup' );
@@ -1376,11 +1370,11 @@ add_action( 'wp_head', function() {
 }, 200 );
 
 
-function hpmv2_nowplaying ( $station ) {
+function hpm_now_playing ( $station ) {
 	return get_option( 'hpm_'.$station.'_nowplay' );
 }
 
-function hpmv2_nowplaying_update () {
+function hpm_now_playing_update () {
 	$stations = [
 		'news887' => 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json',
 		'classical' => 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
@@ -1417,7 +1411,7 @@ function hpmv2_nowplaying_update () {
 	endforeach;
 }
 
-add_action( 'hpm_nowplay_update', 'hpmv2_nowplaying_update' );
+add_action( 'hpm_nowplay_update', 'hpm_now_playing_update' );
 $timestamp = wp_next_scheduled( 'hpm_nowplay_update' );
 if ( empty( $timestamp ) ) :
 	wp_schedule_event( time(), 'hpm_2min', 'hpm_nowplay_update' );
