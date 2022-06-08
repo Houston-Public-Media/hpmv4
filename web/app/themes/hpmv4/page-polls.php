@@ -4,6 +4,64 @@ Template Name: Polls
 */
 
 get_header(); ?>
+	<style>
+		article .entry-content ul.acc,
+		.acc {
+			list-style: none;
+			margin-left: 0;
+		}
+		article .entry-content ul.acc li,
+		.acc li {
+			margin: 1em 0 0;
+		}
+		.acc li h3 {
+			padding: 0.5em;
+			background: #ddd;
+			border: 1px solid black;
+		}
+		.acc li h3:hover {
+			background: #ebebeb;
+			cursor: pointer;
+		}
+		.acc .acc-content {
+			border: 1px dotted #808080;
+			padding: 1em;
+		}
+		.acc .acc-content p {
+			font-style: italic;
+		}
+		.acc .acc-content table {
+			width: 100%;
+			margin: 0 0 2em 0;
+		}
+		.acc .acc-content table td {
+			width: 21%;
+			padding: 0.5em 2%;
+		}
+		.acc .acc-content table td.header2 {
+			font-weight: bolder;
+			border-bottom: 1px solid black;
+		}
+		.acc .acc-content table td.column {
+			width: 46%;
+		}
+		.acc .acc-content table.sixcell td {
+			width: 33.5%;
+		}
+		.acc .acc-content table.sixcell td.column {
+			width: 9.5%;
+		}
+		#options {
+			text-align: right;
+		}
+		#options #expand, #options #collapse {
+			color: #ff0000;
+		}
+		#options #expand:hover, #options #collapse:hover {
+			color: #950000;
+			cursor: pointer;
+		}
+	</style>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
 			var sections = document.querySelectorAll('.acc-section');
