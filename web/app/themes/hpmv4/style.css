@@ -1613,6 +1613,7 @@ nav#site-navigation:focus-within {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	grid-template-columns: 100%;
+	overscroll-behavior: none;
 }
 .nav-active-menu nav#site-navigation .nav-button,
 nav#site-navigation:focus-within .nav-button {
@@ -1723,7 +1724,11 @@ body #top-mobile-close {
 }
 body.nav-active-menu {
 	position: fixed;
-	margin-right: 16px;
+}
+@supports (overscroll-behavior: none) {
+	body.nav-active-menu {
+		position: static;
+	}
 }
 body.nav-active-menu #top-mobile-close {
 	display: block;
