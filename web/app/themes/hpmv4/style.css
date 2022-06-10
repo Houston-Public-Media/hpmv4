@@ -706,6 +706,9 @@ details > summary + * {
 	padding: 1rem;
 	width: 100%;
 }
+.podcast-episode-info > * + * {
+	margin-top: 1rem;
+}
 @media screen and (min-width: 52.5em) {
 	.social-wrap {
 		align-items: start;
@@ -850,6 +853,70 @@ details > summary + * {
 	to {
 		transform: translateY(0);
 		opacity: 1;
+	}
+}
+
+#hpm-promo-bullets {
+	display: flex;
+	align-items: center;
+	align-content: center;
+	margin: 0 0 1em 0;
+	padding: 1rem;
+	width: 100%;
+	flex-flow: row wrap;
+	background-color: white;
+}
+#hpm-promo-bullets h2 {
+	color: var(--main-red);
+	margin: 0;
+	width: 100%;
+}
+#hpm-promo-bullets ul {
+	width: 100%;
+	padding: 0.5rem 0 0.5rem 1rem;
+	margin: 0;
+	background-color: white;
+	list-style: disc outside none;
+}
+#hpm-promo-bullets ul li {
+	margin: 0;
+	padding: 0 0 0 0.5rem;
+}
+#hpm-promo-bullets ul li a {
+	color: var(--main-red);
+}
+@media screen and (min-width: 34em) {
+	#hpm-promo-bullets {
+		flex-flow: row nowrap;
+	}
+	#hpm-promo-bullets h2 {
+		width: auto;
+	}
+	#hpm-promo-bullets ul {
+		width: auto;
+		flex-grow: 2;
+	}
+	#hpm-promo-bullets ul li {
+		display: inline;
+		padding: 0;
+	}
+	#hpm-promo-bullets ul li a {
+		padding: 0 0.5rem;
+	}
+	#hpm-promo-bullets ul li a::before {
+		content: '\2022';
+		position: relative;
+		left: -0.5rem;
+		color: var(--main-blue);
+	}
+}
+@media screen and (min-width: 52.5em) {
+	.hpm-promo-mobile-show {
+		display: none;
+	}
+	#hpm-promo-bullets {
+		width: 100%;
+		margin: 1em 0;
 	}
 }
 
@@ -1762,6 +1829,7 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li > ul > li .nav-top-head {
 		padding: 0;
 		font-size: 1.125rem;
+		margin-bottom: 0.5rem;
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li > ul > li a {
 		padding: 0 0 0.5rem 0;
@@ -2298,7 +2366,7 @@ aside > .hpm-promo-wrap {
 }
 .highlights ul h2 {
 	margin-bottom: 0.75rem;
-	font-size: 1.0625rem;
+	font-size: 1.125rem;
 }
 .highlights h2 {
 	margin-bottom: 1rem;
@@ -2334,7 +2402,6 @@ aside > .hpm-promo-wrap {
 }
 .highlights article.card .entry-header h2 {
 	margin: 0;
-	font-size: 0.9rem;
 }
 .highlights article + article {
 	margin-top: 1rem;
@@ -2669,8 +2736,8 @@ article.card .entry-summary {
 	font-weight: 100;
 	font-size: 1.25em;
 }
-:is(.column-left, .column-span, .article-wrap) article .entry-footer {
-	margin: 0;
+:is(.column-left, .column-span, .article-wrap, #search-results) article .entry-footer {
+	margin: 0 !important;
 }
 .credits-overlay {
 	display: none;
@@ -3030,6 +3097,7 @@ body.single #author-wrap .author-other-stories h2 a {
 	}
 	:is(.single,.page-template-page-npr-articles) #main #author-wrap {
 		order: 3;
+		padding: 1rem 0;
 	}
 	#author-wrap .author-thumb {
 		width: 100%;
@@ -3113,6 +3181,52 @@ body.single #author-wrap .author-other-stories h2 a {
 	}
 }
 
+/* In-Depth */
+.article-wrap article.category-in-depth.card:is(.card-medium,.card-large) {
+	border: 0.375rem solid #00566c;
+}
+.article-wrap article.category-in-depth .indepth img {
+	width: 50%;
+	margin-right: 50%;
+}
+.article-wrap article.category-in-depth.card.card-large .indepth img {
+	width: 20%;
+	margin-right: 1em;
+}
+.single article.category-in-depth .entry-header .indepth {
+	width: 12rem;
+	margin-right: 1rem;
+	display: block;
+}
+.single article.category-in-depth .entry-header .indepth + h3 {
+	width: 100%;
+}
+@media screen and (min-width: 34em) {
+	.single article.category-in-depth .entry-header {
+		display: flex;
+		flex-flow: row wrap;
+		align-content: center;
+	}
+	.single article.category-in-depth .entry-header .indepth + h3 {
+		width: auto;
+		margin: 0;
+		padding-bottom: 0.5rem;
+		align-items: flex-end;
+		display: flex;
+	}
+	.article-wrap article.category-in-depth.card.card-large .indepth + h3 {
+		position: relative;
+		bottom: 0.75rem;
+	}
+	.article-wrap article.category-in-depth.card.card-large {
+		border: 0;
+	}
+	.article-wrap article.category-in-depth.card.card-large header {
+		border: 0.375rem solid #00566c;
+	}
+}
+
+/* Revue Embed */
 #revue-embed {
 	margin: 3em 0;
 	padding: 1em;

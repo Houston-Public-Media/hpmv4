@@ -664,69 +664,7 @@ class HPM_Promos {
 			foreach ( $dont as $d ) :
 				$output .= "<li>" . $d . "</li>";
 			endforeach;
-			$output .= "</ul></div>
-<style>
-	#hpm-promo-bullets {
-		display: flex;
-		justify-content: center;
-		justify-items: center;
-		align-items: center;
-		align-content: center;
-		margin: 0 0 1em 0;
-		padding: 0;
-		clear: both;
-		width: 100%;
-		flex-flow: row wrap;
-	}
-	#hpm-promo-bullets h2 {
-		color: white;
-		background-color: #cc0000;
-		margin: 0;
-		padding: 0.5em;
-		width: 100%;
-	}
-	#hpm-promo-bullets ul {
-		width: 100%;
-		padding: 1em;
-		margin: 0;
-		background-color: white;
-		list-style: none;
-	}
-	#hpm-promo-bullets ul li {
-		margin: 0;
-		padding: 0 0 0 0.5em;
-	}
-	#hpm-promo-bullets ul li:before {
-		content: '\\2022';
-		position: relative;
-		left: -0.5em;
-	}
-	@media screen and (min-width: 34em) {
-		#hpm-promo-bullets {
-			flex-flow: row nowrap;
-		}
-		#hpm-promo-bullets h2 {
-			width: auto;
-		}
-		#hpm-promo-bullets ul {
-			width: auto;
-			flex-grow: 2;
-		}
-		#hpm-promo-bullets ul li {
-			padding: 0 0 0 2em;
-			display: inline;
-		}
-	}
-	@media screen and (min-width: 52.5em) {
-		.hpm-promo-mobile-show {
-			display: none;
-		}
-		#hpm-promo-bullets {
-			width: 100%;
-			margin: 1em 0;
-		}
-	}
-</style>";
+			$output .= "</ul></div>";
 		endif;
 		if ( $sidebar ) :
 			$output = '<div class="hpm-promo-wrap">' . $output . '</div>';

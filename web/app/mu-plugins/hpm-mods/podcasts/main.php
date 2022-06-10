@@ -675,12 +675,11 @@ class HPM_Podcasts {
 	 *
 	 * @return mixed
 	 */
-	public function generate( WP_REST_Request $request = null ) {
-		$pods = $this->options;
+	static public function generate( WP_REST_Request $request = null ) {
+		$pods = get_option( 'hpm_podcast_settings' );
 		$ds = DIRECTORY_SEPARATOR;
 		$protocol = 'https://';
 		$error = '';
-		$dir = wp_upload_dir();
 		$json = [
 			'version' => 'https://jsonfeed.org/version/1',
 			'title' => '',
@@ -709,7 +708,7 @@ class HPM_Podcasts {
 			]]
 		]);
 
-		$xsl = get_stylesheet_directory_uri() . $ds . 'podcast.xsl';
+		$xsl = str_replace( 'http://', $protocol, get_stylesheet_directory_uri() . $ds . 'podcast.xsl' );
 
 		if ( !empty( $pods['recurrence'] ) ) :
 			if ( $pods['recurrence'] == 'hpm_5min' ) :
@@ -872,7 +871,7 @@ class HPM_Podcasts {
 					'date_published' => get_the_date( 'c', '', '', false),
 					'date_modified' => get_the_modified_date( 'c', '', '', false),
 					'author' => coauthors( '; ', '; ', '', '', false ),
-					'thumbnail' => $pod_image[0],
+					'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] : '' ),
 					'attachments' => [
 						'url' => $media_file,
 						'mime_type' => $a_meta['mime'],
@@ -948,8 +947,8 @@ class HPM_Podcasts {
 				return new WP_Error( 'rest_api_sad', esc_html__( $error, 'hpm-podcasts' ), [ 'status' => 500 ] );
 			else :
 				$t = time();
-				$update_last = $this->last_update;
-				$offset = get_option('gmt_offset')*3600;
+				$update_last = get_option( 'hpm_podcast_last_update' );
+				$offset = get_option( 'gmt_offset' ) * 3600;
 				$time = $t + $offset;
 				$date = date( 'F j, Y @ g:i A', $time );
 				update_option( 'hpm_podcast_last_update', $time, false );
@@ -1367,5 +1366,4 @@ class HPM_Podcasts {
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'JSON-formatted feed for ' . $oj['title'], 'hpm-podcasts' ), 'data' => [ 'feed' => $oj, 'status' => 200 ] ] );
 	}
 }
-
 new HPM_Podcasts();

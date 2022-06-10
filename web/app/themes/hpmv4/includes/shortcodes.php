@@ -159,8 +159,7 @@ function hpm_audio_shortcode_insert ( $html, $id, $attachment ) {
 	return $html;
 }
 
-
-function article_display_shortcode( $atts ) {
+function article_display_shortcode ( $atts ) {
 	global $hpm_constants;
 	if ( empty( $hpm_constants ) ) :
 		$hpm_constants = [];
@@ -188,15 +187,15 @@ function article_display_shortcode( $atts ) {
 			[
 				'taxonomy' => 'category',
 				'field'    => 'slug',
-				'terms'    => [ $category ],
+				'terms'    => [ $category ]
 			],
 			[
 				'taxonomy' => 'post_tag',
 				'field'    => 'slug',
-				'terms'    => [ $tag ],
-			],
+				'terms'    => [ $tag ]
+			]
 		];
-	else:
+	else :
 		if ( !empty( $category ) ) :
 			$args['category_name'] = $category;
 		endif;
@@ -242,6 +241,7 @@ function article_display_shortcode( $atts ) {
 				if ( isset( $ka ) ) :
 					$ka += 2;
 				endif;
+				$hpm_constants[] = get_the_ID();
 			endwhile;
 		endif;
 	endforeach;
@@ -253,20 +253,20 @@ function article_display_shortcode( $atts ) {
 add_shortcode( 'hpm_articles', 'article_display_shortcode' );
 
 function article_list_shortcode( $atts ) {
-	extract( shortcode_atts( array(
+	extract( shortcode_atts( [
 		'num' => 1,
 		'category' => '',
 		'tag' => '',
 		'post_id' => ''
-	), $atts, 'multilink' ) );
-	$args = array(
+	], $atts, 'multilink' ) );
+	$args = [
 		'posts_per_page' => $num,
 		'ignore_sticky_posts' => 1
-	);
+	];
 	$extra = '';
 	if ( !empty( $category ) ) :
 		$args['category_name'] = $category;
-		$extra = '<li><a href="/topics/'.$category.'/">Read More...</a></li>';
+		$extra = '<li><a href="/topics/' . $category . '/">Read More...</a></li>';
 	endif;
 	if ( !empty( $tag ) ) :
 		$args['tag_slug__in'][] = $tag;
@@ -279,13 +279,14 @@ function article_list_shortcode( $atts ) {
 	$output = '<ul>';
 	if ( $article->have_posts() ) :
 		while ( $article->have_posts() ) : $article->the_post();
-			$output .= '<li><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></li>';
+			$output .= '<li><a href="' . get_permalink() . '" rel="bookmark">' . get_the_title() . '</a></li>';
 		endwhile;
 		$output .= $extra;
 	else :
 		$output .= "<li>Coming Soon</li>";
 	endif;
 	$output .= '</ul>';
+	wp_reset_query();
 	return $output;
 }
 add_shortcode( 'hpm_article_list', 'article_list_shortcode' );
@@ -673,20 +674,21 @@ function hpm_townsquare_covid( $atts ) {
 			$hpm_constants[] = get_the_ID();
 			$podcast = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );
 			wp_enqueue_script('hpm-plyr');
-			$output .= '<article class="'.implode( ' ', $postClass ).'">'.
-				'<div class="img-wrap">'.
-					'<p><a href="/shows/town-square/" aria-hidden="true"><img src="https://cdn.hpm.io/assets/images/town-square-logo.webp" alt="Town Square with Ernie Manouse logo" /></a></p>'.
+			$output .= '<article class="'.implode( ' ', $postClass ).'">' .
+				'<div class="img-wrap">' .
+					'<p><a href="/shows/town-square/" aria-hidden="true"><img src="https://cdn.hpm.io/assets/images/town-square-logo.webp" alt="Town Square with Ernie Manouse logo" /></a></p>' .
 					'<p><a href="/listen-live/">Listen Live</a> at 3pm or<br /><a href="/podcasts/town-square/">Download the Podcast</a></p>' .
-				'</div>'.
-				'<header class="entry-header">'.
+				'</div>' .
+				'<header class="entry-header">' .
 					'<h3><a href="/shows/town-square/">The Latest from Town Square</a></h3>'.
-					'<div class="article-player-wrap">'.
-						'<h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2>'.
-						'<audio class="js-player" controls preload="metadata">'.
-							'<source src="'.$podcast['url'].'source=plyr-article" type="audio/mpeg" />'.
-						'</audio>'.
-					'</header>'.
-				'</article>';
+					'<div class="article-player-wrap">' .
+						'<h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2>' .
+						'<audio class="js-player" controls preload="metadata">' .
+							'<source src="'.$podcast['url'].'source=plyr-article" type="audio/mpeg" />' .
+						'</audio>' .
+					'</div>' .
+				'</header>' .
+			'</article>';
 		endwhile;
 	endif;
 	wp_reset_query();
