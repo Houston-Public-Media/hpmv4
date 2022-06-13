@@ -78,7 +78,9 @@ hpm.navHandlers = () => {
 				});
 				menuC.addEventListener('focusout', () => {
 					menuC.firstElementChild.setAttribute('aria-expanded', 'false');
-					// menuC.classList.remove('nav-active');
+					if (window.innerWidth > 840) {
+						menuC.classList.remove('nav-active');
+					}
 				});
 				menuC.addEventListener(eventType, () => {
 					menuC.classList.toggle('nav-active');

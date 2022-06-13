@@ -1800,6 +1800,7 @@ body.nav-active-menu #top-mobile-close {
 		top: 0.5rem;
 		position: relative;
 		border-left-color: transparent;
+		border-bottom-color: transparent;
 		border-top-color: rgba(0, 0, 0, 0.45);
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-kids a {
@@ -1872,6 +1873,9 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:focus-within {
 		cursor: pointer;
 		background-color: #eee;
+	}
+	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-active {
+		/* background-color: transparent; */
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:hover > ul,
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:focus-within > ul {

@@ -941,7 +941,7 @@ class HPM_Podcasts {
 				ob_end_clean();
 				update_option( 'hpm_podcast-'.$podcast_title, $getContent, false );
 				update_option( 'hpm_podcast-json-'.$podcast_title, json_encode( $json ), false );
-				sleep(5);
+				//sleep(2);
 			endwhile;
 			if ( !empty( $error ) ) :
 				return new WP_Error( 'rest_api_sad', esc_html__( $error, 'hpm-podcasts' ), [ 'status' => 500 ] );
