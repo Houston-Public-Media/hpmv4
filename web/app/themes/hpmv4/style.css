@@ -307,6 +307,8 @@ input[type=search] {
 #main {
 	background: transparent;
 	padding: 0;
+}
+body:not(.single,.page-template-page-npr-articles) #main {
 	overflow: hidden;
 }
 #content {
@@ -622,6 +624,9 @@ details > summary + * {
 .clearfix::after,
 .clear {
 	clear: both;
+}
+svg:not(:root) {
+	overflow: visible;
 }
 @-ms-viewport {
 	width: device-width;
@@ -2907,9 +2912,6 @@ body.single #author-wrap .author-other-stories h2 a {
 	padding-bottom: 0.5rem;
 	width: 100%;
 }
-.entry-content {
-	overflow: hidden;
-}
 .page-header #author-wrap .author-wrap-left > * + * {
 	margin-top: 1rem;
 }
@@ -3168,13 +3170,13 @@ body.single #author-wrap .author-other-stories h2 a {
 	}
 
 }
-@media screen and (min-width: 64.25em) {
+@media screen and (min-width: 52.5em) {
 	:is(.single,.page-template-page-npr-articles) #main > article.post {
 		display: grid;
-		grid-template-columns: 9rem auto;
+		grid-template-columns: 9rem 1fr;
 	}
 	:is(.single,.page-template-page-npr-articles) #main > article.post .entry-header {
-		grid-column: 1/-1;
+		grid-column: 1 / span 2;
 	}
 	:is(.single,.page-template-page-npr-articles) #main > article.post .entry-footer {
 		grid-column: 2;
@@ -3186,7 +3188,7 @@ body.single #author-wrap .author-other-stories h2 a {
     	top: 1rem;
 	}
 	:is(.single,.page-template-page-npr-articles) #article-share .social-wrap :is(h1,h2,h3,h4,h5) {
-		grid-column: 1/-1;
+		grid-column: 1 / span 2;
 	}
 }
 
