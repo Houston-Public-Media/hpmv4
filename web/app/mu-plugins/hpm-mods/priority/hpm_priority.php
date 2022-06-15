@@ -1,23 +1,4 @@
 <?php
-/**
- * @link 			https://github.com/jwcounts
- * @since  			20180710
- * @package  		HPM-Priority
- *
- * @wordpress-plugin
- * Plugin Name: 	HPM Priority
- * Plugin URI: 		https://github.com/jwcounts
- * Description: 	Setup for priority slots on the homepage
- * Version: 		20180710
- * Author: 			Jared Counts
- * Author URI: 		http://www.houstonpublicmedia.org/staff/jared-counts/
- * License: 		GPL-2.0+
- * License URI: 	http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: 	hpmv2
- *
- * Works best with Wordpress 4.6.0+
- */
-
 add_action('update_option_hpm_priority', function( $old_value, $value ) {
 	wp_cache_delete( 'hpm_priority', 'options' );
 }, 10, 2);
@@ -56,9 +37,9 @@ function hpm_priority_settings_page() {
 	endif; ?>
 	<div class="wrap">
 		<?php settings_errors(); ?>
-		<h1><?php _e('Post Prioritization', 'hpmv2' ); ?></h1>
-		<p><?php _e('This page displays the posts that are currently set as "Priority Posts" on the homepage and main landing pages.', 'hpmv2' ); ?></p>
-		<p style="background-color: yellow; font-style: italic; font-size: 1rem;"><?php _e('<strong>NOTE:</strong> If position #2 is left blank, that slot will show the latest inDepth article. Otherwise, the slot will show the selected article.', 'hpmv2' ); ?></p>
+		<h1><?php _e('Post Prioritization', 'hpmv4' ); ?></h1>
+		<p><?php _e('This page displays the posts that are currently set as "Priority Posts" on the homepage and main landing pages.', 'hpmv4' ); ?></p>
+		<p style="background-color: yellow; font-style: italic; font-size: 1rem;"><?php _e('<strong>NOTE:</strong> If position #2 is left blank, that slot will show the latest inDepth article. Otherwise, the slot will show the selected article.', 'hpmv4' ); ?></p>
 		<form method="post" action="options.php" id="hpm-priority-slots">
 			<?php settings_fields( 'hpm-priority-settings-group' ); ?>
 			<?php do_settings_sections( 'hpm-priority-settings-group' ); ?>
@@ -90,7 +71,7 @@ function hpm_priority_settings_page() {
 												<th scope="row">Position <?PHP echo $position; ?></th>
 											<?php endif; ?>
 												<td>
-													<label class="screen-reader-text"><?php _e( "Current Article in Homepage Position ".$position.":", 'hpmv2' ); ?></label>
+													<label class="screen-reader-text"><?php _e( "Current Article in Homepage Position ".$position.":", 'hpmv4' ); ?></label>
 													<select id="hpm_priority-homepage-<?php echo $kp; ?>" class="hpm-priority-select homepage-select">
 														<option value=""></option>
 														<?php
@@ -101,7 +82,7 @@ function hpm_priority_settings_page() {
 														endforeach; ?>
 													</select>
 												</td>
-												<td><label for="hpm_priority[homepage][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv2' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
+												<td><label for="hpm_priority[homepage][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
 												<td><button class="hpm-clear button button-primary" data-position="<?php echo $kp; ?>">Reset</button></td>
 											</tr>
 									<?php

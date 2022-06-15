@@ -213,7 +213,7 @@ class HPM_Podcasts {
 		);
 		add_meta_box(
 			'hpm-show-meta-class',
-			esc_html__( 'Social and Show Info', 'hpmv2' ),
+			esc_html__( 'Social and Show Info', 'hpmv4' ),
 			[ $this, 'show_meta_box' ],
 			'shows',
 			'normal',
@@ -675,12 +675,11 @@ class HPM_Podcasts {
 	 *
 	 * @return mixed
 	 */
-	public function generate( WP_REST_Request $request = null ) {
-		$pods = $this->options;
+	static public function generate( WP_REST_Request $request = null ) {
+		$pods = get_option( 'hpm_podcast_settings' );
 		$ds = DIRECTORY_SEPARATOR;
 		$protocol = 'https://';
 		$error = '';
-		$dir = wp_upload_dir();
 		$json = [
 			'version' => 'https://jsonfeed.org/version/1',
 			'title' => '',
@@ -709,7 +708,7 @@ class HPM_Podcasts {
 			]]
 		]);
 
-		$xsl = get_stylesheet_directory_uri() . $ds . 'podcast.xsl';
+		$xsl = str_replace( 'http://', $protocol, get_stylesheet_directory_uri() . $ds . 'podcast.xsl' );
 
 		if ( !empty( $pods['recurrence'] ) ) :
 			if ( $pods['recurrence'] == 'hpm_5min' ) :
@@ -872,7 +871,7 @@ class HPM_Podcasts {
 					'date_published' => get_the_date( 'c', '', '', false),
 					'date_modified' => get_the_modified_date( 'c', '', '', false),
 					'author' => coauthors( '; ', '; ', '', '', false ),
-					'thumbnail' => $pod_image[0],
+					'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] : '' ),
 					'attachments' => [
 						'url' => $media_file,
 						'mime_type' => $a_meta['mime'],
@@ -942,14 +941,14 @@ class HPM_Podcasts {
 				ob_end_clean();
 				update_option( 'hpm_podcast-'.$podcast_title, $getContent, false );
 				update_option( 'hpm_podcast-json-'.$podcast_title, json_encode( $json ), false );
-				sleep(5);
+				//sleep(2);
 			endwhile;
 			if ( !empty( $error ) ) :
 				return new WP_Error( 'rest_api_sad', esc_html__( $error, 'hpm-podcasts' ), [ 'status' => 500 ] );
 			else :
 				$t = time();
-				$update_last = $this->last_update;
-				$offset = get_option('gmt_offset')*3600;
+				$update_last = get_option( 'hpm_podcast_last_update' );
+				$offset = get_option( 'gmt_offset' ) * 3600;
 				$time = $t + $offset;
 				$date = date( 'F j, Y @ g:i A', $time );
 				update_option( 'hpm_podcast_last_update', $time, false );
@@ -1120,22 +1119,24 @@ class HPM_Podcasts {
 		if ( !empty( $show_id ) ) :
 			$social = get_post_meta( $show_id, 'hpm_show_social', true );
 			if ( !empty( $social['insta'] ) ) :
-				$temp .= '<li class="social-icon instagram"><a href="https://instagram.com/' . $social['insta'].'" rel="noopener" target="_blank" title="Instagram"><span class="fab fa-instagram" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon instagram"><a href="https://instagram.com/' . $social['insta'].'" rel="noopener" target="_blank" title="Instagram">' . hpm_svg_output( 'instagram' ) . '</a></li>';
 			endif;
 			if ( !empty( $social['yt'] ) ) :
-				$temp .= '<li class="social-icon youtube"><a href="'.$social['yt'].'" rel="noopener" target="_blank" title="YouTube"><span class="fab fa-youtube" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon youtube"><a href="'.$social['yt'].'" rel="noopener" target="_blank" title="YouTube">' . hpm_svg_output( 'youtube' ) . '</a></li>';
 			endif;
 			if ( !empty( $social['twitter'] ) ) :
-				$temp .= '<li class="social-icon twitter"><a href="https://twitter.com/'.$social['twitter'].'" rel="noopener" target="_blank" title="Twitter"><span class="fab fa-twitter" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon twitter"><a href="https://twitter.com/'.$social['twitter'].'" rel="noopener" target="_blank" title="Twitter">' . hpm_svg_output( 'twitter' ) . '</a></li>';
 			endif;
 			if ( !empty( $social['fb'] ) ) :
-				$temp .= '<li class="social-icon facebook"><a href="https://www.facebook.com/'.$social['fb'].'" rel="noopener" target="_blank" title="Facebook"><span class="fab fa-facebook-f" aria-hidden="true"></span></a></li>';
+				$temp .= '<li class="social-icon facebook"><a href="https://www.facebook.com/'.$social['fb'].'" rel="noopener" target="_blank" title="Facebook">' . hpm_svg_output( 'facebook' ) . '</a></li>';
 			endif;
 		endif;
 		if ( !empty( $pod_link ) && $lede ) :
 			$output = '<p>&nbsp;</p><div class="podcast-episode-info"><h3>This article is part of the <em><a href="'.$pod_link['page'].'">'.get_the_title( $pod_id ).'</a></em> podcast</h3><ul class="podcast-badges">' . $temp . '</ul></div>';
 		else :
-			$output = '<ul class="podcast-badges">' . $temp . '</ul>';
+			if ( !empty( $temp ) ) :
+				$output = '<ul class="podcast-badges">' . $temp . '</ul>';
+			endif;
 		endif;
 		return $output;
 	}
@@ -1183,11 +1184,10 @@ class HPM_Podcasts {
 			endif;
 		endforeach;
 		if ( $no > 0 ) :
-			$output .= '<div id="station-social">';
-			if ( !empty( $options['times'] ) ) :
-				$output .= '<h3>' . $options['times'] .'</h3>';
-			endif;
-			$output .= HPM_Podcasts::show_social( $options['podcast'], false, $id ) . '</div>';
+			$social = HPM_Podcasts::show_social( $options['podcast'], false, $id );
+			$output .= '<div id="station-social"' . ( empty( $social ) ? ' class="station-no-social"' : '' ) . '>';
+			$output .= '<h3>' . ( !empty( $options['times'] ) ? $options['times'] : '' ) .'</h3>';
+			$output .= $social . '</div>';
 		endif;
 		$output .= '</header>';
 		return $output;
@@ -1366,5 +1366,4 @@ class HPM_Podcasts {
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'JSON-formatted feed for ' . $oj['title'], 'hpm-podcasts' ), 'data' => [ 'feed' => $oj, 'status' => 200 ] ] );
 	}
 }
-
 new HPM_Podcasts();

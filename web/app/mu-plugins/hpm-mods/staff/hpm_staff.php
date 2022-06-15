@@ -322,7 +322,7 @@ function hpm_staff_echo( $query ) {
 	$cat = $main_query->get( 'staff_category' );
 	$exempt = [ 'hosts', 'executive-team', 'department-leaders' ];
 	if ( empty( $cat ) ) :
-		echo '<h2>Executive Team</h2>';
+		echo '<h2>Executive Team</h2><div class="staff-grid">';
 		$args = [
 			'post_type' => 'staff',
 			'post_status' => 'publish',
@@ -341,8 +341,8 @@ function hpm_staff_echo( $query ) {
 		while ( $el->have_posts() ) : $el->the_post();
 			get_template_part( 'content', 'staff' );
 		endwhile;
+		echo '</div><h2>Department Leaders</h2><div class="staff-grid">';
 
-		echo '</section><section><h2>Department Leaders</h2>';
 		$args['tax_query'] = [
 			'relation' => 'AND',
 			[
@@ -357,12 +357,11 @@ function hpm_staff_echo( $query ) {
 				'operator' => 'NOT IN'
 			]
 		];
-		$dh = new WP_Query( $args );
+		$dh = new WP_Query($args);
 		while ( $dh->have_posts() ) : $dh->the_post();
 			get_template_part( 'content', 'staff' );
 		endwhile;
-
-		echo '</section><section><h2>Talk Show Hosts</h2>';
+		echo '</div><h2>Talk Show Hosts</h2><div class="staff-grid">';
 		$args['tax_query'] = [
 			'relation' => 'AND',
 			[
@@ -382,7 +381,7 @@ function hpm_staff_echo( $query ) {
 			get_template_part( 'content', 'staff' );
 		endwhile;
 
-		echo '</section><section><h2>News &amp; On-Air Staff</h2>';
+		echo '</div><h2>News &amp; On-Air Staff</h2><div class="staff-grid">';
 		$args['tax_query'] = [
 			'relation' => 'AND',
 			[
@@ -402,13 +401,15 @@ function hpm_staff_echo( $query ) {
 			get_template_part( 'content', 'staff' );
 		endwhile;
 
-		echo '</section><section><h2>Houston Public Media Staff</h2>';
+		echo '</div><h2>Houston Public Media Staff</h2>';
 	elseif ( !empty( $cat ) && !in_array( $cat, $exempt ) ) :
 		$main_query->posts = hpm_staff_sort( $main_query->posts );
 	endif;
+	echo '<div class="staff-grid">';
 	while ( $main_query->have_posts() ) : $main_query->the_post();
 		get_template_part( 'content', 'staff' );
 	endwhile;
+	echo "</div>";
 	wp_reset_query();
 }
 
