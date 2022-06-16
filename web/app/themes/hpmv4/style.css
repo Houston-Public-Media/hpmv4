@@ -2818,6 +2818,9 @@ body.single #author-wrap .author-other-stories h2 a {
 #author-wrap p {
 	font-size: 1rem;
 }
+#author-wrap p + p {
+	margin-top: 1rem;
+}
 #author-wrap .author-inner-wrap {
 	background-color: var(--main-element-background);
 	padding: 1rem;
@@ -3019,6 +3022,7 @@ body.single #author-wrap .author-other-stories h2 a {
 		width: 70%;
 		float: left;
 		padding: 0 1em;
+		display: block;
 	}
 	.page-header #author-wrap .author-wrap-left {
 		width: 30%;
