@@ -2907,6 +2907,9 @@ body.single #author-wrap .author-other-stories h2 a {
 .page.page-template-page-series-tiles aside.column-right {
 	background-color: var(--main-element-background);
 }
+.page.page-template-page-series-tiles aside.column-right > * + * {
+	margin-top: 1rem;
+}
 .page.page-template-page-series-tiles aside.column-right h2 {
 	font-family: var(--hpm-font-condensed);
 	font-size: 2em;
