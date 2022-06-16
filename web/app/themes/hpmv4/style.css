@@ -2516,6 +2516,9 @@ article .entry-content p a {
 :is(article .entry-content,.page-content,.show-content) ul {
 	list-style: disc outside none;
 }
+.show-content > * + * {
+	margin-top: 1rem;
+}
 :is(article .entry-content, .page-content) :is(ol li, ul li) {
 	clear: both;
 	margin: 0.5em 0;
@@ -2906,9 +2909,6 @@ body.single #author-wrap .author-other-stories h2 a {
 }
 .page.page-template-page-series-tiles aside.column-right {
 	background-color: var(--main-element-background);
-}
-.page.page-template-page-series-tiles aside.column-right > * + * {
-	margin-top: 1rem;
 }
 .page.page-template-page-series-tiles aside.column-right h2 {
 	font-family: var(--hpm-font-condensed);
