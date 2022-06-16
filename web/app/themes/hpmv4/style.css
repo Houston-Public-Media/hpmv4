@@ -3494,21 +3494,21 @@ body.single #author-wrap .author-other-stories h2 a {
 	padding: 0.75em 0.5em;
 	vertical-align: middle;
 }
+.support-ssac :is(th,td) {
+	color: #00566C;
+	border-bottom-color: #00566C;
+}
 .support-ssac th.ssac-table-5,
 .support-ssac td.ssac-table-5 {
 	color: #D8002B;
 	border-bottom-color: #D8002B;
 }
-.support-ssac th.ssac-table-1,
-.support-ssac td.ssac-table-1,
-.support-ssac th.ssac-table-2,
-.support-ssac td.ssac-table-2,
-.support-ssac th.ssac-table-3,
-.support-ssac td.ssac-table-3,
-.support-ssac th.ssac-table-4,
-.support-ssac td.ssac-table-4 {
-	color: #00566C;
-	border-bottom-color: #00566C;
+.support-ssac td svg {
+	width: 1rem;
+	fill: #00566C;
+}
+.support-ssac td.ssac-table-5 svg {
+	fill: #D8002B;
 }
 .page.support-ssac article .entry-content .major-giving-contacts img {
 	width: 50%;
