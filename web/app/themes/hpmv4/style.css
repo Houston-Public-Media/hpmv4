@@ -2454,6 +2454,9 @@ article .entry-header {
 article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.article-player-wrap) > * + * {
 	margin-top: 1.25rem;
 }
+article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.article-player-wrap) > :is(div,section) > * + * {
+	margin-top: 1.25rem;
+}
 article .entry-header h3 {
 	background-color: transparent;
 	color: var(--secondary-text);
@@ -3714,7 +3717,7 @@ h2.ss-join {
 	padding: 0 0.25em;
 	color: var(--main-red);
 }
-article .entry-content .article-player-wrap * + * {
+article:not(.type-staff) :is(.entry-header,.entry-content,.card-content) > div.article-player-wrap > * + * {
 	margin-top: 0;
 }
 .plyr-audio-embed svg {
