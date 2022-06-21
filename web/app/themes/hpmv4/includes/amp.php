@@ -186,24 +186,6 @@ function hpm_amp_additional_css( $amp_template ) {
 		font-style: italic;
 	}
 	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black.woff2') format('woff2'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black.woff') format('woff'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 900;
-		font-style: normal;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black-It.woff2') format('woff2'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black-It.woff') format('woff'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black-It.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 900;
-		font-style: italic;
-	}
-	@font-face {
 		font-family: 'PBS-Sans-Condensed';
 		src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond.woff2') format('woff2'),
 		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond.woff') format('woff'),
@@ -211,33 +193,6 @@ function hpm_amp_additional_css( $amp_template ) {
 		font-display: auto;
 		font-weight: 400;
 		font-style: normal;
-	}
-	@font-face {
-		font-family: 'PBS-Sans-Condensed';
-		src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-It.woff2') format('woff2'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-It.woff') format('woff'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-It.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 400;
-		font-style: italic;
-	}
-	@font-face {
-		font-family: 'PBS-Sans-Condensed';
-		src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff2') format('woff2'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff') format('woff'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 700;
-		font-style: normal;
-	}
-	@font-face {
-		font-family: 'PBS-Sans-Condensed';
-		src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff2') format('woff2'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff') format('woff'),
-		url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 700;
-		font-style: italic;
 	}
 
 	/* Reset */
@@ -349,8 +304,13 @@ function hpm_amp_additional_css( $amp_template ) {
 		width: 100%;
 	}
 	#main {
-		background: transparent;
+		background-color: var(--main-element-background);
 		padding: 0;
+		flex-flow: row wrap;
+		justify-content: center;
+		align-content: flex-start;
+		display: flex;
+		margin-top: 1rem;
 	}
 	#content {
 		position: relative;
@@ -1104,10 +1064,6 @@ function hpm_amp_additional_css( $amp_template ) {
 	}
 
 	/* Article Styling */
-	.single #main {
-		background-color: var(--main-element-background);
-		padding: 0;
-	}
 	article {
 		margin: 0;
 		width: 100%;
@@ -1256,13 +1212,6 @@ function hpm_amp_additional_css( $amp_template ) {
 	figure.npr-container,
 	figure.wp-block-embed {
 		padding: 1em;
-	}
-	body:is(.single):not(.single-staff,.author) #main {
-		flex-flow: row wrap;
-		justify-content: center;
-		align-content: flex-start;
-		display: flex;
-		padding-top: 1rem;
 	}
 	.single #main article.post {
 		order: 1;

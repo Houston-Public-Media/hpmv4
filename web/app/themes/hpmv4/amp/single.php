@@ -45,7 +45,7 @@
 					<?PHP while ( have_posts() ) : the_post(); $postClass = get_post_class(); ?>
 					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 						<header class="entry-header">
-							<h3><?php echo hpm_top_cat(get_the_ID()); ?></h3>
+							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 							<?php
 								the_title('<h1 class="entry-title">', '</h1>');
 								the_excerpt();
@@ -56,19 +56,19 @@
 								coauthors_posts_links(' / ', ' / ', '<address class="vcard author">', '</address>', true);
 								echo " | ";
 								$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-								$pub = get_the_time('U');
-								$mod = get_the_modified_time('U');
+								$pub = get_the_time( 'U' );
+								$mod = get_the_modified_time( 'U' );
 								$desc = $mod - $pub;
-								$mod_time = get_post_meta($single_id, 'hpm_no_mod_time', true);
-								if ($pub !== $mod && $desc > 900 && $mod > $pub && $mod_time == 0) :
+								$mod_time = get_post_meta( $single_id, 'hpm_no_mod_time', true );
+								if ( $pub !== $mod && $desc > 900 && $mod > $pub && $mod_time == 0 ) :
 									$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time> (Last Updated: <time class="updated" datetime="%3$s">%4$s</time>)';
 								endif;
 
 								$time_string = sprintf(
 									$time_string,
-									esc_attr(get_the_date('c')),
+									esc_attr( get_the_date('c') ),
 									get_the_date(),
-									esc_attr(get_the_modified_date('c')),
+									esc_attr( get_the_modified_date('c') ),
 									get_the_modified_date()
 								);
 
@@ -107,7 +107,7 @@
 							$tags = wp_get_post_tags( $post->ID );
 							if ( $tags ) :
 								$tag_ids = [];
-								foreach($tags as $individual_tag):
+								foreach( $tags as $individual_tag ) :
 									$tag_ids[] = $individual_tag->term_id;
 								endforeach;
 								$args = [
