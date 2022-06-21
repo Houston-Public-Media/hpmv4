@@ -171,7 +171,7 @@ hpm.videoHandlers = () => {
 };
 
 hpm.shareHandlers = () => {
-	var popOut = document.querySelectorAll(".article-share-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
+	var popOut = document.querySelectorAll(".social-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
 	Array.from(popOut).forEach((pop) => {
 		pop.addEventListener(eventType, (e) =>{
 			var attr = pop.getAttribute('data-dialog');
