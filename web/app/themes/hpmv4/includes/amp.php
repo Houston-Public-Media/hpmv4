@@ -1278,7 +1278,7 @@ function hpm_amp_additional_css( $amp_template ) {
 		text-decoration: underline;
 	}
 	body.single #author-wrap .author-other-stories ul {
-		margin: 0 0 1rem 0;
+		margin: 0 0 1rem 1rem;
 	}
 	body.single #author-wrap .author-other-stories h2 a {
 		color: var(--accent-black-1);
@@ -1286,7 +1286,7 @@ function hpm_amp_additional_css( $amp_template ) {
 		font-size: 1.125rem;
 	}
 	#author-wrap {
-		padding: 1rem;
+		padding: 1rem 0;
 		background-color: var(--main-background);
 		width: 100%;
 	}
