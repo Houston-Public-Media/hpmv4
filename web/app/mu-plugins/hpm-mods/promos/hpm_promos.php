@@ -25,7 +25,7 @@ class HPM_Promos {
 		add_action( 'manage_promos_posts_custom_column', [ $this, 'manage_columns' ], 10, 2 );
 		add_action( 'wp_footer', function() {
 			echo $this->generate_lightbox();
-		}, 100 );
+		}, 101 );
 		add_action( 'admin_head', [ $this, 'hide_publish_button' ] );
 
 		// Create menu in Admin Dashboard
