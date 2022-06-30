@@ -1327,6 +1327,30 @@ function hpm_amp_additional_css( $amp_template ) {
 		width: 66%;
 		padding: 0.75em 1em 0.5em 0;
 	}
+	.old-article-banner {
+		background-color: yellow;
+		font-weight: 700;
+		font-size: 1.125rem;
+		padding: 0.5rem 1rem;
+		width: max-content;
+		position: relative;
+		left: -1rem;
+	}
+	.old-article-banner svg {
+		width: 1rem;
+		margin-right: 0.25rem;
+	}
+	.old-article-banner::after {
+		border: 1.25rem solid transparent;
+		border-left-color: yellow;
+		border-top-color: yellow;
+		width: 0;
+		height: 0;
+		content: '';
+		position: absolute;
+		left: 100%;
+		top: 0;
+	}
 	@media screen and (min-width: 34em) {
 		.column-left,
 		.column-span,

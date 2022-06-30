@@ -41,6 +41,8 @@ function hpm_scripts() {
 
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], $versions['analytics'], false );
 
+	//wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main-mod.js', [], time(), true );
+
 	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], $versions['js'], true );
 	wp_register_script( 'hpm-splide', 'https://cdn.hpm.io/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
 	wp_register_script( 'hpm-splide-js', 'https://cdn.hpm.io/assets/js/splide.min.js', [], $versions['js'], true );
@@ -868,6 +870,8 @@ function hpm_svg_output( $icon ) {
 		$output = '<path d="M385.7,273.1L184.1,474.7c-9.7,9.7-25.5,9.7-35.2,0l-23.5-23.5c-9.7-9.7-9.7-25.4,0-35.2l159.8-160.5L125.3,95 c-9.7-9.7-9.7-25.5,0-35.2l23.5-23.5c9.7-9.7,25.5-9.7,35.2,0l201.6,201.6C395.4,247.6,395.4,263.4,385.7,273.1z" />';
 	elseif ( $icon == 'chevron-down' ) :
 		$output = '<path d="M237.9,385.7L36.3,184.1c-9.7-9.7-9.7-25.5,0-35.2l23.5-23.5c9.7-9.7,25.4-9.7,35.2,0l160.5,159.8L416,125.3 c9.7-9.7,25.5-9.7,35.2,0l23.5,23.5c9.7,9.7,9.7,25.5,0,35.2L273.1,385.7C263.4,395.4,247.6,395.4,237.9,385.7L237.9,385.7z" />';
+	elseif ( $icon == 'chevron-up' ) :
+		$output = '<path d="M416 352c-8.188 0-16.38-3.125-22.62-9.375L224 173.3l-169.4 169.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25C432.4 348.9 424.2 352 416 352z"/>';
 	elseif ( $icon == 'angle-double-down' ) :
 		$output = '<path d="M236.3,255.8L82.4,101.9c-10.6-10.6-10.6-27.8,0-38.4L108,38c10.6-10.6,27.8-10.6,38.4,0l109.1,109.1L364.5,38 c10.6-10.6,27.8-10.6,38.4,0l25.8,25.5c10.6,10.6,10.6,27.8,0,38.4L274.7,255.7C264.1,266.4,246.9,266.4,236.3,255.8L236.3,255.8z  M274.7,473l153.9-153.9c10.6-10.6,10.6-27.8,0-38.4L403,255.2c-10.6-10.6-27.8-10.6-38.4,0l-109.2,109L146.4,255.1 c-10.6-10.6-27.8-10.6-38.4,0l-25.7,25.6c-10.6,10.6-10.6,27.8,0,38.4l153.9,153.9C246.9,483.7,264.1,483.7,274.7,473z" />';
 	elseif ( $icon == 'tv' ) :
@@ -897,6 +901,24 @@ function hpm_svg_output( $icon ) {
 	endif;
 	if ( !empty( $output ) ) :
 		$output = '<svg version="1.1" ' . ( $icon == 'play' ? 'id="play-button" ' : '' ) . 'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">' . $output . '</svg>';
+	endif;
+	return $output;
+}
+
+/**
+ * Accepts Unix formatted time. If the time is more than 3 years behind current, output a banner
+ */
+function hpm_pub_time_banner( $time_string ) {
+	$output = '';
+	$t = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+	if ( empty( $time_string ) || $time_string > $t ) :
+		return $output;
+	endif;
+	$diff = $t - $time_string;
+	if ( $diff > 94608000 ) :
+		$output = '<div class="old-article-banner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512zM232 256C232 264 236 271.5 242.7 275.1L338.7 339.1C349.7 347.3 364.6 344.3 371.1 333.3C379.3 322.3 376.3 307.4 365.3 300L280 243.2V120C280 106.7 269.3 96 255.1 96C242.7 96 231.1 106.7 231.1 120L232 256z"/></svg> This article is over ' . floor( $diff / 31536000 ) . ' years old</div>';
 	endif;
 	return $output;
 }

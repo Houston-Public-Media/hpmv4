@@ -14,6 +14,7 @@ Template Name: NPR Content
         <main id="main" class="site-main" role="main">
 			<article id="post-<?php the_ID(); ?>" <?php post_class('post'); ?>>
 				<header class="entry-header">
+					<?php echo hpm_pub_time_banner( strtotime( $nprdata['date'] ) ); ?>
 					<h3><?php echo $nprdata['slug']; ?></h3>
 					<h1 class="entry-title"><?php echo $nprdata['title']; ?></h1>
 					<p><?php echo $nprdata['excerpt']; ?></p>

@@ -17,31 +17,32 @@ if ( is_preview() ) : ?>
 		<?PHP while ( have_posts() ) : the_post(); $postClass = get_post_class(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
+					<?php echo hpm_pub_time_banner( get_the_time( 'U' ) ); ?>
 					<?php echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
-					<h3><?php echo hpm_top_cat(get_the_ID()); ?></h3>
+					<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 					<?php
 						the_title('<h1 class="entry-title">', '</h1>');
 						the_excerpt();
 						$single_id = get_the_ID();
 					?>
 					<div class="byline-date">
-						<?PHP
+					<?PHP
 						coauthors_posts_links(' / ', ' / ', '<address class="vcard author">', '</address>', true);
 						echo " | ";
 						$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-						$pub = get_the_time('U');
-						$mod = get_the_modified_time('U');
+						$pub = get_the_time( 'U' );
+						$mod = get_the_modified_time( 'U' );
 						$desc = $mod - $pub;
-						$mod_time = get_post_meta($single_id, 'hpm_no_mod_time', true);
-						if ($pub !== $mod && $desc > 900 && $mod > $pub && $mod_time == 0) :
+						$mod_time = get_post_meta( $single_id, 'hpm_no_mod_time', true );
+						if ( $pub !== $mod && $desc > 900 && $mod > $pub && $mod_time == 0 ) :
 							$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time> (Last Updated: <time class="updated" datetime="%3$s">%4$s</time>)';
 						endif;
 
 						$time_string = sprintf(
 							$time_string,
-							esc_attr(get_the_date('c')),
+							esc_attr( get_the_date( 'c' ) ),
 							get_the_date(),
-							esc_attr(get_the_modified_date('c')),
+							esc_attr( get_the_modified_date( 'c' ) ),
 							get_the_modified_date()
 						);
 
@@ -50,7 +51,7 @@ if ( is_preview() ) : ?>
 							_x('Posted on', 'Used before publish date.', 'hpmv4'),
 							$time_string
 						);
-						?>
+					?>
 					</div>
 				</header>
 				<?php hpm_article_share(); ?>
@@ -77,7 +78,7 @@ if ( is_preview() ) : ?>
 		endwhile; ?>
 		<aside class="column-right">
 			<?php
-			$categories = get_the_category( get_the_ID() );
+			$categories = get_the_category( $single_id );
 			foreach ( $categories as $cats ) :
 				$anc = get_ancestors( $cats->term_id, 'category' );
 				if ( in_array( 9, $anc ) ) :
@@ -120,7 +121,7 @@ if ( is_preview() ) : ?>
 			get_template_part('sidebar', 'none'); ?>
 		</aside>
 		<div id="author-wrap">
-			<?php echo author_footer( get_the_ID() ); ?>
+			<?php echo author_footer( $single_id ); ?>
 		</div>
 	</main>
 </div>

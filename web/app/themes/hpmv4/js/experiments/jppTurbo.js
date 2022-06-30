@@ -1,3 +1,4 @@
+if ( typeof jpp !== typeof undefined && jpp !== false) {
 var jpp = {
 	'version': 1,
 	'streams': {
@@ -56,8 +57,8 @@ jpp.getJSON = (url, callback) => {
 	xhr.send();
 };
 jpp.loadPlyr = () => {
-	const controls = [ 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'airplay' ];
-	const player = new Plyr('#jpp-player', { controls, 'invertTime': false, 'loadSprite': false });
+	const controls = [ 'play' ];
+	const player = new Plyr('#jpp-player', { controls, 'volume': 1, 'loadSprite': true, 'muted': false, 'autopause': true });
 	var prefStream = getCookie('prefStream');
 	if ( prefStream == null ) {
 		setCookie('prefStream','news',365*24);
@@ -86,7 +87,8 @@ jpp.playerCreate = () => {
 	jpp.elements['podcasts'] = document.getElementById('jpp-podcasts');
 	jpp.elements['playlist'] = document.getElementById('jpp-playlist');
 	jpp.elements['menu'] = document.getElementById('jpp-menu');
-	jpp.elements['menuButton'] = document.getElementById('jpp-button-menu');
+	jpp.elements['menuUp'] = document.getElementById('jpp-menu-up');
+	jpp.elements['menuDown'] = document.getElementById('jpp-menu-down');
 	jpp.elements['menuWrap'] = document.getElementById('jpp-menu-wrap');
 	jpp.elements['nowPlaying'] = document.getElementById('jpp-now-playing');
 	for ( stream in jpp.streams ) {
@@ -160,17 +162,15 @@ jpp.buttonManage = () => {
 	});
 }
 jpp.menuButton = () => {
-	jpp.elements.menuButton.addEventListener('click',function(e){
-		var menuB = document.querySelector('#jpp-button-menu span.fas');
-		if (jpp.elements.menuWrap.classList.contains('jpp-menu-active')) {
-			jpp.elements.menuWrap.classList.remove('jpp-menu-active');
-			menuB.classList.add('fa-bars');
-			menuB.classList.remove('fa-chevron-down');
-		} else {
-			jpp.elements.menuWrap.classList.add('jpp-menu-active');
-			menuB.classList.remove('fa-bars');
-			menuB.classList.add('fa-chevron-down');
-		}
+	jpp.elements.menuUp.addEventListener('click', (e) => {
+		jpp.elements.menuWrap.classList.toggle('jpp-menu-active');
+		jpp.elements.menuUp.classList.toggle('hidden');
+		jpp.elements.menuDown.classList.toggle('hidden');
+	});
+	jpp.elements.menuDown.addEventListener('click', (e) => {
+		jpp.elements.menuWrap.classList.toggle('jpp-menu-active');
+		jpp.elements.menuUp.classList.toggle('hidden');
+		jpp.elements.menuDown.classList.toggle('hidden');
 	});
 };
 jpp.init = () => {
@@ -190,3 +190,4 @@ document.addEventListener('turbo:before-fetch-response', (event) => {
 	console.log(event);
 	googletag.pubads().refresh();
 });
+}

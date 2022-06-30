@@ -45,6 +45,7 @@
 					<?PHP while ( have_posts() ) : the_post(); $postClass = get_post_class(); ?>
 					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 						<header class="entry-header">
+							<?php echo hpm_pub_time_banner( get_the_time( 'U' ) ); ?>
 							<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 							<?php
 								the_title('<h1 class="entry-title">', '</h1>');

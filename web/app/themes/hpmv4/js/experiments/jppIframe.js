@@ -62,95 +62,45 @@ jpp.getJSON = (url, callback) => {
 	};
 	xhr.send();
 };
-jpp.loadStyles = () => {
-	var styles = {'fa': false, 'plyr': false};
-	var loaded = document.querySelectorAll('link[rel=stylesheet]');
-	for(var m = 0; m < loaded.length; m++){
-		var href = loaded[m].getAttribute('href');
-		if (href.includes('fontawesome')) {
-			styles.fa = true;
-		} else if (href.includes('plyr')) {
-			styles.plyr = true;
-		}
-	}
-	if (!styles.fa) {
-		var faStyle = document.createElement('link');
-		faStyle.rel = 'stylesheet';
-		faStyle.href = jpp.assetsUrl+'fonts/fontawesome/css/all.css';
-		document.head.append(faStyle);
-	}
-	if (!styles.plyr) {
-		var plyrStyle = document.createElement('link');
-		plyrStyle.rel = 'stylesheet';
-		plyrStyle.href = jpp.assetsUrl+'js/plyr/plyr.css';
-		document.head.append(plyrStyle);
-	}
-	var jppStyle = document.createElement('link');
-	jppStyle.rel = 'stylesheet';
-	jppStyle.href = '/app/themes/4/js/persistent.css';
-	document.head.append(jppStyle);
-}
 jpp.loadPlyr = () => {
-	var plyrJs = document.createElement('script');
-	plyrJs.src = jpp.assetsUrl + 'js/plyr/plyr.js';
-	const controls = [ 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'airplay' ];
-	plyrJs.addEventListener('load',function(e){
-		const player = new Plyr('#jpp-player', { controls, 'invertTime': false });
-		var prefStream = getCookie('prefStream');
-		if ( prefStream == null ) {
-			setCookie('prefStream','news',365*24);
-			prefStream = 'news';
-		} else {
-			prefStream = getCookie('prefStream');
-		}
-		jpp.player = player;
-		jpp.player.source = jpp.streams[prefStream];
-		document.getElementById('jpp-button-'+prefStream).classList.add('jpp-button-active');
-		jpp.player.on('playing', (event) => {
-			jpp.elements.menuWrap.classList.add('jpp-now-play');
-			jpp.elements.nowPlaying.innerHTML = 'Now Playing: '+ jpp.player.config.title;
-		});
-		jpp.player.on('play', (event) => {
-			jpp.elements.menuWrap.classList.add('jpp-now-play');
-			jpp.elements.nowPlaying.innerHTML = 'Now Playing: '+ jpp.player.config.title;
-		});
-		jpp.player.on('ended', (event) => {
-			jpp.elements.menuWrap.classList.remove('jpp-now-play');
-			jpp.elements.nowPlaying.innerHTML = 'Now Playing: Nothing yet...';
-		});
+	const controls = [ 'play' ];
+	const player = new Plyr('#jpp-player', { controls, 'volume': 1, 'loadSprite': true, 'muted': false, 'autopause': true });
+	var prefStream = getCookie('prefStream');
+	if ( prefStream == null ) {
+		setCookie('prefStream','news',365*24);
+		prefStream = 'news';
+	} else {
+		prefStream = getCookie('prefStream');
+	}
+	jpp.player = player;
+	jpp.player.source = jpp.streams[prefStream];
+	document.getElementById('jpp-button-'+prefStream).classList.add('jpp-button-active');
+	jpp.player.on('playing', (event) => {
+		jpp.elements.menuWrap.classList.add('jpp-now-play');
+		jpp.elements.nowPlaying.innerHTML = 'Now Playing: '+ jpp.player.config.title;
 	});
-	document.head.append(plyrJs);
-}
+	jpp.player.on('play', (event) => {
+		jpp.elements.menuWrap.classList.add('jpp-now-play');
+		jpp.elements.nowPlaying.innerHTML = 'Now Playing: '+ jpp.player.config.title;
+	});
+	jpp.player.on('ended', (event) => {
+		jpp.elements.menuWrap.classList.remove('jpp-now-play');
+		jpp.elements.nowPlaying.innerHTML = 'Now Playing: Nothing yet...';
+	});
+};
 jpp.playerCreate = () => {
-	var jpper = document.createElement('div');
-	jpper.id = 'jpp-player-persist';
-	jpper.innerHTML = `
-	<div id="jpp-player-wrap"><audio id="jpp-player" controls crossorigin playsinline preload="none"></audio></div>
-	<div id="jpp-menu-wrap">
-		<aside id="jpp-menu">
-			<button data-section="streams" id="jpp-button-streams" class="jpp-menu-section jpp-button-active">Streams</button>
-			<button data-section="podcasts" id="jpp-button-podcasts" class="jpp-menu-section">Podcasts</button>
-		</aside>
-		<div id="jpp-submenus">
-			<aside id="jpp-streams" class="jpp-section-active"></aside>
-			<aside id="jpp-podcasts"></aside>
-		</div>
-		<div id="jpp-now-playing">Now Playing: Nothing yet...</div>
-	</div>
-	<div id="jpp-button-wrap">
-		<button id="jpp-button-menu"><span class="fas fa-bars"></span></button>
-	</div>`;
-	document.body.append(jpper);
 	jpp.elements['streams'] = document.getElementById('jpp-streams');
 	jpp.elements['podcasts'] = document.getElementById('jpp-podcasts');
+	jpp.elements['playlist'] = document.getElementById('jpp-playlist');
 	jpp.elements['menu'] = document.getElementById('jpp-menu');
-	jpp.elements['menuButton'] = document.getElementById('jpp-button-menu');
+	jpp.elements['menuUp'] = document.getElementById('jpp-menu-up');
+	jpp.elements['menuDown'] = document.getElementById('jpp-menu-down');
 	jpp.elements['menuWrap'] = document.getElementById('jpp-menu-wrap');
 	jpp.elements['nowPlaying'] = document.getElementById('jpp-now-playing');
 	for ( stream in jpp.streams ) {
 		jpp.elements.streams.innerHTML += '<button data-station="'+stream+'" id="jpp-button-'+stream+'" class="jpp-station">'+jpp.streams[stream]['title']+'</button>';
 	}
-	getJSON( jpp.podcastList, function(err, data) {
+	jpp.getJSON( jpp.podcastList, (err, data) => {
 		if (err !== null) {
 			console.log(err);
 		} else {
@@ -173,7 +123,7 @@ jpp.playerCreate = () => {
 jpp.podListUpdate = () => {
 	var list = '';
 	jpp.podcasts.forEach((item) => {
-		list += '<button data-station="'+item.slug+'" data-audio="'+ item.episode.audio +'" data-title="'+ item.name +': '+item.episode.title +'">' + item.name + '</button>';
+		list += '<button data-station="'+item.slug+'" data-audio="'+ item.episode.audio +'">' + item.name + '</button>';
 	});
 	jpp.elements.podcasts.innerHTML = list;
 	jpp.buttonManage();
@@ -218,17 +168,15 @@ jpp.buttonManage = () => {
 	});
 }
 jpp.menuButton = () => {
-	jpp.elements.menuButton.addEventListener('click',function(e){
-		var menuB = document.querySelector('#jpp-button-menu span.fas');
-		if (jpp.elements.menuWrap.classList.contains('jpp-menu-active')) {
-			jpp.elements.menuWrap.classList.remove('jpp-menu-active');
-			menuB.classList.add('fa-bars');
-			menuB.classList.remove('fa-chevron-down');
-		} else {
-			jpp.elements.menuWrap.classList.add('jpp-menu-active');
-			menuB.classList.remove('fa-bars');
-			menuB.classList.add('fa-chevron-down');
-		}
+	jpp.elements.menuUp.addEventListener('click', (e) => {
+		jpp.elements.menuWrap.classList.toggle('jpp-menu-active');
+		jpp.elements.menuUp.classList.toggle('hidden');
+		jpp.elements.menuDown.classList.toggle('hidden');
+	});
+	jpp.elements.menuDown.addEventListener('click', (e) => {
+		jpp.elements.menuWrap.classList.toggle('jpp-menu-active');
+		jpp.elements.menuUp.classList.toggle('hidden');
+		jpp.elements.menuDown.classList.toggle('hidden');
 	});
 };
 jpp.receiveMessage = (event) => {
@@ -270,13 +218,13 @@ jpp.clickManage = () => {
 					if (b.hasAttribute('style')) b.removeAttribute('style');
 					if (b.hasAttribute('class')) b.removeAttribute('class');
 					Array.from(b.children).forEach((item) => {
-						if (!item.id.includes('jpp-player-') && item.id !== 'sprite-plyr') {
+						if (!item.id.includes('jpp-player-') && !item.id.includes('hpm-') && item.id !== 'sprite-plyr') {
 							b.removeChild(item);
 						}
 					});
 					var frameWrap = document.createElement('div');
 					frameWrap.id = 'jpp-frame-wrap';
-					frameWrap.innerHTML = '<div id="jpp-loader" class="fa-3x"><span class="fas fa-spinner fa-spin"></span></div><iframe id="jpp-frame-iframe" src="'+hrefN.pathname+'" frameborder="0" allowfullscreen></iframe>';
+					frameWrap.innerHTML = '<div id="jpp-loader"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M304 48C304 74.51 282.5 96 256 96C229.5 96 208 74.51 208 48C208 21.49 229.5 0 256 0C282.5 0 304 21.49 304 48zM304 464C304 490.5 282.5 512 256 512C229.5 512 208 490.5 208 464C208 437.5 229.5 416 256 416C282.5 416 304 437.5 304 464zM0 256C0 229.5 21.49 208 48 208C74.51 208 96 229.5 96 256C96 282.5 74.51 304 48 304C21.49 304 0 282.5 0 256zM512 256C512 282.5 490.5 304 464 304C437.5 304 416 282.5 416 256C416 229.5 437.5 208 464 208C490.5 208 512 229.5 512 256zM74.98 437C56.23 418.3 56.23 387.9 74.98 369.1C93.73 350.4 124.1 350.4 142.9 369.1C161.6 387.9 161.6 418.3 142.9 437C124.1 455.8 93.73 455.8 74.98 437V437zM142.9 142.9C124.1 161.6 93.73 161.6 74.98 142.9C56.24 124.1 56.24 93.73 74.98 74.98C93.73 56.23 124.1 56.23 142.9 74.98C161.6 93.73 161.6 124.1 142.9 142.9zM369.1 369.1C387.9 350.4 418.3 350.4 437 369.1C455.8 387.9 455.8 418.3 437 437C418.3 455.8 387.9 455.8 369.1 437C350.4 418.3 350.4 387.9 369.1 369.1V369.1z"/></svg></div><iframe id="jpp-frame-iframe" src="'+hrefN.pathname+'" frameborder="0" allowfullscreen></iframe>';
 					b.append(frameWrap);
 					jpp.elements['iframe'] = document.getElementById('jpp-frame-iframe');
 					jpp.elements['loader'] = document.getElementById('jpp-loader');
@@ -285,7 +233,7 @@ jpp.clickManage = () => {
 					window.addEventListener('message', (event) => {
 						jpp.receiveMessage(event);
 					}, false);
-					window.addEventListener('popstate',function(e){
+					window.addEventListener('popstate', (e) => {
 						jpp.elements.iframe.setAttribute('src', history.state.previous);
 					});
 				}
@@ -301,12 +249,12 @@ jpp.parentFrame = () => {
 	jpp.clickManage();
 };
 jpp.childFrame = () => {
-	window.addEventListener('load',function(){
+	window.addEventListener('load', () => {
 		window.parent.postMessage({'message': 'iframeload','payload': {'path':window.location.pathname,'title':document.title}, 'sender': 'jpp'},'*');
 	});
 	var aHref = document.querySelectorAll('a');
 	Array.from(aHref).forEach((link) => {
-		link.addEventListener('click', function(e){
+		link.addEventListener('click', (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 			if ( ( link.hostname && link.hostname.replace('www.','') !== location.hostname.replace('www.','') ) || link.pathname.includes('/wp-admin/') ) {
@@ -323,7 +271,6 @@ jpp.childFrame = () => {
 	TODO: Add code to popup menu and select playlist submenu on add
 	TODO: Add options for podcasts and playlist entries (play now, remove, etc)
 */
-jpp.loadStyles();
 window.addEventListener('DOMContentLoaded', (event) => {
 	if ( !jpp.inIframe() ) {
 		jpp.parentFrame();
