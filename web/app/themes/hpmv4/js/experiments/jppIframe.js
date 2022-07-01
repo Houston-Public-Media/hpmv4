@@ -87,6 +87,23 @@ jpp.loadPlyr = () => {
 		jpp.elements.menuWrap.classList.remove('jpp-now-play');
 		jpp.elements.nowPlaying.innerHTML = 'Now Playing: Nothing yet...';
 	});
+	/**
+	 * Figure out how to populate hpm.stationLoad with radio stations and update
+	 */
+	if ( typeof hpm.stationLoad.news !== object ) {
+		hpm.stationLoad['news'] = { 'next': false, 'obj': {} };
+		hpm.stationLoad['classical'] = { 'next': false, 'obj': {} };
+		hpm.stationLoad['mixtape'] = { 'next': false, 'obj': {} };
+	}
+	for (let st in hpm.stationLoad) {
+		hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				hpm.npUpdateData(data,st);
+			}
+		});
+	}
 };
 jpp.playerCreate = () => {
 	jpp.elements['streams'] = document.getElementById('jpp-streams');

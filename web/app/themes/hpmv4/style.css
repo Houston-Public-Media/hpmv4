@@ -1740,6 +1740,7 @@ body.nav-active-menu #top-mobile-close {
 	position: fixed;
 	left: 0;
 	top: 0;
+	z-index: 9999;
 }
 @media screen and (max-width: 20rem) {
 	#masthead section button {

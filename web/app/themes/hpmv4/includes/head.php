@@ -15,8 +15,8 @@ function hpm_site_header() { ?>
 								<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
 							</div>
 						</div>
-						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" data-dialog="480:855"><?php echo hpm_svg_output( 'microphone' ); ?>Listen</button></div>
-						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" data-dialog="820:850"><?php echo hpm_svg_output( 'tv' ); ?>Watch</button></div>
+						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" type="button" data-dialog="480:855"><?php echo hpm_svg_output( 'microphone' ); ?>Listen</button></div>
+						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" type="button" data-dialog="820:850"><?php echo hpm_svg_output( 'tv' ); ?>Watch</button></div>
 					</section>
 					<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>
 					<div tabindex="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div>

@@ -1,11 +1,14 @@
+body {
+	--persist-unit: 4rem;
+}
 #jpp-player-persist {
+	--plyr-control-icon-size: calc(var(--persist-unit)/2);
 	width: 100%;
 	bottom: 0;
 	position: fixed;
-	height: 5rem;
+	height: var(--persist-unit);
 	z-index: 20;
 	background-color: white;
-	--plyr-control-icon-size: 2.75rem;
 	border-top: 1px solid #808080;
 }
 #jpp-player-persist #jpp-main {
@@ -14,28 +17,29 @@
 	justify-content: center;
 	align-content: center;
 	justify-items: center;
-	grid-template-columns: 5rem 1fr 5rem;
+	grid-template-columns: var(--persist-unit) 1fr var(--persist-unit);
 	z-index: 40;
 	background-color: white;
 }
 #jpp-player-persist .plyr {
-	min-width: 5rem;
+	min-width: auto;
 }
 #jpp-button-wrap {
-	width: 5rem;
-	height: 5rem;
+	width: var(--persist-unit);
+	height: var(--persist-unit);
 	border-left: 1px solid #808080;
 }
 #jpp-button-wrap button {
-	width: 5rem;
-	height: 5rem;
-	padding: 0.5rem;
+	width: var(--persist-unit);
+	height: var(--persist-unit);
+	padding: 1rem;
 	outline: none;
 	border: 0;
 }
 #jpp-now-playing {
 	font-weight: 500;
-	font-size: 1.125rem;
+	font-size: calc(var(--persist-unit)/4.25);
+	padding: 0.5rem;
 }
 #jpp-player-wrap {
 	border-right: 1px solid #808080;
@@ -58,7 +62,7 @@
 }
 #jpp-menu-wrap.jpp-menu-active,
 #jpp-menu-wrap.jpp-menu-active.jpp-now-play {
-	bottom: 5rem;
+	bottom: var(--persist-unit);
 }
 #jpp-menu-wrap button {
 	font-weight: 500;
@@ -121,11 +125,11 @@
 	color: white;
 }
 #jpp-frame-wrap #jpp-loader.hidden {
-	display: none;
+	/* display: none; */
 }
 #jpp-frame-wrap #jpp-loader svg {
-	height: 5rem;
-	width: 5rem;
+	height: var(--persist-unit);
+	width: var(--persist-unit);
 	animation-name: fa-spin;
 	animation-duration: 2s;
 	animation-iteration-count: infinite;
@@ -152,4 +156,9 @@ body.persist-child-present::-webkit-scrollbar {
 }
 #page {
 	padding-bottom: 3.5em;
+}
+@media screen and (min-width: 34em) {
+	#jpp-player-persist {
+		--persist-unit: 5rem;
+	}
 }

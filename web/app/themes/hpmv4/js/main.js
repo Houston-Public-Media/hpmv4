@@ -50,7 +50,6 @@ hpm.getJSON = function(url, callback) {
 	};
 	xhr.send();
 };
-var eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
 
 hpm.navHandlers = () => {
 	var siteNav = document.querySelector('nav#site-navigation');
@@ -65,10 +64,10 @@ hpm.navHandlers = () => {
 		siteNav.addEventListener('focusout', () => {
 			document.body.classList.remove('nav-active-menu');
 		});
-		topMenu.addEventListener(eventType, () => {
+		topMenu.addEventListener('click', () => {
 			document.body.classList.add('nav-active-menu');
 		});
-		closeMenu.addEventListener(eventType, () => {
+		closeMenu.addEventListener('click', () => {
 			document.body.classList.remove('nav-active-menu');
 		});
 		if ( menuWithChildren !== null ) {
@@ -82,10 +81,10 @@ hpm.navHandlers = () => {
 						menuC.classList.remove('nav-active');
 					}
 				});
-				menuC.addEventListener(eventType, () => {
+				menuC.addEventListener('click', () => {
 					menuC.classList.toggle('nav-active');
 				});
-				menuC.firstElementChild.addEventListener(eventType, (event) => {
+				menuC.firstElementChild.addEventListener('click', (event) => {
 					if (window.innerWidth < 1024) {
 						if (event.currentTarget.getAttribute('aria-expanded') == 'true' ) {
 							event.preventDefault();
@@ -173,7 +172,7 @@ hpm.videoHandlers = () => {
 hpm.shareHandlers = () => {
 	var popOut = document.querySelectorAll(".social-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
 	Array.from(popOut).forEach((pop) => {
-		pop.addEventListener(eventType, (e) =>{
+		pop.addEventListener('click', (e) =>{
 			var attr = pop.getAttribute('data-dialog');
 			var hrefCheck = pop.getAttribute('data-href');
 			if ( hrefCheck.includes('mailto:') ) {
@@ -290,7 +289,7 @@ hpm.npSearch = () => {
 	if ( document.body.classList.contains('page-template-page-listen') ) {
 		hpm.npDataDownload();
 	}
-	timeOuts.push(setInterval('hpm.npDataDownload()',60000));
+	timeOuts.push(setTimeout('hpm.npDataDownload()',60000));
 };
 hpm.npDataDownload = () => {
 	for (let st in hpm.stationLoad) {
