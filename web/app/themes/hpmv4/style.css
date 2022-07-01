@@ -3709,7 +3709,7 @@ h2.ss-join {
 }
 
 .old-article-banner {
-	background-color: yellow;
+	background-color: var(--accent-yellow-1);
 	font-weight: 700;
 	font-size: 1.125rem;
 	padding: 0.5rem 1rem;
@@ -3723,8 +3723,8 @@ h2.ss-join {
 }
 .old-article-banner::after {
 	border: 1.25rem solid transparent;
-	border-left-color: yellow;
-	border-top-color: yellow;
+	border-left-color: var(--accent-yellow-1);
+	border-top-color: var(--accent-yellow-1);
 	width: 0;
 	height: 0;
 	content: '';
