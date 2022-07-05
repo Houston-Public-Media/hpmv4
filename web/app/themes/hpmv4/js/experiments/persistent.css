@@ -2,7 +2,7 @@ body {
 	--persist-unit: 4rem;
 }
 #jpp-player-persist {
-	--plyr-control-icon-size: calc(var(--persist-unit)/2);
+	--plyr-control-icon-size: 2rem;
 	width: 100%;
 	bottom: 0;
 	position: fixed;
@@ -16,7 +16,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	align-content: center;
-	justify-items: center;
+	/* justify-items: center; */
 	grid-template-columns: var(--persist-unit) 1fr var(--persist-unit);
 	z-index: 40;
 	background-color: white;
@@ -38,8 +38,24 @@ body {
 }
 #jpp-now-playing {
 	font-weight: 500;
-	font-size: calc(var(--persist-unit)/4.25);
 	padding: 0.5rem;
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 0;
+}
+#jpp-now-playing :is(h3,p) {
+	margin: 0;
+}
+#jpp-now-playing p {
+	text-transform: capitalize;
+	font-size: 0.75rem;
+}
+#jpp-now-playing h3 {
+	font-style: italic;
+	font-size: 0.9rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 #jpp-player-wrap {
 	border-right: 1px solid #808080;
@@ -125,26 +141,19 @@ body {
 	color: white;
 }
 #jpp-frame-wrap #jpp-loader.hidden {
-	/* display: none; */
+	display: none;
 }
 #jpp-frame-wrap #jpp-loader svg {
 	height: var(--persist-unit);
 	width: var(--persist-unit);
-	animation-name: fa-spin;
+	animation-name: spin;
 	animation-duration: 2s;
 	animation-iteration-count: infinite;
 	animation-timing-function: linear;
 }
-@keyframes fa-spin {
-	0% {
-		-webkit-transform: rotate(0deg);
-		transform: rotate(0deg)
-	}
-
-	to {
-		-webkit-transform: rotate(1turn);
-		transform: rotate(1turn)
-	}
+@keyframes spin {
+	0% { transform: rotate(0deg) }
+	to { transform: rotate(1turn) }
 }
 body.persist-child-present {
 	-ms-overflow-style: none;
@@ -154,11 +163,18 @@ body.persist-child-present {
 body.persist-child-present::-webkit-scrollbar {
 	display: none;
 }
-#page {
-	padding-bottom: 3.5em;
+body {
+	padding-bottom: var(--persist-unit);
 }
 @media screen and (min-width: 34em) {
 	#jpp-player-persist {
 		--persist-unit: 5rem;
+		--plyr-control-icon-size: 2.75rem;
+	}
+	#jpp-now-playing p {
+		font-size: 0.9rem;
+	}
+	#jpp-now-playing h3 {
+		font-size: 1rem;
 	}
 }

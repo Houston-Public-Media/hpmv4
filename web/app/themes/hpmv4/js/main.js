@@ -250,41 +250,61 @@ hpm.audioPlayers = () => {
 hpm.stationIds = {
 	'news': {
 		'feed': 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json&show_song=true',
-		'nowPlaying': {}
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	},
 	'classical': {
 		'feed': 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
-		'nowPlaying': {}
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	},
 	'mixtape': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
-		'nowPlaying': {}
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	},
 	'tv81': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
-		'nowPlaying': {}
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	},
 	'tv82': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
-		'nowPlaying': {}
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	},
 	'tv83': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-		'nowPlaying': {}
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	},
 	'tv84': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
-		'nowPlaying': {}
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	}
 };
-hpm.stationLoad = {};
 hpm.npSearch = () => {
-	hpm.stationLoad = {};
 	var nowPlay = document.querySelectorAll('.hpm-nowplay');
 	Array.from(nowPlay).forEach((np) => {
 		var station = np.getAttribute('data-station');
-		var next = np.getAttribute('data-upnext');
-		hpm.stationLoad[ station ] = { 'next': next, 'obj': np };
+		hpm.stationIds[ station ].refresh = true;
+		hpm.stationIds[ station ].next = np.getAttribute('data-upnext');
+		hpm.stationIds[ station ].obj = np;
 	});
 	if ( document.body.classList.contains('page-template-page-listen') ) {
 		hpm.npDataDownload();
@@ -292,14 +312,16 @@ hpm.npSearch = () => {
 	timeOuts.push(setTimeout('hpm.npDataDownload()',60000));
 };
 hpm.npDataDownload = () => {
-	for (let st in hpm.stationLoad) {
-		hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				hpm.npUpdateData(data,st);
-			}
-		});
+	for (let st in hpm.stationIds) {
+		if ( hpm.stationIds[st].refresh ) {
+			hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					hpm.npUpdateData(data,st);
+				}
+			});
+		}
 	}
 };
 hpm.npUpdateData = (data, station) => {
@@ -315,9 +337,7 @@ hpm.npUpdateData = (data, station) => {
 };
 document.addEventListener('hpm:npUpdate', (event) => {
 	var station = event['detail']['updated'];
-	if ( typeof hpm.stationLoad[ station ] == 'object' ) {
-		hpm.npUpdateHtml(hpm.stationLoad[ station ]['obj'], station, hpm.stationLoad[ station ]['next']);
-	}
+	hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
 });
 hpm.npUpdateHtml = (object,station,next) => {
 	var output = '';
@@ -357,35 +377,14 @@ hpm.npUpdateHtml = (object,station,next) => {
 			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].fullstart)+': '+data.nextUp[0].program.name+'</li></ul>';
 		}
 	}
-	object.innerHTML = output;
-};
-
-hpm.creditContainer = () => {
-	var setupOverlay = (overlay,target) => {
-		var contain = document.createElement('div');
-		contain.classList.add('credits-container');
-		Array.from(target.classList).forEach((tCl) => {
-			contain.classList.add(tCl);
-		});
-		var parent = target.parentNode;
-		contain.innerHTML = target.outerHTML + overlay.outerHTML;
-		if (parent.nodeName == 'a') {
-			parent.outerHTML = contain.outerHTML;
-		} else {
-			target.outerHTML = contain.outerHTML;
+	if (object == 'jpp') {
+		if ( station == jpp.prefStream ) {
+			jpp.elements.nowPlaying.innerHTML =  '<p>Houston Public Media '+station+'</p>'+output;
 		}
-	};
-	var credits = document.querySelectorAll('.credits-overlay');
-	var targets = [];
-	Array.from(credits).forEach((cred) => {
-		targets.push( {'target': 'img' + cred.getAttribute('data-target'), 'overlay': cred } );
-	});
-	targets.forEach((target) => {
-		var t = document.querySelector(target.target);
-		if (t !== null) {
-			setupOverlay( target.overlay, t );
-		}
-	});
+	}
+	if (object !== 'jpp') {
+		object.innerHTML = output;
+	}
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -396,5 +395,4 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
-	hpm.creditContainer();
 });

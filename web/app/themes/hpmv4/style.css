@@ -2631,6 +2631,9 @@ body:is(.single):not(.single-staff,.author) #main {
 	display: inline-block;
 	padding-right: 1em;
 }
+.single #main article.post .entry-footer {
+	margin-top: 1rem;
+}
 aside > * + * {
 	margin-top: 1rem;
 }
@@ -2769,14 +2772,15 @@ article.card .entry-summary {
 	padding: 0 !important;
 }
 .credits-container .credits-overlay {
-	margin: 0;
-	padding: 0 0 0.25em 0;
+	margin: 0 !important;
+	padding: 0.25rem;
 	background-color: transparent;
 	text-align: right;
 	box-sizing: border-box;
 	display: block;
 	overflow: hidden;
-	font: italic 0.75em/1.125em var(--hpm-font-main);
+	font-style: italic;
+	font-size: 0.75rem;
 	color: #404144;
 	max-width: 100% !important;
 }

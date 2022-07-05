@@ -41,7 +41,7 @@ function hpm_scripts() {
 
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], $versions['analytics'], false );
 
-	//wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main-mod.js', [], time(), true );
+	//wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main.js', [], time(), true );
 
 	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], $versions['js'], true );
 	wp_register_script( 'hpm-splide', 'https://cdn.hpm.io/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
@@ -921,4 +921,25 @@ function hpm_pub_time_banner( $time_string ) {
 		$output = '<div class="old-article-banner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512zM232 256C232 264 236 271.5 242.7 275.1L338.7 339.1C349.7 347.3 364.6 344.3 371.1 333.3C379.3 322.3 376.3 307.4 365.3 300L280 243.2V120C280 106.7 269.3 96 255.1 96C242.7 96 231.1 106.7 231.1 120L232 256z"/></svg> This article is over ' . floor( $diff / 31536000 ) . ' years old</div>';
 	endif;
 	return $output;
+}
+
+add_filter( 'the_content', 'hpm_image_credits' , 1000000 );
+function hpm_image_credits( $content ) {
+	preg_match_all( '/<div class="credits-overlay" data-target="\.(wp-image-[0-9]{1,6})">(.+)<\/div>/', $content, $matches );
+	if ( !empty( $matches[0] ) ) :
+		foreach( $matches[1] as $k => $v ) :
+			preg_match( '/(<img.+'.$v.'.+ \/>)/', $content, $match );
+			if ( !empty( $match[0] ) ) :
+				preg_match( '/class="([a-zA-Z\-0-9 ]+)"/', $match[0], $class );
+				$credit = $matches[0][$k];
+				if ( preg_match( '/<a href="" title="">/', $credit ) ) :
+					$credit = str_replace( [ '<a href="" title="">', '</a>' ], [ '', '' ], $credit );
+				endif;
+				$replace = '<div class="credits-container ' . ( !empty( $class ) ? $class[1] : $v ) . '">' . $match[0] . $credit . '</div>';
+				$content = str_replace( $matches[0][$k], '', $content );
+				$content = str_replace( $match[0], $replace, $content );
+			endif;
+		endforeach;
+	endif;
+	return $content;
 }

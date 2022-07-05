@@ -39,7 +39,8 @@ var jpp = {
 	'assetsUrl': 'https://cdn.hpm.io/assets/',
 	'playlist': [],
 	'podcasts': [],
-	'elements': {}
+	'elements': {},
+	'prefStream': 'news'
 };
 jpp.inIframe = () => {
 	try {
@@ -72,37 +73,33 @@ jpp.loadPlyr = () => {
 	} else {
 		prefStream = getCookie('prefStream');
 	}
+	jpp.prefStream = prefStream;
 	jpp.player = player;
 	jpp.player.source = jpp.streams[prefStream];
 	document.getElementById('jpp-button-'+prefStream).classList.add('jpp-button-active');
-	jpp.player.on('playing', (event) => {
-		jpp.elements.menuWrap.classList.add('jpp-now-play');
-		jpp.elements.nowPlaying.innerHTML = 'Now Playing: '+ jpp.player.config.title;
-	});
 	jpp.player.on('play', (event) => {
-		jpp.elements.menuWrap.classList.add('jpp-now-play');
-		jpp.elements.nowPlaying.innerHTML = 'Now Playing: '+ jpp.player.config.title;
+		hpm.npUpdateHtml(hpm.stationIds[ prefStream ]['obj'], prefStream, hpm.stationIds[ prefStream ]['next']);
 	});
 	jpp.player.on('ended', (event) => {
-		jpp.elements.menuWrap.classList.remove('jpp-now-play');
 		jpp.elements.nowPlaying.innerHTML = 'Now Playing: Nothing yet...';
 	});
-	/**
-	 * Figure out how to populate hpm.stationLoad with radio stations and update
-	 */
-	if ( typeof hpm.stationLoad.news !== object ) {
-		hpm.stationLoad['news'] = { 'next': false, 'obj': {} };
-		hpm.stationLoad['classical'] = { 'next': false, 'obj': {} };
-		hpm.stationLoad['mixtape'] = { 'next': false, 'obj': {} };
-	}
-	for (let st in hpm.stationLoad) {
-		hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
-			if (err !== null) {
-				console.log(err);
-			} else {
-				hpm.npUpdateData(data,st);
-			}
-		});
+
+	hpm.stationIds.news.refresh = true;
+	hpm.stationIds.news.obj = 'jpp';
+	hpm.stationIds.classical.refresh = true;
+	hpm.stationIds.classical.obj = 'jpp';
+	hpm.stationIds.mixtape.refresh = true;
+	hpm.stationIds.mixtape.obj = 'jpp';
+	for (let st in hpm.stationIds) {
+		if ( hpm.stationIds[st].refresh ) {
+			hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					hpm.npUpdateData(data,st);
+				}
+			});
+		}
 	}
 };
 jpp.playerCreate = () => {
@@ -164,6 +161,7 @@ jpp.buttonManage = () => {
 				if (audio == null) {
 					jpp.player.source = jpp['streams'][station];
 					setCookie('prefStream',station,365*24);
+					jpp.prefStream = station;
 				} else {
 					jpp.player.source = {
 						'type': 'audio',
@@ -175,6 +173,7 @@ jpp.buttonManage = () => {
 					};
 				}
 				jpp.player.play();
+				hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
 			} else if (section !== null) {
 				Array.from(document.querySelectorAll('#jpp-submenus aside')).forEach((submenu) => {
 					submenu.classList.remove('jpp-section-active');
