@@ -16,8 +16,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	align-content: center;
-	/* justify-items: center; */
-	grid-template-columns: var(--persist-unit) 1fr var(--persist-unit);
+	grid-template-columns: var(--persist-unit) calc(100vw - (var(--persist-unit) * 2)) var(--persist-unit);
 	z-index: 40;
 	background-color: white;
 }
@@ -69,12 +68,14 @@ body {
 	right: 0;
 	transition: bottom .2s ease-out;
 	overflow-y: scroll;
+	overscroll-behavior: none;
 	z-index: -1;
 	display: flex;
-	flex-flow: row-reverse nowrap;
+	flex-flow: column nowrap;
 	border-top: 1px solid #808080;
 	border-bottom: 1px solid #808080;
-	background-color: #f5f5f5;
+	background-color: white;
+	box-shadow: 0 0 10px #000;
 }
 #jpp-menu-wrap.jpp-menu-active,
 #jpp-menu-wrap.jpp-menu-active.jpp-now-play {
@@ -91,20 +92,59 @@ body {
 	outline: 0;
 	border: 0;
 	transition: opacity 0.2s ease-out;
-	border-bottom: 1px solid #808080;
+	border: 1px solid #808080;
 }
 #jpp-menu {
-	width: 35%;
+	width: 100%;
 	display: flex;
-	flex-flow: column nowrap;
+	flex-flow: row nowrap;
+	padding: 0;
+	gap: 0;
 }
-#jpp-menu button {
-	border-left: 1px solid #808080;
-	height: 50%;
-	position: relative;
+#jpp-menu-wrap button.jpp-button-active {
+	background-color: var(--main-background);
+	color: var(--main-blue);
+	border: 1px solid var(--accent-black-2);
+	border-bottom-color: transparent;
 }
-#jpp-menu button:nth-last-child(1) {
-	border-bottom: 0;
+#jpp-menu-wrap :is(#jpp-streams,#jpp-podcasts) button.jpp-button-active {
+	background-color: var(--main-red);
+	color: white;
+	border-bottom-color: var(--accent-black-2);
+}
+#jpp-menu-wrap details + details {
+	margin: 0;
+}
+#jpp-menu-wrap details button {
+    padding: 0.5rem
+}
+#jpp-menu-wrap details > summary {
+	font-size: 1.125em;
+}
+#jpp-menu-wrap details > * + * {
+    margin-top: 0.5rem;
+}
+#jpp-menu-wrap details > p > a {
+    color: white;
+    background-color: var(--main-blue);
+    text-align: center;
+    padding: 0.5rem;
+	display: block;
+}
+#jpp-submenus {
+	padding: 0.5rem;
+}
+#jpp-submenus aside {
+	display: none;
+	gap: 0.5rem;
+	margin: 0 auto;
+	max-width: 100%;
+	width: 100%;
+	float: none;
+	padding: 0;
+}
+#jpp-submenus aside.jpp-section-active {
+	display: grid;
 }
 #jpp-frame-wrap {
 	position: fixed;
@@ -166,6 +206,7 @@ body.persist-child-present::-webkit-scrollbar {
 body {
 	padding-bottom: var(--persist-unit);
 }
+
 @media screen and (min-width: 34em) {
 	#jpp-player-persist {
 		--persist-unit: 5rem;
@@ -176,5 +217,16 @@ body {
 	}
 	#jpp-now-playing h3 {
 		font-size: 1rem;
+	}
+	#jpp-submenus aside {
+		max-width: 75%;
+	}
+}
+@media screen and (min-width: 52.5em) {
+	#jpp-menu-wrap {
+		width: 40em;
+		right: 16px;
+		left: calc(100vw - 40em - 16px);
+		border: 1px solid var(--accent-black-2);
 	}
 }

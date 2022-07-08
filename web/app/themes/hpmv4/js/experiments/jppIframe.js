@@ -37,7 +37,6 @@ var jpp = {
 	},
 	'podcastList': 'https://www.houstonpublicmedia.org/wp-json/hpm-podcast/v1/list',
 	'assetsUrl': 'https://cdn.hpm.io/assets/',
-	'playlist': [],
 	'podcasts': [],
 	'elements': {},
 	'prefStream': 'news'
@@ -77,9 +76,9 @@ jpp.loadPlyr = () => {
 	jpp.player = player;
 	jpp.player.source = jpp.streams[prefStream];
 	document.getElementById('jpp-button-'+prefStream).classList.add('jpp-button-active');
-	jpp.player.on('play', (event) => {
-		hpm.npUpdateHtml(hpm.stationIds[ prefStream ]['obj'], prefStream, hpm.stationIds[ prefStream ]['next']);
-	});
+	// jpp.player.on('play', (event) => {
+	// 	hpm.npUpdateHtml(hpm.stationIds[ prefStream ]['obj'], prefStream, hpm.stationIds[ prefStream ]['next']);
+	// });
 	jpp.player.on('ended', (event) => {
 		jpp.elements.nowPlaying.innerHTML = 'Now Playing: Nothing yet...';
 	});
@@ -105,7 +104,6 @@ jpp.loadPlyr = () => {
 jpp.playerCreate = () => {
 	jpp.elements['streams'] = document.getElementById('jpp-streams');
 	jpp.elements['podcasts'] = document.getElementById('jpp-podcasts');
-	jpp.elements['playlist'] = document.getElementById('jpp-playlist');
 	jpp.elements['menu'] = document.getElementById('jpp-menu');
 	jpp.elements['menuUp'] = document.getElementById('jpp-menu-up');
 	jpp.elements['menuDown'] = document.getElementById('jpp-menu-down');
@@ -130,14 +128,30 @@ jpp.playerCreate = () => {
 					}
 				});
 			});
-			jpp.podListUpdate();
+			jpp.getJSON( 'https://hpm-recast.streamguys1.com/api/sgrecast/podcasts/5/5e152475a85bb?limit=1&format=json', (err, data) => {
+				if (err !== null) {
+					console.log(err);
+				} else {
+					jpp.podcasts.push({
+						'name': data.channel.title,
+						'slug': 'hpm-newscasts',
+						'feed': 'https://hpm-recast.streamguys1.com/api/sgrecast/podcasts/5/5e152475a85bb?format=json',
+						'page': data.channel.link,
+						'episode': {
+							'audio': data.channel.items[0].url,
+							'title': data.channel.items[0].title
+						}
+					});
+					jpp.podListUpdate();
+				}
+			});
 		}
 	});
 };
 jpp.podListUpdate = () => {
 	var list = '';
 	jpp.podcasts.forEach((item) => {
-		list += '<button data-station="'+item.slug+'" data-audio="'+ item.episode.audio +'">' + item.name + '</button>';
+		list += '<details><summary>' + item.name + '</summary><button data-station="'+item.slug+'" data-title="'+item.episode.title+'" data-audio="'+ item.episode.audio +'">Latest Episode</button><p><a href="' + item.page + '">Podcast Archive</a></p></details>';
 	});
 	jpp.elements.podcasts.innerHTML = list;
 	jpp.buttonManage();
@@ -147,21 +161,31 @@ jpp.buttonManage = () => {
 	Array.from(menuButtons).forEach((item) => {
 		item.addEventListener('click', () => {
 			if (item.classList.contains('jpp-button-active')) {
-				return false;
+				jpp.player.play();
 			}
-			Array.from(item.parentNode.children).forEach((button) => {
-				button.classList.remove('jpp-button-active');
-			});
-			item.classList.add('jpp-button-active');
 			var station = item.getAttribute('data-station');
 			var section = item.getAttribute('data-section');
 			if (station !== null) {
+				Array.from(jpp.elements.podcasts.children).forEach((button) => {
+					Array.from(button.children).forEach((child) => {
+						child.classList.remove('jpp-button-active');
+					});
+				});
+				Array.from(jpp.elements.streams.children).forEach((button) => {
+					button.classList.remove('jpp-button-active');
+				});
+				item.classList.add('jpp-button-active');
 				var audio = item.getAttribute('data-audio');
 				jpp.player.stop();
 				if (audio == null) {
 					jpp.player.source = jpp['streams'][station];
 					setCookie('prefStream',station,365*24);
 					jpp.prefStream = station;
+					hpm.stationIds.news.refresh = true;
+					hpm.stationIds.classical.refresh = true;
+					hpm.stationIds.mixtape.refresh = true;
+					timeOuts.push(setInterval('hpm.npDataDownload()',60000));
+					hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
 				} else {
 					jpp.player.source = {
 						'type': 'audio',
@@ -171,13 +195,27 @@ jpp.buttonManage = () => {
 							'type': 'audio/mpeg'
 						}]
 					};
+					hpm.stationIds.news.refresh = false;
+					hpm.stationIds.classical.refresh = false;
+					hpm.stationIds.mixtape.refresh = false;
+					if ( timeOuts.length > 0 ) {
+						Array.from(timeOuts).forEach((item) => {
+							clearTimeout(item);
+						});
+					}
+					var stationString = 'Podcast||' + item.innerText + '||' + item.getAttribute('data-title');
+					hpm.npUpdateHtml('jpp', stationString, 'false');
 				}
 				jpp.player.play();
-				hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
+
 			} else if (section !== null) {
 				Array.from(document.querySelectorAll('#jpp-submenus aside')).forEach((submenu) => {
 					submenu.classList.remove('jpp-section-active');
 				});
+				Array.from(item.parentNode.children).forEach((button) => {
+					button.classList.remove('jpp-button-active');
+				});
+				item.classList.add('jpp-button-active');
 				document.querySelector('aside#jpp-'+section).classList.add('jpp-section-active');
 			}
 		});
