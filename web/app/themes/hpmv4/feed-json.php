@@ -56,7 +56,7 @@ else :
 		$title = '';
 
 		// Determine feed types (authors, categories, tags, etc.) and fill out feed info accordingly
-		$obj = $wp_query->queried_object;
+		$obj = $wp_query->get_queried_object();
 		if ( !empty( $obj->data ) && $obj->data->type == 'wpuser' ) :
 			$title = 'Author feed for '.$obj->data->display_name.' | ';
 			$author_id = $obj->data->ID;
@@ -110,7 +110,7 @@ else :
 				$title = ucwords( str_replace( '_', ' ', $obj->taxonomy ) ).": ".ucwords( $obj->name ).' | ';
 			endif;
 		endif;
-		
+
 		$query_array = $wp_query->query;
 
 		// Make sure query args are always in the same order

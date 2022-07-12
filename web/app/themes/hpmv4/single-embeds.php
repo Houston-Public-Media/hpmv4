@@ -11,7 +11,7 @@ Template Post Type: embeds
  * @since HPMv4 4.0
  */
 global $wp_query;
-$ID = $wp_query->queried_object_id;
+$ID = $wp_query->get_queried_object_id();
 $hpm_embed = get_post_meta( $ID, 'hpm_embed', true );
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" dir="ltr" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">

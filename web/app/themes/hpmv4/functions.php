@@ -52,8 +52,11 @@ function hpm_scripts() {
 	wp_deregister_script( 'better-image-credits' );
 	wp_deregister_style( 'better-image-credits' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
-	wp_deregister_style( 'wp-block-library' );
+	wp_dequeue_style( 'wp-block-library' );
+	wp_dequeue_style( 'wp-block-library-theme' );
+	wp_dequeue_style( 'wc-block-style' );
 	wp_deregister_style( 'wpforms-gutenberg-form-selector' );
+	wp_deregister_style( 'global-styles' );
 }
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 

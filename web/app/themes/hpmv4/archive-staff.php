@@ -95,16 +95,17 @@ get_header(); ?>
 	</style>
 	<section id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?php if ( have_posts() ) : ?>
+		<?php if ( have_posts() ) :
+			$query_obj = $wp_query->get_queried_object(); ?>
 
 			<header class="page-header">
-				<h1 class="page-title"><?php echo ( is_tax() ? 'Staff: ' . $wp_query->queried_object->name  : 'Staff Directory' ) ?></h1>
+				<h1 class="page-title"><?php echo ( is_tax() ? 'Staff: ' . $query_obj->name  : 'Staff Directory' ) ?></h1>
 				<?php wp_dropdown_categories([
 						'show_option_all'	=> __("Select Category"),
 						'taxonomy'			=> 'staff_category',
 						'name'				=> 'hpm-staff-cat',
 						'orderby'			=> 'name',
-						'selected'			=> ( is_tax() ? $wp_query->queried_object->slug : '' ),
+						'selected'			=> ( is_tax() ? $query_obj->slug : '' ),
 						'hierarchical'		=> true,
 						'depth'				=> 3,
 						'show_count'		=> false,
