@@ -1238,7 +1238,7 @@ class HPM_Podcasts {
 	public function add_feed_head() {
 		global $wp_query;
 		if ( !is_home() && !is_404() && get_post_type() === 'shows' ) :
-			$ID = $wp_query->queried_object_id;
+			$ID = $wp_query->get_queried_object_id();
 			$show_meta = get_post_meta( $ID, 'hpm_show_meta', true );
 			if ( !empty( $show_meta['podcast'] ) ) : ?>
 		<link rel="alternate" type="application/rss+xml" title="<?php echo get_the_title( $ID ); ?> Podcast Feed" href="<?php echo get_the_permalink( $show_meta['podcast'] ); ?>" />

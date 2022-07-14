@@ -70,11 +70,13 @@ if ( typeof jpp !== 'object') {
 		jpp.player = player;
 		jpp.player.source = jpp.streams[prefStream];
 		document.getElementById('jpp-button-'+prefStream).classList.add('jpp-button-active');
-		// jpp.player.on('play', (event) => {
-		// 	hpm.npUpdateHtml(hpm.stationIds[ prefStream ]['obj'], prefStream, hpm.stationIds[ prefStream ]['next']);
-		// });
 		jpp.player.on('ended', (event) => {
-			jpp.elements.nowPlaying.innerHTML = 'Now Playing: Nothing yet...';
+			hpm.npUpdateHtml('jpp', jpp.prefStream, 'false');
+			hpm.stationIds.news.refresh = true;
+			hpm.stationIds.classical.refresh = true;
+			hpm.stationIds.mixtape.refresh = true;
+			jpp.player.source = jpp['streams'][jpp.prefStream];
+			jpp.player.play();
 		});
 
 		hpm.stationIds.news.refresh = true;

@@ -1,5 +1,5 @@
 <?php
-	$curauth = $wp_query->queried_object;
+	$curauth = $wp_query->get_queried_object();
 	if ( is_a( $curauth, 'wp_user' ) ) :
 		$author_check = new WP_Query( [
 			'post_type' => 'staff',

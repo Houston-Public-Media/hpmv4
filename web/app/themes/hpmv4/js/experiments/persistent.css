@@ -208,10 +208,6 @@ body {
 }
 
 @media screen and (min-width: 34em) {
-	#jpp-player-persist {
-		--persist-unit: 5rem;
-		--plyr-control-icon-size: 2.75rem;
-	}
 	#jpp-now-playing p {
 		font-size: 0.9rem;
 	}
@@ -228,5 +224,8 @@ body {
 		right: 16px;
 		left: calc(100vw - 40em - 16px);
 		border: 1px solid var(--accent-black-2);
+	}
+	#jpp-player-persist #jpp-main {
+		grid-template-columns: var(--persist-unit) 1fr var(--persist-unit);
 	}
 }
