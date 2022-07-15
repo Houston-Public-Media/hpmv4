@@ -191,14 +191,19 @@ add_action( 'wp_footer', 'hpm_chartbeat', 100 );
  */
 /*
 add_action( 'wp_head', function() {
-	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' ) :
-		//echo '<script type="module"> import hotwiredTurbo from \'https://cdn.skypack.dev/@hotwired/turbo\'; </script>';
-		wp_enqueue_script( 'hpm-jpp', get_template_directory_uri().'/js/experiments/jppIframe.js', [ 'hpm-plyr' ], date('Y-m-d-H') );
+	global $wp_query;
+	$queried_object = $wp_query->get_queried_object_id();
+	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' && $queried_object !== 61263 ) :
+		echo '<script type="module"> import hotwiredTurbo from \'https://cdn.skypack.dev/@hotwired/turbo\'; </script>';
+		wp_enqueue_script( 'hpm-jpp', get_template_directory_uri().'/js/experiments/jppTurbo.js', [ 'hpm-plyr' ], date('Y-m-d-H'), true );
+		//wp_enqueue_script( 'hpm-jpp', get_template_directory_uri().'/js/experiments/jppIframe.js', [ 'hpm-plyr' ], date('Y-m-d-H') );
 		wp_enqueue_style( 'hpm-persistent', get_template_directory_uri().'/js/experiments/persistent.css', [], date('Y-m-d-H') );
 	endif;
 }, 102 );
 function hpm_persistent_player() {
-	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' ) : ?>
+	global $wp_query;
+	$queried_object = $wp_query->get_queried_object_id();
+	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' && $queried_object !== 61263 ) : ?>
 		<div id="jpp-player-persist" data-turbo-permanent>
 			<div id="jpp-main">
 				<div id="jpp-player-wrap"><audio id="jpp-player" playsinline preload="none"></audio></div>

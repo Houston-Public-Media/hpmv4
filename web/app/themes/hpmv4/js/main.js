@@ -21,13 +21,13 @@ if ( typeof hpm !== 'object') {
 		var expires = 'expires=' + d.toUTCString();
 		document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/;SameSite=lax;Secure;';
 	};
-	
+
 	if ( getCookie('inapp') !== null ) {
 		var css = document.createElement('style');
 		css.appendChild(document.createTextNode('#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }'));
 		document.getElementsByTagName("head")[0].appendChild(css);
 	}
-	
+
 	var amPm = (timeString) => {
 		var hourEnd = timeString.indexOf(":");
 		var H = +timeString.substr(0, hourEnd);
@@ -57,6 +57,8 @@ if ( typeof hpm !== 'object') {
 		var buttonDiv = document.querySelectorAll('div[tabindex="0"]');
 		var topMenu = document.querySelector('#top-mobile-menu');
 		var closeMenu = document.querySelector('#top-mobile-close');
+		var topSearch = document.querySelector('#top-search');
+		var searchInput = document.querySelector('#top-search > form > input[type=search]');
 		if ( siteNav !== null ) {
 			var menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
 			siteNav.addEventListener('focusin', () => {
@@ -95,6 +97,11 @@ if ( typeof hpm !== 'object') {
 					});
 				});
 			}
+		}
+		if ( topSearch !== null ) {
+			topSearch.addEventListener('click', () => {
+				searchInput.focus({preventScroll:true});
+			});
 		}
 		Array.from(buttonDiv).forEach((bD) => {
 			bD.addEventListener('focusin', () => {
