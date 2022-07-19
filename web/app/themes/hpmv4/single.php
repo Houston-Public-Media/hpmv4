@@ -112,7 +112,7 @@ if ( is_preview() ) : ?>
 				elseif ( $cats->term_id == 12 ) : ?>
 				<div class="sidebar-ad">
 					<h4>Support Comes From</h4>
-					<p><a href="https://www.texasmutual.com/employers/pr/2021-dividends?utm_source=Banner&utm_medium=Website&utm_campaign=Bauer"><img src="https://cdn.hpm.io/assets/images/FinalOTJ_300x250.gif" alt="We are on the job with them. Helping keep Texas strong. Texas Mutual Workers Compensation Insurance." /></a></p>
+					<p><a href="https://www.texasmutual.com/employers/pr/safer-stronger-better?utm_source=Digital+banners&utm_medium=HoustonPublicMedia.org&utm_campaign=BIB&utm_id=EmployerBIB"><img src="https://cdn.hpm.io/assets/images/BIB_Safety_300x250.gif.webp" alt="We are on the job with them. Helping keep Texas strong. Texas Mutual Workers Compensation Insurance." /></a></p>
 				</div>
 			<?php
 				endif;
