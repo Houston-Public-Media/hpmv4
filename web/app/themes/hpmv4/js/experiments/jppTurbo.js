@@ -68,7 +68,7 @@ if ( typeof jpp !== 'object') {
 		}
 		jpp.prefStream = prefStream;
 		jpp.player = player;
-		jpp.player.source = jpp.streams[prefStream];
+		//jpp.player.source = jpp.streams[prefStream];
 		document.getElementById('jpp-button-'+prefStream).classList.add('jpp-button-active');
 		jpp.player.on('ended', (event) => {
 			hpm.npUpdateHtml('jpp', jpp.prefStream, 'false');
@@ -181,7 +181,7 @@ if ( typeof jpp !== 'object') {
 						hpm.stationIds.classical.refresh = true;
 						hpm.stationIds.mixtape.refresh = true;
 						timeOuts.push(setInterval('hpm.npDataDownload()',60000));
-						hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
+						hpm.npUpdateHtml('jpp', station, 'false');
 					} else {
 						jpp.player.source = {
 							'type': 'audio',

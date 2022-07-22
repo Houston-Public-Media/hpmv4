@@ -219,6 +219,12 @@ body {
 	}
 }
 @media screen and (min-width: 52.5em) {
+	body {
+		--persist-unit: 4.5rem;
+	}
+	#jpp-player-persist {
+		--plyr-control-icon-size: 2.125rem;
+	}
 	#jpp-menu-wrap {
 		width: 40em;
 		right: 16px;

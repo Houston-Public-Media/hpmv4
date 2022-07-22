@@ -372,7 +372,7 @@ if ( typeof hpm !== 'object') {
 				output += '<h3>'+data['airlist'][0]['version']['series']['series-title']+'</h3>';
 			}
 		} else if ( station === 'mixtape' ) {
-			output += '<h3>'+data[0]+' - '+data[1]+'</h3>';
+			output += '<h3>'+data.artist+' - '+data.song+'</h3>';
 		} else if ( station.startsWith('Podcast||') ) {
 			var stationArr = station.split("||");
 			output = '<p>' + stationArr[1] + '</p><h3>' + stationArr[2] + '</h3>';

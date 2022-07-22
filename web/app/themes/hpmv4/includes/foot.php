@@ -203,10 +203,18 @@ add_action( 'wp_head', function() {
 function hpm_persistent_player() {
 	global $wp_query;
 	$queried_object = $wp_query->get_queried_object_id();
-	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' && $queried_object !== 61263 ) : ?>
+	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' && $queried_object !== 61263 ) :
+		$prefStream = "news";
+		if ( !empty( $_COOKIE ) && !empty( $_COOKIE['prefStream'] ) && preg_match( '/[clasimxtpenw]{4,9}/', $_COOKIE['prefStream'] ) ) :
+			$prefStream = $_COOKIE['prefStream'];
+		endif;
+	?>
 		<div id="jpp-player-persist" data-turbo-permanent>
 			<div id="jpp-main">
-				<div id="jpp-player-wrap"><audio id="jpp-player" playsinline preload="none"></audio></div>
+				<div id="jpp-player-wrap"><audio id="jpp-player" playsinline preload="none">
+					<source src="https://stream.houstonpublicmedia.org/<?php echo $prefStream; ?>-aac" type="audio/aac" />
+					<source src="https://stream.houstonpublicmedia.org/<?php echo $prefStream; ?>-mp3" type="audio/mpeg" />
+				</audio></div>
 				<div id="jpp-now-playing">Now Playing: Nothing yet...</div>
 				<div id="jpp-button-wrap">
 					<button id="jpp-menu-up"><?php echo hpm_svg_output( 'chevron-up' ); ?></button>

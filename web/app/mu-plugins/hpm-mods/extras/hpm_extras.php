@@ -1395,7 +1395,7 @@ function hpm_now_playing_update () {
 		if ( strpos( $k, 'tv' ) !== false ) :
 			$output .= $data['airlist'][0]['version']['series']['series-title'];
 		elseif ( $k === 'mixtape' ) :
-			$output .= $data[0] . ' - ' . $data[1];
+			$output .= $data['artist'] . ' - ' . $data['song'];
 		else :
 			if ( empty( $data['onNow']['song'] ) ) :
 				$output .= $data['onNow']['program']['name'];
