@@ -2300,16 +2300,16 @@ footer#colophon ul li a {
 	width: 100%;
 	margin: 0 auto;
 	padding: 0.75rem 0;
-	height: 4.625rem;
+	min-height: 4.625rem;
 }
 @media screen and (min-width: 34em) {
 	#div-gpt-ad-1488818411584-0 {
-		height: 7.125rem;
+		min-height: 7.125rem;
 	}
 }
 @media screen and (min-width: 52.5em) {
 	#div-gpt-ad-1488818411584-0 {
-		height: 4.625rem;
+		min-height: 4.625rem;
 	}
 }
 .top-banner {
