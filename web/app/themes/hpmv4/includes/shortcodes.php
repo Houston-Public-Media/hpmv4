@@ -850,6 +850,7 @@ function hpm_waterlines_shortcode() {
 		while ( $article->have_posts() ) : $article->the_post();
 			$meta = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );
 			if ( !empty( $meta ) ) :
+				$ep_meta = get_post_meta( get_the_ID(), 'hpm_podcast_ep_meta', true );
 				if ( $c == 0 ) :
 					$output .= '<div class="podcast-player-wrap">' .
 								'<audio id="player" playsinline preload="metadata">' .
@@ -860,7 +861,12 @@ function hpm_waterlines_shortcode() {
 								'<div class="pod-playlist">' .
 									'<ul>';
 				endif;
-				$output .= '<li' . ( $c == 0 ? ' class="pod-active"' : '' ) . ' data-audio="' . $meta['url'] . '"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M434.9,219L124.2,35.3C99,20.4,60.3,34.9,60.3,71.8v367.3c0,33.1,35.9,53.1,63.9,36.5l310.7-183.6 C462.6,275.6,462.7,235.3,434.9,219L434.9,219z"></path></svg><p>' . get_the_title() . '</p></li>';
+				if ( !empty( $ep_meta['title'] ) ) :
+					$title = $ep_meta['title'];
+				else :
+					$title = get_the_title();
+				endif;
+				$output .= '<li' . ( $c == 0 ? ' class="pod-active"' : '' ) . ' data-audio="' . $meta['url'] . '"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M434.9,219L124.2,35.3C99,20.4,60.3,34.9,60.3,71.8v367.3c0,33.1,35.9,53.1,63.9,36.5l310.7-183.6 C462.6,275.6,462.7,235.3,434.9,219L434.9,219z"></path></svg><p>' . $title . '</p></li>';
 				$c++;
 			endif;
 		endwhile;
