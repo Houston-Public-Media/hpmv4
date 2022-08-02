@@ -170,7 +170,8 @@ function article_display_shortcode ( $atts ) {
 		'tag' => '',
 		'category' => '',
 		'type' => 'd',
-		'post_id' => ''
+		'post_id' => '',
+		'exclude' => ''
 	], $atts, 'multilink' ) );
 	$args = [
 		'posts_per_page' => $num,
@@ -180,6 +181,16 @@ function article_display_shortcode ( $atts ) {
 	];
 	if ( !empty( $hpm_constants ) ) :
 		$args['post__not_in'] = $hpm_constants;
+	endif;
+	if ( !empty( $exclude ) ) :
+		if ( preg_match( '/[0-9,]+/', $exclude ) ) :
+			$excl_exp = explode( ',', $exclude );
+			if ( empty( $args['post__not_in'] ) ) :
+				$args['post__not_in'] = $excl_exp;
+			else :
+				$args['post__not_in'] = array_merge( $args['post__not_in'], $excl_exp );
+			endif;
+		endif;
 	endif;
 	if ( !empty( $category ) && !empty( $tag ) ) :
 		$args['tax_query'] = [
