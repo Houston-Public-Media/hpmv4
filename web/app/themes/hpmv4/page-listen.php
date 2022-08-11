@@ -114,6 +114,9 @@ get_header(); ?>
 		overflow-y: scroll;
 		overflow-x: hidden;
 	}
+	.player-wrap {
+		margin-top: 0 !important;
+	}
 	@media screen and (min-width: 34em) {
 		body.nav-active-menu #top-mobile-close {
 			left: calc(60vw - 5rem);
