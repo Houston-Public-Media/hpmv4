@@ -1433,11 +1433,12 @@ svg.hpm-logo .hpm-logo-service {
 	justify-content: center;
 }
 #masthead .site-branding .site-logo a {
-	display: block;
+	display: flex;
 	width: 100%;
 }
 #masthead .site-branding .site-logo a svg.hpm-logo {
 	max-height: 3.5rem;
+	width: 100%;
 }
 #masthead .site-branding .site-logo a svg.hpm-logo path {
 	fill: white;

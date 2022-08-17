@@ -565,7 +565,7 @@ class HPM_Promos {
 		return $output;
 	}
 
-	public static function generate_static( $position ) {
+	public static function generate_static( $position, $method = null ) {
 		global $wp_query;
 		$wp_global = $wp_query;
 		$output = '';
@@ -589,15 +589,17 @@ class HPM_Promos {
 			return $output;
 		endif;
 		if ( $wp_global->is_page || $wp_global->is_single ) :
-			$page_id = $wp_global->get_queried_object_id();
-			$anc = get_post_ancestors( $page_id );
-			$opts = get_option( 'hpm_promos_settings' );
-			$bans = explode( ',', $opts['bans']['ids'] );
-			$pt_slug = explode( ',', $opts['bans']['templates'] );
-			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
-				return $output;
-			elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
-				return $output;
+			if ( !isset( $method ) || $method !== 'shortcode' ) :
+				$page_id = $wp_global->get_queried_object_id();
+				$anc = get_post_ancestors( $page_id );
+				$opts = get_option( 'hpm_promos_settings' );
+				$bans = explode( ',', $opts['bans']['ids'] );
+				$pt_slug = explode( ',', $opts['bans']['templates'] );
+				if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
+					return $output;
+				elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
+					return $output;
+				endif;
 			endif;
 		endif;
 		$args = [
@@ -790,7 +792,7 @@ class HPM_Promos {
 		extract( shortcode_atts( [
 			'position' => 'sidebar'
 		], $atts, 'multilink' ) );
-		return HPM_Promos::generate_static( $position );
+		return HPM_Promos::generate_static( $position, 'shortcode' );
 	}
 }
 new HPM_Promos();
