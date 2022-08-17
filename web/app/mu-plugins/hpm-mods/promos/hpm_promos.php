@@ -36,6 +36,8 @@ class HPM_Promos {
 		if ( ! wp_next_scheduled( 'hpm_promo_cleanup' ) ) :
 			wp_schedule_event( time(), 'daily', 'hpm_promo_cleanup' );
 		endif;
+
+		add_shortcode( 'hpm_promos', [ $this, 'promo_shortcode' ] );
 	}
 
 	public function hide_publish_button() {
@@ -765,25 +767,11 @@ class HPM_Promos {
 								<table class="form-table">
 									<tr valign="top">
 										<th scope="row"><label for="hpm_promos_settings[bans][ids]"><?php _e('Exempted Post IDs', 'hpm-promos' ); ?></label></th>
-										<td><?php
-											$editor_opts = [
-												'editor_height' => 150,
-												'media_buttons' => false,
-												'teeny' => true
-											];
-											wp_editor( $opts['bans']['ids'], 'hpm_promos_settings[bans][ids]', $editor_opts );
-										?></td>
+										<td><textarea id="hpm_promos_settings[bans][ids]" name="hpm_promos_settings[bans][ids]" style="height: 100px; width: 100%;"><?php echo $opts['bans']['ids']; ?></textarea></td>
 									</tr>
 									<tr valign="top">
 										<th scope="row"><label for="hpm_promos_settings[bans][templates]"><?php _e('Exempted Post Templates', 'hpm-promos' ); ?></label></th>
-										<td><?php
-											$editor_opts = [
-												'editor_height' => 150,
-												'media_buttons' => false,
-												'teeny' => true
-											];
-											wp_editor( $opts['bans']['templates'], 'hpm_promos_settings[bans][templates]', $editor_opts );
-										?></td>
+										<td><textarea id="hpm_promos_settings[bans][templates]" name="hpm_promos_settings[bans][templates]" style="height: 100px; width: 100%;"><?php echo $opts['bans']['templates']; ?></textarea></td>
 									</tr>
 								</table>
 							</div>
@@ -796,6 +784,13 @@ class HPM_Promos {
 		<?php submit_button(); ?>
 	</form>
 </div><?php
+	}
+
+	public function promo_shortcode( $atts ) {
+		extract( shortcode_atts( [
+			'position' => 'sidebar'
+		], $atts, 'multilink' ) );
+		return HPM_Promos::generate_static( $position );
 	}
 }
 new HPM_Promos();
