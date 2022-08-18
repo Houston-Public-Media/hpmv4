@@ -1438,7 +1438,7 @@ svg.hpm-logo .hpm-logo-service {
 }
 #masthead .site-branding .site-logo a svg.hpm-logo {
 	max-height: 3.5rem;
-	width: 100%;
+	max-width: 14rem;
 }
 #masthead .site-branding .site-logo a svg.hpm-logo path {
 	fill: white;
@@ -1984,7 +1984,7 @@ body.nav-active-menu #top-mobile-close {
 	}
 	body:not(.page-template-page-listen) #masthead .site-branding {
 		background-color: transparent;
-		grid-template-columns: 13rem auto 8rem 5rem;
+		grid-template-columns: 14rem auto 8rem 5rem;
 		gap: 0 1rem;
 	}
 	body:not(.page-template-page-listen) #masthead .site-branding .site-logo {

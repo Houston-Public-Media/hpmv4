@@ -33,7 +33,6 @@ function wpcodex_add_excerpt_support_for_pages() {
 	add_post_type_support( 'page', 'excerpt' );
 }
 add_action( 'init', 'wpcodex_add_excerpt_support_for_pages' );
-add_filter( 'the_content', 'shortcode_unautop');
 
 // Enqueue Typekit, FontAwesome, stylesheets, etc.
 function hpm_scripts() {
@@ -348,7 +347,7 @@ function prefix_insert_post_bug( $content ) {
 	endif;
 	return $content;
 }
-add_filter( 'the_content', 'prefix_insert_post_bug' );
+add_filter( 'the_content', 'prefix_insert_post_bug', 15 );
 
 function prefix_insert_after_paragraph( $insertion, $paragraph_id, $content ) {
 	$closing_p = '</p>';
@@ -363,15 +362,6 @@ function prefix_insert_after_paragraph( $insertion, $paragraph_id, $content ) {
 	endforeach;
 	return implode( '', $paragraphs );
 }
-
-if ( !array_key_exists( 'hpm_filter_text' , $GLOBALS['wp_filter'] ) ) :
-	add_filter( 'hpm_filter_text', 'wptexturize' );
-	add_filter( 'hpm_filter_text', 'convert_smilies' );
-	add_filter( 'hpm_filter_text', 'convert_chars' );
-	add_filter( 'hpm_filter_text', 'wpautop' );
-	add_filter( 'hpm_filter_text', 'shortcode_unautop' );
-	add_filter( 'hpm_filter_text', 'do_shortcode' );
-endif;
 
 function hpm_login_logo() { ?>
 	<style type="text/css">
@@ -393,7 +383,7 @@ function hpm_login_logo() { ?>
 <?php }
 add_action( 'login_enqueue_scripts', 'hpm_login_logo' );
 
-add_action('init', 'remove_plugin_image_sizes');
+add_action( 'init', 'remove_plugin_image_sizes' );
 
 function remove_plugin_image_sizes() {
 	remove_image_size( 'guest-author-32' );
@@ -505,7 +495,7 @@ function hpm_revue_signup( $content ) {
 	endif;
 	return $content;
 }
-add_filter( 'the_content', 'hpm_revue_signup', 8 );
+add_filter( 'the_content', 'hpm_revue_signup', 15 );
 
 function hpm_nprone_check( $post_id, $post ) {
 	if ( !empty( $_POST ) && !empty( $_POST['post_type'] ) && $_POST['post_type'] === 'post' ) :
@@ -668,13 +658,31 @@ function hpm_article_share($nprdata = null) {
 	</div><?php
 }
 
-add_filter( 'the_excerpt', 'hpm_remove_autop', 0 );
-add_filter( 'the_content', 'hpm_remove_autop', 0 );
+if ( !array_key_exists( 'hpm_filter_text' , $GLOBALS['wp_filter'] ) ) :
+	add_filter( 'hpm_filter_text', 'wptexturize', 10 );
+	add_filter( 'hpm_filter_text', 'convert_smilies', 20 );
+	add_filter( 'hpm_filter_text', 'convert_chars', 10 );
+	add_filter( 'hpm_filter_text', 'shortcode_unautop', 10 );
+	add_filter( 'hpm_filter_text', 'wp_filter_content_tags', 11 );
+	add_filter( 'hpm_filter_text', 'do_shortcode', 12 );
+	add_filter( 'hpm_filter_text', 'wpautop', 13 );
+endif;
 
-function hpm_remove_autop( $content ) {
-	if ( get_post_type() !== 'post' ) :
-		remove_filter( 'the_content', 'wpautop' );
-		remove_filter( 'the_excerpt', 'wpautop' );
+remove_filter( 'the_content', 'wp_filter_content_tags', 10 );
+remove_filter( 'the_content', 'do_shortcode', 11 );
+remove_filter( 'the_content', 'wpautop', 10 );
+
+add_filter( 'the_content', 'shortcode_unautop', 10 );
+add_filter( 'the_content', 'wp_filter_content_tags', 11 );
+add_filter( 'the_content', 'do_shortcode', 12 );
+
+add_filter( 'the_excerpt', 'hpm_add_autop', 2 );
+add_filter( 'the_content', 'hpm_add_autop', 2 );
+
+function hpm_add_autop( $content ) {
+	if ( get_post_type() == 'post' ) :
+		add_filter( 'the_content', 'wpautop', 13 );
+		add_filter( 'the_excerpt', 'wpautop', 13 );
 	endif;
 	return $content;
 }
@@ -930,8 +938,9 @@ add_filter( 'the_content', 'hpm_image_credits' , 1000000 );
 function hpm_image_credits( $content ) {
 	preg_match_all( '/<div class="credits-overlay" data-target="\.(wp-image-[0-9]{1,6})">(.+)<\/div>/', $content, $matches );
 	if ( !empty( $matches[0] ) ) :
+		log_it($content);
 		foreach( $matches[1] as $k => $v ) :
-			preg_match( '/(<img.+'.$v.'.+ \/>)/', $content, $match );
+			preg_match( '/(<img[ a-z\=\'\"0-9\-,\.\/\:A-Z\(\)]+'. $v .'[ A-Za-z\=\'\"0-9\-,\.\/\:\(\)]+ \/>)/', $content, $match );
 			if ( !empty( $match[0] ) ) :
 				preg_match( '/class="([a-zA-Z\-0-9 ]+)"/', $match[0], $class );
 				$credit = $matches[0][$k];
