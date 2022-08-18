@@ -854,7 +854,7 @@ function hpm_waterlines_shortcode() {
 				$ep_meta = get_post_meta( get_the_ID(), 'hpm_podcast_ep_meta', true );
 				if ( $c == 0 ) :
 					$output .= '<div class="podcast-player-wrap">' .
-								'<audio id="player" playsinline preload="metadata">' .
+								'<audio id="player" playsinline preload="none">' .
 									'<source src="' . $meta['url'] . '" type="audio/mpeg" />' .
 								'</audio>' .
 							'</div>' .

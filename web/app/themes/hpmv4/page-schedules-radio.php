@@ -328,8 +328,8 @@ Template Name: Radio Schedules
 				$progs = [];
 
 				foreach ( $json['onToday'] as $k => $v ) :
-					$fullend = strtotime( preg_replace( '/ GMT\-0[45]00 \(E[SD]T\)/', '', $v['end_utc'] ) );
-					$fullstart = strtotime( preg_replace( '/ GMT\-0[45]00 \(E[SD]T\)/', '', $v['start_utc'] ) );
+					$fullend = strtotime( $v['fullend'] );
+					$fullstart = strtotime( $v['fullstart'] );
 					$duration = $fullend - $fullstart;
 					$name = $v['program']['name'];
 					if ( $duration > 600 ) :
