@@ -47,7 +47,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 	endif;
 	$html = '';
 	if ( is_feed() || amp_is_request() ) :
-		$html .= '<audio src="'.$audio_url.'source=rss-feed"><source type="audio/mpeg" src="'.$audio_url.'source=rss-feed"></audio>';
+		$html .= '<audio preload="' . $preload . '" src="'.$audio_url.'source=rss-feed"><source type="audio/mpeg" src="'.$audio_url.'source=rss-feed"></audio>';
 	else :
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.
