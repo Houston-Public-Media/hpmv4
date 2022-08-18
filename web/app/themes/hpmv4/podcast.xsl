@@ -258,7 +258,7 @@
 				</span></p>
 				<xsl:if test="count(child::enclosure)=1">
 					<div class="article-player-wrap">
-						<audio controls="controls" class="js-player">
+						<audio controls="controls" class="js-player" preload="none">
 							<source src="{enclosure/@url}?source=podcast-feed-page" type="audio/mpeg" />
 							Your browser does not support the <code>audio</code> element. <a href="{enclosure/@url}">Click here to play.</a>
 						</audio>

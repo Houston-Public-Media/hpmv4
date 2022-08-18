@@ -24,7 +24,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 	endif;
 	$audio_title = 'Listen';
 	$audio_url = $attr[ $audio_type ];
-
+	$preload = 'metadata';
 	$sg_file = get_post_meta( $post_id, 'hpm_podcast_enclosure', true );
 	if ( !empty( $sg_file ) ) :
 		$s3_parse = parse_url( $audio_url );
@@ -36,6 +36,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 		else :
 			$audio_url = str_replace( 'http:', 'https:', $audio_url );
 		endif;
+		$preload = "none";
 	else :
 		$audio_url = str_replace( 'http:', 'https:', $audio_url );
 	endif;
@@ -51,7 +52,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.
 				'<h3>'.htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false ) .'</h3>'.
-				'<audio class="js-player" controls preload="metadata">'.
+				'<audio class="js-player" controls preload="' . $preload . '">'.
 					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
 				'</audio>';
 		if ( !is_admin() && !empty( $attr['id'] ) ) :
