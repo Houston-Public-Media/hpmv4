@@ -52,12 +52,12 @@ function hpm_audio_shortcode( $html, $attr ) {
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.
 				'<h3>'.htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false ) .'</h3>'.
-				'<audio class="js-player" controls preload="' . $preload . '">'.
+				'<audio class="js-player" id="audio-' . $audio_id . '" controls preload="' . $preload . '">'.
 					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
 				'</audio>';
-		if ( !is_admin() && !empty( $attr['id'] ) ) :
+		if ( !is_admin() ) :
 			$html .= "
-				<button class=\"plyr-audio-embed\" data-id=\"{$attr['id']}\">" . hpm_svg_output( 'code' ) . "</button>
+				<button class=\"plyr-audio-embed\" data-id=\"{$audio_id}\">" . hpm_svg_output( 'code' ) . "</button>
 				<div class=\"plyr-audio-embed-popup\" id=\"plyr-{$audio_id}-popup\">
 					<div class=\"plyr-audio-embed-wrap\">
 						<p>To embed this piece of audio in your site, please use this code:</p>

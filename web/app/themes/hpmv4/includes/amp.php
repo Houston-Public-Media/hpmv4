@@ -711,6 +711,7 @@ function hpm_amp_additional_css( $amp_template ) {
 	}
 	#masthead .site-branding .site-logo a svg.hpm-logo {
 		max-height: 3.5rem;
+		max-width: 14rem;
 	}
 	#masthead .site-branding .site-logo a svg.hpm-logo path {
 		fill: white;

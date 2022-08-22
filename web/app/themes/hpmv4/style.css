@@ -594,10 +594,10 @@ details > summary + * {
 	height: 1px;
 	margin: -1px;
 	overflow: hidden;
-	padding: 0;
+	padding: 0 !important;
 	position: absolute;
 	white-space: nowrap;
-	width: 1px;
+	width: 1px !important;
 }
 .sr-only.focusable:active,
 .sr-only.focusable:focus,
