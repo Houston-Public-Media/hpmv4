@@ -668,21 +668,19 @@ if ( !array_key_exists( 'hpm_filter_text' , $GLOBALS['wp_filter'] ) ) :
 	add_filter( 'hpm_filter_text', 'wpautop', 13 );
 endif;
 
-remove_filter( 'the_content', 'wp_filter_content_tags', 10 );
 remove_filter( 'the_content', 'do_shortcode', 11 );
 remove_filter( 'the_content', 'wpautop', 10 );
 
-add_filter( 'the_content', 'shortcode_unautop', 10 );
-add_filter( 'the_content', 'wp_filter_content_tags', 11 );
-add_filter( 'the_content', 'do_shortcode', 12 );
+add_filter( 'the_content', 'shortcode_unautop', 12 );
+add_filter( 'the_content', 'do_shortcode', 13 );
 
 add_filter( 'the_excerpt', 'hpm_add_autop', 2 );
 add_filter( 'the_content', 'hpm_add_autop', 2 );
 
 function hpm_add_autop( $content ) {
 	if ( get_post_type() == 'post' ) :
-		add_filter( 'the_content', 'wpautop', 13 );
-		add_filter( 'the_excerpt', 'wpautop', 13 );
+		add_filter( 'the_content', 'wpautop', 11 );
+		add_filter( 'the_excerpt', 'wpautop', 11 );
 	endif;
 	return $content;
 }
@@ -955,3 +953,39 @@ function hpm_image_credits( $content ) {
 	endif;
 	return $content;
 }
+
+add_filter( 'the_content', function( $content ) {
+	log_it( "Priority 9" );
+	log_it( $content );
+	return $content;
+}, 9 );
+add_filter( 'the_content', function( $content ) {
+	log_it( "Priority 10" );
+	log_it( $content );
+	return $content;
+}, 10 );
+add_filter( 'the_content', function( $content ) {
+	log_it( "Priority 11" );
+	log_it( $content );
+	return $content;
+}, 11 );
+add_filter( 'the_content', function( $content ) {
+	log_it( "Priority 12" );
+	log_it( $content );
+	return $content;
+}, 12 );
+add_filter( 'the_content', function( $content ) {
+	log_it( "Priority 13" );
+	log_it( $content );
+	return $content;
+}, 13 );
+add_filter( 'the_content', function( $content ) {
+	log_it( "Priority 14" );
+	log_it( $content );
+	return $content;
+}, 14 );
+add_filter( 'the_content', function( $content ) {
+	log_it( "Priority 15" );
+	log_it( $content );
+	return $content;
+}, 15 );

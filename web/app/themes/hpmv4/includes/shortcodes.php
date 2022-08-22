@@ -19,6 +19,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 
 	if ( !empty( $attr['id'] ) ) :
 		$audio_id = $attr['id'];
+		$audio_data_title = get_the_title( $attr['id'] );
 	else :
 		$audio_id = $instance;
 	endif;
@@ -52,21 +53,20 @@ function hpm_audio_shortcode( $html, $attr ) {
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.
 				'<h3>'.htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false ) .'</h3>'.
-				'<audio class="js-player" id="audio-' . $audio_id . '" controls preload="' . $preload . '">'.
+				'<audio class="js-player" id="audio-' . $audio_id . '" data-title="' . ( !empty( $audio_data_title ) ? urlencode( $audio_data_title ) : '' ) . '" controls preload="' . $preload . '">'.
 					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
 				'</audio>';
 		if ( !is_admin() ) :
-			$html .= "
-				<button class=\"plyr-audio-embed\" data-id=\"{$audio_id}\">" . hpm_svg_output( 'code' ) . "</button>
-				<div class=\"plyr-audio-embed-popup\" id=\"plyr-{$audio_id}-popup\">
-					<div class=\"plyr-audio-embed-wrap\">
-						<p>To embed this piece of audio in your site, please use this code:</p>
-						<div class=\"plyr-audio-embed-code\">
-							&lt;iframe src=\"https://embed.hpm.io/{$audio_id}/{$post_id}\" style=\"height: 115px; width: 100%;\"&gt;&lt;/iframe&gt;
-						</div>
-						<div class=\"plyr-audio-embed-close\">X</div>
-					</div>
-				</div>";
+			$html .= '<button class="plyr-audio-embed" data-id="' . $audio_id .'">' . hpm_svg_output( 'code' ) . '</button>' .
+				'<div class="plyr-audio-embed-popup" id="plyr-' . $audio_id . '-popup">' .
+					'<div class="plyr-audio-embed-wrap">' .
+						'<p>To embed this piece of audio in your site, please use this code:</p>' .
+						'<div class="plyr-audio-embed-code">' .
+							'&lt;iframe src="https://embed.hpm.io/' . $audio_id . '/' . $post_id . '" style="height: 115px; width: 100%;"&gt;&lt;/iframe&gt;' .
+						'</div>' .
+						'<div class="plyr-audio-embed-close">X</div>' .
+					'</div>' .
+				'</div>';
 		endif;
 		$html .= '</div>';
 	endif;
