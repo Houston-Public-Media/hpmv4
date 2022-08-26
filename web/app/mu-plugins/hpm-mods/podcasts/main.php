@@ -54,7 +54,7 @@ class HPM_Podcasts {
 		add_action( 'pre_get_posts', [ $this, 'meta_query' ] );
 
 		// Add filter for the_content to display podcast tune-in/promo
-		add_filter( 'the_content', [ $this, 'article_footer' ], 15 );
+		add_filter( 'the_content', [ $this, 'article_footer' ], 10 );
 		add_filter( 'get_the_excerpt', [ $this, 'remove_foot_filter' ], 9 );
 		add_filter( 'get_the_excerpt', [ $this, 'add_foot_filter' ], 11 );
 		add_action( 'wp_head', [ $this, 'add_feed_head' ], 100 );

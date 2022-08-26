@@ -954,38 +954,13 @@ function hpm_image_credits( $content ) {
 	return $content;
 }
 
-add_filter( 'the_content', function( $content ) {
-	log_it( "Priority 9" );
-	log_it( $content );
-	return $content;
-}, 9 );
-add_filter( 'the_content', function( $content ) {
-	log_it( "Priority 10" );
-	log_it( $content );
-	return $content;
-}, 10 );
-add_filter( 'the_content', function( $content ) {
-	log_it( "Priority 11" );
-	log_it( $content );
-	return $content;
-}, 11 );
-add_filter( 'the_content', function( $content ) {
-	log_it( "Priority 12" );
-	log_it( $content );
-	return $content;
-}, 12 );
-add_filter( 'the_content', function( $content ) {
-	log_it( "Priority 13" );
-	log_it( $content );
-	return $content;
-}, 13 );
-add_filter( 'the_content', function( $content ) {
-	log_it( "Priority 14" );
-	log_it( $content );
-	return $content;
-}, 14 );
-add_filter( 'the_content', function( $content ) {
-	log_it( "Priority 15" );
-	log_it( $content );
-	return $content;
-}, 15 );
+function hpm_new_user_guest_author( $user_id ) {
+	$coauthor_guest = new CoAuthors_Guest_Authors();
+	$new_guest_id = $coauthor_guest->create_guest_author_from_user_id( $user_id );
+}
+add_action( 'user_register', 'hpm_new_user_guest_author', 20, 1 );
+
+// function hpm_reassign_bylines_on_delete( $user_id, $reassign ) {
+// 	return $user_id;
+// }
+// add_action( 'delete_user', 'hpm_reassign_bylines_on_delete', 10, 2 );
