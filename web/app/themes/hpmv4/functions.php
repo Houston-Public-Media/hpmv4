@@ -40,7 +40,10 @@ function hpm_scripts() {
 
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], $versions['analytics'], false );
 
-	// wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main.js', [], time(), true );
+	if ( WP_ENV !== 'production' ) {
+		wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main.js', [], time(), true );
+		wp_enqueue_style( 'hpm-main', get_template_directory_uri() . '/style.css' );
+	}
 
 	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], $versions['js'], true );
 	wp_register_script( 'hpm-splide', 'https://cdn.hpm.io/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
@@ -59,15 +62,17 @@ function hpm_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 
-add_action( 'wp_footer', function() {
-	$js = file_get_contents( get_template_directory() . '/js/main.js' );
-	echo '<script>' . $js . '</script>';
-}, 100 );
-add_action( 'wp_head', function() {
-	$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
-	$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
-	echo '<style>' . $styles . '</style>';
-}, 100 );
+if ( WP_ENV == 'production' ) {
+	add_action( 'wp_footer', function() {
+		$js = file_get_contents( get_template_directory() . '/js/main.js' );
+		echo '<script>' . $js . '</script>';
+	}, 100 );
+	add_action( 'wp_head', function() {
+		$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
+		$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
+		echo '<style>' . $styles . '</style>';
+	}, 100 );
+}
 
 /*
  * Modifies homepage query
@@ -1023,6 +1028,29 @@ function hpm_save_bylines_before_delete( $user_id ) {
 	}
 	update_option( 'hpm_user_backup_'.$user_id, $output, false );
 	update_post_meta( $author->ID, 'cap-linked_account', '' );
+	Red_Item::create([
+		"url" => "/articles/author/" . $user_obj->data->user_login,
+		"match_data" => [
+			"source" => [
+				"flag_query" => "exact",
+				"flag_case" => true,
+				"flag_trailing" => true,
+				"flag_regex" => false
+			],
+			"options" => [
+				"log_exclude" => false
+			]
+		],
+		"action_code" => "301",
+		"action_type" => "url",
+		"action_data" => [
+			"url" => "/articles/author/" . $author->user_login
+		],
+		"match_type" => "url",
+		"group_id" => 1,
+		"status" => "enabled",
+		"regex" => false
+	]);
 }
 add_action( 'delete_user', 'hpm_save_bylines_before_delete', 1, 1 );
 
