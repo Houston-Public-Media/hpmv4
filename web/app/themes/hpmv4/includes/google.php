@@ -57,7 +57,7 @@ function hpm_google_tracker() {
 			}
 		}
 		if ( !empty( $category ) || !empty( $tag ) ) {
-			echo "\t\t\t\tgoogletag.pubads().";
+			echo "\t\t\t\tgoogletag.pubads()";
 			if ( !empty( $category ) ) {
 				echo ".setTargeting('category', ['" . implode( "','", $category ) . "'])";
 			}
