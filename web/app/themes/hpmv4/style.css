@@ -2930,6 +2930,14 @@ body.single #author-wrap .author-other-stories h2 a {
 .page-header #author-wrap .author-wrap-left > * + * {
 	margin-top: 1rem;
 }
+.page-header #author-wrap .author-wrap-left > .staff-pronouns,
+#author-wrap .author-info > .staff-pronouns,
+article .entry-header p.staff-pronouns,
+.staff-pronouns {
+	margin: 0;
+	font-size: 0.9rem;
+	font-weight: 400;
+}
 @media screen and (min-width: 34em) {
 	.column-left,
 	.column-span,
@@ -3031,13 +3039,13 @@ body.single #author-wrap .author-other-stories h2 a {
 		width: 60%;
 	}
 	.page-header #author-wrap .author-info-wrap {
-		width: 70%;
+		width: 67%;
 		float: left;
 		padding: 0 1em;
 		display: block;
 	}
 	.page-header #author-wrap .author-wrap-left {
-		width: 30%;
+		width: 33%;
 		float: left;
 		text-align: left;
 	}
@@ -3128,6 +3136,7 @@ body.single #author-wrap .author-other-stories h2 a {
 	}
 	#author-wrap .author-thumb {
 		width: 100%;
+		padding: 0;
 	}
 	#author-wrap .author-inner-wrap {
 		padding: 2rem;

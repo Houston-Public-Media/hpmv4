@@ -1,6 +1,7 @@
 <?php
 function hpm_google_tracker() {
-?>		<script async="true" src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+	global $wp_query;
+?>	<script async="true" src='https://www.googletagservices.com/tag/js/gpt.js'></script>
 		<script>
 			var googletag = googletag || {};
 			googletag.cmd = googletag.cmd || [];
@@ -36,9 +37,23 @@ function hpm_google_tracker() {
 						}
 					}
 				});
-				if (document.getElementsByTagName("BODY")[0].classList.contains('home')) {
-					googletag.pubads().setTargeting('section', 'homepage');
-				}
+<?php
+	if ( is_home() ) {
+		echo "\t\t\t\tgoogletag.pubads().setTargeting('section', 'homepage');\n";
+	} elseif ( is_archive() ) {
+		if ( !empty( $wp_query->query_vars['category_name'] ) ) {
+			echo "\t\t\t\tgoogletag.pubads().setTargeting('section', 'category-" . $wp_query->query_vars['category_name'] . "');\n";
+		} elseif ( !empty( $wp_query->query_vars['tag'] ) ) {
+			echo "\t\t\t\tgoogletag.pubads().setTargeting('section', 'tag-" . $wp_query->query_vars['tag'] . "');\n";
+		}
+	} elseif ( is_single() ) {
+		$classes = get_post_class( '', $wp_query->queried_object_id );
+		foreach ( $classes as $class ) {
+			if ( strpos( $class, 'category-' ) !== false || strpos( $class, 'tag-' ) !== false ) {
+				echo "\t\t\t\tgoogletag.pubads().setTargeting('section', '" . $class . "');\n";
+			}
+		}
+	} ?>
 				googletag.enableServices();
 			});
 		</script>
