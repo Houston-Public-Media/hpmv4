@@ -42,16 +42,29 @@ function hpm_google_tracker() {
 		echo "\t\t\t\tgoogletag.pubads().setTargeting('section', 'homepage');\n";
 	} elseif ( is_archive() ) {
 		if ( !empty( $wp_query->query_vars['category_name'] ) ) {
-			echo "\t\t\t\tgoogletag.pubads().setTargeting('section', 'category-" . $wp_query->query_vars['category_name'] . "');\n";
+			echo "\t\t\t\tgoogletag.pubads().setTargeting('category', '" . $wp_query->query_vars['category_name'] . "');\n";
 		} elseif ( !empty( $wp_query->query_vars['tag'] ) ) {
-			echo "\t\t\t\tgoogletag.pubads().setTargeting('section', 'tag-" . $wp_query->query_vars['tag'] . "');\n";
+			echo "\t\t\t\tgoogletag.pubads().setTargeting('tag', '" . $wp_query->query_vars['tag'] . "');\n";
 		}
 	} elseif ( is_single() ) {
 		$classes = get_post_class( '', $wp_query->queried_object_id );
+		$category = $tag = [];
 		foreach ( $classes as $class ) {
-			if ( strpos( $class, 'category-' ) !== false || strpos( $class, 'tag-' ) !== false ) {
-				echo "\t\t\t\tgoogletag.pubads().setTargeting('section', '" . $class . "');\n";
+			if ( strpos( $class, 'category-' ) !== false ) {
+				$category[] = str_replace( 'category-', '', $class );
+			} elseif ( strpos( $class, 'tag-' ) !== false ) {
+				$tag[] = str_replace( 'tag-', '', $class );
 			}
+		}
+		if ( !empty( $category ) || !empty( $tag ) ) {
+			echo "\t\t\t\tgoogletag.pubads().";
+			if ( !empty( $category ) ) {
+				echo ".setTargeting('category', ['" . implode( "','", $category ) . "'])";
+			}
+			if ( !empty( $tag ) ) {
+				echo ".setTargeting('tag', ['" . implode( "','", $tag ) . "'])";
+			}
+			echo ";\n";
 		}
 	} ?>
 				googletag.enableServices();
