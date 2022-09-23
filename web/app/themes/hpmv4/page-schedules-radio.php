@@ -252,29 +252,17 @@ Template Name: Radio Schedules
 				<div id="station-social">
 				<?php
 					if ( $sched_station == 'news887' ) :
-						$media = get_posts([
-							'post_parent' => get_the_ID(),
-							'post_type' => 'attachment',
-							'post_mime_type' => 'application/pdf',
-							'orderby' => 'date',
-							'posts_per_page' => 1,
-							'order' => 'DESC'
-						]); ?>
+						// $media = get_posts([
+						// 	'post_parent' => get_the_ID(),
+						// 	'post_type' => 'attachment',
+						// 	'post_mime_type' => 'application/pdf',
+						// 	'orderby' => 'date',
+						// 	'posts_per_page' => 1,
+						// 	'order' => 'DESC'
+						// ]);
+						// echo wp_get_attachment_url( $media[0]->ID ); ?>
                     <div class="station-printable">
-                        <a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">Printable Schedule</a>
-                    </div>
-				<?php
-					elseif ( $sched_station == 'classical' ) :
-						$media = get_posts([
-							'post_parent' => get_the_ID(),
-							'post_type' => 'attachment',
-							'post_mime_type' => 'application/pdf',
-							'orderby' => 'date',
-							'posts_per_page' => 1,
-							'order' => 'DESC'
-						]); ?>
-                    <div class="station-printable">
-                        <a href="<?php echo wp_get_attachment_url( $media[0]->ID ); ?>">Printable Schedule</a>
+                        <a href="/news887/weekly/">Printable Schedule</a>
                     </div>
 				<?php
 					endif; ?>

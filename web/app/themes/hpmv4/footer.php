@@ -2,7 +2,7 @@
 <?php if ( is_page_template( 'page-blank.php' ) ) : ?>
 		</div>
 <?php else : ?>
-			<h2 id="foot-banner"><a href="/donate">Stories like this are made possible by the generosity of our community of donors, foundations and corporate partners. If you value our reporting, join others and make a gift to Houston Public Media.<br /><br /><span class="donate"><?php echo hpm_svg_output( 'heart' ); ?> DONATE</span></a></h2>
+			<h2 id="foot-banner"><a href="/donate">Resources like these are made possible by the generosity of our community of donors, foundations, and corporate partners. Join others and make your gift to Houston Public Media today!<br /><br /><span class="donate"><?php echo hpm_svg_output( 'heart' ); ?> DONATE</span></a></h2>
 			<footer id="colophon" class="site-footer" role="contentinfo">
 				<section>
 					<div class="foot-logo">

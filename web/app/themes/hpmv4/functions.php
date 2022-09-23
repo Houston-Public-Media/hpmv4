@@ -42,7 +42,7 @@ function hpm_scripts() {
 
 	if ( WP_ENV !== 'production' ) {
 		wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main.js', [], time(), true );
-		wp_enqueue_style( 'hpm-main', get_template_directory_uri() . '/style.css' );
+		wp_enqueue_style( 'hpm-main', get_template_directory_uri() . '/style.css', [], time() );
 	}
 
 	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], $versions['js'], true );

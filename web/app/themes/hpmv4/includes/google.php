@@ -87,7 +87,7 @@ function gtm_populate_category_items( $total_match, $match, $post_id ) {
 
 add_action( 'wp_head', 'hpm_google_conversion', 101 );
 
-function hpm_google_conversion () {
+function hpm_google_conversion() {
 	if ( !empty( $_GET['google_ad'] ) && $_GET['google_ad'] == 'convert' ) {
 		echo "<!-- Event snippet for Outbound click conversion page --> <script> gtag('event', 'conversion', {'send_to': 'AW-10777328260/yyJICKjnw_YCEIT1g5Mo'}); </script>";
 	}
