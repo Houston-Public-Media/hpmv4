@@ -8,7 +8,7 @@ get_header();
 $articles = hpm_homepage_articles(); ?>
 	<style>
 		#station-schedules {
-			background-color: white;
+			background-color: var(--main-element-background);
 		}
 		#station-schedules h4 {
 			border-bottom: 0.125em solid var(--main-red);
@@ -18,7 +18,7 @@ $articles = hpm_homepage_articles(); ?>
 		}
 		#station-schedules .station-now-play {
 			padding: 0.5em 1em;
-			border-bottom: 0.125em solid #f5f5f5;
+			border-bottom: 0.125em solid var(--main-background);
 			min-height: 5em;
 			display: grid;
 			grid-template-columns: 30% 70%;
@@ -47,7 +47,7 @@ $articles = hpm_homepage_articles(); ?>
 			font-family: var(--hpm-font-condensed);
 			padding: 0 0.5rem 0 0;
 			margin: 0;
-			color: #55565a;
+			color: var(--main-headline);
 		}
 		@media screen and (min-width: 34rem) {
 			#station-schedules {

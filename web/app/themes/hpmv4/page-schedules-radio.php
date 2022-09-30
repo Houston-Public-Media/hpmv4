@@ -3,33 +3,33 @@
 Template Name: Radio Schedules
 */
 	$t = time();
-	$offset = get_option('gmt_offset')*3600;
+	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 
 	if ( isset( $wp_query->query_vars['sched_station'] ) ) :
-		$sched_station = urldecode($wp_query->query_vars['sched_station']);
+		$sched_station = urldecode( $wp_query->query_vars['sched_station'] );
 	endif;
 
 	if ( isset( $wp_query->query_vars['sched_year'] ) ) :
-		$sched_year = urldecode($wp_query->query_vars['sched_year']);
+		$sched_year = urldecode( $wp_query->query_vars['sched_year'] );
 	else :
-		$sched_year = date('Y', $t);
+		$sched_year = date( 'Y', $t );
 	endif;
 
 	if ( isset( $wp_query->query_vars['sched_month'] ) ) :
-		$sched_month = urldecode($wp_query->query_vars['sched_month']);
+		$sched_month = urldecode( $wp_query->query_vars['sched_month'] );
 	else :
-		$sched_month = date('m', $t);
+		$sched_month = date( 'm', $t );
 	endif;
 
 	if ( isset( $wp_query->query_vars['sched_day'] ) ) :
-		$sched_day = urldecode($wp_query->query_vars['sched_day']);
+		$sched_day = urldecode( $wp_query->query_vars['sched_day'] );
 	else :
-		$sched_day = date('d', $t);
+		$sched_day = date( 'd', $t );
 	endif;
-	$today_date = date('Y-m-d', $t);
-	$date = $sched_year."-".$sched_month."-".$sched_day;
-	wp_enqueue_script('jquery-ui-datepicker');
+	$today_date = date( 'Y-m-d', $t );
+	$date = $sched_year . "-" . $sched_month . "-" . $sched_day;
+	wp_enqueue_script( 'jquery-ui-datepicker' );
 	get_header();
 ?>
 	<style>
@@ -71,17 +71,9 @@ Template Name: Radio Schedules
 		}
 		#station-schedule-display > ul > li {
 			padding: 1em;
-			background-color: white;
+			background-color: var(--main-element-background);
 			border: 1px solid rgba(0,0,0,0.25);
 			margin: 0 0 1em 0;
-		}
-		#station-schedule-display > ul > li > ul > li {
-			border: 0;
-			margin: 0;
-			padding: 0 0 0.5em 0;
-		}
-		#station-schedule-display > ul > li > ul > li.shade {
-			background-color: #ddd;
 		}
 		#station-schedule-display ul li p {
 			font-size: 90%;
@@ -117,9 +109,13 @@ Template Name: Radio Schedules
 			list-style: none;
 			margin: 0;
 			padding: 1em;
+			background-color: var(--main-element-background);
+		}
+		#station-schedule-display .proglist .progsegment ul.progplay li:nth-child(even) {
+			background-color: var(--main-background);
 		}
 		#station-schedule-display .proglist .progsegment ul.progplay li em {
-			color: rgb(49, 49, 49);
+			color: var(--secondary-text);
 		}
 		#schedule-search {
 			clear: both;
@@ -130,13 +126,13 @@ Template Name: Radio Schedules
 		}
 		#schedule-search label {
 			font: 400 1em/1em var(--hpm-font-main);
-			color: #464646;
+			color: var(--main-text);
 		}
 		#schedule-search input {
 			border: 0;
 			outline: 0;
 			-webkit-appearance: none;
-			border-bottom: 0.125em solid #55565a;
+			border-bottom: 0.125em solid var(--main-text);
 			background-color: transparent;
 			padding: 0 0.25em;
 			width: 11em;
@@ -233,7 +229,7 @@ Template Name: Radio Schedules
 			body.page.page-template-page-schedules-radio .column-right article {
 				width: 100%;
 				padding: 0;
-				background-color: white;
+				background-color: var(--main-element-background);
 			}
 			#schedule-search {
 				float: left;

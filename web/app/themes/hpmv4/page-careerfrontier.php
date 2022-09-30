@@ -54,13 +54,6 @@ Template Name: Career Frontier
 			font-size: 500%;
 			line-height: 100%;
 		}
-		.page-header p {
-			font-size: 125%;
-			width: 100%;
-			font-family: usual,arial,sans-serif;
-			color: white;
-			margin: 0;
-		}
 		.page.page-template-page-careerfrontier #main > article {
 			padding: 0;
 			margin: 0;
@@ -92,10 +85,10 @@ Template Name: Career Frontier
 		}
 		.cf-eps-wrap > article {
 			border-bottom: 1px solid #b1b1b1;
-			background-color: #fff;
+			background-color: var(--main-element-background);
 		}
 		.cf-guest-wrap > article {
-			background-color: #fff;
+			background-color: var(--main-element-background);
 		}
 		.cf-guest-wrap p,
 		.cf-guest-wrap br {
@@ -167,7 +160,7 @@ Template Name: Career Frontier
 			overflow: hidden;
 			width: 1px;
 			position: absolute;
-			background-color: white;
+			background-color: var(--main-element-background);
 			padding: 1em 1em 0;
 		}
 		.cf-eps-wrap article.topic-active .episode-content {
@@ -201,7 +194,7 @@ Template Name: Career Frontier
 			font-size: 150%;
 			font-family: Montserrat,Arial, Helvetica, sans-serif;
 			font-weight: 400;
-			color: #55565a;
+			color: var(--secondary-text);
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {

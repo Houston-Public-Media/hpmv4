@@ -15,7 +15,7 @@ get_header(); ?>
 	<style>
 		body.single-shows #station-social {
 			padding: 1em;
-			background-color: white;
+			background-color: var(--main-element-background);
 			overflow: hidden;
 			width: 100%;
 		}
@@ -35,7 +35,7 @@ get_header(); ?>
 			margin-bottom: 1rem;
 		}
 		#float-wrap aside {
-			background-color: white;
+			background-color: var(--main-element-background);
 		}
 		body.single-shows .podcast-badges {
 			justify-content: flex-end;
@@ -58,10 +58,15 @@ get_header(); ?>
 		}
 		@media screen and (min-width: 52.5em) {
 			body.single-shows #station-social {
-				grid-template-columns: 1fr 2fr;
+				grid-template-columns: 2fr 3fr;
 			}
 			body.single-shows #station-social.station-no-social {
 				grid-template-columns: 1fr !important;
+			}
+		}
+		@media (prefers-color-scheme: dark) {
+			body.single-shows #station-social h3 {
+				color: var(--accent-red-4);
 			}
 		}
 	</style>

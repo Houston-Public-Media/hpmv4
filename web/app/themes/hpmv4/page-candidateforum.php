@@ -68,7 +68,7 @@ get_header(); ?>
 	aside.column-right {
 		padding: 1em;
 		overflow: hidden;
-		background-color: white;
+		background-color: var(--main-element-background);
 		margin-bottom: 2em;
 	}
 
@@ -85,7 +85,7 @@ get_header(); ?>
 	.candidates div {
 		margin-bottom: 2em;
 		padding: 1em;
-		background-color: #f5f5f5;
+		background-color: var(--main-background);
 	}
 	@media screen and (min-width: 34em) {
 		.page-header {

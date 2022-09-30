@@ -183,7 +183,7 @@ get_header(); ?>
 			z-index: 95;
 		}
 		.column-right.kids-sidebar {
-			background-color: white;
+			background-color: var(--main-element-background);
 			padding: 2em 1em 1em;
 			margin: 0;
 			width: 100%;

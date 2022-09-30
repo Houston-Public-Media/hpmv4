@@ -45,7 +45,8 @@ get_header(); ?>
 				padding: 1.5em 0 0;
 				text-align: center;
 			}
-			.page-template-page-passport .page-content a {
+			.page-template-page-passport .page-content a,
+			.page-template-page-passport .page-content h2.device-options {
 				color: #0A145A;
 			}
 			.page-template-page-passport.passport-faqs .page-content {
@@ -302,6 +303,12 @@ get_header(); ?>
 				.page-template-page-passport .page-content ul.passport-options {
 					width: 70%;
 					margin: 0 15%;
+				}
+			}
+			@media (prefers-color-scheme: dark) {
+				.page-template-page-passport .page-content a,
+				.page-template-page-passport .page-content h2.device-options {
+					color: #5680ff;
 				}
 			}
 		</style>

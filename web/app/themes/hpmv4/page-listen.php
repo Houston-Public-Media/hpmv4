@@ -6,19 +6,19 @@ get_header(); ?>
 <style>
 	body.page-template-page-listen .np-selector-wrap {
 		display: flex;
-		border-right: 0.125em solid rgb(230,230,230);
+		border-right: 0.125em solid var(--secondary-text);
 	}
 	body.page-template-page-listen .np-selector-wrap div {
 		flex-basis: 1;
 		flex-grow: 2;
 		text-align: center;
 		font: 100 21px/25px var(--hpm-font-main);
-		color: #58585b;
+		color: var(--secondary-text);
 		padding: 0.5em 1em;
-		background-color: rgb(245,245,245);
-		border-top: 0.125em solid rgb(230,230,230);
-		border-bottom: 0.125em solid rgb(196,196,196);
-		border-left: 0.125em solid rgb(230,230,230);
+		background-color: var(--main-background);
+		border-top: 0.125em solid var(--secondary-text);
+		border-bottom: 0.125em solid var(--secondary-text);
+		border-left: 0.125em solid var(--secondary-text);
 	}
 	body.page-template-page-listen .np-selector-wrap div:hover {
 		opacity: 0.8;
@@ -26,20 +26,20 @@ get_header(); ?>
 	}
 	body.page-template-page-listen .np-selector-wrap div.active {
 		color: rgb(34,175,186);
-		border-bottom: 0.125em solid rgb(255,255,255);
+		border-bottom: 0.125em solid var(--main-element-background);
 		border-top: 0.125em solid rgb(34,175,186);
-		background-color: rgb(255,255,255);
+		background-color: var(--main-element-background);
 	}
 	body.page-template-page-listen video, body.page-template-page-listen object {
 		opacity: 0;
 	}
 	body.page-template-page-listen .player-wrap {
-		background-color: white;
+		background-color: var(--main-element-background);
 		padding: 0.5em;
 		overflow: hidden;
-		border-left: 0.125em solid rgb(230,230,230);
-		border-right: 0.125em solid rgb(230,230,230);
-		border-bottom: 0.125em solid rgb(230,230,230);
+		border-left: 0.125em solid var(--secondary-text);
+		border-right: 0.125em solid var(--secondary-text);
+		border-bottom: 0.125em solid var(--secondary-text);
 	}
 	body.page-template-page-listen #np-classical,
 	body.page-template-page-listen #np-mixtape {
@@ -73,7 +73,7 @@ get_header(); ?>
 	body.page-template-page-listen .player-wrap h3 {
 		font: 700 1.125em/1em var(--hpm-font-main);
 		padding: 1em 2.5% 0;
-		color: rgb(75,76,80);
+		color: var(--secondary-text);
 		text-transform: uppercase;
 	}
 	body.page-template-page-listen :is(footer,#foot-banner) {
@@ -89,7 +89,7 @@ get_header(); ?>
 		background-color: transparent;
 	}
 	body.page-template-page-listen article .entry-header {
-		background-color: white;
+		background-color: var(--main-element-background);
 		padding: 0;
 		width: 1px;
 	}

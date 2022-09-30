@@ -15,7 +15,7 @@ get_header(); ?>
 	<style>
 		body.single-shows #station-social {
 			padding: 1em;
-			background-color: white;
+			background-color: var(--main-element-background);
 			overflow: hidden;
 			width: 100%;
 		}
@@ -35,7 +35,7 @@ get_header(); ?>
 			margin-bottom: 1rem;
 		}
 		#float-wrap aside {
-			background-color: white;
+			background-color: var(--main-element-background);
 		}
 		body.single-shows .podcast-badges {
 			justify-content: flex-end;
@@ -57,6 +57,9 @@ get_header(); ?>
 		.podcast-pane {
 			width: 100%;
 			padding: 0.5em 0;
+		}
+		article#hpm-show-podcast .article-player-wrap h3 {
+			display: none;
 		}
 		@media screen and (min-width: 34em) {
 			body.single-shows #station-social {
@@ -88,14 +91,10 @@ get_header(); ?>
 		}
 		@media screen and (min-width: 52.5em) {
 			body.single-shows #station-social {
-				grid-template-columns: 1fr 2fr;
+				grid-template-columns: 2fr 3fr;
 			}
 			body.single-shows #station-social.station-no-social {
 				grid-template-columns: 1fr !important;
-			}
-			#float-wrap article#hpm-show-podcast.card.card-medium {
-				width: 64.5%;
-				margin: 0 0.75% 1em;
 			}
 		}
 	</style>
@@ -111,6 +110,21 @@ get_header(); ?>
 			echo HPM_Podcasts::show_header( $show_id );
 			endwhile; ?>
 			<div id="float-wrap">
+				<aside class="column-right">
+					<h3>About <?php echo $show_title; ?></h3>
+					<div class="show-content">
+						<?php echo apply_filters( 'the_content', $show_content ); ?>
+					</div>
+					<div class="sidebar-ad">
+						<h4>Support Comes From</h4>
+						<div id="div-gpt-ad-1394579228932-1">
+							<script type='text/javascript'>
+								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+							</script>
+						</div>
+					</div>
+				</aside>
+				<div class="article-wrap">
 <?php
 	if ( !empty( $show['podcast'] ) ) :
 		$last_id = get_post_meta( $show['podcast'], 'hpm_pod_last_id', true );
@@ -129,21 +143,6 @@ get_header(); ?>
 				</article>
 <?php
 	endif; ?>
-				<aside class="column-right">
-					<h3>About <?php echo $show_title; ?></h3>
-					<div class="show-content">
-						<?php echo apply_filters( 'the_content', $show_content ); ?>
-					</div>
-					<div class="sidebar-ad">
-						<h4>Support Comes From</h4>
-						<div id="div-gpt-ad-1394579228932-1">
-							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-							</script>
-						</div>
-					</div>
-				</aside>
-				<div class="article-wrap">
 		<?php
 			$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
 			$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );

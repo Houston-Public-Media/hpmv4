@@ -21,7 +21,7 @@ get_header(); ?>
 			padding: 0 0 1em 2em;
 		}
 		.page-template-page-support-sub.matching-info .page-content aside {
-			background-color: #f5f5f5;
+			background-color: var(--main-background);
 		}
 		.page-template-page-support-sub.matching-info .page-content aside h2 {
 			padding-top: 0;
@@ -51,7 +51,7 @@ get_header(); ?>
 			font-family: var(--hpm-font-main); font-weight: 700;
 		}
 		.page.page-template-page-support-sub p {
-			color: #59595B;
+			color: var(--main-text);
 			font: 100 1.25em/1.125em var(--hpm-font-main);
 			margin-bottom: 1em;
 		}

@@ -9,7 +9,7 @@ get_header(); ?>
 			background-color: transparent;
 		}
 		.page #main article {
-			background-color: white;
+			background-color: var(--main-element-background);
 		}
 	</style>
 	<div id="primary" class="content-area">

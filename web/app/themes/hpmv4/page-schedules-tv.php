@@ -19,7 +19,7 @@ Template Name: TV Schedule
 			margin-bottom: 1rem;
 		}
 		body.page.page-template-page-schedules-tv :is(.column-left,.column-right) {
-			background-color: white;
+			background-color: var(--main-element-background);
 			padding: 1rem;
 		}
 		@media screen and (min-width: 64.0625em) {

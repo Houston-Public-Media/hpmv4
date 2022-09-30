@@ -71,7 +71,7 @@ get_header(); ?>
 			margin: 0 0 1em;
 			padding: 1em;
 			font-size: 125%;
-			color: #000;
+			color: var(--main-text);
 			background-color: rgba( 255, 0, 0, 0.2 );
 			display: block;
 			position: relative;

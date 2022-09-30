@@ -16,11 +16,11 @@ get_header(); ?>
 		}
 		.acc li h3 {
 			padding: 0.5em;
-			background: #ddd;
+			background: var(--main-background);
 			border: 1px solid black;
 		}
 		.acc li h3:hover {
-			background: #ebebeb;
+			opacity: 0.75;
 			cursor: pointer;
 		}
 		.acc .acc-content {
