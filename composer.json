@@ -72,7 +72,6 @@
 		"wpackagist-plugin/wp-ses": "*",
 		"wpackagist-plugin/www-xml-sitemap-generator-org": "2.0.7",
 		"deliciousbrains-plugin/wp-offload-media": "*",
-		"deliciousbrains-plugin/wp-offload-media-assets-pull": "*",
 		"jwcounts/wp-missed-schedule": "1.0.1",
 		"noweh/twitter-api-v2-php": "*"
 	},
