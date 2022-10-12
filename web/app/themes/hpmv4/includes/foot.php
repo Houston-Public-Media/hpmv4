@@ -46,8 +46,9 @@ function author_footer( $id ) {
 		         ( $local ? get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) : '' ) .
 		         "</div>
 			<div class=\"author-info\">
-				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>
-				<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
+				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>" .
+				// ( $local && !empty( $meta['pronouns'] ) ? '<p class="staff-pronouns">(' . $meta['pronouns'] . ')</p>' : '' ) .
+				"<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
 				<div class=\"social-wrap\">";
 		if ( $local ) :
 			if ( !empty( $meta['facebook'] ) ) :

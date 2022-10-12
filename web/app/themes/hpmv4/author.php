@@ -43,6 +43,7 @@
 					<div class="author-wrap-left">
 						<?PHP the_post_thumbnail( 'medium', array( 'alt' => get_the_title(), 'class' => 'author-thumb' ) ); ?>
 						<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
+						<?php // echo ( !empty( $author['pronouns'] ) ? '<p class="staff-pronouns">(' . $author['pronouns'] . ')</p>' : '' ) ?>
 						<h3><?php echo $author['title']; ?></h3>
 				<?php
 						if (

@@ -60,7 +60,7 @@ html {
 	--plyr-audio-control-color: var(--main-red);
 	--plyr-audio-controls-background: #eee;
 }
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
 	html {
 		--main-background: #282828;
 		--main-text: #FFFFFF;
@@ -93,7 +93,7 @@ html {
 			border-bottom: 0.25rem solid var(--accent-dark-blue-1) !important;
 		}
 	}
-} */
+}
 /* Typography */
 @font-face {
 	font-family: 'PBS-Sans';
@@ -231,6 +231,9 @@ body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
 }
 ul[role=list], ol[role=list] {
 	list-style: none;
+}
+ul li, ol li {
+	color: var(--main-text);
 }
 html:focus-within {
 	scroll-behavior: smooth;
@@ -397,8 +400,8 @@ p {
 	text-align: center;
 	padding: 1rem;
 	margin: 1rem 2.5%;
-	background-color: rgb(219, 229, 233);
-	color: rgb(16, 165, 177);
+	background-color: var(--main-element-background);
+	color: var(--accent-light-blue-1);
 	clear: both;
 }
 a.edit-box {
@@ -420,9 +423,11 @@ ol[type="i"] {
 	list-style-type: lower-roman;
 }
 blockquote {
-	padding: 0.25em 0 0.25em 1.5em;
+	padding: 1rem 0 1rem 1.5em;
 	margin: 0 0 1em 0;
-	border-left: 0.125em solid var(--main-background);
+	border-left: 0.125em solid var(--secondary-text);
+	background-color: var(--main-background);
+	color: var(--secondary-text);
 }
 blockquote * {
 	padding: 0;
@@ -476,6 +481,12 @@ details > * + * {
 }
 details > summary + * {
 	margin-top: 1rem;
+}
+.wpforms-container label {
+	color: var(--main-text);
+}
+.wpforms-container .wpforms-field-description {
+	color: var(--secondary-text);
 }
 
 /* Print Reset */
@@ -734,7 +745,7 @@ svg:not(:root) {
 	justify-content: flex-start;
 }
 .podcast-episode-info {
-	background-color: #eee;
+	background-color: var(--main-background);
 	padding: 1rem;
 	width: 100%;
 }
@@ -1120,6 +1131,7 @@ nav.pagination a.page-numbers.next {
 }
 .table-striped {
 	width: 100%;
+	color: var(--main-text);
 }
 #preview-warn {
 	text-align: center;
@@ -2910,7 +2922,7 @@ body.single #author-wrap .author-other-stories h2 a {
 	padding: 0.5em 0;
 }
 #top-schedule-wrap nav ul li a {
-	color: rgb(131,133,133);
+	color: var(--secondary-text);
 	font-weight: 500;
 	font-size: 1.25em;
 }
@@ -2967,6 +2979,7 @@ article .entry-header p.staff-pronouns,
 	margin: 0;
 	font-size: 0.9rem;
 	font-weight: 400;
+	color: var(--secondary-text);
 }
 @media screen and (min-width: 34em) {
 	.column-left,
@@ -3539,6 +3552,9 @@ article .entry-header p.staff-pronouns,
 .support-ssac tbody tr:nth-child(2n-1) {
 	background-color: #efefef;
 }
+.support-ssac .ssac-scroll {
+	background-color: rgba(255,255,255,0.75);
+}
 .support-ssac th, .support-ssac td {
 	text-align: center;
 	color: rgb(89, 89, 91);
@@ -3571,20 +3587,20 @@ article .entry-header p.staff-pronouns,
 .page.support-ssac h2.ssac-head {
 	text-align: center;
 	color: var(--main-red);
-	border-bottom: 1px solid #59595B;
+	border-bottom: 1px solid var(--secondary-text);
 }
 .page.support-ssac section h1 {
 	font-weight: 500;
 	font-size: 1.25em;
 	margin: 0;
-	color: #59595B;
+	color: var(--secondary-text);
 }
 .page.support-ssac section h2 {
 	padding: 0;
 	margin: 0 0 0.5em 0;
 	font-weight: 100;
 	font-size: 1.25em;
-	color: #59595B;
+	color: var(--secondary-text);
 	border: 0;
 	text-align: left;
 }
@@ -3593,10 +3609,10 @@ article .entry-header p.staff-pronouns,
 	font-size: 1.125em;
 	margin: 0;
 	padding: 0 0 1em;
-	color: #707070;
+	color: var(--main-text);
 }
 .page.support-ssac article .entry-content p a {
-	color: #59595B;
+	color: var(--secondary-text);
 	text-decoration: none;
 }
 .page.support-ssac article .entry-content p a.ss-give {
@@ -3631,7 +3647,7 @@ h2.ss-join {
 .page.support-ssac article.support-members .entry-content ul li {
 	margin: 0 0 0.5em;
 	font-family: var(--hpm-font-main); font-weight: 500;
-	color: #59595B;
+	color: var(--main-text);
 }
 .page.support-ssac article.support-members .entry-content p {
 	display: none;
