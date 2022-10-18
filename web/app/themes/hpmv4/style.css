@@ -60,7 +60,7 @@ html {
 	--plyr-audio-control-color: var(--main-red);
 	--plyr-audio-controls-background: #eee;
 }
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
 	html {
 		--main-background: #282828;
 		--main-text: #FFFFFF;
@@ -93,7 +93,7 @@ html {
 			border-bottom: 0.25rem solid var(--accent-dark-blue-1) !important;
 		}
 	}
-}
+}*/
 /* Typography */
 @font-face {
 	font-family: 'PBS-Sans';
