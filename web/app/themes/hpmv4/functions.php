@@ -941,16 +941,18 @@ add_filter( 'the_content', 'hpm_image_credits' , 1000000 );
 function hpm_image_credits( $content ) {
 	preg_match_all( '/<div class="credits-overlay" data-target="\.(wp-image-[0-9]{1,6})">(.+)<\/div>/', $content, $matches );
 	if ( !empty( $matches[0] ) ) :
-		log_it($content);
+		//log_it( $matches );
 		foreach( $matches[1] as $k => $v ) :
-			preg_match( '/(<img[ a-z\=\'\"0-9\-,\.\/\:A-Z\(\)]+'. $v .'[ A-Za-z\=\'\"0-9\-,\.\/\:\(\)]+ \/>)/', $content, $match );
-			if ( !empty( $match[0] ) ) :
-				preg_match( '/class="([a-zA-Z\-0-9 ]+)"/', $match[0], $class );
+			preg_match( '/(<p>)?(<a.+>)?(<img[ a-z\=\'\"0-9\-,\.\/\:A-Z\(\)]+'. $v .'[ A-Za-z\=\'\"0-9\-,\.\/\:\(\)_]+ \/>)(<\/a>)?(<\/p>)?/', $content, $match );
+			//log_it( $match );
+			if ( !empty( $match[3] ) ) :
+				preg_match( '/class="([a-zA-Z\-0-9 ]+)"/', $match[3], $class );
 				$credit = $matches[0][$k];
 				if ( preg_match( '/<a href="" title="">/', $credit ) ) :
 					$credit = str_replace( [ '<a href="" title="">', '</a>' ], [ '', '' ], $credit );
 				endif;
-				$replace = '<div class="credits-container ' . ( !empty( $class ) ? $class[1] : $v ) . '">' . $match[0] . $credit . '</div>';
+				$replace = '<div class="credits-container ' . ( !empty( $class ) ? $class[1] : $v ) . '">' .
+					( !empty( $match[2] ) ? $match[2] : '' ) . $match[3] . ( !empty( $match[4] ) ? $match[4] : '' ) . $credit . '</div>';
 				$content = str_replace( $matches[0][$k], '', $content );
 				$content = str_replace( $match[0], $replace, $content );
 			endif;
