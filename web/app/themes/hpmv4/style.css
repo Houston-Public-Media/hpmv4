@@ -2399,6 +2399,12 @@ aside > .hpm-promo-wrap {
 		display: grid;
 		grid-template-columns: 1fr;
 	}
+	aside > .hpm-promo-wrap > .column-one {
+		grid-row: 1;
+	}
+	aside > .hpm-promo-wrap > .column-two {
+		grid-row: 2;
+	}
 }
 
 /* Sidebar Highlights */
