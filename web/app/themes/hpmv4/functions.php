@@ -293,7 +293,7 @@ function hpm_top_cat( $post_id ) {
 }
 
 // Generate excerpt outside of the WP Loop
-function get_excerpt_by_id( $post_id ){
+function get_excerpt_by_id( $post_id ) {
 	$the_post = get_post( $post_id );
 	if ( !empty( $the_post ) ) :
 		$the_excerpt = $the_post->post_excerpt;
@@ -344,7 +344,7 @@ function prefix_insert_post_bug( $content ) {
 			$bug_code = '<div class="in-post-bug"><a href="/news/politics/texas-legislature/"><img src="https://cdn.hpm.io/assets/images/TX_Lege_Article_Bug.jpg" alt="Special Coverage Of The 85th Texas Legislative Session"></a><h3><a href="/news/politics/texas-legislature/">Special Coverage Of The 85th Texas Legislative Session</a></h3></div>';
 			return prefix_insert_after_paragraph( $bug_code, 2, $content );
 		elseif ( in_category( 'in-depth' ) ) :
-			if ( !preg_match( '/\[hpm_indepth\/\]/', $content ) ) :
+			if ( !preg_match( '/\[hpm_indepth ?\/?\]/', $content ) ) :
 				$bug_code = '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
 				return prefix_insert_after_paragraph( $bug_code, 5, $content );
 			endif;
@@ -352,7 +352,7 @@ function prefix_insert_post_bug( $content ) {
 	endif;
 	return $content;
 }
-add_filter( 'the_content', 'prefix_insert_post_bug', 15 );
+add_filter( 'the_content', 'prefix_insert_post_bug', 9 );
 
 function prefix_insert_after_paragraph( $insertion, $paragraph_id, $content ) {
 	$closing_p = '</p>';
