@@ -3,7 +3,7 @@
  * Plugin Name: Redis Object Cache Drop-In
  * Plugin URI: https://wordpress.org/plugins/redis-cache/
  * Description: A persistent object cache backend powered by Redis. Supports Predis, PhpRedis, Relay, replication, sentinels, clustering and WP-CLI.
- * Version: 2.2.0
+ * Version: 2.2.1
  * Author: Till Krüss
  * Author URI: https://objectcache.pro
  * License: GPLv3
@@ -17,6 +17,32 @@ defined( '\\ABSPATH' ) || exit;
 
 // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact, Generic.WhiteSpace.ScopeIndent.Incorrect
 if ( ! defined( 'WP_REDIS_DISABLED' ) || ! WP_REDIS_DISABLED ) :
+
+/**
+ * Determines whether the object cache implementation supports a particular feature.
+ *
+ * Possible values include:
+ *  - `add_multiple`, `set_multiple`, `get_multiple` and `delete_multiple`
+ *  - `flush_runtime` and `flush_group`
+ *
+ * @param string $feature Name of the feature to check for.
+ * @return bool True if the feature is supported, false otherwise.
+ */
+function wp_cache_supports( $feature ) {
+	switch ( $feature ) {
+		case 'add_multiple':
+		case 'set_multiple':
+		case 'get_multiple':
+		case 'delete_multiple':
+		case 'flush_runtime':
+			return true;
+
+        case 'flush_group':
+		default:
+			return false;
+	}
+}
+
 
 /**
  * Adds a value to cache.
@@ -514,7 +540,7 @@ class WP_Object_Cache {
             }
 
             if ( defined( 'WP_REDIS_CLUSTER' ) ) {
-	            $connectionID = is_string( WP_REDIS_CLUSTER )
+                $connectionID = is_string( WP_REDIS_CLUSTER )
                     ? WP_REDIS_CLUSTER
                     : current( $this->build_cluster_connection_array() );
 
@@ -1170,6 +1196,7 @@ class WP_Object_Cache {
 
         $orig_exp = $expire;
         $expire = $this->validate_expiration( $expire );
+        $derived_keys = [];
 
         foreach ( $data as $key => $value ) {
             /**
@@ -1213,6 +1240,10 @@ class WP_Object_Cache {
             $results = array_map( function ( $response ) {
                 return (bool) $this->parse_redis_response( $response );
             }, $tx->{$method}() ?? [] );
+
+            if ( count( $results ) !== count( $keys ) ) {
+                throw new Exception( 'Redis pipeline returned unexpected result' );
+            }
 
             $results = array_combine( $keys, $results );
 
@@ -1360,7 +1391,7 @@ class WP_Object_Cache {
      * @param   string $group      The group value appended to the $key.
      * @return  bool               Returns TRUE on success or FALSE on failure.
      */
-    public function delete( $key, $group = 'default' ) {
+    public function delete( $key, $group = 'default', $deprecated = false ) {
         $result = false;
 
         $san_key = $this->sanitize_key_part( $key );
@@ -1458,6 +1489,10 @@ class WP_Object_Cache {
             $results = array_map( function ( $response ) {
                 return (bool) $this->parse_redis_response( $response );
             }, $tx->{$method}() ?? [] );
+
+            if ( count( $results ) !== count( $keys ) ) {
+                throw new Exception( 'Redis pipeline returned unexpected result' );
+            }
 
             $execute_time = microtime( true ) - $start_time;
         } catch ( Exception $exception ) {
@@ -1734,8 +1769,6 @@ LUA;
      * @return  bool|mixed         Cached object value.
      */
     public function get( $key, $group = 'default', $force = false, &$found = null ) {
-        $start_time = microtime( true );
-
         $san_key = $this->sanitize_key_part( $key );
         $san_group = $this->sanitize_key_part( $group );
         $derived_key = $this->fast_build_key( $san_key, $san_group );
@@ -1752,6 +1785,8 @@ LUA;
 
             return false;
         }
+
+        $start_time = microtime( true );
 
         try {
             $result = $this->redis->get( $derived_key );
@@ -2107,6 +2142,10 @@ LUA;
             $results = array_map( function ( $response ) {
                 return (bool) $this->parse_redis_response( $response );
             }, $tx->{$method}() ?? [] );
+
+            if ( count( $results ) !== count( $keys ) ) {
+                throw new Exception( 'Redis pipeline returned unexpected result' );
+            }
 
             $results = array_combine( $keys, $results );
 
