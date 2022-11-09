@@ -528,9 +528,19 @@ class HPM_Promos {
 							"setCookie('visited','true',4);".
 							"document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);".
 							"var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');".
+							"var campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
+							"setTimeout(() => {".
+								"ga('hpmprod.send', 'event', 'Lightbox', 'view', campaignData);".
+								"ga('hpmRollupprod.send', 'event', 'Lightbox', 'view', campaignData);".
+								"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'view', campaignData);".
+							"}, 1000);" .
 							"for (i = 0; i < campaign.length; ++i) {".
-								"campaign[i].addEventListener('click', function() {".
+								"campaign[i].addEventListener('click', (event) => {".
+									"event.stopPropagation();" .
 									"document.getElementById('campaign-splash').style.display = 'none';".
+									"ga('hpmprod.send', 'event', 'Lightbox', 'dismiss', campaignData);".
+									"ga('hpmRollupprod.send', 'event', 'Lightbox', 'dismiss', campaignData);".
+									"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'dismiss', campaignData);".
 								"});".
 							"}".
 						"}";
@@ -549,7 +559,8 @@ class HPM_Promos {
 					"var lBox = document.querySelectorAll('#campaign-splash a');".
 					"if (lBox !== null) {".
 						"Array.from(lBox).forEach((item) => {".
-							"item.addEventListener('click', () => {".
+							"item.addEventListener('click', (event) => {".
+								"event.stopPropagation();" .
 								"var campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
 								"if ( typeof campaign !== typeof undefined && campaign !== false) {".
 									"ga('hpmprod.send', 'event', 'Lightbox', 'click', campaign);".
