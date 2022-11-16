@@ -45,8 +45,7 @@ get_header(); ?>
 				padding: 1.5em 0 0;
 				text-align: center;
 			}
-			.page-template-page-passport .page-content a,
-			.page-template-page-passport .page-content h2.device-options {
+			.page-template-page-passport .page-content a {
 				color: #0A145A;
 			}
 			.page-template-page-passport.passport-faqs .page-content {
@@ -123,8 +122,52 @@ get_header(); ?>
 				padding: 0 1em 1em;
 			}
 			.page-template-page-passport .page-content ul.passport-options li {
-				width: 25%;
 				padding: 0 1em;
+			}
+			.passport-app {
+				border-top: 1rem solid #f5f5f5;
+				padding: 1rem 0 0;
+				background-color: #0A145A;
+				background: linear-gradient(90deg, var(--main-red) 0%, #0A145A 100%);
+			}
+			.page-template-page-passport .page-content h2.device-options a {
+				color: white;
+			}
+			.passport-app .passport-options a {
+				background-color: #fff;
+				display: block;
+				width: 3rem;
+				height: 3rem;
+				mask-repeat: no-repeat;
+				mask-position: center;
+				mask-size: contain;
+			}
+			.passport-app .passport-options a.passport-ios {
+				mask-image: url(https://cdn.hpm.io/assets/images/icons/iOS@2x.png);
+			}
+			.passport-app .passport-options a.passport-appletv {
+				mask-image: url(https://cdn.hpm.io/assets/images/icons/apple_tv@2x.png);
+				width: 4rem;
+			}
+			.passport-app .passport-options a.passport-roku {
+				mask-image: url(https://cdn.hpm.io/assets/images/icons/roku_big@2x.png);
+				width: 5rem;
+			}
+			.passport-app .passport-options a.passport-android {
+				mask-image: url(https://cdn.hpm.io/assets/images/icons/android@2x.png);
+				width: 3.5rem;
+			}
+			.passport-app .passport-options a.passport-androidtv {
+				mask-image: url(https://cdn.hpm.io/assets/images/icons/androidtv@2x.png);
+				width: 5.5rem;
+			}
+			.passport-app .passport-options a.passport-firetv {
+				mask-image: url(https://cdn.hpm.io/assets/images/icons/amazonfireTV_big@2x.png);
+				width: 3.5rem;
+			}
+			.passport-app .passport-options a.passport-chromecast {
+				mask-image: url(https://cdn.hpm.io/assets/images/icons/chromecast@2x.png);
+				width: 7rem;
 			}
 			.page-template-page-passport.passport-faqs .page-content #passport-devices {
 				flex-flow: row wrap;
@@ -306,8 +349,7 @@ get_header(); ?>
 				}
 			}
 			@media (prefers-color-scheme: dark) {
-				.page-template-page-passport .page-content a,
-				.page-template-page-passport .page-content h2.device-options {
+				.page-template-page-passport .page-content a {
 					color: #5680ff;
 				}
 			}
