@@ -138,34 +138,44 @@ get_header(); ?>
 				display: block;
 				width: 3rem;
 				height: 3rem;
+				-webkit-mask-repeat: no-repeat;
+				-webkit-mask-position: center;
+				-webkit-mask-size: contain;
 				mask-repeat: no-repeat;
 				mask-position: center;
 				mask-size: contain;
 			}
 			.passport-app .passport-options a.passport-ios {
+				-webkit-mask-image: url(https://cdn.hpm.io/assets/images/icons/iOS@2x.png);
 				mask-image: url(https://cdn.hpm.io/assets/images/icons/iOS@2x.png);
 			}
 			.passport-app .passport-options a.passport-appletv {
+				-webkit-mask-image: url(https://cdn.hpm.io/assets/images/icons/apple_tv@2x.png);
 				mask-image: url(https://cdn.hpm.io/assets/images/icons/apple_tv@2x.png);
 				width: 4rem;
 			}
 			.passport-app .passport-options a.passport-roku {
+				-webkit-mask-image: url(https://cdn.hpm.io/assets/images/icons/roku_big@2x.png);
 				mask-image: url(https://cdn.hpm.io/assets/images/icons/roku_big@2x.png);
 				width: 5rem;
 			}
 			.passport-app .passport-options a.passport-android {
+				-webkit-mask-image: url(https://cdn.hpm.io/assets/images/icons/android@2x.png);
 				mask-image: url(https://cdn.hpm.io/assets/images/icons/android@2x.png);
 				width: 3.5rem;
 			}
 			.passport-app .passport-options a.passport-androidtv {
+				-webkit-mask-image: url(https://cdn.hpm.io/assets/images/icons/androidtv@2x.png);
 				mask-image: url(https://cdn.hpm.io/assets/images/icons/androidtv@2x.png);
 				width: 5.5rem;
 			}
 			.passport-app .passport-options a.passport-firetv {
+				-webkit-mask-image: url(https://cdn.hpm.io/assets/images/icons/amazonfireTV_big@2x.png);
 				mask-image: url(https://cdn.hpm.io/assets/images/icons/amazonfireTV_big@2x.png);
 				width: 3.5rem;
 			}
 			.passport-app .passport-options a.passport-chromecast {
+				-webkit-mask-image: url(https://cdn.hpm.io/assets/images/icons/chromecast@2x.png);
 				mask-image: url(https://cdn.hpm.io/assets/images/icons/chromecast@2x.png);
 				width: 7rem;
 			}
