@@ -56,7 +56,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 				'<audio class="js-player" id="audio-' . $audio_id . '" data-title="' . ( !empty( $audio_data_title ) ? urlencode( $audio_data_title ) : '' ) . '" controls preload="' . $preload . '">'.
 					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
 				'</audio>';
-		if ( !is_admin() ) :
+		if ( !is_admin() && !in_array( $post_id, [ 0, 58036 ] ) ) :
 			$html .= '<button class="plyr-audio-embed" data-id="' . $audio_id .'">' . hpm_svg_output( 'code' ) . '</button>' .
 				'<div class="plyr-audio-embed-popup" id="plyr-' . $audio_id . '-popup">' .
 					'<div class="plyr-audio-embed-wrap">' .
