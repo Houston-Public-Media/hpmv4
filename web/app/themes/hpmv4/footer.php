@@ -58,7 +58,7 @@
 			</footer>
 		</div>
 	<?php
-			wp_footer();
-		endif; ?>
+		endif;
+		wp_footer(); ?>
 	</body>
 </html>

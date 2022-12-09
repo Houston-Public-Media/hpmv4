@@ -834,7 +834,7 @@ class HPM_Podcasts {
 			<title><?PHP the_title_rss(); ?></title>
 		</image><?php
 		endif;
-		do_action( 'rss2_head');
+		do_action( 'rss2_head' );
 		if ( $podeps->have_posts() ) :
 			while ( $podeps->have_posts() ) :
 				$podeps->the_post();
@@ -844,6 +844,9 @@ class HPM_Podcasts {
 					update_post_meta( $pod_id, 'hpm_pod_last_id', $last );
 				endif;
 				$a_meta = get_post_meta( $epid, 'hpm_podcast_enclosure', true );
+				if ( empty( $a_meta ) ) :
+					continue;
+				endif;
 				$pod_image = wp_get_attachment_image_src( get_post_thumbnail_id( $epid ), 'full' );
 				$tags = wp_get_post_tags( $epid );
 				$tag_array = [];

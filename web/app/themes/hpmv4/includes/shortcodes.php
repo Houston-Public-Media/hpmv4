@@ -879,3 +879,52 @@ function hpm_waterlines_shortcode() {
 	return $output;
 }
 add_shortcode( 'hpm_waterlines_pod', 'hpm_waterlines_shortcode' );
+
+function hpm_impact_shortcode() {
+	$output = '';
+	$page_id = get_the_ID() ? get_the_ID() : 0;
+	if ( $page_id == 0 ) {
+		return $output;
+	}
+	$args = [
+		'post_parent'    => $page_id,
+		'post_type'      => 'attachment',
+		'post_mime_type' => 'application/pdf',
+		'posts_per_page' => -1,
+		'post_status'	 => 'inherit'
+	];
+	$media = new WP_query( $args );
+	if ( empty( $media->posts ) ) {
+		return $output;
+	}
+	$output .= '<section class="impact-current">';
+	$prev = [];
+	foreach ( $media->posts as $k => $m ) {
+		if ( $k <= 3 ) {
+			$output .= '<div><a href="' . wp_get_attachment_url( $m->ID ) . '"><img src="' . wp_get_attachment_thumb_url( $m->ID ) . '">' . $m->post_excerpt . '</a></div>';
+		} else {
+			$temp = [
+				'url' => wp_get_attachment_url( $m->ID ),
+				'title' => $m->post_excerpt
+			];
+			preg_match( '/([0-9]{4})[\-_]([0-9]{2})/', $m->post_name, $match );
+			if ( !empty( $match ) ) {
+				$prev[ $match[1] ][ $match[2] ] = $temp;
+			}
+		}
+	}
+	foreach ( $prev as $pk => $pv ) {
+		ksort( $prev[ $pk ] );
+	}
+	$output .= '</section><section class="impact-archive"><h2>Previous Reports</h2>';
+	foreach ( $prev as $pk => $pv ) {
+		$output .= '<div><h3>' . $pk . '</h3><ul>';
+		foreach ( $pv as $ppv ) {
+			$output .= '<li><a href="' . $ppv['url'] . '">' . $ppv['title'] . '</a></li>';
+		}
+		$output .= '</ul></div>';
+	}
+	$output .= "</section>";
+	return $output;
+}
+add_shortcode( 'hpm_impact', 'hpm_impact_shortcode' );
