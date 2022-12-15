@@ -519,6 +519,8 @@ function hpm_nprone_check( $post_id, $post ) {
 			if ( !preg_match( '/\[audio.+\]\[\/audio\]/', $post->post_content ) ) :
 				unset( $_POST['send_to_one'] );
 				unset( $_POST['nprone_featured'] );
+			else :
+				$_POST['send_to_one'] = 1;
 			endif;
 		else :
 			unset( $_POST['send_to_api'] );
