@@ -635,7 +635,7 @@ function hpm_careers_trans() {
 	$json = json_decode( $response, true );
 	$desc = json_decode( file_get_contents( 'https://cdn.hpm.io/assets/taleo.json' ), true );
 	if ( empty( $json['requisitionList'] ) ) :
-		$output = '<p>Thank you for your interest in Houston Public Media. We do not currently have any job openings. Please check back later, or you can check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
+		$output = '';
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
 	endif;
@@ -654,7 +654,6 @@ function hpm_careers_trans() {
 			$output .= '<p><a href="https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=' . $j['contestNo'] . '&tz=GMT-06%3A00&tzname=America%2FChicago">Click here to apply</a></p></details>';
 		endif;
 	endforeach;
-	$output .= '<p><em>The University of Houston is an Equal Opportunity/Affirmative Action institution. Minorities, women, veterans and persons with disabilities are encouraged to apply. Additionally, the University prohibits discrimination in employment on the basis of sexual orientation, gender identity or gender expression.</em></p><p>For all employment opportunities, check out <a href="https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)" target="_blank">Houston Public Media on the UH Taleo Job Site</a>.</p>';
 	set_transient( 'hpm_careers', $output, 900 );
 	return $output;
 }
