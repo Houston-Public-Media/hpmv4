@@ -58,11 +58,11 @@ get_header(); ?>
 				grid-template-columns: 2fr 3fr;
 			}
 		}
-		@media (prefers-color-scheme: dark) {
+		/* @media (prefers-color-scheme: dark) {
 			body.single-shows #station-social h3 {
 				color: var(--accent-red-4);
 			}
-		}
+		} */
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
