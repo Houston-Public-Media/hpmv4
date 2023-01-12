@@ -486,18 +486,24 @@ add_filter( 'the_content', 'hpm_charset_clean', 10 );
 
 function hpm_revue_signup( $content ) {
 	global $post;
-	if ( is_single() && $post->post_type == 'post' ) :
-		if ( in_category( 'news' ) ) :
-			$content .= "<div id=\"revue-embed\">
-<h2>Subscribe to <em>Today in Houston</em></h2>
-<p>Fill out the form below to subscribe our new daily editorial newsletter from the HPM Newsroom.</p>
-<form action=\"https://www.getrevue.co/profile/TodayInHouston/add_subscriber\" method=\"post\" id=\"revue-form\" name=\"revue-form\" target=\"_blank\">
-<div class=\"revue-form-group\"><label for=\"member_email\">Email*</label><input class=\"revue-form-field\" placeholder=\"Email (Required)\" type=\"email\" name=\"member[email]\" id=\"member_email\"></div>
-<div class=\"revue-form-group\"><label for=\"member_first_name\">First Name</label><input class=\"revue-form-field\" placeholder=\"First Name\" type=\"text\" name=\"member[first_name]\" id=\"member_first_name\"></div>
-<div class=\"revue-form-group\"><label for=\"member_last_name\">Last Name</label><input class=\"revue-form-field\" placeholder=\"Last Name\" type=\"text\" name=\"member[last_name]\" id=\"member_last_name\"></div>
-<div class=\"revue-form-actions\"><p class=\"revue-small\">* required</p><input type=\"submit\" value=\"Subscribe\" name=\"member[subscribe]\" id=\"member_submit\"></div></form></div>";
-		endif;
-	endif;
+	if ( is_single() && $post->post_type == 'post' ) {
+		if ( in_category( 'news' ) ) {
+// 			$content .= "<div id=\"revue-embed\">
+// <h2>Subscribe to <em>Today in Houston</em></h2>
+// <p>Fill out the form below to subscribe our new daily editorial newsletter from the HPM Newsroom.</p>
+// <form action=\"https://www.getrevue.co/profile/TodayInHouston/add_subscriber\" method=\"post\" id=\"revue-form\" name=\"revue-form\" target=\"_blank\">
+// <div class=\"revue-form-group\"><label for=\"member_email\">Email*</label><input class=\"revue-form-field\" placeholder=\"Email (Required)\" type=\"email\" name=\"member[email]\" id=\"member_email\"></div>
+// <div class=\"revue-form-group\"><label for=\"member_first_name\">First Name</label><input class=\"revue-form-field\" placeholder=\"First Name\" type=\"text\" name=\"member[first_name]\" id=\"member_first_name\"></div>
+// <div class=\"revue-form-group\"><label for=\"member_last_name\">Last Name</label><input class=\"revue-form-field\" placeholder=\"Last Name\" type=\"text\" name=\"member[last_name]\" id=\"member_last_name\"></div>
+// <div class=\"revue-form-actions\"><p class=\"revue-small\">* required</p><input type=\"submit\" value=\"Subscribe\" name=\"member[subscribe]\" id=\"member_submit\"></div></form></div>";
+// 		endif;
+			$form_id = '441232';
+			if ( WP_ENV == 'development' ) {
+				$form_id = '439474';
+			}
+			$content .= '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+		}
+	}
 	return $content;
 }
 add_filter( 'the_content', 'hpm_revue_signup', 15 );
