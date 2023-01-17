@@ -290,16 +290,15 @@ Template Name: Career Frontier
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post(); ?>
+		<?PHP while ( have_posts() ) {
+			the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="page-header">
-					<?php
-						the_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
-				</header><!-- .entry-header -->
+					<?php the_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
+				</header>
 				<div class="page-content">
 					<?php the_content(); ?>
-				</div><!-- .entry-content -->
-
+				</div>
 				<footer class="entry-footer">
 				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
@@ -310,12 +309,11 @@ Template Name: Career Frontier
 						);
 					}
 					edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-footer -->
-			</article><!-- #post-## -->
-			<?php
-				endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+				</footer>
+			</article>
+		<?php } ?>
+		</main>
+	</div>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
 			var artHeads = document.querySelectorAll('.cf-eps-wrap article header');

@@ -1,6 +1,6 @@
 <?php
 	$curauth = $wp_query->get_queried_object();
-	if ( is_a( $curauth, 'wp_user' ) ) :
+	if ( is_a( $curauth, 'wp_user' ) ) {
 		$author_check = new WP_Query( [
 			'post_type' => 'staff',
 			'post_status' => 'publish',
@@ -10,8 +10,8 @@
 				'value' => $curauth->ID
 			] ]
 		] );
-	elseif ( !empty( $curauth->type ) && $curauth->type == 'guest-author' ) :
-		if ( !empty( $curauth->linked_account ) ) :
+	} elseif ( !empty( $curauth->type ) && $curauth->type == 'guest-author' ) {
+		if ( !empty( $curauth->linked_account ) ) {
 			$authid = get_user_by( 'login', $curauth->linked_account );
 			$author_check = new WP_Query( [
 				'post_type' => 'staff',
@@ -22,12 +22,12 @@
 					'value' => $authid->ID
 				] ]
 			] );
-		else :
+		} else {
 			$author_check = '';
-		endif;
-	else :
+		}
+	} else {
 		$author_check = '';
-    endif;
+    }
 	get_header();
 ?>
 	<section id="primary" class="content-area">
@@ -35,9 +35,9 @@
 			<header class="page-header">
 				<div id="author-wrap">
 		<?php
-			if ( !empty( $author_check ) && is_a( $author_check, 'wp_query' ) ) :
-				if ( $author_check->have_posts() ) :
-					while ( $author_check->have_posts() ) :
+			if ( !empty( $author_check ) && is_a( $author_check, 'wp_query' ) ) {
+				if ( $author_check->have_posts() ) {
+					while ( $author_check->have_posts() ) {
 						$author_check->the_post();
 						$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE ); ?>
 					<div class="author-wrap-left">
@@ -51,84 +51,51 @@
 							!empty( $author['twitter'] ) ||
 							!empty( $author['linkedin'] ) ||
 							!empty( $author['email'] )
-						) : ?>
+						) { ?>
 						<div class="social-wrap">
-					<?php
-							if ( !empty( $author['facebook'] ) ) : ?>
-							<div class="social-icon facebook">
-								<a href="<?php echo $author['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
-							</div>
-				<?php
-							endif;
-							if ( !empty( $author['twitter'] ) ) : ?>
-							<div class="social-icon twitter">
-								<a href="<?php echo $author['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></a>
-							</div>
-				<?php
-							endif;
-							if ( !empty( $author['linkedin'] ) ) : ?>
-								<div class="social-icon linkedin">
-									<a href="<?php echo $author['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
-								</div>
-				<?php
-							endif;
-							if ( !empty( $author['email'] ) ) : ?>
-							<div class="social-icon envelope">
-								<a href="mailto:<?php echo $author['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?></a>
-							</div>
-				<?php
-							endif; ?>
+						<?php
+							echo ( !empty( $author['facebook'] ) ? '<div class="social-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . ' </a></div>' : '' );
+							echo ( !empty( $author['twitter'] ) ? '<div class="social-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>' : '' );
+							echo ( !empty( $author['linkedin'] ) ? '<div class="social-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>' : '' );
+							echo ( !empty( $author['email'] ) ? '<div class="social-icon envelope"><a href="mailto:' . $author['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>' : '' );
+						} ?>
 						</div>
-				<?php
-						endif; ?>
 					</div>
 					<div class="author-info-wrap">
 				<?php
-	                    $author_bio = get_the_content();
-	                    if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) :
-	                        $author_bio = '';
-	                    endif;
-	                    echo apply_filters( 'hpm_filter_text', $author_bio ); ?>
+						$author_bio = get_the_content();
+						if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) {
+							$author_bio = '';
+						}
+						echo apply_filters( 'hpm_filter_text', $author_bio ); ?>
 					</div>
 			<?php
-					endwhile;
-				else : ?>
+					}
+				} else { ?>
 					<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
 			<?php
-					if ( !empty( $curauth->user_email ) || !empty( $curauth->website ) ) : ?>
+					if ( !empty( $curauth->user_email ) || !empty( $curauth->website ) ) { ?>
 					<ul>
-			<?php
-						if ( !empty( $curauth->website ) ) : ?>
-						<li><a href="<?php echo $curauth->website; ?>" target="_blank">More from this author</a></li>
-			<?php
-						endif;
-						if ( !empty( $curauth->user_email ) ) : ?>
-						<li><a href="mailto:<?php echo $curauth->user_email; ?>">Contact this author</a></li>
-			<?php
-						endif; ?>
+					<?php
+						echo ( !empty( $curauth->website ) ? '<li><a href="' . $curauth->website . '" target="_blank">More from this author</a></li>' : '' );
+						echo ( !empty( $curauth->user_email ) ? '<li><a href="mailto:' . $curauth->user_email .'">Contact this author</a></li>' : '' );
+					} ?>
 					</ul>
 		<?php
-					endif;
-				endif;
-			else : ?>
+				}
+			} else { ?>
 					<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
 			<?php
-					if ( !empty( $curauth->user_email ) || !empty( $curauth->website ) ) : ?>
+				if ( !empty( $curauth->user_email ) || !empty( $curauth->website ) ) { ?>
 					<ul>
-			<?php
-						if ( !empty( $curauth->website ) ) : ?>
-						<li><a href="<?php echo $curauth->website; ?>" target="_blank">More from this author</a></li>
-			<?php
-						endif;
-						if ( !empty( $curauth->user_email ) ) : ?>
-						<li><a href="mailto:<?php echo $curauth->user_email; ?>">Contact this author</a></li>
-			<?php
-						endif; ?>
+					<?php
+						echo ( !empty( $curauth->website ) ? '<li><a href="' . $curauth->website . '" target="_blank">More from this author</a></li>' : '' );
+						echo ( !empty( $curauth->user_email ) ? '<li><a href="mailto:' . $curauth->user_email . '">Contact this author</a></li>' : '' ); ?>
 					</ul>
 		<?php
-					endif;
+				}
 
-			endif;
+			}
 			wp_reset_query(); ?>
 				</div>
 			</header>
@@ -137,10 +104,11 @@
 			</aside>
 			<section id="search-results">
 		<?php
-		if ( have_posts() ) :
-			while ( have_posts() ) : the_post();
+		if ( have_posts() ) {
+			while ( have_posts() ) {
+				the_post();
 				get_template_part( 'content', get_post_type() );
-			endwhile;
+			}
 
 			// Previous/next page navigation.
 			the_posts_pagination( array(
@@ -150,9 +118,9 @@
 			) );
 
 		// If no content, include the "No posts found" template.
-		else :
+		} else {
 			get_template_part( 'content', 'none' );
-		endif; ?>
+		} ?>
 			</section>
 		</main>
 	</section>

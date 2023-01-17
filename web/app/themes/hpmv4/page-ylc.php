@@ -5,7 +5,9 @@ Template Name: Young Leaders Council
 get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-			<?PHP while ( have_posts() ) : the_post(); ?>
+<?PHP
+	while ( have_posts() ) {
+		the_post(); ?>
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 					<header class="page-header">
 						<h2><?php echo get_the_excerpt(); ?></h2>
@@ -32,9 +34,10 @@ get_header(); ?>
 						edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 					</footer>
 				</article>
-			<?php endwhile; ?>
+<?php
+	} ?>
 		</main>
-					</div>
+	</div>
 	<script>
 		function modalSwitch(dataId,modal) {
 			var dIndexSp = dataId.split('-');

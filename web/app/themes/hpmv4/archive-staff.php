@@ -95,7 +95,7 @@ get_header(); ?>
 	</style>
 	<section id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?php if ( have_posts() ) :
+		<?php if ( have_posts() ) {
 			$query_obj = $wp_query->get_queried_object(); ?>
 
 			<header class="page-header">
@@ -116,9 +116,9 @@ get_header(); ?>
 			<section id="search-results">
 		<?php
 			hpm_staff_echo( $wp_query );
-		else :
+		} else {
 			get_template_part( 'content', 'none' );
-		endif; ?>
+		} ?>
 			</section>
 		</main>
 	</section>

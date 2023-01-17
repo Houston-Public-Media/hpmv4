@@ -105,7 +105,9 @@ get_header(); ?>
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-			<?PHP while ( have_posts() ) : the_post(); ?>
+<?PHP
+	while ( have_posts() ) {
+		the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="padding: 0;">
 				<header class="page-header">
 					<div class="page-header-wrap">
@@ -129,7 +131,8 @@ get_header(); ?>
 					edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer>
 			</article>
-		<?php endwhile; ?>
+<?php
+	} ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

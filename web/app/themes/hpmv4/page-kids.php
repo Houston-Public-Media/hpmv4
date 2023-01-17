@@ -409,7 +409,8 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
-			while ( have_posts() ) : the_post(); ?>
+			while ( have_posts() ) {
+				the_post(); ?>
 			<header class="page-header">
 				<?php the_title( '<h1 class="entry-title screen-reader-text">', '</h1>' ); ?>
 				<img src="https://cdn.hpm.io/wp-content/uploads/2016/01/29132048/HPMKids-Logo-11.png" alt="Houston Public Media Kids" id="head-logo">
@@ -418,8 +419,7 @@ get_header(); ?>
 			</header>
 			<?php
 				the_content( );
-			endwhile; ?>
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+			} ?>
+		</main>
+	</div>
 <?php get_footer(); ?>

@@ -62,48 +62,48 @@ function hpm_header_info() {
 		'has_audio' => 0
 	];
 
-	if ( is_home() || is_404() ) :
+	if ( is_home() || is_404() ) {
 		// Do Nothing
-	else :
+	} else {
 		$ID = $wp_query->get_queried_object_id();
 		$query_obj = $wp_query->get_queried_object();
 
-		if ( is_author() ) :
+		if ( is_author() ) {
 			global $curauth;
 			global $author_check;
 			$reqs['og_type'] = 'profile';
 			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
 			$reqs['title'] = $curauth->display_name." | Houston Public Media";
-			if ( !empty( $author_check ) ) :
-				while ( $author_check->have_posts() ) :
+			if ( !empty( $author_check ) ) {
+				while ( $author_check->have_posts() ) {
 					$author_check->the_post();
 					$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
-					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) :
+					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) {
 						$reqs['description'] = $head_excerpt;
-					endif;
+					}
 					$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
 					$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
-					if ( !empty( $head_categories ) ) :
+					if ( !empty( $head_categories ) ) {
 						$reqs['keywords'] = [];
-						foreach( $head_categories as $hcat ) :
+						foreach( $head_categories as $hcat ) {
 							$reqs['keywords'][] = $hcat->name;
-						endforeach;
-					endif;
+						}
+					}
 					$reqs['title'] = $curauth->display_name.", ".$author['title']." | Houston Public Media";
-				endwhile;
+				}
 				wp_reset_query();
-			endif;
-		elseif ( is_archive() ) :
-			if ( is_post_type_archive() ) :
+			}
+		} elseif ( is_archive() ) {
+			if ( is_post_type_archive() ) {
 				$obj = get_post_type_object( get_post_type() );
 				$reqs['permalink'] = get_post_type_archive_link( get_post_type() );
 				$reqs['title'] = $obj->labels->name . ' | Houston Public Media';
 				$reqs['description'] = wp_strip_all_tags( $obj->description, true );
-			else :
+			} else {
 				$reqs['permalink'] = get_the_permalink( $ID );
 				$reqs['title'] = $query_obj->name . ' | Houston Public Media';
-			endif;
-		elseif ( is_page_template( 'page-npr-articles.php' ) ) :
+			}
+		} elseif ( is_page_template( 'page-npr-articles.php' ) ) {
 				global $nprdata;
 				$reqs['title'] = $nprdata['title'];
 				$reqs['permalink'] = $nprdata['permalink'];
@@ -116,9 +116,9 @@ function hpm_header_info() {
 					'mime-type' => $nprdata['image']['mime-type']
 				];
 				$reqs['publish_date'] = $nprdata['date'];
-		elseif ( is_single() || is_page() || get_post_type() == 'embeds' ) :
+		} elseif ( is_single() || is_page() || get_post_type() == 'embeds' ) {
 			$attach_id = get_post_thumbnail_id( $ID );
-			if ( !empty( $attach_id ) ) :
+			if ( !empty( $attach_id ) ) {
 				$feature_img = wp_get_attachment_image_src( $attach_id, 'large' );
 				$reqs['thumb_meta'] = [
 					'width' => $feature_img[1],
@@ -126,88 +126,88 @@ function hpm_header_info() {
 					'mime-type' => get_post_mime_type( $attach_id )
 				];
 				$reqs['thumb'] = $feature_img[0];
-			endif;
+			}
 			$seo_headline = get_post_meta( $ID, 'hpm_seo_headline', true );
-			if ( !empty( $seo_headline ) ) :
+			if ( !empty( $seo_headline ) ) {
 				$reqs['title'] = wp_strip_all_tags( $seo_headline ) . ' | Houston Public Media';
-			else :
+			} else {
 				$reqs['title'] = wp_strip_all_tags( get_the_title( $ID ), true ) . ' | Houston Public Media';
-			endif;
+			}
 			$reqs['permalink'] = get_the_permalink( $ID );
 			$reqs['description'] = htmlentities( wp_strip_all_tags( get_excerpt_by_id( $ID ), true ), ENT_QUOTES );
 			$reqs['og_type'] = 'article';
 			$coauthors = get_coauthors( $ID );
-			foreach ( $coauthors as $coa ) :
+			foreach ( $coauthors as $coa ) {
 				$author_fb = '';
-				if ( is_a( $coa, 'wp_user' ) ) :
-					$author_check = new WP_Query( [
+				if ( is_a( $coa, 'wp_user' ) ) {
+					$author_check = new WP_Query([
 						'post_type' => 'staff',
 						'post_status' => 'publish',
-						'meta_query' => [ [
+						'meta_query' => [[
 							'key' => 'hpm_staff_authid',
 							'compare' => '=',
 							'value' => $coa->ID
-						] ]
-					] );
-					if ( $author_check->have_posts() ) :
+						]]
+					]);
+					if ( $author_check->have_posts() ) {
 						$author_meta = get_post_meta( $author_check->post->ID, 'hpm_staff_meta', true );
-						if ( !empty( $author_meta['facebook'] ) ) :
+						if ( !empty( $author_meta['facebook'] ) ) {
 							$author_fb = $author_meta['facebook'];
-						endif;
-					endif;
-				elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) :
-					if ( !empty( $coa->linked_account ) ) :
+						}
+					}
+				} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
+					if ( !empty( $coa->linked_account ) ) {
 						$authid = get_user_by( 'login', $coa->linked_account );
-						if ( $authid !== false ) :
-							$author_check = new WP_Query( [
+						if ( $authid !== false ) {
+							$author_check = new WP_Query([
 								'post_type' => 'staff',
 								'post_status' => 'publish',
-								'meta_query' => [ [
+								'meta_query' => [[
 									'key' => 'hpm_staff_authid',
 									'compare' => '=',
 									'value' => $authid->ID
-								] ]
-							] );
-							if ( $author_check->have_posts() ) :
+								]]
+							]);
+							if ( $author_check->have_posts() ) {
 								$author_meta = get_post_meta( $author_check->post->ID, 'hpm_staff_meta', true );
-								if ( !empty( $author_meta['facebook'] ) ) :
+								if ( !empty( $author_meta['facebook'] ) ) {
 									$author_fb = $author_meta['facebook'];
-								endif;
-							endif;
-						endif;
-					endif;
-				endif;
+								}
+							}
+						}
+					}
+				}
 				$reqs['author'][] = [
 					'profile' => ( !empty( $author_fb ) ? $author_fb : get_author_posts_url( $coa->ID, $coa->user_nicename ) ),
 					'first_name' => $coa->first_name,
 					'last_name' => $coa->last_name,
 					'username' => $coa->user_nicename
 				];
-			endforeach;
+			}
 			$reqs['publish_date'] = get_the_date( 'c', $ID );
 			$reqs['modified_date'] = get_the_modified_date( 'c', $ID );
 			$reqs['description'] = htmlentities( wp_strip_all_tags( get_excerpt_by_id( $ID ), true ), ENT_QUOTES );
 			$head_categories = get_the_category( $ID );
 			$head_tags = wp_get_post_tags( $ID );
 			$reqs['keywords'] = [];
-			foreach( $head_categories as $hcat ) :
+			foreach( $head_categories as $hcat ) {
 				$reqs['keywords'][] = $hcat->name;
-			endforeach;
-			foreach( $head_tags as $htag ) :
+			}
+			foreach( $head_tags as $htag ) {
 				$reqs['keywords'][] = $htag->name;
-			endforeach;
-			if ( get_post_type() === 'post' ) :
+			}
+			if ( get_post_type() === 'post' ) {
 				$reqs['word_count'] = word_count( $ID );
 				$reqs['has_audio'] = ( preg_match( '/\[audio/', $wp_query->post->post_content ) ? 1 : 0 );
 				$npr_retrieved_story = get_post_meta( $ID, 'npr_retrieved_story', 1 );
 				$reqs['npr_story_id'] = get_post_meta( $ID, 'npr_story_id', 1 );
 				$reqs['hpm_section'] = hpm_top_cat( $ID );
 				$reqs['npr_byline'] = ( $npr_retrieved_story == 1 ? get_post_meta( $ID, 'npr_byline', 1 ) : coauthors( ', ', ', ', '', '', false ) );
-			elseif ( get_post_type() === 'staff' ) :
+			} elseif ( get_post_type() === 'staff' ) {
 				$reqs['og_type'] = 'profile';
-			endif;
-		endif;
-	endif;
+			}
+		}
+	}
 ?>
 		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime();</script>
 		<link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -254,36 +254,36 @@ function hpm_header_info() {
 		<meta property="og:image:type" content="<?php echo $reqs['thumb_meta']['mime-type']; ?>" />
 		<meta property="og:image:secure_url" content="<?php echo $reqs['thumb']; ?>" />
 <?php
-	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
+	if ( ( is_single() || is_page_template( 'page-npr-articles.php' ) ) && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) { ?>
 		<meta property="article:content_tier" content="free" />
 		<meta property="article:published_time" content="<?php echo $reqs['publish_date']; ?>" />
 		<meta property="article:modified_time" content="<?php echo $reqs['modified_date']; ?>" />
 		<meta property="article:publisher" content="https://www.facebook.com/houstonpublicmedia/" />
 		<meta property="article:section" content="<?php echo $reqs['hpm_section']; ?>" />
 <?php
-		if ( !empty( $reqs['keywords'] ) ) :
-			foreach( $reqs['keywords'] as $keys ) : ?>
+		if ( !empty( $reqs['keywords'] ) ) {
+			foreach( $reqs['keywords'] as $keys ) { ?>
 		<meta property="article:tag" content="<?php echo $keys; ?>" />
 <?php
-			endforeach;
-		endif;
-		foreach ( $reqs['author'] as $aup ) : ?>
+			}
+		}
+		foreach ( $reqs['author'] as $aup ) { ?>
 		<meta property="article:author" content="<?php echo $aup['profile']; ?>" />
 <?php
-		endforeach;
-	endif;
-	if ( is_author() ) : ?>
+		}
+	}
+	if ( is_author() ) { ?>
 		<meta property="profile:first_name" content="<?php echo $curauth->first_name; ?>" />
 		<meta property="profile:last_name" content="<?php echo $curauth->last_name; ?>" />
 		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>" />
 <?php
-	elseif ( is_single() && get_post_type() === 'staff' ) :
+	} elseif ( is_single() && get_post_type() === 'staff' ) {
 		global $curstaff; ?>
 		<meta property="profile:first_name" content="<?php echo $curstaff['first_name']; ?>" />
 		<meta property="profile:last_name" content="<?php echo $curstaff['last_name']; ?>" />
 		<meta property="profile:username" content="<?php echo $curstaff['user_nicename']; ?>" />
 <?php
-	endif; ?>
+	} ?>
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@houstonpubmedia" />
 		<meta name="twitter:creator" content="@houstonpubmedia" />
@@ -295,7 +295,7 @@ function hpm_header_info() {
 		<meta name="twitter:widgets:border-color" content="#000000" />
 		<meta name="twitter:partner" content="tfwp" />
 <?php
-	/* if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) : ?>
+	/* if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) { ?>
 		<meta name="datePublished" content="<?php echo $reqs['publish_date']; ?>" />
 		<meta name="story_id" content="<?php echo $reqs['npr_story_id']; ?>" />
 		<meta name="has_audio" content="<?php echo $reqs['has_audio']; ?>" />
@@ -305,27 +305,27 @@ function hpm_header_info() {
 		<meta name="author" content="<?php echo $reqs['npr_byline']; ?>" />
 		<meta name="wordCount" content="<?php echo $reqs['word_count']; ?>" />
 <?php
-	endif; */
+	} */
 }
 add_action( 'wp_head', 'hpm_header_info', 1 );
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
 
 function hpm_body_open() {
 	global $wp_query;
-	if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) : ?>
+	if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) { ?>
 	<script>setCookie('inapp','true',1);</script>
 	<style>#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }</style>
-<?php endif; ?>
+<?php } ?>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv4' ); ?></a>
 <?php
-	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) : ?>
+	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
 		<?php echo HPM_Promos::generate_static( 'emergency' ); ?>
 		<div class="container">
 			<?php hpm_site_header(); ?>
 		</div>
 		<?php echo hpm_talkshows(); ?>
 <?php
-	elseif ( is_page_template( 'page-listen.php' ) ) : ?>
+	} elseif ( is_page_template( 'page-listen.php' ) ) { ?>
 		<?php echo HPM_Promos::generate_static( 'emergency' ); ?>
 		<div class="container">
 			<header id="masthead" class="site-header" role="banner">
@@ -340,11 +340,11 @@ function hpm_body_open() {
 						<div class="nav-wrap">
 							<div id="top-search" tabindex="0" aria-expanded="false"><?php echo hpm_svg_output( 'search' ); get_search_form(); ?></div>
 							<?php
-								wp_nav_menu( [
+								wp_nav_menu([
 									'menu_class' => 'nav-menu',
 									'menu' => 12244,
 									'walker' => new HPM_Menu_Walker
-								] );
+								]);
 							?>
 						</div>
 					</nav>
@@ -352,19 +352,19 @@ function hpm_body_open() {
 			</header>
 		</div>
 <?php
-	endif; ?>
+	} ?>
 		<div id="page" class="hfeed site">
 			<div id="content" class="site-content">
 <?php
-	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) : ?>
-			<!-- /9147267/HPM_Under_Nav -->
+	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
+				<!-- /9147267/HPM_Under_Nav -->
 				<div id='div-gpt-ad-1488818411584-0'>
 					<script>
 						googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
 					</script>
 				</div>
 <?php
-	endif;
+	}
 	echo HPM_Promos::generate_static( 'top' );
 }
 add_action( 'body_open', 'hpm_body_open' );
@@ -380,17 +380,17 @@ function hpm_talkshows() {
 	$anc = get_post_ancestors( get_the_ID() );
 	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
 	$hm_air = hpm_houston_matters_check();
-	if ( empty( $wp_query->post ) ) :
+	if ( empty( $wp_query->post ) ) {
 		return '';
-	endif;
-	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && !empty( $wp_query->post ) && $wp_query->post->post_type !== 'embeds' ) :
-		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) :
-			if ( $now['hours'] == 15 ) :
+	}
+	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && !empty( $wp_query->post ) && $wp_query->post->post_type !== 'embeds' ) {
+		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
+			if ( $now['hours'] == 15 ) {
 				$output .= '<div id="hm-top" class="townsquare"><p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://8884869677">888.486.9677</a></strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
-			else :
+			} else {
 				$output .= '<div id="hm-top"><p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://7134408870">713.440.8870</a></strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
-			endif;
-		endif;
-	endif;
+			}
+		}
+	}
 	return $output;
 }

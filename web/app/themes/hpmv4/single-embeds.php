@@ -36,7 +36,8 @@ $hpm_embed = get_post_meta( $ID, 'hpm_embed', true );
 		</style>
 	</head>
 	<body <?php body_class(); ?>>
-<?php if ( $hpm_embed['branding'] ) : ?>
+<?php
+	if ( $hpm_embed['branding'] ) { ?>
 		<div class="container">
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
@@ -46,48 +47,54 @@ $hpm_embed = get_post_meta( $ID, 'hpm_embed', true );
 				</div>
 			</header>
 		</div>
-<?php endif; ?>
+<?php
+	} ?>
 		<div id="page" class="hfeed site">
 			<div id="content" class="site-content">
 				<div id="primary" class="content-area">
 					<main id="main" class="site-main" role="main">
-						<?PHP while (have_posts()) : the_post(); ?>
+<?PHP
+	while ( have_posts() ) {
+		the_post(); ?>
 						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 							<header class="entry-header screen-reader-text">
 								<?php the_title('<h1 class="entry-title">', '</h1>'); ?>
 								<div class="byline-date">
-									<?PHP coauthors_posts_links(' / ', ' / ', '<address class="vcard author">', '</address>', true);
-									echo " | ";
-									$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time> (Last Updated: <time class="updated" datetime="%3$s">%4$s</time>)';
-									$time_string = sprintf(
-										$time_string,
-										esc_attr(get_the_date('c')),
-										get_the_date(),
-										esc_attr(get_the_modified_date('c')),
-										get_the_modified_date()
-									);
+<?PHP
+		coauthors_posts_links(' / ', ' / ', '<address class="vcard author">', '</address>', true);
+		echo " | ";
+		$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time> (Last Updated: <time class="updated" datetime="%3$s">%4$s</time>)';
+		$time_string = sprintf(
+			$time_string,
+			esc_attr( get_the_date('c') ),
+			get_the_date(),
+			esc_attr( get_the_modified_date('c') ),
+			get_the_modified_date()
+		);
 
-									printf(
-										'<span class="posted-on"><span class="screen-reader-text">%1$s </span>%2$s</span>',
-										_x('Posted on', 'Used before publish date.', 'hpmv4'),
-										$time_string
-									);
-									?>
+		printf(
+			'<span class="posted-on"><span class="screen-reader-text">%1$s </span>%2$s</span>',
+			_x( 'Posted on', 'Used before publish date.', 'hpmv4' ),
+			$time_string
+		); ?>
 								</div>
 							</header>
 							<div class="entry-content">
 								<?php the_content(); ?>
 							</div>
 						</article>
-						<?php endwhile; ?>
+<?php
+	} ?>
 					</main>
 				</div>
 			</div>
 		</div>
-<?php if ( $hpm_embed['responsive'] ) : ?>
+<?php
+	if ( $hpm_embed['responsive'] ) { ?>
 		<script src="https://pym.nprapps.org/pym.v1.min.js"></script>
-		<script>var pymChild = new pym.Child({polling: 500});</script>
-<?php endif; ?>
-		<?php wp_footer(); ?>
+		<script>var pymChild = new pym.Child( { polling: 500 } );</script>
+<?php
+	}
+	wp_footer(); ?>
 	</body>
 </html>

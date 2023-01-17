@@ -259,18 +259,18 @@ Template Name: Not Forgotten
 		</style>
 	</head>
 	<body <?php body_class(); ?>>
-	<?php if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) : ?>
+	<?php if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) { ?>
 		<script>setCookie('inapp','true',1);</script>
 		<style>#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }</style>
-	<?php endif; ?>
+	<?php } ?>
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv4' ); ?></a>
 		<header id="masthead" class="site-header" role="banner">
 			<div class="site-branding">
 				<a href="/" rel="home" title="Houston Public Media"><img src="https://cdn.hpm.io/assets/images/HPM-PBS-NPR-White.png" alt="Houston Public Media" /></a>
-			</div><!-- .site-branding -->
+			</div>
 			<div class="site-title"><h1><a href="/not-forgotten/">Not Forgotten</a></h1></div>
 			<div class="site-nav"><a href="/coronavirus/">COVID News</a></div>
-		</header><!-- .site-header -->
+		</header>
 		<div id="page" class="hfeed site">
 			<div id="content" class="site-content">
 				<div id="primary" class="content-area">

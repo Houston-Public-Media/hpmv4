@@ -4,10 +4,10 @@
  *
  * @package WordPress
  */
-header('Content-Type: ' . feed_content_type('rss2') . '; charset=' . get_option('blog_charset'), true);
+header('Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ), true);
 $more = 1;
 
-echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
+echo '<?xml version="1.0" encoding="' . get_option('blog_charset') . '"?>';
 
 /**
  * Fires between the xml and rss tags in a feed.
@@ -41,7 +41,7 @@ do_action( 'rss_tag_pre', 'rss2' );
 	<atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />
 	<link><?php bloginfo_rss('url') ?></link>
 	<description><?php bloginfo_rss("description") ?></description>
-	<lastBuildDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_lastpostmodified('GMT'), false); ?></lastBuildDate>
+	<lastBuildDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_lastpostmodified( 'GMT' ), false ); ?></lastBuildDate>
 	<language><?php bloginfo_rss( 'language' ); ?></language>
 	<sy:updatePeriod><?php
 		$duration = 'hourly';
@@ -77,33 +77,34 @@ do_action( 'rss_tag_pre', 'rss2' );
 	 */
 	do_action( 'rss2_head');
 
-	while( have_posts()) : the_post();
+	while( have_posts() ) {
+		the_post();
 		$topcat = sanitize_title( hpm_top_cat( get_the_ID() ) );
 	?>
 	<item>
 		<title><?php the_title_rss() ?></title>
 		<link><?php the_permalink_rss() ?>?utm_source=rss-<?php echo $topcat; ?>-article&amp;utm_medium=link&amp;utm_campaign=hpm-rss-link</link>
-		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
+		<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
 		<dc:creator><![CDATA[<?php echo coauthors( ', ', ', ', '', '', false ); ?>]]></dc:creator>
-<?php the_category_rss('rss2') ?>
+		<?php the_category_rss( 'rss2' ) ?>
 		<guid isPermaLink="false"><?php the_guid(); ?></guid>
-<?php if ( get_option( 'rss_use_excerpt' ) ) : ?>
+<?php if ( get_option( 'rss_use_excerpt' ) ) { ?>
 		<description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
-<?php else : ?>
+<?php } else { ?>
 		<description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
 <?php
-		$content = get_the_content_feed('rss2');
-		if ( strlen( $content ) > 0 ) : ?>
+		$content = get_the_content_feed( 'rss2' );
+		if ( strlen( $content ) > 0 ) { ?>
 		<content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
-<?php 	else : ?>
+<?php 	} else { ?>
 		<content:encoded><![CDATA[<?php the_excerpt_rss(); ?>]]></content:encoded>
 <?php
-		endif;
-	endif;
-	if ( has_post_thumbnail() ) :
+		}
+	}
+	if ( has_post_thumbnail() ) {
 		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumbnail' ); ?>
 		<media:thumbnail url="<?php echo $thumb[0]; ?>" width="<?php echo $thumb[1]; ?>" height="<?php echo $thumb[2]; ?>" />
-<?php endif;
+<?php }
 	rss_enclosure();
 
 	/**
@@ -114,6 +115,6 @@ do_action( 'rss_tag_pre', 'rss2' );
 	do_action( 'rss2_item' );
 	?>
 	</item>
-<?php endwhile; ?>
+<?php } ?>
 </channel>
 </rss>

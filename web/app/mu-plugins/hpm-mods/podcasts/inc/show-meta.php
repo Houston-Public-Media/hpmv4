@@ -1,25 +1,26 @@
 <?php
-	if ( empty( $hpm_shows_cat ) ) :
+	if ( empty( $hpm_shows_cat ) ) {
 		$hpm_shows_cat = '';
 		$top_story = "<p><em>Please select a Show category and click 'Save' or 'Update'</em></p>";
-	else :
+	} else {
 		$top = get_post_meta( $object->ID, 'hpm_shows_top', true );
 		$top_story = '<label for="hpm-shows-top">Top Story:</label><select name="hpm-shows-top" id="hpm-shows-top"><option value="None">No Top Story</option>';
-		$cat = new WP_query( array(
+		$cat = new WP_Query([
 			'cat' => $hpm_shows_cat,
 			'post_status' => 'publish',
 			'posts_per_page' => 25,
 			'post_type' => 'post',
 			'ignore_sticky_posts' => 1
-		) );
-		if ( $cat->have_posts() ) :
-			while ( $cat->have_posts() ) : $cat->the_post();
-				$top_story .= '<option value="'.get_the_ID().'" '.selected( $top, get_the_ID(), FALSE ).'>'.get_the_title().'</option>';
-			endwhile;
-		endif;
+		]);
+		if ( $cat->have_posts() ) {
+			while ( $cat->have_posts() ) {
+				$cat->the_post();
+				$top_story .= '<option value="' . get_the_ID() . '" ' . selected( $top, get_the_ID(), FALSE ) . '>' . get_the_title() . '</option>';
+			}
+		}
 		wp_reset_query();
 		$top_story .= '</select><br />';
-	endif; ?>
+	} ?>
 <h3><?PHP _e( "Show Category", 'hpm-podcasts' ); ?></h3>
 <?php
 	wp_dropdown_categories([
@@ -40,18 +41,18 @@
 <p>Use the buttons below to select your mobile, tablet, and desktop banner images</p>
 <?php
 	$hpm_mobile_url = $hpm_tablet_url = $hpm_desktop_url = '';
-	if ( !empty( $hpm_show_meta['banners']['mobile'] ) ) :
+	if ( !empty( $hpm_show_meta['banners']['mobile'] ) ) {
 		$hpm_mobile_temp = wp_get_attachment_image_src( $hpm_show_meta['banners']['mobile'], 'medium' );
-		$hpm_mobile_url = ' style="background-image: url('.$hpm_mobile_temp[0].')"';
-	endif;
-	if ( !empty( $hpm_show_meta['banners']['tablet'] ) ) :
+		$hpm_mobile_url = ' style="background-image: url(' . $hpm_mobile_temp[0] . ')"';
+	}
+	if ( !empty( $hpm_show_meta['banners']['tablet'] ) ) {
 		$hpm_tablet_temp = wp_get_attachment_image_src( $hpm_show_meta['banners']['tablet'], 'medium' );
-		$hpm_tablet_url = ' style="background-image: url('.$hpm_tablet_temp[0].')"';
-	endif;
-	if ( !empty( $hpm_show_meta['banners']['desktop'] ) ) :
+		$hpm_tablet_url = ' style="background-image: url(' . $hpm_tablet_temp[0] . ')"';
+	}
+	if ( !empty( $hpm_show_meta['banners']['desktop'] ) ) {
 		$hpm_desktop_temp = wp_get_attachment_image_src( $hpm_show_meta['banners']['desktop'], 'medium' );
-		$hpm_desktop_url = ' style="background-image: url('.$hpm_desktop_temp[0].')"';
-	endif;
+		$hpm_desktop_url = ' style="background-image: url(' . $hpm_desktop_temp[0] . ')"';
+	}
 ?>
 <div class="hpm-show-banner-wrap">
 	<div class="hpm-show-banner">
@@ -95,12 +96,13 @@
 <select name="hpm-show-pod" id="hpm-show-pod">
 	<option value=""<?PHP selected( '', $hpm_show_meta['podcast'], TRUE ); ?>><?PHP _e( "Select One", 'hpm-podcasts' ); ?></option>
 <?php
-	if ( $podcasts->have_posts() ) :
-		while ( $podcasts->have_posts() ) : $podcasts->the_post(); ?>
+	if ( $podcasts->have_posts() ) {
+		while ( $podcasts->have_posts() ) {
+			$podcasts->the_post(); ?>
 			<option value="<?PHP echo $post->ID; ?>"<?PHP selected( $hpm_show_meta['podcast'], $post->ID, TRUE );?>><?PHP the_title(); ?></option>
-			<?php
-		endwhile;
-	endif; ?>
+<?php
+		}
+	} ?>
 </select></p>
 
 <p>&nbsp;</p>

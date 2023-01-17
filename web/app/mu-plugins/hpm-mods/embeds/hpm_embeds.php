@@ -58,12 +58,12 @@ class HPM_Embeds {
 	public function embeds_meta( $object, $box ) {
 		wp_nonce_field( basename( __FILE__ ), 'hpm_embeds_class_nonce' );
 		$hpm_embed = get_post_meta( $object->ID, 'hpm_embed', true );
-		if ( empty( $hpm_embed ) ) :
+		if ( empty( $hpm_embed ) ) {
 			$hpm_embed = [
 				'responsive' => 0,
 				'branding' => 0
 			];
-		endif; ?>
+		} ?>
 		<p><strong><label for="hpm-embed-respond"><?PHP _e( "Is this a responsive embed? I.e. Do you want to use pym.js to dynamically manage the height of the iframe?", 'hpm-embeds' ); ?></label></strong> <select name="hpm-embed-respond" id="hpm-embed-respond">
 				<option value="0"<?PHP selected( $hpm_embed['responsive'], 0, TRUE ); ?>><?PHP _e( "No", 'hpm-embeds' ); ?></option>
 				<option value="1"<?PHP selected( $hpm_embed['responsive'], 1, TRUE ); ?>><?PHP _e( "Yes", 'hpm-embeds' ); ?></option>
@@ -126,20 +126,20 @@ class HPM_Embeds {
 	 */
 	public function save_meta( $post_id, $post ) {
 		$post_type = get_post_type_object( $post->post_type );
-		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) :
+		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 			return $post_id;
-		endif;
-		if ( $post->post_type == 'embeds' ) :
-			if ( empty( $_POST['hpm_embeds_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_embeds_class_nonce'], basename( __FILE__ ) ) ) :
+		}
+		if ( $post->post_type == 'embeds' ) {
+			if ( empty( $_POST['hpm_embeds_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_embeds_class_nonce'], basename( __FILE__ ) ) ) {
 				return $post_id;
-			endif;
+			}
 			$hpm_embed = [
 				'responsive' => $_POST['hpm-embed-respond'],
 				'branding' => $_POST['hpm-embed-brand']
 			];
 
 			update_post_meta( $post_id, 'hpm_embed', $hpm_embed );
-		endif;
+		}
 	}
 
 	/**
@@ -185,7 +185,7 @@ class HPM_Embeds {
 	 */
 	public function add_role_caps() {
 		$roles = [ 'editor', 'administrator' ];
-		foreach( $roles as $the_role ) :
+		foreach( $roles as $the_role ) {
 			$role = get_role( $the_role );
 			$role->add_cap( 'read' );
 			$role->add_cap( 'read_hpm_embed');
@@ -198,7 +198,7 @@ class HPM_Embeds {
 			$role->add_cap( 'delete_others_hpm_embeds' );
 			$role->add_cap( 'delete_private_hpm_embeds' );
 			$role->add_cap( 'delete_published_hpm_embeds' );
-		endforeach;
+		}
 	}
 
 	/**
@@ -208,9 +208,9 @@ class HPM_Embeds {
 	 */
 	public function list( WP_REST_Request $request = null ) {
 		$list = get_transient( 'hpm_embeds_list' );
-		if ( !empty( $list ) ) :
+		if ( !empty( $list ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Embeds list', 'hpm-embeds' ), 'data' => [ 'list' => $list, 'status' =>	200 ] ] );
-		endif;
+		}
 		$protocol = 'https://';
 		$_SERVER['HTTPS'] = 'on';
 		$list = [];
@@ -220,8 +220,8 @@ class HPM_Embeds {
 			'post_status' => 'publish',
 			'posts_per_page' => -1,
 		]);
-		if ( $embeds->have_posts() ) :
-			while ( $embeds->have_posts() ) :
+		if ( $embeds->have_posts() ) {
+			while ( $embeds->have_posts() ) {
 				$temp = [
 					'name' => '',
 					'responsive' => '',
@@ -235,15 +235,15 @@ class HPM_Embeds {
 				$temp['responsive'] = $embed['responsive'];
 				$temp['branded'] = $embed['branding'];
 				$code = '';
-				if ( $embed['responsive'] ) :
+				if ( $embed['responsive'] ) {
 					$code .= '<div id="hpm-embed"></div><script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script><script>var pymParent = new pym.Parent(\'hpm-embed\', \'' . get_the_permalink() . '\', {});</script>';
-				else :
+				} else {
 					$code .= '<p><iframe src="' . get_the_permalink() . '" width="100%" height="500" frameborder="0" allowfullscreen></iframe>"></iframe></p>';
-				endif;
+				}
 				$temp['code'] = $code;
 				$list[] = $temp;
-			endwhile;
-		endif;
+			}
+		}
 		set_transient( 'hpm_embeds_list', $list, 86400 );
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Embeds list', 'hpm-embeds' ), 'data' => [ 'list' => $list, 'status' => 200 ] ] );
 	}

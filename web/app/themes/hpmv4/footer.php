@@ -1,7 +1,7 @@
 			</div>
-<?php if ( is_page_template( 'page-blank.php' ) ) : ?>
+<?php if ( is_page_template( 'page-blank.php' ) ) { ?>
 		</div>
-<?php else : ?>
+<?php } else { ?>
 			<h2 id="foot-banner"><a href="/donate">Resources like these are made possible by the generosity of our community of donors, foundations, and corporate partners. Join others and make your gift to Houston Public Media today!<br /><br /><span class="donate"><?php echo hpm_svg_output( 'heart' ); ?> DONATE</span></a></h2>
 			<footer id="colophon" class="site-footer" role="contentinfo">
 				<section>
@@ -33,7 +33,7 @@
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
 						<div class="social-wrap">
-						<div class="social-icon facebook">
+							<div class="social-icon facebook">
 								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
 							<div class="social-icon twitter">
@@ -57,8 +57,7 @@
 				</div>
 			</footer>
 		</div>
-	<?php
-		endif;
+<?php }
 		wp_footer(); ?>
 	</body>
 </html>

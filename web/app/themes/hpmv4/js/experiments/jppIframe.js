@@ -320,11 +320,9 @@ jpp.childFrame = () => {
 		});
 	});
 };
-
-/*	TODO: Add event listeners for playlist on update
-	TODO: Add code to popup menu and select playlist submenu on add
-	TODO: Add options for podcasts and playlist entries (play now, remove, etc)
-*/
+// TODO: Add event listeners for playlist on update
+// TODO: Add code to popup menu and select playlist submenu on add
+// TODO: Add options for podcasts and playlist entries (play now, remove, etc)
 window.addEventListener('DOMContentLoaded', (event) => {
 	if ( !jpp.inIframe() ) {
 		jpp.parentFrame();

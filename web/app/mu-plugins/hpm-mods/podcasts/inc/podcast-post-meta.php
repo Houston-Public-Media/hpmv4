@@ -31,14 +31,14 @@
 <p style="float: left; width: 50%;"><label for="hpm-podcast-season"><?php _e( "Season Number:", 'hpm-podcasts' ); ?></label>
 	<input type="number" id="hpm-podcast-season" name="hpm-podcast-season" value="<?PHP echo $hpm_pod_desc['season']; ?>" placeholder="" style="width: 25%;" /></p>
 <?php
-if ( !empty( $pods['upload-media'] ) ) :
+if ( !empty( $pods['upload-media'] ) ) {
 	$hpm_pod_sg = get_post_meta( $object->ID, 'hpm_podcast_enclosure', true );
 	$sg_url = '';
-	if ( !empty( $hpm_pod_sg ) ) :
-		if ( !empty( $hpm_pod_desc['feed'] ) ) :
+	if ( !empty( $hpm_pod_sg ) ) {
+		if ( !empty( $hpm_pod_desc['feed'] ) ) {
 			$sg_url = $hpm_pod_sg['url'];
-		endif;
-	endif;
+		}
+	}
 	$podcasts = new WP_Query([
 		'post_type' => 'podcasts',
 		'post_status' => 'publish',
@@ -51,20 +51,21 @@ if ( !empty( $pods['upload-media'] ) ) :
 		<label for="hpm-podcast-ep-feed"><?php _e( "Podcast Feed:", 'hpm-podcasts' ); ?></label>
 		<select name="hpm-podcast-ep-feed" id="hpm-podcast-ep-feed">
 			<option value=""<?PHP selected( '', $hpm_pod_desc['feed'], TRUE ); ?>><?PHP _e( "Select One", 'hpm-podcasts' ); ?></option>
-			<?php
-			if ( $podcasts->have_posts() ) :
-				while ( $podcasts->have_posts() ) : $podcasts->the_post(); ?>
+<?php
+			if ( $podcasts->have_posts() ) {
+				while ( $podcasts->have_posts() ) {
+					$podcasts->the_post(); ?>
 					<option value="<?PHP echo $post->post_name; ?>"<?PHP selected( $hpm_pod_desc['feed'], $post->post_name, TRUE );?>><?PHP the_title(); ?></option>
-					<?php
-				endwhile;
-			endif; ?>
+<?php
+				}
+			} ?>
 		</select>&nbsp;&nbsp;&nbsp;<a href="#" class="button button-secondary" id="hpm-pods-upload">Choose Audio for Podcast</a></p>
 	<h3><?PHP _e( "External URL", 'hpm-podcasts' ); ?></h3>
 	<p><?PHP _e( "If you want to upload your audio file manually, you can paste the URL here:", 'hpm-podcasts' );
 		?><br />
 		<label for="hpm-podcast-sg-file"><?php _e( "URL:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-sg-file" name="hpm-podcast-sg-file" value="<?PHP echo $sg_url; ?>" placeholder="https://ondemand.example.com/blah/blah.mp3" style="width: 75%;" /></p>
-	<?php
-endif; ?>
+<?php
+} ?>
 <script>
 	function uploadCheck() {
 		var id = jQuery('#post_ID').val();

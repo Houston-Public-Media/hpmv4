@@ -100,15 +100,16 @@ get_header(); ?>
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?php
-			while ( have_posts() ) : the_post();
-			$show_id = get_the_ID();
-			$show = get_post_meta( $show_id, 'hpm_show_meta', true );
-			$show_title = get_the_title();
-			$show_content = get_the_content();
-			$episodes = HPM_Podcasts::list_episodes( $show_id );
-			echo HPM_Podcasts::show_header( $show_id );
-			endwhile; ?>
+<?php
+	while ( have_posts() ) {
+		the_post();
+		$show_id = get_the_ID();
+		$show = get_post_meta( $show_id, 'hpm_show_meta', true );
+		$show_title = get_the_title();
+		$show_content = get_the_content();
+		$episodes = HPM_Podcasts::list_episodes( $show_id );
+		echo HPM_Podcasts::show_header( $show_id );
+	} ?>
 			<div id="float-wrap">
 				<aside class="column-right">
 					<h3>About <?php echo $show_title; ?></h3>
@@ -126,7 +127,7 @@ get_header(); ?>
 				</aside>
 				<div class="article-wrap">
 <?php
-	if ( !empty( $show['podcast'] ) ) :
+	if ( !empty( $show['podcast'] ) ) {
 		$last_id = get_post_meta( $show['podcast'], 'hpm_pod_last_id', true );
 		$enc = get_post_meta( $last_id['id'], 'hpm_podcast_enclosure', true );
 		$audio = '[audio mp3="' . $enc['url'] . '"][/audio]'; ?>
@@ -142,58 +143,59 @@ get_header(); ?>
 					</div>
 				</article>
 <?php
-	endif; ?>
-		<?php
-			$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
-			$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
-			$terms = get_terms( array( 'include'  => $cat_no, 'taxonomy' => 'category' ) );
-			$term = reset( $terms );
-			$cat_args = array(
-				'cat' => $cat_no,
-				'orderby' => 'date',
-				'order'   => 'DESC',
-				'posts_per_page' => 15,
-				'ignore_sticky_posts' => 1
-			);
-			global $ka;
-			$ka = 0;
-			if ( !empty( $top ) && $top !== 'None' ) :
-				$top_art = new WP_query( [ 'p' => $top ] );
-				$cat_args['posts_per_page'] = 14;
-				$cat_args['post__not_in'] = [ $top ];
-				if ( $top_art->have_posts() ) :
-					while ( $top_art->have_posts() ) : $top_art->the_post();
-						get_template_part( 'content', get_post_type() );
-						$ka += 2;
-					endwhile;
-					$post_num = 14;
-				endif;
-				wp_reset_query();
-			endif;
-			$cat = new WP_query( $cat_args );
-			if ( $cat->have_posts() ) :
-				while ( $cat->have_posts() ) : $cat->the_post();
-					get_template_part( 'content', get_post_type() );
-					$ka += 2;
-				endwhile;
-			endif; ?>
+	}
+	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
+	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
+	$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
+	$term = reset( $terms );
+	$cat_args = [
+		'cat' => $cat_no,
+		'orderby' => 'date',
+		'order'   => 'DESC',
+		'posts_per_page' => 15,
+		'ignore_sticky_posts' => 1
+	];
+	global $ka;
+	$ka = 0;
+	if ( !empty( $top ) && $top !== 'None' ) {
+		$top_art = new WP_Query( [ 'p' => $top ] );
+		$cat_args['posts_per_page'] = 14;
+		$cat_args['post__not_in'] = [ $top ];
+		if ( $top_art->have_posts() ) {
+			while ( $top_art->have_posts() ) {
+				$top_art->the_post();
+				get_template_part( 'content', get_post_type() );
+				$ka += 2;
+			}
+			$post_num = 14;
+		}
+		wp_reset_query();
+	}
+	$cat = new WP_Query( $cat_args );
+	if ( $cat->have_posts() ) {
+		while ( $cat->have_posts() ) {
+			$cat->the_post();
+			get_template_part( 'content', get_post_type() );
+			$ka += 2;
+		}
+	} ?>
 				</div>
 			</div>
-		<?php
-			if ( $cat->found_posts > 15 ) : ?>
+<?php
+	if ( $cat->found_posts > 15 ) { ?>
 			<div class="readmore">
 				<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
 			</div>
-		<?php
-			endif;
-			if ( !empty( $show['ytp'] ) ) : ?>
+<?php
+	}
+	if ( !empty( $show['ytp'] ) ) { ?>
 			<div id="shows-youtube">
 				<div id="youtube-wrap">
-				<?php
-					$json = hpm_youtube_playlist( $show['ytp'] );
-					foreach ( $json as $tubes ) :
-						$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
-						if ( $c == 0 ) : ?>
+<?php
+		$json = hpm_youtube_playlist( $show['ytp'] );
+		foreach ( $json as $tubes ) {
+			$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
+			if ( $c == 0 ) { ?>
 					<div id="youtube-main">
 						<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
 							<?php echo hpm_svg_output( 'play' ) ?>
@@ -204,21 +206,21 @@ get_header(); ?>
 					</div>
 					<div id="youtube-upcoming">
 						<h4>Past Shows</h4>
-					<?php
-						endif; ?>
+<?php
+			} ?>
 						<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdate="<?php echo date( 'F j, Y', $pubtime); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
 							<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $tubes['snippet']['title']; ?>" />
 							<h2><?php echo $tubes['snippet']['title']; ?></h2>
 							<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
 						</div>
-					<?php
-						$c++;
-					endforeach; ?>
+<?php
+			$c++;
+		} ?>
 					</div>
 				</div>
 			</div>
-	<?php
-			endif; ?>
+<?php
+	} ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

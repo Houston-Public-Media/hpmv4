@@ -213,15 +213,16 @@ get_header(); ?>
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?php
-			while ( have_posts() ) : the_post();
+<?php
+			while ( have_posts() ) {
+				the_post();
 				$show_id = get_the_ID();
 				$show = get_post_meta( $show_id, 'hpm_show_meta', true );
 				$show_title = get_the_title();
 				$show_content = get_the_content();
 				$episodes = HPM_Podcasts::list_episodes( $show_id );
 				echo HPM_Podcasts::show_header( $show_id );
-			endwhile; ?>
+			} ?>
 			<section id="country-covers">
 				<div id="shows-youtube">
 					<div id="youtube-wrap">
@@ -232,9 +233,9 @@ get_header(); ?>
 							</div>
 						</div>
 <?php
-					// PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB
-					$json = hpm_youtube_playlist( 'PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB', 50 );
-					$r = rand( 0, count( $json ) - 1 ); ?>
+			// PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB
+			$json = hpm_youtube_playlist( 'PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB', 50 );
+			$r = rand( 0, count( $json ) - 1 ); ?>
 						<div id="youtube-main">
 							<div id="youtube-player" style="background-image: url( '<?php echo $json[$r]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[$r]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $json[$r]['snippet']['title'], ENT_COMPAT ); ?>">
 								<?php echo hpm_svg_output( 'play' ); ?>
@@ -244,7 +245,7 @@ get_header(); ?>
 						</div>
 						<div id="youtube-upcoming">
 <?php
-						foreach ( $json as $tubes ) : ?>
+			foreach ( $json as $tubes ) { ?>
 							<div>
 								<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
 									<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $tubes['snippet']['title']; ?>" />
@@ -252,7 +253,7 @@ get_header(); ?>
 								</div>
 							</div>
 						<?php
-						endforeach; ?>
+			} ?>
 						</div>
 					</div>
 				</div>
@@ -286,28 +287,29 @@ get_header(); ?>
 				'ignore_sticky_posts' => 1
 			]);
 
-			if ( $studio->have_posts() ) :
-				while ( $studio->have_posts() ) : $studio->the_post();
+			if ( $studio->have_posts() ) {
+				while ( $studio->have_posts() ) {
+					$studio->the_post();
 					get_template_part( 'content', get_post_type() );
-				endwhile;
-			endif;
+				}
+			}
 			wp_reset_query(); ?>
-				<div class="readmore" style="clear: both; width: 100%">
-					<a href="/topics/in-studio/page/2">View More Performances</a>
-				</div>
+					<div class="readmore" style="clear: both; width: 100%">
+						<a href="/topics/in-studio/page/2">View More Performances</a>
+					</div>
 <?php
-			if ( $others->have_posts() ) :
-				while ( $others->have_posts() ) : $others->the_post();
+			if ( $others->have_posts() ) {
+				while ( $others->have_posts() ) {
+					$others->the_post();
 					get_template_part( 'content', get_post_type() );
-				endwhile;
-			endif;
+				}
+			}
 			wp_reset_query(); ?>
-			<div class="readmore" style="clear: both; width: 100%">
-				<a href="/topics/skyline-sessions/page/2">View More Related Articles</a>
+					<div class="readmore" style="clear: both; width: 100%">
+						<a href="/topics/skyline-sessions/page/2">View More Related Articles</a>
+					</div>
+				</div>
 			</div>
-			</div>
-		</div>
-
 		</main>
 	</div>
 	<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>

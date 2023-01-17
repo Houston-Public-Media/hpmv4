@@ -20,12 +20,12 @@ get_header(); ?>
 					$redurl = ( isset( $_SERVER['REQUEST_URI'] ) ) ? $_SERVER['REQUEST_URI'] : '';
 					$domain = ( isset( $_SERVER['SERVER_NAME'] ) ) ? "http://".$_SERVER['SERVER_NAME'] : '';
 					$time = date( 'm/d/Y  H:i:s' );
-					if ( empty( $ref ) ) :
+					if ( empty( $ref ) ) {
 						$ref = 'No referring URL';
 						$ref2 = 'No referring URL';
-					else :
+					} else {
 						$ref2 = '<a href="'.$ref.'">'.$ref.'</a>';
-					endif;
+					}
 					$text = "There has been an error reported on your website.  Please rectify this at your earliest convenience:%0A%0AReferring Site/Page: ".$ref."%0APage Requested: ".$domain.$redurl."%0ATime: ".$time;
 
 					$url_find = [ ' ','!','"','#','$','&','\'','(',')',',','-',':','/',';' ];

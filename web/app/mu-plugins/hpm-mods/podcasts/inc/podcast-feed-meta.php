@@ -169,29 +169,29 @@
 <p><?PHP _e( "iTunes allows you to select up to 3 category/subcategory combinations.  **The primary category is required, and is what will display in iTunes.**", 'hpm-podcasts' ); ?></p>
 <ul>
 <?php
-	foreach ( $hpm_podcast_link['categories'] as $pos => $cat ) : ?>
+	foreach ( $hpm_podcast_link['categories'] as $pos => $cat ) { ?>
 	<li>
 		<label for="hpm-podcast-icat-<?php echo $pos; ?>"><?php _e( ucwords( $pos )." Category:", 'hpm-podcasts' );
 		?></label>
 		<select name="hpm-podcast-icat-<?php echo $pos; ?>" id="hpm-podcast-icat-<?php echo $pos; ?>">
 			<option value=""<?PHP selected( $cat, '', TRUE ); ?>><?PHP _e( "Select One", 'hpm-podcasts' ); ?></option>
 <?php
-		foreach ( $itunes_cats as $it_cat => $it_sub ) : ?>
+		foreach ( $itunes_cats as $it_cat => $it_sub ) { ?>
 			<option value="<?PHP echo $it_cat; ?>"<?PHP selected( $cat, $it_cat, TRUE ); ?>><?PHP _e( $it_cat, 'hpm-podcasts' ); ?></option>
 <?PHP
-			if ( !empty( $it_sub ) ) :
-				foreach ( $it_sub as $sub ) :
+			if ( !empty( $it_sub ) ) {
+				foreach ( $it_sub as $sub ) {
 				$cat_sub = $it_cat.'||'.$sub; ?>
 				<option value="<?PHP echo $cat_sub; ?>"<?PHP selected( $cat, $cat_sub, TRUE ); ?>><?PHP _e( $it_cat." > ".$sub, 'hpm-podcasts' ); ?></option>
 <?php
-				endforeach;
-			endif;
-		endforeach;
+				}
+			}
+		}
 ?>
 		</select>
 	</li>
 <?php
-	endforeach; ?>
+	} ?>
 </ul>
 <p>&nbsp;</p>
 <h3><?PHP _e( "External Services", 'hpm-podcasts' ); ?></h3>

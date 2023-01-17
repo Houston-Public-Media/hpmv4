@@ -32,27 +32,11 @@ if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography 
 				} ?></h2>
 			<?php // echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">(' . $staff['pronouns'] . ')</p>' : '' ) ?>
 			<div class="social-wrap">
-<?php
-		if ( !empty( $staff['facebook'] ) ) { ?>
-			<div class="social-icon facebook">
-				<a href="<?php echo $staff['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
-			</div>
-<?php	}
-		if ( !empty( $staff['twitter'] ) ) { ?>
-				<div class="social-icon twitter">
-					<a href="<?php echo $staff['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></a>
-				</div>
-<?php	}
-		if (!empty( $staff['linkedin'] ) ) { ?>
-				<div class="social-icon linkedin">
-					<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
-				</div>
-<?php	}
-		if ( !empty( $staff['email'] ) ) { ?>
-	<div class="social-icon">
-		<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?></a>
-	</div>
-<?php	} ?>
+			<?php
+				echo ( !empty( $staff['facebook'] ) ? '<div class="social-icon facebook"><a href="' . $staff['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . '</a></div>' : '' );
+				echo ( !empty( $staff['twitter'] ) ? '<div class="social-icon twitter"><a href="' . $staff['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) .'</a></div>' : '' );
+				echo ( !empty( $staff['linkedin'] ) ? '<div class="social-icon linkedin"><a href="' . $staff['linkedin'] .'" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>' : '' );
+				echo ( !empty( $staff['email'] ) ? '<div class="social-icon"><a href="mailto:' . $staff['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>' : '' ); ?>
 			</div>
 		</header>
 		<div class="entry-summary">

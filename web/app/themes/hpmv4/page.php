@@ -15,9 +15,10 @@
 	get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?php
-			while ( have_posts() ) : the_post();
-				echo hpm_head_banners( get_the_ID(), 'page' ); ?>
+<?php
+	while ( have_posts() ) {
+		the_post();
+		echo hpm_head_banners( get_the_ID(), 'page' ); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content">
@@ -35,46 +36,44 @@
 					edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer>
 			</article>
-			<?php
-				endwhile; ?>
+<?php
+	} ?>
 			<aside class="column-right">
-			<?php
-				if ( $pagename == 'spelling-bee' ) : ?>
+<?php
+	if ( $pagename == 'spelling-bee' ) { ?>
 				<div class="sidebar-ad">
 					<h4>Presented By</h4>
 					<a href="http://www.texaschildrens.org/" target="_blank" class="beesponsor" id="texas-childrens-hospital">
 						<img src="https://cdn.hpm.io/assets/images/TCH_sponsor-01.png" alt="Texas Children's Hospital" style="margin: 0 12.5%; width: 75%; ">
 					</a>
 				</div>
-			<?php
-				elseif ( $pagename == 'about' || in_array( 61381, $anc ) ) : ?>
+<?php
+	} elseif ( $pagename == 'about' || in_array( 61381, $anc ) ) { ?>
 				<div id="top-schedule-wrap">
 					<nav id="category-navigation" class="category-navigation" role="navigation" style="padding: 0;">
 						<h4>About Houston Public Media</h4>
-				<?php
-					wp_nav_menu( [
-						'menu_class' => 'nav-menu',
-						'menu' => 2379
-					] );
-				?>
+<?php
+		wp_nav_menu([
+			'menu_class' => 'nav-menu',
+			'menu' => 2379
+		]); ?>
 					</nav>
 				</div>
-			<?php
-				elseif ( $pagename == 'support' || in_array( 61383, $anc ) ) : ?>
+<?php
+	} elseif ( $pagename == 'support' || in_array( 61383, $anc ) ) { ?>
 				<div id="top-schedule-wrap">
 					<nav id="category-navigation" class="category-navigation" role="navigation" style="padding: 0;">
 						<h4>Support HPM</h4>
-				<?php
-					wp_nav_menu( [
-						'menu_class' => 'nav-menu',
-						'menu' => 2560
-					] );
-				?>
+<?php
+		wp_nav_menu([
+			'menu_class' => 'nav-menu',
+			'menu' => 2560
+		]); ?>
 					</nav>
 				</div>
-			<?php
-				endif;
-			    get_template_part( 'sidebar', 'none' ); ?>
+<?php
+	}
+	get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 		</main>
 	</div>

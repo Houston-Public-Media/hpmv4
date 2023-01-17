@@ -2,9 +2,9 @@
 /*
 Template Name: NPR Content
 */
-	if ( isset( $wp_query->query_vars['npr_id'] ) ) :
+	if ( isset( $wp_query->query_vars['npr_id'] ) ) {
 		$npr_id = urldecode( $wp_query->query_vars['npr_id'] );
-	endif;
+	}
 	$nprdata = hpm_pull_npr_story( $npr_id );
 	get_header(); ?>
 	<style>
@@ -20,18 +20,18 @@ Template Name: NPR Content
 					<p><?php echo $nprdata['excerpt']; ?></p>
 					<div class="byline-date">
 					<?PHP
-						foreach ( $nprdata['bylines'] as $k => $byline ) :
-							if ( $k > 0 ) :
+						foreach ( $nprdata['bylines'] as $k => $byline ) {
+							if ( $k > 0 ) {
 								echo ' / ';
-							endif;
+							}
 							echo '<address class="vcard author">';
 							$bl = $byline['name'];
-							if ( !empty( $byline['link'] ) ) :
+							if ( !empty( $byline['link'] ) ) {
 								$bl = '<a href="' . $byline['link'] . '">' . $bl . '</a>';
-							endif;
+							}
 							echo $bl;
 							echo '</address>';
-						endforeach;
+						}
 						echo " | ";
 						$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 
@@ -60,22 +60,21 @@ Template Name: NPR Content
 			</article>
 			<aside class="column-right">
 			<?php
-				if ( !empty( $nprdata['related'] ) ) : ?>
+				if ( !empty( $nprdata['related'] ) ) { ?>
 				<section class="highlights">
 					<h4>Related</h4>
 					<ul>
 				<?php
-					foreach ( $nprdata['related'] as $related ) : ?>
+					foreach ( $nprdata['related'] as $related ) { ?>
 						<li><h2 class="entry-title"><a href="<?php echo $related['link']; ?>" rel="bookmark" target="_blank"><?PHP echo $related['text']; ?></a></h2></li>
 				<?php
-					endforeach; ?>
+					} ?>
 					</ul>
 				</section>
 			<?php
-				endif;
+				}
 				get_template_part( 'sidebar', 'none' ); ?>
 			</aside>
 		</main>
 	</div>
-
 <?php get_footer(); ?>

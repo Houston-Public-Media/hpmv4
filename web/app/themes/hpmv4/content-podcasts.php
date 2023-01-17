@@ -6,9 +6,9 @@
  */
 $pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true ); ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'card' ); ?>>
-	<?php if ( has_post_thumbnail() ) : ?>
+	<?php if ( has_post_thumbnail() ) { ?>
 	<a class="post-thumbnail" href="<?php echo $pod_link['page']; ?>"><?php the_post_thumbnail( 'thumbnail' ); ?></a>
-	<?php endif; ?>
+	<?php } ?>
 	<div class="card-content">
 		<header class="entry-header">
 			<h3>Podcast</h3>
@@ -19,11 +19,11 @@ $pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true ); ?>
 			<p><?php echo get_the_excerpt(); ?></p>
 			<ul>
 				<li><a href="<?php echo $pod_link['page']; ?>">Episode Archive</a></li>
-			<?php if ( !empty( $pod_link['rss-override'] ) ) : ?>
+			<?php if ( !empty( $pod_link['rss-override'] ) ) { ?>
 				<li><a href="<?php echo $pod_link['rss-override']; ?>">RSS Feed</a></li>
-			<?php else : ?>
+			<?php } else { ?>
 				<li><a href="<?php the_permalink(); ?>">RSS Feed</a></li>
-			<?php endif; ?>
+			<?php } ?>
 			</ul>
 			<div class="podcast-episode-info">
 				<h3>Available on:</h3>
@@ -32,12 +32,12 @@ $pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true ); ?>
 		<footer class="entry-footer">
 			<?php
 				$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
-				if ( $tags_list ) :
+				if ( $tags_list ) {
 					printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
 						_x( 'Tags', 'Used before tag names.', 'hpmv4' ),
 						$tags_list
 					);
-				endif;
+				}
 				edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 		</footer>
 	</div>

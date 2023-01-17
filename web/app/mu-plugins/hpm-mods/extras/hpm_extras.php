@@ -25,29 +25,29 @@ add_action( 'owf_update_published_post', 'hpm_apple_news_exclude', 10, 2 );
 
 function hpm_apple_news_exclude( $post_id, $post ) {
 	$cats = get_the_category( $post_id );
-	foreach ( $cats as $c ) :
-		if ( $c->term_id == 27876 ) :
+	foreach ( $cats as $c ) {
+		if ( $c->term_id == 27876 ) {
 			apply_filters( 'apple_news_skip_push', true, $post_id );
-		endif;
-	endforeach;
+		}
+	}
 }
 
 function hpm_versions() {
 	$transient = get_transient( 'hpm_versions' );
-	if ( !empty( $transient ) ) :
+	if ( !empty( $transient ) ) {
 		return $transient;
-	else :
+	} else {
 		$remote = wp_remote_get( esc_url_raw( "https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/version.json" ) );
-		if ( is_wp_error( $remote ) ) :
+		if ( is_wp_error( $remote ) ) {
 			return false;
-		else :
+		} else {
 			$api = wp_remote_retrieve_body( $remote );
 			$json = json_decode( $api, TRUE );
-		endif;
+		}
 
 		set_transient( 'hpm_versions', $json, 3 * 60 );
 		return $json;
-	endif;
+	}
 }
 
 /*
@@ -73,11 +73,11 @@ function disable_wp_emojicons() {
 }
 
 function disable_emojicons_tinymce( $plugins ) {
-	if ( is_array( $plugins ) ) :
+	if ( is_array( $plugins ) ) {
 		return array_diff( $plugins, [ 'wpemoji' ] );
-	else :
+	} else {
 		return [];
-	endif;
+	}
 }
 add_action( 'init', 'disable_wp_emojicons' );
 
@@ -141,20 +141,20 @@ function hpm_cron_updates( $schedules ) {
  * Save local copies of today's schedule JSON from NPR Composer2 into site transients
  */
 function hpm_schedules( $station, $date ) {
-	if ( empty( $station ) || empty( $date ) ) :
+	if ( empty( $station ) || empty( $date ) ) {
 		return false;
-	endif;
+	}
 	$api = get_transient( 'hpm_' . $station . '_' . $date );
-	if ( !empty( $api ) ) :
+	if ( !empty( $api ) ) {
 		return $api;
-	endif;
-	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/".$station."/day?date=".$date."&format=json" ) );
-	if ( is_wp_error( $remote ) ) :
+	}
+	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/" . $station . "/day?date=" . $date . "&format=json" ) );
+	if ( is_wp_error( $remote ) ) {
 		return false;
-	else :
+	} else {
 		$api = wp_remote_retrieve_body( $remote );
 		$json = json_decode( $api, TRUE );
-	endif;
+	}
 	$c = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$c = $c + $offset;
@@ -163,26 +163,26 @@ function hpm_schedules( $station, $date ) {
 	$new = $now[0] + 432000;
 	$date_exp = explode( '-', $date );
 	$dateunix = mktime( 0, 0, 0, $date_exp[1], $date_exp[2], $date_exp[0] );
-	if ( $dateunix > $old && $dateunix < $new ) :
+	if ( $dateunix > $old && $dateunix < $new ) {
 		set_transient( 'hpm_' . $station . '_' . $date, $json, 300 );
-	endif;
+	}
 	return $json;
 }
 
 /*
  * Log errors in wp-content/debug.log when debugging is enabled.
  */
-if ( !function_exists( 'log_it' ) ) :
+if ( !function_exists( 'log_it' ) ) {
 	function log_it( $message ) {
-		if( WP_DEBUG === true ) :
-			if ( is_array( $message ) || is_object( $message ) ) :
+		if ( WP_DEBUG === true ) {
+			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message, true ) );
-			else :
+			} else {
 				error_log( $message );
-			endif;
-		endif;
+			}
+		}
 	}
-endif;
+}
 
 /*
  * Add checkbox to post editor in order to hide last modified time in the post display (single.php)
@@ -190,10 +190,12 @@ endif;
 add_action( 'post_submitbox_misc_actions', 'hpm_no_mod_time' );
 function hpm_no_mod_time() {
 	global $post;
-	if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) return false;
+	if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) {
+		return false;
+	}
 	if ( $post->post_type == 'post' ) {
 		$value = get_post_meta( $post->ID, 'hpm_no_mod_time', true );
-		$checked = ! empty( $value ) ? ' checked="checked" ' : '';
+		$checked = ( !empty( $value ) ? ' checked="checked" ' : '' );
 		echo '<div class="misc-pub-section misc-pub-section-last"><input type="checkbox"' . $checked . 'value="1" name="hpm_no_mod_time" /><label for="hpm_no_mod_time">Hide Last Modified Time?</label></div>';
 	}
 }
@@ -201,10 +203,18 @@ function hpm_no_mod_time() {
 add_action( 'save_post', 'save_hpm_no_mod_time');
 function save_hpm_no_mod_time( ) {
 	global $post;
-	if ( empty( $post ) || $post->post_type != 'post' ) return false;
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return false;
-	if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) return false;
-	if ( empty( $post->ID ) ) return false;
+	if ( empty( $post ) || $post->post_type != 'post' ) {
+		return false;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return false;
+	}
+	if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) {
+		return false;
+	}
+	if ( empty( $post->ID ) ) {
+		return false;
+	}
 	$value = ( !empty( $_POST['hpm_no_mod_time'] )  ? 1 : 0 );
 
 	update_post_meta( $post->ID, 'hpm_no_mod_time', $value );
@@ -216,14 +226,20 @@ function save_hpm_no_mod_time( ) {
 add_action( 'save_post', 'hpm_local_cat_check');
 function hpm_local_cat_check() {
 	global $post;
-	if ( empty( $post ) || $post->post_type != 'post' ) return false;
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return false;
-	if ( empty( $post->ID ) ) return false;
+	if ( empty( $post ) || $post->post_type != 'post' ) {
+		return false;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return false;
+	}
+	if ( empty( $post->ID ) ) {
+		return false;
+	}
 	$cat = wp_get_post_categories( $post->ID );
-	if ( ( in_array( 36052, $cat ) || in_array( 32567, $cat ) ) && !in_array( 2113, $cat ) ) :
+	if ( ( in_array( 36052, $cat ) || in_array( 32567, $cat ) ) && !in_array( 2113, $cat ) ) {
 		$cat[] = 2113;
 		wp_set_object_terms( $post->ID, $cat, 'category' );
-	endif;
+	}
 }
 
 /*
@@ -247,48 +263,48 @@ add_filter('upload_mimes', 'custom_upload_mimes');
  * Finds the last 5 entries in the specified YouTube playlist and saves into a site transient
  */
 function hpm_youtube_playlist( $key, $num = 5 ) {
-	$list = get_transient( 'hpm_yt_'.$key.'_'.$num );
-	if ( !empty( $list ) ) :
+	$list = get_transient( 'hpm_yt_' . $key . '_' . $num );
+	if ( !empty( $list ) ) {
 		return $list;
-	endif;
-	$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId='.$key.'&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
-	if ( is_wp_error( $remote ) ) :
+	}
+	$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
+	if ( is_wp_error( $remote ) ) {
 		return false;
-	else :
+	} else {
 		$yt = wp_remote_retrieve_body( $remote );
 		$json = json_decode( $yt, TRUE );
-	endif;
+	}
 	$totalResults = $json['pageInfo']['totalResults'];
 	$resultsPerPage = $json['pageInfo']['resultsPerPage'];
 	$times = [ strtotime( $json['items'][0]['snippet']['publishedAt'] ), strtotime( $json['items'][1]['snippet']['publishedAt'] ), strtotime( $json['items'][2]['snippet']['publishedAt'] ) ];
-	if ( $times[0] > $times[1] && $times[1] > $times[2] ) :
+	if ( $times[0] > $times[1] && $times[1] > $times[2] ) {
 		$new2old = TRUE;
-	elseif ( $times[2] > $times[1] && $times[1] > $times[0] ) :
+	} elseif ( $times[2] > $times[1] && $times[1] > $times[0] ) {
 		$new2old = FALSE;
-	else :
+	} else {
 		$new2old = TRUE;
-	endif;
-	if ( $new2old ) :
+	}
+	if ( $new2old ) {
 		$items = $json['items'];
-	else :
-		if ( $totalResults > $resultsPerPage ) :
+	} else {
+		if ( $totalResults > $resultsPerPage ) {
 			$pages = floor( $totalResults / $resultsPerPage );
-			for ( $i=0; $i < $pages; $i++ ) :
-				if ( !empty( $json['nextPageToken'] ) ) :
-					$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId='.$key.'&pageToken='.$json['nextPageToken'].'&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
-					if ( is_wp_error( $remote ) ) :
+			for ( $i = 0; $i < $pages; $i++ ) {
+				if ( !empty( $json['nextPageToken'] ) ) {
+					$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&pageToken=' . $json['nextPageToken'] . '&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
+					if ( is_wp_error( $remote ) ) {
 						return false;
-					else :
+					} else {
 						$yt = wp_remote_retrieve_body( $remote );
 						$json = json_decode( $yt, TRUE );
-					endif;
-				endif;
-			endfor;
-		endif;
+					}
+				}
+			}
+		}
 		$items = array_reverse( $json['items'] );
-	endif;
+	}
 	$json_r = array_slice( $items, 0, $num );
-	set_transient( 'hpm_yt_'.$key.'_'.$num, $json_r, 300 );
+	set_transient( 'hpm_yt_' . $key . '_' . $num, $json_r, 300 );
 	return $json_r;
 }
 
@@ -306,16 +322,16 @@ function hpm_facebook_ping( $arg1 ) {
 		'body' => $data
 	];
 	$remote = wp_remote_get( esc_url_raw( $url ), $options );
-	if ( is_wp_error( $remote ) ) :
+	if ( is_wp_error( $remote ) ) {
 		return false;
-	else :
+	} else {
 		return true;
-	endif;
+	}
 }
 function hpm_facebook_ping_schedule( $post_id, $post ) {
-	if ( WP_ENV == 'production' ) :
+	if ( WP_ENV == 'production' ) {
 		wp_schedule_single_event( time() + 60, 'hpm_facebook_ping', [ $post_id ] );
-	endif;
+	}
 }
 
 add_action( 'publish_post', 'hpm_facebook_ping_schedule', 10, 2 );
@@ -330,15 +346,15 @@ add_action( 'owf_update_published_post', 'update_post_meta_info', 10, 2 );
  */
 function update_post_meta_info( $original_post_id, $revised_post ) {
 	$post_meta_keys = get_post_custom_keys( $revised_post->ID );
-	if ( empty( $post_meta_keys ) ) :
+	if ( empty( $post_meta_keys ) ) {
 		return;
-	endif;
+	}
 
-	foreach ( $post_meta_keys as $meta_key ) :
+	foreach ( $post_meta_keys as $meta_key ) {
 		$meta_key_trim = trim( $meta_key );
-		if ( '_' == $meta_key_trim[0] || strpos( $meta_key_trim, 'oasis' ) !== false ) :
+		if ( '_' == $meta_key_trim[0] || strpos( $meta_key_trim, 'oasis' ) !== false ) {
 			continue;
-		endif;
+		}
 		$revised_meta_values = get_post_custom_values( $meta_key, $revised_post->ID );
 		$original_meta_values = get_post_custom_values( $meta_key, $original_post_id );
 
@@ -346,29 +362,29 @@ function update_post_meta_info( $original_post_id, $revised_post ) {
 		$meta_values_count = count( $revised_meta_values ) > count( $original_meta_values ) ? count( $revised_meta_values ) : count( $original_meta_values );
 
 		// loop through the meta values to find what's added, modified and deleted.
-		for( $i = 0; $i < $meta_values_count; $i++) :
+		for ( $i = 0; $i < $meta_values_count; $i++) {
 			$new_meta_value = "";
 			// delete if the revised post doesn't have that key
-			if ( count( $revised_meta_values ) >= $i+1 ) :
+			if ( count( $revised_meta_values ) >= $i + 1 ) {
 				$new_meta_value = maybe_unserialize( $revised_meta_values[$i] );
-			else :
+			} else {
 				$old_meta_value = maybe_unserialize( $original_meta_values[$i] );
 				delete_post_meta( $original_post_id, $meta_key, $old_meta_value );
 				continue;
-			endif;
+			}
 
 			// old meta values got updated, so simply update it
-			if ( count( $original_meta_values ) >= $i+1 ) :
+			if ( count( $original_meta_values ) >= $i + 1 ) {
 				$old_meta_value = maybe_unserialize( $original_meta_values[$i] );
 				update_post_meta( $original_post_id, $meta_key, $new_meta_value, $old_meta_value );
-			endif;
+			}
 
 			// new meta values got added, so add it
-			if ( count( $original_meta_values ) < $i+1 ) :
+			if ( count( $original_meta_values ) < $i + 1 ) {
 				add_post_meta( $original_post_id, $meta_key, $new_meta_value );
-			endif;
-		endfor;
-	endforeach;
+			}
+		}
+	}
 }
 
 /**
@@ -395,9 +411,9 @@ function analyticsPull_update() {
 	require_once SITE_ROOT . '/vendor/autoload.php';
 	$analytics = initializeAnalytics();
 	$t = time();
-	$offset = get_option('gmt_offset')*3600;
+	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
-	$now = getdate($t);
+	$now = getdate( $t );
 	$then = $now[0] - 172800;
 	$match = [];
 	$result = $analytics->data_ga->get(
@@ -415,16 +431,16 @@ function analyticsPull_update() {
 		]
 	);
 	$output = "<ul>";
-	foreach ( $result->rows as $row ) :
+	foreach ( $result->rows as $row ) {
 		preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row[0], $match );
-		if ( !empty( $match ) ) :
+		if ( !empty( $match ) ) {
 			$title = get_the_title( $match[1] );
-			if ( empty( $title ) ) :
+			if ( empty( $title ) ) {
 				$title = ucwords( str_replace( '-', ' ', $match[2] ) );
-			endif;
+			}
 			$output .= '<li><h2 class="entry-title"><a href="'.$row[0].'" rel="bookmark">'.$title.'</a></h2></li>';
-		endif;
-	endforeach;
+		}
+	}
 	$output .= "</ul>";
 	update_option( 'hpm_most_popular', $output );
 }
@@ -435,37 +451,37 @@ function analyticsPull() {
 
 add_action( 'hpm_analytics', 'analyticsPull_update' );
 $timestamp = wp_next_scheduled( 'hpm_analytics' );
-if ( empty( $timestamp ) ) :
+if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
-endif;
+}
 
 /**
  * @return mixed|string
  * Pull NPR API articles and save them to a transient
  */
 function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
-	$npr = get_transient( 'hpm_nprapi_'.$api_id );
-	if ( !empty( $npr ) ) :
+	$npr = get_transient( 'hpm_nprapi_' . $api_id );
+	if ( !empty( $npr ) ) {
 		return $npr;
-	endif;
+	}
 	$output = '';
 	$api_key = get_option( 'ds_npr_api_key' );
 	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
-	if ( is_wp_error( $remote ) ) :
+	if ( is_wp_error( $remote ) ) {
 		return "<p></p>";
-	else :
+	} else {
 		$npr = wp_remote_retrieve_body( $remote );
 		$npr_json = json_decode( $npr, TRUE );
-	endif;
-	foreach ( $npr_json['list']['story'] as $story ) :
-		$npr_date = strtotime($story['storyDate']['$text']);
+	}
+	foreach ( $npr_json['list']['story'] as $story ) {
+		$npr_date = strtotime( $story['storyDate']['$text'] );
 		$output .= '<article class="card">';
-		if ( !empty( $story['image'][0]['src'] ) ) :
-			$output .= '<a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" class="post-thumbnail"><img src="'.$story['image'][0]['src'].'" alt="'.$story['title']['$text'].'" loading="lazy" /></a>';
-		endif;
-		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/'.date('Y/m/d/',$npr_date).$story['id'].'/'.sanitize_title($story['title']['$text']).'/" rel="bookmark">'.$story['title']['$text'].'</a></h2></div><div class="entry-summary screen-reader-text">'.$story['teaser']['$text'].'</div></div></article>';
-	endforeach;
-	set_transient( 'hpm_nprapi_'.$api_id, $output, 300 );
+		if ( !empty( $story['image'][0]['src'] ) ) {
+			$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
+		}
+		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story['teaser']['$text'] . '</div></div></article>';
+	}
+	set_transient( 'hpm_nprapi_' . $api_id, $output, 300 );
 	return $output;
 }
 
@@ -485,9 +501,9 @@ function hpm_election_night() {
 		'post_status' => 'publish'
 	];
 	$election = new WP_Query( $args );
-	if ( !empty( $election->post->post_content ) ) :
+	if ( !empty( $election->post->post_content ) ) {
 		$output = $election->post->post_content;
-	endif;
+	}
 	return $output;
 }
 add_shortcode( 'election_night', 'hpm_election_night' );
@@ -502,9 +518,9 @@ add_action( 'admin_footer-post-new.php', 'hpm_npr_api_contributor' );
 add_action( 'admin_footer-post.php', 'hpm_npr_api_contributor' );
 
 function hpm_https_check() {
-	if ( 'post' !== $GLOBALS['post_type'] ) :
+	if ( 'post' !== $GLOBALS['post_type'] ) {
 		return;
-	endif;
+	}
 	global $post; ?>
 	<script>
 		jQuery(document).ready(function($){
@@ -526,23 +542,23 @@ function hpm_https_check() {
 			});
 		});
 	</script>
-	<?php
+<?php
 }
 
 function hpm_npr_api_contributor() {
-	if ( 'post' !== $GLOBALS['post_type'] ) :
+	if ( 'post' !== $GLOBALS['post_type'] ) {
 		return;
-	endif;
+	}
 	$user = wp_get_current_user();
-	if ( !in_array( 'contributor', $user->roles ) ) :
+	if ( !in_array( 'contributor', $user->roles ) ) {
 		return;
-	endif; ?>
+	} ?>
 	<script>
 		jQuery(document).ready(function($){
 			$('#send_to_api').prop('checked', false);
 		});
 	</script>
-	<?php
+<?php
 }
 
 if ( !function_exists('hpm_add_allowed_tags' ) ) {
@@ -558,9 +574,9 @@ if ( !function_exists('hpm_add_allowed_tags' ) ) {
 	add_filter( 'wp_kses_allowed_html', 'hpm_add_allowed_tags' );
 }
 
-if ( empty( wp_next_scheduled( 'oasiswf_auto_delete_history_schedule' ) ) ) :
-	wp_schedule_event(time(), 'daily', 'oasiswf_auto_delete_history_schedule');
-endif;
+if ( empty( wp_next_scheduled( 'oasiswf_auto_delete_history_schedule' ) ) ) {
+	wp_schedule_event( time(), 'daily', 'oasiswf_auto_delete_history_schedule' );
+}
 
 add_action( 'rest_api_init', 'custom_register_coauthors' );
 function custom_register_coauthors() {
@@ -575,26 +591,26 @@ function custom_register_coauthors() {
 }
 
 function custom_get_coauthors( $object, $field_name, $request ) {
-	$coauthors = get_coauthors($object['id']);
+	$coauthors = get_coauthors( $object['id'] );
 	$authors = [];
-	foreach ( $coauthors as $coa ) :
+	foreach ( $coauthors as $coa ) {
 		$guest = true;
-		if ( is_a( $coa, 'wp_user' ) ) :
+		if ( is_a( $coa, 'wp_user' ) ) {
 			$guest = false;
-		elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) :
-			if ( !empty( $coa->linked_account ) ) :
+		} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
+			if ( !empty( $coa->linked_account ) ) {
 				$authid = get_user_by( 'login', $coa->linked_account );
-				if ( is_a( $authid, 'wp_user' ) ) :
+				if ( is_a( $authid, 'wp_user' ) ) {
 					$guest = false;
-				endif;
-			endif;
-		endif;
+				}
+			}
+		}
 		$authors[] = [
 			'display_name' => $coa->display_name,
 			'user_nicename' => $coa->user_nicename,
 			'guest_author' => $guest
 		];
-	endforeach;
+	}
 	return $authors;
 }
 
@@ -664,103 +680,103 @@ function hpm_segments( $name, $date ) {
 	$dx = explode( '-', $date );
 	$du = mktime( 0,0,0, $dx[1], $dx[2], $dx[0] );
 	$dt = date( 'Y-m-d', $du + DAY_IN_SECONDS );
-	$trans = 'hpm_'.sanitize_title( $name ).'-'.$date;
-	if ( empty( $shows[$name] ) ) :
+	$trans = 'hpm_' . sanitize_title( $name ) . '-' . $date;
+	if ( empty( $shows[ $name ] ) ) {
 		return $output;
-	else :
-		if ( $shows[$name]['source'] == 'npr' ) :
+	} else {
+		if ( $shows[ $name ]['source'] == 'npr' ) {
 			$transient = get_transient( $trans );
-			if ( !empty( $transient ) ) :
+			if ( !empty( $transient ) ) {
 				return $transient;
-			else :
+			} else {
 				$api_key = get_option( 'ds_npr_api_key' );
 				$url = "https://api.npr.org/query?id={$shows[$name]['id']}&fields=title&output=JSON&numResults=20&date={$date}&apiKey={$api_key}";
 				$remote = wp_remote_get( esc_url_raw( $url ) );
-				if ( is_wp_error( $remote ) ) :
+				if ( is_wp_error( $remote ) ) {
 					return $output;
-				else :
+				} else {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api, TRUE );
-					if ( !empty( $json['list']['story'] ) ) :
+					if ( !empty( $json['list']['story'] ) ) {
 						$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
-						foreach ( $json['list']['story'] as $j ) :
-							foreach ( $j['link'] as $jl ) :
-								if ( $jl['type'] == 'html' ) :
+						foreach ( $json['list']['story'] as $j ) {
+							foreach ( $j['link'] as $jl ) {
+								if ( $jl['type'] == 'html' ) {
 									$link = $jl['$text'];
-								endif;
-							endforeach;
-							$output .= '<li><a href="'.$link.'" target="_blank">'.$j['title']['$text'].'</a></li>';
-						endforeach;
+								}
+							}
+							$output .= '<li><a href="' . $link . '" target="_blank">' . $j['title']['$text'] . '</a></li>';
+						}
 						$output .= "</ul></details>";
-					endif;
-				endif;
+					}
+				}
 				set_transient( $trans, $output, HOUR_IN_SECONDS );
-			endif;
-		elseif ( $shows[$name]['source'] == 'regex' ) :
-			if ( $name == 'BBC World Service' ) :
+			}
+		} elseif ( $shows[ $name ]['source'] == 'regex' ) {
+			if ( $name == 'BBC World Service' ) {
 				$offset = str_replace( '-', '', get_option( 'gmt_offset' ) );
-				$output .= "<details class=\"progsegment\"><summary>Schedule</summary><ul><li><a href=\"{$shows[$name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></details>";
+				$output .= "<details class=\"progsegment\"><summary>Schedule</summary><ul><li><a href=\"{$shows[ $name]['id']}{$dx[0]}/{$dx[1]}/{$dx[2]}?utcoffset=-0{$offset}:00\" target=\"_blank\">BBC Schedule for {$date}</a></li></ul></details>";
 				return $output;
-			endif;
-		elseif ( $shows[$name]['source'] == 'wp-rss' ) :
+			}
+		} elseif ( $shows[ $name ]['source'] == 'wp-rss' ) {
 			$transient = get_transient( $trans );
-			if ( !empty( $transient ) ) :
+			if ( !empty( $transient ) ) {
 				return $transient;
-			else :
-				$url = $shows[$name]['id']. str_replace( '-', '/', $date ) . "/feed/";
+			} else {
+				$url = $shows[ $name ]['id'] . str_replace( '-', '/', $date ) . "/feed/";
 				$remote = wp_remote_get( esc_url_raw( $url ) );
-				if ( is_wp_error( $remote ) ) :
+				if ( is_wp_error( $remote ) ) {
 					return $output;
-				else :
+				} else {
 					$dom = simplexml_load_string( wp_remote_retrieve_body( $remote ) );
 					$json = json_decode( json_encode( $dom ), true );
 					$title = strtolower( 'Texas Standard For ' . date( 'F j, Y', $du ) );
 					$set = false;
-					if ( !empty( $json ) ) :
-						if ( isset( $json['channel']['item']['title'] ) ) :
-							if ( strtolower( $json['channel']['item']['title'] ) === $title ) :
-								$output .= '<details class="progsegment"><summary>Program for '. $date . '</summary><ul><li><a href="'.$json['channel']['item']['link'].'" target="_blank">' . $json['channel']['item']['title'] .'</a></li></ul></details>';
+					if ( !empty( $json ) ) {
+						if ( isset( $json['channel']['item']['title'] ) ) {
+							if ( strtolower( $json['channel']['item']['title'] ) === $title ) {
+								$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $json['channel']['item']['link'] . '" target="_blank">' . $json['channel']['item']['title'] . '</a></li></ul></details>';
 								$set = true;
-							endif;
-						else :
-							foreach ( $json['channel']['item'] as $item ) :
-								if ( !$set ) :
-									if ( strtolower( $item['title'] ) === $title ) :
-										$output .= '<details class="progsegment"><summary>Program for '. $date . '</summary><ul><li><a href="'.$item['link'].'" target="_blank">' . $item['title'] .'</a></li></ul></details>';
+							}
+						} else {
+							foreach ( $json['channel']['item'] as $item ) {
+								if ( !$set ) {
+									if ( strtolower( $item['title'] ) === $title ) {
+										$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $item['link'] . '" target="_blank">' . $item['title'] . '</a></li></ul></details>';
 										$set = true;
-									endif;
-								endif;
-							endforeach;
-						endif;
-					endif;
-				endif;
+									}
+								}
+							}
+						}
+					}
+				}
 				set_transient( $trans, $output, HOUR_IN_SECONDS );
-			endif;
-		elseif ( $shows[$name]['source'] == 'wp' ) :
+			}
+		} elseif ( $shows[ $name ]['source'] == 'wp' ) {
 			$transient = get_transient( $trans );
-			if ( !empty( $transient ) ) :
+			if ( !empty( $transient ) ) {
 				return $transient;
-			else :
-				$url = $shows[$name]['id']."?before=".$dt."T00:00:00&after=".$date."T00:00:00";
+			} else {
+				$url = $shows[ $name ]['id'] . "?before=" . $dt . "T00:00:00&after=" . $date . "T00:00:00";
 				$remote = wp_remote_get( esc_url_raw( $url ) );
-				if ( is_wp_error( $remote ) ) :
+				if ( is_wp_error( $remote ) ) {
 					return $output;
-				else :
+				} else {
 					$api = wp_remote_retrieve_body( $remote );
 					$json = json_decode( $api );
-					if ( !empty( $json ) ) :
+					if ( !empty( $json ) ) {
 						$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
-						foreach ( $json as $j ) :
-							$output .= '<li><a href="'.$j->link.'" target="_blank">'.$j->title->rendered.'</a></li>';
-						endforeach;
+						foreach ( $json as $j ) {
+							$output .= '<li><a href="' . $j->link . '" target="_blank">' . $j->title->rendered . '</a></li>';
+						}
 						$output .= "</ul></details>";
-					endif;
-				endif;
+					}
+				}
 				set_transient( $trans, $output, HOUR_IN_SECONDS );
-			endif;
-		elseif ( $shows[$name]['source'] == 'local' ) :
-			if ( $name == 'Houston Matters' ) :
-				$hm = new WP_Query( [
+			}
+		} elseif ( $shows[ $name ]['source'] == 'local' ) {
+			if ( $name == 'Houston Matters' ) {
+				$hm = new WP_Query([
 					'year' => $dx[0],
 					'monthnum' => $dx[1],
 					'day' => $dx[2],
@@ -768,35 +784,35 @@ function hpm_segments( $name, $date ) {
 					'post_type' => 'post',
 					'post_status' => 'publish',
 					'ignore_sticky_posts' => 1
-				] );
-				if ( $hm->have_posts() ) :
+				]);
+				if ( $hm->have_posts() ) {
 					$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
-					while( $hm->have_posts() ) :
+					while ( $hm->have_posts() ) {
 						$hm->the_post();
-						$output .= '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';
-					endwhile;
+						$output .= '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></li>';
+					}
 					$output .= '</ul></details>';
-				endif;
+				}
 				wp_reset_query();
-			else :
+			} else {
 				return $output;
-			endif;
-		else :
+			}
+		} else {
 			return $output;
-		endif;
-	endif;
+		}
+	}
 	return $output;
 }
 
 add_filter( 'xmlrpc_enabled', '__return_false' );
 
 function hpm_reset_password_message( $message, $key ) {
-	if ( strpos( $_POST['user_login'], '@' ) ) :
+	if ( strpos( $_POST['user_login'], '@' ) ) {
 		$user_data = get_user_by( 'email', trim( $_POST['user_login'] ) );
-	else :
+	} else {
 		$login = trim( $_POST['user_login'] );
 		$user_data = get_user_by( 'login', $login );
-	endif;
+	}
 
 	$user_login = $user_data->user_login;
 
@@ -851,7 +867,7 @@ function hpm_image_preview_page() {
 					<main id="main" class="site-main" role="main">
 						<div class="article-wrap">
 <?php
-		if ( empty( $post_id ) ) : ?>
+		if ( empty( $post_id ) ) { ?>
 							<h2 style="width: 100%;">Enter the ID number of the post you want to preview</h2>
 							<form action="" method="GET">
 								<input type="hidden" name="page" value="hpm-image-preview" />
@@ -859,10 +875,10 @@ function hpm_image_preview_page() {
 								<input type="submit" value="Submit" />
 							</form>
 <?php
-		elseif ( !in_array( 'has-post-thumbnail', $postClass ) ) : ?>
+		} elseif ( !in_array( 'has-post-thumbnail', $postClass ) ) { ?>
 							<h2 style="width: 100%;">The article you're previewing doesn't have a featured image. Set one in the editor and refresh this page.</h2>
 <?php
-		elseif ( is_user_logged_in() && current_user_can( 'edit_post', $post_id ) ) : ?>
+		} elseif ( is_user_logged_in() && current_user_can( 'edit_post', $post_id ) ) { ?>
 							<article <?php post_class( 'card card-large', $post_id ); ?>>
 								<a class="post-thumbnail" href="#"><?php echo get_the_post_thumbnail( $post_id, 'large' ); ?></a>
 								<div class="card-content">
@@ -891,7 +907,7 @@ function hpm_image_preview_page() {
 								</div>
 							</article>
 <?php
-		endif; ?>
+		} ?>
 						</div>
 					</main>
 				</div>
@@ -915,88 +931,82 @@ add_action('admin_menu', 'hpm_image_preview_page');
  * Displays meta box on post editor screen (both new and edit pages).
  */
 function postscript_meta_box_setup() {
-    $user    = wp_get_current_user();
-    $roles   = [ 'administrator' ];
+	$user    = wp_get_current_user();
+	$roles   = [ 'administrator' ];
 
-    // Add meta boxes only for allowed user roles.
-    if ( array_intersect( $roles, $user->roles ) ) {
-        // Add meta box.
-        add_action( 'add_meta_boxes', 'postscript_add_meta_box' );
-
-        // Save post meta.
-        add_action( 'save_post', 'postscript_save_post_meta', 10, 2 );
-    }
+	// Add meta boxes only for allowed user roles.
+	if ( array_intersect( $roles, $user->roles ) ) {
+		add_action( 'add_meta_boxes', 'postscript_add_meta_box' );
+		add_action( 'save_post', 'postscript_save_post_meta', 10, 2 );
+	}
 }
 add_action( 'load-post.php', 'postscript_meta_box_setup' );
 add_action( 'load-post-new.php', 'postscript_meta_box_setup' );
 
 
 function postscript_metabox_admin_notice() {
-    $postscript_meta = get_post_meta( get_the_id(), 'postscript_meta', true );
-    ?>
-    <div class="error">
-    <?php var_dump( $_POST ) ?>
-        <p><?php _e( 'Error!', 'postscript' ); ?></p>
-    </div>
-    <?php
+	$postscript_meta = get_post_meta( get_the_id(), 'postscript_meta', true ); ?>
+	<div class="error">
+	<?php var_dump( $_POST ) ?>
+		<p><?php _e( 'Error!', 'postscript' ); ?></p>
+	</div>
+	<?php
 }
 
 /**
  * Creates meta box for the post editor screen (for user-selected post types).
- *
  * Passes array of user-setting options to callback.
  *
  * @uses postscript_get_options()   Safely gets option from database.
  */
 function postscript_add_meta_box() {
-    $options = [
+	$options = [
 		'user_roles' => [ 'administrator' ],
 		'post_types' => [ 'post', 'page', 'shows' ],
 		'allow' => [ 'class_body' => 'on', 'class_post' => 'on' ]
 	];
 
-    add_meta_box(
-        'postscript-meta',
-        esc_html__( 'Postscript', 'postscript' ),
-        'postscript_meta_box_callback',
-        $options['post_types'],
-        'side',
-        'default',
-        $options
-    );
+	add_meta_box(
+		'postscript-meta',
+		esc_html__( 'Postscript', 'postscript' ),
+		'postscript_meta_box_callback',
+		$options['post_types'],
+		'side',
+		'default',
+		$options
+	);
 }
 
 /**
  * Builds HTML form for the post meta box.
- *
  * Form elements are text fields for entering body/post classes (stored in same post-meta array).
- *
  * Form elements are printed only if allowed on Setting page.
  *
  * @param  Object $post Object containing the current post.
  * @param  array  $box  Array of meta box id, title, callback, and args elements.
  */
 function postscript_meta_box_callback( $post, $box ) {
-    $post_id = $post->ID;
-    wp_nonce_field( basename( __FILE__ ), 'postscript_meta_nonce' );
+	$post_id = $post->ID;
+	wp_nonce_field( basename( __FILE__ ), 'postscript_meta_nonce' );
 
-    // Display text fields for: URLs (style/script) and classes (body/post).
-    $opt_allow       = $box['args']['allow'];
-    $postscript_meta = get_post_meta( $post_id, 'postscript_meta', true );
+	// Display text fields for: URLs (style/script) and classes (body/post).
+	$opt_allow = $box['args']['allow'];
+	$postscript_meta = get_post_meta( $post_id, 'postscript_meta', true );
 
-    if ( isset ( $opt_allow['class_body'] ) ) { // Admin setting allows body_class() text field. ?>
-    <p>
-        <label for="postscript-class-body"><?php _e( 'Body class:', 'postscript' ); ?></label><br />
-        <input class="widefat" type="text" name="postscript_meta[class_body]" id="postscript-class-body" value="<?php if ( isset ( $postscript_meta['class_body'] ) ) { echo sanitize_html_class( $postscript_meta['class_body'] ); } ?>" size="30" />
-    </p>
-    <?php } ?>
-    <?php if ( isset ( $opt_allow['class_post'] ) ) { // Admin setting allows post_class() text field. ?>
-    <p>
-        <label for="postscript-class-post"><?php _e( 'Post class:', 'postscript' ); ?></label><br />
-        <input class="widefat" type="text" name="postscript_meta[class_post]" id="postscript-class-post" value="<?php if ( isset ( $postscript_meta['class_post'] ) ) { echo sanitize_html_class( $postscript_meta['class_post'] ); } ?>" size="30" />
-    </p>
-    <?php
-    }
+	if ( isset ( $opt_allow['class_body'] ) ) { // Admin setting allows body_class() text field. ?>
+	<p>
+		<label for="postscript-class-body"><?php _e( 'Body class:', 'postscript' ); ?></label><br />
+		<input class="widefat" type="text" name="postscript_meta[class_body]" id="postscript-class-body" value="<?php if ( isset ( $postscript_meta['class_body'] ) ) { echo sanitize_html_class( $postscript_meta['class_body'] ); } ?>" size="30" />
+	</p>
+<?php
+	}
+	if ( isset ( $opt_allow['class_post'] ) ) { // Admin setting allows post_class() text field. ?>
+	<p>
+		<label for="postscript-class-post"><?php _e( 'Post class:', 'postscript' ); ?></label><br />
+		<input class="widefat" type="text" name="postscript_meta[class_post]" id="postscript-class-post" value="<?php if ( isset ( $postscript_meta['class_post'] ) ) { echo sanitize_html_class( $postscript_meta['class_post'] ); } ?>" size="30" />
+	</p>
+<?php
+	}
 }
 
 /**
@@ -1008,58 +1018,49 @@ function postscript_meta_box_callback( $post, $box ) {
  * @param WP_Post $post       Post object.
  */
 function postscript_save_post_meta( $post_id, $post ) {
-    // Checks save status
-    $is_autosave = wp_is_post_autosave( $post_id );
-    $is_revision = wp_is_post_revision( $post_id );
-    $is_valid_nonce = ( isset( $_POST[ 'postscript_meta_nonce' ] ) && wp_verify_nonce( $_POST[ 'postscript_meta_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+	// Checks save status
+	$is_autosave = wp_is_post_autosave( $post_id );
+	$is_revision = wp_is_post_revision( $post_id );
+	$is_valid_nonce = ( isset( $_POST[ 'postscript_meta_nonce' ] ) && wp_verify_nonce( $_POST[ 'postscript_meta_nonce' ], basename( __FILE__ ) ) ? 'true' : 'false' );
 
-    // Exits script depending on save status
-    if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
-        return;
-    }
+	// Exits script depending on save status
+	if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
+		return;
+	}
 
-    // Get the post type object (to match with current user capability).
-    $post_type = get_post_type_object( $post->post_type );
+	// Get the post type object (to match with current user capability).
+	$post_type = get_post_type_object( $post->post_type );
 
-    // Check if the current user has permission to edit the post.
-    if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
-        return $post_id;
-    }
+	// Check if the current user has permission to edit the post.
+	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+		return $post_id;
+	}
 
-    $meta_key   = 'postscript_meta';
-    $meta_value = get_post_meta( $post_id, $meta_key, true );
+	$meta_key = 'postscript_meta';
+	$meta_value = get_post_meta( $post_id, $meta_key, true );
 
-    // If any user-submitted form fields have a value.
-    // (implode() reduces array values to a string to do the check).
-    if ( isset( $_POST['postscript_meta'] ) && implode( $_POST['postscript_meta'] ) ) {
-        $form_data  = postscript_sanitize_data( $_POST['postscript_meta'] );
-    } else {
-        $form_data  = null;
-    }
+	// If any user-submitted form fields have a value.
+	// (implode() reduces array values to a string to do the check).
+	if ( isset( $_POST['postscript_meta'] ) && implode( $_POST['postscript_meta'] ) ) {
+		$form_data  = postscript_sanitize_data( $_POST['postscript_meta'] );
+	} else {
+		$form_data  = null;
+	}
 
-    // Add post-meta, if none exists, and if user entered new form data.
-    if ( $form_data && '' == $meta_value ) {
-        add_post_meta( $post_id, $meta_key, $form_data, true );
-
-    // Update post-meta if user changed existing post-meta values in form.
-    } elseif ( $form_data && $form_data != $meta_value ) {
-        update_post_meta( $post_id, $meta_key, $form_data );
-
-    // Delete existing post-meta if user cleared all post-meta values from form.
-    } elseif ( null == $form_data && $meta_value ) {
-        delete_post_meta( $post_id, $meta_key );
-
-    // Any other possibilities?
-    } else {
-        return;
-    }
+	// Add post-meta, if none exists, and if user entered new form data.
+	if ( $form_data && '' == $meta_value ) {
+		add_post_meta( $post_id, $meta_key, $form_data, true );
+	} elseif ( $form_data && $form_data != $meta_value ) {
+		update_post_meta( $post_id, $meta_key, $form_data );
+	} elseif ( null == $form_data && $meta_value ) {
+		delete_post_meta( $post_id, $meta_key );
+	} else {
+		return;
+	}
 }
-
-
 
 /**
  * Sanitizes values in an one- and multi- dimensional arrays.
- *
  * Used by post meta-box form before writing post-meta to database
  * and by Settings API before writing option to database.
  *
@@ -1071,31 +1072,31 @@ function postscript_save_post_meta( $post_id, $post ) {
  * @return   array    $input_clean  The sanitized input.
  */
 function postscript_sanitize_data( $data = [] ) {
-    // Initialize a new array to hold the sanitized values.
-    $data_clean = [];
+	// Initialize a new array to hold the sanitized values.
+	$data_clean = [];
 
-    // Check for non-empty array.
-    if ( ! is_array( $data ) || ! count( $data )) {
-        return [];
-    }
+	// Check for non-empty array.
+	if ( ! is_array( $data ) || ! count( $data )) {
+		return [];
+	}
 
-    // Traverse the array and sanitize each value.
-    foreach ( $data as $key => $value) {
-        // For one-dimensional array.
-        if ( ! is_array( $value ) && ! is_object( $value ) ) {
-            // Remove blank lines and whitespaces.
-            $value = preg_replace( '/^\h*\v+/m', '', trim( $value ) );
-            $value = str_replace( ' ', '', $value );
-            $data_clean[ $key ] = sanitize_text_field( $value );
-        }
+	// Traverse the array and sanitize each value.
+	foreach ( $data as $key => $value) {
+		// For one-dimensional array.
+		if ( ! is_array( $value ) && ! is_object( $value ) ) {
+			// Remove blank lines and whitespaces.
+			$value = preg_replace( '/^\h*\v+/m', '', trim( $value ) );
+			$value = str_replace( ' ', '', $value );
+			$data_clean[ $key ] = sanitize_text_field( $value );
+		}
 
-        // For multidimensional array.
-        if ( is_array( $value ) ) {
-            $data_clean[ $key ] = postscript_sanitize_data( $value );
-        }
-    }
+		// For multidimensional array.
+		if ( is_array( $value ) ) {
+			$data_clean[ $key ] = postscript_sanitize_data( $value );
+		}
+	}
 
-    return $data_clean;
+	return $data_clean;
 }
 
 /**
@@ -1110,19 +1111,19 @@ function postscript_sanitize_data( $data = [] ) {
  * @return   array    $input_clean  The sanitized input.
  */
 function postscript_sanitize_array( $input ) {
-    // Initialize a new array to hold the sanitized values.
-    $input_clean = [];
+	// Initialize a new array to hold the sanitized values.
+	$input_clean = [];
 
-    // Traverse the array and sanitize each value.
-    foreach ( $input as $key => $val ) {
-        $input_clean[ $key ] = sanitize_text_field( $val );
-    }
+	// Traverse the array and sanitize each value.
+	foreach ( $input as $key => $val ) {
+		$input_clean[ $key ] = sanitize_text_field( $val );
+	}
 
-    return $input_clean;
+	return $input_clean;
 }
 
 function postscript_remove_empty_lines( $string ) {
-    return preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string );
+	return preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string );
 }
 
 /**
@@ -1132,24 +1133,24 @@ function postscript_remove_empty_lines( $string ) {
  * @return  array $classes  WordPress defaults and user-added classes
  */
 function postscript_class_body( $classes ) {
-    $post_id = get_the_ID();
-    $options = [
+	$post_id = get_the_ID();
+	$options = [
 		'user_roles' => [ 'administrator' ],
 		'post_types' => [ 'post', 'page', 'shows' ],
 		'allow' => [ 'class_body' => 'on', 'class_post' => 'on' ]
 	];
 
-    if ( ! empty( $post_id ) && isset( $options['allow']['class_body'] ) ) {
-        // Get the custom post class.
-        $postscript_meta = get_post_meta( $post_id, 'postscript_meta', true );
+	if ( !empty( $post_id ) && isset( $options['allow']['class_body'] ) ) {
+		// Get the custom post class.
+		$postscript_meta = get_post_meta( $post_id, 'postscript_meta', true );
 
-        // If a post class was input, sanitize it and add it to the body class array.
-        if ( ! empty( $postscript_meta['class_body'] ) ) {
-            $classes[] = sanitize_html_class( $postscript_meta['class_body'] );
-        }
-    }
+		// If a post class was input, sanitize it and add it to the body class array.
+		if ( !empty( $postscript_meta['class_body'] ) ) {
+			$classes[] = sanitize_html_class( $postscript_meta['class_body'] );
+		}
+	}
 
-    return $classes;
+	return $classes;
 }
 add_filter( 'body_class', 'postscript_class_body' );
 
@@ -1161,27 +1162,26 @@ add_filter( 'body_class', 'postscript_class_body' );
  * @return  array $classes  WordPress defaults and user-added classes
  */
 function postscript_class_post( $classes ) {
-    $post_id = get_the_ID();
-    $options = [
+	$post_id = get_the_ID();
+	$options = [
 		'user_roles' => [ 'administrator' ],
 		'post_types' => [ 'post', 'page', 'shows' ],
 		'allow' => [ 'class_body' => 'on', 'class_post' => 'on' ]
 	];
 
-    if ( ! empty( $post_id ) && isset( $options['allow']['class_post'] ) ) {
-        // Get the custom post class.
-        $postscript_meta = get_post_meta( $post_id, 'postscript_meta', true );
+	if ( !empty( $post_id ) && isset( $options['allow']['class_post'] ) ) {
+		// Get the custom post class.
+		$postscript_meta = get_post_meta( $post_id, 'postscript_meta', true );
 
-        // If a post class was input, sanitize it and add it to the post class array.
-        if ( ! empty( $postscript_meta['class_post'] ) ) {
-            $classes[] = sanitize_html_class( $postscript_meta['class_post'] );
-        }
-    }
+		// If a post class was input, sanitize it and add it to the post class array.
+		if ( !empty( $postscript_meta['class_post'] ) ) {
+			$classes[] = sanitize_html_class( $postscript_meta['class_post'] );
+		}
+	}
 
-    return $classes;
+	return $classes;
 }
 add_filter( 'post_class', 'postscript_class_post' );
-
 
 add_action( 'load-post.php', 'hpm_alt_headline_setup' );
 add_action( 'load-post-new.php', 'hpm_alt_headline_setup' );
@@ -1234,30 +1234,30 @@ function hpm_alt_headline_meta_box( $object, $box ) {
 }
 
 function hpm_alt_headline_save_meta( $post_id, $post ) {
-	if ( $post->post_type == 'post' ) :
-		if ( !isset( $_POST['hpm_alt_headline_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_alt_headline_class_nonce'], basename( __FILE__ ) ) ) :
+	if ( $post->post_type == 'post' ) {
+		if ( !isset( $_POST['hpm_alt_headline_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_alt_headline_class_nonce'], basename( __FILE__ ) ) ) {
 			return $post_id;
-		endif;
+		}
 
 		$post_type = get_post_type_object( $post->post_type );
 
-		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) :
+		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 			return $post_id;
-		endif;
+		}
 		$alt = get_post_meta( $post_id, 'hpm_alt_headline', true );
-		if ( !empty( $_POST['hpm-alt-headline'] ) ) :
+		if ( !empty( $_POST['hpm-alt-headline'] ) ) {
 			update_post_meta( $post_id, 'hpm_alt_headline', sanitize_text_field( $_POST['hpm-alt-headline'] ) );
-		elseif ( empty( $_POST['hpm-alt-headline'] ) && !empty( $alt ) ) :
+		} elseif ( empty( $_POST['hpm-alt-headline'] ) && !empty( $alt ) ) {
 			delete_post_meta( $post_id, 'hpm_alt_headline', '' );
-		endif;
+		}
 
 		$seo = get_post_meta( $post_id, 'hpm_seo_headline', true );
-		if ( !empty( $_POST['hpm-seo-headline'] ) ) :
+		if ( !empty( $_POST['hpm-seo-headline'] ) ) {
 			update_post_meta( $post_id, 'hpm_seo_headline', sanitize_text_field( $_POST['hpm-seo-headline'] ) );
-		elseif ( empty( $_POST['hpm-seo-headline'] ) && !empty( $seo ) ) :
+		} elseif ( empty( $_POST['hpm-seo-headline'] ) && !empty( $seo ) ) {
 			delete_post_meta( $post_id, 'hpm_seo_headline', '' );
-		endif;
-	endif;
+		}
+	}
 }
 
 /*
@@ -1265,12 +1265,12 @@ function hpm_alt_headline_save_meta( $post_id, $post ) {
  */
 function hpm_article_seo_title( $title ) {
 	global $wp_query;
-	if ( $wp_query->is_single() ) :
+	if ( $wp_query->is_single() ) {
 		$seo_headline = get_post_meta( $wp_query->post->ID, 'hpm_seo_headline', true );
-		if ( !empty( $seo_headline ) ) :
+		if ( !empty( $seo_headline ) ) {
 			return wp_strip_all_tags( $seo_headline ) . ' | Houston Public Media';
-		endif;
-	endif;
+		}
+	}
 	return $title;
 }
 add_filter( 'pre_get_document_title', 'hpm_article_seo_title' );
@@ -1284,7 +1284,7 @@ function hpm_page_script_setup() {
 
 function hpm_page_script_add_meta() {
 	$user = wp_get_current_user();
-	if ( in_array( 'administrator', (array) $user->roles ) ) :
+	if ( in_array( 'administrator', (array) $user->roles ) ) {
     	add_meta_box(
 			'hpm-page-script-meta-class',
 			esc_html__( 'Injectable Scripts or Styling', 'example' ),
@@ -1293,18 +1293,18 @@ function hpm_page_script_add_meta() {
 			'normal',
 			'high'
 		);
-	endif;
+	}
 }
 
 function hpm_page_script_meta_box( $object, $box ) {
 	wp_nonce_field( basename( __FILE__ ), 'hpm_page_script_class_nonce' );
 	$page_script = get_post_meta( $object->ID, 'hpm_page_script', true );
-	if ( empty( $page_script ) ) :
+	if ( empty( $page_script ) ) {
 		$page_script = [
 			'head' => '',
 			'foot' => ''
 		];
-	endif; ?>
+	} ?>
 	<p>If you have styling or scripts that you would like to include, put them in here</p>
 	<p><label for="hpm-page-script-head"><strong><?php _e( "Header:", 'hpm-podcasts' ); ?></strong></label><br /><?php
 		$editor_opts = [
@@ -1316,32 +1316,32 @@ function hpm_page_script_meta_box( $object, $box ) {
 	?></p>
 	<p><label for="hpm-page-script-foot"><strong><?php _e( "Footer:", 'hpm-podcasts' ); ?></strong></label><br /><?php
 		wp_editor( $page_script['foot'], 'hpm-page-script-foot', $editor_opts ); ?></p>
-	<?php
+<?php
 }
 
 function hpm_page_script_save_meta( $post_id, $post ) {
 	$user = wp_get_current_user();
-	if ( in_array( 'administrator', (array) $user->roles ) ) :
-		if ( !isset( $_POST['hpm_page_script_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_page_script_class_nonce'], basename( __FILE__ ) ) ) :
+	if ( in_array( 'administrator', (array) $user->roles ) ) {
+		if ( !isset( $_POST['hpm_page_script_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_page_script_class_nonce'], basename( __FILE__ ) ) ) {
 			return $post_id;
-		endif;
+		}
 
 		$post_type = get_post_type_object( $post->post_type );
 
-		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) :
+		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 			return $post_id;
-		endif;
+		}
 
-		if ( empty( $_POST['hpm-page-script-head'] ) && empty( $_POST['hpm-page-script-foot'] ) ) :
+		if ( empty( $_POST['hpm-page-script-head'] ) && empty( $_POST['hpm-page-script-foot'] ) ) {
 			delete_post_meta( $post_id, 'hpm_page_script' );
-		else :
+		} else {
 			$page_script = [
 				'head' => $_POST['hpm-page-script-head'],
 				'foot' => $_POST['hpm-page-script-foot']
 			];
 			update_post_meta( $post_id, 'hpm_page_script', $page_script );
-		endif;
-	endif;
+		}
+	}
 }
 
 add_action( 'wp_footer', function() {
@@ -1349,29 +1349,29 @@ add_action( 'wp_footer', function() {
 	$page_id = $wp_query->get_queried_object_id();
 	$types = [ 'post', 'page', 'embeds', 'shows' ];
 	$post_type = get_post_type( $page_id );
-	if ( in_array( $post_type, $types ) ) :
+	if ( in_array( $post_type, $types ) ) {
 		$page_script = get_post_meta( $page_id, 'hpm_page_script', true );
-		if ( !empty( $page_script['foot'] ) ) :
+		if ( !empty( $page_script['foot'] ) ) {
 			echo $page_script['foot'];
-		endif;
-	endif;
+		}
+	}
 }, 999 );
 add_action( 'wp_head', function() {
 	global $wp_query;
 	$page_id = $wp_query->get_queried_object_id();
 	$types = [ 'post', 'page', 'embeds', 'shows' ];
 	$post_type = get_post_type( $page_id );
-	if ( in_array( $post_type, $types ) ) :
+	if ( in_array( $post_type, $types ) ) {
 		$page_script = get_post_meta( $page_id, 'hpm_page_script', true );
-		if ( !empty( $page_script['head'] ) ) :
+		if ( !empty( $page_script['head'] ) ) {
 			echo $page_script['head'];
-		endif;
-	endif;
+		}
+	}
 }, 200 );
 
 
 function hpm_now_playing ( $station ) {
-	return get_option( 'hpm_'.$station.'_nowplay' );
+	return get_option( 'hpm_' . $station . '_nowplay' );
 }
 
 function hpm_now_playing_update () {
@@ -1384,35 +1384,35 @@ function hpm_now_playing_update () {
 		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
 		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json'
 	];
-	foreach ( $stations as $k => $v ) :
+	foreach ( $stations as $k => $v ) {
 		$output = '<h3>';
 		$remote = wp_remote_get( esc_url_raw( $v ) );
-		if ( is_wp_error( $remote ) ) :
+		if ( is_wp_error( $remote ) ) {
 			continue;
-		else :
+		} else {
 			$data = json_decode( wp_remote_retrieve_body( $remote ), true );
-		endif;
-		if ( strpos( $k, 'tv' ) !== false ) :
+		}
+		if ( strpos( $k, 'tv' ) !== false ) {
 			$output .= $data['airlist'][0]['version']['series']['series-title'];
-		elseif ( $k === 'mixtape' ) :
+		} elseif ( $k === 'mixtape' ) {
 			$output .= $data['artist'] . ' - ' . $data['song'];
-		else :
-			if ( empty( $data['onNow']['song'] ) ) :
+		} else {
+			if ( empty( $data['onNow']['song'] ) ) {
 				$output .= $data['onNow']['program']['name'];
-			else :
-				if ( !empty( $data['onNow']['song']['composerName'] ) ) :
+			} else {
+				if ( !empty( $data['onNow']['song']['composerName'] ) ) {
 					$output .= $data['onNow']['song']['composerName'] . ' - ';
-				endif;
+				}
 				$output .= str_replace( '&', '&amp;', $data['onNow']['song']['trackName'] );
-			endif;
-		endif;
+			}
+		}
 		$output .= '</h3>';
 		update_option( 'hpm_' . $k . '_nowplay', $output, false );
-	endforeach;
+	}
 }
 
 add_action( 'hpm_nowplay_update', 'hpm_now_playing_update' );
 $timestamp = wp_next_scheduled( 'hpm_nowplay_update' );
-if ( empty( $timestamp ) ) :
+if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hpm_2min', 'hpm_nowplay_update' );
-endif;
+}

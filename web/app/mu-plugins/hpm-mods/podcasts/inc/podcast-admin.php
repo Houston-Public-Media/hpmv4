@@ -48,9 +48,9 @@
 												?></label></th>
 										<td>
 											<select name="hpm_podcast_settings[roles][ ]" multiple class="regular-text">
-												<?php foreach ( get_editable_roles() as $role_name => $role_info ) : ?>
+												<?php foreach ( get_editable_roles() as $role_name => $role_info ) { ?>
 													<option value="<?php echo $role_name; ?>"<?php echo ( in_array( $role_name, $pods['roles'] ) ? " selected" : '' ); ?>><?php echo $role_name; ?></option>
-												<?php endforeach; ?>
+												<?php } ?>
 											</select>
 										</td>
 									</tr>
@@ -136,11 +136,11 @@
 									<tr valign="top">
 										<th scope="row"><label for="hpm_podcast_settings[credentials][sftp][password]"><?php _e('FTP Password', 'hpm-podcasts' ); ?></label></th>
 										<td><input name="hpm_podcast_settings[credentials][sftp][password]" <?php
-											if ( defined( 'HPM_SFTP_PASSWORD' ) ) :
+											if ( defined( 'HPM_SFTP_PASSWORD' ) ) {
 												echo 'value="Set in wp-config.php" disabled type="text" ';
-											else :
+											} else {
 												echo 'value ="'.$pods['credentials']['sftp']['password'].'" type="password" ';
-											endif; ?>class="regular-text" placeholder="P@assw0rd" /></td>
+											} ?>class="regular-text" placeholder="P@assw0rd" /></td>
 									</tr>
 									<tr valign="top">
 										<th scope="row"><label for="hpm_podcast_settings[credentials][sftp][folder]"><?php _e('FTP Folder', 'hpm-podcasts' ); ?></label></th>

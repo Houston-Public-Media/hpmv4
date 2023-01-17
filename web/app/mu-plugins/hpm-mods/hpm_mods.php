@@ -38,15 +38,15 @@ function hpm_mods_activate() {
 		]
 	];
 	$old = get_option( 'hpm_podcast_settings' );
-	if ( empty( $old ) ) :
+	if ( empty( $old ) ) {
 		update_option( 'hpm_podcast_settings', $pods, false );
-	endif;
+	}
 	update_option( 'hpm_podcast_last_update', 'none', false );
 	HPM_Podcasts::create_type();
 	flush_rewrite_rules();
-	if ( ! wp_next_scheduled( 'hpm_podcast_update_refresh' ) ) :
+	if ( ! wp_next_scheduled( 'hpm_podcast_update_refresh' ) ) {
 		wp_schedule_event( time(), 'hourly', 'hpm_podcast_update_refresh' );
-	endif;
+	}
 }
 
 function hpm_mods_deactivate() {

@@ -57,33 +57,31 @@ get_header(); ?>
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post(); ?>
+<?PHP
+	while ( have_posts() ) {
+		the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
-					<?php
-						the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
                     <div class="plan-colorbar"></div>
                     <div class="plan-colorbar"></div>
                     <div class="plan-colorbar"></div>
                     <div class="plan-colorbar"></div>
 				</header>
 				<div class="entry-content">
-					<?php
-						if ( has_post_thumbnail() ) :
-					?>
+<?php
+		if ( has_post_thumbnail() ) { ?>
 					<div class="post-thumbnail">
-						<?php
-							the_post_thumbnail( 'hpm-large' );
-							$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
-							if (!empty($thumb_caption)) :
-								echo "<p>".$thumb_caption."</p>";
-							endif;
-						?>
+<?php
+			the_post_thumbnail( 'hpm-large' );
+			$thumb_caption = get_post(get_post_thumbnail_id())->post_excerpt;
+			if ( !empty( $thumb_caption ) ) {
+				echo "<p>" . $thumb_caption . "</p>";
+			} ?>
 					</div>
-					<?PHP
-						endif;
-						the_content();
-					?>
+<?PHP
+		}
+		the_content(); ?>
 				</div>
 				<footer class="entry-footer">
 				<?PHP
@@ -97,8 +95,8 @@ get_header(); ?>
 					edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer>
 			</article>
-			<?php
-				endwhile; ?>
+<?php
+	} ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

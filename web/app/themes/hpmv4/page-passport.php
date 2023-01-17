@@ -365,7 +365,8 @@ get_header(); ?>
 			} */
 		</style>
 		<main id="main" class="site-main" role="main">
-			<?PHP while ( have_posts() ) : the_post(); ?>
+			<?PHP while ( have_posts() ) {
+				the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="padding: 0;">
 				<?PHP $header_back = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' ); ?>
 				<header class="page-header" style="background-image: url('<?php echo $header_back[0]; ?>');">
@@ -387,7 +388,7 @@ get_header(); ?>
 					edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer>
 			</article>
-		<?php endwhile; ?>
+		<?php } ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

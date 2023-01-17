@@ -79,11 +79,11 @@ $articles = hpm_homepage_articles(); ?>
 				<div class="article-wrap">
 <?php
 	$artnum = count( $articles );
-	if ( $artnum % 2 !== 0 ) :
+	if ( $artnum % 2 !== 0 ) {
 		unset( $articles[ $artnum - 1 ] );
-	endif;
-	foreach ( $articles as $ka => $va ) :
-		if ( $ka == 4 ) : ?>
+	}
+	foreach ( $articles as $ka => $va ) {
+		if ( $ka == 4 ) { ?>
 				</div>
 				<aside id="top-schedule-wrap" class="column-right">
 					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
@@ -128,7 +128,7 @@ $articles = hpm_homepage_articles(); ?>
 				</aside>
 				<div class="article-wrap">
 <?php
-		elseif ( $ka == 12 ) : ?>
+		} elseif ( $ka == 12 ) { ?>
 				</div>
 				<aside id="npr-side" class="column-right">
 					<section class="highlights">
@@ -144,10 +144,10 @@ $articles = hpm_homepage_articles(); ?>
 				</aside>
 				<div class="article-wrap">
 <?php
-		endif;
+		}
 		$post = $va;
 		get_template_part( 'content', get_post_format() );
-	endforeach; ?>
+	} ?>
 				</div>
 			</div>
 		</main>

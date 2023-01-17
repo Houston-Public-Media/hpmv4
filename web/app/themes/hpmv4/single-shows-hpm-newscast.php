@@ -66,15 +66,16 @@ get_header(); ?>
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?php
-			while ( have_posts() ) : the_post();
-			$show_id = get_the_ID();
-			$show = get_post_meta( $show_id, 'hpm_show_meta', true );
-			$show_title = get_the_title();
-			$show_content = get_the_content();
-			$episodes = HPM_Podcasts::list_episodes( $show_id );
-			echo HPM_Podcasts::show_header( $show_id );
-			endwhile; ?>
+<?php
+	while ( have_posts() ) {
+		the_post();
+		$show_id = get_the_ID();
+		$show = get_post_meta( $show_id, 'hpm_show_meta', true );
+		$show_title = get_the_title();
+		$show_content = get_the_content();
+		$episodes = HPM_Podcasts::list_episodes( $show_id );
+		echo HPM_Podcasts::show_header( $show_id );
+	} ?>
 			<div id="float-wrap">
 				<aside class="column-right">
 					<h3>About <?php echo $show_title; ?></h3>

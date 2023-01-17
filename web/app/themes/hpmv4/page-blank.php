@@ -22,26 +22,27 @@ Template Name: Blank Wrapper
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post(); ?>
+		<?PHP while ( have_posts() ) {
+				the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
 					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 				</header>
 				<div class="entry-content">
 					<?php
-						if ( has_post_thumbnail() ) :
+						if ( has_post_thumbnail() ) {
 					?>
 					<div class="post-thumbnail">
 						<?php
 							the_post_thumbnail( 'hpm-large' );
 							$thumb_caption = get_post( get_post_thumbnail_id() )->post_excerpt;
-							if ( !empty( $thumb_caption ) ) :
+							if ( !empty( $thumb_caption ) ) {
 								echo "<p>" . $thumb_caption . "</p>";
-							endif;
+							}
 						?>
 					</div>
 					<?PHP
-						endif;
+						}
 						the_content();
 					?>
 				</div>
@@ -57,7 +58,7 @@ Template Name: Blank Wrapper
 					edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer>
 			</article>
-		<?php endwhile; ?>
+		<?php } ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

@@ -9,5 +9,5 @@ define( 'WP_DEBUG_LOG', false );
 define( 'DISALLOW_FILE_MODS', false );
 define( 'DB_HOST_2', env( 'DB_HOST_2' ) );
 
-$_SERVER['HTTPS']='on';
+$_SERVER['HTTPS'] = 'on';
 $protocol = 'https';

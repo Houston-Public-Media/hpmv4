@@ -33,25 +33,25 @@ class HPM_Promos {
 		add_filter( 'pre_update_option_hpm_promos_settings', [ $this, 'options_clean' ], 10, 2 );
 
 		// Make sure that the proper cron job is scheduled
-		if ( ! wp_next_scheduled( 'hpm_promo_cleanup' ) ) :
+		if ( ! wp_next_scheduled( 'hpm_promo_cleanup' ) ) {
 			wp_schedule_event( time(), 'daily', 'hpm_promo_cleanup' );
-		endif;
+		}
 
 		add_shortcode( 'hpm_promos', [ $this, 'promo_shortcode' ] );
 	}
 
 	public function hide_publish_button() {
 		global $post;
-		if ( $post !== null && $post->post_type == 'promos' ) :
+		if ( $post !== null && $post->post_type == 'promos' ) {
 			$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
-			if ( !empty( $meta ) && !empty( $meta['type'] ) ) :
+			if ( !empty( $meta ) && !empty( $meta['type'] ) ) {
 				return;
-			endif; ?>
+			} ?>
 			<script type="text/javascript">
-			window.onload = function() { document.getElementById('publish').disabled = true; }
+				window.onload = function() { document.getElementById('publish').disabled = true; }
 			</script>
-		<?php
-		endif;
+<?php
+		}
 	}
 
 	public function create_type() {
@@ -94,7 +94,7 @@ class HPM_Promos {
 		$roles = [ 'administrator', 'editor' ];
 
 		// Loop through each role and assign capabilities
-		foreach ( $roles as $the_role ) :
+		foreach ( $roles as $the_role ) {
 			$role = get_role( $the_role );
 			$role->add_cap( 'read' );
 			$role->add_cap( 'read_hpm_promo' );
@@ -107,7 +107,7 @@ class HPM_Promos {
 			$role->add_cap( 'delete_others_hpm_promos' );
 			$role->add_cap( 'delete_private_hpm_promos' );
 			$role->add_cap( 'delete_published_hpm_promos' );
-		endforeach;
+		}
 	}
 
 
@@ -125,7 +125,7 @@ class HPM_Promos {
 	public function meta_box( $object, $box ) {
 		wp_nonce_field( basename( __FILE__ ), 'hpm_promos_class_nonce' );
 		$hpm_promo = get_post_meta( $object->ID, 'hpm_promos_meta', true );
-		if ( empty( $hpm_promo ) ) :
+		if ( empty( $hpm_promo ) ) {
 			$hpm_promo = [
 				'location' => 'any',
 				'type' => '',
@@ -157,7 +157,7 @@ class HPM_Promos {
 					'dont-miss' => []
 				]
 			];
-		endif;
+		}
 		$editor_opts = [
 			'editor_height' => 150,
 			'media_buttons' => false,
@@ -232,56 +232,56 @@ class HPM_Promos {
 				});
 			});
 		</script>
-		<?php
+<?php
 	}
 
 	public function save_meta( $post_id, $post ) {
-		if ( $post->post_type == 'promos' ) :
+		if ( $post->post_type == 'promos' ) {
 			/* Verify the nonce before proceeding. */
-			if ( ! isset( $_POST['hpm_promos_class_nonce'] ) || ! wp_verify_nonce( $_POST['hpm_promos_class_nonce'], basename( __FILE__ ) ) ) :
+			if ( ! isset( $_POST['hpm_promos_class_nonce'] ) || ! wp_verify_nonce( $_POST['hpm_promos_class_nonce'], basename( __FILE__ ) ) ) {
 				return $post_id;
-			endif;
+			}
 
 			/* Get the post type object. */
 			$post_type = get_post_type_object( $post->post_type );
 
 			/* Check if the current user has permission to edit the post. */
-			if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) :
+			if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 				return $post_id;
-			endif;
+			}
 
 			$hpend = $_POST['hpm_promo']['end'];
 
-			foreach ( $hpend as $hpe ) :
-				if ( !is_numeric( $hpe ) || $hpe == '' ) :
+			foreach ( $hpend as $hpe ) {
+				if ( !is_numeric( $hpe ) || $hpe == '' ) {
 					return $post_id;
-				endif;
-			endforeach;
+				}
+			}
 
 			$offset = get_option('gmt_offset')*3600;
 			$endtime = mktime( $hpend['hour'], $hpend['min'], 0, $hpend['mon'], $hpend['day'], $hpend['year'] ) - $offset;
 			update_post_meta( $post_id, 'hpm_promos_end_time', $endtime );
 
 			$options = $_POST['hpm_promo']['options'];
-			foreach ( $options as $k => $v ) :
-				if ( is_array( $v ) ) :
-					foreach ( $v as $vk => $vv ) :
-						if ( is_array( $vv ) ) :
-							foreach ( $vv as $vvk => $vvv ) :
-								if ( $vvk !== 'text' ) :
+			foreach ( $options as $k => $v ) {
+				if ( is_array( $v ) ) {
+					foreach ( $v as $vk => $vv ) {
+						if ( is_array( $vv ) ) {
+							foreach ( $vv as $vvk => $vvv ) {
+								if ( $vvk !== 'text' ) {
 									$options[$k][$vk][$vvk] = sanitize_text_field( $vvv );
-								else :
+								} else {
 									$options[$k][$vk][$vvk] = wp_kses_post( $vvv );
-								endif;
-							endforeach;
-						else :
+								}
+							}
+						} else {
 							$options[$k][$vk] = sanitize_text_field( $vv );
-						endif;
-					endforeach;
-				else :
+						}
+					}
+				} else {
 					$options[$k] = sanitize_text_field( $v );
-				endif;
-			endforeach;
+				}
+			}
 
 			$hpm_promo_meta = [
 				'location' => $_POST['hpm_promo']['location'],
@@ -290,29 +290,31 @@ class HPM_Promos {
 			];
 
 			update_post_meta( $post_id, 'hpm_promos_meta', $hpm_promo_meta );
-		endif;
+		}
 	}
 
 	public function options_clean( $new_value, $old_value ) {
 		$find = [ '{/$}', '{^/}' ];
 		$replace = [ '', '' ];
-		foreach ( $new_value['bans'] as $k => $v ) :
+		foreach ( $new_value['bans'] as $k => $v ) {
 			$new_value['bans'][$k] = preg_replace( '/\s/', '', $v );
-		endforeach;
+		}
 		return $new_value;
 	}
 
 	public function unpub_date() {
 		global $post;
-		if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) return false;
-		if ( $post->post_type == 'promos' ) :
+		if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) {
+			return false;
+		}
+		if ( $post->post_type == 'promos' ) {
 			$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
 			$offset = get_option('gmt_offset')*3600;
-			if ( empty( $endtime ) ) :
+			if ( empty( $endtime ) ) {
 				$t = time() + $offset + ( 24 * HOUR_IN_SECONDS );
-			else :
+			} else {
 				$t = $endtime + $offset;
-			endif;
+			}
 			$timeend = [
 				'mon' => date( 'm', $t),
 				'day' => date( 'd', $t),
@@ -405,7 +407,7 @@ class HPM_Promos {
 	}
 </style>
 <?php
-		endif;
+		}
 	}
 
 	public function cleanup() {
@@ -426,12 +428,12 @@ class HPM_Promos {
 			]
 		];
 		$promos = new WP_Query( $args );
-		if ( $promos->have_posts() ) :
-			while ( $promos->have_posts() ) :
+		if ( $promos->have_posts() ) {
+			while ( $promos->have_posts() ) {
 				$promos->the_post();
 				wp_trash_post( get_the_ID() );
-			endwhile;
-		endif;
+			}
+		}
 	}
 
 	public function generate_lightbox() {
@@ -439,24 +441,24 @@ class HPM_Promos {
 		$wp_global = $wp_query;
 		$output = '';
 		$lightbox = 0;
-		if ( empty( $wp_query->post ) ) :
+		if ( empty( $wp_query->post ) ) {
 			return $output;
-		endif;
-		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) :
+		}
+		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) {
 			return $output;
-		endif;
-		if ( $wp_global->is_page || $wp_global->is_single ) :
+		}
+		if ( $wp_global->is_page || $wp_global->is_single ) {
 			$page_id = $wp_global->get_queried_object_id();
 			$anc = get_post_ancestors( $page_id );
 			$opts = $this->options;
 			$bans = explode( ',', $opts['bans']['ids'] );
 			$pt_slug = explode( ',', $opts['bans']['templates'] );
-			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
+			if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) {
 				return $output;
-			elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
+			} elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) {
 				return $output;
-			endif;
-		endif;
+			}
+		}
 		$args = [
 			'post_type' => 'promos',
 			'posts_per_page' => -1,
@@ -465,7 +467,7 @@ class HPM_Promos {
 		];
 		$t = time();
 		$now = getdate($t);
-		if ( !empty( $_GET['testtime'] ) ) :
+		if ( !empty( $_GET['testtime'] ) ) {
 			$tt = explode( '-', $_GET['testtime'] );
 			$offset = get_option( 'gmt_offset' ) * 3600;
 			$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) + $offset );
@@ -478,30 +480,30 @@ class HPM_Promos {
 				],
 				'inclusive' => true
 			]];
-		endif;
+		}
 		$args['meta_query'] = [[
 			'key'     => 'hpm_promos_end_time',
 			'value'   => $now[0],
 			'compare' => '>=',
 		]];
 		$promos = new WP_Query( $args );
-		if ( $promos->have_posts() ) :
-			while ( $promos->have_posts() ) :
+		if ( $promos->have_posts() ) {
+			while ( $promos->have_posts() ) {
 				$promos->the_post();
 				$meta = get_post_meta( get_the_ID(), 'hpm_promos_meta', true );
-				if ( empty( $meta ) ) :
+				if ( empty( $meta ) ) {
 					continue;
-				endif;
-				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) :
+				}
+				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) {
 					continue;
-				endif;
+				}
 				$content = do_shortcode( get_the_content(), false );
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
-				if ( $meta['type'] == 'lightbox' ) :
-					if ( $lightbox == 0 ) :
+				if ( $meta['type'] == 'lightbox' ) {
+					if ( $lightbox == 0 ) {
 						$output .= "var visited = getCookie('visited');";
-						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) :
+						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) {
 							$content_esc = str_replace(
 								[ "[[link]]", "[[image]]", "[[text]]" ],
 								[ "'+lblink+'", "'+lbimage+'", "'+lbtext+'" ],
@@ -517,12 +519,12 @@ class HPM_Promos {
 								"lblink = '".$meta['options']['lightbox']['b']['link']."';".
 								"lbimage = '".$meta['options']['lightbox']['b']['image']."';".
 							"}";
-						endif;
-						if ( !empty( $meta['options']['lightbox']['total'] ) ) :
+						}
+						if ( !empty( $meta['options']['lightbox']['total'] ) ) {
 							$remote = file_get_contents( $meta['options']['lightbox']['total'] );
 							$total = json_decode( $remote, true );
 							$content_esc = str_replace( "[[total]]", $total['total'], $content_esc );
-						endif;
+						}
 						$output .= "var lightBox = '".$content_esc."';".
 						"if (visited === null) {".
 							"setCookie('visited','true',4);".
@@ -545,13 +547,13 @@ class HPM_Promos {
 							"}".
 						"}";
 						$lightbox++;
-					else :
+					} else {
 						continue;
-					endif;
-				endif;
-			endwhile;
-		endif;
-		if ( !empty( $output ) ) :
+					}
+				}
+			}
+		}
+		if ( !empty( $output ) ) {
 			$output = "<script>".
 				"(function(){".
 					"var wide = window.innerWidth;".
@@ -572,7 +574,7 @@ class HPM_Promos {
 					"}".
 				"}());".
 			"</script>";
-		endif;
+		}
 		return $output;
 	}
 
@@ -593,26 +595,26 @@ class HPM_Promos {
 				'sidebar'
 			]
 		];
-		if ( empty( $wp_query->post ) ) :
+		if ( empty( $wp_query->post ) ) {
 			return $output;
-		endif;
-		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) :
+		}
+		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) {
 			return $output;
-		endif;
-		if ( $wp_global->is_page || $wp_global->is_single ) :
-			if ( !isset( $method ) || $method !== 'shortcode' ) :
+		}
+		if ( $wp_global->is_page || $wp_global->is_single ) {
+			if ( !isset( $method ) || $method !== 'shortcode' ) {
 				$page_id = $wp_global->get_queried_object_id();
 				$anc = get_post_ancestors( $page_id );
 				$opts = get_option( 'hpm_promos_settings' );
 				$bans = explode( ',', $opts['bans']['ids'] );
 				$pt_slug = explode( ',', $opts['bans']['templates'] );
-				if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) :
+				if ( in_array( 61383, $anc ) || in_array( $page_id, $bans ) ) {
 					return $output;
-				elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) :
+				} elseif ( in_array( get_page_template_slug( $page_id ), $pt_slug ) ) {
 					return $output;
-				endif;
-			endif;
-		endif;
+				}
+			}
+		}
 		$args = [
 			'post_type' => 'promos',
 			'posts_per_page' => -1,
@@ -620,8 +622,8 @@ class HPM_Promos {
 			'order' => 'ASC'
 		];
 		$t = time();
-		$now = getdate($t);
-		if ( !empty( $_GET['testtime'] ) ) :
+		$now = getdate( $t );
+		if ( !empty( $_GET['testtime'] ) ) {
 			$tt = explode( '-', $_GET['testtime'] );
 			$offset = get_option( 'gmt_offset' ) * 3600;
 			$now = getdate( mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] ) + $offset );
@@ -634,56 +636,56 @@ class HPM_Promos {
 				],
 				'inclusive' => true
 			]];
-		endif;
+		}
 		$args['meta_query'] = [[
 			'key'     => 'hpm_promos_end_time',
 			'value'   => $now[0],
 			'compare' => '>=',
 		]];
 		$promos = new WP_Query( $args );
-		if ( $promos->have_posts() ) :
-			while ( $promos->have_posts() ) :
+		if ( $promos->have_posts() ) {
+			while ( $promos->have_posts() ) {
 				$promos->the_post();
 				$meta = get_post_meta( get_the_ID(), 'hpm_promos_meta', true );
-				if ( empty( $meta ) ) :
+				if ( empty( $meta ) ) {
 					continue;
-				endif;
-				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) :
+				}
+				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) {
 					continue;
-				endif;
+				}
 				$content = do_shortcode( get_the_content(), false );
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
-				if ( in_array( $meta['type'], $positions[ $position ] ) ) :
-					if ( $meta['type'] == 'sidebar' ) :
+				if ( in_array( $meta['type'], $positions[ $position ] ) ) {
+					if ( $meta['type'] == 'sidebar' ) {
 						$output .= $content_esc;
 						$sidebar = true;
-					elseif ( $meta['type'] == 'fullwidth' ) :
-						if ( !$fullwidth ) :
+					} elseif ( $meta['type'] == 'fullwidth' ) {
+						if ( !$fullwidth ) {
 							$output .= $content_esc;
 							$fullwidth = true;
-						else :
+						} else {
 							continue;
-						endif;
-					elseif ( $meta['type'] == 'emergency' ) :
+						}
+					} elseif ( $meta['type'] == 'emergency' ) {
 						$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
 						$output .= '<div id="emergency">'. hpm_svg_output( 'exclamation-circle' ) . " " . $content_esc . '</div>';
-					elseif ( $meta['type'] == 'dont-miss' ) :
+					} elseif ( $meta['type'] == 'dont-miss' ) {
 						$dont[] = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
-					endif;
-				endif;
-			endwhile;
-		endif;
-		if ( !empty( $dont ) ) :
+					}
+				}
+			}
+		}
+		if ( !empty( $dont ) ) {
 			$output .= '<div id="hpm-promo-bullets"><h2>Don&#39;t Miss:</h2><ul>';
-			foreach ( $dont as $d ) :
+			foreach ( $dont as $d ) {
 				$output .= "<li>" . $d . "</li>";
-			endforeach;
+			}
 			$output .= "</ul></div>";
-		endif;
-		if ( $sidebar ) :
+		}
+		if ( $sidebar ) {
 			$output = '<div class="hpm-promo-wrap">' . $output . '</div>';
-		endif;
+		}
 		wp_reset_query();
 		return $output;
 	}
@@ -705,36 +707,36 @@ class HPM_Promos {
 		global $post;
 		$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
 		$offset = get_option( 'gmt_offset' ) * 3600;
-		if ( empty( $endtime ) ) :
+		if ( empty( $endtime ) ) {
 			$t = 'unset';
-		else :
+		} else {
 			$t = $endtime + $offset;
-		endif;
+		}
 		$now = time() + $offset;
 		$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
 		switch( $column ) {
 			case 'promo_type' :
-				if ( empty( $meta ) || empty( $meta['type'] ) ) :
+				if ( empty( $meta ) || empty( $meta['type'] ) ) {
 					echo __( 'None' );
-				else :
+				} else {
 					echo __( ucwords( $meta['type'] ) );
-				endif;
+				}
 				break;
 			case 'promo_location' :
-				if ( empty( $meta ) || empty( $meta['location'] ) ) :
+				if ( empty( $meta ) || empty( $meta['location'] ) ) {
 					echo __( 'None' );
-				else :
+				} else {
 					echo __( ucwords( $meta['location'] ) );
-				endif;
+				}
 				break;
 			case 'promo_expiration' :
-				if ( $t == 'unset' ) :
+				if ( $t == 'unset' ) {
 					echo "<strong>NOT SET</strong>";
-				elseif ( $now > $t ) :
+				} elseif ( $now > $t ) {
 					echo "<strong>EXPIRED</strong>";
-				else :
+				} else {
 					echo date( 'F j, Y, g:i A', $t );
-				endif;
+				}
 				break;
 			default :
 				break;

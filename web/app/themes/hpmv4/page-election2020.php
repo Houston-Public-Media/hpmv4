@@ -5,7 +5,8 @@ Template Name: Election 2020
 get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-			<?PHP while ( have_posts() ) : the_post(); ?>
+		<?PHP while ( have_posts() ) {
+			the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="page-header">
 					<h1 class="page-title screen-reader-text"><?php echo get_the_title(); ?></h1>
@@ -14,7 +15,7 @@ get_header(); ?>
 					<?php the_content(); ?>
 				</div>
 				<footer class="page-footer">
-					<?PHP
+				<?PHP
 					$tags_list = get_the_tag_list( '', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
 					if ( $tags_list ) {
 						printf( '<p class="screen-reader-text"><span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span></p>',
@@ -25,7 +26,7 @@ get_header(); ?>
 					edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer>
 			</article>
-		<?php endwhile; ?>
+		<?php } ?>
 		</main>
 	</div>
 	<style>

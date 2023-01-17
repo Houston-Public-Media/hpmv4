@@ -29,12 +29,13 @@ function hpm_priority_settings_page() {
 		'orderby' => 'date',
 		'category__not_in' =>  [ 0, 1, 7636 ]
 	]);
-	if ( $recent->have_posts() ) :
-		while( $recent->have_posts() ) : $recent->the_post();
+	if ( $recent->have_posts() ) {
+		while( $recent->have_posts() ) {
+			$recent->the_post();
 			$recent_id = get_the_ID();
 			$recents[ $recent_id ] = get_the_title();
-		endwhile;
-	endif; ?>
+		}
+	} ?>
 	<div class="wrap">
 		<?php settings_errors(); ?>
 		<h1><?php _e('Post Prioritization', 'hpmv4' ); ?></h1>
@@ -61,32 +62,31 @@ function hpm_priority_settings_page() {
 										</thead>
 										<tbody>
 									<?php
-										foreach ( $priority['homepage'] as $kp => $vp ) :
+										foreach ( $priority['homepage'] as $kp => $vp ) {
 											$position = $kp + 1;
-											if ( $kp == 1 ) : ?>
+											if ( $kp == 1 ) { ?>
 											<tr valign="top" style="border: 0.25rem solid #00566c;">
 												<th scope="row">Position <?PHP echo $position; ?><br /><strong>inDepth Position</strong></th>
-											<?php else : ?>
+											<?php } else { ?>
 											<tr valign="top">
 												<th scope="row">Position <?PHP echo $position; ?></th>
-											<?php endif; ?>
+											<?php } ?>
 												<td>
 													<label class="screen-reader-text"><?php _e( "Current Article in Homepage Position ".$position.":", 'hpmv4' ); ?></label>
 													<select id="hpm_priority-homepage-<?php echo $kp; ?>" class="hpm-priority-select homepage-select">
 														<option value=""></option>
-														<?php
-														foreach( $recents as $k => $v ) : ?>
-															<option value="<?php echo $k; ?>"<?php selected( $vp, $k, TRUE ); ?>><?php echo
-																$v; ?></option>
-															<?php
-														endforeach; ?>
+<?php
+														foreach( $recents as $k => $v ) { ?>
+															<option value="<?php echo $k; ?>"<?php selected( $vp, $k, TRUE ); ?>><?php echo	$v; ?></option>
+<?php
+														} ?>
 													</select>
 												</td>
 												<td><label for="hpm_priority[homepage][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
 												<td><button class="hpm-clear button button-primary" data-position="<?php echo $kp; ?>">Reset</button></td>
 											</tr>
-									<?php
-										endforeach; ?>
+<?php
+										} ?>
 										</tbody>
 									</table>
 								</div>

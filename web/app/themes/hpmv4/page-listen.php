@@ -162,16 +162,17 @@ get_header(); ?>
 </style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		<?PHP while ( have_posts() ) : the_post(); ?>
+		<?PHP while ( have_posts() ) {
+			the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header screen-reader-text">
 					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 				</header>
 				<div class="entry-content">
-                    <?php the_content(); ?>
+					<?php the_content(); ?>
 				</div>
 			</article>
-		<?php endwhile; ?>
+		<?php } ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

@@ -6,57 +6,57 @@ function hpm_audio_shortcode( $html, $attr ) {
 	$supported = false;
 	$audio_type = '';
 	$default_types = wp_get_audio_extensions();
-	foreach ( $default_types as $type ) :
-		if ( !empty( $attr[ $type ] ) ) :
+	foreach ( $default_types as $type ) {
+		if ( !empty( $attr[ $type ] ) ) {
 			$supported = true;
 			$audio_type = $type;
-		endif;
-	endforeach;
+		}
+	}
 
-	if ( !$supported ) :
+	if ( !$supported ) {
 		return '&nbsp;';
-	endif;
+	}
 
-	if ( !empty( $attr['id'] ) ) :
+	if ( !empty( $attr['id'] ) ) {
 		$audio_id = $attr['id'];
 		$audio_data_title = get_the_title( $attr['id'] );
-	else :
+	} else {
 		$audio_id = $instance;
-	endif;
+	}
 	$audio_title = 'Listen';
 	$audio_url = $attr[ $audio_type ];
 	$preload = 'metadata';
 	$sg_file = get_post_meta( $post_id, 'hpm_podcast_enclosure', true );
-	if ( !empty( $sg_file ) ) :
+	if ( !empty( $sg_file ) ) {
 		$s3_parse = parse_url( $audio_url );
 		$s3_path = pathinfo( $s3_parse['path'] );
 		$sg_parse = parse_url( $sg_file['url'] );
 		$sg_path = pathinfo( $sg_parse['path'] );
-		if ( $s3_path['basename'] === $sg_path['basename'] ) :
+		if ( $s3_path['basename'] === $sg_path['basename'] ) {
 			$audio_url = $sg_file['url'];
-		else :
+		} else {
 			$audio_url = str_replace( 'http:', 'https:', $audio_url );
-		endif;
+		}
 		$preload = "none";
-	else :
+	} else {
 		$audio_url = str_replace( 'http:', 'https:', $audio_url );
-	endif;
-	if ( strpos( $audio_url, '?' ) === false ) :
+	}
+	if ( strpos( $audio_url, '?' ) === false ) {
 		$audio_url .= '?';
-	else :
+	} else {
 		$audio_url .= '&';
-	endif;
+	}
 	$html = '';
-	if ( is_feed() || amp_is_request() ) :
+	if ( is_feed() || amp_is_request() ) {
 		$html .= '<audio preload="' . $preload . '" src="'.$audio_url.'source=rss-feed"><source type="audio/mpeg" src="'.$audio_url.'source=rss-feed"></audio>';
-	else :
+	} else {
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.
 				'<h3>'.htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false ) .'</h3>'.
 				'<audio class="js-player" id="audio-' . $audio_id . '" data-title="' . ( !empty( $audio_data_title ) ? urlencode( $audio_data_title ) : '' ) . '" controls preload="' . $preload . '">'.
 					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
 				'</audio>';
-		if ( !is_admin() && !in_array( $post_id, [ 0, 58036 ] ) ) :
+		if ( !is_admin() && !in_array( $post_id, [ 0, 58036 ] ) ) {
 			$html .= '<button class="plyr-audio-embed" data-id="' . $audio_id .'">' . hpm_svg_output( 'code' ) . '</button>' .
 				'<div class="plyr-audio-embed-popup" id="plyr-' . $audio_id . '-popup">' .
 					'<div class="plyr-audio-embed-wrap">' .
@@ -67,12 +67,11 @@ function hpm_audio_shortcode( $html, $attr ) {
 						'<div class="plyr-audio-embed-close">X</div>' .
 					'</div>' .
 				'</div>';
-		endif;
+		}
 		$html .= '</div>';
-	endif;
+	}
 	return $html;
 }
-
 add_filter( 'wp_audio_shortcode_override', 'hpm_audio_shortcode', 10, 2 );
 
 function hpm_nprapi_audio_shortcode( $text ) {
@@ -81,16 +80,16 @@ function hpm_nprapi_audio_shortcode( $text ) {
 
 	$tags = $matches[2];
 	$args = $matches[3];
-	foreach( $tags as $i => $tag ) :
-		if ( $tag == "audio" ) :
+	foreach( $tags as $i => $tag ) {
+		if ( $tag == "audio" ) {
 			$atts = shortcode_parse_atts( $args[$i] );
-			if ( !empty( $atts['mp3'] ) ) :
+			if ( !empty( $atts['mp3'] ) ) {
 				$a_tag = '<figure><figcaption>Listen to the story audio:</figcaption><audio controls src="' . $atts['mp3'] . '">Your browser does not support the <code>audio</code> element.</audio></figure>';
 				$text = str_replace( '<p>'.$matches[0][$i].'</p>', $a_tag, $text );
 				$text = str_replace( $matches[0][$i], $a_tag, $text );
-			endif;
-		endif;
-	endforeach;
+			}
+		}
+	}
 	return $text;
 }
 add_filter( 'npr_ds_shortcode_filter', 'hpm_nprapi_audio_shortcode', 10, 1 );
@@ -104,30 +103,30 @@ function hpm_apple_news_audio( $text ) {
 
 	$tags = $matches[2];
 	$args = $matches[3];
-	foreach( $tags as $i => $tag ) :
-		if ( $tag == "audio" ) :
+	foreach( $tags as $i => $tag ) {
+		if ( $tag == "audio" ) {
 			$atts = shortcode_parse_atts( $args[$i] );
-			if ( !empty( $atts ) ) :
+			if ( !empty( $atts ) ) {
 				$a_tag = '';
-				if ( !empty( $atts['id'] ) ) :
+				if ( !empty( $atts['id'] ) ) {
 					$a_tag = '<audio src="' . wp_get_attachment_url( $atts['id'] ) . '"></audio>';
-				elseif ( !empty( $atts['mp3'] ) ) :
+				} elseif ( !empty( $atts['mp3'] ) ) {
 					$a_tag = '<audio src="' . $atts['mp3'] . '"></audio>';
-				endif;
+				}
 				$text = str_replace( '<p>'.$matches[0][$i].'</p>', $a_tag, $text );
 				$text = str_replace( $matches[0][$i], $a_tag, $text );
-			endif;
-		endif;
-	endforeach;
+			}
+		}
+	}
 	$terms = get_the_terms( $id, 'category' );
 	$show = 0;
-	foreach( $terms as $t ) :
+	foreach( $terms as $t ) {
 		$cats = get_ancestors( $t->term_id, 'category', 'taxonomy' );
-		if ( in_array( 5, $cats ) ) :
+		if ( in_array( 5, $cats ) ) {
 			$show = $t->term_id;
-		endif;
-	endforeach;
-	if ( $show !== 0 ) :
+		}
+	}
+	if ( $show !== 0 ) {
 		$res = $wpdb->get_results( "SELECT wp_posts.*
 			FROM wp_posts
 			LEFT JOIN wp_postmeta AS tr1 ON (wp_posts.ID = tr1.post_id)
@@ -136,35 +135,34 @@ function hpm_apple_news_audio( $text ) {
 				tr1.meta_value = $show AND
 				wp_posts.post_status = 'publish' AND
 				( wp_posts.post_type = 'shows' OR wp_posts.post_type = 'podcasts' ) ", OBJECT );
-		if ( !empty( $res ) ) :
-			if ( $res[0]->post_type == 'shows' ) :
+		if ( !empty( $res ) ) {
+			if ( $res[0]->post_type == 'shows' ) {
 				$text .= '<p><strong><em>For more information and episodes, visit the <a href="' . get_the_permalink(
 					$res[0]->ID ) . '">' . $res[0]->post_title . ' show page</a>.</em></strong></p>';
-			elseif ( $res[0]->post_type == 'podcasts' ) :
+			} elseif ( $res[0]->post_type == 'podcasts' ) {
 				$podmeta = get_post_meta( $res[0]->ID, 'hpm_pod_link', true );
 				$text .= '<p><strong><em>For more information and episodes, visit the <a href="' . $podmeta['page'] .
 				         '">' . $res[0]->post_title . ' show page</a>.</em></strong></p>';
-			endif;
-		endif;
-	endif;
+			}
+		}
+	}
 	return $text;
 }
 add_filter( 'apple_news_exporter_content_pre', 'hpm_apple_news_audio', 10, 1 );
 
-
-add_filter( 'media_send_to_editor', 'hpm_audio_shortcode_insert', 10, 8 );
 function hpm_audio_shortcode_insert ( $html, $id, $attachment ) {
-	if ( strpos( $html, '[audio' ) !== FALSE ) :
-		$html = str_replace( '][/audio]', ' id="'.$id.'"][/audio]', $html );
-	endif;
+	if ( strpos( $html, '[audio' ) !== FALSE ) {
+		$html = str_replace( '][/audio]', ' id="' . $id . '"][/audio]', $html );
+	}
 	return $html;
 }
+add_filter( 'media_send_to_editor', 'hpm_audio_shortcode_insert', 10, 8 );
 
 function article_display_shortcode ( $atts ) {
 	global $hpm_constants;
-	if ( empty( $hpm_constants ) ) :
+	if ( empty( $hpm_constants ) ) {
 		$hpm_constants = [];
-	endif;
+	}
 	$article = [];
 	extract( shortcode_atts( [
 		'num' => 1,
@@ -180,20 +178,20 @@ function article_display_shortcode ( $atts ) {
 		'post_type' => 'post',
 		'post_status' => 'publish'
 	];
-	if ( !empty( $hpm_constants ) ) :
+	if ( !empty( $hpm_constants ) ) {
 		$args['post__not_in'] = $hpm_constants;
-	endif;
-	if ( !empty( $exclude ) ) :
-		if ( preg_match( '/[0-9,]+/', $exclude ) ) :
+	}
+	if ( !empty( $exclude ) ) {
+		if ( preg_match( '/[0-9,]+/', $exclude ) ) {
 			$excl_exp = explode( ',', $exclude );
-			if ( empty( $args['post__not_in'] ) ) :
+			if ( empty( $args['post__not_in'] ) ) {
 				$args['post__not_in'] = $excl_exp;
-			else :
+			} else {
 				$args['post__not_in'] = array_merge( $args['post__not_in'], $excl_exp );
-			endif;
-		endif;
-	endif;
-	if ( !empty( $category ) && !empty( $tag ) ) :
+			}
+		}
+	}
+	if ( !empty( $category ) && !empty( $tag ) ) {
 		$args['tax_query'] = [
 			'relation' => 'OR',
 			[
@@ -207,23 +205,23 @@ function article_display_shortcode ( $atts ) {
 				'terms'    => [ $tag ]
 			]
 		];
-	else :
-		if ( !empty( $category ) ) :
+	} else {
+		if ( !empty( $category ) ) {
 			$args['category_name'] = $category;
-		endif;
-		if ( !empty( $tag ) ) :
+		}
+		if ( !empty( $tag ) ) {
 			$args['tag_slug__in'][] = $tag;
-		endif;
-	endif;
-	if ( !empty( $post_id ) ) :
+		}
+	}
+	if ( !empty( $post_id ) ) {
 		$i_exp = explode( ',', $post_id );
-		foreach ( $i_exp as $ik => $iv ) :
+		foreach ( $i_exp as $ik => $iv ) {
 			$i_exp[$ik] = trim( $iv );
-		endforeach;
+		}
 		$args['post__in'] = $i_exp;
 		$args['orderby'] = 'post__in';
 		$c = count( $i_exp );
-		if ( $c != $args['posts_per_page'] ) :
+		if ( $c != $args['posts_per_page'] ) {
 			$diff = $args['posts_per_page'] - $c;
 			$args['posts_per_page'] = $c;
 			unset( $args['category_name'] );
@@ -233,30 +231,31 @@ function article_display_shortcode ( $atts ) {
 			$args['order'] = 'DESC';
 			$args['post__not_in'] = array_merge( $hpm_constants, $i_exp );
 			$args['posts_per_page'] = $diff;
-			if ( !empty( $category ) ) :
+			if ( !empty( $category ) ) {
 				$args['category_name'] = $category;
-			endif;
-		endif;
-	endif;
+			}
+		}
+	}
 	$article[] = new WP_query( $args );
 	global $ka;
-	if ( $type == 'a' ) :
+	if ( $type == 'a' ) {
 		$ka = 0;
-	elseif ( $type == 'b' ) :
+	} elseif ( $type == 'b' ) {
 		$ka = 1;
-	endif;
+	}
 	ob_start();
-	foreach ( $article as $art ) :
-		if ( $art->have_posts() ) :
-			while ( $art->have_posts() ) : $art->the_post();
+	foreach ( $article as $art ) {
+		if ( $art->have_posts() ) {
+			while ( $art->have_posts() ) {
+				$art->the_post();
 				get_template_part( 'content', get_post_format() );
-				if ( isset( $ka ) ) :
+				if ( isset( $ka ) ) {
 					$ka += 2;
-				endif;
+				}
 				$hpm_constants[] = get_the_ID();
-			endwhile;
-		endif;
-	endforeach;
+			}
+		}
+	}
 	wp_reset_query();
 	$getContent = ob_get_contents();
 	ob_end_clean();
@@ -276,27 +275,28 @@ function article_list_shortcode( $atts ) {
 		'ignore_sticky_posts' => 1
 	];
 	$extra = '';
-	if ( !empty( $category ) ) :
+	if ( !empty( $category ) ) {
 		$args['category_name'] = $category;
 		$extra = '<li><a href="/topics/' . $category . '/">Read More...</a></li>';
-	endif;
-	if ( !empty( $tag ) ) :
+	}
+	if ( !empty( $tag ) ) {
 		$args['tag_slug__in'][] = $tag;
-	endif;
-	if ( !empty( $post_id ) ) :
+	}
+	if ( !empty( $post_id ) ) {
 		$args['p'] = $post_id;
 		$args['posts_per_page'] = 1;
-	endif;
+	}
 	$article = new WP_query( $args );
 	$output = '<ul>';
-	if ( $article->have_posts() ) :
-		while ( $article->have_posts() ) : $article->the_post();
+	if ( $article->have_posts() ) {
+		while ( $article->have_posts() ) {
+			$article->the_post();
 			$output .= '<li><a href="' . get_permalink() . '" rel="bookmark">' . get_the_title() . '</a></li>';
-		endwhile;
+		}
 		$output .= $extra;
-	else :
+	} else {
 		$output .= "<li>Coming Soon</li>";
-	endif;
+	}
 	$output .= '</ul>';
 	wp_reset_query();
 	return $output;
@@ -322,13 +322,13 @@ function hpm_athome_sched_update() {
 	 *  If WP_Debug is enabled, ignore the transient and regenerate
 	 *  If the transient is not empty, serve it, otherwise move forward
 	 */
-	if ( WP_DEBUG ) :
+	if ( WP_DEBUG ) {
 		$output = '';
-	else :
-		if ( !empty( $output ) ) :
+	} else {
+		if ( !empty( $output ) ) {
 			return $output;
-		endif;
-	endif;
+		}
+	}
 
 	// Determine the current time in GMT and adjust to timezone
 	$t = time();
@@ -403,21 +403,21 @@ function hpm_athome_sched_update() {
 	 * 	-- If Tuesday - Friday, find previous Monday
 	 * 	-- If Saturday - Sunday, find next Monday
 	 */
-	if ( $now['wday'] >= 1 && $now['wday'] <= 5 ) :
+	if ( $now['wday'] >= 1 && $now['wday'] <= 5 ) {
 		$monday_unix = ( $now[0] - ( ( $now['wday'] - 1 ) * 86400 ) );
-	elseif ( $now['wday'] == 0 ) :
+	} elseif ( $now['wday'] == 0 ) {
 		$monday_unix = ( $now[0] + 86400 );
-	elseif ( $now['wday'] == 6 ) :
+	} elseif ( $now['wday'] == 6 ) {
 		$monday_unix = ( $now[0] + ( 2 * 86400 ) );
-	endif;
+	}
 
 	// Loop through week data structure and determine dates and Unix times for each day
 	$week[1]['date'] = date( "Ymd" , $monday_unix );
 	$week[1]['date_unix'] = $monday_unix;
-	for ( $i = 2; $i < 6; $i++ ) :
+	for ( $i = 2; $i < 6; $i++ ) {
 		$week[$i]['date'] = date( "Ymd" , $monday_unix + ( ( $i - 1 ) * 86400 ) );
 		$week[$i]['date_unix'] = $monday_unix + ( ( $i - 1 ) * 86400 );
-	endfor;
+	}
 
 	/**
 	 * Set up context for API pulls
@@ -437,7 +437,7 @@ function hpm_athome_sched_update() {
 	 * Loop though the week and pull the actual schedule data
 	 * 8.1 is our main public channel, and 8.4 is our WORLD broadcast
 	*/
-	foreach ( $week as $k => $w ) :
+	foreach ( $week as $k => $w ) {
 		$url1 = $url_base."day/".$w['date']."/623006be-27ab-40ab-aea7-208777d02ab1";
 		$url4 = $url_base."day/".$w['date']."/afc37341-cecf-45a4-ac81-0ed31542d4c9";
 
@@ -449,109 +449,88 @@ function hpm_athome_sched_update() {
 		$data4 = json_decode( $result4, true );
 		$week[$k]['data']['8.1'] = $data1['feeds'][0]['listings'];
 		$week[$k]['data']['8.4'] = $data4['feeds'][0]['listings'];
-	endforeach;
+	}
 
 	// Build the head of each schedule and put it into our temp array
 	$temp['8.1'] = '<div class="lah-schedule"><h2>Channel 8.1 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-young"><span></span> Grades PreK-3</div><div class="lah-legend-middle"><span></span> Grades 4-8</div><div class="lah-legend-high"><span></span> Grades 9-12</div></div><div class="lah-wrap">'.$timecol['8.1'];
-	if ( $monday_unix > $cutoff ) :
+	if ( $monday_unix > $cutoff ) {
 		$temp['8.4'] = '<div class="lah-schedule"><h2 id="tv8.4">Channel 8.4 At-Home Learning Schedule</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div><div class="lah-legend-math"><span></span> Math</div></div><div class="lah-wrap">'.$timecol['8.4'];
-	else :
+	} else {
 		$temp['8.4'] = '<div class="lah-schedule"><h2 id="tv8.4">Channel 8.4 At-Home Learning Schedule with Links to Learning Resources</h2><h3>Week of ' . date( 'F j, Y', $monday_unix ) . '</h3><div class="lah-legend"><div class="lah-legend-science"><span></span> Science</div><div class="lah-legend-sstudies"><span></span> Social Studies</div><div class="lah-legend-ela"><span></span> English/Language Arts</div><div class="lah-legend-math"><span></span> Math</div></div><div class="lah-wrap">'.$timecol['8.4'];
-	endif;
+	}
 
 
 	/**
 	 * Wheels within wheels, my friend. Well, loops within loops
 	 * Loops through the days in the week
 	 */
-	foreach ( $week as $w ) :
+	foreach ( $week as $w ) {
 		// Loop through the daily data for each channel
-		foreach ( $w['data'] as $dk => $dv ) :
+		foreach ( $w['data'] as $dk => $dv ) {
 			// Setup the header for each daily column
 			$temp[ $dk ] .= '<div class="lah-col lah-' . strtolower( $w['name'] ) . '"><div class="lah-col-head">' . $w['name'] . '<br />' . date( 'm/d/Y', $w['date_unix'] ) . '</div>';
 			// Loop through each entry of the current day
-			foreach ( $dv as $pv ) :
+			foreach ( $dv as $pv ) {
 				// Determine if the program is in the right timeframe for the channel
 				if (
 					( $dk === '8.1' && $pv['start_time'] >= 600 && $pv['start_time'] < 1800 ) ||
 					( $dk === '8.4' && $pv['start_time'] >= 1100 && $pv['start_time'] < 1600 )
-				) :
+				) {
 					// Set up a generic CSS class
 					$class = 'lah-' . $pv['minutes'];
 					/**
 					 * Modify CSS class to reflect grade level on main channel
 					 * This is mostly based on timeframes but there might be some wiggle
 					 */
-					if ( $dk === '8.1' ) :
-						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 1200 ) :
+					if ( $dk === '8.1' ) {
+						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 1200 ) {
 							$class .= ' lah-young';
-						elseif ( $pv['start_time'] >= 1200 && $pv['start_time'] < 1500 ) :
+						} elseif ( $pv['start_time'] >= 1200 && $pv['start_time'] < 1500 ) {
 							$class .= ' lah-middle';
-						elseif ( $pv['start_time'] >= 1500 ) :
+						} elseif ( $pv['start_time'] >= 1500 ) {
 							$class .= ' lah-high';
-						endif;
+						}
 
 					/**
 					 * Modify CSS class to reflect subject matter on WORLD channel
 					 * This is partially based on timeframe, but ELA gets preempted at least 2 days a week in favor of social studies
 					 * Had to make some best guesses, and am looking ahead at the schedule to adjust the exemptions
 					 */
-					elseif ( $dk === '8.4' ) :
-						if ( $pv['start_time'] < 1300 ) :
-							if (
-								preg_match( '/Math/', $pv['title'] )
-							) :
+					} elseif ( $dk === '8.4' ) {
+						if ( $pv['start_time'] < 1300 ) {
+							if ( preg_match( '/Math/', $pv['title'] ) ) {
 								$class .= ' lah-math';
-							else :
+							} else {
 								$class .= ' lah-science';
-							endif;
-						elseif ( $pv['start_time'] >= 1300 ) :
-							if ( $pv['title'] == 'American Masters' || $pv['title'] == 'Poetry in America' || $pv['title'] == 'Great Performances' ) :
+							}
+						} elseif ( $pv['start_time'] >= 1300 ) {
+							if ( $pv['title'] == 'American Masters' || $pv['title'] == 'Poetry in America' || $pv['title'] == 'Great Performances' ) {
 								$class .= ' lah-ela';
-							elseif ( preg_match( '/Amazing Human Body/', $pv['title'] ) ) :
+							} elseif ( preg_match( '/Amazing Human Body/', $pv['title'] ) ) {
 								$class .= ' lah-science';
-							else :
+							} else {
 								$class .= ' lah-sstudies';
-							endif;
-						/* elseif ( $pv['start_time'] >= 1300 && $pv['start_time'] < 1500 ) :
-							$class .= ' lah-sstudies';
-						elseif ( $pv['start_time'] >= 1500 ) :
-							if (
-								preg_match( '/John Lewis/', $pv['title'] ) ||
-								preg_match( '/Rick Steves/', $pv['title'] ) ||
-								preg_match( '/John Lewis/', $pv['title'] ) ||
-								preg_match( '/Tiananmen/', $pv['title'] ) ||
-								preg_match( '/American Experience/', $pv['title'] ) ||
-								preg_match( '/Shanghai/', $pv['title'] ) ||
-								preg_match( '/Summoned/', $pv['title'] ) ||
-								preg_match( '/Cuban/', $pv['title'] ) ||
-								preg_match( '/Shanghai/', $pv['title'] ) ||
-								preg_match( '/Africa/', $pv['title'] )
-							) :
-								$class .= ' lah-sstudies';
-							else :
-								$class .= ' lah-ela';
-							endif; */
-						endif;
-					endif;
-					if ( strlen( $pv['title'] ) > 40 ) :
+							}
+						}
+					}
+					if ( strlen( $pv['title'] ) > 40 ) {
 						$exp_title = explode( ':', $pv['title'] );
 						$show_title = wp_trim_words( trim( $exp_title[0] ), 9, '&hellip;' );
-					else :
+					} else {
 						$show_title = wp_trim_words( trim( $pv['title'] ), 9, '&hellip;' );
-					endif;
+					}
 					// Create the schedule entries and concatenate them onto the temp schedule
-					if ( $monday_unix > $cutoff ) :
+					if ( $monday_unix > $cutoff ) {
 						$temp[ $dk ] .= '<div class="' . $class . '">' . $show_title . '</div>';
-					else :
+					} else {
 						$temp[ $dk ] .= '<div class="' . $class . '"><a title="' . $pv['title'] . ' Episode Information" href="./resources/#s'. date( 'w-', $w['date_unix'] ) . $pv['start_time'] . '-' . $dk . '">' . $show_title . '</a></div>';
-					endif;
-				endif;
-			endforeach;
+					}
+				}
+			}
 			// Close out the column
 			$temp[ $dk ] .= '</div>';
-		endforeach;
-	endforeach;
+		}
+	}
 	// Close out the temp schedules
 	$temp['8.1'] .= $timecol['8.1'] . '</div></div>';
 	$temp['8.4'] .= $timecol['8.4'] . '</div></div>';
@@ -560,11 +539,11 @@ function hpm_athome_sched_update() {
 	 * Concatenate the channel schedules along with a hidden time stamp
 	 * Makes it easier to ensure that the cron job is running and the schedule is updating
 	*/
-	if ( $monday_unix > $cutoff ) :
+	if ( $monday_unix > $cutoff ) {
 		$output = $temp['8.4'] . '<p style="display: none;">Last Update: ' . date( 'Y/m/d H:i:s', $t ) . '</p>';
-	else :
+	} else {
 		$output = $temp['8.1'] . $temp['8.4'] . '<p style="display: none;">Last Update: ' . date( 'Y/m/d H:i:s', $t ) . '</p>';
-	endif;
+	}
 	// Save the output as a site transient in Redis and output
 	set_transient( 'hpm_athome_sched', $output, 7200 );
 	return $output;
@@ -573,9 +552,9 @@ add_shortcode( 'hpm_athome', 'hpm_athome_sched_update' );
 
 add_action( 'hpm_athome_update', 'hpm_athome_sched_update' );
 $timestamp = wp_next_scheduled( 'hpm_athome_update' );
-if ( empty( $timestamp ) ) :
+if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hourly', 'hpm_athome_update' );
-endif;
+}
 
 /**
  * Cron job for updating at-home learning page schedule
@@ -589,22 +568,22 @@ function hpm_programs_shortcode( $atts ) {
 	extract( shortcode_atts( [
 		'channel' => 'news'
 	], $atts, 'multilink' ) );
-	if ( empty( $channel ) ) :
+	if ( empty( $channel ) ) {
 		return 'EMPTY';
-	endif;
+	}
 	$out = get_transient( 'hpm_programs_' . $channel );
-	if ( empty( $out ) ) :
+	if ( empty( $out ) ) {
 		return "Transient Empty";
-	endif;
+	}
 	return $out;
 }
 add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
 
 function hpm_careers_trans() {
 	$output = get_transient( 'hpm_careers' );
-	if ( !empty( $output ) ) :
+	if ( !empty( $output ) ) {
 		return $output;
-	endif;
+	}
 	$curl = curl_init();
 
 	curl_setopt_array( $curl, [
@@ -634,26 +613,26 @@ function hpm_careers_trans() {
 	curl_close( $curl );
 	$json = json_decode( $response, true );
 	$desc = json_decode( file_get_contents( 'https://cdn.hpm.io/assets/taleo.json' ), true );
-	if ( empty( $json['requisitionList'] ) ) :
+	if ( empty( $json['requisitionList'] ) ) {
 		$output = '';
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
-	endif;
+	}
 	$output = '';
-	foreach ( $json['requisitionList'] as $j ) :
-		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) :
-			if ( !empty( $desc[ $j['contestNo'] ]['title'] ) ) :
+	foreach ( $json['requisitionList'] as $j ) {
+		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) {
+			if ( !empty( $desc[ $j['contestNo'] ]['title'] ) ) {
 				$title = $desc[ $j['contestNo'] ]['title'];
-			else :
+			} else {
 				$title = trim( $j['column'][0] );
-			endif;
+			}
 			$output .= "<details><summary>" . $title . "</strong></summary>";
-			if ( !empty( $desc[ $j['contestNo'] ]['description'] ) ) :
+			if ( !empty( $desc[ $j['contestNo'] ]['description'] ) ) {
 				$output .= $desc[ $j['contestNo'] ]['description'];
-			endif;
+			}
 			$output .= '<p><a href="https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=' . $j['contestNo'] . '&tz=GMT-06%3A00&tzname=America%2FChicago">Click here to apply</a></p></details>';
-		endif;
-	endforeach;
+		}
+	}
 	set_transient( 'hpm_careers', $output, 900 );
 	return $output;
 }
@@ -661,9 +640,9 @@ add_shortcode( 'hpm_careers', 'hpm_careers_trans' );
 
 function hpm_townsquare_covid( $atts ) {
 	global $hpm_constants;
-	if ( empty( $hpm_constants ) ) :
+	if ( empty( $hpm_constants ) ) {
 		$hpm_constants = [];
-	endif;
+	}
 	extract( shortcode_atts( [], $atts, 'multilink' ) );
 	$args = [
 		'posts_per_page' => 1,
@@ -678,8 +657,9 @@ function hpm_townsquare_covid( $atts ) {
 	];
 	$art = new WP_query( $args );
 	$output = '';
-	if ( $art->have_posts() ) :
-		while ( $art->have_posts() ) : $art->the_post();
+	if ( $art->have_posts() ) {
+		while ( $art->have_posts() ) {
+			$art->the_post();
 			$postClass = get_post_class();
 			$postClass[] = 'town-square-feature';
 			$hpm_constants[] = get_the_ID();
@@ -700,8 +680,8 @@ function hpm_townsquare_covid( $atts ) {
 					'</div>' .
 				'</header>' .
 			'</article>';
-		endwhile;
-	endif;
+		}
+	}
 	wp_reset_query();
 	return $output;
 }
@@ -725,12 +705,12 @@ function hpm_splide_gallery( $attr ) {
 	$output = '';
 
 	// We're trusting author input, so let's at least make sure it looks like a valid orderby statement
-	if ( isset( $attr['orderby'] ) ) :
+	if ( isset( $attr['orderby'] ) ) {
 		$attr['orderby'] = sanitize_sql_orderby( $attr['orderby'] );
-		if ( !$attr['orderby'] ) :
+		if ( !$attr['orderby'] ) {
 			unset( $attr['orderby'] );
-		endif;
-	endif;
+		}
+	}
 
 	// extract the shortcode attributes into the current variable space
 	extract( shortcode_atts([
@@ -752,82 +732,82 @@ function hpm_splide_gallery( $attr ) {
 	$id = intval( $id );
 
 	// random MySQL ordering doesn't need two attributes
-	if ( $order == 'RAND' ) :
+	if ( $order == 'RAND' ) {
 		$orderby = 'none';
-	endif;
+	}
 
 	// use the given IDs of images
-	if ( !empty( $ids ) ) :
+	if ( !empty( $ids ) ) {
 		$include = $ids;
-	endif;
+	}
 
 	// fetch the images
-	if ( !empty( $include ) ) :
+	if ( !empty( $include ) ) {
 		// include only the given image IDs
 		$include = preg_replace( '/[^0-9,]+/', '', $include );
 		$_attachments = get_posts( [ 'include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby ] );
 		$attachments = [];
-		foreach ( $_attachments as $key => $val ) :
+		foreach ( $_attachments as $key => $val ) {
 			$attachments[ $val->ID ] = $_attachments[ $key ];
-		endforeach;
-		if ( !empty( $ids ) ) :
+		}
+		if ( !empty( $ids ) ) {
 			$sortedAttachments = [];
 			$ids = preg_replace( '/[^0-9,]+/', '', $ids );
 			$idsArray = explode( ',', $ids );
-			foreach ( $idsArray as $aid ) :
-				if ( array_key_exists( $aid, $attachments ) ) :
+			foreach ( $idsArray as $aid ) {
+				if ( array_key_exists( $aid, $attachments ) ) {
 					$sortedAttachments[ $aid ] = $attachments[ $aid ];
-				endif;
-			endforeach;
+				}
+			}
 			$attachments = $sortedAttachments;
-		endif;
-	elseif ( !empty( $exclude ) ) :
+		}
+	} elseif ( !empty( $exclude ) ) {
 		// exclude certain image IDs
 		$exclude = preg_replace( '/[^0-9,]+/', '', $exclude );
 		$attachments = get_children( [ 'post_parent' => $id, 'exclude' => $exclude, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby ] );
-	else :
+	} else {
 		// default: all images attached to this post/page
 		$attachments = get_children( [ 'post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby ] );
-	endif;
+	}
 
 	// output nothing if we didn't find any images
-	if ( empty( $attachments ) ) :
+	if ( empty( $attachments ) ) {
 		return $output;
-	endif;
+	}
 
 	// output the individual images when displaying as a news feed
-	if ( is_feed() ) :
+	if ( is_feed() ) {
 		$output .= "\n";
 		foreach ( $attachments as $attachmentId => $attachment ) {
 			list( $src, $w, $h ) = wp_get_attachment_image_src( $attachmentId, 'medium' );
 			$output .= '<img src="' . $src . '" width="' . $w . '" height="' . $h . '">' . "\n";
 		}
 		return $output;
-	endif;
+	}
 
 	$output .= '<figure class="wp-block-image"><div class="splide"><div class="splide__track"><ul class="splide__list">';
-	foreach ( $attachments as $attachmentId => $attachment ) :
+	foreach ( $attachments as $attachmentId => $attachment ) {
 		$thumb = wp_get_attachment_image_src( $attachmentId, 'medium' );
 		$big = wp_get_attachment_image_src( $attachmentId, 'full' );
 		$credit = get_post_meta( $attachmentId, '_wp_attachment_source_name', true );
 		$link = get_post_meta( $attachmentId, '_wp_attachment_source_url', true );
-		if ( !empty( $credit ) && !empty( $link ) ) :
+		if ( !empty( $credit ) && !empty( $link ) ) {
 			$mcredit = ' (Photo Credit: <a href="' . $link . '" rel="noopener noreferrer dofollow" target="_blank">' . $credit . '</a>)';
-		elseif ( !empty( $credit ) && empty( $link ) ) :
+		} elseif ( !empty( $credit ) && empty( $link ) ) {
 			$mcredit = ' (Photo Credit: ' . $credit . ')';
-		else :
+		} else {
 			$mcredit = '';
-		endif;
-		if ( !empty( $attachment->post_excerpt ) ) :
+		}
+		if ( !empty( $attachment->post_excerpt ) ) {
 			$description = $attachment->post_excerpt . $mcredit;
-		elseif ( !empty( $attachment->post_title ) ) :
+		} elseif ( !empty( $attachment->post_title ) ) {
 			$description = $attachment->post_title . $mcredit;
-		else :
+		} else {
 			$description = $mcredit;
-		endif;
+		}
 		$alt = str_replace( '"', '&quot;', strip_tags( $description ) );
 		$output .= '<li class="splide__slide"><a href="' . $big[0] . '" target="_blank" title="Click for full size"><img data-splide-lazy="' . $thumb[0] . '" alt="' . $alt . '"></a><div>' . $description . '</div></li>';
-	endforeach;
+	}
 	$output .= '</div></div></ul></figure>';
 	wp_enqueue_script( 'hpm-splide' );
 	wp_enqueue_style( 'hpm-splide-css' );
@@ -846,12 +826,13 @@ function hpm_waterlines_shortcode() {
 	$article = new WP_query( $args );
 	$output = '';
 	$c = 0;
-	if ( $article->have_posts() ) :
-		while ( $article->have_posts() ) : $article->the_post();
+	if ( $article->have_posts() ) {
+		while ( $article->have_posts() ) {
+			$article->the_post();
 			$meta = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );
-			if ( !empty( $meta ) ) :
+			if ( !empty( $meta ) ) {
 				$ep_meta = get_post_meta( get_the_ID(), 'hpm_podcast_ep_meta', true );
-				if ( $c == 0 ) :
+				if ( $c == 0 ) {
 					$output .= '<div class="podcast-player-wrap">' .
 								'<audio id="player" playsinline preload="none">' .
 									'<source src="' . $meta['url'] . '" type="audio/mpeg" />' .
@@ -860,20 +841,20 @@ function hpm_waterlines_shortcode() {
 							'<nav id="pod">' .
 								'<div class="pod-playlist">' .
 									'<ul>';
-				endif;
-				if ( !empty( $ep_meta['title'] ) ) :
+				}
+				if ( !empty( $ep_meta['title'] ) ) {
 					$title = $ep_meta['title'];
-				else :
+				} else {
 					$title = get_the_title();
-				endif;
+				}
 				$output .= '<li' . ( $c == 0 ? ' class="pod-active"' : '' ) . ' data-audio="' . $meta['url'] . '"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M434.9,219L124.2,35.3C99,20.4,60.3,34.9,60.3,71.8v367.3c0,33.1,35.9,53.1,63.9,36.5l310.7-183.6 C462.6,275.6,462.7,235.3,434.9,219L434.9,219z"></path></svg><p>' . $title . '</p></li>';
 				$c++;
-			endif;
-		endwhile;
-		if ( !empty( $output ) ) :
+			}
+		}
+		if ( !empty( $output ) ) {
 			$output .= '</ul></div></nav>';
-		endif;
-	endif;
+		}
+	}
 	wp_reset_query();
 	return $output;
 }

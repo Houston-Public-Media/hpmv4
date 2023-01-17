@@ -20,24 +20,24 @@ function hpm_amp_modify_json_metadata( $metadata, $post ) {
 		'@type' => 'ImageObject',
 		'url' => 'https://cdn.hpm.io/wp-content/uploads/2019/01/20130758/HPM_podcast-tile.jpg'
 	];
-	if ( empty( $metadata['image'] ) ) :
+	if ( empty( $metadata['image'] ) ) {
 		$metadata['image'] = [
 			'@type' => 'ImageObject',
 			'url' => 'https://cdn.hpm.io/wp-content/uploads/2019/01/20130758/HPM_podcast-tile.jpg',
 			'height' => 1600,
 			'width' => 1600
 		];
-	endif;
-	if ( empty( $metadata['headline'] ) ) :
-		if ( $post->post_type == 'attachment' && strpos( $post->post_mime_type, 'image' ) !== false ) :
+	}
+	if ( empty( $metadata['headline'] ) ) {
+		if ( $post->post_type == 'attachment' && strpos( $post->post_mime_type, 'image' ) !== false ) {
 			$headline = get_post_meta( $post->ID, '_wp_attachment_image_alt', true );
-			if ( !empty( $headline ) ) :
+			if ( !empty( $headline ) ) {
 				$metadata['headline'] = $headline;
 				return $metadata;
-			endif;
-		endif;
+			}
+		}
 		$metadata['headline'] = $post->post_excerpt;
-	endif;
+	}
 	return $metadata;
 }
 
@@ -46,9 +46,9 @@ function hpm_amp_modify_json_metadata( $metadata, $post ) {
  */
 add_filter( 'amp_post_template_analytics', 'hpm_amp_add_custom_analytics' );
 function hpm_amp_add_custom_analytics( $analytics ) {
-	if ( ! is_array( $analytics ) ) :
+	if ( ! is_array( $analytics ) ) {
 		$analytics = [];
-	endif;
+	}
 	$analytics['hpm-googleanalytics'] = [
 		'type' => 'googleanalytics',
 		'attributes' => [
