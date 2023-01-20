@@ -11,7 +11,7 @@ class HPM_Media_Upload {
 	 * @access protected
 	 */
 	protected $data = [];
-	protected $post_args;
+	// protected $post_args;
 
 	/**
 	 * Initiate new async request
@@ -80,9 +80,9 @@ class HPM_Media_Upload {
 	 * @return array
 	 */
 	protected function get_post_args() {
-		if ( property_exists( $this, 'post_args' ) ) {
-			return $this->post_args;
-		}
+		// if ( property_exists( $this, 'post_args' ) ) {
+		// 	return $this->post_args;
+		// }
 
 		return [
 			'timeout'   => 0.01,
