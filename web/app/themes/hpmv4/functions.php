@@ -84,7 +84,7 @@ function homepage_meta_query( $query ) {
 			$query->set( 'post__not_in', $priority['homepage'] );
 		}
 		$query->set( 'post_status', 'publish' );
-		$query->set( 'category__not_in', [ 0, 1, 7636, 28, 37840 ] );
+		$query->set( 'category__not_in', [ 0, 1, 7636, 28, 37840, 54338 ] );
 		$query->set( 'ignore_sticky_posts', 1 );
 		$query->set( 'posts_per_page', 25 );
 	}
