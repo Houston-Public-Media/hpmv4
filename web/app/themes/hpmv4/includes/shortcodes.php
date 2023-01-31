@@ -430,7 +430,7 @@ function hpm_athome_sched_update() {
 			'header' => HPM_PBS_TVSS
 		]
 	];
-	$url_base = "https://services.pbs.org/tvss/kuht/";
+	$url_base = "https://tvss.services.pbs.org/tvss/kuht/";
 
 
 	/**
