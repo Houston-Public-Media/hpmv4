@@ -84,7 +84,7 @@ function homepage_meta_query( $query ) {
 			$query->set( 'post__not_in', $priority['homepage'] );
 		}
 		$query->set( 'post_status', 'publish' );
-		$query->set( 'category__not_in', [ 0, 1, 7636, 28, 37840, 54338 ] );
+		$query->set( 'category__not_in', [ 0, 1, 7636, 28, 37840, 54338, 60 ] );
 		$query->set( 'ignore_sticky_posts', 1 );
 		$query->set( 'posts_per_page', 25 );
 	}
@@ -1204,3 +1204,14 @@ function hpm_reassign_bylines_after_delete( $user_id ) {
 	delete_option( 'hpm_user_backup_' . $user_id );
 }
 add_action( 'deleted_user', 'hpm_reassign_bylines_after_delete', 999, 1 );
+
+function hpm_uh_moment_blurb( $content ) {
+	global $post;
+	if ( is_single() && $post->post_type == 'post' ) {
+		if ( in_category( 'uh-moment' ) ) {
+			$content .= '<div id="revue-embed">This content is in service of our education mission and is sponsored by the University of Houston. It is not a product of our news team.</div>';
+		}
+	}
+	return $content;
+}
+add_filter( 'the_content', 'hpm_uh_moment_blurb', 15 );
