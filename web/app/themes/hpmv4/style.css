@@ -60,40 +60,38 @@ html {
 	--plyr-audio-control-color: var(--main-red);
 	--plyr-audio-controls-background: #eee;
 }
-/*@media (prefers-color-scheme: dark) {
-	html {
-		--main-background: #282828;
-		--main-text: #FFFFFF;
-		--main-headline: #FFFFFF;
-		--secondary-text: #AFAFAF;
-		--main-element-background: #000000;
-		--nav-background: #000000;
-		--nav-background-open: #282828;
-		--nav-arrow: rgba(255, 255, 255, 0.45);
+html[data-theme="dark"] {
+	--main-background: #282828;
+	--main-text: #FFFFFF;
+	--main-headline: #FFFFFF;
+	--secondary-text: #AFAFAF;
+	--main-element-background: #000000;
+	--nav-background: #000000;
+	--nav-background-open: #282828;
+	--nav-arrow: rgba(255, 255, 255, 0.45);
+}
+[data-theme="dark"] #pbs-passport-logo .st0 {
+	fill: #ffffff !important;
+}
+[data-theme="dark"] #masthead .site-branding .site-logo a svg.hpm-logo :is(.hpm-logo-text,.hpm-logo-service) {
+	fill: #ffffff !important;
+}
+[data-theme="dark"] body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:not(.nav-kids,.nav-uh) > :is(a,div[tabindex="0"]) {
+	color: var(--accent-black-4) !important;
+}
+[data-theme="dark"] #revue-embed #revue-form label {
+	color: white;
+}
+[data-theme="dark"] article .entry-footer .tags-links a,
+[data-theme="dark"] nav.pagination a.page-numbers.next {
+	font-weight: 400;
+	background-color: rgb(40,40,40) !important;
+}
+@media screen and (min-width: 52.5em) {
+	[data-theme="dark"] body:not(.page-template-page-listen) .container {
+		border-bottom: 0.25rem solid var(--accent-dark-blue-1) !important;
 	}
-	#pbs-passport-logo .st0 {
-		fill: #ffffff !important;
-	}
-	#masthead .site-branding .site-logo a svg.hpm-logo :is(.hpm-logo-text,.hpm-logo-service) {
-		fill: #ffffff !important;
-	}
-	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:not(.nav-kids,.nav-uh) > :is(a,div[tabindex="0"]) {
-		color: var(--accent-black-4) !important;
-	}
-	#revue-embed #revue-form label {
-		color: white;
-	}
-	article .entry-footer .tags-links a,
-	nav.pagination a.page-numbers.next {
-		font-weight: 400;
-		background-color: rgb(40,40,40) !important;
-	}
-	@media screen and (min-width: 52.5em) {
-		body:not(.page-template-page-listen) .container {
-			border-bottom: 0.25rem solid var(--accent-dark-blue-1) !important;
-		}
-	}
-}*/
+}
 /* Typography */
 @font-face {
 	font-family: 'PBS-Sans';

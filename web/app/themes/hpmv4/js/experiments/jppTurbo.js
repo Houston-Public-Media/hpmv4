@@ -59,12 +59,12 @@ if ( typeof jpp !== 'object') {
 	jpp.loadPlyr = () => {
 		const controls = [ 'play' ];
 		const player = new Plyr('#jpp-player', { controls, 'volume': 1, 'loadSprite': true, 'muted': false, 'autopause': true });
-		var prefStream = getCookie('prefStream');
+		var prefStream = localStorage.getItem('prefStream');
 		if ( prefStream == null ) {
-			setCookie('prefStream','news',365*24);
+			localStorage.setItem('prefStream','news');
 			prefStream = 'news';
 		} else {
-			prefStream = getCookie('prefStream');
+			prefStream = localStorage.getItem('prefStream');
 		}
 		jpp.prefStream = prefStream;
 		jpp.player = player;
@@ -175,7 +175,7 @@ if ( typeof jpp !== 'object') {
 					jpp.player.stop();
 					if (audio == null) {
 						jpp.player.source = jpp['streams'][station];
-						setCookie('prefStream',station,365*24);
+						localStorage.setItem('prefStream',station);
 						jpp.prefStream = station;
 						hpm.stationIds.news.refresh = true;
 						hpm.stationIds.classical.refresh = true;

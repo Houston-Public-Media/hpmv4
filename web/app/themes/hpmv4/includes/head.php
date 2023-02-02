@@ -295,17 +295,29 @@ function hpm_header_info() {
 		<meta name="twitter:widgets:border-color" content="#000000" />
 		<meta name="twitter:partner" content="tfwp" />
 <?php
-	/* if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) { ?>
-		<meta name="datePublished" content="<?php echo $reqs['publish_date']; ?>" />
-		<meta name="story_id" content="<?php echo $reqs['npr_story_id']; ?>" />
-		<meta name="has_audio" content="<?php echo $reqs['has_audio']; ?>" />
-		<meta name="programs" content="none" />
-		<meta name="category" content="<?php echo $reqs['hpm_section']; ?>" />
-		<meta name="org_id" content="220" />
-		<meta name="author" content="<?php echo $reqs['npr_byline']; ?>" />
-		<meta name="wordCount" content="<?php echo $reqs['word_count']; ?>" />
-<?php
-	} */
+	if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) {
+		$jsonLd = new stdClass;
+		$jsonLd->{'@context'} = "http://schema.org";
+		$jsonLd->{'@type'} = "NewsArticle";
+		$jsonLd->headline = str_replace( ' | Houston Public Media', '', $reqs['title'] );
+		$jsonLd->datePublished = $reqs['publish_date'];
+		$jsonLd->dateModified = $reqs['modified_date'];
+		$jsonLd->image = [ $reqs['thumb'] ];
+		$jsonLd->author = [];
+		$artpub = new stdClass;
+		$artpub->{'@type'} = "Organization";
+		$artpub->name = 'Houston Public Media';
+		$artpub->url = 'https://www.houstonpublicmedia.org';
+		$jsonLd->publisher = [ $artpub ];
+		foreach ( $reqs['author'] as $auth ) {
+			$new_auth = new stdClass;
+			$new_auth->{'@type'} = "Person";
+			$new_auth->name = $auth['first_name'] . " " . $auth['last_name'];
+			$new_auth->url = $auth['profile'];
+			$jsonLd->author[] = $new_auth;
+		}
+		echo '<script type="application/ld+json">' . json_encode( $jsonLd ) . '</script>';
+	}
 }
 add_action( 'wp_head', 'hpm_header_info', 1 );
 add_action( 'wp_head', 'hpm_google_tracker', 100 );

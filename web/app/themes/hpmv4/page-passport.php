@@ -358,11 +358,9 @@ get_header(); ?>
 					margin: 0 15%;
 				}
 			}
-			/* @media (prefers-color-scheme: dark) {
-				.page-template-page-passport .page-content a {
-					color: #5680ff;
-				}
-			} */
+			[data-theme="dark"] .page-template-page-passport .page-content a {
+				color: #5680ff;
+			}
 		</style>
 		<main id="main" class="site-main" role="main">
 			<?PHP while ( have_posts() ) {
