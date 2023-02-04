@@ -319,7 +319,7 @@ function hpm_header_info() {
 		echo '<script type="application/ld+json">' . json_encode( $jsonLd ) . '</script>';
 	}
 }
-add_action( 'wp_head', 'hpm_header_info', 1 );
+add_action( 'wp_head', 'hpm_header_info', 2 );
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
 
 function hpm_body_open() {
@@ -379,7 +379,7 @@ function hpm_body_open() {
 	}
 	echo HPM_Promos::generate_static( 'top' );
 }
-add_action( 'body_open', 'hpm_body_open' );
+add_action( 'body_open', 'hpm_body_open', 11 );
 
 function hpm_talkshows() {
 	wp_reset_query();

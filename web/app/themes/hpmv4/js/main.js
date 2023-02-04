@@ -227,6 +227,7 @@ if ( typeof hpm !== 'object') {
 						ga('hpmprod.send', 'event', 'Top Banner', 'click', attr);
 						ga('hpmRollupprod.send', 'event', 'Top Banner', 'click', attr);
 						ga('hpmWebAmpprod.send', 'event', 'Top Banner', 'click', attr);
+						gtag('event', 'top_banner', {'event_label': attr,'event_category': 'click'});
 					}
 				});
 			});
@@ -244,12 +245,14 @@ if ( typeof hpm !== 'object') {
 					ga('hpmprod.send', 'event', 'Plyr', 'Play', mediaName);
 					ga('hpmRollupprod.send', 'event', 'Plyr', 'Play', mediaName);
 					ga('hpmWebAmpprod.send', 'event', 'Plyr', 'Play', mediaName);
+					gtag('event', 'plyr', {'event_label': mediaName,'event_category': 'play'});
 				});
 				player.on('ended', (event) => {
 					var mediaName = event.detail.plyr.media.currentSrc;
 					ga('hpmprod.send', 'event', 'Plyr', 'Ended', mediaName);
 					ga('hpmRollupprod.send', 'event', 'Plyr', 'Ended', mediaName);
 					ga('hpmWebAmpprod.send', 'event', 'Plyr', 'Ended', mediaName);
+					gtag('event', 'plyr', {'event_label': mediaName,'event_category': 'ended'});
 				});
 			});
 		}

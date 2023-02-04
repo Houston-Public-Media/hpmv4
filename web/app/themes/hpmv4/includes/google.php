@@ -75,7 +75,11 @@ function hpm_google_tracker() {
 <?php
 }
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
-add_filter( 'gtm_post_category', 'gtm_populate_category_items', 10, 3 );
+add_filter( 'gtm_post_category', 'gtm_populate_category_items', 12, 3 );
+add_filter( 'gtm_post_tags', 'gtm_populate_tag_items', 12, 3 );
+add_filter( 'gtm_story_id', 'gtm_populate_story_id', 12, 3 );
+add_filter( 'gtm_permalink', 'gtm_populate_permalink', 12, 3 );
+add_filter( 'gtm_author_name', 'gtm_populate_authors', 12, 3 );
 
 function gtm_populate_category_items( $total_match, $match, $post_id ) {
 	$terms = wp_get_object_terms( $post_id, 'category', [ 'fields' => 'slugs' ] );
@@ -83,6 +87,31 @@ function gtm_populate_category_items( $total_match, $match, $post_id ) {
 		return '';
 	}
 	return $terms;
+}
+
+function gtm_populate_tag_items( $total_match, $match, $post_id ) {
+	$terms = wp_get_object_terms( $post_id, 'post_tag', [ 'fields' => 'slugs' ] );
+	if ( is_wp_error( $terms ) || empty( $terms ) ) {
+		return '';
+	}
+	return $terms;
+}
+
+function gtm_populate_story_id( $total_match, $match, $post_id ) {
+	return get_post_meta( $post_id, 'npr_story_id', true );
+}
+
+function gtm_populate_permalink( $total_match, $match, $post_id ) {
+	return get_permalink( $post_id );
+}
+
+function gtm_populate_authors( $total_match, $match, $post_id ) {
+	$coauthors = get_coauthors( $post_id );
+	$authors = [];
+	foreach ( $coauthors as $coa ) {
+		$authors[] = $coa->display_name;
+	}
+	return $authors;
 }
 
 add_action( 'wp_head', 'hpm_google_conversion', 101 );
