@@ -82,7 +82,7 @@ add_filter( 'gtm_permalink', 'gtm_populate_permalink', 12, 3 );
 add_filter( 'gtm_author_name', 'gtm_populate_authors', 12, 3 );
 
 function gtm_populate_category_items( $total_match, $match, $post_id ) {
-	$terms = wp_get_object_terms( $post_id, 'category', [ 'fields' => 'slugs' ] );
+	$terms = wp_get_object_terms( $post_id, 'category', [ 'fields' => 'names' ] );
 	if ( is_wp_error( $terms ) || empty( $terms ) ) {
 		return '';
 	}
@@ -90,7 +90,7 @@ function gtm_populate_category_items( $total_match, $match, $post_id ) {
 }
 
 function gtm_populate_tag_items( $total_match, $match, $post_id ) {
-	$terms = wp_get_object_terms( $post_id, 'post_tag', [ 'fields' => 'slugs' ] );
+	$terms = wp_get_object_terms( $post_id, 'post_tag', [ 'fields' => 'names' ] );
 	if ( is_wp_error( $terms ) || empty( $terms ) ) {
 		return '';
 	}
