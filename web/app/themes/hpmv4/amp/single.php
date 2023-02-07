@@ -13,6 +13,20 @@
 			<?php $this->load_parts( [ 'style' ] ); ?>
 			<?php do_action( 'amp_post_template_css', $this ); ?>
 		</style>
+		<amp-analytics type="googleanalytics" config="https://amp.analytics-debugger.com/ga4.json" data-credentials="include">
+			<script type="application/json">
+				{
+					"vars": {
+						"GA4_MEASUREMENT_ID": "G-MTVH6D0BL5",
+						"GA4_ENDPOINT_HOSTNAME": "www.google-analytics.com",
+						"DEFAULT_PAGEVIEW_ENABLED": true,
+						"GOOGLE_CONSENT_ENABLED": false,
+						"WEBVITALS_TRACKING": false,
+						"PERFORMANCE_TIMING_TRACKING": false
+					}
+				}
+			</script>
+		</amp-analytics>
 	</head>
 	<body class="<?php echo esc_attr( $this->get( 'body_class' ) ); ?> single">
 		<div class="container">

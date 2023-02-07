@@ -135,6 +135,9 @@
 							</article>
 							<aside class="column-right">
 								<h2>About <xsl:value-of select="$title" /></h2>
+								<xsl:when test="link">
+									<p><a href="{link}" title="Link to original website">Visit the program homepage</a></p>
+								</xsl:when>
 								<div class="pod-desc"><xsl:value-of select="description" disable-output-escaping="no" /></div>
 							</aside>
 							<section id="search-results">
