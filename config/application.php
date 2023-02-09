@@ -40,7 +40,7 @@ if ( file_exists( $env_config ) ) {
 if ( empty( $_SERVER['HTTP_HOST'] ) && WP_ENV == 'development' ) {
 	$_SERVER['HTTP_HOST'] = 'dev.houstonpublicmedia.org';
 }
-if ( empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) ) {
+if ( empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) && !empty( $_SERVER['HTTP_HOST'] ) ) {
 	$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
 }
 if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && strpos( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok.io' ) !== FALSE ) {

@@ -65,6 +65,7 @@
 								<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 								<?php
 									the_title('<h1 class="entry-title">', '</h1>');
+									$amp_title = get_the_title();
 									the_excerpt();
 									$single_id = get_the_ID();
 								?>

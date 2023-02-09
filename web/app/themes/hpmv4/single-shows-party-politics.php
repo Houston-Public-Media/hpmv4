@@ -155,7 +155,7 @@ get_header(); ?>
 		$json = hpm_youtube_playlist( $show['ytp'] );
 		foreach ( $json as $tubes ) {
 			$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
-			if ( $c == 0 ) { ?>
+			if ( $c == 0 && strpos( $tubes['snippet']['title'], 'Private Video' ) === false ) { ?>
 					<div id="youtube-main">
 						<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
 							<?php echo hpm_svg_output( 'play' ); ?>
