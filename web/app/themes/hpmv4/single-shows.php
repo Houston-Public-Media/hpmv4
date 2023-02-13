@@ -97,6 +97,70 @@ get_header(); ?>
 				</aside>
 				<div class="article-wrap">
 <?php
+	if ( !empty( $show['ytp'] ) ) {
+		$c = 0; ?>
+					<div id="shows-youtube">
+						<div id="youtube-wrap">
+<?php
+		$json = hpm_youtube_playlist( $show['ytp'] );
+		foreach ( $json as $tubes ) {
+			$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
+			$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
+			if ( $c == 0 && strpos( $yt_title, 'Private Video' ) === false ) { ?>
+							<div id="youtube-main">
+								<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
+									<?php echo hpm_svg_output( 'play' ); ?>
+								</div>
+								<h2><?php echo $yt_title; ?></h2>
+								<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
+								<div class="desc-wrap"><p class="desc"><?php echo str_replace( "\n", "<br />", $tubes['snippet']['description'] ); ?></p><button type="button" class="yt-readmore">Read More...</button></div>
+								<dialog id="yt-dialog">
+									<div class="yt-dialog-content">
+										<h3></h3>
+										<p></p>
+										<ul class="dialog-actions">
+											<li><button type="button" data-action="dismiss">Dismiss</button></li>
+										</ul>
+									</div>
+								</dialog>
+								<script>
+									const dialog = document.getElementById("yt-dialog");
+									const readMore = document.querySelector("#youtube-main .yt-readmore");
+
+									readMore.addEventListener("click", ({ target }) => {
+										var desc = document.querySelector("#youtube-main .desc");
+										var title = document.querySelector("#youtube-main h2");
+										dialog.querySelector("p").innerHTML = desc.innerHTML;
+										dialog.querySelector("h3").textContent = title.textContent;
+										dialog.showModal();
+									});
+
+									dialog.addEventListener("click", ({ target }) => {
+										if (target.matches('dialog') || target.matches('[data-action="dismiss"]')) {
+											dialog.close();
+										}
+									});
+								</script>
+							</div>
+							<div id="youtube-upcoming">
+								<h4>All Episodes</h4>
+								<div class="youtube-scroll">
+<?php
+			} ?>
+									<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>" data-ytdate="<?php echo date( 'F j, Y', $pubtime); ?>" data-ytdesc="<?php echo htmlentities( str_replace( "\n", "<br />", $tubes['snippet']['description'] ) ); ?>">
+										<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $yt_title; ?>" />
+										<h2><?php echo $yt_title; ?></h2>
+										<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
+									</div>
+<?php
+			$c++;
+		} ?>
+								</div>
+							</div>
+						</div>
+					</div>
+<?php
+	}
 	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
 	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
 	$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
@@ -138,40 +202,6 @@ get_header(); ?>
 	if ( $cat->found_posts > 15 ) { ?>
 			<div class="readmore">
 				<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
-			</div>
-<?php
-	}
-	if ( !empty( $show['ytp'] ) ) {
-		$c = 0; ?>
-			<div id="shows-youtube">
-				<div id="youtube-wrap">
-<?php
-		$json = hpm_youtube_playlist( $show['ytp'] );
-		foreach ( $json as $tubes ) {
-			$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
-			if ( $c == 0 ) { ?>
-					<div id="youtube-main">
-						<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>">
-							<?php echo hpm_svg_output( 'play' ); ?>
-						</div>
-						<h2><?php echo $tubes['snippet']['title']; ?></h2>
-						<p class="desc"><?php echo $tubes['snippet']['description']; ?></p>
-						<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
-					</div>
-					<div id="youtube-upcoming">
-						<h4>Past Shows</h4>
-<?php
-			} ?>
-						<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $tubes['snippet']['title'], ENT_COMPAT ); ?>" data-ytdate="<?php echo date( 'F j, Y', $pubtime); ?>" data-ytdesc="<?php echo htmlentities($tubes['snippet']['description']); ?>">
-							<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $tubes['snippet']['title']; ?>" />
-							<h2><?php echo $tubes['snippet']['title']; ?></h2>
-							<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
-						</div>
-<?php
-			$c++;
-		} ?>
-					</div>
-				</div>
 			</div>
 <?php
 	} ?>

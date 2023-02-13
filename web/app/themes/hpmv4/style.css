@@ -1360,6 +1360,11 @@ ul.timeline li .timeline-date {
 	fill: white;
 	width: 4rem;
 	height: 4rem;
+	stroke: black;
+	stroke-width: 3px;
+}
+#shows-youtube #youtube-upcoming {
+	border-top: 0.25rem solid var(--main-background);
 }
 #shows-youtube #youtube-upcoming .youtube {
 	padding: 1rem;
@@ -1379,7 +1384,7 @@ ul.timeline li .timeline-date {
 	color: rgb(131, 133, 133);
 }
 #shows-youtube #youtube-upcoming .youtube + .youtube {
-	border-top: 0.125rem solid var(--main-background);
+	border-left: 0.125rem solid var(--main-background);
 }
 #shows-youtube #youtube-upcoming h4 {
 	text-transform: uppercase;
@@ -1403,16 +1408,80 @@ ul.timeline li .timeline-date {
 	font: 400 2em/1.75em var(--hpm-font-main);
 	color: white;
 }
+#youtube-upcoming .youtube-scroll {
+	overflow-x: scroll;
+	display: grid;
+	grid-template-columns: repeat(5, 18rem);
+	gap: 0 0.5rem;
+}
+#youtube-main .desc-wrap {
+	max-height: 5rem;
+	overflow: hidden;
+	display: block;
+	position: relative;
+}
+#youtube-main .desc-wrap .yt-readmore {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: rgb(255,255,255);
+	background: linear-gradient(0deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+	width: 100%;
+	color: var(--accent-light-blue-1);
+	font-weight: bold;
+	padding: 0.5rem 0 0;
+	outline: 0;
+	border: 0;
+	text-align: left;
+}
+#youtube-main .desc-wrap .yt-readmore:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+dialog#yt-dialog {
+	margin: auto;
+	padding: 0;
+	width: min(65ch, 100vw - 2rem);
+	position: fixed;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	background-color: white;
+	border: 2px solid;
+}
+dialog#yt-dialog p button {
+	display: none;
+}
+dialog#yt-dialog .yt-dialog-content {
+	padding: clamp(1rem, 5%, 2rem);
+}
+
+dialog#yt-dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(10px);
+}
+dialog#yt-dialog .dialog-actions {
+	list-style: none;
+	padding: 0;
+	margin: 1rem auto 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+}
+dialog#yt-dialog .dialog-actions button {
+	padding: 0.5em 1em;
+	border: 1px solid gray;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	text-align: center;
+}
+dialog#yt-dialog .dialog-actions li {
+	margin: 0;
+}
+dialog#yt-dialog [data-action=dismiss]:is(:focus, :hover) {
+	background-color: #f4c7be;
+}
 @media screen and (min-width: 34em) {
-	#shows-youtube #youtube-upcoming .youtube {
-		display: grid;
-		grid-template-columns: 40% 60%;
-	}
-	#shows-youtube #youtube-upcoming .youtube :is(img,picture) {
-		grid-row: 1/span 2;
-		align-self: center;
-		padding-right: 1rem;
-	}
 	#shows-youtube #youtube-upcoming .youtube h2 {
 		margin: 0;
 	}
@@ -1424,10 +1493,6 @@ ul.timeline li .timeline-date {
 	}
 }
 @media screen and (min-width: 64.25em) {
-	#youtube-wrap {
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-	}
 	#campaign-splash.lightbox #splash {
 		width: 45%;
 		max-width: 48rem;
