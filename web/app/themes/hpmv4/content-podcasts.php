@@ -27,7 +27,7 @@ $pod_link = get_post_meta( get_the_ID(), 'hpm_pod_link', true ); ?>
 			</ul>
 			<div class="podcast-episode-info">
 				<h3>Available on:</h3>
-				<?php echo HPM_Podcasts::show_social( get_the_ID(), false, '' ); ?>
+				<?php echo HPM_Podcasts::show_social( get_the_ID(), false, '', true ); ?>
 		</div>
 		<footer class="entry-footer">
 			<?php

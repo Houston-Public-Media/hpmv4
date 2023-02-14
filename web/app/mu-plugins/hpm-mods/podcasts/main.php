@@ -1071,14 +1071,14 @@ class HPM_Podcasts {
 					'posts_per_page' => 1
 				]);
 				if ( $poids->have_posts() ) {
-					$content .= HPM_Podcasts::show_social( $poids->post->ID, true, '' );
+					$content .= HPM_Podcasts::show_social( $poids->post->ID, true, '', true );
 				}
 			}
 		}
 		return $content;
 	}
 
-	public static function show_social( $pod_id = '', $lede = false, $show_id = '' ) {
+	public static function show_social( $pod_id = '', $lede = false, $show_id = '', $full_list = false ) {
 		$temp = $output = $template = '';
 		$badges = 'https://cdn.hpm.io/assets/images/podcasts/';
 		if ( !empty( $show_id ) ) {
@@ -1096,29 +1096,31 @@ class HPM_Podcasts {
 			if ( !empty( $pod_link['spotify'] ) ) {
 				$temp .= '<li><a href="' . $pod_link['spotify'] . '" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="' . $badges . 'spotify.png" alt="Subscribe on Spotify" title="Subscribe on Spotify"></a></li>';
 			}
-			if ( !empty( $pod_link['stitcher'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['stitcher'] . '" rel="noopener" target="_blank" title="Subscribe on Stitcher"><img src="' . $badges . 'stitcher.png" alt="Subscribe on Stitcher" title="Subscribe on Stitcher"></a></li>';
-			}
-			if ( !empty( $pod_link['tunein'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png" alt="Subscribe on TuneIn" title="Subscribe on TuneIn"></a></li>';
-			}
-			if ( !empty( $pod_link['iheart'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['iheart'] . '" rel="noopener" target="_blank" title="Subscribe on iHeart"><img src="' . $badges . 'iheart_radio.png" alt="Subscribe on iHeart" title="Subscribe on iHeart"></a></li>';
-			}
-			if ( !empty( $pod_link['pandora'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['pandora'] . '" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="' . $badges . 'pandora.png" alt="Subscribe on Pandora" title="Subscribe on Pandora"></a></li>';
-			}
-			if ( !empty( $pod_link['radiopublic'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['radiopublic'] . '" rel="noopener" target="_blank" title="Subscribe on RadioPublic"><img src="' . $badges . 'radio_public.png" alt="Subscribe on RadioPublic" title="Subscribe on RadioPublic"></a></li>';
-			}
-			if ( !empty( $pod_link['pcast'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['pcast'] . '" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="' . $badges . 'pocketcasts.png" alt="Subscribe on Pocket Casts" title="Subscribe on Pocket Casts"></a></li>';
-			}
-			if ( !empty( $pod_link['overcast'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['overcast'] . '" rel="noopener" target="_blank" title="Subscribe on Overcast"><img src="' . $badges . 'overcast.png" alt="Subscribe on Overcast" title="Subscribe on Overcast"></a></li>';
-			}
-			if ( !empty( $pod_link['amazon'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['amazon'] . '" rel="noopener" target="_blank" title="Subscribe on Amazon Music"><img src="' . $badges . 'amazon.png" alt="Subscribe on Amazon Music" title="Subscribe on Amazon Music"></a></li>';
+			if ( $full_list ) {
+				if ( !empty( $pod_link['stitcher'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['stitcher'] . '" rel="noopener" target="_blank" title="Subscribe on Stitcher"><img src="' . $badges . 'stitcher.png" alt="Subscribe on Stitcher" title="Subscribe on Stitcher"></a></li>';
+				}
+				if ( !empty( $pod_link['tunein'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png" alt="Subscribe on TuneIn" title="Subscribe on TuneIn"></a></li>';
+				}
+				if ( !empty( $pod_link['iheart'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['iheart'] . '" rel="noopener" target="_blank" title="Subscribe on iHeart"><img src="' . $badges . 'iheart_radio.png" alt="Subscribe on iHeart" title="Subscribe on iHeart"></a></li>';
+				}
+				if ( !empty( $pod_link['pandora'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['pandora'] . '" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="' . $badges . 'pandora.png" alt="Subscribe on Pandora" title="Subscribe on Pandora"></a></li>';
+				}
+				if ( !empty( $pod_link['radiopublic'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['radiopublic'] . '" rel="noopener" target="_blank" title="Subscribe on RadioPublic"><img src="' . $badges . 'radio_public.png" alt="Subscribe on RadioPublic" title="Subscribe on RadioPublic"></a></li>';
+				}
+				if ( !empty( $pod_link['pcast'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['pcast'] . '" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="' . $badges . 'pocketcasts.png" alt="Subscribe on Pocket Casts" title="Subscribe on Pocket Casts"></a></li>';
+				}
+				if ( !empty( $pod_link['overcast'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['overcast'] . '" rel="noopener" target="_blank" title="Subscribe on Overcast"><img src="' . $badges . 'overcast.png" alt="Subscribe on Overcast" title="Subscribe on Overcast"></a></li>';
+				}
+				if ( !empty( $pod_link['amazon'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['amazon'] . '" rel="noopener" target="_blank" title="Subscribe on Amazon Music"><img src="' . $badges . 'amazon.png" alt="Subscribe on Amazon Music" title="Subscribe on Amazon Music"></a></li>';
+				}
 			}
 			$temp .= '<li><a href="' . ( !empty( $pod_link['rss-override'] ) ? $pod_link['rss-override'] : get_permalink( $pod_id ) ).'" target="_blank" title="Subscribe via RSS"><img src="' . $badges . 'rss.png" alt="Subscribe via RSS" title="Subscribe via RSS"></a></li>';
 		}
