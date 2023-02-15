@@ -304,7 +304,7 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 		$items = array_reverse( $json['items'] );
 	}
 	$json_r = array_slice( $items, 0, $num );
-	set_transient( 'hpm_yt_' . $key . '_' . $num, $json_r, 3600 );
+	set_transient( 'hpm_yt_' . $key . '_' . $num, $json_r, 600 );
 	return $json_r;
 }
 
