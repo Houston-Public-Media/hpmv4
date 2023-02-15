@@ -268,12 +268,9 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 		return $list;
 	}
 	$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
-	if ( is_wp_error( $remote ) ) {
+	if ( is_wp_error( $remote ) || $remote['response']['code'] !== 200 ) {
 		return [];
 	} else {
-		if ( $remote['response']['code'] !== 200 ) {
-			return [];
-		}
 		$yt = wp_remote_retrieve_body( $remote );
 		$json = json_decode( $yt, TRUE );
 	}
@@ -295,8 +292,8 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 			for ( $i = 0; $i < $pages; $i++ ) {
 				if ( !empty( $json['nextPageToken'] ) ) {
 					$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&pageToken=' . $json['nextPageToken'] . '&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
-					if ( is_wp_error( $remote ) ) {
-						return false;
+					if ( is_wp_error( $remote ) || $remote['response']['code'] !== 200 ) {
+						return [];
 					} else {
 						$yt = wp_remote_retrieve_body( $remote );
 						$json = json_decode( $yt, TRUE );
@@ -307,7 +304,7 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 		$items = array_reverse( $json['items'] );
 	}
 	$json_r = array_slice( $items, 0, $num );
-	set_transient( 'hpm_yt_' . $key . '_' . $num, $json_r, 600 );
+	set_transient( 'hpm_yt_' . $key . '_' . $num, $json_r, 3600 );
 	return $json_r;
 }
 
