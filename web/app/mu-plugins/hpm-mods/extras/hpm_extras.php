@@ -269,8 +269,11 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 	}
 	$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
 	if ( is_wp_error( $remote ) ) {
-		return false;
+		return [];
 	} else {
+		if ( $remote['response']['code'] !== 200 ) {
+			return [];
+		}
 		$yt = wp_remote_retrieve_body( $remote );
 		$json = json_decode( $yt, TRUE );
 	}

@@ -98,15 +98,16 @@ get_header(); ?>
 				<div class="article-wrap">
 <?php
 	if ( !empty( $show['ytp'] ) ) {
-		$c = 0; ?>
+		$json = hpm_youtube_playlist( $show['ytp'] );
+		if ( !empty( $json ) ) {
+			$c = 0; ?>
 					<div id="shows-youtube">
 						<div id="youtube-wrap">
 <?php
-		$json = hpm_youtube_playlist( $show['ytp'] );
-		foreach ( $json as $tubes ) {
-			$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
-			$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
-			if ( $c == 0 && strpos( $yt_title, 'Private Video' ) === false ) { ?>
+			foreach ( $json as $tubes ) {
+				$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
+				$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
+				if ( $c == 0 && strpos( $yt_title, 'Private Video' ) === false ) { ?>
 							<div id="youtube-main">
 								<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
 									<?php echo hpm_svg_output( 'play' ); ?>
@@ -146,20 +147,21 @@ get_header(); ?>
 								<h4>All Episodes</h4>
 								<div class="youtube-scroll">
 <?php
-			} ?>
+				} ?>
 									<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>" data-ytdate="<?php echo date( 'F j, Y', $pubtime); ?>" data-ytdesc="<?php echo htmlentities( str_replace( "\n", "<br />", $tubes['snippet']['description'] ) ); ?>">
 										<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $yt_title; ?>" />
 										<h2><?php echo $yt_title; ?></h2>
 										<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
 									</div>
 <?php
-			$c++;
-		} ?>
+				$c++;
+			} ?>
 								</div>
 							</div>
 						</div>
 					</div>
 <?php
+		}
 	}
 	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
 	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
