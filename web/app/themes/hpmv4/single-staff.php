@@ -33,7 +33,7 @@ get_header(); ?>
 <?php
 			if ( !empty( $staff['phone'] ) ) { ?>
 							<div class="service-icon phone">
-								<a href="tel://+1<?php echo str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ); ?>" title="Call <?php the_title(); ?> at <?php echo $staff['phone']; ?>"><?php echo hpm_svg_output( 'phone' ); ?></a>
+								<a href="tel://+1<?php echo str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ); ?>" title="Call <?php the_title(); ?> at <?php echo $staff['phone']; ?>" data-phone="<?php echo $staff['phone']; ?>"><?php echo hpm_svg_output( 'phone' ); ?></a>
 							</div>
 <?php
 			}

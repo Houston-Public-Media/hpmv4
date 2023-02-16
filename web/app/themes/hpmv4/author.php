@@ -47,6 +47,7 @@
 						<h3><?php echo $author['title']; ?></h3>
 				<?php
 						if (
+							!empty( $author['phone'] ) ||
 							!empty( $author['facebook'] ) ||
 							!empty( $author['twitter'] ) ||
 							!empty( $author['linkedin'] ) ||
@@ -54,7 +55,7 @@
 						) { ?>
 						<div class="icon-wrap">
 						<?php
-							echo ( !empty( $staff['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ) . '" title="Call ' . $curauth->display_name . ' at ' . $staff['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>' : '' );
+							echo ( !empty( $author['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $author['phone'] ) . '" title="Call ' . $curauth->display_name . ' at ' . $author['phone'] . '" data-phone="' . $author['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>' : '' );
 							echo ( !empty( $author['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . ' </a></div>' : '' );
 							echo ( !empty( $author['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>' : '' );
 							echo ( !empty( $author['linkedin'] ) ? '<div class="service-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>' : '' );

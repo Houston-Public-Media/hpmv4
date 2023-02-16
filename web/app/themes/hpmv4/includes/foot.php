@@ -54,7 +54,7 @@ function author_footer( $id ) {
 			if ( !empty( $meta['phone'] ) ) {
 				$temp .= '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $meta['phone'] ) . '" rel="noopener" title="Call ' .
 				( $local ? $author->post->post_title : $coa->display_name ) .
-				' at ' . $meta['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>';
+				' at ' . $meta['phone'] . '" data-phone="' . $meta['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>';
 			}
 			if ( !empty( $meta['facebook'] ) ) {
 				$temp .= '<div class="service-icon facebook"><a href="' . $meta['facebook'] . '" rel="noopener" title="' .
