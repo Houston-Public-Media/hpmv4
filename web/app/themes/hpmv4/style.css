@@ -672,7 +672,7 @@ svg:not(:root) {
 }
 
 /* Social Icons */
-.social-wrap {
+.icon-wrap {
 	display: grid;
 	grid-template-columns: repeat(5, 3rem);
 	align-items: center;
@@ -680,14 +680,14 @@ svg:not(:root) {
 	gap: 1rem;
 	margin-bottom: 1rem;
 }
-.social-wrap :is(h1,h2,h3,h4,h5) {
+.icon-wrap :is(h1,h2,h3,h4,h5) {
 	margin: 0;
 	padding-right: 1rem;
 }
-.social-icon {
+.service-icon {
 	--unit: 3rem;
 }
-.social-icon :is(a,button) {
+.service-icon :is(a,button) {
 	display: block;
 	background-color: var(--accent-black-3);
 	padding: 0.25rem;
@@ -697,26 +697,35 @@ svg:not(:root) {
 	text-align: center;
 	border-radius: 0.5rem;
 }
-.social-icon :is(a,button) svg {
+.service-icon :is(a,button) svg {
 	fill: white;
 }
-.social-icon.facebook :is(a,button) {
+.service-icon.phone :is(a,button) {
+	padding: calc(var(--unit)/6);
+	background: rgb(131,242,131);
+	background: linear-gradient(180deg, rgba(131,242,131,1) 0%, rgba(86,186,68,1) 100%);
+}
+.service-icon.envelope :is(a,button) {
+	background: rgb(73,121,227);
+	background: linear-gradient(180deg, rgba(73,121,227,1) 0%, rgba(116,187,240,1) 100%);
+}
+.service-icon.facebook :is(a,button) {
 	background: rgb(59, 89, 152);
 }
-.social-icon.twitter :is(a,button) {
+.service-icon.twitter :is(a,button) {
 	background: rgb(29, 161, 242);
 }
-.social-icon.youtube :is(a,button) {
+.service-icon.youtube :is(a,button) {
 	background: rgb(234, 50, 35);
 }
-.social-icon.instagram :is(a,button) {
+.service-icon.instagram :is(a,button) {
 	background: rgb(81, 91, 212);
 	background: linear-gradient(135deg, rgb(81, 91, 212) 0%, rgb(129, 52, 175) 20%, rgb(221, 42, 123) 50%, rgb(254, 218, 119) 70%, rgb(245, 133, 41) 90%);
 }
-.social-icon.linkedin :is(a,button) {
+.service-icon.linkedin :is(a,button) {
 	background: rgb(40, 103, 178);
 }
-.social-icon:last-child :is(a,button) {
+.service-icon:last-child :is(a,button) {
 	margin-right: 0;
 }
 .podcast-badges {
@@ -732,11 +741,11 @@ svg:not(:root) {
 	width: 3rem;
 	margin-top: 0 !important;
 }
-.podcast-badges .social-icon {
+.podcast-badges .service-icon {
 	--unit: 3rem;
 }
-.podcast-badges .social-icon a,
-.podcast-badges .social-icon button {
+.podcast-badges .service-icon a,
+.podcast-badges .service-icon button {
 	margin: 0;
 }
 .single:not(.single-shows) .podcast-badges {
@@ -751,18 +760,18 @@ svg:not(:root) {
 	margin-top: 1rem;
 }
 @media screen and (min-width: 52.5em) {
-	.social-wrap {
+	.icon-wrap {
 		align-items: start;
 		margin-bottom: 0;
 	}
-	.social-wrap :is(h1,h2,h3,h4,h5) {
+	.icon-wrap :is(h1,h2,h3,h4,h5) {
 		padding: 0;
 		grid-column: 1/-1;
 	}
-	.social-icon {
+	.service-icon {
 		--unit: 3.5rem;
 	}
-	.site-footer .social-icon {
+	.site-footer .service-icon {
 		--unit: 3rem;
 	}
 }
@@ -2278,7 +2287,7 @@ footer#colophon .foot-logo a svg.hpm-logo :is(.cls-5,.cls-6) {
 footer#colophon .foot-logo a svg.hpm-logo .cls-6 {
 	fill: var(--main-blue);
 }
-footer#colophon .social-wrap {
+footer#colophon .icon-wrap {
 	justify-content: center;
 	margin-bottom: 1rem;
 }
@@ -2382,11 +2391,11 @@ footer#colophon ul li a {
 	footer#colophon .foot-contact p.foot-button {
 		text-align: left;
 	}
-	footer#colophon .foot-contact .social-wrap {
+	footer#colophon .foot-contact .icon-wrap {
 		margin: 0;
 		justify-content: end;
 	}
-	footer#colophon .foot-contact .social-wrap .social-icon a {
+	footer#colophon .foot-contact .icon-wrap .service-icon a {
 		margin-bottom: 0;
 	}
 }
@@ -2782,6 +2791,9 @@ article.card .entry-summary {
 	white-space: normal;
 	width: auto;
 	padding: 0 1rem 1rem;
+}
+#search-results article + article {
+	margin-top: 1rem;
 }
 :is(#search-results,.post-archive) article.card h3:empty {
 	display: none;
@@ -3254,10 +3266,10 @@ article .entry-header p.staff-pronouns,
 		padding: 2rem;
 		gap: 2rem;
 	}
-	:is(.single,.page-template-page-npr-articles) #article-share .social-wrap {
+	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap {
 		padding: 0 0 1rem 0;
 	}
-	:is(.single,.page-template-page-npr-articles) #article-share .social-wrap :is(h1,h2,h3,h4,h5) {
+	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap :is(h1,h2,h3,h4,h5) {
 		grid-column: 1;
 	}
 	#float-wrap {
@@ -3318,13 +3330,13 @@ article .entry-header p.staff-pronouns,
 	:is(.single,.page-template-page-npr-articles) #main > article.post .entry-footer {
 		grid-column: 2;
 	}
-	:is(.single,.page-template-page-npr-articles) #article-share .social-wrap {
+	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap {
 		grid-template-columns: 3.5rem 3.5rem;
 		gap: 1rem;
 		position: sticky;
     	top: 1rem;
 	}
-	:is(.single,.page-template-page-npr-articles) #article-share .social-wrap :is(h1,h2,h3,h4,h5) {
+	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap :is(h1,h2,h3,h4,h5) {
 		grid-column: 1 / span 2;
 	}
 }

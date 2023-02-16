@@ -645,24 +645,24 @@ function hpm_article_share( $nprdata = null ) {
 		$uri_excerpt = rawurlencode( $nprdata['excerpt'] );
 	} ?>
 	<div id="article-share">
-		<div class="social-wrap">
+		<div class="icon-wrap">
 			<h4>Share</h4>
-			<div class="social-icon facebook">
+			<div class="service-icon facebook">
 				<button aria-label="Share to Facebook" data-href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" data-dialog="400:368">
 					<?php echo hpm_svg_output( 'facebook' ); ?>
 				</button>
 			</div>
-			<div class="social-icon twitter">
+			<div class="service-icon twitter">
 				<button aria-label="Share to Twitter" data-href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
 					<?php echo hpm_svg_output( 'twitter' ); ?>
 				</button>
 			</div>
-			<div class="social-icon linkedin">
+			<div class="service-icon linkedin">
 				<button aria-label="Share to LinkedIn" data-href="https://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
 					<?php echo hpm_svg_output( 'linkedin' ); ?>
 				</button>
 			</div>
-			<div class="social-icon">
+			<div class="service-icon envelope">
 				<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
 					<?php echo hpm_svg_output( 'envelope' ); ?>
 				</a>
@@ -1053,6 +1053,8 @@ function hpm_svg_output( $icon ) {
 		$output = '<path d="M438.1,85.3c-48.4-41.2-120.3-33.8-164.7,12L256,115.2l-17.4-17.9c-44.3-45.8-116.4-53.2-164.7-12 c-55.4,47.3-58.4,132.2-8.7,183.5L236,445.2c11,11.4,29,11.4,40,0l170.8-176.4C496.5,217.5,493.6,132.6,438.1,85.3L438.1,85.3z" />';
 	} elseif ( $icon == 'play' ) {
 		$output = '<path d="M434.9,219L124.2,35.3C99,20.4,60.3,34.9,60.3,71.8v367.3c0,33.1,35.9,53.1,63.9,36.5l310.7-183.6 C462.6,275.6,462.7,235.3,434.9,219L434.9,219z" />';
+	} elseif ( $icon == 'phone' ) {
+		$output = '<path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />';
 	}
 	if ( !empty( $output ) ) {
 		$output = '<svg version="1.1" ' . ( $icon == 'play' ? 'id="play-button" ' : '' ) . 'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">' . $output . '</svg>';

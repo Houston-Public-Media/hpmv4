@@ -29,28 +29,34 @@ get_header(); ?>
 						<h3><?php echo $staff['title']; ?></h3>
 <?php
 		if ( !empty( $staff ) ) { ?>
-						<div class="social-wrap">
+						<div class="icon-wrap">
 <?php
+			if ( !empty( $staff['phone'] ) ) { ?>
+							<div class="service-icon phone">
+								<a href="tel://+1<?php echo str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ); ?>" title="Call <?php the_title(); ?> at <?php echo $staff['phone']; ?>"><?php echo hpm_svg_output( 'phone' ); ?></a>
+							</div>
+<?php
+			}
 			if ( !empty( $staff['facebook'] ) ) { ?>
-							<div class="social-icon facebook">
+							<div class="service-icon facebook">
 								<a href="<?php echo $staff['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
 <?php
 			}
 			if ( !empty( $staff['twitter'] ) ) { ?>
-							<div class="social-icon twitter">
+							<div class="service-icon twitter">
 								<a href="<?php echo $staff['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></a>
 							</div>
 <?php
 			}
 			if ( !empty( $staff['linkedin'] ) ) { ?>
-							<div class="social-icon linkedin">
+							<div class="service-icon linkedin">
 								<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
 							</div>
 <?php
 			}
 			if ( !empty( $staff['email'] ) ) { ?>
-							<div class="social-icon envelope">
+							<div class="service-icon envelope">
 								<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?></a>
 							</div>
 <?php

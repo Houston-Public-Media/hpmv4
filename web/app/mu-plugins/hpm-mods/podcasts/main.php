@@ -1127,16 +1127,16 @@ class HPM_Podcasts {
 		if ( !empty( $show_id ) ) {
 			$social = get_post_meta( $show_id, 'hpm_show_social', true );
 			if ( !empty( $social['insta'] ) ) {
-				$temp .= '<li class="social-icon instagram"><a href="https://instagram.com/' . $social['insta'] . '" rel="noopener" target="_blank" title="Instagram">' . hpm_svg_output( 'instagram' ) . '</a></li>';
+				$temp .= '<li class="service-icon instagram"><a href="https://instagram.com/' . $social['insta'] . '" rel="noopener" target="_blank" title="Instagram">' . hpm_svg_output( 'instagram' ) . '</a></li>';
 			}
 			if ( !empty( $social['yt'] ) ) {
-				$temp .= '<li class="social-icon youtube"><a href="' . $social['yt'] . '" rel="noopener" target="_blank" title="YouTube">' . hpm_svg_output( 'youtube' ) . '</a></li>';
+				$temp .= '<li class="service-icon youtube"><a href="' . $social['yt'] . '" rel="noopener" target="_blank" title="YouTube">' . hpm_svg_output( 'youtube' ) . '</a></li>';
 			}
 			if ( !empty( $social['twitter'] ) ) {
-				$temp .= '<li class="social-icon twitter"><a href="https://twitter.com/' . $social['twitter'] . '" rel="noopener" target="_blank" title="Twitter">' . hpm_svg_output( 'twitter' ) . '</a></li>';
+				$temp .= '<li class="service-icon twitter"><a href="https://twitter.com/' . $social['twitter'] . '" rel="noopener" target="_blank" title="Twitter">' . hpm_svg_output( 'twitter' ) . '</a></li>';
 			}
 			if ( !empty( $social['fb'] ) ) {
-				$temp .= '<li class="social-icon facebook"><a href="https://www.facebook.com/' . $social['fb'] . '" rel="noopener" target="_blank" title="Facebook">' . hpm_svg_output( 'facebook' ) . '</a></li>';
+				$temp .= '<li class="service-icon facebook"><a href="https://www.facebook.com/' . $social['fb'] . '" rel="noopener" target="_blank" title="Facebook">' . hpm_svg_output( 'facebook' ) . '</a></li>';
 			}
 		}
 		if ( !empty( $pod_link ) && $lede ) {

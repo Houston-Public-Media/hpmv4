@@ -195,20 +195,20 @@
 					<div class="foot-contact">
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
-						<div class="social-wrap">
-							<div class="social-icon facebook">
+						<div class="icon-wrap">
+							<div class="service-icon facebook">
 								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M441.4,283.8l12.6-82h-78.7v-53.2c0-22.4,11-44.3,46.2-44.3h35.8V34.5c0,0-32.5-5.5-63.5-5.5 C329,29,286.7,68.3,286.7,139.3v62.5h-72v82h72V482h88.6V283.8H441.4z"></path></svg></a>
 							</div>
-							<div class="social-icon twitter">
+							<div class="service-icon twitter">
 								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M435.5,163.9c0.3,4,0.3,8,0.3,12c0,122.5-93.2,263.6-263.6,263.6C119.8,439.6,71,424.4,30,398 c7.5,0.9,14.6,1.1,22.4,1.1c43.3,0,83.2-14.6,115-39.6c-40.7-0.9-74.9-27.5-86.6-64.2c5.7,0.9,11.5,1.4,17.5,1.4 c8.3,0,16.6-1.1,24.4-3.2c-42.4-8.6-74.3-45.9-74.3-90.9v-1.1c12.3,6.9,26.7,11.2,41.9,11.8c-25-16.6-41.3-45-41.3-77.2 c0-17.2,4.6-33,12.6-46.7c45.6,56.2,114.1,92.9,191,96.9c-1.4-6.9-2.3-14.1-2.3-21.2c0-51.1,41.3-92.6,92.6-92.6 c26.7,0,50.8,11.2,67.7,29.3c20.9-4,41-11.8,58.8-22.4c-6.9,21.5-21.5,39.6-40.7,51.1c18.6-2,36.7-7.2,53.3-14.3 C469.4,134.4,453.6,150.7,435.5,163.9L435.5,163.9z"></path></svg></a>
 							</div>
-							<div class="social-icon instagram">
+							<div class="service-icon instagram">
 								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M256,141.1c-63.6,0-114.9,51.3-114.9,114.9S192.4,370.9,256,370.9S370.9,319.6,370.9,256S319.6,141.1,256,141.1z  M256,330.7c-41.1,0-74.7-33.5-74.7-74.7s33.5-74.7,74.7-74.7s74.7,33.5,74.7,74.7S297.1,330.7,256,330.7L256,330.7z M402.4,136.4 c0,14.9-12,26.8-26.8,26.8c-14.9,0-26.8-12-26.8-26.8s12-26.8,26.8-26.8S402.4,121.6,402.4,136.4z M478.5,163.6 c-1.7-35.9-9.9-67.7-36.2-93.9c-26.2-26.2-58-34.4-93.9-36.2c-37-2.1-147.9-2.1-184.9,0c-35.8,1.7-67.6,9.9-93.9,36.1 s-34.4,58-36.2,93.9c-2.1,37-2.1,147.9,0,184.9c1.7,35.9,9.9,67.7,36.2,93.9s58,34.4,93.9,36.2c37,2.1,147.9,2.1,184.9,0 c35.9-1.7,67.7-9.9,93.9-36.2c26.2-26.2,34.4-58,36.2-93.9C480.6,311.4,480.6,200.6,478.5,163.6L478.5,163.6z M430.7,388.1 c-7.8,19.6-22.9,34.7-42.6,42.6c-29.5,11.7-99.5,9-132.1,9s-102.7,2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6 c-11.7-29.5-9-99.5-9-132.1s-2.6-102.7,9-132.1c7.8-19.6,22.9-34.7,42.6-42.6c29.5-11.7,99.5-9,132.1-9s102.7-2.6,132.1,9 c19.6,7.8,34.7,22.9,42.6,42.6c11.7,29.5,9,99.5,9,132.1S442.4,358.7,430.7,388.1z"></path></svg></a>
 							</div>
-							<div class="social-icon youtube">
+							<div class="service-icon youtube">
 								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M472.5,146.9c-5.2-19.6-20.6-35.1-40-40.3c-35.3-9.5-177-9.5-177-9.5s-141.7,0-177,9.5 c-19.5,5.2-34.8,20.7-40,40.3C29,182.4,29,256.6,29,256.6s0,74.2,9.5,109.7c5.2,19.6,20.6,34.4,40,39.7c35.3,9.5,177,9.5,177,9.5 s141.7,0,177-9.5c19.5-5.2,34.8-20,40.1-39.7c9.5-35.6,9.5-109.7,9.5-109.7S482,182.4,472.5,146.9z M209.2,324V189.3l118.4,67.4 L209.2,324L209.2,324z"></path></svg></a>
 							</div>
-							<div class="social-icon linkedin">
+							<div class="service-icon linkedin">
 								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M130.4,482H36.5V179.6h93.9V482z M83.4,138.3c-30,0-54.4-24.9-54.4-54.9C29,53.4,53.4,29,83.4,29 c30,0,54.4,24.3,54.4,54.4C137.8,113.4,113.4,138.3,83.4,138.3z M481.9,482h-93.7V334.8c0-35.1-0.7-80.1-48.8-80.1 c-48.8,0-56.3,38.1-56.3,77.6V482h-93.8V179.6h90.1v41.3h1.3c12.5-23.8,43.2-48.8,88.9-48.8c95,0,112.5,62.6,112.5,143.9V482H481.9 z"></path></svg></a>
 							</div>
 						</div>

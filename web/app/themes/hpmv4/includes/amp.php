@@ -482,7 +482,7 @@ function hpm_amp_additional_css( $amp_template ) {
 	}
 
 	/* Social Icons */
-	.social-wrap {
+	.icon-wrap {
 		display: grid;
 		grid-template-columns: repeat(5, 3rem);
 		align-items: center;
@@ -490,14 +490,14 @@ function hpm_amp_additional_css( $amp_template ) {
 		gap: 1rem;
 		margin-bottom: 1rem;
 	}
-	.social-wrap :is(h1,h2,h3,h4,h5) {
+	.icon-wrap :is(h1,h2,h3,h4,h5) {
 		margin: 0;
 		padding-right: 1rem;
 	}
-	.social-icon {
+	.service-icon {
 		--unit: 3rem;
 	}
-	.social-icon :is(a,button) {
+	.service-icon :is(a,button) {
 		display: block;
 		background-color: var(--accent-black-3);
 		padding: 0.25rem;
@@ -507,26 +507,26 @@ function hpm_amp_additional_css( $amp_template ) {
 		text-align: center;
 		border-radius: 0.5rem;
 	}
-	.social-icon :is(a,button) svg {
+	.service-icon :is(a,button) svg {
 		fill: white;
 	}
-	.social-icon.facebook :is(a,button) {
+	.service-icon.facebook :is(a,button) {
 		background: rgb(59, 89, 152);
 	}
-	.social-icon.twitter :is(a,button) {
+	.service-icon.twitter :is(a,button) {
 		background: rgb(29, 161, 242);
 	}
-	.social-icon.youtube :is(a,button) {
+	.service-icon.youtube :is(a,button) {
 		background: rgb(234, 50, 35);
 	}
-	.social-icon.instagram :is(a,button) {
+	.service-icon.instagram :is(a,button) {
 		background: rgb(81, 91, 212);
 		background: linear-gradient(135deg, rgb(81, 91, 212) 0%, rgb(129, 52, 175) 20%, rgb(221, 42, 123) 50%, rgb(254, 218, 119) 70%, rgb(245, 133, 41) 90%);
 	}
-	.social-icon.linkedin :is(a,button) {
+	.service-icon.linkedin :is(a,button) {
 		background: rgb(40, 103, 178);
 	}
-	.social-icon:last-child :is(a,button) {
+	.service-icon:last-child :is(a,button) {
 		margin-right: 0;
 	}
 	.podcast-badges {
@@ -542,11 +542,11 @@ function hpm_amp_additional_css( $amp_template ) {
 		width: 3rem;
 		margin-top: 0 !important;
 	}
-	.podcast-badges .social-icon {
+	.podcast-badges .service-icon {
 		--unit: 3rem;
 	}
-	.podcast-badges .social-icon a,
-	.podcast-badges .social-icon button {
+	.podcast-badges .service-icon a,
+	.podcast-badges .service-icon button {
 		margin: 0;
 	}
 	.single:not(.single-shows) .podcast-badges {
@@ -561,18 +561,18 @@ function hpm_amp_additional_css( $amp_template ) {
 		margin-top: 1rem;
 	}
 	@media screen and (min-width: 52.5em) {
-		.social-wrap {
+		.icon-wrap {
 			align-items: start;
 			margin-bottom: 0;
 		}
-		.social-wrap :is(h1,h2,h3,h4,h5) {
+		.icon-wrap :is(h1,h2,h3,h4,h5) {
 			padding: 0;
 			grid-column: 1/-1;
 		}
-		.social-icon {
+		.service-icon {
 			--unit: 3.5rem;
 		}
-		.site-footer .social-icon {
+		.site-footer .service-icon {
 			--unit: 3rem;
 		}
 	}
@@ -879,7 +879,7 @@ function hpm_amp_additional_css( $amp_template ) {
 	footer#colophon .foot-logo a svg.hpm-logo .cls-6 {
 		fill: var(--main-blue);
 	}
-	footer#colophon .social-wrap {
+	footer#colophon .icon-wrap {
 		justify-content: center;
 		margin-bottom: 1rem;
 	}
@@ -983,11 +983,11 @@ function hpm_amp_additional_css( $amp_template ) {
 		footer#colophon .foot-contact p.foot-button {
 			text-align: left;
 		}
-		footer#colophon .foot-contact .social-wrap {
+		footer#colophon .foot-contact .icon-wrap {
 			margin: 0;
 			justify-content: end;
 		}
-		footer#colophon .foot-contact .social-wrap .social-icon a {
+		footer#colophon .foot-contact .icon-wrap .service-icon a {
 			margin-bottom: 0;
 		}
 	}

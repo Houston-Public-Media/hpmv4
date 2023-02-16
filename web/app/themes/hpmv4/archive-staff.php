@@ -34,24 +34,25 @@ get_header(); ?>
 			position: relative;
 		}
 		article.staff .card-content {
-			min-width: 70%;
+			min-width: 69%;
 			flex: 1;
+			margin-bottom: 1rem;
 		}
 		article.staff .post-thumbnail img {
 			aspect-ratio: initial;
 			height: auto;
 			padding-right: 1rem;
 		}
-		article.staff .social-icon {
+		article.staff .service-icon {
 			--unit: 2rem;
 		}
-		article.staff .social-wrap {
+		article.staff .icon-wrap {
 			margin: 0;
 			position: absolute;
 			bottom: 0.5rem;
 			right: 0.5rem;
 			display: flex;
-			gap: 0;
+			gap: 0.5rem;
 		}
 		article.staff .entry-summary p {
 			font-size: 1rem;
@@ -84,12 +85,6 @@ get_header(); ?>
 		@media screen and (min-width: 52.55rem) {
 			.staff-grid {
 				grid-template-columns: 1fr 1fr 1fr;
-			}
-			article.staff .social-icon :is(a,button) {
-				margin: 0 calc(var(--unit)/3) 0 0;
-			}
-			article.staff .social-icon:last-child :is(a,button) {
-				margin: 0;
 			}
 		}
 	</style>

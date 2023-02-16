@@ -52,12 +52,13 @@
 							!empty( $author['linkedin'] ) ||
 							!empty( $author['email'] )
 						) { ?>
-						<div class="social-wrap">
+						<div class="icon-wrap">
 						<?php
-							echo ( !empty( $author['facebook'] ) ? '<div class="social-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . ' </a></div>' : '' );
-							echo ( !empty( $author['twitter'] ) ? '<div class="social-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>' : '' );
-							echo ( !empty( $author['linkedin'] ) ? '<div class="social-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>' : '' );
-							echo ( !empty( $author['email'] ) ? '<div class="social-icon envelope"><a href="mailto:' . $author['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>' : '' );
+							echo ( !empty( $staff['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ) . '" title="Call ' . $curauth->display_name . ' at ' . $staff['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>' : '' );
+							echo ( !empty( $author['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . ' </a></div>' : '' );
+							echo ( !empty( $author['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>' : '' );
+							echo ( !empty( $author['linkedin'] ) ? '<div class="service-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>' : '' );
+							echo ( !empty( $author['email'] ) ? '<div class="service-icon envelope"><a href="mailto:' . $author['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>' : '' );
 						} ?>
 						</div>
 					</div>

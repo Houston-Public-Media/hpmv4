@@ -186,20 +186,20 @@
 					<div class="foot-contact">
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
-						<div class="social-wrap">
-						<div class="social-icon facebook">
+						<div class="icon-wrap">
+						<div class="service-icon facebook">
 								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
-							<div class="social-icon twitter">
+							<div class="service-icon twitter">
 								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></svg></a>
 							</div>
-							<div class="social-icon instagram">
+							<div class="service-icon instagram">
 								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?></a>
 							</div>
-							<div class="social-icon youtube">
+							<div class="service-icon youtube">
 								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?></a>
 							</div>
-							<div class="social-icon linkedin">
+							<div class="service-icon linkedin">
 								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
 							</div>
 						</div>

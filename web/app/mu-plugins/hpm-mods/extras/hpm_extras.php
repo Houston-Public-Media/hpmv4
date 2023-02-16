@@ -267,7 +267,7 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 	if ( !empty( $list ) ) {
 		return $list;
 	}
-	$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
+	$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&key=' . HPM_YT_API_KEY ) );
 	if ( is_wp_error( $remote ) || $remote['response']['code'] !== 200 ) {
 		return [];
 	} else {
@@ -291,7 +291,7 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 			$pages = floor( $totalResults / $resultsPerPage );
 			for ( $i = 0; $i < $pages; $i++ ) {
 				if ( !empty( $json['nextPageToken'] ) ) {
-					$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&pageToken=' . $json['nextPageToken'] . '&key=AIzaSyBHSGTRPfGElaMTniNCtHNbHuGHKcjPRxw' ) );
+					$remote = wp_remote_get( esc_url_raw( 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' . $key . '&pageToken=' . $json['nextPageToken'] . '&key=' . HPM_YT_API_KEY ) );
 					if ( is_wp_error( $remote ) || $remote['response']['code'] !== 200 ) {
 						return [];
 					} else {

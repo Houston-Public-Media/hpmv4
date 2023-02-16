@@ -49,19 +49,32 @@ function author_footer( $id ) {
 				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) . "</h2>" .
 				// ( $local && !empty( $meta['pronouns'] ) ? '<p class="staff-pronouns">(' . $meta['pronouns'] . ')</p>' : '' ) .
 				"<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
-				<div class=\"social-wrap\">";
+				<div class=\"icon-wrap\">";
 		if ( $local ) {
+			if ( !empty( $meta['phone'] ) ) {
+				$temp .= '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $meta['phone'] ) . '" rel="noopener" title="Call ' .
+				( $local ? $author->post->post_title : $coa->display_name ) .
+				' at ' . $meta['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>';
+			}
 			if ( !empty( $meta['facebook'] ) ) {
-				$temp .= '<div class="social-icon facebook"><a href="'.$meta['facebook'].'" rel="noopener" title="'.( $local ? $author->post->post_title : $coa->display_name ).' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '</a></div>';
+				$temp .= '<div class="service-icon facebook"><a href="' . $meta['facebook'] . '" rel="noopener" title="' .
+					( $local ? $author->post->post_title : $coa->display_name ) .
+					' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '</a></div>';
 			}
 			if ( !empty( $meta['twitter'] ) ) {
-				$temp .= '<div class="social-icon twitter"><a href="'.$meta['twitter'].'" rel="noopener" title="'.( $local ? $author->post->post_title : $coa->display_name ).' on Twitter" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>';
+				$temp .= '<div class="service-icon twitter"><a href="' . $meta['twitter'] . '" rel="noopener" title="' .
+				( $local ? $author->post->post_title : $coa->display_name ) .
+				' on Twitter" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>';
 			}
 			if ( !empty( $meta['linkedin'] ) ) {
-				$temp .= '<div class="social-icon linkedin"><a href="'.$meta['linkedin'].'" rel="noopener" title="'.( $local ? $author->post->post_title : $coa->display_name ).' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>';
+				$temp .= '<div class="service-icon linkedin"><a href="' . $meta['linkedin'] . '" rel="noopener" title="' .
+				( $local ? $author->post->post_title : $coa->display_name ) .
+				' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>';
 			}
 			if ( !empty( $meta['email'] ) ) {
-				$temp .= '<div class="social-icon"><a href="mailto:'.$meta['email'].'" rel="noopener" title="Email '.( $local ? $author->post->post_title : $coa->display_name ).'" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>';
+				$temp .= '<div class="service-icon envelope"><a href="mailto:' . $meta['email'] . '" rel="noopener" title="Email ' .
+				( $local ? $author->post->post_title : $coa->display_name ) .
+				'" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>';
 			}
 			$author_bio = $author->post->post_content;
 			if ( preg_match( '/Biography pending/', $author_bio ) ) {
@@ -69,10 +82,10 @@ function author_footer( $id ) {
 			}
 		} else {
 			if ( !empty( $coa->user_email ) ) {
-				$temp .= '<div class="social-icon"><a href="mailto:'.$coa->user_email.'" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>';
+				$temp .= '<div class="service-icon envelope"><a href="mailto:' . $coa->user_email . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>';
 			}
 			if ( !empty( $coa->website ) ) {
-				$temp .= '<div class="social-icon"><a href="'.$coa->website.'" target="_blank">' . hpm_svg_output( 'home' ) . '</a></div>';
+				$temp .= '<div class="service-icon"><a href="' . $coa->website . '" target="_blank">' . hpm_svg_output( 'home' ) . '</a></div>';
 			}
 		}
 		$temp .= "
@@ -93,16 +106,16 @@ function author_footer( $id ) {
 			<h4>Recent Stories</h4>
 			<ul>";
 			foreach ( $q->posts as $qp ) {
-				$temp .= '<li><h2 class="entry-title"><a href="'.esc_url( get_permalink( $qp->ID ) ).'" rel="bookmark">'.$qp->post_title.'</a></h2></li>';
+				$temp .= '<li><h2 class="entry-title"><a href="' . esc_url( get_permalink( $qp->ID ) ) . '" rel="bookmark">' . $qp->post_title . '</a></h2></li>';
 			}
 			$temp .= "
 			</ul>
-			<p><a href=\"/articles/author/".$coa->user_nicename."\">More Articles by This Author</a></p>";
+			<p><a href=\"/articles/author/" . $coa->user_nicename . "\">More Articles by This Author</a></p>";
 		}
 		$temp .= "
 		</div>
 	</div>";
-		set_transient( 'hpm_author_'.$coa->user_nicename, $temp, 7200 );
+		set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 7200 );
 		$output .= $temp;
 	endforeach;
 	return $output;
@@ -121,7 +134,7 @@ function hpm_houston_matters_check() {
 		9 => false,
 		15 => false
 	];
-	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=".$date."&format=json" ) );
+	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=" . $date . "&format=json" ) );
 	if ( is_wp_error( $remote ) ) {
 		return false;
 	} else {
