@@ -392,7 +392,7 @@ function update_post_meta_info( $original_post_id, $revised_post ) {
  * @return Google_Service_Analytics
  */
 function initializeAnalytics() {
-	$KEY_FILE_LOCATION = SITE_ROOT . '/client_secrets.json';
+	$KEY_FILE_LOCATION = SITE_ROOT . '/../client_secrets.json';
 
 	// Create and configure a new client object.
 	$client = new Google_Client();
