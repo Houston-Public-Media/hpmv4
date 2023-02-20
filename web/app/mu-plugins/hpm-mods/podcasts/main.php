@@ -890,15 +890,15 @@ class HPM_Podcasts {
 			<description><![CDATA[<?php echo ( !empty( $pod_desc['description'] ) ? $pod_desc['description'] : $content ); ?>]]></description>
 			<author><?php
 				if ( function_exists( 'coauthors' ) ) {
-					coauthors(', ', ', ', '', '', true);
+					echo str_replace( '&', 'and', coauthors( ', ', ', ', '', '', false ) );
 				} else {
-					echo get_the_author();
+					echo str_replace( '&', 'and', get_the_author() );
 				} ?></author>
 			<itunes:author><?php
 				if ( function_exists( 'coauthors' ) ) {
-					coauthors(', ', ', ', '', '', true);
+					echo str_replace( '&', 'and', coauthors( ', ', ', ', '', '', false ) );
 				} else {
-					echo get_the_author();
+					echo str_replace( '&', 'and', get_the_author() );
 				} ?></itunes:author>
 			<itunes:keywords><![CDATA[<?php echo implode( ',', $tag_array ); ?>]]></itunes:keywords>
 			<itunes:summary><![CDATA[<?php echo ( !empty( $pod_desc['description'] ) ? $pod_desc['description'] : $content ); ?>]]></itunes:summary>
