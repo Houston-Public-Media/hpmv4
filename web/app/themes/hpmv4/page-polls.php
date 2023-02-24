@@ -64,9 +64,9 @@ get_header(); ?>
 	</style>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			var sections = document.querySelectorAll('.acc-section');
-			var h3s = document.querySelectorAll('.acc li h3');
-			var featured = document.querySelectorAll('.featured');
+			let sections = document.querySelectorAll('.acc-section');
+			let h3s = document.querySelectorAll('.acc li h3');
+			let featured = document.querySelectorAll('.featured');
 			Array.from(sections).forEach((section) => {
 				section.classList.add('screen-reader-text');
 			});
@@ -145,7 +145,7 @@ get_header(); ?>
 						'posts_per_page'=> 4,
 						'ignore_sticky_posts'=> 1
 					];
-					$my_query = new wp_query( $args );
+					$my_query = new WP_Query( $args );
 					if ( $my_query->have_posts() ) { ?>
 				<div class="highlights">
 					<h4>Related</h4>
@@ -167,7 +167,7 @@ get_header(); ?>
 					'post_parent' => $current_page,
 					'post_type' => 'page'
 				];
-				$q = new wp_query( $poll_args );
+				$q = new WP_Query( $poll_args );
 		if ( $q->have_posts() ) {
 			while ( $q->have_posts() ) {
 				$q->the_post();

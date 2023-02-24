@@ -1,5 +1,5 @@
 <?php
-function hpm_site_header() { ?>
+function hpm_site_header(): void { ?>
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-branding">
 					<div class="site-logo">
@@ -38,7 +38,7 @@ function hpm_site_header() { ?>
 			</header><?php
 }
 
-function hpm_header_info() {
+function hpm_header_info(): void {
 	global $wp_query;
 	$reqs = [
 		'description' => 'Houston Public Media provides informative, thought-provoking and entertaining content through a multi-media platform that includes TV 8, News 88.7 and HPM Classical and reaches a combined weekly audience of more than 1.5 million.',
@@ -197,20 +197,15 @@ function hpm_header_info() {
 				$reqs['keywords'][] = $htag->name;
 			}
 			if ( get_post_type() === 'post' ) {
-				$reqs['word_count'] = word_count( $ID );
-				$reqs['has_audio'] = ( preg_match( '/\[audio/', $wp_query->post->post_content ) ? 1 : 0 );
-				$npr_retrieved_story = get_post_meta( $ID, 'npr_retrieved_story', 1 );
-				$reqs['npr_story_id'] = get_post_meta( $ID, 'npr_story_id', 1 );
 				$reqs['hpm_section'] = hpm_top_cat( $ID );
-				$reqs['npr_byline'] = ( $npr_retrieved_story == 1 ? get_post_meta( $ID, 'npr_byline', 1 ) : coauthors( ', ', ', ', '', '', false ) );
 			} elseif ( get_post_type() === 'staff' ) {
 				$reqs['og_type'] = 'profile';
 			}
 		}
 	}
 ?>
-		<script type='text/javascript'>var _sf_startpt=(new Date()).getTime();</script>
-		<link rel="profile" href="http://gmpg.org/xfn/11" />
+		<script type='text/javascript'>let _sf_startpt=(new Date()).getTime();</script>
+		<link rel="profile" href="https://gmpg.org/xfn/11" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
 		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
@@ -297,7 +292,7 @@ function hpm_header_info() {
 <?php
 	if ( is_single() && get_post_type() !== 'staff' && get_post_type() !== 'embeds' ) {
 		$jsonLd = new stdClass;
-		$jsonLd->{'@context'} = "http://schema.org";
+		$jsonLd->{'@context'} = "https://schema.org";
 		$jsonLd->{'@type'} = "NewsArticle";
 		$jsonLd->headline = str_replace( ' | Houston Public Media', '', $reqs['title'] );
 		$jsonLd->datePublished = $reqs['publish_date'];
@@ -322,7 +317,7 @@ function hpm_header_info() {
 add_action( 'wp_head', 'hpm_header_info', 2 );
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
 
-function hpm_body_open() {
+function hpm_body_open(): void {
 	global $wp_query;
 	if ( !empty( $_GET['browser'] ) && $_GET['browser'] == 'inapp' ) { ?>
 	<script>setCookie('inapp','true',1);</script>
@@ -381,13 +376,13 @@ function hpm_body_open() {
 }
 add_action( 'body_open', 'hpm_body_open', 11 );
 
-function hpm_talkshows() {
+function hpm_talkshows(): string {
 	wp_reset_query();
 	global $wp_query;
 	$t = time();
-	$offset = get_option('gmt_offset')*3600;
+	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
-	$now = getdate($t);
+	$now = getdate( $t );
 	$output = '';
 	$anc = get_post_ancestors( get_the_ID() );
 	$bans = [ 135762, 290722, 303436, 303018, 315974 ];

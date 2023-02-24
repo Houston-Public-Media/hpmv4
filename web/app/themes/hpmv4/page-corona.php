@@ -180,10 +180,7 @@ get_header(); ?>
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/4);
+				padding: 0 0 calc(100%/4) 0;
 				background-image: url(https://cdn.hpm.io/assets/images/covid19_Tablet.png);
 			}
 			#search-results article .thumbnail-wrap {
@@ -213,10 +210,7 @@ get_header(); ?>
 				border-right: 0;
 			}
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/6);
+				padding: 0 0 calc(100%/6) 0;
 				background-image: url(https://cdn.hpm.io/assets/images/covid19_Desktop.png);
 			}
 		}

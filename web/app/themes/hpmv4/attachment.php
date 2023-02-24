@@ -19,19 +19,19 @@ get_header(); ?>
 				the_post();
 				$mime = get_post_mime_type();
 				$extra = '';
-				if ( preg_match( '/image/', $mime ) ) {
+				if ( str_contains( 'image', $mime ) ) {
 					$extra = 'attachment-full';
 				} ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
 				<header class="entry-header">
 					<?php
 						$attach_title = get_the_title();
-						if ( empty( $attach_title ) && preg_match( '/image/', $mime ) ) {
+						if ( empty( $attach_title ) && str_contains( 'image', $mime ) ) {
 							$attach_title = get_post_meta( get_the_ID(), '_wp_attachment_image_alt', true );
 						} ?>
 						<h1 class="entry-title"><?php echo $attach_title; ?></h1>
 					<?php
-						if ( preg_match( '/image/', $mime ) ) {
+						if ( str_contains( 'image', $mime ) ) {
 							the_excerpt();
 						} else {
 							echo "<p>".get_excerpt_by_id( wp_get_post_parent_id( $post_ID ) )."</p>";
@@ -41,7 +41,7 @@ get_header(); ?>
 					<?php
 						$attach = get_post_meta( get_the_ID(), '_wp_attachment_metadata', true );
 						$s3 = get_post_meta( get_the_ID(), 'amazonS3_info', true );
-						if ( preg_match( '/image/', $mime ) ) {
+						if ( str_contains( 'image', $mime ) ) {
 							$media_credit = get_post_meta( get_the_ID(), '_wp_attachment_source_name', true );
 							$media_credit_url = get_post_meta( get_the_ID(), '_wp_attachment_source_url', true );
 							$media_license = get_post_meta( get_the_ID(), '_wp_attachment_license', true );
@@ -78,7 +78,7 @@ get_header(); ?>
 							echo ( !empty( $attach['image_meta']['shutter_speed'] ) ? '<li>Shutter Speed: ' . $attach['image_meta']['shutter_speed'] . '</li>' : '' ); ?>
 					</ul>
 					<?PHP
-						} elseif ( preg_match( '/audio/', $mime ) ) {
+						} elseif ( str_contains( 'audio', $mime ) ) {
 							if ( $mime == 'audio/mpeg' || $mime == 'audio/wav' ) {
 								echo do_shortcode( '[audio id="'.get_the_ID().'"][/audio]' );
 							} else { ?>
@@ -104,7 +104,7 @@ get_header(); ?>
 						<li>File Size: <?PHP echo $size; ?></li>
 					</ul>
 					<?php
-						} elseif ( preg_match( '/video/', $mime ) ) {
+						} elseif ( str_contains( 'video', $mime ) ) {
 							if ( $mime == 'video/quicktime' || $mime == 'video/mp4' ) {
 								echo do_shortcode( '[video src="' . wp_get_attachment_url( get_the_ID() ) .'"][/video]' );
 							} ?>
@@ -139,7 +139,7 @@ get_header(); ?>
 						<li>File Size: <?PHP echo $size; ?></li>
 					</ul>
 					<?php
-						} elseif ( preg_match( '/application/', $mime ) ) {
+						} elseif ( str_contains( 'application', $mime ) ) {
 							$site_url = site_url();
 							if ( !empty( $s3 ) ) {
 								echo do_shortcode( '[pdfjs-viewer url=' . $site_url . '/' . $s3['key'] . ' viewer_width=600px viewer_height=700px fullscreen=true download=true print=true openfile=false]' );
@@ -182,7 +182,7 @@ get_header(); ?>
 			</article>
 			<?php
 				}
-				if ( !preg_match( '/image/', $mime ) ) { ?>
+				if ( !str_contains( 'image', $mime ) ) { ?>
 			<aside class="column-right">
 				<?php get_template_part( 'sidebar', 'none' ); ?>
 			</aside>

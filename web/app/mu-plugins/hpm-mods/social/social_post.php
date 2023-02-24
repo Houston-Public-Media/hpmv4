@@ -3,15 +3,15 @@
 
 	add_action( 'load-post.php', 'hpm_social_post_setup' );
 	add_action( 'load-post-new.php', 'hpm_social_post_setup' );
-	function hpm_social_post_setup() {
+	function hpm_social_post_setup(): void {
 		add_action( 'add_meta_boxes', 'hpm_social_post_add_meta' );
 		add_action( 'save_post', 'hpm_social_post_save_meta', 10, 2 );
 	}
 	add_action( 'publish_post', 'hpm_social_post_send', 10, 2 );
 
-	function hpm_social_post_add_meta() {
+	function hpm_social_post_add_meta():void {
 		$user = wp_get_current_user();
-		if ( in_array( 'administrator', (array) $user->roles ) || in_array( 'editor', (array) $user->roles ) ) {
+		if ( in_array( 'administrator', $user->roles ) || in_array( 'editor', $user->roles ) ) {
 			add_meta_box(
 				'hpm-social-post-meta-class',
 				esc_html__( 'Social Posting', 'example' ),
@@ -23,7 +23,7 @@
 		}
 	}
 
-	function hpm_social_post_meta_box( $object, $box ) {
+	function hpm_social_post_meta_box( $object, $box ): void {
 		wp_nonce_field( basename( __FILE__ ), 'hpm_social_post_class_nonce' );
 		$social_post = get_post_meta( $object->ID, 'hpm_social_post', true );
 		$social_facebook_sent = get_post_meta( $object->ID, 'hpm_social_facebook_sent', true );
@@ -45,7 +45,7 @@
 		<textarea id="hpm-social-post-facebook" name="hpm-social-post-facebook" placeholder="What would you like to post to Facebook?" style="width: 100%;" rows="2"><?php echo $social_post['facebook']['data']; ?></textarea></p>
 		<script>
 			jQuery(document).ready(function($){
-				var desc = $("#hpm-social-post-twitter");
+				let desc = $("#hpm-social-post-twitter");
 				$("span#excerpt_counter").text(desc.val().length);
 				desc.keyup( function() {
 					if($(this).val().length > 280){
@@ -59,7 +59,7 @@
 
 	function hpm_social_post_save_meta( $post_id, $post ) {
 		$user = wp_get_current_user();
-		if ( !in_array( 'administrator', (array) $user->roles ) && !in_array( 'editor', (array) $user->roles ) ) {
+		if ( !in_array( 'administrator', $user->roles ) && !in_array( 'editor', $user->roles ) ) {
 			return $post_id;
 		}
 		if ( !isset( $_POST['hpm_social_post_class_nonce'] ) || !wp_verify_nonce( $_POST['hpm_social_post_class_nonce'], basename( __FILE__ ) ) ) {
@@ -71,16 +71,7 @@
 		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 			return $post_id;
 		}
-		if ( empty( $social_post_current ) ) {
-			$social_post_current = [
-				'twitter' => [
-					'data' => ''
-				],
-				'facebook' => [
-					'data' => ''
-				]
-			];
-		}
+
 		if ( empty( $_POST['hpm-social-post-facebook'] ) && empty( $_POST['hpm-social-post-twitter'] ) ) {
 			delete_post_meta( $post_id, 'hpm_social_post' );
 			delete_post_meta( $post_id, 'hpm_social_facebook_sent' );
@@ -99,6 +90,7 @@
 				hpm_social_post_send( $post_id, $post );
 			}
 		}
+		return $post_id;
 	}
 
 	function hpm_social_post_send( $post_id, $post ) {
@@ -125,7 +117,7 @@
 					$return = $client->tweet()->performRequest( 'POST', [ 'text' => $social_post['twitter']['data'] . ' ' . get_the_permalink( $post_id ) ] );
 					update_post_meta( $post_id, 'hpm_social_twitter_sent', 1 );
 					log_it( $return );
-				} catch (Exception $e) {
+				} catch (Exception|\GuzzleHttp\Exception\GuzzleException $e) {
 					log_it( $e );
 				}
 			}

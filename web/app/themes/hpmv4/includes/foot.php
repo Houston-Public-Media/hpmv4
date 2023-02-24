@@ -1,5 +1,5 @@
 <?php
-function author_footer( $id ) {
+function author_footer( $id ): string {
 	$output = '';
 	$coauthors = get_coauthors( $id );
 	foreach ( $coauthors as $k => $coa ) :
@@ -11,6 +11,7 @@ function author_footer( $id ) {
 		}
 		$local = false;
 		$author = null;
+		$meta = '';
 		if ( is_a( $coa, 'wp_user' ) ) {
 			$author = new WP_Query( [
 				'post_type' => 'staff',
@@ -53,31 +54,31 @@ function author_footer( $id ) {
 		if ( $local ) {
 			if ( !empty( $meta['phone'] ) ) {
 				$temp .= '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $meta['phone'] ) . '" rel="noopener" title="Call ' .
-				( $local ? $author->post->post_title : $coa->display_name ) .
+				( $author->post->post_title ?? $coa->display_name ) .
 				' at ' . $meta['phone'] . '" data-phone="' . $meta['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>';
 			}
 			if ( !empty( $meta['facebook'] ) ) {
 				$temp .= '<div class="service-icon facebook"><a href="' . $meta['facebook'] . '" rel="noopener" title="' .
-					( $local ? $author->post->post_title : $coa->display_name ) .
+					( $author->post->post_title ?? $coa->display_name ) .
 					' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '</a></div>';
 			}
 			if ( !empty( $meta['twitter'] ) ) {
 				$temp .= '<div class="service-icon twitter"><a href="' . $meta['twitter'] . '" rel="noopener" title="' .
-				( $local ? $author->post->post_title : $coa->display_name ) .
+				( $author->post->post_title ?? $coa->display_name ) .
 				' on Twitter" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>';
 			}
 			if ( !empty( $meta['linkedin'] ) ) {
 				$temp .= '<div class="service-icon linkedin"><a href="' . $meta['linkedin'] . '" rel="noopener" title="' .
-				( $local ? $author->post->post_title : $coa->display_name ) .
+				( $author->post->post_title ?? $coa->display_name ) .
 				' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>';
 			}
 			if ( !empty( $meta['email'] ) ) {
 				$temp .= '<div class="service-icon envelope"><a href="mailto:' . $meta['email'] . '" rel="noopener" title="Email ' .
-				( $local ? $author->post->post_title : $coa->display_name ) .
+				( $author->post->post_title ?? $coa->display_name ) .
 				'" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>';
 			}
 			$author_bio = $author->post->post_content;
-			if ( preg_match( '/Biography pending/', $author_bio ) ) {
+			if ( str_contains( 'Biography pending', $author_bio ) ) {
 				$author_bio = '';
 			}
 		} else {
@@ -95,7 +96,7 @@ function author_footer( $id ) {
 			</div>
 		</div>
 		<div class=\"author-other-stories\">";
-		$q = new WP_query([
+		$q = new WP_Query([
 			'posts_per_page' => 4,
 			'post_type' => 'post',
 			'post_status' => 'publish',
@@ -156,14 +157,13 @@ function hpm_houston_matters_check() {
 	return $hm_airtimes;
 }
 
-function hpm_chartbeat() {
+function hpm_chartbeat(): void {
 	global $wp_query;
 	$id = $wp_query->get_queried_object_id();
 	$anc = get_post_ancestors( $id );
 	if ( !in_array( 61383, $anc ) && WP_ENV !== 'development' ) {
 		$auth = get_coauthors( $id );
 		$auth_temp = [];
-		$authors = '';
 		if ( empty( $auth ) || is_front_page() ) {
 			$authors = 'Houston Public Media';
 		} else {
@@ -173,7 +173,7 @@ function hpm_chartbeat() {
 			$authors = implode( ', ', $auth_temp );
 		} ?>
 		<script type='text/javascript'>
-			var _sf_async_config={};
+			let _sf_async_config={};
 			/** CONFIGURATION START **/
 			_sf_async_config.uid = 33583;
 			_sf_async_config.domain = 'houstonpublicmedia.org';
@@ -184,13 +184,13 @@ function hpm_chartbeat() {
 			(function(){
 				function loadChartbeat() {
 					window._sf_endpt=(new Date()).getTime();
-					var e = document.createElement('script');
+					let e = document.createElement('script');
 					e.setAttribute('language', 'javascript');
 					e.setAttribute('type', 'text/javascript');
 					e.setAttribute('src', '//static.chartbeat.com/js/chartbeat.js');
 					document.body.appendChild(e);
 				}
-				var oldonload = window.onload;
+				let oldonload = window.onload;
 				window.onload = (typeof window.onload != 'function') ?
 					loadChartbeat : function() { oldonload(); loadChartbeat(); };
 			})();
@@ -200,7 +200,7 @@ function hpm_chartbeat() {
 }
 add_action( 'wp_footer', 'hpm_chartbeat', 100 );
 
-function hpm_dark_mode_toggle() {
+function hpm_dark_mode_toggle(): void {
 	if ( !is_admin() ) { ?>
 <style>
 	#theme-switch {
@@ -223,24 +223,24 @@ function hpm_dark_mode_toggle() {
 </label>
 <script>
 	//determines if the user has a set theme
-	var detectColorScheme = () => {
-		var theme = "light";    //default to light
+	let detectColorScheme = () => {
+		let theme = "light";    //default to light
 
 		//local storage is used to override OS theme settings
 		if ( localStorage.getItem("theme") ) {
-			if ( localStorage.getItem("theme") == "dark" ) {
-				var theme = "dark";
+			if ( localStorage.getItem("theme") === "dark" ) {
+				theme = "dark";
 			}
 		} else if ( !window.matchMedia ) {
 			//matchMedia method not supported
 			return false;
 		} else if ( window.matchMedia("(prefers-color-scheme: dark)").matches ) {
 			//OS theme setting detected as dark
-			var theme = "dark";
+			theme = "dark";
 		}
 
 		//dark theme preferred, set document with a `data-theme` attribute
-		if ( theme == "dark" ) {
+		if ( theme === "dark" ) {
 			document.documentElement.setAttribute("data-theme", "dark");
 		}
 	}
@@ -250,7 +250,7 @@ function hpm_dark_mode_toggle() {
 	const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
 
 	//function that changes the theme, and sets a localStorage variable to track the theme between page loads
-	var switchTheme = (e) => {
+	let switchTheme = (e) => {
 		if ( e.target.checked ) {
 			localStorage.setItem('theme', 'dark');
 			document.documentElement.setAttribute('data-theme', 'dark');
@@ -266,7 +266,7 @@ function hpm_dark_mode_toggle() {
 	toggleSwitch.addEventListener( 'change', switchTheme, false );
 
 	//pre-check the dark-theme checkbox if dark-theme is set
-	if ( document.documentElement.getAttribute("data-theme") == "dark" ) {
+	if ( document.documentElement.getAttribute("data-theme") === "dark" ) {
 		toggleSwitch.checked = true;
 	}
 </script>

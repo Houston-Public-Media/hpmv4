@@ -6,7 +6,7 @@ add_action('update_option_hpm_priority', function( $old_value, $value ) {
 // create custom plugin settings menu
 add_action('admin_menu', 'hpm_priority_create_menu');
 
-function hpm_priority_create_menu() {
+function hpm_priority_create_menu(): void {
 	add_submenu_page( 'edit.php', 'HPM Post Priority Settings', 'Priority Posts', 'edit_others_posts', 'hpm-priority-settings', 'hpm_priority_settings_page' );
 	add_action( 'admin_init', 'hpm_priority_register_settings' );
 }
@@ -14,11 +14,11 @@ function hpm_priority_create_menu() {
 /**
  * Registers the settings group for HPM Priority
  */
-function hpm_priority_register_settings() {
+function hpm_priority_register_settings(): void {
 	register_setting( 'hpm-priority-settings-group', 'hpm_priority' );
 }
 
-function hpm_priority_settings_page() {
+function hpm_priority_settings_page(): void {
 	$priority = get_option( 'hpm_priority' );
 	$recents = $indepths = [];
 	$recent = new WP_Query([
@@ -101,14 +101,14 @@ function hpm_priority_settings_page() {
 		<script>
 			jQuery(document).ready(function($){
 				$( ".hpm-priority-select" ).change(function () {
-					var postId = $(this).val();
-					var slotId = $(this).attr('id');
-					var slot = slotId.split('-');
+					let postId = $(this).val();
+					let slotId = $(this).attr('id');
+					let slot = slotId.split('-');
 					$('#' + slot[1] + '-' + slot[2]).val(postId);
 					if (postId !== '') {
 						$("." + slot[1] + "-select").each(function () {
-							var selectId = $(this).attr('id');
-							var selectSlot = selectId.split('-');
+							let selectId = $(this).attr('id');
+							let selectSlot = selectId.split('-');
 							if (selectId !== slotId) {
 								if ($(this).val() === postId) {
 									$(this).val('');
@@ -125,13 +125,13 @@ function hpm_priority_settings_page() {
 
 				});
 				$( "input[type=number]" ).keyup(function(){
-					var inputId = $(this).attr('id');
-					var inputType = inputId.split('-');
-					var inputVal = $(this).val();
+					let inputId = $(this).attr('id');
+					let inputType = inputId.split('-');
+					let inputVal = $(this).val();
 					$('#hpm_priority-' + inputId).val(inputVal);
 					if ( inputVal !== '' ) {
 						$("." + inputType[0] + "-select-input").each(function () {
-							var selectId = $(this).attr('id');
+							let selectId = $(this).attr('id');
 							if (selectId !== inputId) {
 								if ($(this).val() === inputVal) {
 									$(this).val('');

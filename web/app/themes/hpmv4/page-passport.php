@@ -6,9 +6,8 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<style>
 			.page-template-page-passport .page-header {
-				padding: 0;
 				height: 0;
-				padding-bottom: calc(100%/2.5);
+				padding: 0 0 calc(100%/2.5) 0;
 				background-size: cover;
 				background-position: top center;
 				position: relative;
@@ -127,7 +126,7 @@ get_header(); ?>
 			.passport-app {
 				border-top: 1rem solid #f5f5f5;
 				padding: 1rem 0 0;
-				background-color: #0A145A;
+				background: #0A145A;
 				background: linear-gradient(90deg, var(--main-red) 0%, #0A145A 100%);
 			}
 			.page-template-page-passport .page-content h2.device-options a {
@@ -256,7 +255,6 @@ get_header(); ?>
 				width: 70%;
 				padding: 0.5em;
 				border: 1px solid #464646;
-				border-bottom: 1px solid #464646;
 				font: 400 100%/1em var(--hpm-font-main);
 			}
 			@media screen and (min-width: 34em) {

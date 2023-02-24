@@ -29,7 +29,7 @@ function hpm_amp_modify_json_metadata( $metadata, $post ) {
 		];
 	}
 	if ( empty( $metadata['headline'] ) ) {
-		if ( $post->post_type == 'attachment' && strpos( $post->post_mime_type, 'image' ) !== false ) {
+		if ( $post->post_type == 'attachment' && str_contains( $post->post_mime_type, 'image' ) !== false ) {
 			$headline = get_post_meta( $post->ID, '_wp_attachment_image_alt', true );
 			if ( !empty( $headline ) ) {
 				$metadata['headline'] = $headline;
@@ -88,7 +88,7 @@ function hpm_amp_add_custom_analytics( $analytics ) {
 
 add_action( 'amp_post_template_css', 'hpm_amp_additional_css' );
 
-function hpm_amp_additional_css( $amp_template ) {
+function hpm_amp_additional_css( $amp_template ): void {
 	?>
 	:root {
 		--hpm-font-main: 'PBS-Sans',helvetica,arial,sans-serif;
@@ -1352,6 +1352,12 @@ function hpm_amp_additional_css( $amp_template ) {
 		left: 100%;
 		top: 0;
 	}
+	article .entry-content .amp-carousel-slide .caption {
+		position: absolute;
+		bottom: 0;
+		color: white;
+		background-color: rgba(0,0,0,0.5);
+	}
 	@media screen and (min-width: 34em) {
 		.column-left,
 		.column-span,
@@ -1476,69 +1482,6 @@ function hpm_amp_additional_css( $amp_template ) {
 			width: 100% !important;
 		}
 
-	}
-
-	/* Revue Embed */
-	#revue-embed {
-		margin: 3em 0;
-		padding: 1em;
-		background-color: var(--main-background);
-		font-size: 90%;
-	}
-	#revue-embed h2 {
-		padding: 0;
-		color: var(--main-red);
-	}
-	#revue-embed .revue-small {
-		display: inline-block;
-		float: left;
-		font-style: italic;
-		font-size: 95%;
-	}
-	#revue-embed #revue-form {
-		overflow: hidden;
-	}
-	#revue-embed #revue-form .revue-form-group {
-		width: 100%;
-		padding-bottom: 0.5em;
-		display: flex;
-		flex-flow: row nowrap;
-		align-content: center;
-		align-items: center;
-	}
-	#revue-embed #revue-form label {
-		padding-right: 0.5em;
-	}
-	#revue-embed #revue-form input {
-		flex-grow: 2;
-	}
-	#revue-embed #revue-form input[type="submit"] {
-		border: 0;
-		outline: 0;
-		background-color: var(--main-red);
-		color: white;
-		font-weight: bolder;
-		font-size: 125%;
-		padding: 0.5em;
-		float: right;
-	}
-	#revue-embed * + * {
-		margin-top: 0;
-	}
-	#revue-embed :is(h2,p,form) {
-		margin-top: 1rem;
-	}
-	@media screen and (min-width: 34em) {
-		#revue-embed #revue-form .revue-form-group:nth-child(2) {
-			width: 50%;
-			float: left;
-			padding-right: 0.5em;
-		}
-		#revue-embed #revue-form .revue-form-group:nth-child(3) {
-			width: 50%;
-			float: left;
-			padding-left: 0.5em;
-		}
 	}
 	<?php
 }

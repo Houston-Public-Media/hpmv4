@@ -25,10 +25,7 @@ Template Name: Career Frontier
 			background-size: cover;
 			height: 0;
 			margin: 0;
-			padding-right: 0;
-			padding-left: 0;
-			padding-top: 0;
-			padding-bottom: calc(100%/1.5);
+			padding: 0 0 calc(100%/1.5) 0;
 			position: relative;
 			background-image: url(https://cdn.hpm.io/assets/images/CF-Large-Banner-Phone-300x200.jpg);
 		}
@@ -198,10 +195,7 @@ Template Name: Career Frontier
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/4);
+				padding: 0 0 calc(100%/4) 0;
 				background-image: url(https://cdn.hpm.io/assets/images/CF-Large-Banner-Tablet-800x200.jpg);
 			}
 			.cf-content-wrap {
@@ -228,10 +222,7 @@ Template Name: Career Frontier
 		}
 		@media screen and (min-width: 52.5em) {
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/6);
+				padding: 0 0 calc(100%/6) 0;
 				background-image: url(https://cdn.hpm.io/assets/images/CF-Large-Banner-Desktop-1200x200.jpg);
 			}
 			.page.page-template-page-careerfrontier #main > article {
@@ -316,7 +307,7 @@ Template Name: Career Frontier
 	</div>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			var artHeads = document.querySelectorAll('.cf-eps-wrap article header');
+			let artHeads = document.querySelectorAll('.cf-eps-wrap article header');
 			Array.from(artHeads).forEach((art) => {
 				art.addEventListener('click', () => {
 					art.parentNode.classList.toggle('topic-active');

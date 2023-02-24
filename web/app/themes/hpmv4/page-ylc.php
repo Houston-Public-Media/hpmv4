@@ -40,43 +40,42 @@ get_header(); ?>
 	</div>
 	<script>
 		function modalSwitch(dataId,modal) {
-			var dIndexSp = dataId.split('-');
-			var dInt = parseInt(dIndexSp[2]);
-			var roster = document.querySelectorAll('.'+dIndexSp[0]+'-'+dIndexSp[1]);
-			if ( dInt - 1 == 0 ) {
-				var prev = roster.length;
-			} else {
-				var prev = dInt - 1;
+			let dIndexSp = dataId.split('-');
+			let dInt = parseInt(dIndexSp[2]);
+			let roster = document.querySelectorAll('.'+dIndexSp[0]+'-'+dIndexSp[1]);
+			let prev = dInt - 1;
+			let next = dInt + 1;
+			if ( dInt - 1 === 0 ) {
+				prev = roster.length;
 			}
-			if ( dInt + 1 == roster.length + 1 ) {
-				var next = 1;
-			} else {
-				var next = dInt + 1;
+
+			if ( dInt + 1 === roster.length + 1 ) {
+				next = 1;
 			}
-			var current = document.querySelector('#'+dataId);
-			document.querySelector('#ylc-prev').setAttribute('data-item', 'ylc-'+dIndexSp[1]+'-'+prev);
-			document.querySelector('#ylc-next').setAttribute('data-item', 'ylc-'+dIndexSp[1]+'-'+next);
-			var name = current.getAttribute('data-name');
-			var title = current.getAttribute('data-title');
-			var quote = current.getAttribute('data-quote');
-			var fTitle = title.replace(/\|\|/g, '<br />');
+			let current = document.querySelector('#'+dataId);
+			document.querySelector('#ylc-prev').setAttribute('data-item', 'ylc-' + dIndexSp[1] + '-' + prev);
+			document.querySelector('#ylc-next').setAttribute('data-item', 'ylc-' + dIndexSp[1] + '-' + next);
+			let name = current.getAttribute('data-name');
+			let title = current.getAttribute('data-title');
+			let quote = current.getAttribute('data-quote');
+			let fTitle = title.replace(/\|\|/g, '<br />');
 			document.querySelector('#ylc-overlay-person > h1').innerHTML = name;
 			document.querySelector('#ylc-overlay-person > h3').innerHTML = fTitle;
 			document.querySelector('#ylc-overlay-quote > blockquote').innerHTML = quote;
-			var image = current.children[0];
+			let image = current.children[0];
 			document.querySelector('#ylc-overlay-img').innerHTML = '<img src="'+image.getAttribute('src')+'" alt="'+image.getAttribute('alt')+'" title="'+image.getAttribute('title')+'">';
 			if (modal) {
 				document.querySelector('#ylc-overlay').classList.add('ylc-active');
 			}
 		}
 		document.addEventListener('DOMContentLoaded', () => {
-			var main = document.querySelector('#main').getBoundingClientRect();
-			var winhigh = window.innerHeight;
-			var header_height = winhigh - main.top - window.scrollY;
+			let main = document.querySelector('#main').getBoundingClientRect();
+			let winhigh = window.innerHeight;
+			let header_height = winhigh - main.top - window.scrollY;
 			document.querySelector('.page-template-page-ylc .page-header').style.height = header_height+'px';
 			document.querySelector('button.down').addEventListener('click', (e) => {
 				e.preventDefault();
-				var offset = document.querySelector('.page-content').offsetTop;
+				let offset = document.querySelector('.page-content').offsetTop;
 				window.scrollTo(0, offset-(4*16));
 			});
 			Array.from(document.querySelectorAll('#ylc-close,#ylc-overlay')).forEach((navC) => {
@@ -95,7 +94,7 @@ get_header(); ?>
 					modalSwitch(navB.getAttribute('data-item'), false);
 				});
 			});
-			var members = document.querySelectorAll('.ylc-roster-item');
+			let members = document.querySelectorAll('.ylc-roster-item');
 			Array.from(members).forEach((member) => {
 				member.addEventListener('click', (e) => {
 					modalSwitch(member.id, true);
@@ -106,13 +105,13 @@ get_header(); ?>
 			});
 			document.addEventListener('keyup', (e) => {
 				if (document.querySelector('#ylc-overlay').classList.contains('ylc-active')) {
-					if (e.which == 37) {
+					if (e.which === 37) {
 						console.log( 'Keyboard Previous' );
-						var dIndex = document.querySelector('#ylc-prev').getAttribute('data-item');
+						let dIndex = document.querySelector('#ylc-prev').getAttribute('data-item');
 						modalSwitch(dIndex,false);
-					} else if (e.which == 39) {
+					} else if (e.which === 39) {
 						console.log( 'Keyboard Next' );
-						var dIndex = document.querySelector('#ylc-next').getAttribute('data-item');
+						let dIndex = document.querySelector('#ylc-next').getAttribute('data-item');
 						modalSwitch(dIndex,false);
 					}
 				}

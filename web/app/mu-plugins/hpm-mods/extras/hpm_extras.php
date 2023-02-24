@@ -7,15 +7,15 @@
  * Adds ability for anyone who can edit others' posts to be able to create and manage guest authors
  */
 add_filter( 'coauthors_guest_author_manage_cap', 'capx_filter_guest_author_manage_cap' );
-function capx_filter_guest_author_manage_cap( $cap ) {
+function capx_filter_guest_author_manage_cap( $cap ): string {
 	return 'edit_others_posts';
 }
 
 /**
- * Anyone who can publish can publish to Apple News
+ * Anyone who can publish on the site can publish to Apple News
  */
 add_filter( 'apple_news_publish_capability', 'publish_to_apple_news_cap' );
-function publish_to_apple_news_cap( $cap ) {
+function publish_to_apple_news_cap( $cap ): string {
 	return 'publish_posts';
 }
 
@@ -23,7 +23,7 @@ add_action( 'publish_post', 'hpm_apple_news_exclude', 10, 2 );
 add_action( 'save_post', 'hpm_apple_news_exclude', 10, 2 );
 add_action( 'owf_update_published_post', 'hpm_apple_news_exclude', 10, 2 );
 
-function hpm_apple_news_exclude( $post_id, $post ) {
+function hpm_apple_news_exclude( $post_id, $post ): void {
 	$cats = get_the_category( $post_id );
 	foreach ( $cats as $c ) {
 		if ( $c->term_id == 27876 ) {
@@ -59,9 +59,9 @@ remove_action( 'wp_head', 'wp_generator' );
 remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 
 /**
- * Disable support for Wordpress Emojicons, because we will never use them and don't need the extra overhead
+ * Disable support for WordPress Emojicons, because we will never use them and don't need the extra overhead
  */
-function disable_wp_emojicons() {
+function disable_wp_emojicons(): void {
 	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
@@ -72,7 +72,7 @@ function disable_wp_emojicons() {
 	add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
 }
 
-function disable_emojicons_tinymce( $plugins ) {
+function disable_emojicons_tinymce( $plugins ): array {
 	if ( is_array( $plugins ) ) {
 		return array_diff( $plugins, [ 'wpemoji' ] );
 	} else {
@@ -82,9 +82,9 @@ function disable_emojicons_tinymce( $plugins ) {
 add_action( 'init', 'disable_wp_emojicons' );
 
 /*
- * Adding variables to the Wordpress query setup for special sections and external data pulls
+ * Adding variables to the WordPress query setup for special sections and external data pulls
  */
-function add_query_vars($aVars) {
+function add_query_vars( $aVars ): array {
 	$aVars[] = "sched_station";
 	$aVars[] = "sched_year";
 	$aVars[] = "sched_month";
@@ -97,7 +97,7 @@ add_filter('query_vars', 'add_query_vars');
 /*
  * Creating new rewrite rules to feed those special sections and external data pulls
  */
-function add_rewrite_rules($aRules) {
+function add_rewrite_rules( $aRules ): array {
 	$aNewRules = [
 		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=$matches[4]',
 		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=01',
@@ -106,8 +106,7 @@ function add_rewrite_rules($aRules) {
 		'^(news887|classical)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
 		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]+)/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]'
 	];
-	$aRules = $aNewRules + $aRules;
-	return $aRules;
+	return $aNewRules + $aRules;
 }
 add_filter('rewrite_rules_array', 'add_rewrite_rules');
 
@@ -173,7 +172,7 @@ function hpm_schedules( $station, $date ) {
  * Log errors in wp-content/debug.log when debugging is enabled.
  */
 if ( !function_exists( 'log_it' ) ) {
-	function log_it( $message ) {
+	function log_it( $message ): void {
 		if ( WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message, true ) );
@@ -188,7 +187,7 @@ if ( !function_exists( 'log_it' ) ) {
  * Add checkbox to post editor in order to hide last modified time in the post display (single.php)
  */
 add_action( 'post_submitbox_misc_actions', 'hpm_no_mod_time' );
-function hpm_no_mod_time() {
+function hpm_no_mod_time(): bool {
 	global $post;
 	if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) {
 		return false;
@@ -198,10 +197,11 @@ function hpm_no_mod_time() {
 		$checked = ( !empty( $value ) ? ' checked="checked" ' : '' );
 		echo '<div class="misc-pub-section misc-pub-section-last"><input type="checkbox"' . $checked . 'value="1" name="hpm_no_mod_time" /><label for="hpm_no_mod_time">Hide Last Modified Time?</label></div>';
 	}
+	return true;
 }
 
 add_action( 'save_post', 'save_hpm_no_mod_time');
-function save_hpm_no_mod_time( ) {
+function save_hpm_no_mod_time(): bool {
 	global $post;
 	if ( empty( $post ) || $post->post_type != 'post' ) {
 		return false;
@@ -218,6 +218,7 @@ function save_hpm_no_mod_time( ) {
 	$value = ( !empty( $_POST['hpm_no_mod_time'] )  ? 1 : 0 );
 
 	update_post_meta( $post->ID, 'hpm_no_mod_time', $value );
+	return true;
 }
 
 /*
@@ -311,9 +312,9 @@ function hpm_youtube_playlist( $key, $num = 5 ) {
 /*
  * Ping Facebook's OpenGraph servers whenever a post is published, in order to prime their cache
  */
-function hpm_facebook_ping( $arg1 ) {
+function hpm_facebook_ping( $arg1 ): bool {
 	$perma = get_permalink( $arg1 );
-	$url = 'http://graph.facebook.com';
+	$url = 'https://graph.facebook.com';
 	$data = [ 'id' => $perma, 'scrape' => 'true' ];
 	$options = [
 		'headers' => [
@@ -324,11 +325,10 @@ function hpm_facebook_ping( $arg1 ) {
 	$remote = wp_remote_get( esc_url_raw( $url ), $options );
 	if ( is_wp_error( $remote ) ) {
 		return false;
-	} else {
-		return true;
 	}
+	return true;
 }
-function hpm_facebook_ping_schedule( $post_id, $post ) {
+function hpm_facebook_ping_schedule( $post_id, $post ): void {
 	if ( WP_ENV == 'production' ) {
 		wp_schedule_single_event( time() + 60, 'hpm_facebook_ping', [ $post_id ] );
 	}
@@ -344,7 +344,7 @@ add_action( 'owf_update_published_post', 'update_post_meta_info', 10, 2 );
  *
  * Copy over any metadata from an article revision to its original
  */
-function update_post_meta_info( $original_post_id, $revised_post ) {
+function update_post_meta_info( $original_post_id, $revised_post ): void {
 	$post_meta_keys = get_post_custom_keys( $revised_post->ID );
 	if ( empty( $post_meta_keys ) ) {
 		return;
@@ -352,7 +352,7 @@ function update_post_meta_info( $original_post_id, $revised_post ) {
 
 	foreach ( $post_meta_keys as $meta_key ) {
 		$meta_key_trim = trim( $meta_key );
-		if ( '_' == $meta_key_trim[0] || strpos( $meta_key_trim, 'oasis' ) !== false ) {
+		if ( '_' == $meta_key_trim[0] || str_contains( $meta_key_trim, 'oasis' ) ) {
 			continue;
 		}
 		$revised_meta_values = get_post_custom_values( $meta_key, $revised_post->ID );
@@ -390,8 +390,9 @@ function update_post_meta_info( $original_post_id, $revised_post ) {
 /**
  * Authorization function for accessing Google Analytics API
  * @return Google_Service_Analytics
+ * @throws \Google\Exception
  */
-function initializeAnalytics() {
+function initializeAnalytics(): Google_Service_Analytics {
 	$KEY_FILE_LOCATION = SITE_ROOT . '/../client_secrets.json';
 
 	// Create and configure a new client object.
@@ -406,8 +407,9 @@ function initializeAnalytics() {
 
 /**
  * Cron task to pull top 5 most-viewed stories from the last 3 days
+ * @throws \Google\Exception
  */
-function analyticsPull_update() {
+function analyticsPull_update(): void {
 	require_once SITE_ROOT . '/vendor/autoload.php';
 	$analytics = initializeAnalytics();
 	$t = time();
@@ -459,7 +461,7 @@ if ( empty( $timestamp ) ) {
  * @return mixed|string
  * Pull NPR API articles and save them to a transient
  */
-function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
+function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 	$npr = get_transient( 'hpm_nprapi_' . $api_id );
 	if ( !empty( $npr ) ) {
 		return $npr;
@@ -488,12 +490,12 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ) {
 /**
  * Hide the Comments menu in Admin because we don't use it
  */
-function remove_menus() {
+function remove_menus(): void {
 	remove_menu_page( 'edit-comments.php' );
 }
 add_action( 'admin_menu', 'remove_menus' );
 
-function hpm_election_night() {
+function hpm_election_night(): string {
 	$output = '';
 	$args = [
 		'p' => 248126,
@@ -508,7 +510,7 @@ function hpm_election_night() {
 }
 add_shortcode( 'election_night', 'hpm_election_night' );
 
-function wpdocs_set_html_mail_content_type() {
+function wpdocs_set_html_mail_content_type(): string {
 	return 'text/html';
 }
 
@@ -517,7 +519,7 @@ add_action( 'admin_footer-post.php', 'hpm_https_check' );
 add_action( 'admin_footer-post-new.php', 'hpm_npr_api_contributor' );
 add_action( 'admin_footer-post.php', 'hpm_npr_api_contributor' );
 
-function hpm_https_check() {
+function hpm_https_check(): void {
 	if ( 'post' !== $GLOBALS['post_type'] ) {
 		return;
 	}
@@ -525,7 +527,7 @@ function hpm_https_check() {
 	<script>
 		jQuery(document).ready(function($){
 			$('#publish, #save-post, #workflow_submit').on('click', function(e){
-				var content = $('#content').val();
+				let content = $('#content').val();
 				if ( content.includes('src="http://') ) {
 					e.preventDefault();
 					alert( 'This post contains an embed or image from an insecure source.\nPlease check and see if that embed is available via HTTPS.\n\nTo check this:\n\n\t1.  Look for any <img> or <iframe> tags in your HTML\n\t2.  Find the src="" attribute and copy the URL\n\t3.  Change \'http:\' to \'https:\' and paste it into your browser\n\t4.  If it loads correctly, then great! Update the URL in your HTML\n\nIf you have any questions, email jcounts@houstonpublicmedia.org' );
@@ -537,15 +539,15 @@ function hpm_https_check() {
 			$('#postimagediv .inside').append( '<p class="hide-if-no-js"><a href="/wp/wp-admin/edit.php?page=hpm-image-preview&p=<?php echo $post->ID; ?>" id="hpm-image-preview" style="color: white; font-weight: bolder; background-color: #0085ba; padding: 5px; text-decoration: none;">Preview featured image</a></p>' );
 			$('#hpm-image-preview').on('click', function(e){
 				e.preventDefault();
-				var href = $(this).attr('href');
-				var myWindow = window.open(href, 'HPM Featured Image Preview', "width=850,height=800");
+				let href = $(this).attr('href');
+				window.open(href, 'HPM Featured Image Preview', "width=850,height=800");
 			});
 		});
 	</script>
 <?php
 }
 
-function hpm_npr_api_contributor() {
+function hpm_npr_api_contributor(): void {
 	if ( 'post' !== $GLOBALS['post_type'] ) {
 		return;
 	}
@@ -579,7 +581,7 @@ if ( empty( wp_next_scheduled( 'oasiswf_auto_delete_history_schedule' ) ) ) {
 }
 
 add_action( 'rest_api_init', 'custom_register_coauthors' );
-function custom_register_coauthors() {
+function custom_register_coauthors(): void {
 	register_rest_field( 'post',
 		'coauthors',
 		[
@@ -590,7 +592,7 @@ function custom_register_coauthors() {
 	);
 }
 
-function custom_get_coauthors( $object, $field_name, $request ) {
+function custom_get_coauthors( $object, $field_name, $request ): array {
 	$coauthors = get_coauthors( $object['id'] );
 	$authors = [];
 	foreach ( $coauthors as $coa ) {
@@ -806,28 +808,7 @@ function hpm_segments( $name, $date ) {
 
 add_filter( 'xmlrpc_enabled', '__return_false' );
 
-function hpm_reset_password_message( $message, $key ) {
-	if ( strpos( $_POST['user_login'], '@' ) ) {
-		$user_data = get_user_by( 'email', trim( $_POST['user_login'] ) );
-	} else {
-		$login = trim( $_POST['user_login'] );
-		$user_data = get_user_by( 'login', $login );
-	}
-
-	$user_login = $user_data->user_login;
-
-	$msg = __( 'The password for the following account has been requested to be reset:' ). "\r\n\r\n";
-	$msg .= network_site_url() . "\r\n\r\n";
-	$msg .= sprintf( __( 'Username: %s' ), $user_login ) . "\r\n\r\n";
-	$msg .= __( 'If this message was sent in error, please ignore this email.' ) . "\r\n\r\n";
-	$msg .= __( 'To reset your password, visit the following address:' ) . "\r\n\r\n";
-	$msg .= network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
-	return $msg;
-
-}
-add_filter( 'retrieve_password_message', 'hpm_reset_password_message', null, 2 );
-
-function hpm_image_preview_page() {
+function hpm_image_preview_page(): void {
 	$hook = add_submenu_page( 'edit.php', 'Featured Image Preview', 'Featured Image Preview', 'edit_posts', 'hpm-image-preview', function() {} );
 	add_action('load-' . $hook, function() {
 		$post_id = sanitize_text_field( $_GET['p'] );
@@ -930,7 +911,7 @@ add_action('admin_menu', 'hpm_image_preview_page');
 /**
  * Displays meta box on post editor screen (both new and edit pages).
  */
-function postscript_meta_box_setup() {
+function postscript_meta_box_setup(): void {
 	$user    = wp_get_current_user();
 	$roles   = [ 'administrator' ];
 
@@ -944,7 +925,7 @@ add_action( 'load-post.php', 'postscript_meta_box_setup' );
 add_action( 'load-post-new.php', 'postscript_meta_box_setup' );
 
 
-function postscript_metabox_admin_notice() {
+function postscript_metabox_admin_notice(): void {
 	$postscript_meta = get_post_meta( get_the_id(), 'postscript_meta', true ); ?>
 	<div class="error">
 	<?php var_dump( $_POST ) ?>
@@ -959,7 +940,7 @@ function postscript_metabox_admin_notice() {
  *
  * @uses postscript_get_options()   Safely gets option from database.
  */
-function postscript_add_meta_box() {
+function postscript_add_meta_box(): void {
 	$options = [
 		'user_roles' => [ 'administrator' ],
 		'post_types' => [ 'post', 'page', 'shows' ],
@@ -982,10 +963,10 @@ function postscript_add_meta_box() {
  * Form elements are text fields for entering body/post classes (stored in same post-meta array).
  * Form elements are printed only if allowed on Setting page.
  *
- * @param  Object $post Object containing the current post.
- * @param  array  $box  Array of meta box id, title, callback, and args elements.
+ * @param Object $post Object containing the current post.
+ * @param array $box  Array of meta box id, title, callback, and args elements.
  */
-function postscript_meta_box_callback( $post, $box ) {
+function postscript_meta_box_callback( object $post, array $box ): void {
 	$post_id = $post->ID;
 	wp_nonce_field( basename( __FILE__ ), 'postscript_meta_nonce' );
 
@@ -1012,12 +993,13 @@ function postscript_meta_box_callback( $post, $box ) {
 /**
  * Saves the meta box form data upon submission.
  *
- * @uses  postscript_sanitize_data()    Sanitizes $_POST array.
- *
  * @param int     $post_id    Post ID.
  * @param WP_Post $post       Post object.
+ *
+ *@uses  postscript_sanitize_data()    Sanitizes $_POST array.
+ *
  */
-function postscript_save_post_meta( $post_id, $post ) {
+function postscript_save_post_meta( int $post_id, WP_Post $post ): int {
 	// Checks save status
 	$is_autosave = wp_is_post_autosave( $post_id );
 	$is_revision = wp_is_post_revision( $post_id );
@@ -1025,7 +1007,7 @@ function postscript_save_post_meta( $post_id, $post ) {
 
 	// Exits script depending on save status
 	if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
-		return;
+		return 0;
 	}
 
 	// Get the post type object (to match with current user capability).
@@ -1054,13 +1036,12 @@ function postscript_save_post_meta( $post_id, $post ) {
 		update_post_meta( $post_id, $meta_key, $form_data );
 	} elseif ( null == $form_data && $meta_value ) {
 		delete_post_meta( $post_id, $meta_key );
-	} else {
-		return;
 	}
+	return $post_id;
 }
 
 /**
- * Sanitizes values in an one- and multi- dimensional arrays.
+ * Sanitizes values in an one- and multi-dimensional arrays.
  * Used by post meta-box form before writing post-meta to database
  * and by Settings API before writing option to database.
  *
@@ -1068,10 +1049,11 @@ function postscript_save_post_meta( $post_id, $post ) {
  *
  * @since    0.4.0
  *
- * @param    array    $input        The address input.
+ * @param array $data
+ *
  * @return   array    $input_clean  The sanitized input.
  */
-function postscript_sanitize_data( $data = [] ) {
+function postscript_sanitize_data( $data = [] ): array {
 	// Initialize a new array to hold the sanitized values.
 	$data_clean = [];
 
@@ -1107,10 +1089,11 @@ function postscript_sanitize_data( $data = [] ) {
  *
  * @since    0.4.0
  *
- * @param    array    $input        The address input.
+ * @param array $input        The address input.
+ *
  * @return   array    $input_clean  The sanitized input.
  */
-function postscript_sanitize_array( $input ) {
+function postscript_sanitize_array( array $input ): array {
 	// Initialize a new array to hold the sanitized values.
 	$input_clean = [];
 
@@ -1122,7 +1105,7 @@ function postscript_sanitize_array( $input ) {
 	return $input_clean;
 }
 
-function postscript_remove_empty_lines( $string ) {
+function postscript_remove_empty_lines( $string ): array|string|null {
 	return preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string );
 }
 
@@ -1132,7 +1115,7 @@ function postscript_remove_empty_lines( $string ) {
  * @uses postscript_get_options()   Safely gets option from database.
  * @return  array $classes  WordPress defaults and user-added classes
  */
-function postscript_class_body( $classes ) {
+function postscript_class_body( $classes ): array {
 	$post_id = get_the_ID();
 	$options = [
 		'user_roles' => [ 'administrator' ],
@@ -1161,7 +1144,7 @@ add_filter( 'body_class', 'postscript_class_body' );
  * @uses postscript_get_options()   Safely gets option from database.
  * @return  array $classes  WordPress defaults and user-added classes
  */
-function postscript_class_post( $classes ) {
+function postscript_class_post( $classes ): array {
 	$post_id = get_the_ID();
 	$options = [
 		'user_roles' => [ 'administrator' ],
@@ -1185,12 +1168,12 @@ add_filter( 'post_class', 'postscript_class_post' );
 
 add_action( 'load-post.php', 'hpm_alt_headline_setup' );
 add_action( 'load-post-new.php', 'hpm_alt_headline_setup' );
-function hpm_alt_headline_setup() {
+function hpm_alt_headline_setup(): void {
 	add_action( 'add_meta_boxes', 'hpm_alt_headline_add_meta' );
 	add_action( 'save_post', 'hpm_alt_headline_save_meta', 10, 2 );
 }
 
-function hpm_alt_headline_add_meta() {
+function hpm_alt_headline_add_meta(): void {
 	add_meta_box(
 		'hpm-alt-headline-meta-class',
 		esc_html__( 'Alternate Headlines', 'example' ),
@@ -1201,7 +1184,7 @@ function hpm_alt_headline_add_meta() {
 	);
 }
 
-function hpm_alt_headline_meta_box( $object, $box ) {
+function hpm_alt_headline_meta_box( $object, $box ): void {
 	$placeholder = [
 		'Diana was still alive hours before she died',
 		'Missing woman unwittingly joins search party looking for herself',
@@ -1247,14 +1230,14 @@ function hpm_alt_headline_save_meta( $post_id, $post ) {
 		$alt = get_post_meta( $post_id, 'hpm_alt_headline', true );
 		if ( !empty( $_POST['hpm-alt-headline'] ) ) {
 			update_post_meta( $post_id, 'hpm_alt_headline', sanitize_text_field( $_POST['hpm-alt-headline'] ) );
-		} elseif ( empty( $_POST['hpm-alt-headline'] ) && !empty( $alt ) ) {
+		} elseif ( !empty( $alt ) ) {
 			delete_post_meta( $post_id, 'hpm_alt_headline', '' );
 		}
 
 		$seo = get_post_meta( $post_id, 'hpm_seo_headline', true );
 		if ( !empty( $_POST['hpm-seo-headline'] ) ) {
 			update_post_meta( $post_id, 'hpm_seo_headline', sanitize_text_field( $_POST['hpm-seo-headline'] ) );
-		} elseif ( empty( $_POST['hpm-seo-headline'] ) && !empty( $seo ) ) {
+		} elseif ( !empty( $seo ) ) {
 			delete_post_meta( $post_id, 'hpm_seo_headline', '' );
 		}
 	}
@@ -1277,14 +1260,14 @@ add_filter( 'pre_get_document_title', 'hpm_article_seo_title' );
 
 add_action( 'load-post.php', 'hpm_page_script_setup' );
 add_action( 'load-post-new.php', 'hpm_page_script_setup' );
-function hpm_page_script_setup() {
+function hpm_page_script_setup(): void {
 	add_action( 'add_meta_boxes', 'hpm_page_script_add_meta' );
 	add_action( 'save_post', 'hpm_page_script_save_meta', 10, 2 );
 }
 
-function hpm_page_script_add_meta() {
+function hpm_page_script_add_meta(): void {
 	$user = wp_get_current_user();
-	if ( in_array( 'administrator', (array) $user->roles ) ) {
+	if ( in_array( 'administrator', $user->roles ) ) {
     	add_meta_box(
 			'hpm-page-script-meta-class',
 			esc_html__( 'Injectable Scripts or Styling', 'example' ),
@@ -1296,7 +1279,7 @@ function hpm_page_script_add_meta() {
 	}
 }
 
-function hpm_page_script_meta_box( $object, $box ) {
+function hpm_page_script_meta_box( $object, $box ): void {
 	wp_nonce_field( basename( __FILE__ ), 'hpm_page_script_class_nonce' );
 	$page_script = get_post_meta( $object->ID, 'hpm_page_script', true );
 	if ( empty( $page_script ) ) {
@@ -1374,7 +1357,7 @@ function hpm_now_playing ( $station ) {
 	return get_option( 'hpm_' . $station . '_nowplay' );
 }
 
-function hpm_now_playing_update () {
+function hpm_now_playing_update (): void {
 	$stations = [
 		'news887' => 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json',
 		'classical' => 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
@@ -1392,7 +1375,7 @@ function hpm_now_playing_update () {
 		} else {
 			$data = json_decode( wp_remote_retrieve_body( $remote ), true );
 		}
-		if ( strpos( $k, 'tv' ) !== false ) {
+		if ( str_contains( $k, 'tv' ) ) {
 			$output .= $data['airlist'][0]['version']['series']['series-title'];
 		} elseif ( $k === 'mixtape' ) {
 			$output .= $data['artist'] . ' - ' . $data['song'];

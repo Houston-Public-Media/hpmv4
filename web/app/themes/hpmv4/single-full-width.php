@@ -34,7 +34,7 @@ if ( is_preview() ) { ?>
 						$mod = get_the_modified_time( 'U' );
 						$desc = $mod - $pub;
 						$mod_time = get_post_meta( $single_id, 'hpm_no_mod_time', true );
-						if ( $pub !== $mod && $desc > 900 && $mod > $pub && $mod_time == 0 ) {
+						if ( $desc > 900 && $mod > $pub && $mod_time == 0 ) {
 							$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time> (Last Updated: <time class="updated" datetime="%3$s">%4$s</time>)';
 						}
 

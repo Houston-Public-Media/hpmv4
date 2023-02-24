@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 class HPM_Media_Upload {
 
 	/**
@@ -10,7 +12,7 @@ class HPM_Media_Upload {
 	 * @var array
 	 * @access protected
 	 */
-	protected $data = [];
+	protected array $data = [];
 
 	/**
 	 * Initiate new async request
@@ -47,7 +49,7 @@ class HPM_Media_Upload {
 	 *
 	 * @return $this
 	 */
-	public function data( $data ) {
+	public function data( array $data ): static {
 		$this->data = $data;
 		return $this;
 	}
@@ -57,7 +59,7 @@ class HPM_Media_Upload {
 	 *
 	 * @return array|WP_Error
 	 */
-	public function dispatch() {
+	public function dispatch(): WP_Error|array {
 		$url  = $this->get_query_url();
 		$args = $this->get_post_args();
 
@@ -69,7 +71,7 @@ class HPM_Media_Upload {
 	 *
 	 * @return string
 	 */
-	protected function get_query_url() {
+	protected function get_query_url(): string {
 		return WP_HOME . '/wp-json/hpm-podcast/v1/upload/' . $this->data['feed'] . '/' . $this->data['id'] . '/' . $this->data['attach'] . '/process';
 	}
 
@@ -78,7 +80,7 @@ class HPM_Media_Upload {
 	 *
 	 * @return array
 	 */
-	protected function get_post_args() {
+	protected function get_post_args(): array {
 		return [
 			'timeout'   => 0.01,
 			'blocking'  => false,
@@ -93,7 +95,7 @@ class HPM_Media_Upload {
 	 *
 	 * Check for correct nonce and pass to handler.
 	 */
-	public function maybe_handle() {
+	#[NoReturn] public function maybe_handle(): void {
 
 		// Don't lock up other requests while processing
 		session_write_close();
@@ -107,7 +109,7 @@ class HPM_Media_Upload {
 	 * Override this method to perform any actions required
 	 * during the async request.
 	 */
-	protected function handle() {
+	protected function handle(): bool {
 		$id = $_REQUEST['id'];
 		$feed = $_REQUEST['feed'];
 		$attach = $_REQUEST['attach'];
@@ -128,7 +130,7 @@ class HPM_Media_Upload {
 		$url = wp_get_attachment_url( $attach );
 		$metadata = get_post_meta( $attach, '_wp_attachment_metadata', true );
 
-		if ( strpos( $url, $dir['baseurl'] ) !== FALSE ) {
+		if ( str_contains( $url, $dir['baseurl'] ) ) {
 			$meta = get_post_meta( $attach, '_wp_attached_file', true );
 			$local = $save . $ds . $meta;
 			$path = pathinfo( $meta );

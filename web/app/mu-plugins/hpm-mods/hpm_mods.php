@@ -17,7 +17,7 @@ require( HPM_MODS_DIR . 'social/social_post.php' );
 register_activation_hook( __FILE__, 'hpm_mods_activate' );
 register_deactivation_hook( __FILE__, 'hpm_mods_deactivate' );
 
-function hpm_mods_activate() {
+function hpm_mods_activate(): void {
 	$pods = [
 		'owner' => [
 			'name' => '',
@@ -49,7 +49,7 @@ function hpm_mods_activate() {
 	}
 }
 
-function hpm_mods_deactivate() {
+function hpm_mods_deactivate(): void {
 	wp_clear_scheduled_hook( 'hpm_podcast_update_refresh' );
 	delete_option( 'hpm_podcast_settings' );
 	delete_option( 'hpm_podcast_last_update' );

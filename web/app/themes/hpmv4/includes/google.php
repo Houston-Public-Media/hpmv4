@@ -1,5 +1,5 @@
 <?php
-function hpm_google_tracker() {
+function hpm_google_tracker(): void {
 	global $wp_query;
 ?>	<script async="true" src='https://www.googletagservices.com/tag/js/gpt.js'></script>
 		<script>
@@ -50,9 +50,9 @@ function hpm_google_tracker() {
 		$classes = get_post_class( '', $wp_query->queried_object_id );
 		$category = $tag = [];
 		foreach ( $classes as $class ) {
-			if ( strpos( $class, 'category-' ) !== false ) {
+			if ( str_contains( $class, 'category-' ) ) {
 				$category[] = str_replace( 'category-', '', $class );
-			} elseif ( strpos( $class, 'tag-' ) !== false ) {
+			} elseif ( str_contains( $class, 'tag-' ) ) {
 				$tag[] = str_replace( 'tag-', '', $class );
 			}
 		}
@@ -81,7 +81,7 @@ add_filter( 'gtm_story_id', 'gtm_populate_story_id', 12, 3 );
 add_filter( 'gtm_permalink', 'gtm_populate_permalink', 12, 3 );
 add_filter( 'gtm_author_name', 'gtm_populate_authors', 12, 3 );
 
-function gtm_populate_category_items( $total_match, $match, $post_id ) {
+function gtm_populate_category_items( $total_match, $match, $post_id ): array|WP_Error|string {
 	$terms = wp_get_object_terms( $post_id, 'category', [ 'fields' => 'names' ] );
 	if ( is_wp_error( $terms ) || empty( $terms ) ) {
 		return '';
@@ -89,7 +89,7 @@ function gtm_populate_category_items( $total_match, $match, $post_id ) {
 	return $terms;
 }
 
-function gtm_populate_tag_items( $total_match, $match, $post_id ) {
+function gtm_populate_tag_items( $total_match, $match, $post_id ): array|WP_Error|string {
 	$terms = wp_get_object_terms( $post_id, 'post_tag', [ 'fields' => 'names' ] );
 	if ( is_wp_error( $terms ) || empty( $terms ) ) {
 		return '';
@@ -101,11 +101,11 @@ function gtm_populate_story_id( $total_match, $match, $post_id ) {
 	return get_post_meta( $post_id, 'npr_story_id', true );
 }
 
-function gtm_populate_permalink( $total_match, $match, $post_id ) {
+function gtm_populate_permalink( $total_match, $match, $post_id ): bool|string {
 	return get_permalink( $post_id );
 }
 
-function gtm_populate_authors( $total_match, $match, $post_id ) {
+function gtm_populate_authors( $total_match, $match, $post_id ): array {
 	$coauthors = get_coauthors( $post_id );
 	$authors = [];
 	foreach ( $coauthors as $coa ) {
@@ -116,7 +116,7 @@ function gtm_populate_authors( $total_match, $match, $post_id ) {
 
 add_action( 'wp_head', 'hpm_google_conversion', 101 );
 
-function hpm_google_conversion() {
+function hpm_google_conversion(): void {
 	if ( !empty( $_GET['google_ad'] ) && $_GET['google_ad'] == 'convert' ) {
 		echo "<!-- Event snippet for Outbound click conversion page --> <script> gtag('event', 'conversion', {'send_to': 'AW-10777328260/yyJICKjnw_YCEIT1g5Mo'}); </script>";
 	}

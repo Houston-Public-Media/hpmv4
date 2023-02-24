@@ -10,6 +10,6 @@
  * License URI: 	http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: 	hpm-mods
  *
- * Works best with Wordpress 4.6.0+
+ * Works best with WordPress 4.6.0+
 */
 require( 'hpm-mods/hpm_mods.php' );

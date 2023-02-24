@@ -1,5 +1,5 @@
 <?php
-function hpm_audio_shortcode( $html, $attr ) {
+function hpm_audio_shortcode( $html, $attr ): string {
 	$post_id = get_post() ? get_the_ID() : 0;
 	static $instance = 0;
 	$instance++;
@@ -41,7 +41,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 	} else {
 		$audio_url = str_replace( 'http:', 'https:', $audio_url );
 	}
-	if ( strpos( $audio_url, '?' ) === false ) {
+	if ( !str_contains( $audio_url, '?' ) ) {
 		$audio_url .= '?';
 	} else {
 		$audio_url .= '&';
@@ -74,7 +74,7 @@ function hpm_audio_shortcode( $html, $attr ) {
 }
 add_filter( 'wp_audio_shortcode_override', 'hpm_audio_shortcode', 10, 2 );
 
-function hpm_nprapi_audio_shortcode( $text ) {
+function hpm_nprapi_audio_shortcode( $text ): string {
 	$matches = [];
 	preg_match_all( '/' . get_shortcode_regex() . '/', $text, $matches );
 
@@ -94,7 +94,7 @@ function hpm_nprapi_audio_shortcode( $text ) {
 }
 add_filter( 'npr_ds_shortcode_filter', 'hpm_nprapi_audio_shortcode', 10, 1 );
 
-function hpm_apple_news_audio( $text ) {
+function hpm_apple_news_audio( $text ): string {
 	global $post;
 	global $wpdb;
 	$id = $post->ID;
@@ -134,15 +134,14 @@ function hpm_apple_news_audio( $text ) {
 				( tr1.meta_key = 'hpm_shows_cat' OR tr1.meta_key = 'hpm_pod_cat' ) AND
 				tr1.meta_value = $show AND
 				wp_posts.post_status = 'publish' AND
-				( wp_posts.post_type = 'shows' OR wp_posts.post_type = 'podcasts' ) ", OBJECT );
+				( wp_posts.post_type = 'shows' OR wp_posts.post_type = 'podcasts' ) " );
 		if ( !empty( $res ) ) {
 			if ( $res[0]->post_type == 'shows' ) {
 				$text .= '<p><strong><em>For more information and episodes, visit the <a href="' . get_the_permalink(
 					$res[0]->ID ) . '">' . $res[0]->post_title . ' show page</a>.</em></strong></p>';
 			} elseif ( $res[0]->post_type == 'podcasts' ) {
 				$podmeta = get_post_meta( $res[0]->ID, 'hpm_pod_link', true );
-				$text .= '<p><strong><em>For more information and episodes, visit the <a href="' . $podmeta['page'] .
-				         '">' . $res[0]->post_title . ' show page</a>.</em></strong></p>';
+				$text .= '<p><strong><em>For more information and episodes, visit the <a href="' . $podmeta['page'] . '">' . $res[0]->post_title . ' show page</a>.</em></strong></p>';
 			}
 		}
 	}
@@ -150,15 +149,15 @@ function hpm_apple_news_audio( $text ) {
 }
 add_filter( 'apple_news_exporter_content_pre', 'hpm_apple_news_audio', 10, 1 );
 
-function hpm_audio_shortcode_insert ( $html, $id, $attachment ) {
-	if ( strpos( $html, '[audio' ) !== FALSE ) {
+function hpm_audio_shortcode_insert ( $html, $id, $attachment ): string {
+	if ( str_contains( $html, '[audio' ) ) {
 		$html = str_replace( '][/audio]', ' id="' . $id . '"][/audio]', $html );
 	}
 	return $html;
 }
 add_filter( 'media_send_to_editor', 'hpm_audio_shortcode_insert', 10, 8 );
 
-function article_display_shortcode ( $atts ) {
+function article_display_shortcode ( $atts ): bool|string {
 	global $hpm_constants;
 	if ( empty( $hpm_constants ) ) {
 		$hpm_constants = [];
@@ -263,7 +262,7 @@ function article_display_shortcode ( $atts ) {
 }
 add_shortcode( 'hpm_articles', 'article_display_shortcode' );
 
-function article_list_shortcode( $atts ) {
+function article_list_shortcode( $atts ): string {
 	extract( shortcode_atts( [
 		'num' => 1,
 		'category' => '',
@@ -303,7 +302,7 @@ function article_list_shortcode( $atts ) {
 }
 add_shortcode( 'hpm_article_list', 'article_list_shortcode' );
 
-function hpm_npr_article_shortcode( $atts ) {
+function hpm_npr_article_shortcode( $atts ): string {
 	extract( shortcode_atts( [
 		'category' => 1001,
 		'num' => 4
@@ -315,7 +314,7 @@ add_shortcode( 'hpm_npr_articles', 'hpm_npr_article_shortcode' );
 /**
  * Cron job for updating at-home learning page schedule
  */
-function hpm_athome_sched_update() {
+function hpm_athome_sched_update(): string {
 	// Pull cached transient from Redis
 	$output = get_transient( 'hpm_athome_sched' );
 	/**
@@ -386,12 +385,9 @@ function hpm_athome_sched_update() {
 		]
 	];
 	// Set up data structure for temporary schedule
-	$temp = [
-		'8.1' => '',
-		'8.4' => ''
-	];
+	$temp = [];
 	// Time columns to put on the front and back of the schedules
-	// Could probably script this but I was in a hurry
+	// Could probably script this, but I was in a hurry
 	$timecol = [
 		'8.1' => '<div class="lah-col lah-time"><div class="lah-col-head"></div><div>6:00am</div><div>6:30am</div><div>7:00am</div><div>7:30am</div><div>8:00am</div><div>8:30am</div><div>9:00am</div><div>9:30am</div><div>10:00am</div><div>10:30am</div><div>11:00am</div><div>11:30am</div><div>12:00pm</div><div>12:30pm</div><div>1:00pm</div><div>1:30pm</div><div>2:00pm</div><div>2:30pm</div><div>3:00pm</div><div>3:30pm</div><div>4:00pm</div><div>4:30pm</div><div>5:00pm</div><div>5:30pm</div></div>',
 		'8.4' => '<div class="lah-col lah-time"><div class="lah-col-head"></div><div>11:00am</div><div>11:30am</div><div>12:00pm</div><div>12:30pm</div><div>1:00pm</div><div>1:30pm</div><div>2:00pm</div><div>2:30pm</div><div>3:00pm</div><div>3:30pm</div></div>'
@@ -403,6 +399,7 @@ function hpm_athome_sched_update() {
 	 * 	-- If Tuesday - Friday, find previous Monday
 	 * 	-- If Saturday - Sunday, find next Monday
 	 */
+	$monday_unix = 0;
 	if ( $now['wday'] >= 1 && $now['wday'] <= 5 ) {
 		$monday_unix = ( $now[0] - ( ( $now['wday'] - 1 ) * 86400 ) );
 	} elseif ( $now['wday'] == 0 ) {
@@ -482,31 +479,31 @@ function hpm_athome_sched_update() {
 					 * Modify CSS class to reflect grade level on main channel
 					 * This is mostly based on timeframes but there might be some wiggle
 					 */
-					if ( $dk === '8.1' ) {
-						if ( $pv['start_time'] >= 600 && $pv['start_time'] < 1200 ) {
+					if ( $dk == '8.1' ) {
+						if ( $pv['start_time'] < 1200 ) {
 							$class .= ' lah-young';
-						} elseif ( $pv['start_time'] >= 1200 && $pv['start_time'] < 1500 ) {
+						} elseif ( $pv['start_time'] < 1500 ) {
 							$class .= ' lah-middle';
-						} elseif ( $pv['start_time'] >= 1500 ) {
+						} else {
 							$class .= ' lah-high';
 						}
 
 					/**
-					 * Modify CSS class to reflect subject matter on WORLD channel
+					 * Modify CSS class to reflect subject on WORLD channel
 					 * This is partially based on timeframe, but ELA gets preempted at least 2 days a week in favor of social studies
-					 * Had to make some best guesses, and am looking ahead at the schedule to adjust the exemptions
+					 * Had to make some best guesses, and look ahead at the schedule to adjust the exemptions
 					 */
-					} elseif ( $dk === '8.4' ) {
+					} else {
 						if ( $pv['start_time'] < 1300 ) {
-							if ( preg_match( '/Math/', $pv['title'] ) ) {
+							if ( str_contains( 'Math', $pv['title'] ) ) {
 								$class .= ' lah-math';
 							} else {
 								$class .= ' lah-science';
 							}
-						} elseif ( $pv['start_time'] >= 1300 ) {
+						} else {
 							if ( $pv['title'] == 'American Masters' || $pv['title'] == 'Poetry in America' || $pv['title'] == 'Great Performances' ) {
 								$class .= ' lah-ela';
-							} elseif ( preg_match( '/Amazing Human Body/', $pv['title'] ) ) {
+							} elseif ( str_contains( 'Amazing Human Body', $pv['title'] ) ) {
 								$class .= ' lah-science';
 							} else {
 								$class .= ' lah-sstudies';
@@ -556,15 +553,7 @@ if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hourly', 'hpm_athome_update' );
 }
 
-/**
- * Cron job for updating at-home learning page schedule
- */
-function hpm_artspace_trans() {
-	return get_transient( 'hpm_artspace' );
-}
-add_shortcode( 'hpm_artspace', 'hpm_artspace_trans' );
-
-function hpm_programs_shortcode( $atts ) {
+function hpm_programs_shortcode( $atts ): string {
 	extract( shortcode_atts( [
 		'channel' => 'news'
 	], $atts, 'multilink' ) );
@@ -579,46 +568,45 @@ function hpm_programs_shortcode( $atts ) {
 }
 add_shortcode( 'hpm_programs', 'hpm_programs_shortcode' );
 
-function hpm_careers_trans() {
+function hpm_careers_trans(): string {
 	$output = get_transient( 'hpm_careers' );
 	if ( !empty( $output ) ) {
 		return $output;
 	}
-	$curl = curl_init();
 
-	curl_setopt_array( $curl, [
-		CURLOPT_URL => 'https://uhs.taleo.net/careersection/rest/jobboard/searchjobs?lang=en&portal=8100120292',
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => '',
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 0,
-		CURLOPT_FOLLOWLOCATION => true,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => 'POST',
-		CURLOPT_POSTFIELDS =>'{"multilineEnabled":false,"sortingSelection":{"sortBySelectionParam":"3","ascendingSortingOrder":"false"},"fieldData":{"fields":{"KEYWORD":""},"valid":true},"filterSelectionParam":{"searchFilterSelections":[{"id":"POSTING_DATE","selectedValues":[]},{"id":"ORGANIZATION","selectedValues":["14400120292"]},{"id":"JOB_TYPE","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_SCHEDULE","selectedValues":[]}]},"advancedSearchFiltersSelectionParam":{"searchFilterSelections":[{"id":"ORGANIZATION","selectedValues":[]},{"id":"LOCATION","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_NUMBER","selectedValues":[]},{"id":"URGENT_JOB","selectedValues":[]},{"id":"EMPLOYEE_STATUS","selectedValues":[]},{"id":"STUDY_LEVEL","selectedValues":[]},{"id":"JOB_SHIFT","selectedValues":[]}]},"pageNo":1}',
-		CURLOPT_HTTPHEADER => [
-			'Referer: https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)',
-			'Origin: https://uhs.taleo.net',
-			'X-Requested-With: XMLHttpRequest',
-			'tz: GMT-06:00',
-			'tzname: America/Chicago',
-			'Pragma: no-cache',
-			'Content-Type: application/json',
-			'Cookie: locale=en'
-		],
-	]);
+	$url = 'https://uhs.taleo.net/careersection/rest/jobboard/searchjobs?lang=en&portal=8100120292';
+	$options =[
+		'body' => '{"multilineEnabled":false,"sortingSelection":{"sortBySelectionParam":"3","ascendingSortingOrder":"false"},"fieldData":{"fields":{"KEYWORD":""},"valid":true},"filterSelectionParam":{"searchFilterSelections":[{"id":"POSTING_DATE","selectedValues":[]},{"id":"ORGANIZATION","selectedValues":["14400120292"]},{"id":"JOB_TYPE","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_SCHEDULE","selectedValues":[]}]},"advancedSearchFiltersSelectionParam":{"searchFilterSelections":[{"id":"ORGANIZATION","selectedValues":[]},{"id":"LOCATION","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_NUMBER","selectedValues":[]},{"id":"URGENT_JOB","selectedValues":[]},{"id":"EMPLOYEE_STATUS","selectedValues":[]},{"id":"STUDY_LEVEL","selectedValues":[]},{"id":"JOB_SHIFT","selectedValues":[]}]},"pageNo":1}',
+		'headers' => [
+			'Referer' => 'https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)',
+			'Origin' => 'https://uhs.taleo.net',
+			'X-Requested-With' => 'XMLHttpRequest',
+			'tz' => 'GMT-06:00',
+			'tzname' => 'America/Chicago',
+			'Pragma' => 'no-cache',
+			'Content-Type' => 'application/json',
+			'Cookie' => 'locale=en'
+		]
+	];
+	$result = wp_remote_post( $url, $options );
+	if ( is_wp_error( $result ) ) {
+		return $output;
+	}
 
-	$response = curl_exec( $curl );
+	if ( $result['response']['code'] !== 200 ) {
+		return $output;
+	}
+	$body = wp_remote_retrieve_body( $result );
+	if ( empty( $body ) ) {
+		return $output;
+	}
 
-	curl_close( $curl );
-	$json = json_decode( $response, true );
+	$json = json_decode( $body, true );
 	$desc = json_decode( file_get_contents( 'https://cdn.hpm.io/assets/taleo.json' ), true );
 	if ( empty( $json['requisitionList'] ) ) {
-		$output = '';
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
 	}
-	$output = '';
 	foreach ( $json['requisitionList'] as $j ) {
 		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) {
 			if ( !empty( $desc[ $j['contestNo'] ]['title'] ) ) {
@@ -638,7 +626,7 @@ function hpm_careers_trans() {
 }
 add_shortcode( 'hpm_careers', 'hpm_careers_trans' );
 
-function hpm_townsquare_covid( $atts ) {
+function hpm_townsquare_covid( $atts ): string {
 	global $hpm_constants;
 	if ( empty( $hpm_constants ) ) {
 		$hpm_constants = [];
@@ -655,7 +643,7 @@ function hpm_townsquare_covid( $atts ) {
 			'compare' => 'EXISTS'
 		]]
 	];
-	$art = new WP_query( $args );
+	$art = new WP_Query( $args );
 	$output = '';
 	if ( $art->have_posts() ) {
 		while ( $art->have_posts() ) {
@@ -687,12 +675,12 @@ function hpm_townsquare_covid( $atts ) {
 }
 add_shortcode( 'covid_ts', 'hpm_townsquare_covid' );
 
-function hpm_indepth_bug() {
+function hpm_indepth_bug(): string {
 	return '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
 }
 add_shortcode( 'hpm_indepth', 'hpm_indepth_bug' );
 
-function hpm_newsletter_bug() {
+function hpm_newsletter_bug(): string {
 	return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
 }
 add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
@@ -700,7 +688,7 @@ add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
 remove_shortcode( 'gallery', 'gallery_shortcode' );
 add_shortcode( 'gallery', 'hpm_splide_gallery' );
 
-function hpm_splide_gallery( $attr ) {
+function hpm_splide_gallery( $attr ): string {
 	global $post;
 	$output = '';
 
@@ -747,8 +735,8 @@ function hpm_splide_gallery( $attr ) {
 		$include = preg_replace( '/[^0-9,]+/', '', $include );
 		$_attachments = get_posts( [ 'include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby ] );
 		$attachments = [];
-		foreach ( $_attachments as $key => $val ) {
-			$attachments[ $val->ID ] = $_attachments[ $key ];
+		foreach ( $_attachments as $val ) {
+			$attachments[ $val->ID ] = $val;
 		}
 		if ( !empty( $ids ) ) {
 			$sortedAttachments = [];
@@ -785,7 +773,20 @@ function hpm_splide_gallery( $attr ) {
 		return $output;
 	}
 
-	$output .= '<figure class="wp-block-image"><div class="splide"><div class="splide__track"><ul class="splide__list">';
+	if ( amp_is_request() ) {
+		add_action( 'amp_post_template_css', function() { ?>
+			<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+			<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
+			<?php
+		} );
+		$output .= '<amp-carousel class="carousel1" layout="responsive" height="400" width="500" type="slides">';
+	} else {
+		wp_enqueue_script( 'hpm-splide' );
+		wp_enqueue_style( 'hpm-splide-css' );
+		$output .= '<figure class="wp-block-image"><div class="splide"><div class="splide__track"><ul class="splide__list">';
+	}
+
+
 	foreach ( $attachments as $attachmentId => $attachment ) {
 		$thumb = wp_get_attachment_image_src( $attachmentId, 'medium' );
 		$big = wp_get_attachment_image_src( $attachmentId, 'full' );
@@ -806,15 +807,23 @@ function hpm_splide_gallery( $attr ) {
 			$description = $mcredit;
 		}
 		$alt = str_replace( '"', '&quot;', strip_tags( $description ) );
-		$output .= '<li class="splide__slide"><a href="' . $big[0] . '" target="_blank" title="Click for full size"><img data-splide-lazy="' . $thumb[0] . '" alt="' . $alt . '"></a><div>' . $description . '</div></li>';
+		if ( amp_is_request() ) {
+			$meta = get_post_meta( $attachmentId, '_wp_attachment_metadata', true );
+			$output .= '<div class="slide"><amp-img src="' . $thumb[0] . '" layout="responsive" height="' . $meta['height'] . '" width="' . $meta['width'] . '" alt="' . $alt . '"></amp-img><div class="caption">' . $description . '</div></div>';
+		} else {
+			$output .= '<li class="splide__slide"><a href="' . $big[0] . '" target="_blank" title="Click for full size"><img data-splide-lazy="' . $thumb[0] . '" alt="' . $alt . '"></a><div>' . $description . '</div></li>';
+		}
 	}
-	$output .= '</div></div></ul></figure>';
-	wp_enqueue_script( 'hpm-splide' );
-	wp_enqueue_style( 'hpm-splide-css' );
+	if ( amp_is_request() ) {
+		$output .= '</amp-carousel>';
+	} else {
+		$output .= '</div></div></ul></figure>';
+	}
+
 	return $output;
 }
 
-function hpm_waterlines_shortcode() {
+function hpm_waterlines_shortcode(): string {
 	$args = [
 		'posts_per_page' => -1,
 		'ignore_sticky_posts' => 1,
@@ -823,7 +832,7 @@ function hpm_waterlines_shortcode() {
 		'category_name' => 'below-the-waterlines',
 		'order' => 'ASC'
 	];
-	$article = new WP_query( $args );
+	$article = new WP_Query( $args );
 	$output = '';
 	$c = 0;
 	if ( $article->have_posts() ) {
@@ -860,7 +869,7 @@ function hpm_waterlines_shortcode() {
 }
 add_shortcode( 'hpm_waterlines_pod', 'hpm_waterlines_shortcode' );
 
-function hpm_impact_shortcode() {
+function hpm_impact_shortcode(): string {
 	$output = '';
 	$page_id = get_the_ID() ? get_the_ID() : 0;
 	if ( $page_id == 0 ) {
@@ -881,7 +890,7 @@ function hpm_impact_shortcode() {
 	$prev = [];
 	foreach ( $media->posts as $k => $m ) {
 		if ( $k <= 3 ) {
-			$output .= '<div><a href="' . wp_get_attachment_url( $m->ID ) . '"><img src="' . wp_get_attachment_thumb_url( $m->ID ) . '">' . $m->post_excerpt . '</a></div>';
+			$output .= '<div><a href="' . wp_get_attachment_url( $m->ID ) . '"><img src="' . wp_get_attachment_thumb_url( $m->ID ) . '" alt="' . $m->post_excerpt . '">' . $m->post_excerpt . '</a></div>';
 		} else {
 			$temp = [
 				'url' => wp_get_attachment_url( $m->ID ),

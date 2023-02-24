@@ -119,12 +119,12 @@ get_header(); ?>
 	</section>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			var staffCat = document.querySelector('select#hpm-staff-cat')
-			staffCat.addEventListener('change', (e) => {
-				if (staffCat.value == 0) {
+			let staffCat = document.querySelector('select#hpm-staff-cat')
+			staffCat.addEventListener('change', () => {
+				if (staffCat.value === 0) {
 					window.location.href = '/staff/';
 				} else {
-					window.location.href = "/staff-category/"+staffCat.value+"/";
+					window.location.href = "/staff-category/" + staffCat.value + "/";
 				}
 			});
 		});

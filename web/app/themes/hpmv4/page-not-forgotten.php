@@ -316,40 +316,40 @@ Template Name: Not Forgotten
 						e.stopPropagation();
 						document.querySelector('#nf-msg-overlay').classList.remove('nf-active');
 						document.body.classList.remove('modal-open');
-						var scroll = document.body.style.top;
+						let scroll = document.body.style.top;
 						window.scrollTo(0, parseInt(scroll || '0') * -1);
 						hpm.players.forEach((player) => {
 							player.pause();
 						});
-						var current = msg.getAttribute('data-current');
+						let current = msg.getAttribute('data-current');
 						if (msg.hasChildNodes) {
 							document.querySelector('#nf-profile-'+current).append(msg.firstChild);
 						}
 					});
 					document.querySelector('button.down').addEventListener(eventType, (e) => {
 						e.preventDefault();
-						var offset = document.querySelector('.page-content').offsetTop;
+						let offset = document.querySelector('.page-content').offsetTop;
 						window.scrollTo(0, offset-(4*16));
 					});
-					var profiles = document.querySelectorAll('.nf-profile');
-					var msg = document.querySelector('#nf-msg');
-					var navigation = document.querySelectorAll('#nf-next, #nf-previous');
+					let profiles = document.querySelectorAll('.nf-profile');
+					let msg = document.querySelector('#nf-msg');
+					let navigation = document.querySelectorAll('#nf-next, #nf-previous');
 					Array.from(navigation).forEach((navi) => {
 						navi.addEventListener(eventType, (e) => {
-							var current = parseInt(msg.getAttribute('data-current'));
-							var next, message;
-							if (navi.id == 'nf-next') {
+							let current = parseInt(msg.getAttribute('data-current'));
+							let next, message;
+							if (navi.id === 'nf-next') {
 								next = current + 1;
 							} else {
 								next = current - 1;
 							}
 							if (next > profiles.length) {
 								next = 1;
-							} else if (next == 0) {
+							} else if (next === 0) {
 								next = profiles.length;
 							}
 							msg.setAttribute('data-current', next);
-							var nProf = document.querySelector('#nf-profile-'+next);
+							let nProf = document.querySelector('#nf-profile-'+next);
 							Array.from(nProf.children).forEach((child) => {
 								if (child.classList.contains('profile-full')) {
 									message = child;
@@ -377,13 +377,13 @@ Template Name: Not Forgotten
 									message = child;
 								}
 							});
-							var currentMsg = msg.getAttribute('data-current');
+							let currentMsg = msg.getAttribute('data-current');
 							if ( currentMsg !== '') {
 								if (msg.hasChildNodes) {
 									document.querySelector('#nf-profile-'+currentMsg).append(msg.firstChild);
 								}
 							}
-							var current = profile.getAttribute('data-profile-num');
+							let current = profile.getAttribute('data-profile-num');
 							document.querySelector('#nf-msg-overlay').classList.add('nf-active');
 							msg.append(message);
 							msg.setAttribute('data-current', current);

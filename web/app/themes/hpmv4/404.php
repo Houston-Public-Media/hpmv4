@@ -16,9 +16,9 @@ get_header(); ?>
 				</header>
 				<div class="page-content">
 				<?php
-					$ref = ( isset( $_SERVER['HTTP_REFERER'] ) ) ? $_SERVER['HTTP_REFERER'] : '';
-					$redurl = ( isset( $_SERVER['REQUEST_URI'] ) ) ? $_SERVER['REQUEST_URI'] : '';
-					$domain = ( isset( $_SERVER['SERVER_NAME'] ) ) ? "http://".$_SERVER['SERVER_NAME'] : '';
+					$ref = ( $_SERVER['HTTP_REFERER'] ?? '' );
+					$redurl = ( $_SERVER['REQUEST_URI'] ?? '' );
+					$domain = ( isset( $_SERVER['SERVER_NAME'] ) ? "https://".$_SERVER['SERVER_NAME'] : '' );
 					$time = date( 'm/d/Y  H:i:s' );
 					if ( empty( $ref ) ) {
 						$ref = 'No referring URL';

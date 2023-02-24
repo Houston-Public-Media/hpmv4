@@ -107,7 +107,7 @@ get_header(); ?>
 			foreach ( $json as $tubes ) {
 				$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
 				$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
-				if ( $c == 0 && strpos( $yt_title, 'Private Video' ) === false ) { ?>
+				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) { ?>
 							<div id="youtube-main">
 								<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
 									<?php echo hpm_svg_output( 'play' ); ?>
@@ -177,7 +177,7 @@ get_header(); ?>
 	global $ka;
 	$ka = 0;
 	if ( !empty( $top ) && $top !== 'None' ) {
-		$top_art = new WP_query( [ 'p' => $top ] );
+		$top_art = new WP_Query( [ 'p' => $top ] );
 		$cat_args['posts_per_page'] = 14;
 		$cat_args['post__not_in'] = [ $top ];
 		if ( $top_art->have_posts() ) {
@@ -190,7 +190,7 @@ get_header(); ?>
 		}
 		wp_reset_query();
 	}
-	$cat = new WP_query( $cat_args );
+	$cat = new WP_Query( $cat_args );
 	if ( $cat->have_posts() ) {
 		while ( $cat->have_posts() ) {
 			$cat->the_post();

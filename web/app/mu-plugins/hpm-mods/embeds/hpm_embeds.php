@@ -11,7 +11,7 @@ class HPM_Embeds {
 		add_action( 'init', [ $this, 'create_type' ] );
 	}
 
-	public function init() {
+	public function init(): void {
 		// Add edit capabilities to selected roles
 		add_action( 'admin_init', [ $this, 'add_role_caps' ], 999 );
 
@@ -31,12 +31,12 @@ class HPM_Embeds {
 		});
 	}
 
-	public function meta_setup() {
+	public function meta_setup(): void {
 		add_action( 'add_meta_boxes', [ $this, 'add_meta' ] );
 		add_action( 'save_post', [ $this, 'save_meta' ], 10, 2 );
 	}
 
-	public function add_meta() {
+	public function add_meta(): void {
 		add_meta_box(
 			'hpm-embeds-meta-class',
 			esc_html__( 'Embed Metadata', 'hpm-embeds' ),
@@ -53,9 +53,9 @@ class HPM_Embeds {
 	 * @param $object
 	 * @param $box
 	 *
-	 * @return mixed
+	 * @return void
 	 */
-	public function embeds_meta( $object, $box ) {
+	public function embeds_meta( $object, $box ): void {
 		wp_nonce_field( basename( __FILE__ ), 'hpm_embeds_class_nonce' );
 		$hpm_embed = get_post_meta( $object->ID, 'hpm_embed', true );
 		if ( empty( $hpm_embed ) ) {
@@ -104,8 +104,8 @@ class HPM_Embeds {
 			jQuery(document).ready(function($){
 				$(document).on('change', '#hpm-embed-respond', function(){
 					$('.hpm-embed-codes').hide();
-					var select = $('#hpm-embed-respond').children('option:selected').val();
-					if ( select == 0 ) {
+					let select = $('#hpm-embed-respond').children('option:selected').val();
+					if ( select === 0 ) {
 						$('#hpm-embed-iframe').show();
 					} else {
 						$('#hpm-embed-pym').show();
@@ -124,7 +124,7 @@ class HPM_Embeds {
 	 *
 	 * @return mixed
 	 */
-	public function save_meta( $post_id, $post ) {
+	public function save_meta( $post_id, $post ): mixed {
 		$post_type = get_post_type_object( $post->post_type );
 		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 			return $post_id;
@@ -140,12 +140,13 @@ class HPM_Embeds {
 
 			update_post_meta( $post_id, 'hpm_embed', $hpm_embed );
 		}
+		return $post_id;
 	}
 
 	/**
 	 * Create custom post type to house our embeds
 	 */
-	public function create_type() {
+	public function create_type(): void {
 		register_post_type( 'embeds', [
 			'labels' => [
 				'name' => __( 'Embeds' ),
@@ -183,7 +184,7 @@ class HPM_Embeds {
 	/**
 	 * Add capabilities to the selected roles (default is admin/editor)
 	 */
-	public function add_role_caps() {
+	public function add_role_caps(): void {
 		$roles = [ 'editor', 'administrator' ];
 		foreach( $roles as $the_role ) {
 			$role = get_role( $the_role );
@@ -204,14 +205,13 @@ class HPM_Embeds {
 	/**
 	 * Return list of active podcast feeds with feed URLs and most recent files
 	 *
-	 * @return string
+	 * @return WP_Error|WP_HTTP_Response|WP_REST_Response
 	 */
-	public function list( WP_REST_Request $request = null ) {
+	public function list( WP_REST_Request $request = null ): WP_Error|WP_HTTP_Response|WP_REST_Response {
 		$list = get_transient( 'hpm_embeds_list' );
 		if ( !empty( $list ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Embeds list', 'hpm-embeds' ), 'data' => [ 'list' => $list, 'status' =>	200 ] ] );
 		}
-		$protocol = 'https://';
 		$_SERVER['HTTPS'] = 'on';
 		$list = [];
 
@@ -222,12 +222,7 @@ class HPM_Embeds {
 		]);
 		if ( $embeds->have_posts() ) {
 			while ( $embeds->have_posts() ) {
-				$temp = [
-					'name' => '',
-					'responsive' => '',
-					'branded' => '',
-					'code' => ''
-				];
+				$temp = [];
 				$embeds->the_post();
 				$id = get_the_ID();
 				$embed = get_post_meta( $id, 'hpm_embed', true );

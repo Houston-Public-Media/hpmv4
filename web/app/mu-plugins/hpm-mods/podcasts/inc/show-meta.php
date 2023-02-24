@@ -134,21 +134,21 @@
 	jQuery(document).ready(function($){
 		$('.hpm-show-banner-select').click(function(e){
 			e.preventDefault();
-			var size = $(this).attr('data-show');
-			var frame = wp.media({
+			let size = $(this).attr('data-show');
+			let frame = wp.media({
 				title: 'Choose Your ' + capitalizeFirstLetter(size) + ' Banner',
 				library: {type: 'image'},
 				multiple: false,
 				button: {text: 'Set ' + capitalizeFirstLetter(size) + ' Banner'}
 			});
 			frame.on('select', function(){
-				var sizes = frame.state().get('selection').first().attributes.sizes;
+				let sizes = frame.state().get('selection').first().attributes.sizes;
 				if ( typeof sizes.medium !== 'undefined' ) {
-					var thumb = sizes.medium.url;
+					let thumb = sizes.medium.url;
 				} else {
-					var thumb = sizes.full.url;
+					let thumb = sizes.full.url;
 				}
-				var attachId = frame.state().get('selection').first().id;
+				let attachId = frame.state().get('selection').first().id;
 				$('#hpm-show-banner-'+size).css( 'background-image', 'url('+thumb+')' )
 				$('#hpm-show-banner-'+size+'-id').val(attachId);
 			});
@@ -156,7 +156,7 @@
 		});
 		$('.hpm-show-banner-remove').click(function(e){
 			e.preventDefault();
-			var size = $(this).attr('data-show');
+			let size = $(this).attr('data-show');
 			$('#hpm-show-banner-'+size).css( 'background-image', '' )
 			$('#hpm-show-banner-'+size+'-id').val('');
 		});

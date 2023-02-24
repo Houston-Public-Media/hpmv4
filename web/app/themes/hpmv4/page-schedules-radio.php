@@ -29,7 +29,6 @@ Template Name: Radio Schedules
 	}
 	$today_date = date( 'Y-m-d', $t );
 	$date = $sched_year . "-" . $sched_month . "-" . $sched_day;
-	wp_enqueue_script( 'jquery-ui-datepicker' );
 	get_header();
 ?>
 	<style>
@@ -238,7 +237,6 @@ Template Name: Radio Schedules
 			}
 		}
 	</style>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
@@ -259,7 +257,7 @@ Template Name: Radio Schedules
 					<div id="day-select">
 						<form role="form" method="" action="">
 							<label for="datepicker">Select a Day</label>
-							<input type="text" id="datepicker" placeholder="Enter a date" name="datepicker" />
+							<input type="date" id="datepicker" name="datepicker" value="<?php echo date( 'Y/m/d' ); ?>" />
 						</form>
 					</div>
 				</div>
@@ -445,11 +443,10 @@ Template Name: Radio Schedules
 	</div>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			jQuery( "#datepicker" ).datepicker({
-				dateFormat: "yy/mm/dd",
-				onSelect: function(date) {
-					location.href = '/<?PHP echo $sched_station; ?>/schedule/'+ date;
-				}
+			let picker = document.getElementById('datepicker');
+			picker.addEventListener( 'change', () => {
+				let date = picker.value.replaceAll('-','/');
+				location.href = '/<?PHP echo $sched_station; ?>/schedule/'+date;
 			});
 		});
 	</script>

@@ -4,7 +4,7 @@
  */
 add_action( 'init', 'create_staff_post' );
 add_action( 'init', 'create_staff_taxonomies' );
-function create_staff_post() {
+function create_staff_post(): void {
 	register_post_type( 'staff', [
 		'labels' => [
 			'name' => __( 'Staff' ),
@@ -39,7 +39,7 @@ function create_staff_post() {
 	]);
 }
 
-function create_staff_taxonomies() {
+function create_staff_taxonomies(): void {
 	register_taxonomy('staff_category', 'staff', [
 		'hierarchical' => true,
 		'labels' => [
@@ -65,16 +65,16 @@ function create_staff_taxonomies() {
 }
 
 add_action( 'admin_init', 'hpm_staff_add_role_caps', 999 );
-function hpm_staff_add_role_caps() {
+function hpm_staff_add_role_caps(): void {
 	// Add the roles you'd like to administer the custom post types
 	$roles = [ 'editor', 'administrator', 'author' ];
 
 	// Loop through each role and assign capabilities
 	foreach( $roles as $the_role ) {
 		$role = get_role( $the_role );
+		$role->add_cap( 'read' );
+		$role->add_cap( 'read_hpm_staffer');
 		if ( $the_role !== 'author' ) {
-			$role->add_cap( 'read' );
-			$role->add_cap( 'read_hpm_staffer');
 			$role->add_cap( 'add_hpm_staffer' );
 			$role->add_cap( 'add_hpm_staffers' );
 			$role->add_cap( 'read_private_hpm_staffers' );
@@ -87,8 +87,6 @@ function hpm_staff_add_role_caps() {
 			$role->add_cap( 'delete_private_hpm_staffers' );
 			$role->add_cap( 'delete_published_hpm_staffers' );
 		} else {
-			$role->add_cap( 'read' );
-			$role->add_cap( 'read_hpm_staffer');
 			$role->remove_cap( 'add_hpm_staffer' );
 			$role->remove_cap( 'add_hpm_staffers' );
 			$role->remove_cap( 'read_private_hpm_staffers' );
@@ -106,12 +104,12 @@ function hpm_staff_add_role_caps() {
 
 add_action( 'load-post.php', 'hpm_staff_setup' );
 add_action( 'load-post-new.php', 'hpm_staff_setup' );
-function hpm_staff_setup() {
+function hpm_staff_setup(): void {
 	add_action( 'add_meta_boxes', 'hpm_staff_add_meta' );
 	add_action( 'save_post', 'hpm_staff_save_meta', 10, 2 );
 }
 
-function hpm_staff_add_meta() {
+function hpm_staff_add_meta(): void {
 	add_meta_box(
 		'hpm-staff-meta-class',
 		esc_html__( 'Title, Social Media, Etc.', 'example' ),
@@ -122,7 +120,7 @@ function hpm_staff_add_meta() {
 	);
 }
 
-function hpm_staff_meta_box( $object, $box ) {
+function hpm_staff_meta_box( $object, $box ): void {
 	wp_nonce_field( basename( __FILE__ ), 'hpm_staff_class_nonce' );
 
 	$hpm_staff_meta = get_post_meta( $object->ID, 'hpm_staff_meta', true );
@@ -196,22 +194,22 @@ function hpm_staff_save_meta( $post_id, $post ) {
 		update_post_meta( $post_id, 'hpm_staff_meta', $hpm_staff );
 		update_post_meta( $post_id, 'hpm_staff_alpha', $hpm_staff_alpha );
 	}
+	return $post_id;
 }
 
 add_filter( 'manage_edit-staff_columns', 'hpm_edit_staff_columns' ) ;
-function hpm_edit_staff_columns( $columns ) {
-	$columns = [
+function hpm_edit_staff_columns( $columns ): array {
+	return [
 		'cb' => '<input type="checkbox" />',
 		'title' => __( 'Name' ),
 		'job_title' => __( 'Title' ),
 		'staff_category' => __( 'Departments' ),
 		'authorship' => __( 'Author?' )
 	];
-	return $columns;
 }
 
 add_action( 'manage_staff_posts_custom_column', 'hpm_manage_staff_columns', 10, 2 );
-function hpm_manage_staff_columns( $column, $post_id ) {
+function hpm_manage_staff_columns( $column, $post_id ): void {
 	global $post;
 	$staff_meta = get_post_meta( $post_id, 'hpm_staff_meta', true );
 	$staff_authid = get_post_meta( $post_id, 'hpm_staff_authid', true );
@@ -251,14 +249,14 @@ function hpm_manage_staff_columns( $column, $post_id ) {
 }
 
 add_action('restrict_manage_posts', 'hpm_filter_post_type_by_taxonomy');
-function hpm_filter_post_type_by_taxonomy() {
+function hpm_filter_post_type_by_taxonomy(): void {
 	global $typenow;
 	$taxonomy  = 'staff_category';
 	if ( $typenow == 'staff' ) {
-		$selected      = isset( $_GET[ $taxonomy ] ) ? $_GET[$taxonomy ] : '';
+		$selected      = ( $_GET[ $taxonomy ] ?? '' );
 		$info_taxonomy = get_taxonomy( $taxonomy );
 		wp_dropdown_categories([
-			'show_option_all' => __("Show All {$info_taxonomy->label}"),
+			'show_option_all' => __("Show All $info_taxonomy->label"),
 			'taxonomy'        => $taxonomy,
 			'name'            => $taxonomy,
 			'orderby'         => 'name',
@@ -272,11 +270,11 @@ function hpm_filter_post_type_by_taxonomy() {
 }
 
 add_filter('parse_query', 'hpm_convert_id_to_term_in_query');
-function hpm_convert_id_to_term_in_query( $query ) {
+function hpm_convert_id_to_term_in_query( $query ): void {
 	global $pagenow;
 	$taxonomy  = 'staff_category';
 	$q_vars    = &$query->query_vars;
-	if ( $pagenow == 'edit.php' && isset( $q_vars['post_type'] ) && $q_vars['post_type'] == 'staff' && isset( $q_vars[ $taxonomy ] ) && is_numeric( $q_vars[ $taxonomy ] ) && $q_vars[ $taxonomy ] != 0 ) {
+	if ( $pagenow == 'edit.php' && isset( $q_vars['post_type'] ) && $q_vars['post_type'] == 'staff' && isset( $q_vars[ $taxonomy ] ) && is_numeric( $q_vars[ $taxonomy ] ) && $q_vars[ $taxonomy ] !== 0 ) {
 		$term = get_term_by('id', $q_vars[ $taxonomy ], $taxonomy );
 		$q_vars[ $taxonomy ] = $term->slug;
 	}
@@ -285,7 +283,7 @@ function hpm_convert_id_to_term_in_query( $query ) {
 /*
  * Changes number of posts loaded when viewing the staff directory
  */
-function staff_meta_query( $query ) {
+function staff_meta_query( $query ): void {
 	if (
 		$query->is_archive() &&
 		$query->is_main_query() &&
@@ -321,7 +319,7 @@ function hpm_staff_tax_template( $taxonomy_template ) {
 }
 add_filter( 'taxonomy_template', 'hpm_staff_tax_template' );
 
-function hpm_staff_echo( $query ) {
+function hpm_staff_echo( $query ): void {
 	$main_query = $query;
 	$cat = $main_query->get( 'staff_category' );
 	$exempt = [ 'hosts', 'executive-team', 'department-leaders' ];
@@ -410,7 +408,7 @@ function hpm_staff_echo( $query ) {
 		}
 
 		echo '</div><h2>Houston Public Media Staff</h2>';
-	} elseif ( !empty( $cat ) && !in_array( $cat, $exempt ) ) {
+	} elseif ( !in_array( $cat, $exempt ) ) {
 		$main_query->posts = hpm_staff_sort( $main_query->posts );
 	}
 	echo '<div class="staff-grid">';
@@ -422,7 +420,7 @@ function hpm_staff_echo( $query ) {
 	wp_reset_query();
 }
 
-function hpm_staff_sort( $posts ) {
+function hpm_staff_sort( $posts ): array {
 	$out = $first = [];
 	$exempt = [ 'hosts', 'executive-team', 'department-leaders' ];
 	foreach ( $posts as $p ) {

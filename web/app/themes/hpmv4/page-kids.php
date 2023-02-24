@@ -46,7 +46,6 @@ get_header(); ?>
 			font-size: 0.8em;
 			font-weight: normal;
 			font-style: normal;
-			line-height: 1.2;
 			letter-spacing: 1px;
 			position: absolute;
 			text-transform: uppercase;
@@ -418,7 +417,7 @@ get_header(); ?>
 				<img src="https://cdn.hpm.io/wp-content/uploads/2016/01/14164220/Kids-2.png" alt="Ready Jet Go Kids" id="head-kids">
 			</header>
 			<?php
-				the_content( );
+				the_content();
 			} ?>
 		</main>
 	</div>

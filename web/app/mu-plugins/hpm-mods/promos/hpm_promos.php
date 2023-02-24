@@ -5,7 +5,7 @@
 
 class HPM_Promos {
 
-	protected $options;
+	protected array $options;
 
 	public function __construct() {
 		add_action( 'plugins_loaded', [ $this, 'init' ] );
@@ -15,7 +15,7 @@ class HPM_Promos {
 	/**
 	 * Init
 	 */
-	public function init() {
+	public function init(): void {
 		$this->options = get_option( 'hpm_promos_settings' );
 		add_action( 'admin_init', [ $this, 'add_role_caps' ], 999 );
 		add_action( 'save_post', [ $this, 'save_meta' ], 10, 2 );
@@ -40,7 +40,7 @@ class HPM_Promos {
 		add_shortcode( 'hpm_promos', [ $this, 'promo_shortcode' ] );
 	}
 
-	public function hide_publish_button() {
+	public function hide_publish_button(): void {
 		global $post;
 		if ( $post !== null && $post->post_type == 'promos' ) {
 			$meta = get_post_meta( $post->ID, 'hpm_promos_meta', true );
@@ -54,7 +54,7 @@ class HPM_Promos {
 		}
 	}
 
-	public function create_type() {
+	public function create_type(): void {
 		register_post_type( 'promos',
 			[
 				'labels'               => [
@@ -89,7 +89,7 @@ class HPM_Promos {
 		);
 	}
 
-	public function add_role_caps() {
+	public function add_role_caps(): void {
 		// Add the roles you'd like to administer the custom post types
 		$roles = [ 'administrator', 'editor' ];
 
@@ -111,7 +111,7 @@ class HPM_Promos {
 	}
 
 
-	public function add_meta() {
+	public function add_meta(): void {
 		add_meta_box(
 			'hpm-promos-meta-class',
 			esc_html__( 'Alert Metadata', 'example' ),
@@ -122,7 +122,7 @@ class HPM_Promos {
 		);
 	}
 
-	public function meta_box( $object, $box ) {
+	public function meta_box( $object, $box ): void {
 		wp_nonce_field( basename( __FILE__ ), 'hpm_promos_class_nonce' );
 		$hpm_promo = get_post_meta( $object->ID, 'hpm_promos_meta', true );
 		if ( empty( $hpm_promo ) ) {
@@ -214,21 +214,17 @@ class HPM_Promos {
 		<script>
 			jQuery(document).ready(function($){
 				$( "#hpm_promo_type" ).change(function () {
-					var typeVal = $(this).val();
+					let typeVal = $(this).val();
 					$('.hpm-promo-types').hide();
 					$('#hpm-'+typeVal).show();
-					if (typeVal == 'sidebar') {
+					if (typeVal === 'sidebar') {
 						send_to_editor("<div id=\"[[ CAMPAIGN ID ]]\" class=\"top-banner\">\n\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n</div>\n");
-					} else if (typeVal == 'fullwidth') {
+					} else if (typeVal === 'fullwidth') {
 						send_to_editor("<div id=\"[[ CAMPAIGN ID ]]\" class=\"top-banner\">\n\t<a href=\"[[ CLICKTHROUGH LINK ]]\">\n\t\t<picture>\n\t\t\t<source srcset=\"[[ MOBILE IMAGE URL ]]\" media=\"(max-width: 34em)\" />\n\t\t\t<source srcset=\"[[ TABLET IMAGE URL ]]\" media=\"(max-width: 52.5em)\" />\n\t\t\t<source srcset=\"[[ DESKTOP IMAGE URL ]]\" />\n\t\t\t<img src=\"[[ DESKTOP IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" />\n\t\t</picture>\n\t</a>\n</div>\n");
-					} else if (typeVal == 'lightbox') {
-						send_to_editor("<div id=\"campaign-splash\" data-campaign=\"[[ LIGHTBOX DESCRIPTION ]]\" class=\"lightbox\">\n\t<div id=\"splash\">\n\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n\t\t<div class=\"campaign-push\">\n\t\t\t<p>[[ LIGHTBOX COPY ]]</p>\n\t\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 512 512\"><path d=\"M438.1,85.3c-48.4-41.2-120.3-33.8-164.7,12L256,115.2l-17.4-17.9c-44.3-45.8-116.4-53.2-164.7-12 c-55.4,47.3-58.4,132.2-8.7,183.5L236,445.2c11,11.4,29,11.4,40,0l170.8-176.4C496.5,217.5,493.6,132.6,438.1,85.3L438.1,85.3z\"></path></svg> [[ BUTTON TEXT ]]</a>\n\t\t</div>\n\t\t<div id=\"campaign-close\">X</div>\n\t</div>\n</div>\n");
+					} else if (typeVal === 'lightbox') {
+						send_to_editor("<div id=\"campaign-splash\" data-campaign=\"[[ LIGHTBOX DESCRIPTION ]]\" class=\"lightbox\">\n\t<div id=\"splash\">\n\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n\t\t<div class=\"campaign-push\">\n\t\t\t<p>[[ LIGHTBOX COPY ]]</p>\n\t\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><path d=\"M438.1,85.3c-48.4-41.2-120.3-33.8-164.7,12L256,115.2l-17.4-17.9c-44.3-45.8-116.4-53.2-164.7-12 c-55.4,47.3-58.4,132.2-8.7,183.5L236,445.2c11,11.4,29,11.4,40,0l170.8-176.4C496.5,217.5,493.6,132.6,438.1,85.3L438.1,85.3z\"></path></svg> [[ BUTTON TEXT ]]</a>\n\t\t</div>\n\t\t<div id=\"campaign-close\">X</div>\n\t</div>\n</div>\n");
 					}
-					if (typeVal !== '') {
-						document.getElementById('publish').disabled = false;
-					} else {
-						document.getElementById('publish').disabled = true;
-					}
+					document.getElementById('publish').disabled = typeVal === '';
 				});
 			});
 		</script>
@@ -291,20 +287,19 @@ class HPM_Promos {
 
 			update_post_meta( $post_id, 'hpm_promos_meta', $hpm_promo_meta );
 		}
+		return $post_id;
 	}
 
-	public function options_clean( $new_value, $old_value ) {
-		$find = [ '{/$}', '{^/}' ];
-		$replace = [ '', '' ];
+	public function options_clean( $new_value, $old_value ): array {
 		foreach ( $new_value['bans'] as $k => $v ) {
 			$new_value['bans'][$k] = preg_replace( '/\s/', '', $v );
 		}
 		return $new_value;
 	}
 
-	public function unpub_date() {
+	public function unpub_date(): bool {
 		global $post;
-		if ( ! current_user_can( 'edit_others_posts', $post->ID ) ) {
+		if ( !current_user_can( 'edit_others_posts', $post->ID ) ) {
 			return false;
 		}
 		if ( $post->post_type == 'promos' ) {
@@ -408,9 +403,10 @@ class HPM_Promos {
 </style>
 <?php
 		}
+		return true;
 	}
 
-	public function cleanup() {
+	public function cleanup(): void {
 		$t = time();
 		$offset = get_option('gmt_offset')*3600;
 		$t = $t + $offset;
@@ -436,7 +432,7 @@ class HPM_Promos {
 		}
 	}
 
-	public function generate_lightbox() {
+	public function generate_lightbox(): string {
 		global $wp_query;
 		$wp_global = $wp_query;
 		$output = '';
@@ -444,7 +440,7 @@ class HPM_Promos {
 		if ( empty( $wp_query->post ) ) {
 			return $output;
 		}
-		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) {
+		if ( $wp_query->post->post_type == 'embeds' ) {
 			return $output;
 		}
 		if ( $wp_global->is_page || $wp_global->is_single ) {
@@ -549,8 +545,6 @@ class HPM_Promos {
 							"}".
 						"}";
 						$lightbox++;
-					} else {
-						continue;
 					}
 				}
 			}
@@ -558,19 +552,19 @@ class HPM_Promos {
 		if ( !empty( $output ) ) {
 			$output = "<script>".
 				"(function(){".
-					"var wide = window.innerWidth;".
+					"let wide = window.innerWidth;".
 					$output .
-					"var lBox = document.querySelectorAll('#campaign-splash a');".
+					"let lBox = document.querySelectorAll('#campaign-splash a');".
 					"if (lBox !== null) {".
 						"Array.from(lBox).forEach((item) => {".
 							"item.addEventListener('click', (event) => {".
 								"event.stopPropagation();" .
-								"var campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
+								"let campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
 								"if ( typeof campaign !== typeof undefined && campaign !== false) {".
 									"ga('hpmprod.send', 'event', 'Lightbox', 'click', campaign);".
 									"ga('hpmRollupprod.send', 'event', 'Lightbox', 'click', campaign);".
 									"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'click', campaign);".
-									"gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'click'});" .
+									"gtag('event', 'lightbox', {'event_label': campaign,'event_category': 'click'});" .
 								"}".
 							"});".
 						"});".
@@ -581,7 +575,7 @@ class HPM_Promos {
 		return $output;
 	}
 
-	public static function generate_static( $position, $method = null ) {
+	public static function generate_static( $position, $method = null ): string {
 		global $wp_query;
 		$wp_global = $wp_query;
 		$output = '';
@@ -601,7 +595,7 @@ class HPM_Promos {
 		if ( empty( $wp_query->post ) ) {
 			return $output;
 		}
-		if ( !empty( $wp_query->post ) && $wp_query->post->post_type == 'embeds' ) {
+		if ( $wp_query->post->post_type == 'embeds' ) {
 			return $output;
 		}
 		if ( $wp_global->is_page || $wp_global->is_single ) {
@@ -667,8 +661,6 @@ class HPM_Promos {
 						if ( !$fullwidth ) {
 							$output .= $content_esc;
 							$fullwidth = true;
-						} else {
-							continue;
 						}
 					} elseif ( $meta['type'] == 'emergency' ) {
 						$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
@@ -694,8 +686,8 @@ class HPM_Promos {
 	}
 
 
-	public function edit_columns( $columns ) {
-		$columns = [
+	public function edit_columns( $columns ): array {
+		return [
 			'cb' => '<input type="checkbox" />',
 			'title' => __( 'Name' ),
 			'promo_type' => __( 'Type' ),
@@ -703,10 +695,9 @@ class HPM_Promos {
 			'date' => __( 'Date' ),
 			'promo_expiration' => __( 'Expiration' )
 		];
-		return $columns;
 	}
 
-	public function manage_columns( $column, $post_id ) {
+	public function manage_columns( $column, $post_id ): void {
 		global $post;
 		$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
 		$offset = get_option( 'gmt_offset' ) * 3600;
@@ -749,7 +740,7 @@ class HPM_Promos {
 	/**
 	 * Creates the Settings menu in the Admin Dashboard
 	 */
-	public function create_menu() {
+	public function create_menu(): void {
 		add_submenu_page( 'edit.php?post_type=promos', 'HPM Promo Settings', 'Settings', 'manage_options', 'hpm-promos-settings', [ $this, 'settings_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 	}
@@ -757,14 +748,14 @@ class HPM_Promos {
 	/**
 	 * Registers the settings group for HPM Podcasts
 	 */
-	public function register_settings() {
+	public function register_settings(): void {
 		register_setting( 'hpm-promos-settings-group', 'hpm_promos_settings' );
 	}
 
 	/**
 	 * Creates the Settings menu in the Admin Dashboard
 	 */
-	public function settings_page() {
+	public function settings_page(): void {
 		$opts = $this->options; ?>
 <div class="wrap">
 	<h1><?php _e('Promo Banner Administration', 'hpm-promos' ); ?></h1>
@@ -804,7 +795,7 @@ class HPM_Promos {
 </div><?php
 	}
 
-	public function promo_shortcode( $atts ) {
+	public function promo_shortcode( $atts ): string {
 		extract( shortcode_atts( [
 			'position' => 'sidebar'
 		], $atts, 'multilink' ) );

@@ -5,23 +5,23 @@ Template Name: Main Categories
 if ( !empty( $_GET ) ) {
 	if ( !empty( $_GET['q'] ) ) {
 		$q = $_GET['q'];
-		if ( preg_match( '/^source/', $q ) || preg_match( '/^by/', $q ) ) {
-			$q_a = str_replace( array('source:','by','+'),array('','',' '),$q );
-			$q_a = sanitize_title($q_a);
-			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: //www.houstonpublicmedia.org/articles/author/'.$q_a);
+		if ( str_contains( 'source', $q ) || str_contains( 'by', $q ) ) {
+			$q_a = str_replace( [ 'source:', 'by', '+' ], [ '', '', ' '], $q );
+			$q_a = sanitize_title( $q_a );
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: //www.houstonpublicmedia.org/articles/author/' . $q_a );
 			exit;
-		} elseif ( preg_match( '/^tag/', $q ) ) {
-			$tag = str_replace( array('tag:',' '),array('','-'),$q );
-			$tag = sanitize_title($tag);
-			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: //www.houstonpublicmedia.org/tag/'.$tag);
+		} elseif ( str_contains( 'tag', $q ) ) {
+			$tag = str_replace( [ 'tag:', ' ' ], [ '', '-' ], $q );
+			$tag = sanitize_title( $tag );
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: //www.houstonpublicmedia.org/tag/' . $tag );
 			exit;
-		} elseif ( preg_match( '/^category/', $q ) ) {
-			$tag = str_replace( array('category:',' '),array('','-'),$q );
-			$tag = sanitize_title($tag);
-			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: //www.houstonpublicmedia.org/tag/'.$tag);
+		} elseif ( str_contains( 'category', $q ) ) {
+			$tag = str_replace( [ 'category:', ' ' ], [ '', '-' ], $q );
+			$tag = sanitize_title( $tag );
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: //www.houstonpublicmedia.org/tag/' . $tag );
 			exit;
 		}
 	}

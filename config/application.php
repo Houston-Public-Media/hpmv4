@@ -1,10 +1,8 @@
 <?php
 
-/** @var string Directory containing all of the site's files */
 $root_dir = dirname( __DIR__ );
 define( 'SITE_ROOT', $root_dir );
 
-/** @var string Document Root */
 $webroot_dir = $root_dir . '/web';
 
 /**
@@ -43,7 +41,7 @@ if ( empty( $_SERVER['HTTP_HOST'] ) && WP_ENV == 'development' ) {
 if ( empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) && !empty( $_SERVER['HTTP_HOST'] ) ) {
 	$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
 }
-if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && strpos( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok.io' ) !== FALSE ) {
+if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && str_contains( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok.io' ) ) {
 	define( 'WP_HOME', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] );
 	define( 'WP_SITEURL', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] . '/wp' );
 } else {
@@ -54,9 +52,9 @@ if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpu
 /**
  * Custom Content Directory
  */
-define( 'CONTENT_DIR', '/app' );
+const CONTENT_DIR = '/app';
 define( 'WP_CONTENT_DIR', $webroot_dir . CONTENT_DIR );
-define( 'WP_CONTENT_URL', WP_HOME . CONTENT_DIR );
+const WP_CONTENT_URL = WP_HOME . CONTENT_DIR;
 
 /**
  * DB settings
@@ -65,8 +63,8 @@ define( 'DB_NAME', env('DB_NAME' ) );
 define( 'DB_USER', env( 'DB_USER' ) );
 define( 'DB_PASSWORD', env( 'DB_PASSWORD' ) );
 define( 'DB_HOST', env( 'DB_HOST' ) ?: '127.0.0.1' );
-define( 'DB_CHARSET', 'utf8mb4' );
-define( 'DB_COLLATE', 'utf8mb4_unicode_ci' );
+const DB_CHARSET = 'utf8mb4';
+const DB_COLLATE = 'utf8mb4_unicode_ci';
 $table_prefix = env( 'DB_PREFIX' ) ?: 'wp_';
 
 /**
@@ -84,14 +82,14 @@ define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
 /**
  * Custom Settings
  */
-define( 'FORCE_SSL_ADMIN', true );
-define( 'WP_AUTO_UPDATE_CORE', false );
-define( 'AUTOMATIC_UPDATER_DISABLED', true );
+const FORCE_SSL_ADMIN = true;
+const WP_AUTO_UPDATE_CORE = false;
+const AUTOMATIC_UPDATER_DISABLED = true;
 define( 'DISABLE_WP_CRON', env( 'DISABLE_WP_CRON' ) ?: false );
-define( 'DISALLOW_FILE_EDIT', true );
-define( 'EMPTY_TRASH_DAYS', 30 );
-define( 'WP_POST_REVISIONS', 7 );
-define( 'WP_MAX_MEMORY_LIMIT', '1024M' );
+const DISALLOW_FILE_EDIT = true;
+const EMPTY_TRASH_DAYS   = 30;
+const WP_POST_REVISIONS  = 7;
+const WP_MAX_MEMORY_LIMIT = '1024M';
 define( 'AWS_ACCESS_KEY_ID', env( 'AWS_ACCESS_KEY_ID' ) );
 define( 'AWS_SECRET_ACCESS_KEY', env( 'AWS_SECRET_ACCESS_KEY' ) );
 define( 'HPM_SFTP_PASSWORD', env( 'HPM_SFTP_PASSWORD' ) );
@@ -108,7 +106,7 @@ define( 'HPM_FB_PAGE_ID', env( 'FACEBOOK_PAGE_ID' ) );
 define( 'HPM_FB_ACCESS_TOKEN', env( 'FACEBOOK_ACCESS_TOKEN' ) );
 define( 'HPM_FB_APPSECRET', env( 'FACEBOOK_APPSECRET' ) );
 define( 'HPM_YT_API_KEY', env( 'YT_API_KEY' ) );
-define( 'EWWW_IMAGE_OPTIMIZER_DEFER_S3', true );
+const EWWW_IMAGE_OPTIMIZER_DEFER_S3 = true;
 
 /**
  * Bootstrap WordPress

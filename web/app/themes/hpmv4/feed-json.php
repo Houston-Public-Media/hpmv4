@@ -139,8 +139,8 @@ if ( 'podcasts' === get_query_var( 'post_type' ) ) {
 				'content_html' => apply_filters( 'hpm_filter_text', get_the_content() ),
 				'content_text' => strip_shortcodes( wp_strip_all_tags( get_the_content() ) ),
 				'excerpt' => get_the_excerpt(),
-				'date_published' => get_the_date( 'c', '', '', false),
-				'date_modified' => get_the_modified_date( 'c', '', '', false),
+				'date_published' => get_the_date( 'c', '' ),
+				'date_modified' => get_the_modified_date( 'c', '' ),
 				'author' => coauthors( '; ', '; ', '', '', false ),
 				'attachments' => []
 			];
@@ -150,7 +150,7 @@ if ( 'podcasts' === get_query_var( 'post_type' ) ) {
 				foreach ( $media as $m ) {
 					$url = wp_get_attachment_url( $m->ID );
 					$meta = get_post_meta( $m->ID, '_wp_attachment_metadata', true );
-					if ( strpos( $m->post_mime_type, 'image' ) !== FALSE ) {
+					if ( str_contains( $m->post_mime_type, 'image' ) ) {
 						$single['attachments'][] = [
 							'url' => $url,
 							'mime_type' => $m->post_mime_type,
@@ -158,7 +158,7 @@ if ( 'podcasts' === get_query_var( 'post_type' ) ) {
 							'width' => ( !empty( $meta['width'] ) ? $meta['width'] : 0 ),
 							'height' => ( !empty( $meta['height'] ) ? $meta['height'] : 0 )
 						];
-					} elseif ( strpos( $m->post_mime_type, 'audio' ) !== FALSE ) {
+					} elseif ( str_contains( $m->post_mime_type, 'audio' ) ) {
 						$single['attachments'][] = [
 							'url' => $url,
 							'mime_type' => $m->post_mime_type,

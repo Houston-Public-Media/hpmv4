@@ -50,10 +50,7 @@ get_header(); ?>
 		background-size: cover;
 		height: 0;
 		margin: 0 !important;
-		padding-right: 0;
-		padding-left: 0;
-		padding-top: 0;
-		padding-bottom: calc(100%/1.5);
+		padding: 0 0 calc(100%/1.5) 0;
 		position: relative;
 		background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_mobile.jpg);
 	}
@@ -90,10 +87,7 @@ get_header(); ?>
 	}
 	@media screen and (min-width: 34em) {
 		.page-header {
-			padding-right: 0;
-			padding-left: 0;
-			padding-top: 0;
-			padding-bottom: calc(100%/4);
+			padding: 0 0 calc(100%/4) 0;
 			margin: 0 !important;
 			background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_tablet.jpg);
 		}
@@ -120,10 +114,7 @@ get_header(); ?>
 			}
 
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/6);
+				padding: 0 0 calc(100%/6) 0;
 				margin: 0 !important;
 				background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_desktop.jpg);
 			}

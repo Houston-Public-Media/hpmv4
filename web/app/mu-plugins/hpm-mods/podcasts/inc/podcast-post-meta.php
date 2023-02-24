@@ -68,7 +68,7 @@ if ( !empty( $pods['upload-media'] ) ) {
 } ?>
 <script>
 	function uploadCheck() {
-		var id = jQuery('#post_ID').val();
+		let id = jQuery('#post_ID').val();
 		jQuery.ajax({
 			type: 'GET',
 			url: '/wp-json/hpm-podcast/v1/upload/'+id+'/progress',
@@ -101,7 +101,7 @@ if ( !empty( $pods['upload-media'] ) ) {
 	}
 
 	jQuery(document).ready(function($){
-		var desc = $("#hpm-podcast-description");
+		let desc = $("#hpm-podcast-description");
 		$("span#excerpt_counter").text(desc.val().length);
 		desc.keyup( function() {
 			if($(this).val().length > 4000){
@@ -111,16 +111,16 @@ if ( !empty( $pods['upload-media'] ) ) {
 		});
 		$('#hpm-pods-upload').click(function(e){
 			e.preventDefault();
-			var frame = wp.media({
+			let frame = wp.media({
 				title: 'Choose Your Audio File',
 				library: {type: 'audio/mpeg'},
 				multiple: false,
 				button: {text: 'Upload to StreamGuys'}
 			});
 			frame.on('select', function(){
-				var attachId = frame.state().get('selection').first().id;
-				var id = $('#post_ID').val();
-				var feed = $('#hpm-podcast-ep-feed').val();
+				let attachId = frame.state().get('selection').first().id;
+				let id = $('#post_ID').val();
+				let feed = $('#hpm-podcast-ep-feed').val();
 				console.log('Attach ID: '+attachId);
 				$('#hpm-pods-upload').after( '<span id="hpm-upload"><img style="padding: 0 0.5em; vertical-align: middle;" src="<?php echo WP_SITEURL; ?>/wp-includes/images/spinner.gif"><span style="margin-left: 1em;" id="hpm-upload-message"></span></span>' );
 				$.ajax({

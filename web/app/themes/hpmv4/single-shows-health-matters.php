@@ -64,7 +64,7 @@ get_header(); ?>
 		}
 		section#audio-playlist-player #audio-nav .audio-playlist p {
 			color: white;
-			font: 500;
+			font-weight: 500;
 			font-size: 1.25em;
 			display: block;
 			width: 100%;
@@ -79,7 +79,6 @@ get_header(); ?>
 			padding: 0;
 			max-height: 28em;
 			overflow-y: scroll;
-			margin-bottom: 0;
 			border-bottom: 1px solid white;
 		}
 		section #audio-nav ul li {
@@ -321,7 +320,8 @@ get_header(); ?>
 						<ul>
 						<?php
 							foreach ( $atts as $a ) { ?>
-								<li <?php echo ($a['id'] == $atts[0]['id'] ? 'class="current" ' : ''); ?>id="hm<?php echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
+								<li <?php echo ( $a['id'] == $atts[0]['id'] ? 'class="current" ' : '' ); ?>id="hm<?php
+								echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
 									<div class="audio-info"><?php echo $a['title']; ?></div>
 								</li>
 						<?php
@@ -334,20 +334,19 @@ get_header(); ?>
 	</div>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			var navs = document.querySelectorAll('#audio-nav ul li');
+			let navs = document.querySelectorAll('#audio-nav ul li');
 			Array.from(navs).forEach((nav) => {
 				nav.addEventListener('click', () => {
-					var ytid = nav.getAttribute('data-ytid');
-					var yttitle = nav.getAttribute('data-yttitle');
-					var stTitle = document.querySelector('#ap-title');
+					let ytid = nav.getAttribute('data-ytid');
+					let yttitle = nav.getAttribute('data-yttitle');
+					let stTitle = document.querySelector('#ap-title');
+					let next = document.querySelector('#audio > ul li:first-child').getAttribute('id');
 					if (ytid === null) {
 						return false;
 					} else {
 						stTitle.innerHTML = yttitle;
 						if (nav.nextElementSibling !== null) {
-							var next = nav.nextElementSibling.getAttribute('id');
-						} else {
-							var next = document.querySelector('#audio > ul li:first-child').getAttribute('id');
+							next = nav.nextElementSibling.getAttribute('id');
 						}
 						hpm.players[0].pause();
 						hpm.players[0].source = {
@@ -369,18 +368,17 @@ get_header(); ?>
 			});
 			setTimeout(() => {
 				hpm.players[0].on('ended', (event) => {
-					var stTitle = document.querySelector('#ap-title');
-					var nextId = stTitle.getAttribute('data-next-id');
-					var nextEp = document.querySelector('#' + nextId);
-					var ytid = nextEp.getAttribute('data-ytid');
+					let stTitle = document.querySelector('#ap-title');
+					let nextId = stTitle.getAttribute('data-next-id');
+					let nextEp = document.querySelector('#' + nextId);
+					let ytid = nextEp.getAttribute('data-ytid');
+					let next = document.querySelector('#audio > ul li:first-child').getAttribute('id');
 					if (ytid === null) {
 						return false;
 					} else {
-						var yttitle = nextEp.getAttribute('data-yttitle');
+						let yttitle = nextEp.getAttribute('data-yttitle');
 						if (nextEp.nextElementSibling !== null) {
-							var next = nextEp.nextElementSibling.getAttribute('id');
-						} else {
-							var next = document.querySelector('#audio > ul li:first-child').getAttribute('id');
+							next = nextEp.nextElementSibling.getAttribute('id');
 						}
 						stTitle.innerHTML = yttitle;
 						hpm.players[0].source = {

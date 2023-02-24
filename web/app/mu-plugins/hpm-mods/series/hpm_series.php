@@ -4,13 +4,13 @@
  */
 add_action( 'load-post.php', 'hpm_series_setup' );
 add_action( 'load-post-new.php', 'hpm_series_setup' );
-function hpm_series_setup() {
+function hpm_series_setup(): void {
 	add_action( 'add_meta_boxes', 'hpm_series_add_meta' );
 	add_action( 'save_post', 'hpm_series_save_meta', 10, 2 );
 }
 
 $hpm_templates = [ 'default', 'page-wide.php', 'page-wide-w-post.php', 'page-wide-w-post-poll.php', 'page-series.php', 'page-series-tiles.php' ];
-function hpm_series_add_meta() {
+function hpm_series_add_meta(): void  {
 	global $wp_query;
 	global $hpm_templates;
 	$template = get_post_meta( get_the_ID(), '_wp_page_template', true );
@@ -24,7 +24,7 @@ function hpm_series_add_meta() {
 			'high'
 		);
 	}
-	if ( preg_match( '/series/', $template ) || preg_match( '/wide\-w\-post/', $template ) ) {
+	if ( str_contains( 'series', $template ) || str_contains( 'wide-w-post', $template ) ) {
 		add_meta_box(
 			'hpm-series-meta-class',
 			esc_html__( 'Series Category', 'example' ),
@@ -36,7 +36,7 @@ function hpm_series_add_meta() {
 	}
 }
 
-function hpm_header_image_meta_box( $object, $box ) {
+function hpm_header_image_meta_box( $object, $box ): void {
 	wp_nonce_field( basename( __FILE__ ), 'hpm_series_class_nonce' );
 	$hpm_page_options = get_post_meta( $object->ID, 'hpm_page_options', true );
 	if ( empty( $hpm_page_options ) ) {
@@ -70,19 +70,19 @@ function hpm_header_image_meta_box( $object, $box ) {
 			<div class="hpm-page-banner-image" id="hpm-page-banner-mobile"<?php echo $hpm_mobile_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="mobile">Mobile</button>
 			<input value="<?php echo $hpm_page_options['banner']['mobile']; ?>" type="hidden" id="hpm-page-banner-mobile-id" name="hpm-page-banner-mobile-id" />
-			<?php echo ( !empty( $hpm_page_options['banner']['mobile'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="mobile" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
+			<?php echo ( $hpm_page_options['banner']['mobile'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="mobile" style="border-color: red; color: red;">Remove</button>' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-tablet"<?php echo $hpm_tablet_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="tablet">Tablet</button>
 			<input value="<?php echo $hpm_page_options['banner']['tablet']; ?>" type="hidden" id="hpm-page-banner-tablet-id" name="hpm-page-banner-tablet-id" />
-			<?php echo ( !empty( $hpm_page_options['banner']['tablet'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="tablet" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
+			<?php echo ( $hpm_page_options['banner']['tablet'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="tablet" style="border-color: red; color: red;">Remove</button>' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-desktop"<?php echo $hpm_desktop_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="desktop">Desktop</button>
 			<input value="<?php echo $hpm_page_options['banner']['desktop']; ?>" type="hidden" id="hpm-page-banner-desktop-id" name="hpm-page-banner-desktop-id" />
-			<?php echo ( !empty( $hpm_page_options['banner']['desktop'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
+			<?php echo ( $hpm_page_options['banner']['desktop'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' ); ?>
 		</div>
 	</div>
 	<script>
@@ -92,21 +92,20 @@ function hpm_header_image_meta_box( $object, $box ) {
 		jQuery(document).ready(function($){
 			$('.hpm-page-banner-select').click(function(e){
 				e.preventDefault();
-				var size = $(this).attr('data-show');
-				var frame = wp.media({
+				let size = $(this).attr('data-show');
+				let frame = wp.media({
 					title: 'Choose Your ' + capitalizeFirstLetter(size) + ' Banner',
 					library: {type: 'image'},
 					multiple: false,
 					button: {text: 'Set ' + capitalizeFirstLetter(size) + ' Banner'}
 				});
 				frame.on('select', function(){
-					var sizes = frame.state().get('selection').first().attributes.sizes;
+					let sizes = frame.state().get('selection').first().attributes.sizes;
+					let thumb = sizes.full.url;
 					if ( typeof sizes.medium !== 'undefined' ) {
-						var thumb = sizes.medium.url;
-					} else {
-						var thumb = sizes.full.url;
+						thumb = sizes.medium.url;
 					}
-					var attachId = frame.state().get('selection').first().id;
+					let attachId = frame.state().get('selection').first().id;
 					$('#hpm-page-banner-'+size).css( 'background-image', 'url('+thumb+')' )
 					$('#hpm-page-banner-'+size+'-id').val(attachId);
 				});
@@ -114,7 +113,7 @@ function hpm_header_image_meta_box( $object, $box ) {
 			});
 			$('.hpm-page-banner-remove').click(function(e){
 				e.preventDefault();
-				var size = $(this).attr('data-show');
+				let size = $(this).attr('data-show');
 				$('#hpm-page-banner-'+size).css( 'background-image', '' )
 				$('#hpm-page-banner-'+size+'-id').val('');
 			});
@@ -144,7 +143,7 @@ function hpm_header_image_meta_box( $object, $box ) {
 <?php
 }
 
-function hpm_series_meta_box( $object, $box ) {
+function hpm_series_meta_box( $object, $box ): void {
 	wp_nonce_field( basename( __FILE__ ), 'hpm_series_class_nonce' );
 	$hpm_series_cat = get_post_meta( $object->ID, 'hpm_series_cat', true );
 	if ( empty( $hpm_series_cat ) ) {
@@ -229,7 +228,7 @@ function hpm_series_save_meta( $post_id, $post ) {
 		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 			return $post_id;
 		}
-		if ( preg_match( '/series/', $template ) || preg_match( '/wide\-w\-post/', $template ) ) {
+		if ( str_contains( 'series', $template ) || str_contains( 'wide-w-post', $template ) ) {
 			$hpm_series_embeds = [];
 			$hpm_page_options = [
 				'banner' => [
@@ -239,26 +238,25 @@ function hpm_series_save_meta( $post_id, $post ) {
 				]
 			];
 
-			$hpm_series_cat = ( isset( $_POST['hpm-series-cat'] ) ? sanitize_text_field( $_POST['hpm-series-cat'] ) : '' );
-			$hpm_series_top = ( isset( $_POST['hpm-series-top'] ) ? sanitize_text_field( $_POST['hpm-series-top'] ) : '' );
-			$hpm_series_embeds['bottom'] = ( isset( $_POST['hpm-series-embeds'] ) ? $_POST['hpm-series-embeds'] : '' );
-			$hpm_series_embeds['twitter'] = ( isset( $_POST['hpm-series-embeds-twitter'] ) ? $_POST['hpm-series-embeds-twitter'] : '' );
-			$hpm_series_embeds['facebook'] = ( isset( $_POST['hpm-series-embeds-facebook'] ) ? $_POST['hpm-series-embeds-facebook'] : '' );
-			$hpm_series_embeds['order'] = ( isset( $_POST['hpm-series-order'] ) ? $_POST['hpm-series-order'] : 'ASC' );
-
+			$hpm_series_cat = ( sanitize_text_field( $_POST['hpm-series-cat'] ) ?? '' );
+			$hpm_series_top = ( sanitize_text_field( $_POST['hpm-series-top'] ) ?? '' );
+			$hpm_series_embeds['bottom'] = ( $_POST['hpm-series-embeds'] ?? '' );
+			$hpm_series_embeds['twitter'] = ( $_POST['hpm-series-embeds-twitter'] ?? '' );
+			$hpm_series_embeds['facebook'] = ( $_POST['hpm-series-embeds-facebook'] ?? '' );
+			$hpm_series_embeds['order'] = ( $_POST['hpm-series-order'] ?? 'ASC' );
 
 			update_post_meta( $post_id, 'hpm_series_cat', $hpm_series_cat );
 			update_post_meta( $post_id, 'hpm_series_top', $hpm_series_top );
 			update_post_meta( $post_id, 'hpm_series_embeds', $hpm_series_embeds );
 		}
-		$hpm_page_options['banner']['mobile'] = ( isset( $_POST['hpm-page-banner-mobile-id'] ) ? $_POST['hpm-page-banner-mobile-id'] : '' );
-		$hpm_page_options['banner']['tablet'] = ( isset( $_POST['hpm-page-banner-tablet-id'] ) ? $_POST['hpm-page-banner-tablet-id'] : '' );
-		$hpm_page_options['banner']['desktop'] = ( isset( $_POST['hpm-page-banner-desktop-id'] ) ? $_POST['hpm-page-banner-desktop-id'] : '' );
+		$hpm_page_options['banner']['mobile'] = ( $_POST['hpm-page-banner-mobile-id'] ?? '' );
+		$hpm_page_options['banner']['tablet'] = ( $_POST['hpm-page-banner-tablet-id'] ?? '' );
+		$hpm_page_options['banner']['desktop'] = ( $_POST['hpm-page-banner-desktop-id'] ?? '' );
 		update_post_meta( $post_id, 'hpm_page_options', $hpm_page_options );
 	}
 }
 
-function hpm_head_banners( $id, $location ) {
+function hpm_head_banners( $id, $location ): string {
 	$temp = $output = '';
 	$options = get_post_meta( $id, 'hpm_page_options', true );
 

@@ -46,10 +46,7 @@ get_header(); ?>
 			background-size: cover;
 			height: 0;
 			margin: 0 !important;
-			padding-right: 0;
-			padding-left: 0;
-			padding-top: 0;
-			padding-bottom: calc(100%/1.5);
+			padding: 0 0 calc(100%/1.5) 0;
 			position: relative;
 			background-image: url(https://cdn.hpm.io/assets/images/Election-2020_mobile-2x.jpg);
 		}
@@ -68,10 +65,7 @@ get_header(); ?>
 		}
 		@media screen and (min-width: 34em) {
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/4);
+				padding: 0 0 calc(100%/4) 0;
 				margin: 0 !important;
 				background-image: url(https://cdn.hpm.io/assets/images/Election-2020_tablet-2x.jpg);
 			}
@@ -83,10 +77,7 @@ get_header(); ?>
 				border-right: 0;
 			}
 			.page-header {
-				padding-right: 0;
-				padding-left: 0;
-				padding-top: 0;
-				padding-bottom: calc(100%/6);
+				padding: 0 0 calc(100%/6) 0;
 				margin: 0 !important;
 				background-image: url(https://cdn.hpm.io/assets/images/Election-2020_-desktop-2x.jpg);
 			}

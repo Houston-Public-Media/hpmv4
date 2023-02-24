@@ -40,7 +40,7 @@
 				'posts_per_page'=> 4,
 				'ignore_sticky_posts'=> 1
 			];
-			$my_query = new wp_Query( $args );
+			$my_query = new WP_Query( $args );
 			if ( $my_query->have_posts() ) { ?>
 <section class="highlights">
 	<h4>Related</h4>

@@ -2,10 +2,18 @@
 /*
 Template Name: NPR Content
 */
+	$npr_id = 0;
 	if ( isset( $wp_query->query_vars['npr_id'] ) ) {
 		$npr_id = urldecode( $wp_query->query_vars['npr_id'] );
 	}
-	$nprdata = hpm_pull_npr_story( $npr_id );
+	try {
+		$nprdata = hpm_pull_npr_story( $npr_id );
+	} catch ( Exception $e ) {
+		status_header(404);
+		include( get_404_template() );
+		exit;
+	}
+
 	get_header(); ?>
 	<style>
 		article .entry-content .fullattribution img { max-width: 1px; max-height: 1px; }
