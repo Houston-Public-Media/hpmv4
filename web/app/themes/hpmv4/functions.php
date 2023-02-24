@@ -465,9 +465,6 @@ function hpm_revue_signup( $content ) {
 	if ( is_single() && $post->post_type == 'post' ) {
 		if ( in_category( 'news' ) ) {
 			$form_id = '441232';
-			if ( WP_ENV == 'development' ) {
-				$form_id = '439474';
-			}
 			$content .= '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
 		}
 	}

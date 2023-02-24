@@ -1,5 +1,5 @@
 if ( typeof hpm !== 'object') {
-	let getCookie = (cname) => {
+	var getCookie = (cname) => {
 		let name = cname + "=";
 		let decodedCookie = decodeURIComponent(document.cookie);
 		let ca = decodedCookie.split(';');
@@ -14,8 +14,8 @@ if ( typeof hpm !== 'object') {
 		}
 		return null;
 	}
-	let timeOuts = [];
-	let setCookie = (cname, cvalue, exhours) => {
+	var timeOuts = [];
+	var setCookie = (cname, cvalue, exhours) => {
 		let d = new Date();
 		d.setTime(d.getTime() + (exhours*60*60*1000));
 		let expires = 'expires=' + d.toUTCString();
@@ -28,7 +28,7 @@ if ( typeof hpm !== 'object') {
 		document.getElementsByTagName("head")[0].appendChild(css);
 	}
 
-	let amPm = (timeString) => {
+	var amPm = (timeString) => {
 		let hourEnd = timeString.indexOf(":");
 		let H = +timeString.substr(0, hourEnd);
 		let h = H % 12 || 12;
@@ -36,7 +36,7 @@ if ( typeof hpm !== 'object') {
 		return h + timeString.substr(hourEnd, 3) + ampm;
 	};
 
-	let hpm = {};
+	var hpm = {};
 	hpm.getJSON = function(url, callback) {
 		let xhr = new XMLHttpRequest();
 		xhr.open('GET', url, true);
@@ -89,7 +89,7 @@ if ( typeof hpm !== 'object') {
 					});
 					menuC.firstElementChild.addEventListener('click', (event) => {
 						if (window.innerWidth < 1024) {
-							if (event.currentTarget.getAttribute('aria-expanded') == 'true' ) {
+							if (event.currentTarget.getAttribute('aria-expanded') === 'true' ) {
 								event.preventDefault();
 								document.getElementById('focus-sink').focus({preventScroll:true});
 							}
