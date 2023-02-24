@@ -1,8 +1,14 @@
-<?php
+<?PHP
 /**
  * Functions or modifications related to plugins or things that aren't directly theme-related
  */
-
+require SITE_ROOT . '/vendor/autoload.php';
+use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use Google\Analytics\Data\V1beta\DateRange;
+use Google\Analytics\Data\V1beta\Dimension;
+use Google\Analytics\Data\V1beta\Metric;
+use Google\Analytics\Data\V1beta\FilterExpression;
+use Google\Analytics\Data\V1beta\Filter;
 /**
  * Adds ability for anyone who can edit others' posts to be able to create and manage guest authors
  */
@@ -195,7 +201,7 @@ function hpm_no_mod_time(): bool {
 	if ( $post->post_type == 'post' ) {
 		$value = get_post_meta( $post->ID, 'hpm_no_mod_time', true );
 		$checked = ( !empty( $value ) ? ' checked="checked" ' : '' );
-		echo '<div class="misc-pub-section misc-pub-section-last"><input type="checkbox"' . $checked . 'value="1" name="hpm_no_mod_time" /><label for="hpm_no_mod_time">Hide Last Modified Time?</label></div>';
+		echo '<div class="misc-pub-section misc-pub-section-last"><input type="checkbox"' . $checked . ' value="1" name="hpm_no_mod_time" /><label for="hpm_no_mod_time">Hide Last Modified Time?</label></div>';
 	}
 	return true;
 }
@@ -225,7 +231,7 @@ function save_hpm_no_mod_time(): bool {
  *  If post is in "Houston" or "Harris County" category, add "Local" category
  */
 add_action( 'save_post', 'hpm_local_cat_check');
-function hpm_local_cat_check() {
+function hpm_local_cat_check(): bool {
 	global $post;
 	if ( empty( $post ) || $post->post_type != 'post' ) {
 		return false;
@@ -241,6 +247,7 @@ function hpm_local_cat_check() {
 		$cat[] = 2113;
 		wp_set_object_terms( $post->ID, $cat, 'category' );
 	}
+	return true;
 }
 
 /*
@@ -388,59 +395,55 @@ function update_post_meta_info( $original_post_id, $revised_post ): void {
 }
 
 /**
- * Authorization function for accessing Google Analytics API
- * @return Google_Service_Analytics
- * @throws \Google\Exception
- */
-function initializeAnalytics(): Google_Service_Analytics {
-	$KEY_FILE_LOCATION = SITE_ROOT . '/../client_secrets.json';
-
-	// Create and configure a new client object.
-	$client = new Google_Client();
-	$client->setApplicationName("Hello Analytics Reporting");
-	$client->setAuthConfig($KEY_FILE_LOCATION);
-	$client->setScopes(['https://www.googleapis.com/auth/analytics.readonly']);
-	$analytics = new Google_Service_Analytics($client);
-
-	return $analytics;
-}
-
-/**
  * Cron task to pull top 5 most-viewed stories from the last 3 days
  * @throws \Google\Exception
+ * @throws \Google\ApiCore\ValidationException
+ * @throws \Google\ApiCore\ApiException
  */
 function analyticsPull_update(): void {
-	require_once SITE_ROOT . '/vendor/autoload.php';
-	$analytics = initializeAnalytics();
+	$analytics = new BetaAnalyticsDataClient([
+		'credentials' => SITE_ROOT . '/../client_secrets.json'
+	]);
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 	$now = getdate( $t );
 	$then = $now[0] - 172800;
 	$match = [];
-	$result = $analytics->data_ga->get(
-		'ga:233320975',
-		date( "Y-m-d", $then ),
-		date( "Y-m-d", $now[0] ),
-		'ga:visits',
-		[
-			'filters' => 'ga:pagePath=@/articles',
-			'dimensions'  => 'ga:pagePath',
-			'metrics'     => 'ga:pageviews,ga:uniquePageviews',
-			'sort'        => '-ga:pageviews,-ga:uniquePageviews',
-			'max-results' => '5',
-			'output'      => 'json'
-		]
-	);
+	$result = $analytics->runReport([
+		'property' => 'properties/253228385',
+		'dateRanges' => [
+			new DateRange([
+				'start_date' => date( "Y-m-d", $then ),
+				'end_date' => date( "Y-m-d", $now[0] ),
+			]),
+		],
+		'dimensions' => [
+			new Dimension([ 'name' => 'pagePath' ])
+		],
+		'metrics' => [
+			new Metric([ 'name' => 'screenPageViews' ])
+		],
+		'dimensionFilter' => new FilterExpression([
+			'filter' => new Filter([
+				'field_name' => 'pagePath',
+				'string_filter' => new Filter\StringFilter([
+					'match_type' => Filter\StringFilter\MatchType::BEGINS_WITH,
+					'value' => '/articles/'
+				])
+			])
+		]),
+		'limit' => 5
+	]);
 	$output = "<ul>";
-	foreach ( $result->rows as $row ) {
-		preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row[0], $match );
+	foreach ( $result->getRows() as $row ) {
+		preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row->getDimensionValues()[0]->getValue(), $match );
 		if ( !empty( $match ) ) {
 			$title = get_the_title( $match[1] );
 			if ( empty( $title ) ) {
 				$title = ucwords( str_replace( '-', ' ', $match[2] ) );
 			}
-			$output .= '<li><h2 class="entry-title"><a href="'.$row[0].'" rel="bookmark">'.$title.'</a></h2></li>';
+			$output .= '<li><h2 class="entry-title"><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark">' . $title . '</a></h2></li>';
 		}
 	}
 	$output .= "</ul>";
@@ -819,7 +822,7 @@ function hpm_image_preview_page(): void {
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 	<head>
 		<meta charset="UTF-8">
-		<link rel="profile" href="http://gmpg.org/xfn/11">
+		<link rel="profile" href="https://gmpg.org/xfn/11">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>HPM Featured Image Preview</title>
@@ -1241,6 +1244,7 @@ function hpm_alt_headline_save_meta( $post_id, $post ) {
 			delete_post_meta( $post_id, 'hpm_seo_headline', '' );
 		}
 	}
+	return $post_id;
 }
 
 /*
@@ -1325,6 +1329,7 @@ function hpm_page_script_save_meta( $post_id, $post ) {
 			update_post_meta( $post_id, 'hpm_page_script', $page_script );
 		}
 	}
+	return $post_id;
 }
 
 add_action( 'wp_footer', function() {
