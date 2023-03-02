@@ -26,23 +26,23 @@
 				</xsl:element>
 				<xsl:element name="link">
 					<xsl:attribute name="rel">shortcut icon</xsl:attribute>
-					<xsl:attribute name="href">https://cdn.hpm.io/assets/images/favicon/icon-48.png</xsl:attribute>
+					<xsl:attribute name="href">https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-48.png</xsl:attribute>
 				</xsl:element>
 				<xsl:element name="link">
 					<xsl:attribute name="rel">icon</xsl:attribute>
-					<xsl:attribute name="href">https://cdn.hpm.io/assets/images/favicon/icon-192.png</xsl:attribute>
+					<xsl:attribute name="href">https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-192.png</xsl:attribute>
 					<xsl:attribute name="type">image/png</xsl:attribute>
 					<xsl:attribute name="sizes">192x192</xsl:attribute>
 				</xsl:element>
 				<xsl:element name="link">
 					<xsl:attribute name="rel">apple-touch-icon</xsl:attribute>
-					<xsl:attribute name="href">https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-180.png</xsl:attribute>
+					<xsl:attribute name="href">https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-180.png</xsl:attribute>
 					<xsl:attribute name="type">image/png</xsl:attribute>
 					<xsl:attribute name="sizes">180x180</xsl:attribute>
 				</xsl:element>
 				<xsl:element name="script">
 					<xsl:attribute name="type">text/javascript</xsl:attribute>
-					<xsl:attribute name="src">https://cdn.hpm.io/assets/js/analytics/index.js</xsl:attribute>
+					<xsl:attribute name="src">https://cdn.houstonpublicmedia.org/assets/js/analytics/index.js</xsl:attribute>
 				</xsl:element>
 				<xsl:element name="script">
 					<xsl:attribute name="type">text/javascript</xsl:attribute>
@@ -50,11 +50,11 @@
 				</xsl:element>
 				<xsl:element name="script">
 					<xsl:attribute name="type">text/javascript</xsl:attribute>
-					<xsl:attribute name="src">https://cdn.hpm.io/assets/js/main.js?v=1</xsl:attribute>
+					<xsl:attribute name="src">https://cdn.houstonpublicmedia.org/assets/js/main.js?v=1</xsl:attribute>
 				</xsl:element>
 				<xsl:element name="script">
 					<xsl:attribute name="type">text/javascript</xsl:attribute>
-					<xsl:attribute name="src">https://cdn.hpm.io/assets/js/plyr/plyr.js?v=1</xsl:attribute>
+					<xsl:attribute name="src">https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js?v=1</xsl:attribute>
 				</xsl:element>
 				<style type="text/css">.pod-desc { font: 500 1.125em/1.125em var(--hpm-font-main); color: rgb(142,144,144); } article.card { display: block !important; border-bottom: 1px solid #808080; }</style>
 			</head>

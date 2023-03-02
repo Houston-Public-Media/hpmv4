@@ -164,7 +164,7 @@ hpm.videoHandlers = () => {
 	});
 	if (youtube) {
 		var tag = document.createElement('script');
-		tag.src = "https://cdn.hpm.io/assets/js/youtube.js?v=1";
+		tag.src = "https://cdn.houstonpublicmedia.org/assets/js/youtube.js?v=1";
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	}

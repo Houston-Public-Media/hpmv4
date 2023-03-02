@@ -602,7 +602,7 @@ function hpm_careers_trans(): string {
 	}
 
 	$json = json_decode( $body, true );
-	$desc = json_decode( file_get_contents( 'https://cdn.hpm.io/assets/taleo.json' ), true );
+	$desc = json_decode( file_get_contents( 'https://cdn.houstonpublicmedia.org/assets/taleo.json' ), true );
 	if ( empty( $json['requisitionList'] ) ) {
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
@@ -655,7 +655,7 @@ function hpm_townsquare_covid( $atts ): string {
 			wp_enqueue_script('hpm-plyr');
 			$output .= '<article class="'.implode( ' ', $postClass ).'">' .
 				'<div class="img-wrap">' .
-					'<p><a href="/shows/town-square/" aria-hidden="true"><img src="https://cdn.hpm.io/assets/images/town-square-logo.webp" alt="Town Square with Ernie Manouse logo" /></a></p>' .
+					'<p><a href="/shows/town-square/" aria-hidden="true"><img src="https://cdn.houstonpublicmedia.org/assets/images/town-square-logo.webp" alt="Town Square with Ernie Manouse logo" /></a></p>' .
 					'<p><a href="/listen-live/">Listen Live</a> at 3pm or<br /><a href="/podcasts/town-square/">Download the Podcast</a></p>' .
 				'</div>' .
 				'<header class="entry-header">' .

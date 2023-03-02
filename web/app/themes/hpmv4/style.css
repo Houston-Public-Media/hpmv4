@@ -95,126 +95,126 @@ html[data-theme="dark"] {
 /* Typography */
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 400;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-It.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-It.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-It.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 400;
 	font-style: italic;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Medium.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Medium.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Medium.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 500;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Medium-It.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Medium-It.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Medium-It.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 500;
 	font-style: italic;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Light.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Light.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Light.eot') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.eot') format('truetype');
 	font-display: auto;
 	font-weight: 100;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Light-It.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Light-It.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Light-It.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 100;
 	font-style: italic;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src:url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Bold.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Bold.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Bold.ttf') format('truetype');
+	src:url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 700;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Bold-It.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Bold-It.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Bold-It.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 700;
 	font-style: italic;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 900;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'PBS-Sans';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black-It.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black-It.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Black-It.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black-It.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 900;
 	font-style: italic;
 }
 @font-face {
 	font-family: 'PBS-Sans-Condensed';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 400;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'PBS-Sans-Condensed';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-It.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-It.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-It.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-It.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 400;
 	font-style: italic;
 }
 @font-face {
 	font-family: 'PBS-Sans-Condensed';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 700;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'PBS-Sans-Condensed';
-	src: url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff2') format('woff2'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff') format('woff'),
-	url('https://cdn.hpm.io/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.ttf') format('truetype');
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.ttf') format('truetype');
 	font-display: auto;
 	font-weight: 700;
 	font-style: italic;
@@ -1095,7 +1095,7 @@ nav.pagination a.page-numbers.next {
 	padding: 0;
 	background-color: #00566c;
 	margin: 1rem 0;
-	background-image: url(https://cdn.hpm.io/assets/images/inDepth-white-arrows.png);
+	background-image: url(https://cdn.houstonpublicmedia.org/assets/images/inDepth-white-arrows.png);
 	background-position: -10px center;
 	background-size: 54%;
 	background-repeat: no-repeat;
@@ -1111,7 +1111,7 @@ nav.pagination a.page-numbers.next {
 	padding: 0.5rem 1rem;
 	background-color: var(--main-red);
 	margin: 1rem 0;
-	background-image: url(https://cdn.hpm.io/assets/images/today-in-houston-skyline.webp);
+	background-image: url(https://cdn.houstonpublicmedia.org/assets/images/today-in-houston-skyline.webp);
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -3805,13 +3805,13 @@ h2.ss-join {
 		padding: 0 0 0 1.5em;
 	}
 	.page.support-ssac article .entry-content p.phone {
-		background-image: url(https://cdn.hpm.io/assets/images/phone_icon2x.png);
+		background-image: url(https://cdn.houstonpublicmedia.org/assets/images/phone_icon2x.png);
 		background-size: 1em;
 		background-repeat: no-repeat;
 		background-position: 0;
 	}
 	.page.support-ssac article .entry-content p.email {
-		background-image: url(https://cdn.hpm.io/assets/images/email_icon2x.png);
+		background-image: url(https://cdn.houstonpublicmedia.org/assets/images/email_icon2x.png);
 		background-size: 1em;
 		background-repeat: no-repeat;
 		background-position: 0 8px;

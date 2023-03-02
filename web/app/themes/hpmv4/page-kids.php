@@ -7,7 +7,7 @@ get_header(); ?>
 	<style>
 		@font-face {
 			font-family: 'PBSKids';
-			src: url('https://cdn.hpm.io/assets/fonts/pbskidsheadline-regular-webfont.ttf') format('truetype'), url('https://cdn.hpm.io/assets/fonts/pbskidsheadline-regular-webfont.woff') format('woff'), url('https://cdn.hpm.io/assets/fonts/pbskidsheadline-regular-webfont.eot') format('eot');
+			src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbskidsheadline-regular-webfont.ttf') format('truetype'), url('https://cdn.houstonpublicmedia.org/assets/fonts/pbskidsheadline-regular-webfont.woff') format('woff'), url('https://cdn.houstonpublicmedia.org/assets/fonts/pbskidsheadline-regular-webfont.eot') format('eot');
 			font-weight: normal;
 			font-style: normal;
 		}
@@ -152,7 +152,7 @@ get_header(); ?>
 		}
 		body.page.page-template-page-kids .page-header {
 			background-color: transparent;
-			background-image: url('https://cdn.hpm.io/wp-content/uploads/2016/01/14164222/White-lines-2.png');
+			background-image: url('https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/01/14164222/White-lines-2.png');
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-size: 110% auto;
@@ -412,9 +412,9 @@ get_header(); ?>
 				the_post(); ?>
 			<header class="page-header">
 				<?php the_title( '<h1 class="entry-title screen-reader-text">', '</h1>' ); ?>
-				<img src="https://cdn.hpm.io/wp-content/uploads/2016/01/29132048/HPMKids-Logo-11.png" alt="Houston Public Media Kids" id="head-logo">
-				<img src="https://cdn.hpm.io/wp-content/uploads/2016/01/14164215/Cat-2.png" alt="Cat" id="head-cat">
-				<img src="https://cdn.hpm.io/wp-content/uploads/2016/01/14164220/Kids-2.png" alt="Ready Jet Go Kids" id="head-kids">
+				<img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/01/29132048/HPMKids-Logo-11.png" alt="Houston Public Media Kids" id="head-logo">
+				<img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/01/14164215/Cat-2.png" alt="Cat" id="head-cat">
+				<img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/01/14164220/Kids-2.png" alt="Ready Jet Go Kids" id="head-kids">
 			</header>
 			<?php
 				the_content();

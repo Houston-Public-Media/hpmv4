@@ -1076,7 +1076,7 @@ class HPM_Podcasts {
 
 	public static function show_social( $pod_id = '', $lede = false, $show_id = '', $full_list = false ): string {
 		$temp = $output = $template = '';
-		$badges = 'https://cdn.hpm.io/assets/images/podcasts/';
+		$badges = 'https://cdn.houstonpublicmedia.org/assets/images/podcasts/';
 		if ( !empty( $show_id ) ) {
 			$template = get_post_meta( $show_id, '_wp_page_template', true );
 		}

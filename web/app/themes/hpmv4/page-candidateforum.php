@@ -52,7 +52,7 @@ get_header(); ?>
 		margin: 0 !important;
 		padding: 0 0 calc(100%/1.5) 0;
 		position: relative;
-		background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_mobile.jpg);
+		background-image: url(https://cdn.houstonpublicmedia.org/assets/images/HOBBY_Election-2020-Forum_mobile.jpg);
 	}
 
 	.page-template-page-candidateforum article {
@@ -89,7 +89,7 @@ get_header(); ?>
 		.page-header {
 			padding: 0 0 calc(100%/4) 0;
 			margin: 0 !important;
-			background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_tablet.jpg);
+			background-image: url(https://cdn.houstonpublicmedia.org/assets/images/HOBBY_Election-2020-Forum_tablet.jpg);
 		}
 
 		section.column-left,
@@ -116,7 +116,7 @@ get_header(); ?>
 			.page-header {
 				padding: 0 0 calc(100%/6) 0;
 				margin: 0 !important;
-				background-image: url(https://cdn.hpm.io/assets/images/HOBBY_Election-2020-Forum_desktop.jpg);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/HOBBY_Election-2020-Forum_desktop.jpg);
 			}
 
 			aside.column-right {

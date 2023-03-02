@@ -26,7 +26,7 @@ if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null 
 	<?php } ?>
 	<div class="card-content">
 		<header class="entry-header">
-			<?php echo ( $indepth ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
+			<?php echo ( $indepth ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.houstonpublicmedia.org/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 			<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 			<h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php
 				if ( is_front_page() ) {

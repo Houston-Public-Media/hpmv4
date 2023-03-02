@@ -36,7 +36,7 @@ var jpp = {
 		},
 	},
 	'podcastList': 'https://www.houstonpublicmedia.org/wp-json/hpm-podcast/v1/list',
-	'assetsUrl': 'https://cdn.hpm.io/assets/',
+	'assetsUrl': 'https://cdn.houstonpublicmedia.org/assets/',
 	'podcasts': [],
 	'elements': {},
 	'prefStream': 'news'

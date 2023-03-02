@@ -13,8 +13,8 @@ Template Post Type: shows
 
 wp_enqueue_script('jquery');
 get_header(); ?>
-	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick.min.css" />
-	<link rel="stylesheet" href="https://cdn.hpm.io/assets/js/slick/slick-theme.css" />
+	<link rel="stylesheet" href="https://cdn.houstonpublicmedia.org/assets/js/slick/slick.min.css" />
+	<link rel="stylesheet" href="https://cdn.houstonpublicmedia.org/assets/js/slick/slick-theme.css" />
 	<style>
 		body.single-shows #station-social {
 			padding: 1em;
@@ -49,7 +49,7 @@ get_header(); ?>
 		section#country-covers {
 			max-width: 100%;
 			background-color: rgb(181,159,109);
-			background-image: url(https://cdn.hpm.io/assets/images/tan_mobile.png);
+			background-image: url(https://cdn.houstonpublicmedia.org/assets/images/tan_mobile.png);
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-size: cover;
@@ -227,7 +227,7 @@ get_header(); ?>
 				<div id="shows-youtube">
 					<div id="youtube-wrap">
 						<div class="column-right">
-							<a href="http://claimittexas.org" target="_blank"><img src="https://cdn.hpm.io/assets/images/cc_logo_sponsor2x.png" alt="Skyline Sessions Country Covers" class="" /></a>
+							<a href="http://claimittexas.org" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/cc_logo_sponsor2x.png" alt="Skyline Sessions Country Covers" class="" /></a>
 							<div class="show-content">
 								<p><em>Country Covers</em> is a spin-off of our digital music series <em>Skyline Sessions</em> and features a variety of musicians performing their favorite country classics and sharing personal stories of their love for country music. <em>Country Covers</em> is Houston Public Media's companion piece to Ken Burns' new documentary series <em>Country Music</em>.</p>
 							</div>
@@ -312,7 +312,7 @@ get_header(); ?>
 			</div>
 		</main>
 	</div>
-	<script src="https://cdn.hpm.io/assets/js/slick/slick.min.js"></script>
+	<script src="https://cdn.houstonpublicmedia.org/assets/js/slick/slick.min.js"></script>
 	<script>
 		jQuery(document).ready(function($){
 			let options = { slidesToShow: 3, rows: 1, slidesToScroll: 3, infinite: false, autoplay: false, lazyLoad: 'ondemand', responsive: [ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, { breakpoint: 800, settings: { slidesToShow: 3, slidesToScroll: 3, rows: 1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 3 } }] };

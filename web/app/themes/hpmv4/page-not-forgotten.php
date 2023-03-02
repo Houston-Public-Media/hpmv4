@@ -77,7 +77,7 @@ Template Name: Not Forgotten
 			}
 			.page-template-page-not-forgotten .page-header {
 				background-color: #000000;
-				background-image: url(https://cdn.hpm.io/assets/images/NotForgotten_Landing-Page_Art_1500x1500.jpg);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/NotForgotten_Landing-Page_Art_1500x1500.jpg);
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: cover;
@@ -266,7 +266,7 @@ Template Name: Not Forgotten
 		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'hpmv4' ); ?></a>
 		<header id="masthead" class="site-header" role="banner">
 			<div class="site-branding">
-				<a href="/" rel="home" title="Houston Public Media"><img src="https://cdn.hpm.io/assets/images/HPM-PBS-NPR-White.png" alt="Houston Public Media" /></a>
+				<a href="/" rel="home" title="Houston Public Media"><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM-PBS-NPR-White.png" alt="Houston Public Media" /></a>
 			</div>
 			<div class="site-title"><h1><a href="/not-forgotten/">Not Forgotten</a></h1></div>
 			<div class="site-nav"><a href="/coronavirus/">COVID News</a></div>
@@ -276,7 +276,7 @@ Template Name: Not Forgotten
 				<div id="primary" class="content-area">
 					<main id="main" class="site-main" role="main">
 						<header class="page-header">
-							<img src="https://cdn.hpm.io/assets/images/NotForgotten_Logo.svg" alt="<?php echo get_the_title() . ": " . get_the_excerpt(); ?>" />
+							<img src="https://cdn.houstonpublicmedia.org/assets/images/NotForgotten_Logo.svg" alt="<?php echo get_the_title() . ": " . get_the_excerpt(); ?>" />
 							<button class="down scrollto">
 								<?php echo hpm_svg_output( 'angle-double-down' ); ?>
 							</button>

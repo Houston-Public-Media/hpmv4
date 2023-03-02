@@ -49,10 +49,10 @@ if ( 'podcasts' === get_query_var( 'post_type' ) ) {
 
 		$author_name = 'Houston Public Media';
 		$author_url = 'https://www.houstonpublicmedia.org';
-		$author_avatar = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
+		$author_avatar = 'https://cdn.houstonpublicmedia.org/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
 		$desc = 'Houston Public Media provides informative, thought-provoking and entertaining content through a multi-media platform that includes TV 8, News 88.7 and HPM Classical and reaches a combined weekly audience of more than 1.5 million.';
-		$icon = 'https://cdn.hpm.io/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
-		$favicon = 'https://cdn.hpm.io/assets/images/favicon-192x192.png';
+		$icon = 'https://cdn.houstonpublicmedia.org/assets/images/HPM_UH_ConnectivityLogo_OUT.jpg';
+		$favicon = 'https://cdn.houstonpublicmedia.org/assets/images/favicon-192x192.png';
 		$title = '';
 
 		// Determine feed types (authors, categories, tags, etc.) and fill out feed info accordingly

@@ -9,6 +9,6 @@ const WP_DEBUG_LOG = true;
 $_SERVER['SERVER_NAME'] = 'www.houstonpublicmedia.org';
 define( 'AS3CF_ASSETS_PULL_SETTINGS', serialize( [
 	'rewrite-urls' => false,
-	'domain' => 'assets.hpm.io',
+	'domain' => 'assets.houstonpublicmedia.org',
 	'force-https' => false,
 ] ) );

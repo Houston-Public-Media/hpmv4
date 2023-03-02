@@ -45,7 +45,7 @@ function hpm_header_info(): void {
 		'keywords' => [ 'Houston Public Media', 'KUHT', 'TV 8', 'Houston Public Media Schedule', 'Educational TV Programs', 'independent program broadcasts', 'University of Houston', 'nonprofit', 'NPR News', 'KUHF', 'Classical Music', 'Arts &amp; Culture', 'News 88.7' ],
 		'permalink' => 'https://www.houstonpublicmedia.org',
 		'title' => 'Houston Public Media',
-		'thumb' => 'https://cdn.hpm.io/assets/images/HPM-logo-OGimage-2.jpg',
+		'thumb' => 'https://cdn.houstonpublicmedia.org/assets/images/HPM-logo-OGimage-2.jpg',
 		'thumb_meta' => [
 			'width' => 1200,
 			'height' => 630,
@@ -55,11 +55,7 @@ function hpm_header_info(): void {
 		'author' => [],
 		'publish_date' => '',
 		'modified_date' => '',
-		'word_count' => 0,
-		'npr_byline' => '',
-		'npr_story_id' => '',
-		'hpm_section' => '',
-		'has_audio' => 0
+		'hpm_section' => ''
 	];
 
 	if ( is_home() || is_404() ) {
@@ -212,24 +208,24 @@ function hpm_header_info(): void {
 		<meta name="bitly-verification" content="7777946f1a0a" />
 		<meta name="google-site-verification" content="WX07OGEaNirk2km8RjRBernE0mA7_QL6ywgu6NXl1TM" />
 		<meta name="theme-color" content="#f5f5f5" />
-		<link rel="icon" sizes="48x48" href="https://cdn.hpm.io/assets/images/favicon/icon-48.png" />
-		<link rel="icon" sizes="96x96" href="https://cdn.hpm.io/assets/images/favicon/icon-96.png" />
-		<link rel="icon" sizes="144x144" href="https://cdn.hpm.io/assets/images/favicon/icon-144.png" />
-		<link rel="icon" sizes="192x192" href="https://cdn.hpm.io/assets/images/favicon/icon-192.png" />
-		<link rel="icon" sizes="256x256" href="https://cdn.hpm.io/assets/images/favicon/icon-256.png" />
-		<link rel="icon" sizes="384x384" href="https://cdn.hpm.io/assets/images/favicon/icon-384.png" />
-		<link rel="icon" sizes="512x512" href="https://cdn.hpm.io/assets/images/favicon/icon-512.png" />
-		<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-57.png" />
-		<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-60.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-72.png" />
-		<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-76.png" />
-		<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-114.png" />
-		<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-120.png" />
-		<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-152.png" />
-		<link rel="apple-touch-icon" sizes="167x167" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-167.png" />
-		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.hpm.io/assets/images/favicon/apple-touch-icon-180.png" />
-		<link rel="mask-icon" href="https://cdn.hpm.io/assets/images/favicon/safari-pinned-tab.svg" color="#ff0000" />
-		<meta name="msapplication-config" content="https://cdn.hpm.io/assets/images/favicon/config.xml" />
+		<link rel="icon" sizes="48x48" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-48.png" />
+		<link rel="icon" sizes="96x96" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-96.png" />
+		<link rel="icon" sizes="144x144" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-144.png" />
+		<link rel="icon" sizes="192x192" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-192.png" />
+		<link rel="icon" sizes="256x256" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-256.png" />
+		<link rel="icon" sizes="384x384" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-384.png" />
+		<link rel="icon" sizes="512x512" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/icon-512.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-57.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-120.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-152.png" />
+		<link rel="apple-touch-icon" sizes="167x167" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-167.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/apple-touch-icon-180.png" />
+		<link rel="mask-icon" href="https://cdn.houstonpublicmedia.org/assets/images/favicon/safari-pinned-tab.svg" color="#ff0000" />
+		<meta name="msapplication-config" content="https://cdn.houstonpublicmedia.org/assets/images/favicon/config.xml" />
 		<link rel="manifest" href="/manifest.webmanifest" />
 		<meta name="apple-itunes-app" content="app-id=1549226694,app-argument=<?php echo $reqs['permalink']; ?>" />
 		<meta name="google-play-app" content="app-id=com.jacobsmedia.KUHFV3" />

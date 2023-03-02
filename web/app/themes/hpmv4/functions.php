@@ -38,17 +38,17 @@ add_action( 'init', 'wpcodex_add_excerpt_support_for_pages' );
 function hpm_scripts(): void {
 	$versions = hpm_versions();
 
-	wp_enqueue_script( 'hpm-analytics', 'https://cdn.hpm.io/assets/js/analytics/index.js', [], $versions['analytics'], false );
+	wp_enqueue_script( 'hpm-analytics', 'https://cdn.houstonpublicmedia.org/assets/js/analytics/index.js', [], $versions['analytics'], false );
 
 	if ( WP_ENV !== 'production' ) {
 		wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main.js', [], time(), true );
 		wp_enqueue_style( 'hpm-main', get_template_directory_uri() . '/style.css', [], time() );
 	}
 
-	wp_register_script( 'hpm-plyr', 'https://cdn.hpm.io/assets/js/plyr/plyr.js', [], $versions['js'], true );
-	wp_register_script( 'hpm-splide', 'https://cdn.hpm.io/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
-	wp_register_script( 'hpm-splide-js', 'https://cdn.hpm.io/assets/js/splide.min.js', [], $versions['js'], true );
-	wp_register_style( 'hpm-splide-css', 'https://cdn.hpm.io/assets/css/splide.min.css', [], $versions['css'] );
+	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], $versions['js'], true );
+	wp_register_script( 'hpm-splide', 'https://cdn.houstonpublicmedia.org/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
+	wp_register_script( 'hpm-splide-js', 'https://cdn.houstonpublicmedia.org/assets/js/splide.min.js', [], $versions['js'], true );
+	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], $versions['css'] );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_script( 'better-image-credits' );
@@ -331,10 +331,10 @@ function prefix_insert_post_bug( $content ) {
 	global $post;
 	if ( is_single() && $post->post_type == 'post' ) {
 		if ( in_category( 'election-2016' ) ) {
-			$bug_code = '<div class="in-post-bug"><a href="/news/politics/election-2016/"><img src="https://cdn.hpm.io/wp-content/uploads/2016/03/21120957/ELECTION_crop.jpg" alt="Houston Public Media\'s Coverage of Election 2016"></a><h3><a href="/news/politics/election-2016/">Houston Public Media\'s Coverage of Election 2016</a></h3></div>';
+			$bug_code = '<div class="in-post-bug"><a href="/news/politics/election-2016/"><img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/03/21120957/ELECTION_crop.jpg" alt="Houston Public Media\'s Coverage of Election 2016"></a><h3><a href="/news/politics/election-2016/">Houston Public Media\'s Coverage of Election 2016</a></h3></div>';
 			return prefix_insert_after_paragraph( $bug_code, 2, $content );
 		} elseif ( in_category( 'texas-legislature' ) ) {
-			$bug_code = '<div class="in-post-bug"><a href="/news/politics/texas-legislature/"><img src="https://cdn.hpm.io/assets/images/TX_Lege_Article_Bug.jpg" alt="Special Coverage Of The 85th Texas Legislative Session"></a><h3><a href="/news/politics/texas-legislature/">Special Coverage Of The 85th Texas Legislative Session</a></h3></div>';
+			$bug_code = '<div class="in-post-bug"><a href="/news/politics/texas-legislature/"><img src="https://cdn.houstonpublicmedia.org/assets/images/TX_Lege_Article_Bug.jpg" alt="Special Coverage Of The 85th Texas Legislative Session"></a><h3><a href="/news/politics/texas-legislature/">Special Coverage Of The 85th Texas Legislative Session</a></h3></div>';
 			return prefix_insert_after_paragraph( $bug_code, 2, $content );
 		} elseif ( in_category( 'in-depth' ) ) {
 			if ( !preg_match( '/\[hpm_indepth ?\/?\]/', $content ) ) {
@@ -364,7 +364,7 @@ function prefix_insert_after_paragraph( $insertion, $paragraph_id, $content ): s
 function hpm_login_logo(): void { ?>
 	<style>
 		#login h1 a, .login h1 a {
-			background-image: url(https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Color.png);
+			background-image: url(https://cdn.houstonpublicmedia.org/assets/images/HPM-PBS-NPR-Color.png);
 			height:85px;
 			width:320px;
 			background-size: 320px 85px;
@@ -716,7 +716,7 @@ function hpm_pull_npr_story( $npr_id ) {
 		'permalink' => '',
 		'slug' => '',
 		'image' => [
-			'src' => 'https://cdn.hpm.io/assets/images/NPR-NEWS.gif',
+			'src' => 'https://cdn.houstonpublicmedia.org/assets/images/NPR-NEWS.gif',
 			'width' => 600,
 			'height' => 293,
 			'mime-type' => 'image/gif'

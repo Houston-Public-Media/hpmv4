@@ -27,7 +27,7 @@ Template Name: Career Frontier
 			margin: 0;
 			padding: 0 0 calc(100%/1.5) 0;
 			position: relative;
-			background-image: url(https://cdn.hpm.io/assets/images/CF-Large-Banner-Phone-300x200.jpg);
+			background-image: url(https://cdn.houstonpublicmedia.org/assets/images/CF-Large-Banner-Phone-300x200.jpg);
 		}
 		.page-header .page-header-wrap {
 			display: flex;
@@ -173,7 +173,7 @@ Template Name: Career Frontier
 			width: 100%;
 			margin: 0;
 			padding: 1em 1em 4em;
-			background-image: url(https://cdn.hpm.io/assets/images/ConnectionsGraphic1-sm.png);
+			background-image: url(https://cdn.houstonpublicmedia.org/assets/images/ConnectionsGraphic1-sm.png);
 			background-position: bottom;
 			background-repeat: no-repeat;
 			background-size: contain;
@@ -196,7 +196,7 @@ Template Name: Career Frontier
 		@media screen and (min-width: 34em) {
 			.page-header {
 				padding: 0 0 calc(100%/4) 0;
-				background-image: url(https://cdn.hpm.io/assets/images/CF-Large-Banner-Tablet-800x200.jpg);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/CF-Large-Banner-Tablet-800x200.jpg);
 			}
 			.cf-content-wrap {
 				display: flex;
@@ -223,7 +223,7 @@ Template Name: Career Frontier
 		@media screen and (min-width: 52.5em) {
 			.page-header {
 				padding: 0 0 calc(100%/6) 0;
-				background-image: url(https://cdn.hpm.io/assets/images/CF-Large-Banner-Desktop-1200x200.jpg);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/CF-Large-Banner-Desktop-1200x200.jpg);
 			}
 			.page.page-template-page-careerfrontier #main > article {
 				padding: 0;

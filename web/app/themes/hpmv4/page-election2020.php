@@ -48,7 +48,7 @@ get_header(); ?>
 			margin: 0 !important;
 			padding: 0 0 calc(100%/1.5) 0;
 			position: relative;
-			background-image: url(https://cdn.hpm.io/assets/images/Election-2020_mobile-2x.jpg);
+			background-image: url(https://cdn.houstonpublicmedia.org/assets/images/Election-2020_mobile-2x.jpg);
 		}
 		.page-template-page-election2020 article {
 			padding: 0;
@@ -67,7 +67,7 @@ get_header(); ?>
 			.page-header {
 				padding: 0 0 calc(100%/4) 0;
 				margin: 0 !important;
-				background-image: url(https://cdn.hpm.io/assets/images/Election-2020_tablet-2x.jpg);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/Election-2020_tablet-2x.jpg);
 			}
 		}
 		@media screen and (min-width: 52.5em) {
@@ -79,7 +79,7 @@ get_header(); ?>
 			.page-header {
 				padding: 0 0 calc(100%/6) 0;
 				margin: 0 !important;
-				background-image: url(https://cdn.hpm.io/assets/images/Election-2020_-desktop-2x.jpg);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/Election-2020_-desktop-2x.jpg);
 			}
 		}
 	</style>

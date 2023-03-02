@@ -30,7 +30,7 @@ get_header(); ?>
 			padding-top: 0;
 			padding-bottom: calc(100%/1.5);
 			position: relative;
-			background-image: url(https://cdn.hpm.io/assets/images/covid19_Mobile.png);
+			background-image: url(https://cdn.houstonpublicmedia.org/assets/images/covid19_Mobile.png);
 		}
 		.page-header .page-header-wrap {
 			display: flex;
@@ -181,7 +181,7 @@ get_header(); ?>
 		@media screen and (min-width: 34em) {
 			.page-header {
 				padding: 0 0 calc(100%/4) 0;
-				background-image: url(https://cdn.hpm.io/assets/images/covid19_Tablet.png);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/covid19_Tablet.png);
 			}
 			#search-results article .thumbnail-wrap {
 				float: left;
@@ -211,7 +211,7 @@ get_header(); ?>
 			}
 			.page-header {
 				padding: 0 0 calc(100%/6) 0;
-				background-image: url(https://cdn.hpm.io/assets/images/covid19_Desktop.png);
+				background-image: url(https://cdn.houstonpublicmedia.org/assets/images/covid19_Desktop.png);
 			}
 		}
 	</style>

@@ -12,7 +12,7 @@ get_header(); ?>
 					<header class="page-header">
 						<h2><?php echo get_the_excerpt(); ?></h2>
 						<div class="header-logo">
-							<a href="/" rel="home" title="Houston Public Media homepage"><img src="https://cdn.hpm.io/assets/images/HPM-PBS-NPR-Reverse.png" alt="Houston Public Media, a service of the University of Houston" /></a>
+							<a href="/" rel="home" title="Houston Public Media homepage"><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM-PBS-NPR-Reverse.png" alt="Houston Public Media, a service of the University of Houston" /></a>
 						</div>
 						<h1 class="page-title"><?php the_title(); ?></h1>
 						<button class="down scrollto">

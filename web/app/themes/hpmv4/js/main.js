@@ -1,4 +1,4 @@
-if ( typeof hpm !== 'object') {
+if ( typeof hpm !== 'object' ) {
 	var getCookie = (cname) => {
 		let name = cname + "=";
 		let decodedCookie = decodeURIComponent(document.cookie);
@@ -136,6 +136,9 @@ if ( typeof hpm !== 'object') {
 			if ( vidWide === '100%' && vidHigh === '100%' ) {
 				ratio = 1.6667;
 			}
+			if ( typeof frameSrc !== 'string' ) {
+				return false;
+			}
 			if ( frameSrc.indexOf('google.com/maps') !== -1 || frameSrc.indexOf('googleusercontent.com') !== -1 || frameSrc.indexOf('houstontranstar.org') !== -1 ) {
 				iframeClass = 'iframe-embed-tall';
 			} else {
@@ -170,7 +173,7 @@ if ( typeof hpm !== 'object') {
 		});
 		if (youtube) {
 			let tag = document.createElement('script');
-			tag.src = "https://cdn.hpm.io/assets/js/youtube.js?v=1";
+			tag.src = "https://cdn.houstonpublicmedia.org/assets/js/youtube.js?v=1";
 			let firstScriptTag = document.getElementsByTagName('script')[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 		}

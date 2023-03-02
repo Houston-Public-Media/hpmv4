@@ -19,7 +19,7 @@ if ( is_preview() ) { ?>
 				<header class="entry-header">
 					<?php
 						echo hpm_pub_time_banner( get_the_time( 'U' ) );
-						echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
+						echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.houstonpublicmedia.org/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 					<h3><?php echo hpm_top_cat(get_the_ID()); ?></h3>
 					<?php
 						the_title('<h1 class="entry-title">', '</h1>');
