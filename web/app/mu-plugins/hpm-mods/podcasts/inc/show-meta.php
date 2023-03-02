@@ -71,7 +71,7 @@
 		<div class="hpm-show-banner-image" id="hpm-show-banner-desktop"<?php echo $hpm_desktop_url; ?>></div>
 		<button class="hpm-show-banner-select button button-primary" data-show="desktop">Desktop</button>
 		<input value="<?php echo $hpm_show_meta['banners']['desktop']; ?>" type="hidden" id="hpm-show-banner-desktop-id" name="hpm-show-banner-desktop-id" />
-		<?php echo ( !empty( $hpm_show_meta['banners']['desktop'] ) ? '<button class="hpm-show-banner-remove button button-secondary" data-show="Desktop" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
+		<?php echo ( !empty( $hpm_show_meta['banners']['desktop'] ) ? '<button class="hpm-show-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
 	</div>
 </div>
 <p>&nbsp;</p>
