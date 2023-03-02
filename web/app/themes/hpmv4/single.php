@@ -21,7 +21,7 @@ if ( is_preview() ) { ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
 					<?php echo hpm_pub_time_banner( get_the_time( 'U' ) ); ?>
-					<?php echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.hpm.io/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
+					<?php echo ( in_array( 'category-in-depth', $postClass ) ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.houstonpublicmedia.org/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
 					<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 <?php
 		the_title('<h1 class="entry-title">', '</h1>');
@@ -112,7 +112,7 @@ if ( is_preview() ) { ?>
 		} elseif ( $cats->term_id == 12 ) { ?>
 				<div class="sidebar-ad">
 					<h4>Support Comes From</h4>
-					<p><a href="https://www.texasmutual.com/employers/pr/business-is-better?utm_source=Bauer+Biz&utm_medium=Digital&utm_campaign=BIB-Claims&utm_id=BIB-Claims"><img src="https://cdn.hpm.io/assets/images/300x250-Texas-Mutual-BIB-Preview.gif" alt="Protecting Texas businesses and workers for 30 years." /></a></p>
+					<p><a href="https://www.texasmutual.com/employers/pr/business-is-better?utm_source=Bauer+Biz&utm_medium=Digital&utm_campaign=BIB-Claims&utm_id=BIB-Claims"><img src="https://cdn.houstonpublicmedia.org/assets/images/300x250-Texas-Mutual-BIB-Preview.gif" alt="Protecting Texas businesses and workers for 30 years." /></a></p>
 				</div>
 <?php
 		}
