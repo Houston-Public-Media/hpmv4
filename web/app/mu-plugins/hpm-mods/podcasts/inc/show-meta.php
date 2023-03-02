@@ -143,10 +143,9 @@
 			});
 			frame.on('select', function(){
 				let sizes = frame.state().get('selection').first().attributes.sizes;
+				let thumb = sizes.full.url;
 				if ( typeof sizes.medium !== 'undefined' ) {
-					let thumb = sizes.medium.url;
-				} else {
-					let thumb = sizes.full.url;
+					thumb = sizes.medium.url;
 				}
 				let attachId = frame.state().get('selection').first().id;
 				$('#hpm-show-banner-'+size).css( 'background-image', 'url('+thumb+')' )
