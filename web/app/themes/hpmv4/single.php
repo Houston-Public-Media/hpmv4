@@ -112,7 +112,7 @@ if ( is_preview() ) { ?>
 		} elseif ( $cats->term_id == 12 ) { ?>
 				<div class="sidebar-ad">
 					<h4>Support Comes From</h4>
-					<p><a href="https://www.texasmutual.com/employers/pr/business-is-better?utm_source=Bauer+Biz&utm_medium=Digital&utm_campaign=BIB-Claims&utm_id=BIB-Claims"><img src="https://cdn.houstonpublicmedia.org/assets/images/300x250-Texas-Mutual-BIB-Preview.gif" alt="Protecting Texas businesses and workers for 30 years." /></a></p>
+					<p><a href="https://www.texasmutual.com/employers/pr/driver-safety?utm_source=KUHF-KUHT&utm_medium=digital&utm_campaign=BIB-Driver-Safety&utm_id=BIB-Driver-Safety"><img src="https://cdn.houstonpublicmedia.org/assets/images/300x250-EN-TXM-Driver-Safety.jpg.webp" alt="Texas Mutual: Driving Texas business forward" /></a></p>
 				</div>
 <?php
 		}
