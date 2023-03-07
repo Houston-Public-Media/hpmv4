@@ -2651,8 +2651,10 @@ article .entry-header .byline-date address {
 	font-style: normal;
 }
 article .entry-content img, .mceMediaCreditOuterTemp {
-	margin: 0;
 	max-width: 100%;
+}
+article .entry-content img:not(.alignright,.alignleft,.aligncenter), .mceMediaCreditOuterTemp {
+	margin: 0;
 }
 article .entry-content #map-canvas :is(img,picture) {
 	max-width: initial;
