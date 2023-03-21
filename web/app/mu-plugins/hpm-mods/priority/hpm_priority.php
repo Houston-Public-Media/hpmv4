@@ -3,6 +3,62 @@ add_action('update_option_hpm_priority', function( $old_value, $value ) {
 	wp_cache_delete( 'hpm_priority', 'options' );
 }, 10, 2);
 
+add_action( 'rest_api_init', function() {
+	register_rest_route( 'hpm-priority/v1', '/list', [
+		'methods'  => 'GET',
+		'callback' => 'hpm_priority_json_list',
+		'permission_callback' => function() {
+			return true;
+		}
+	] );
+} );
+
+function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
+	$hpm_priority = get_option( 'hpm_priority' );
+	$output = [];
+	if ( !empty( $hpm_priority['homepage'] ) ) {
+		if ( empty( $hpm_priority['homepage'][1] ) ) {
+			$indepth = new WP_Query([
+				'posts_per_page' => 2,
+				'cat' => 29328,
+				'ignore_sticky_posts' => 1,
+				'post_status' => 'publish'
+			]);
+			if ( $indepth->have_posts() ) {
+				if ( $hpm_priority['homepage'][0] == $indepth->posts[0]->ID ) {
+					$hpm_priority['homepage'][1] = $indepth->posts[1]->ID;
+				} else {
+					$hpm_priority['homepage'][1] = $indepth->posts[0]->ID;
+				}
+			}
+		}
+		$sticknum = count( $hpm_priority['homepage'] );
+		$sticky_args = [
+			'posts_per_page' => $sticknum,
+			'post__in'  => $hpm_priority['homepage'],
+			'orderby' => 'post__in',
+			'ignore_sticky_posts' => 1
+		];
+		$sticky_query = new WP_Query( $sticky_args );
+		if ( $sticky_query->have_posts() ) {
+			foreach ( $sticky_query->posts as $stp ) {
+				$arr = [
+					'ID' => $stp->ID,
+					'title' => $stp->post_title,
+					'excerpt' => $stp->post_excerpt,
+					'picture' => get_the_post_thumbnail_url( $stp->ID, 'medium' )
+				];
+				$output[] = $arr;
+			}
+		}
+	}
+	if ( $output ) {
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Priority Homepage Story List', 'hpm-priority' ), 'data' => [ 'articles' => $output, 'status' => 200 ] ] );
+	} else {
+		return new WP_Error( 'rest_api_sad', esc_html__( 'There has been an error, please try again later.', 'hpm-priority' ), [ 'status' => 500 ] );
+	}
+}
+
 // create custom plugin settings menu
 add_action('admin_menu', 'hpm_priority_create_menu');
 

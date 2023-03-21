@@ -432,12 +432,12 @@ class HPM_Podcasts {
 			update_post_meta( $post_id, 'hpm_shows_top', $hpm_shows_top );
 		} elseif ( $post->post_type == 'post' ) {
 			$hpm_podcast = [
-				'feed' => ( $_POST['hpm-podcast-ep-feed'] ?? '' ),
-				'title' => ( preg_replace( '/(&)([^amp])/', '&amp;$2', $_POST['hpm-podcast-title'] ) ?? '' ),
-				'description' => ( balanceTags( strip_shortcodes( $_POST['hpm-podcast-description'] ), true ) ?? '' ),
-				'episode' => ( sanitize_text_field( $_POST['hpm-podcast-episode'] ) ?? '' ),
-				'episodeType' => ( $_POST['hpm-podcast-episodetype'] ?? 'full' ),
-				'season' => ( sanitize_text_field( $_POST['hpm-podcast-season'] ) ?? '' )
+				'feed' => ( !empty( $_POST['hpm-podcast-ep-feed'] ) ? $_POST['hpm-podcast-ep-feed'] : '' ),
+				'title' => ( !empty( $_POST['hpm-podcast-title'] ) ? preg_replace( '/(&)([^amp])/', '&amp;$2', $_POST['hpm-podcast-title'] ) : '' ),
+				'description' => ( !empty( $_POST['hpm-podcast-description'] ) ? balanceTags( strip_shortcodes( $_POST['hpm-podcast-description'] ), true ) : '' ),
+				'episode' => ( isset( $_POST['hpm-podcast-episode'] ) ? sanitize_text_field( $_POST['hpm-podcast-episode'] ) : '' ),
+				'episodeType' => ( !empty( $_POST['hpm-podcast-episodetype'] ) ? $_POST['hpm-podcast-episodetype'] : 'full' ),
+				'season' => ( isset( $_POST['hpm-podcast-season'] ) ? sanitize_text_field( $_POST['hpm-podcast-season'] ) : '' )
 			];
 
 			update_post_meta( $post_id, 'hpm_podcast_ep_meta', $hpm_podcast );
