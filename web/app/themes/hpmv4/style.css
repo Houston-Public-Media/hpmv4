@@ -1595,10 +1595,10 @@ svg.hpm-logo .hpm-logo-service {
 	fill: white;
 }
 #masthead .site-branding .site-logo a svg.hpm-logo .cls-2 {
-	fill: #da252b;
+	fill: #D62021;
 }
 #masthead .site-branding .site-logo a svg.hpm-logo .cls-3 {
-	fill: #1e7fc3;
+	fill: #237BBD;
 }
 #masthead .site-branding .site-logo a svg.hpm-logo :is(.cls-4,.cls-6) {
 	fill: #fff;
@@ -1610,7 +1610,7 @@ svg.hpm-logo .hpm-logo-service {
 	fill-rule: evenodd;
 }
 #masthead .site-branding .site-logo a svg.hpm-logo .cls-6 {
-	fill: var(--main-blue);
+	fill: #2638C4;
 }
 #masthead .site-branding :is(div,section):not(.site-logo) svg {
 	fill: white;
