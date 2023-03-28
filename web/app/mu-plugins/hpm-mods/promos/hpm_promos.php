@@ -159,9 +159,13 @@ class HPM_Promos {
 			];
 		}
 		$editor_opts = [
-			'editor_height' => 150,
+			'editor_height' => 200,
 			'media_buttons' => false,
-			'teeny' => true
+			'quicktags' => true,
+			'teeny' => true,
+			'wpautop' => false,
+			'tinymce' => false,
+			'drag_drop_upload' => false
 		]; ?>
 		<h3><?PHP _e( "What type of banner are you creating?", 'hpmv4' ); ?> <span style="font-weight: bolder; font-style: italic; color: red;"><?PHP _e( "REQUIRED", 'hpmv4' ); ?></span></h3>
 		<p><label for="hpm_promo[type]"><?php _e( "Type:", 'hpmv4' ); ?></label>

@@ -1297,7 +1297,11 @@ function hpm_page_script_meta_box( $object, $box ): void {
 		$editor_opts = [
 			'editor_height' => 200,
 			'media_buttons' => false,
-			'teeny' => true
+			'quicktags' => true,
+			'teeny' => true,
+			'wpautop' => false,
+			'tinymce' => false,
+			'drag_drop_upload' => false
 		];
 		wp_editor( $page_script['head'], 'hpm-page-script-head', $editor_opts );
 	?></p>
