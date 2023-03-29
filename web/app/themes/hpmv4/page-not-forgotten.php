@@ -6,7 +6,7 @@ Template Name: Not Forgotten
 <html <?php language_attributes(); ?> xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" dir="ltr" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<head>
 		<?php wp_head(); ?>
-		<link rel="stylesheet" href="https://use.typekit.net/uku0xns.css">
+		<link rel="stylesheet" href="https://use.typekit.net/wue8rzh.css">
 		<style>
 			body.page-template-page-not-forgotten {
 				background-color: black;

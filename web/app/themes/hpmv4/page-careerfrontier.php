@@ -3,7 +3,7 @@
 Template Name: Career Frontier
 */
 	get_header(); ?>
-	<link rel="stylesheet" href="https://use.typekit.net/qmq1vwk.css">
+	<link rel="stylesheet" href="https://use.typekit.net/how4uza.css">
 	<style>
 		:root {
 			--plyr-audio-control-color: rgb(80, 127, 145);
