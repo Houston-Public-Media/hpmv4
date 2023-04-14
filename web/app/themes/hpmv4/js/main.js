@@ -91,7 +91,7 @@ if ( typeof hpm !== 'object' ) {
 						if (window.innerWidth < 1024) {
 							if (event.currentTarget.getAttribute('aria-expanded') === 'true' ) {
 								event.preventDefault();
-								document.getElementById('focus-sink').focus({preventScroll:true});
+								document.activeElement.blur();
 							}
 						}
 					});
