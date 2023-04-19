@@ -25,7 +25,7 @@ get_header(); ?>
 <?php
 		} ?>
 						<h1 class="entry-title"><?php the_title(); ?></h1>
-						<?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">(' . $staff['pronouns'] . ')</p>' : '' ); ?>
+						<?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">' . $staff['pronouns'] . '</p>' : '' ); ?>
 						<h3><?php echo $staff['title']; ?></h3>
 <?php
 		if ( !empty( $staff ) ) { ?>

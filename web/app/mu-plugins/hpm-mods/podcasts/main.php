@@ -1260,9 +1260,9 @@ class HPM_Podcasts {
 	 *
 	 * @param WP_REST_Request|null $request
 	 *
-	 * @return WP_Error|string
+	 * @return WP_Error|WP_REST_Response
 	 */
-	public function list( WP_REST_Request $request = null ): WP_Error|string {
+	public function list( WP_REST_Request $request = null ): WP_Error|WP_REST_Response {
 		$list = get_transient( 'hpm_podcasts_list' );
 		if ( !empty( $list ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Podcast feed list', 'hpm-podcasts' ), 'data' => [ 'list' => $list, 'status' =>	200 ] ] );

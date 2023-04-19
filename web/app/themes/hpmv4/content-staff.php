@@ -30,7 +30,7 @@ if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography 
 				} else {
 					the_title();
 				} ?></h2>
-			<?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">(' . $staff['pronouns'] . ')</p>' : '' ) ?>
+			<?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">' . $staff['pronouns'] . '</p>' : '' ) ?>
 			<div class="icon-wrap">
 			<?php
 				echo ( !empty( $staff['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ) . '" title="Call ' . get_the_title() . ' at ' . $staff['phone'] . '" data-phone="' . $staff['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>' : '' );

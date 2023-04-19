@@ -269,11 +269,13 @@ function hpm_header_info(): void {
 		<meta property="profile:username" content="<?php echo $curauth->user_nicename; ?>" />
 <?php
 	} elseif ( is_single() && get_post_type() === 'staff' ) {
-		global $curstaff; ?>
+		global $curstaff;
+		if ( !empty( $curstaff['first_name'] ) && !empty( $curstaff['last_name'] ) ) { ?>
 		<meta property="profile:first_name" content="<?php echo $curstaff['first_name']; ?>" />
 		<meta property="profile:last_name" content="<?php echo $curstaff['last_name']; ?>" />
 		<meta property="profile:username" content="<?php echo $curstaff['user_nicename']; ?>" />
 <?php
+		}
 	} ?>
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@houstonpubmedia" />

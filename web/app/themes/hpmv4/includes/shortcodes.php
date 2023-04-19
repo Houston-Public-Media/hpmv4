@@ -602,7 +602,7 @@ function hpm_careers_trans(): string {
 	}
 
 	$json = json_decode( $body, true );
-	$desc = json_decode( file_get_contents( 'https://cdn.houstonpublicmedia.org/assets/taleo.json' ), true );
+	$desc = json_decode( file_get_contents( 'https://hpmwebv2.s3-us-west-2.amazonaws.com/assets/taleo.json' ), true );
 	if ( empty( $json['requisitionList'] ) ) {
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;

@@ -13,15 +13,21 @@
 	} elseif ( !empty( $curauth->type ) && $curauth->type == 'guest-author' ) {
 		if ( !empty( $curauth->linked_account ) ) {
 			$authid = get_user_by( 'login', $curauth->linked_account );
-			$author_check = new WP_Query( [
-				'post_type' => 'staff',
-				'post_status' => 'publish',
-				'meta_query' => [ [
-					'key' => 'hpm_staff_authid',
-					'compare' => '=',
-					'value' => $authid->ID
-				] ]
-			] );
+			if ( !empty( $authid ) ) {
+				$author_check = new WP_Query( [
+					'post_type'   => 'staff',
+					'post_status' => 'publish',
+					'meta_query'  => [
+						[
+							'key'     => 'hpm_staff_authid',
+							'compare' => '=',
+							'value'   => $authid->ID
+						]
+					]
+				] );
+			} else {
+				$author_check = '';
+			}
 		} else {
 			$author_check = '';
 		}
@@ -43,7 +49,7 @@
 					<div class="author-wrap-left">
 						<?PHP the_post_thumbnail( 'medium', array( 'alt' => get_the_title(), 'class' => 'author-thumb' ) ); ?>
 						<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
-						<?php echo ( !empty( $author['pronouns'] ) ? '<p class="staff-pronouns">(' . $author['pronouns'] . ')</p>' : '' ) ?>
+						<?php echo ( !empty( $author['pronouns'] ) ? '<p class="staff-pronouns">' . $author['pronouns'] . '</p>' : '' ) ?>
 						<h3><?php echo $author['title']; ?></h3>
 				<?php
 						if (

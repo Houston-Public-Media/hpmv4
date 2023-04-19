@@ -48,7 +48,7 @@ function author_footer( $id ): string {
 			"</div>
 			<div class=\"author-info\">
 				<h2>" . ( $local ? $author->post->post_title : $coa->display_name ) .
-				( $local && !empty( $meta['pronouns'] ) ? ' <span class="staff-pronouns">(' . $meta['pronouns'] . ')</span>' : '' ) . "</h2>" .
+				( $local && !empty( $meta['pronouns'] ) ? ' <span class="staff-pronouns">' . $meta['pronouns'] . '</span>' : '' ) . "</h2>" .
 				"<h3>" . ( $local ? $meta['title'] : '' ) . "</h3>
 				<div class=\"icon-wrap\">";
 		if ( $local ) {
