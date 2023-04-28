@@ -41,8 +41,8 @@ function hpm_scripts(): void {
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.houstonpublicmedia.org/assets/js/analytics/index.js', [], $versions['analytics'], false );
 
 	if ( WP_ENV !== 'production' ) {
-		wp_enqueue_script( 'hpm-main', get_template_directory_uri() . '/js/main.js', [], time(), true );
-		wp_enqueue_style( 'hpm-main', get_template_directory_uri() . '/style.css', [], time() );
+		wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], time(), true );
+		wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [], time() );
 	}
 
 	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], $versions['js'], true );
@@ -57,21 +57,26 @@ function hpm_scripts(): void {
 	wp_dequeue_style( 'wp-block-library' );
 	wp_dequeue_style( 'wp-block-library-theme' );
 	wp_dequeue_style( 'wp-block-style' );
+	wp_dequeue_style( 'classic-theme-styles' );
+	wp_deregister_style( 'classic-theme-styles' );
 	wp_deregister_style( 'wpforms-gutenberg-form-selector' );
 	wp_deregister_style( 'global-styles' );
 }
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 
+function hpm_inline_script(): void {
+	$js = file_get_contents( get_template_directory() . '/js/main.js' );
+	echo '<script>' . $js . '</script>';
+}
+function hpm_inline_style(): void {
+	$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
+	$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
+	echo '<style>' . $styles . '</style>';
+}
+
 if ( WP_ENV == 'production' ) {
-	add_action( 'wp_footer', function() {
-		$js = file_get_contents( get_template_directory() . '/js/main.js' );
-		echo '<script>' . $js . '</script>';
-	}, 100 );
-	add_action( 'wp_head', function() {
-		$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
-		$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
-		echo '<style>' . $styles . '</style>';
-	}, 100 );
+	add_action( 'wp_footer', 'hpm_inline_script', 100 );
+	add_action( 'wp_head', 'hpm_inline_style', 100 );
 }
 
 /*

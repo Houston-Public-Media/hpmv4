@@ -917,3 +917,123 @@ function hpm_impact_shortcode(): string {
 	return $output;
 }
 add_shortcode( 'hpm_impact', 'hpm_impact_shortcode' );
+
+function hpm_pull_podcasts_shortcode( $atts ): string {
+	$output = '';
+	$podcasts = get_option( 'hpm_pull_podcasts' );
+	if ( empty( $podcasts ) ) {
+		$podcasts = hpm_pull_podcasts_update();
+	}
+	extract( shortcode_atts( [ 'pod' => '', 'time' => '' ], $atts, 'multilink' ) );
+	if ( empty( $pod ) || empty( $podcasts[ $pod ] ) ) {
+		return $output;
+	}
+	$output .= <<<EOT
+<article id="{$pod}">
+	<header>
+		<div class="art-wrap">
+			<div class="big-time">{$time}<br /><span>pm</span></div>
+			<img src="{$podcasts[ $pod ]['image']}" alt="{$podcasts[ $pod ]['title']} podcast artwork" class="podcast-art" />
+		</div>
+		<div class="title-wrap">
+			<h1>{$podcasts[ $pod ]['title']}</h1>
+			<p>{$podcasts[ $pod ]['description']}</p>
+		</div>
+		<div class="audio-wrap">
+			<h3>Listen to the latest episode!<br /><em>{$podcasts[ $pod ]['latest-title']}</em></h3>
+			<div>
+				<audio class="js-player" id="audio-{$pod}" data-title="{$podcasts[ $pod ]['title']}: {$podcasts[ $pod ]['latest-title']}" controls preload="none">
+					<source src="{$podcasts[ $pod ]['latest-audio']}" type="audio/mpeg" />
+				</audio>
+			</div>
+		</div>
+	</header>
+</article>
+
+EOT;
+	return $output;
+}
+add_shortcode( 'hpm_pull_podcasts', 'hpm_pull_podcasts_shortcode' );
+
+function hpm_pull_podcasts_update(): array {
+	$podcasts = get_option( 'hpm_pull_podcasts' );
+	if ( empty( $podcasts ) ) {
+		$podcasts = [
+			'notes-from-america' => [
+				'feed' => 'http://feeds.feedburner.com/unitedstatesofanxiety',
+				'title' => 'Notes from America with Kai Wright',
+				'image' => '',
+				'description' => '',
+				'latest-audio' => '',
+				'latest-title' => ''
+			],
+			'our-body-politic' => [
+				'feed' => 'https://feeds.simplecast.com/_xaPhs1s',
+				'title' => 'Our Body Politic',
+				'image' => '',
+				'description' => '',
+				'latest-audio' => '',
+				'latest-title' => ''
+			],
+			'latino-usa' => [
+				'feed' => 'https://latinousa.feeds.futuromedia.org/',
+				'title' => 'Latino USA',
+				'image' => '',
+				'description' => '',
+				'latest-audio' => '',
+				'latest-title' => ''
+			],
+			'embodied' => [
+				'feed' => 'https://embodied.feed.wunc.org/',
+				'title' => 'Embodied',
+				'image' => '',
+				'description' => '',
+				'latest-audio' => '',
+				'latest-title' => ''
+			],
+			'i-see-u' => [
+				'feed' => 'https://www.houstonpublicmedia.org/podcasts/i-see-u/',
+				'title' => 'I SEE U with Eddie Robinson',
+				'image' => '',
+				'description' => '',
+				'latest-audio' => '',
+				'latest-title' => ''
+			]
+		];
+	}
+	foreach ( $podcasts as $k => $v ) {
+		$remote = wp_remote_get( $v['feed'] );
+		if ( is_wp_error( $remote ) ) {
+			continue;
+		}
+		$feed = wp_remote_retrieve_body( $remote );
+		$dom = simplexml_load_string( $feed );
+		$ns = $dom->getNamespaces( true );
+		$image = $dom->channel->image->url;
+		if ( empty( $image ) ) {
+			$temp = $dom->channel->children( $ns['itunes'] )->image;
+			foreach ( $temp->attributes() as $tk => $tv ) {
+				if ( $tk == 'href' ) {
+					$image = $tv;
+				}
+			}
+		}
+		$enclose = $dom->channel->item[0]->enclosure;
+		foreach ( $enclose->attributes() as $ek => $ev ) {
+			if ( $ek == 'url' ) {
+				$podcasts[ $k ]['latest-audio'] = $ev->__toString();
+			}
+		}
+		$podcasts[ $k ]['image'] = $image->__toString();
+		$podcasts[ $k ]['description'] = trim( $dom->channel->description );
+		$podcasts[ $k ]['latest-title'] = $dom->channel->item[0]->title->__toString();
+	}
+	update_option( 'hpm_pull_podcasts', $podcasts, false );
+	return $podcasts;
+}
+
+add_action( 'hpm_pull_podcasts', 'hpm_pull_podcasts_update' );
+$timestamp = wp_next_scheduled( 'hpm_pull_podcasts' );
+if ( empty( $timestamp ) ) {
+	wp_schedule_event( time(), 'hpm_30min', 'hpm_pull_podcasts' );
+}

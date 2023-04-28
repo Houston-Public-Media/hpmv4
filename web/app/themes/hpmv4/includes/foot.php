@@ -200,6 +200,18 @@ function hpm_chartbeat(): void {
 }
 add_action( 'wp_footer', 'hpm_chartbeat', 100 );
 
+function hpm_blank_footer(): void {
+	add_action( 'wp_footer', function(){
+		wp_dequeue_style( 'hpm-css' );
+		wp_deregister_style( 'hpm-css' );
+		wp_dequeue_script( 'hpm-js' );
+		wp_deregister_script( 'hpm-js' );
+	}, 1 );
+	remove_action( 'wp_footer', 'hpm_inline_script', 100 );
+	wp_footer();
+	echo "</html>";
+}
+
 function hpm_dark_mode_toggle(): void {
 	if ( !is_admin() ) { ?>
 <style>

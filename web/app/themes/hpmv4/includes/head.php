@@ -399,3 +399,20 @@ function hpm_talkshows(): string {
 	}
 	return $output;
 }
+
+function hpm_blank_header(): void {
+	echo '<!DOCTYPE html>' .
+	     '<html lang="en-US" xmlns="https://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml" dir="ltr" prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb#">' .
+	     '<head>' .
+	     '<meta charset="' . get_bloginfo( 'charset', 'display' ) . '">';
+	add_action( 'wp_head', function(){
+		wp_dequeue_style( 'hpm-css' );
+		wp_deregister_style( 'hpm-css' );
+		wp_dequeue_script( 'hpm-js' );
+		wp_deregister_script( 'hpm-js' );
+	}, 1 );
+
+	remove_action( 'wp_head', 'hpm_inline_style', 100 );
+	wp_head();
+	echo "</head>";
+}
