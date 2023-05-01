@@ -963,7 +963,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'http://feeds.feedburner.com/unitedstatesofanxiety',
 				'title' => 'Notes from America with Kai Wright',
 				'image' => '',
-				'description' => '',
+				'description' => '<em>Notes from America with Kai Wright</em> is a show about the unfinished business of our history and its grip on our future.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -971,7 +971,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://feeds.simplecast.com/_xaPhs1s',
 				'title' => 'Our Body Politic',
 				'image' => '',
-				'description' => '',
+				'description' => 'Created and hosted by award-winning journalist Farai Chideya, <em>Our Body Politic</em> is unapologetically centered on not just how women of color experience the major political events of today, but how they&#039;re impacting those very issues.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -979,7 +979,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://latinousa.feeds.futuromedia.org/',
 				'title' => 'Latino USA',
 				'image' => '',
-				'description' => '',
+				'description' => '<em>Latino USA</em> offers insight into the lived experiences of Latino communities and is a window on the current and emerging cultural, political and social ideas impacting Latinos and the nation.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -987,7 +987,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://embodied.feed.wunc.org/',
 				'title' => 'Embodied',
 				'image' => '',
-				'description' => '',
+				'description' => 'Sex and relationships are intimate &mdash; and sometimes intimidating to talk about. In <em>Embodied</em>, host Anita Rao guides us on an exploration of our brains and our bodies that touches down in taboo territory.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -995,7 +995,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://www.houstonpublicmedia.org/podcasts/i-see-u/',
 				'title' => 'I SEE U with Eddie Robinson',
 				'image' => '',
-				'description' => '',
+				'description' => 'Hosted by Houston Public Media’s Eddie Robinson, <em>I SEE U</em> explores cultural identity through the stories of people and places that have been transformed by the effects of long-standing biases. Eddie guides fascinating conversations with newsmakers who share their personal histories, their struggles and their triumphs.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			]
@@ -1025,7 +1025,7 @@ function hpm_pull_podcasts_update(): array {
 			}
 		}
 		$podcasts[ $k ]['image'] = $image->__toString();
-		$podcasts[ $k ]['description'] = trim( $dom->channel->description );
+		//$podcasts[ $k ]['description'] = trim( $dom->channel->description );
 		$podcasts[ $k ]['latest-title'] = $dom->channel->item[0]->title->__toString();
 	}
 	update_option( 'hpm_pull_podcasts', $podcasts, false );
