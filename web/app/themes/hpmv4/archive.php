@@ -33,7 +33,7 @@ if ( is_category() ) {
 		if ( !empty( $args ) ) {
 			$series_page = new WP_query( $args );
 			if ( $series_page->have_posts() ) {
-				while( $series_page->have_posts() ) {
+				while ( $series_page->have_posts() ) {
 					$series_page->the_post();
 					header( "HTTP/1.1 301 Moved Permanently" );
 					header( 'Location: ' . get_the_permalink() );

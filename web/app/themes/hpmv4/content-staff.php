@@ -5,11 +5,11 @@
  * @since HPMv4 4.0
  */
 $staff = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
+$staff_authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', true );
 $author_bio = get_the_content();
-if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" || $author_bio == '' ) {
+$bio_link = true;
+if ( ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" || $author_bio == '' ) && $staff_authid < 1 ) {
 	$bio_link = false;
-} else {
-	$bio_link = true;
 } ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 <?php

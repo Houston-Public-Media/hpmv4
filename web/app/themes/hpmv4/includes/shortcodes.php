@@ -614,7 +614,7 @@ function hpm_careers_trans(): string {
 			} else {
 				$title = trim( $j['column'][0] );
 			}
-			$output .= "<details><summary>" . $title . "</strong></summary>";
+			$output .= '<details id="' . $j['contestNo'] . '"><summary>' . $title . '</strong></summary><div class="job-link" title="Click for a direct link to this job posting" data-job="#' . $j['contestNo'] . '">🔗</div>';
 			if ( !empty( $desc[ $j['contestNo'] ]['description'] ) ) {
 				$output .= $desc[ $j['contestNo'] ]['description'];
 			}
