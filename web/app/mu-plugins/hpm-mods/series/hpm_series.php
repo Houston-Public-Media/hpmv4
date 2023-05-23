@@ -70,19 +70,19 @@ function hpm_header_image_meta_box( $object, $box ): void {
 			<div class="hpm-page-banner-image" id="hpm-page-banner-mobile"<?php echo $hpm_mobile_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="mobile">Mobile</button>
 			<input value="<?php echo $hpm_page_options['banner']['mobile']; ?>" type="hidden" id="hpm-page-banner-mobile-id" name="hpm-page-banner-mobile-id" />
-			<?php echo ( $hpm_page_options['banner']['mobile'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="mobile" style="border-color: red; color: red;">Remove</button>' ); ?>
+			<?php echo ( !empty( $hpm_page_options['banner']['mobile'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="mobile" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-tablet"<?php echo $hpm_tablet_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="tablet">Tablet</button>
 			<input value="<?php echo $hpm_page_options['banner']['tablet']; ?>" type="hidden" id="hpm-page-banner-tablet-id" name="hpm-page-banner-tablet-id" />
-			<?php echo ( $hpm_page_options['banner']['tablet'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="tablet" style="border-color: red; color: red;">Remove</button>' ); ?>
+			<?php echo ( !empty( $hpm_page_options['banner']['tablet'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="tablet" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-desktop"<?php echo $hpm_desktop_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="desktop">Desktop</button>
 			<input value="<?php echo $hpm_page_options['banner']['desktop']; ?>" type="hidden" id="hpm-page-banner-desktop-id" name="hpm-page-banner-desktop-id" />
-			<?php echo ( $hpm_page_options['banner']['desktop'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' ); ?>
+			<?php echo ( !empty( $hpm_page_options['banner']['desktop'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
 		</div>
 	</div>
 	<script>
