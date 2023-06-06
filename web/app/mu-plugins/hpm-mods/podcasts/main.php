@@ -370,29 +370,29 @@ class HPM_Podcasts {
 		}
 
 		if ( $post->post_type == 'podcasts' ) {
-			$hpm_podcast_cat = $_POST['hpm-podcast-cat'];
-			$hpm_podcast_prod = $_POST['hpm-podcast-prod'];
+			$hpm_podcast_cat = ( !empty( $_POST['hpm-podcast-cat'] ) ? $_POST['hpm-podcast-cat'] : '' );
+			$hpm_podcast_prod = ( !empty( $_POST['hpm-podcast-prod'] ) ? $_POST['hpm-podcast-prod'] : '' );
 			$hpm_podcast_link = [
-				'page' => ( sanitize_text_field( $_POST['hpm-podcast-link'] ) ?? '' ),
-				'itunes' => ( sanitize_text_field( $_POST['hpm-podcast-link-itunes'] ) ?? '' ),
-				'gplay' => ( sanitize_text_field( $_POST['hpm-podcast-link-gplay'] ) ?? '' ),
-				'spotify' => ( sanitize_text_field( $_POST['hpm-podcast-link-spotify'] ) ?? '' ),
-				'stitcher' => ( sanitize_text_field( $_POST['hpm-podcast-link-stitcher'] ) ?? '' ),
-				'radiopublic' => ( sanitize_text_field( $_POST['hpm-podcast-link-radiopublic'] ) ?? '' ),
-				'pcast' => ( sanitize_text_field( $_POST['hpm-podcast-link-pcast'] ) ?? '' ),
-				'overcast' => ( sanitize_text_field( $_POST['hpm-podcast-link-overcast'] ) ?? '' ),
-				'amazon' => ( sanitize_text_field( $_POST['hpm-podcast-link-amazon'] ) ?? '' ),
-				'tunein' => ( sanitize_text_field( $_POST['hpm-podcast-link-tunein'] ) ?? '' ),
-				'pandora' => ( sanitize_text_field( $_POST['hpm-podcast-link-pandora'] ) ?? '' ),
-				'iheart' => ( sanitize_text_field( $_POST['hpm-podcast-link-iheart'] ) ?? '' ),
-				'limit' => ( sanitize_text_field( $_POST['hpm-podcast-limit'] ) ?? 0 ),
+				'page' => ( !empty( $_POST['hpm-podcast-link'] ) ? sanitize_text_field( $_POST['hpm-podcast-link'] ) : '' ),
+				'itunes' => ( !empty( $_POST['hpm-podcast-link-itunes'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-itunes'] ) : '' ),
+				'gplay' => ( !empty( $_POST['hpm-podcast-link-gplay'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-gplay'] ) : '' ),
+				'spotify' => ( !empty( $_POST['hpm-podcast-link-spotify'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-spotify'] ) : '' ),
+				'stitcher' => ( !empty( $_POST['hpm-podcast-link-stitcher'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-stitcher'] ) : '' ),
+				'radiopublic' => ( !empty( $_POST['hpm-podcast-link-radiopublic'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-radiopublic'] ) : '' ),
+				'pcast' => ( !empty( $_POST['hpm-podcast-link-pcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pcast'] ) : '' ),
+				'overcast' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-overcast'] ) : '' ),
+				'amazon' => ( !empty( $_POST['hpm-podcast-link-amazon'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-amazon'] ) : '' ),
+				'tunein' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-tunein'] ) : '' ),
+				'pandora' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pandora'] ) : '' ),
+				'iheart' => ( !empty( $_POST['hpm-podcast-link-iheart'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-iheart'] ) : '' ),
+				'limit' => ( !empty( $_POST['hpm-podcast-limit'] ) ? sanitize_text_field( $_POST['hpm-podcast-limit'] ) : 0 ),
 				'categories' => [
-					'first' => $_POST['hpm-podcast-icat-first'],
-					'second' => $_POST['hpm-podcast-icat-second'],
-					'third' => $_POST['hpm-podcast-icat-third']
+					'first' => ( !empty( $_POST['hpm-podcast-icat-first'] ) ? $_POST['hpm-podcast-icat-first'] : '' ),
+					'second' => ( !empty( $_POST['hpm-podcast-icat-second'] ) ? $_POST['hpm-podcast-icat-second'] : '' ),
+					'third' => ( !empty( $_POST['hpm-podcast-icat-third'] ) ? $_POST['hpm-podcast-icat-third'] : '' )
 				],
-				'type' => $_POST['hpm-podcast-type'],
-				'rss-override' => ( sanitize_text_field( $_POST['hpm-podcast-rss-override'] ) ?? '' )
+				'type' => ( !empty( $_POST['hpm-podcast-type'] ) ? $_POST['hpm-podcast-type'] : '' ),
+				'rss-override' => ( !empty( $_POST['hpm-podcast-rss-override'] ) ? sanitize_text_field( $_POST['hpm-podcast-rss-override'] ) : '' )
 			];
 
 			update_post_meta( $post_id, 'hpm_pod_cat', $hpm_podcast_cat );

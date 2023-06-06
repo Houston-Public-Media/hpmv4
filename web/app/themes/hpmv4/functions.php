@@ -40,11 +40,6 @@ function hpm_scripts(): void {
 
 	wp_enqueue_script( 'hpm-analytics', 'https://cdn.houstonpublicmedia.org/assets/js/analytics/index.js', [], $versions['analytics'], false );
 
-	if ( WP_ENV !== 'production' ) {
-		wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], time(), true );
-		wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [], time() );
-	}
-
 	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], $versions['js'], true );
 	wp_register_script( 'hpm-splide', 'https://cdn.houstonpublicmedia.org/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
 	wp_register_script( 'hpm-splide-js', 'https://cdn.houstonpublicmedia.org/assets/js/splide.min.js', [], $versions['js'], true );
@@ -65,19 +60,26 @@ function hpm_scripts(): void {
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 
 function hpm_inline_script(): void {
-	$js = file_get_contents( get_template_directory() . '/js/main.js' );
-	echo '<script>' . $js . '</script>';
+	if ( WP_ENV == 'production' ) {
+		$js = file_get_contents( get_template_directory() . '/js/main.js' );
+		echo '<script>' . $js . '</script>';
+	} else {
+		echo '<script src="' . get_template_directory_uri() . '/js/main.js" type="module"></script>';
+	}
 }
 function hpm_inline_style(): void {
-	$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
-	$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
-	echo '<style>' . $styles . '</style>';
+	if ( WP_ENV == 'production' ) {
+		$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
+		$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
+		echo '<style>' . $styles . '</style>';
+	} else {
+		echo '<link rel="stylesheet" id="hpm-css" href="' . get_template_directory_uri() . '/style.css" type="text/css" media="all">';
+	}
+
 }
 
-if ( WP_ENV == 'production' ) {
-	add_action( 'wp_footer', 'hpm_inline_script', 100 );
-	add_action( 'wp_head', 'hpm_inline_style', 100 );
-}
+add_action( 'wp_footer', 'hpm_inline_script', 100 );
+add_action( 'wp_head', 'hpm_inline_style', 100 );
 
 /*
  * Modifies homepage query
@@ -499,9 +501,17 @@ function hpm_nprone_check( $post_id, $post ): void {
 			}
 		} else {
 			unset( $_POST['send_to_api'] );
+			unset( $_POST['send_to_cds'] );
 			unset( $_POST['send_to_one'] );
 			unset( $_POST['nprone_featured'] );
 		}
+		if ( in_array( 60, $_POST['post_category'] ) ) {
+			unset( $_POST['send_to_api'] );
+			unset( $_POST['send_to_cds'] );
+			unset( $_POST['send_to_one'] );
+			unset( $_POST['nprone_featured'] );
+		}
+		log_it( $_POST );
 	}
 }
 add_action( 'save_post', 'hpm_nprone_check', 2, 2 );
@@ -573,7 +583,7 @@ function hpm_homepage_articles(): array {
 	return $articles;
 }
 
-function hpm_priority_indepth() {
+function hpm_priority_indepth(): void {
 	$hpm_priority = get_option( 'hpm_priority' );
 	if ( !empty( $hpm_priority['indepth'] ) ) {
 		$indepth = [
@@ -763,12 +773,30 @@ function hpm_pull_npr_story( $npr_id ) {
 		if ( !empty( $story->bylines ) ) {
 			foreach ( $story->bylines as $byline ) {
 				$byl_id = $npr->extract_asset_id( $byline->href );
-				$nprdata['bylines'][] = [
-					'name' => $story->assets->{$byl_id}->name,
-					'link' => ''
-				];
+				$byl_current = $story->assets->{$byl_id};
+				$byl_profile = $npr->extract_asset_profile( $byl_current );
+				if ( $byl_profile === 'reference-byline' ) {
+					foreach ( $byl_current->bylineDocuments as $byl_doc ) {
+						$byl_data = $npr->get_document( $byl_doc->href );
+						if ( !empty( $byl_data ) ) {
+							$byl_link = '';
+							if ( !empty( $byl_data->webPages ) ) {
+								foreach ( $byl_data->webPages as $byl_web ) {
+									if ( !empty( $byl_web->rels ) && in_array( 'canonical', $byl_web->rels ) ) {
+										$byl_link = $byl_web->href;
+									}
+								}
+							}
+							$nprdata['bylines'][] = [
+								'name' => $byl_data->title,
+								'link' => $byl_link
+							];
+						}
+					}
+				}
 			}
-		} else {
+		}
+		if ( empty( $nprdata['bylines'] ) ) {
 			$nprdata['bylines'][] = [
 				'name' => 'NPR Staff',
 				'link' => ''
@@ -1027,6 +1055,18 @@ function hpm_svg_output( $icon ): string {
 		$output = '<path d="M434.9,219L124.2,35.3C99,20.4,60.3,34.9,60.3,71.8v367.3c0,33.1,35.9,53.1,63.9,36.5l310.7-183.6 C462.6,275.6,462.7,235.3,434.9,219L434.9,219z" />';
 	} elseif ( $icon == 'phone' ) {
 		$output = '<path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />';
+	} elseif ( $icon == 'stop' ) {
+		$output = '<path d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/>';
+	} elseif ( $icon == 'pause' ) {
+		$output = '<path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm224-72V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V184c0-13.3 10.7-24 24-24s24 10.7 24 24zm112 0V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V184c0-13.3 10.7-24 24-24s24 10.7 24 24z"/>';
+	} elseif ( $icon == 'volume-up' ) {
+		$output = '<path d="M533.6 32.5C598.5 85.3 640 165.8 640 256s-41.5 170.8-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/>';
+	} elseif ( $icon == 'mute' ) {
+		$output = '<path d="M320 64c0-12.6-7.4-24-18.9-29.2s-25-3.1-34.4 5.3L131.8 160H64c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64h67.8L266.7 471.9c9.4 8.4 22.9 10.4 34.4 5.3S320 460.6 320 448V64z"/>';
+	} elseif ( $icon == 'skip-forward' ) {
+		$output = '<path d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/>';
+	} elseif ( $icon == 'skip-back' ) {
+		$output = '<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"/>';
 	}
 	if ( !empty( $output ) ) {
 		$output = '<svg ' . ( $icon == 'play' ? 'id="play-button"' : '' ) . ' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">' . $output . '</svg>';
