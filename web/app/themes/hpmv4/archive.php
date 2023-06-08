@@ -42,11 +42,11 @@ if ( is_category() ) {
 				wp_reset_postdata();
 			}
 		}
-	}
-	if ( $cat->term_id == 29328 ) {
-		header( "HTTP/1.1 301 Moved Permanently" );
-		header( 'Location: /news/indepth/' );
-		exit;
+		if ( $cat->term_id == 29328 ) {
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: /news/indepth/' );
+			exit;
+		}
 	}
 }
 get_header(); ?>
