@@ -386,13 +386,13 @@ function hpm_staff_echo( $query ): void {
 			get_template_part( 'content', 'staff' );
 		}
 
-		echo '</div><h2>News &amp; On-Air Staff</h2><div class="staff-grid">';
+		echo '</div><h2>News &amp; Content</h2><div class="staff-grid">';
 		$args['tax_query'] = [
 			'relation' => 'AND',
 			[
 				'taxonomy' => 'staff_category',
 				'field' => 'slug',
-				'terms' => [ 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations' ]
+				'terms' => [ 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations', 'digital-operations' ]
 			],
 			[
 				'taxonomy' => 'staff_category',

@@ -441,7 +441,7 @@ function analyticsPull_update(): void {
 		if ( !empty( $match ) ) {
 			$title = get_the_title( $match[1] );
 			if ( empty( $title ) ) {
-				$title = ucwords( str_replace( '-', ' ', $match[2] ) );
+				$title = ucwords( str_replace( [ '-', '/' ], [ ' ', '' ] , $match[2] ) );
 			}
 			$output .= '<li><h2 class="entry-title"><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark">' . $title . '</a></h2></li>';
 		}
@@ -470,21 +470,48 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 		return $npr;
 	}
 	$output = '';
-	$api_key = get_option( 'ds_npr_api_key' );
-	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
-	if ( is_wp_error( $remote ) ) {
-		return "<p></p>";
-	} else {
-		$npr = wp_remote_retrieve_body( $remote );
-		$npr_json = json_decode( $npr, TRUE );
-	}
-	foreach ( $npr_json['list']['story'] as $story ) {
-		$npr_date = strtotime( $story['storyDate']['$text'] );
-		$output .= '<article class="card">';
-		if ( !empty( $story['image'][0]['src'] ) ) {
-			$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
+	if ( function_exists( 'npr_cds_activate' ) ) {
+		$npr = new NPR_CDS_WP();
+		$npr->request([
+			'collectionIds' => $api_id,
+			'profileIds' => 'story,renderable,publishable',
+			'limit' => $num,
+			'sort' => 'publishDateTime:desc'
+		]);
+		$npr->parse();
+		if ( !empty( $npr->stories ) ) {
+			foreach ( $npr->stories as $story ) {
+				$output .= '<article class="card">';
+				if ( !empty( $story->images[0] ) ) {
+					$image_id = $npr->extract_asset_id( $story->images[0]->href );
+					$image_asset = $story->assets->{$image_id};
+					foreach ( $image_asset->enclosures as $enclosure ) {
+						if ( in_array( 'primary', $enclosure->rels ) ) {
+							$image_url = $npr->get_image_url( $enclosure );
+						}
+					}
+					$output .= '<a href="/npr' . $story->nprWebsitePath . '/" class="post-thumbnail"><img src="' . $image_url . '" alt="' . $story->title . '" loading="lazy" /></a>';
+				}
+				$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark">' . $story->title . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story->teaser . '</div></div></article>';
+			}
 		}
-		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story['teaser']['$text'] . '</div></div></article>';
+	} elseif ( function_exists( 'nprstory_activate' ) ) {
+		$api_key = get_option( 'ds_npr_api_key' );
+		$remote  = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
+		if ( is_wp_error( $remote ) ) {
+			return "<p></p>";
+		} else {
+			$npr      = wp_remote_retrieve_body( $remote );
+			$npr_json = json_decode( $npr, true );
+		}
+		foreach ( $npr_json['list']['story'] as $story ) {
+			$npr_date = strtotime( $story['storyDate']['$text'] );
+			$output   .= '<article class="card">';
+			if ( ! empty( $story['image'][0]['src'] ) ) {
+				$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
+			}
+			$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story['teaser']['$text'] . '</div></div></article>';
+		}
 	}
 	set_transient( 'hpm_nprapi_' . $api_id, $output, 300 );
 	return $output;

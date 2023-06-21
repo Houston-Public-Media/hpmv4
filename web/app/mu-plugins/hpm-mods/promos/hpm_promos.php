@@ -532,18 +532,12 @@ class HPM_Promos {
 							"var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');" .
 							"var campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');" .
 							"setTimeout(() => {" .
-								"ga('hpmprod.send', 'event', 'Lightbox', 'view', campaignData);" .
-								"ga('hpmRollupprod.send', 'event', 'Lightbox', 'view', campaignData);" .
-								"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'view', campaignData);" .
 								"gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'view'});" .
 							"}, 1000);" .
 							"for (i = 0; i < campaign.length; ++i) {" .
 								"campaign[i].addEventListener('click', (event) => {" .
 									"event.stopPropagation();" .
 									"document.getElementById('campaign-splash').style.display = 'none';" .
-									"ga('hpmprod.send', 'event', 'Lightbox', 'dismiss', campaignData);" .
-									"ga('hpmRollupprod.send', 'event', 'Lightbox', 'dismiss', campaignData);" .
-									"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'dismiss', campaignData);" .
 									"gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'dismiss'});" .
 								"});".
 							"}".
@@ -565,9 +559,6 @@ class HPM_Promos {
 								"event.stopPropagation();" .
 								"let campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
 								"if ( typeof campaign !== typeof undefined && campaign !== false) {".
-									"ga('hpmprod.send', 'event', 'Lightbox', 'click', campaign);".
-									"ga('hpmRollupprod.send', 'event', 'Lightbox', 'click', campaign);".
-									"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'click', campaign);".
 									"gtag('event', 'lightbox', {'event_label': campaign,'event_category': 'click'});" .
 								"}".
 							"});".
