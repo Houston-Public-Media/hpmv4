@@ -302,7 +302,7 @@ function staff_meta_query( $query ): void {
 			$query->set( 'tax_query', [[
 				'taxonomy' => 'staff_category',
 				'field' => 'slug',
-				'terms' => [ 'hosts', 'executive-team', 'department-leaders', 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations' ],
+				'terms' => [ 'hosts', 'executive-team', 'department-leaders', 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations', 'digital-operations' ],
 				'operator' => 'NOT IN'
 			]] );
 		}
