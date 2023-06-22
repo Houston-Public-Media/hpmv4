@@ -1,3 +1,4 @@
+//import { jpp } from './experiments/jppIframe.js';
 let getCookie = (cname) => {
 	let name = cname + "=";
 	let decodedCookie = decodeURIComponent(document.cookie);
@@ -35,7 +36,7 @@ let amPm = (timeString) => {
 	return h + timeString.substr(hourEnd, 3) + ampm;
 };
 
-let hpm = {};
+export let hpm = {};
 
 hpm.navHandlers = () => {
 	let siteNav = document.querySelector('nav#site-navigation');
@@ -286,7 +287,7 @@ hpm.stationIds = {
 		'obj': {}
 	}
 };
-hpm.npSearch = () => {
+const npSearch = () => {
 	let nowPlay = document.querySelectorAll('.hpm-nowplay');
 	Array.from(nowPlay).forEach((np) => {
 		let station = np.getAttribute('data-station');
@@ -295,24 +296,24 @@ hpm.npSearch = () => {
 		hpm.stationIds[ station ].obj = np;
 	});
 	if ( document.body.classList.contains('page-template-page-listen') ) {
-		hpm.npDataDownload();
+		npDataDownload();
 	}
-	timeOuts.push(setInterval('hpm.npDataDownload()',60000));
+	timeOuts.push(setInterval('window.npDataDownload()',60000));
 };
-hpm.npDataDownload = () => {
+window.npDataDownload = () => {
 	for (let st in hpm.stationIds) {
 		if ( hpm.stationIds[st].refresh ) {
 			if ( hpm.stationIds[st].refresh ) {
 				fetch(hpm.stationIds[st].feed)
 					.then((response) => response.json())
 					.then((data) => {
-						hpm.npUpdateData(data,st);
+						npUpdateData(data,st);
 					});
 			}
 		}
 	}
 };
-hpm.npUpdateData = (data, station) => {
+export const npUpdateData = (data, station) => {
 	if (JSON.stringify(data) !== JSON.stringify(hpm.stationIds[station]['nowPlaying']) ) {
 		hpm.stationIds[station]['nowPlaying'] = data;
 		let hpmUpdate = new CustomEvent('hpm:npUpdate', {
@@ -325,9 +326,9 @@ hpm.npUpdateData = (data, station) => {
 };
 document.addEventListener('hpm:npUpdate', (event) => {
 	let station = event['detail']['updated'];
-	hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
+	npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
 });
-hpm.npUpdateHtml = (object,station,next) => {
+export const npUpdateHtml = (object,station,next) => {
 	let output = '';
 	let data;
 	data = hpm.stationIds[station]['nowPlaying'];
@@ -366,14 +367,25 @@ hpm.npUpdateHtml = (object,station,next) => {
 			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].start_time)+': '+data.nextUp[0].program.name+'</li></ul>';
 		}
 	}
-	object.innerHTML = output;
+	if (object === 'jpp') {
+		if ( station === jpp.prefStream ) {
+			jpp.elements.nowPlaying.innerHTML = '<div><p>Houston Public Media ' + station + '</p>' + output + '</div>';
+			if ( station === 'news' ) {
+				jpp.elements.nowPlaying.innerHTML += '<div class="playing-next"><p>Coming up @ ' + amPm(data.nextUp[0].start_time) + '</p><h3>' + data.nextUp[0].program.name + '</h3></div>';
+			}
+		}
+		document.getElementById('menu-station-'+station).innerHTML = '<p>Houston Public Media ' + station + '</p>' + output;
+	}
+	if (object !== 'jpp') {
+		object.innerHTML = output;
+	}
 };
 document.addEventListener('DOMContentLoaded', () => {
 	hpm.navHandlers();
 	hpm.videoHandlers();
 	hpm.shareHandlers();
 	hpm.audioEmbeds();
-	hpm.npSearch();
+	npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
 });

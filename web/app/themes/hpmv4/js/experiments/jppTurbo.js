@@ -1,4 +1,4 @@
-import { hpm, npUpdateData, npUpdateHtml  } from '../main.js';
+import { hpm, npUpdateData, npUpdateHtml  } from '../main-mod.js';
 export let jpp = {
 	'version': 1,
 	'streams': {

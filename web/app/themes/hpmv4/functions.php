@@ -64,7 +64,7 @@ function hpm_inline_script(): void {
 		$js = file_get_contents( get_template_directory() . '/js/main.js' );
 		echo '<script>' . $js . '</script>';
 	} else {
-		echo '<script src="' . get_template_directory_uri() . '/js/main.js" type="module"></script>';
+		echo '<script src="' . get_template_directory_uri() . '/js/main.js"></script>';
 	}
 }
 function hpm_inline_style(): void {
