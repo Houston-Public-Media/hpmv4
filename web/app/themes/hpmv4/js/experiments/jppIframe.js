@@ -1,5 +1,4 @@
-import { hpm, npUpdateData, npUpdateHtml  } from '../main-mod.js';
-export let jpp = {
+let jpp = {
 	'version': 1,
 	'streams': {
 		'news': {
@@ -103,7 +102,7 @@ jpp.loadPlayer = () => {
 			fetch(hpm.stationIds[st].feed)
 				.then((response) => response.json())
 				.then((data) => {
-					npUpdateData(data,st);
+					hpm.npUpdateData(data,st);
 				});
 		}
 	}
@@ -158,7 +157,7 @@ jpp.buttonManage = () => {
 			if (jpp.elements.stop.classList.contains('hidden')) {
 				jpp.elements.stop.classList.toggle('hidden');
 			}
-			npUpdateHtml('jpp', station, 'false');
+			hpm.npUpdateHtml('jpp', station, 'false');
 		});
 	});
 };

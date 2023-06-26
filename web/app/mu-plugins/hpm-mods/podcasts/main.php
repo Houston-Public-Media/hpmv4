@@ -655,20 +655,22 @@ class HPM_Podcasts {
 		if ( empty( $status ) ) {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No upload status found, please try your upload again.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		} else {
-			if ( $status['status'] == 'error' ) {
-				return new WP_Error( 'rest_api_sad', esc_html__( $status['message'], 'hpm-podcasts' ), [ 'status' => 500 ] );
-			} elseif ( $status['status'] == 'in-progress' ) {
+			if ( $status['status'] == 'in-progress' ) {
 				return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( $status['message'], 'hpm-podcasts' ), 'data' => [ 'current' => 'in-progress', 'status' => 200 ] ] );
 			} elseif ( $status['status'] == 'success' ) {
-				delete_post_meta( $request['id'], 'hpm_podcast_status', '' );
+				delete_post_meta( $request['id'], 'hpm_podcast_status' );
 				$data = get_post_meta( $request['id'], 'hpm_podcast_enclosure', true );
 				return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( $status['message'], 'hpm-podcasts' ), 'data' => [ 'url' => $data['url'], 'current' => 'success', 'status' => 200 ] ] );
+			} else {
+				return new WP_Error( 'rest_api_sad', esc_html__( $status['message'], 'hpm-podcasts' ), [ 'status' => 500 ] );
 			}
 		}
 	}
 
 	/**
 	 * Pull a list of podcasts, generate the feeds, and save them as flat XML files in the database
+	 *
+	 * @param WP_REST_Request|null $request
 	 *
 	 * @return WP_HTTP_Response|WP_REST_Response|WP_Error
 	 */
@@ -728,7 +730,7 @@ class HPM_Podcasts {
 				$pod_id = get_the_ID();
 				$catslug = get_post_meta( $pod_id, 'hpm_pod_cat', true );
 				$podlink = get_post_meta( $pod_id, 'hpm_pod_link', true );
-				$last_id = get_post_meta( $pod_id, 'hpm_pod_last_id', true );
+				// $last_id = get_post_meta( $pod_id, 'hpm_pod_last_id', true );
 				$current_post = $post;
 				$podcast_title = $podcasts->post->post_name;
 				$perpage = -1;
@@ -745,13 +747,13 @@ class HPM_Podcasts {
 						'compare' => 'EXISTS'
 					]]
 				]);
-				if ( $podeps->have_posts() && $request === null ) {
-					$first_id = $podeps->post->ID;
-					$modified = get_the_modified_date('U', $first_id );
-					if ( !empty( $last_id['id'] ) && $last_id['id'] == $first_id && $last_id['modified'] == $modified ) {
-						continue;
-					}
-				}
+//				if ( $podeps->have_posts() && $request === null ) {
+//					$first_id = $podeps->post->ID;
+//					$modified = get_the_modified_date('U', $first_id );
+//					if ( !empty( $last_id['id'] ) && $last_id['id'] == $first_id && $last_id['modified'] == $modified ) {
+//						continue;
+//					}
+//				}
 				$main_image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
 				$favicon = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumb' );
 				$categories = [];

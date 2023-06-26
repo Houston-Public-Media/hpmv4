@@ -366,7 +366,18 @@ hpm.npUpdateHtml = (object,station,next) => {
 			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].start_time)+': '+data.nextUp[0].program.name+'</li></ul>';
 		}
 	}
-	object.innerHTML = output;
+	if (object === 'jpp') {
+		if ( station === jpp.prefStream ) {
+			jpp.elements.nowPlaying.innerHTML = '<div><p>Houston Public Media ' + station + '</p>' + output + '</div>';
+			if ( station === 'news' ) {
+				jpp.elements.nowPlaying.innerHTML += '<div class="playing-next"><p>Coming up @ ' + amPm(data.nextUp[0].start_time) + '</p><h3>' + data.nextUp[0].program.name + '</h3></div>';
+			}
+		}
+		document.getElementById('menu-station-'+station).innerHTML = '<p>Houston Public Media ' + station + '</p>' + output;
+	}
+	if (object !== 'jpp') {
+		object.innerHTML = output;
+	}
 };
 document.addEventListener('DOMContentLoaded', () => {
 	hpm.navHandlers();
