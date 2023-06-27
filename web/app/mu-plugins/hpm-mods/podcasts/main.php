@@ -456,6 +456,19 @@ class HPM_Podcasts {
 					}
 				}
 			}
+			if ( !empty( $_POST['hpm-podcast-ep-feed'] ) ) {
+				$hpm_podcast_feed = new WP_Query([
+					'post_type' => 'podcasts',
+					'post_status' => 'publish',
+					'name' => sanitize_text_field( $_POST['hpm-podcast-ep-feed'] )
+				]);
+				if ( $hpm_podcast_feed->have_posts() ) {
+					$pod_id = $hpm_podcast_feed->posts[0]->ID;
+					$pod_last_id = get_post_meta( $pod_id, 'hpm_pod_last_id', true );
+					$pod_last_id['modified'] = 0;
+					update_post_meta( $pod_id, 'hpm_pod_last_id', $pod_last_id );
+				}
+			}
 		}
 		return $post_id;
 	}
@@ -730,7 +743,7 @@ class HPM_Podcasts {
 				$pod_id = get_the_ID();
 				$catslug = get_post_meta( $pod_id, 'hpm_pod_cat', true );
 				$podlink = get_post_meta( $pod_id, 'hpm_pod_link', true );
-				// $last_id = get_post_meta( $pod_id, 'hpm_pod_last_id', true );
+				$last_id = get_post_meta( $pod_id, 'hpm_pod_last_id', true );
 				$current_post = $post;
 				$podcast_title = $podcasts->post->post_name;
 				$perpage = -1;
@@ -747,13 +760,13 @@ class HPM_Podcasts {
 						'compare' => 'EXISTS'
 					]]
 				]);
-//				if ( $podeps->have_posts() && $request === null ) {
-//					$first_id = $podeps->post->ID;
-//					$modified = get_the_modified_date('U', $first_id );
-//					if ( !empty( $last_id['id'] ) && $last_id['id'] == $first_id && $last_id['modified'] == $modified ) {
-//						continue;
-//					}
-//				}
+				if ( $podeps->have_posts() && $request === null ) {
+					$first_id = $podeps->post->ID;
+					$modified = get_the_modified_date('U', $first_id );
+					if ( !empty( $last_id['id'] ) && $last_id['id'] == $first_id && $last_id['modified'] == $modified ) {
+						continue;
+					}
+				}
 				$main_image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
 				$favicon = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumb' );
 				$categories = [];

@@ -511,7 +511,6 @@ function hpm_nprone_check( $post_id, $post ): void {
 			unset( $_POST['send_to_one'] );
 			unset( $_POST['nprone_featured'] );
 		}
-		log_it( $_POST );
 	}
 }
 add_action( 'save_post', 'hpm_nprone_check', 2, 2 );
