@@ -38,8 +38,6 @@ add_action( 'init', 'wpcodex_add_excerpt_support_for_pages' );
 function hpm_scripts(): void {
 	$versions = hpm_versions();
 
-	wp_enqueue_script( 'hpm-analytics', 'https://cdn.houstonpublicmedia.org/assets/js/analytics/index.js', [], $versions['analytics'], false );
-
 	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], $versions['js'], true );
 	wp_register_script( 'hpm-splide', 'https://cdn.houstonpublicmedia.org/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
 	wp_register_script( 'hpm-splide-js', 'https://cdn.houstonpublicmedia.org/assets/js/splide.min.js', [], $versions['js'], true );

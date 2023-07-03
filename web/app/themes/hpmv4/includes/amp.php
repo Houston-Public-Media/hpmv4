@@ -41,51 +41,6 @@ function hpm_amp_modify_json_metadata( $metadata, $post ) {
 	return $metadata;
 }
 
-/*
- * Add Google Analytics to AMP
- */
-add_filter( 'amp_post_template_analytics', 'hpm_amp_add_custom_analytics' );
-function hpm_amp_add_custom_analytics( $analytics ) {
-	if ( ! is_array( $analytics ) ) {
-		$analytics = [];
-	}
-	$analytics['hpm-googleanalytics'] = [
-		'type' => 'googleanalytics',
-		'attributes' => [
-			// 'data-credentials' => 'include',
-		],
-		'config_data' => [
-			'vars' => [
-				'account' => "UA-3106036-13"
-			],
-			'triggers' => [
-				'trackPageview' => [
-					'on' => 'visible',
-					'request' => 'pageview',
-				],
-			],
-		],
-	];
-	$analytics['hpmwebamp-googleanalytics'] = [
-		'type' => 'googleanalytics',
-		'attributes' => [
-			// 'data-credentials' => 'include',
-		],
-		'config_data' => [
-			'vars' => [
-				'account' => "UA-3106036-22"
-			],
-			'triggers' => [
-				'trackPageview' => [
-					'on' => 'visible',
-					'request' => 'pageview',
-				],
-			],
-		],
-	];
-	return $analytics;
-}
-
 add_action( 'amp_post_template_css', 'hpm_amp_additional_css' );
 
 function hpm_amp_additional_css( $amp_template ): void {
