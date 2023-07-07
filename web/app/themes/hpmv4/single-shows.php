@@ -176,6 +176,7 @@ get_header(); ?>
 	];
 	global $ka;
 	$ka = 0;
+	$tag_ids = [];
 	if ( !empty( $top ) && $top !== 'None' ) {
 		$top_art = new WP_Query( [ 'p' => $top ] );
 		$cat_args['posts_per_page'] = 14;
@@ -185,6 +186,16 @@ get_header(); ?>
 				$top_art->the_post();
 				get_template_part( 'content', get_post_type() );
 				$ka += 2;
+				if ( $show_id === 380127 || $show_id === 119016 ) {
+					$tags = wp_get_post_tags( get_the_ID() );
+					if ( $tags ) {
+						foreach ( $tags as $individual_tag ) {
+							if ( ! in_array( $individual_tag->term_id, $tag_ids ) ) {
+								$tag_ids[] = $individual_tag->term_id;
+							}
+						}
+					}
+				}
 			}
 			$post_num = 14;
 		}
@@ -195,10 +206,48 @@ get_header(); ?>
 		while ( $cat->have_posts() ) {
 			$cat->the_post();
 			get_template_part( 'content', get_post_type() );
+			if ( $show_id === 380127 || $show_id === 119016 ) {
+				$tags = wp_get_post_tags( get_the_ID() );
+				if ( $tags ) {
+					foreach( $tags as $individual_tag ) {
+						if ( !in_array( $individual_tag->term_id, $tag_ids ) )
+						$tag_ids[] = $individual_tag->term_id;
+					}
+				}
+			}
 			$ka += 2;
 		}
 	} ?>
 				</div>
+				<aside class="column-right">
+<?php
+	if ( $show_id === 380127 || $show_id === 119016 ) {
+		$rel_args = [
+			'tag__in' => $tag_ids,
+			'category__not_in' => [ 0, 1, 7636, 28, 37840, 54338, 60, $cat_no ],
+			'posts_per_page'=> 4,
+			'ignore_sticky_posts'=> 1
+		];
+		$rel_query = new WP_Query( $rel_args );
+		if ( $rel_query->have_posts() ) { ?>
+					<section class="highlights">
+						<h4>Related</h4>
+<?php
+			while ( $rel_query->have_posts() ) {
+				$rel_query->the_post();
+				get_template_part( 'content', get_post_format() );
+			} ?>
+					</section>
+		<?php
+		}
+		hpm_top_posts(); ?>
+					<section class="highlights">
+						<h4>News from NPR</h4>
+						<?php echo hpm_nprapi_output(); ?>
+					</section>
+				</aside>
+<?php
+	} ?>
 			</div>
 <?php
 	if ( $cat->found_posts > 15 ) { ?>
@@ -207,6 +256,7 @@ get_header(); ?>
 			</div>
 <?php
 	} ?>
+
 		</main>
 	</div>
 <?php get_footer(); ?>
