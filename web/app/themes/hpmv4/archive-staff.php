@@ -36,7 +36,7 @@ get_header(); ?>
 		article.staff .card-content {
 			min-width: 69%;
 			flex: 1;
-			margin-bottom: 1rem;
+			margin-bottom: 1.75rem;
 		}
 		article.staff .post-thumbnail img {
 			aspect-ratio: initial;
