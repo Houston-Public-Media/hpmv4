@@ -259,7 +259,8 @@ add_action( 'wp_footer', function(){
 	}
 	@keyframes fades {
 		0% { opacity: 0; }
-		6% { opacity: 1; }
+		3% { opacity: 0; }
+		7% { opacity: 1; }
 		94% { opacity: 1; }
 		100% { opacity: 0; }
 	}

@@ -501,7 +501,10 @@ class HPM_Promos {
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
 				if ( $meta['type'] == 'lightbox' ) {
-					if ( $lightbox == 0 ) {
+					if ( !empty( $_GET['utm_source'] ) && strtolower( $_GET['utm_source'] ) === 'high5media' && !empty( $_GET['utm_content'] ) && ( $_GET['utm_content'] === 'trusted' || $_GET['utm_content'] === 'inspiring' ) ) {
+						continue;
+					}
+					if ( $lightbox == 0  ) {
 						$output .= "var visited = getCookie('visited');";
 						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) {
 							$content_esc = str_replace(
