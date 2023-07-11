@@ -214,20 +214,20 @@ function hpm_blank_footer(): void {
 
 add_action( 'wp_footer', function(){
 	if ( !empty( $_GET['utm_source'] ) && strtolower( $_GET['utm_source'] ) === 'high5media' && !empty( $_GET['utm_content'] ) ) {
-		if ( strtolower($_GET['utm_content'] ) === 'informing' ) {
-			$content = '<div id="campaign-splash" data-campaign="fy23-june-tv-drive" class="lightbox"><div id="splash"><a href="https://www.pledgecart.org/?campaign=787579FE-6AD5-40D4-85F9-411F1F25A973&source="><img src="https://cdn.houstonpublicmedia.org/assets/images/PreSpring-TV-23_1200x600EH.png.webp" alt="Houston Public Media TV 8, two-for-one match. Give now!" /></a><div class="campaign-push"><p>Help protect the beloved PBS programs that your family loves by giving during the PBS TV Drive today! All donations made by June 25 are <strong>matched dollar-for-dollar, up to $35,000</strong>!</p><a href="https://www.pledgecart.org/?campaign=787579FE-6AD5-40D4-85F9-411F1F25A973&source="><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M438.1,85.3c-48.4-41.2-120.3-33.8-164.7,12L256,115.2l-17.4-17.9c-44.3-45.8-116.4-53.2-164.7-12 c-55.4,47.3-58.4,132.2-8.7,183.5L236,445.2c11,11.4,29,11.4,40,0l170.8-176.4C496.5,217.5,493.6,132.6,438.1,85.3L438.1,85.3z"></path></svg> Give Now</a></div><div id="campaign-close">X</div></div></div>';
+		if ( strtolower($_GET['utm_content'] ) === 'inspiring' ) {
+			$content = '<div id="campaign-splash" data-campaign="high5-inspiring" class="lightbox"><div id="splash" style="width: 85% !important; max-width: 85% !important;"><picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Mobile.png.webp" media="(max-width: 700px)" /><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Desktop.jpg.webp" /><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Mobile.png.webp" alt="Houston Public Media is informing and inspiring the people of Greater Houston. Wherever you are, whenever you want it." /></picture><div id="campaign-close">X</div></div></div>';
 		} elseif ( strtolower($_GET['utm_content'] ) === 'trusted' ) {
-			$content = '<div id="campaign-splash" data-campaign="fy23-june-tv-drive" class="lightbox"><div id="splash"><a href="https://www.pledgecart.org/?campaign=787579FE-6AD5-40D4-85F9-411F1F25A973&source="><img src="https://cdn.houstonpublicmedia.org/assets/images/PreSpring-TV-23_1200x600EH.png.webp" alt="Houston Public Media TV 8, two-for-one match. Give now!" /></a><div class="campaign-push"><p>Help protect the beloved PBS programs that your family loves by giving during the PBS TV Drive today! All donations made by June 25 are <strong>matched dollar-for-dollar, up to $35,000</strong>!</p><a href="https://www.pledgecart.org/?campaign=787579FE-6AD5-40D4-85F9-411F1F25A973&source="><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M438.1,85.3c-48.4-41.2-120.3-33.8-164.7,12L256,115.2l-17.4-17.9c-44.3-45.8-116.4-53.2-164.7-12 c-55.4,47.3-58.4,132.2-8.7,183.5L236,445.2c11,11.4,29,11.4,40,0l170.8-176.4C496.5,217.5,493.6,132.6,438.1,85.3L438.1,85.3z"></path></svg> Give Now</a></div><div id="campaign-close">X</div></div></div>';
+			$content = '<div id="campaign-splash" data-campaign="high5-trusted-news" class="lightbox""><div id="splash" style="width: 85% !important; max-width: 85% !important;"><picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Mobile.png.webp" media="(max-width: 700px)" /><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Desktop.png.webp" /><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Mobile.png.webp" alt="Houston Public Media is trusted news and information that matters to you. Wherever you are, whenever you want it." /></picture><div id="campaign-close">X</div></div></div>';
 		}
 		echo <<<EOT
 <script>
 	(function(){
-		let wide = window.innerWidth;
 		let lightBox = '{$content}';
 		document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);
 		let campaign = document.querySelectorAll('#campaign-splash, #campaign-close');
 		let campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');
 		setTimeout(() => { gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'view'}); }, 1000);
+		setTimeout(() => { document.getElementById('campaign-splash').style.display = 'none'; }, 18000);
 		for (i = 0; i < campaign.length; ++i) {
 			campaign[i].addEventListener('click', (event) => {
 				event.stopPropagation();
@@ -249,6 +249,21 @@ add_action( 'wp_footer', function(){
 		}
 	}());
 </script>
+<style>
+	.lightbox {
+		opacity: 0;
+		animation-name: fades;
+		animation-duration: 17s;
+		animation-delay: 0s;
+		animation-fill-mode: both;
+	}
+	@keyframes fades {
+		0% { opacity: 0; }
+		6% { opacity: 1; }
+		94% { opacity: 1; }
+		100% { opacity: 0; }
+	}
+</style>
 EOT;
 	}
 }, 100 );
