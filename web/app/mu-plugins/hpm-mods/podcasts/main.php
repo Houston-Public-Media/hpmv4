@@ -301,7 +301,6 @@ class HPM_Podcasts {
 					'itunes'       => '',
 					'gplay'        => '',
 					'spotify'      => '',
-					'stitcher'     => '',
 					'radiopublic'  => '',
 					'pcast'        => '',
 					'overcast'     => '',
@@ -321,7 +320,6 @@ class HPM_Podcasts {
 				'itunes'       => '',
 				'gplay'        => '',
 				'spotify'      => '',
-				'stitcher'     => '',
 				'radiopublic'  => '',
 				'pcast'        => '',
 				'overcast'     => '',
@@ -377,7 +375,6 @@ class HPM_Podcasts {
 				'itunes' => ( !empty( $_POST['hpm-podcast-link-itunes'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-itunes'] ) : '' ),
 				'gplay' => ( !empty( $_POST['hpm-podcast-link-gplay'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-gplay'] ) : '' ),
 				'spotify' => ( !empty( $_POST['hpm-podcast-link-spotify'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-spotify'] ) : '' ),
-				'stitcher' => ( !empty( $_POST['hpm-podcast-link-stitcher'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-stitcher'] ) : '' ),
 				'radiopublic' => ( !empty( $_POST['hpm-podcast-link-radiopublic'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-radiopublic'] ) : '' ),
 				'pcast' => ( !empty( $_POST['hpm-podcast-link-pcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pcast'] ) : '' ),
 				'overcast' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-overcast'] ) : '' ),
@@ -1108,9 +1105,6 @@ class HPM_Podcasts {
 				$temp .= '<li><a href="' . $pod_link['spotify'] . '" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="' . $badges . 'spotify.png" alt="Subscribe on Spotify" title="Subscribe on Spotify"></a></li>';
 			}
 			if ( $full_list ) {
-				if ( !empty( $pod_link['stitcher'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['stitcher'] . '" rel="noopener" target="_blank" title="Subscribe on Stitcher"><img src="' . $badges . 'stitcher.png" alt="Subscribe on Stitcher" title="Subscribe on Stitcher"></a></li>';
-				}
 				if ( !empty( $pod_link['tunein'] ) ) {
 					$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png" alt="Subscribe on TuneIn" title="Subscribe on TuneIn"></a></li>';
 				}
