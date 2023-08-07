@@ -116,7 +116,7 @@ function author_footer( $id ): string {
 		$temp .= "
 		</div>
 	</div>";
-		set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 7200 );
+		set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 900 );
 		$output .= $temp;
 	endforeach;
 	return $output;
