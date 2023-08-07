@@ -122,10 +122,10 @@ function author_footer( $id ): string {
 	return $output;
 }
 
-function hpm_houston_matters_check() {
-	$hm_air = get_transient( 'hpm_hm_airing' );
-	if ( !empty( $hm_air ) ) {
-		return $hm_air;
+function hpm_houston_matters_check(): array {
+	$hm_airtimes = get_transient( 'hpm_hm_airing' );
+	if ( !empty( $hm_airtimes ) ) {
+		return $hm_airtimes;
 	}
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
@@ -137,7 +137,7 @@ function hpm_houston_matters_check() {
 	];
 	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=" . $date . "&format=json" ) );
 	if ( is_wp_error( $remote ) ) {
-		return false;
+		return $hm_airtimes;
 	} else {
 		$api = wp_remote_retrieve_body( $remote );
 		$json = json_decode( $api, TRUE );
