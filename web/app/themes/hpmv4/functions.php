@@ -541,8 +541,9 @@ function election_homepage(): void {
 function hpm_homepage_articles(): array {
 	$articles = [];
 	$hpm_priority = get_option( 'hpm_priority' );
+	$indepth_slot = $hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
-		if ( empty( $hpm_priority['homepage'][1] ) ) {
+		if ( empty( $hpm_priority['homepage'][ $indepth_slot ] ) ) {
 			$indepth = new WP_Query([
 				'posts_per_page' => 2,
 				'cat' => 29328,
@@ -551,9 +552,9 @@ function hpm_homepage_articles(): array {
 			]);
 			if ( $indepth->have_posts() ) {
 				if ( $hpm_priority['homepage'][0] == $indepth->posts[0]->ID ) {
-					$hpm_priority['homepage'][1] = $indepth->posts[1]->ID;
+					$hpm_priority['homepage'][ $indepth_slot ] = $indepth->posts[1]->ID;
 				} else {
-					$hpm_priority['homepage'][1] = $indepth->posts[0]->ID;
+					$hpm_priority['homepage'][ $indepth_slot ] = $indepth->posts[0]->ID;
 				}
 			}
 		}
@@ -578,32 +579,6 @@ function hpm_homepage_articles(): array {
 		}
 	}
 	return $articles;
-}
-
-function hpm_priority_indepth(): void {
-	$hpm_priority = get_option( 'hpm_priority' );
-	if ( !empty( $hpm_priority['indepth'] ) ) {
-		$indepth = [
-			'posts_per_page' => 1,
-			'p' => $hpm_priority['indepth'],
-			'post_status' => 'publish'
-		];
-	} else {
-		$indepth = [
-			'posts_per_page' => 1,
-			'cat' => 29328,
-			'ignore_sticky_posts' => 1,
-			'post_status' => 'publish'
-		];
-	}
-	$indepth_query = new WP_Query( $indepth );
-	if ( $indepth_query->have_posts() ) {
-		while ( $indepth_query->have_posts() ) {
-			$indepth_query->the_post();
-			get_template_part( 'content', get_post_type() );
-		}
-	}
-	wp_reset_query();
 }
 
 function hpm_article_share( $nprdata = null ): void {
