@@ -1,7 +1,23 @@
 <?php
-add_action('update_option_hpm_priority', function( $old_value, $value ) {
+add_action( 'pre_update_option_hpm_priority', function( $old_value, $value ) {
+	$number = $old_value['number'];
+	if ( $number !== count( $old_value['homepage'] ) ) {
+		$new = [];
+		for ( $i = 0; $i < $number; $i++ ) {
+			if ( empty( $old_value['homepage'][ $i ] ) ) {
+				$new[ $i ] = '';
+			} else {
+				$new[ $i ] = $old_value['homepage'][ $i ];
+			}
+		}
+		$old_value['homepage'] = $new;
+	}
+	return $old_value;
+}, 10, 2 );
+
+add_action( 'update_option_hpm_priority', function( $old_value, $value ) {
 	wp_cache_delete( 'hpm_priority', 'options' );
-}, 10, 2);
+}, 10, 2 );
 
 add_action( 'rest_api_init', function() {
 	register_rest_route( 'hpm-priority/v1', '/list', [
@@ -145,6 +161,7 @@ function hpm_priority_settings_page(): void {
 										} ?>
 										</tbody>
 									</table>
+									<p><label for="hpm_priority[number]"><?php _e('Number of slots: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[number]" id="homepage-number" class="homepage-select-input" value="<?php echo ( !empty( $priority['number'] ) ? $priority['number'] : count( $priority['homepage'] ) ); ?>" style="width: 150px;" /></p>
 								</div>
 							</div>
 						</div>
