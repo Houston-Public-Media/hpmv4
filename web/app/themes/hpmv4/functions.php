@@ -541,7 +541,7 @@ function election_homepage(): void {
 function hpm_homepage_articles(): array {
 	$articles = [];
 	$hpm_priority = get_option( 'hpm_priority' );
-	$indepth_slot = $hpm_priority['inDepthnumber'] - 1;
+	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
 		if ( empty( $hpm_priority['homepage'][ $indepth_slot ] ) ) {
 			$indepth = new WP_Query([
