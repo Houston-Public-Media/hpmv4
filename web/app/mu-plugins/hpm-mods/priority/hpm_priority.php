@@ -32,7 +32,7 @@ add_action( 'rest_api_init', function() {
 function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	$hpm_priority = get_option( 'hpm_priority' );
 	$output = [];
-	$indepth_slot = $hpm_priority['inDepthnumber'] - 1;
+	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
 		if ( empty( $hpm_priority['homepage'][ $indepth_slot ] ) ) {
 			$indepth = new WP_Query([
@@ -135,7 +135,7 @@ function hpm_priority_settings_page(): void {
 										</thead>
 										<tbody>
 									<?php
-                                        $inDepthSlotNumber = $priority['inDepthnumber'] - 1;
+                                        $inDepthSlotNumber = (int)$priority['inDepthnumber'] - 1;
 										foreach ( $priority['homepage'] as $kp => $vp ) {
 											$position = $kp + 1;
 											if ( $kp == $inDepthSlotNumber ) { ?>
