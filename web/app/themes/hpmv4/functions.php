@@ -541,6 +541,9 @@ function election_homepage(): void {
 function hpm_homepage_articles(): array {
 	$articles = [];
 	$hpm_priority = get_option( 'hpm_priority' );
+	if ( empty( $hpm_priority['inDepthnumber'] ) ) {
+		$hpm_priority['inDepthnumber'] = 2;
+	}
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
 		if ( empty( $hpm_priority['homepage'][ $indepth_slot ] ) ) {

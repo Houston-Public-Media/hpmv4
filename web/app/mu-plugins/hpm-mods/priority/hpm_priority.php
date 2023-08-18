@@ -31,6 +31,9 @@ add_action( 'rest_api_init', function() {
 
 function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	$hpm_priority = get_option( 'hpm_priority' );
+	if ( empty( $hpm_priority['inDepthnumber'] ) ) {
+		$hpm_priority['inDepthnumber'] = 2;
+	}
 	$output = [];
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
@@ -93,6 +96,9 @@ function hpm_priority_register_settings(): void {
 
 function hpm_priority_settings_page(): void {
 	$priority = get_option( 'hpm_priority' );
+	if ( empty( $priority['inDepthnumber'] ) ) {
+		$priority['inDepthnumber'] = 2;
+	}
 	$recents = $indepths = [];
 	$recent = new WP_Query([
 		'post_status' => 'publish',
@@ -135,7 +141,7 @@ function hpm_priority_settings_page(): void {
 										</thead>
 										<tbody>
 									<?php
-                                        $inDepthSlotNumber = (int)$priority['inDepthnumber'] - 1;
+										$inDepthSlotNumber = (int)$priority['inDepthnumber'] - 1;
 										foreach ( $priority['homepage'] as $kp => $vp ) {
 											$position = $kp + 1;
 											if ( $kp == $inDepthSlotNumber ) { ?>
