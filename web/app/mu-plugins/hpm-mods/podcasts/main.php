@@ -379,8 +379,8 @@ class HPM_Podcasts {
 				'pcast' => ( !empty( $_POST['hpm-podcast-link-pcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pcast'] ) : '' ),
 				'overcast' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-overcast'] ) : '' ),
 				'amazon' => ( !empty( $_POST['hpm-podcast-link-amazon'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-amazon'] ) : '' ),
-				'tunein' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-tunein'] ) : '' ),
-				'pandora' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pandora'] ) : '' ),
+				'tunein' => ( !empty( $_POST['hpm-podcast-link-tunein'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-tunein'] ) : '' ),
+				'pandora' => ( !empty( $_POST['hpm-podcast-link-pandora'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pandora'] ) : '' ),
 				'iheart' => ( !empty( $_POST['hpm-podcast-link-iheart'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-iheart'] ) : '' ),
 				'limit' => ( !empty( $_POST['hpm-podcast-limit'] ) ? sanitize_text_field( $_POST['hpm-podcast-limit'] ) : 0 ),
 				'categories' => [
