@@ -1146,7 +1146,7 @@ class HPM_Podcasts {
 			}
 		}
 		if ( !empty( $pod_link ) && $lede ) {
-			$output = '<p>&nbsp;</p><div class="podcast-episode-info"><h3>This article is part of the <em><a href="' . $pod_link['page'] . '">' . get_the_title( $pod_id ) . '</a></em> podcast</h3><ul class="podcast-badges">' . $temp . '</ul></div>';
+			$output = '<p>&nbsp;</p><div class="podcast-episode-info"><h3>This article is part of the podcast <em><a href="' . $pod_link['page'] . '">' . get_the_title( $pod_id ) . '</a></em></h3><ul class="podcast-badges">' . $temp . '</ul></div>';
 		} else {
 			if ( !empty( $temp ) ) {
 				$output = '<ul class="podcast-badges">' . $temp . '</ul>';

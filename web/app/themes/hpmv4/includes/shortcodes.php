@@ -682,7 +682,8 @@ function hpm_indepth_bug(): string {
 add_shortcode( 'hpm_indepth', 'hpm_indepth_bug' );
 
 function hpm_newsletter_bug(): string {
-	return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
+	//return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
+	return '';
 }
 add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
 

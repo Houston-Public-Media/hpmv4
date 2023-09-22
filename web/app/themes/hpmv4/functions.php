@@ -465,17 +465,17 @@ function hpm_charset_clean( $content ): array|string {
 }
 add_filter( 'the_content', 'hpm_charset_clean', 10 );
 
-function hpm_revue_signup( $content ) {
-	global $post;
-	if ( is_single() && $post->post_type == 'post' ) {
-		if ( in_category( 'news' ) ) {
-			$form_id = '441232';
-			$content .= '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
-		}
-	}
-	return $content;
-}
-add_filter( 'the_content', 'hpm_revue_signup', 15 );
+//function hpm_revue_signup( $content ) {
+//	global $post;
+//	if ( is_single() && $post->post_type == 'post' ) {
+//		if ( in_category( 'news' ) ) {
+//			$form_id = '441232';
+//			$content .= '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+//		}
+//	}
+//	return $content;
+//}
+// add_filter( 'the_content', 'hpm_revue_signup', 15 );
 
 function hpm_nprone_check( $post_id, $post ): void {
 	if ( !empty( $_POST ) && !empty( $_POST['post_type'] ) && $_POST['post_type'] === 'post' ) {
@@ -989,7 +989,7 @@ function hpm_svg_output( $icon ): string {
 	} elseif ( $icon == 'facebook' ) {
 		$output = '<path d="M441.4,283.8l12.6-82h-78.7v-53.2c0-22.4,11-44.3,46.2-44.3h35.8V34.5c0,0-32.5-5.5-63.5-5.5 C329,29,286.7,68.3,286.7,139.3v62.5h-72v82h72V482h88.6V283.8H441.4z" />';
 	} elseif ( $icon == 'twitter' ) {
-		$output = '<path d="M435.5,163.9c0.3,4,0.3,8,0.3,12c0,122.5-93.2,263.6-263.6,263.6C119.8,439.6,71,424.4,30,398 c7.5,0.9,14.6,1.1,22.4,1.1c43.3,0,83.2-14.6,115-39.6c-40.7-0.9-74.9-27.5-86.6-64.2c5.7,0.9,11.5,1.4,17.5,1.4 c8.3,0,16.6-1.1,24.4-3.2c-42.4-8.6-74.3-45.9-74.3-90.9v-1.1c12.3,6.9,26.7,11.2,41.9,11.8c-25-16.6-41.3-45-41.3-77.2 c0-17.2,4.6-33,12.6-46.7c45.6,56.2,114.1,92.9,191,96.9c-1.4-6.9-2.3-14.1-2.3-21.2c0-51.1,41.3-92.6,92.6-92.6 c26.7,0,50.8,11.2,67.7,29.3c20.9-4,41-11.8,58.8-22.4c-6.9,21.5-21.5,39.6-40.7,51.1c18.6-2,36.7-7.2,53.3-14.3 C469.4,134.4,453.6,150.7,435.5,163.9L435.5,163.9z" />';
+		$output = '<path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>';
 	} elseif ( $icon == 'linkedin' ) {
 		$output = '<path d="M130.4,482H36.5V179.6h93.9V482z M83.4,138.3c-30,0-54.4-24.9-54.4-54.9C29,53.4,53.4,29,83.4,29 c30,0,54.4,24.3,54.4,54.4C137.8,113.4,113.4,138.3,83.4,138.3z M481.9,482h-93.7V334.8c0-35.1-0.7-80.1-48.8-80.1 c-48.8,0-56.3,38.1-56.3,77.6V482h-93.8V179.6h90.1v41.3h1.3c12.5-23.8,43.2-48.8,88.9-48.8c95,0,112.5,62.6,112.5,143.9V482H481.9 z" />';
 	} elseif ( $icon == 'youtube' ) {

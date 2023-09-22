@@ -187,8 +187,6 @@
 					</div>
 					<div class="foot-newsletter">
 						<h3>Subscribe to Our Newsletters</h3>
-						<h4><a href="https://www.houstonpublicmedia.org/news/today-in-houston-newsletter/">Today in Houston</a></h4>
-						<p>Let the Houston Public Media newsroom help you start your day.</p>
 						<h4><a href="https://www.houstonpublicmedia.org/support/newslettereguide-signup/">This Week</a></h4>
 						<p>Get highlights, trending news, and behind-the-scenes insights from Houston Public Media delivered to your inbox each week.</p>
 					</div>
