@@ -25,15 +25,17 @@ function author_footer( $id ): string {
 		} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
 			if ( !empty( $coa->linked_account ) ) {
 				$authid = get_user_by( 'login', $coa->linked_account );
-				$author = new WP_Query([
-					'post_type' => 'staff',
-					'post_status' => 'publish',
-					'meta_query' => [[
-						'key' => 'hpm_staff_authid',
-						'compare' => '=',
-						'value' => $authid->ID
-					]]
-				]);
+				if ( $authid !== false ) {
+					$author = new WP_Query([
+						'post_type' => 'staff',
+						'post_status' => 'publish',
+						'meta_query' => [[
+							'key' => 'hpm_staff_authid',
+							'compare' => '=',
+							'value' => $authid->ID
+						]]
+					]);
+				}
 			}
 		}
 		if ( !empty( $author ) && $author->have_posts() ) {

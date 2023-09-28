@@ -97,6 +97,9 @@ function hpm_header_info(): void {
 				$reqs['description'] = wp_strip_all_tags( $obj->description, true );
 			} else {
 				$reqs['permalink'] = get_the_permalink( $ID );
+				if ( !empty( $query_obj->name ) ) {
+					$reqs['title'] = $query_obj->name . ' | Houston Public Media';
+				}
 				$reqs['title'] = $query_obj->name . ' | Houston Public Media';
 			}
 		} elseif ( is_page_template( 'page-npr-articles.php' ) ) {
@@ -116,6 +119,14 @@ function hpm_header_info(): void {
 			$attach_id = get_post_thumbnail_id( $ID );
 			if ( !empty( $attach_id ) ) {
 				$feature_img = wp_get_attachment_image_src( $attach_id, 'large' );
+				if ( $feature_img !== false ) {
+					$reqs['thumb_meta'] = [
+						'width' => $feature_img[1],
+						'height' => $feature_img[2],
+						'mime-type' => get_post_mime_type( $attach_id )
+					];
+					$reqs['thumb'] = $feature_img[0];
+				}
 				$reqs['thumb_meta'] = [
 					'width' => $feature_img[1],
 					'height' => $feature_img[2],
