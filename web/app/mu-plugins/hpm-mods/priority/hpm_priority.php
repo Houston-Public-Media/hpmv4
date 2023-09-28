@@ -99,6 +99,9 @@ function hpm_priority_settings_page(): void {
 	if ( empty( $priority['inDepthnumber'] ) ) {
 		$priority['inDepthnumber'] = 2;
 	}
+//	if ( empty( $priority['breaking'] ) ) {
+//		$priority['breaking'] = 0;
+//	}
 	$recents = $indepths = [];
 	$recent = new WP_Query([
 		'post_status' => 'publish',
@@ -171,6 +174,15 @@ function hpm_priority_settings_page(): void {
 									</table>
 									<p><label for="hpm_priority[number]"><?php _e('Number of slots: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[number]" id="homepage-number" class="homepage-select-input" value="<?php echo ( !empty( $priority['number'] ) ? $priority['number'] : count( $priority['homepage'] ) ); ?>" style="width: 150px;" /></p>
                                     <p><label for="hpm_priority[inDepthnumber]"><?php _e('inDepth Slot Number: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[inDepthnumber]" id="inDepthnumber" class="homepage-select-input" value="<?php echo ( !empty( $priority['inDepthnumber'] ) ? $priority['inDepthnumber'] : '' ); ?>" style="width: 150px;" /></p>
+									<?php /* ?><p><label for="hpm_priority[breaking]"><?php _e('Breaking News Top: ', 'hpmv4' ); ?></label><label class="screen-reader-text"><?php _e( "Breaking News Top:", 'hpmv4' ); ?></label>
+										<select id="hpm_priority-breaking" name="hpm_priority[breaking]" class="hpm-priority-select breaking-select">
+											<option value=""></option>
+											<?php
+											foreach( $recents as $k => $v ) { ?>
+												<option value="<?php echo $k; ?>"<?php selected( $priority['breaking'], $k, TRUE ); ?>><?php echo $v; ?></option>
+												<?php
+											} ?>
+										</select></p><?php */ ?>
 								</div>
 							</div>
 						</div>

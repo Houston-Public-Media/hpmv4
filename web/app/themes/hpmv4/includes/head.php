@@ -339,7 +339,7 @@ function hpm_body_open(): void {
 		<div class="container">
 			<?php hpm_site_header(); ?>
 		</div>
-		<?php echo hpm_talkshows(); ?>
+		<?php echo hpm_talkshows(); //echo hpm_breaking_banner(); ?>
 <?php
 	} elseif ( is_page_template( 'page-listen.php' ) ) { ?>
 		<?php echo HPM_Promos::generate_static( 'emergency' ); ?>
@@ -405,6 +405,38 @@ function hpm_talkshows(): string {
 				$output .= '<div id="hm-top" class="townsquare"><p><span><a href="/listen-live/"><strong>Town Square</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://+18884869677">888.486.9677</a></strong> | Email <a href="mailto:talk@townsquaretalk.org">talk@townsquaretalk.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
 			} else {
 				$output .= '<div id="hm-top"><p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Call <strong><a href="tel://+17134408870">713.440.8870</a></strong> | Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a></p></div>';
+			}
+		}
+	}
+	return $output;
+}
+
+function hpm_breaking_banner(): string {
+	$t = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+	$now = getdate( $t );
+	$output = '';
+	$hpm_priority = get_option( 'hpm_priority' );
+	if ( !empty( $hpm_priority['breaking'] ) ) {
+		if ( $hpm_priority['breaking'] === $hpm_priority['homepage'][0] && is_home() ) {
+			return $output;
+		}
+		$publish = get_the_date( 'u', $hpm_priority['breaking'] );
+		$diff = $now[0] - $publish;
+		if ( $diff < 86400 ) {
+			$output .= '<div id="breaking-top"><span>Breaking:</span> <a href="' . get_the_permalink( $hpm_priority['breaking'] ) . '">' . get_the_title( $hpm_priority['breaking'] ) . '</a></div>';
+			return $output;
+		}
+	}
+
+	$top_tags = get_the_tags( $hpm_priority['homepage'][0] );
+	foreach ( $top_tags as $tag ) {
+		if ( $tag->slug === 'breaking-news' ) {
+			$publish = get_the_date( 'u', $hpm_priority['homepage'][0] );
+			$diff = $now[0] - $publish;
+			if ( $diff < 86400 ) {
+				$output .= '<div id="breaking-top"><span>Breaking:</span> <a href="' . get_the_permalink( $hpm_priority['homepage'][0] ) . '">' . get_the_title( $hpm_priority['homepage'][0] ) . '</a></div>';
 			}
 		}
 	}

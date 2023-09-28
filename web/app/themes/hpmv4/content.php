@@ -6,6 +6,7 @@
  */
 global $ka;
 $indepth = false;
+$breaking = false;
 $extra = 'card';
 $size = 'thumbnail';
 if ( $ka !== null ) {
@@ -17,8 +18,14 @@ if ( $ka !== null ) {
 	}
 }
 $postClass = get_post_class();
-if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null && $ka < 2 ) ) {
-	$indepth = true;
+if ( is_home() && $ka !== null ) {
+	$hpm_priority = get_option( 'hpm_priority' );
+	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
+	if ( in_array( 'category-in-depth', $postClass ) && $ka === $indepth_slot ) {
+		$indepth = true;
+	} elseif ( in_array( 'tag-breaking-news', $postClass ) && $ka === 0 ) {
+		$breaking = true;
+	}
 } ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( $extra ); ?>>
 	<?php if ( has_post_thumbnail() ) { ?>
@@ -27,6 +34,7 @@ if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null 
 	<div class="card-content">
 		<header class="entry-header">
 			<?php echo ( $indepth ? '<a href="/topics/in-depth/" class="indepth"><img src="https://cdn.houstonpublicmedia.org/assets/images/inDepth-logo-300.png" alt="News 88.7 inDepth" /></a>' : '' ); ?>
+			<?php // echo ( $breaking ? '<h3 class="breaking-news">Breaking News</h3>' : '' ); ?>
 			<h3><?php echo hpm_top_cat( get_the_ID() ); ?></h3>
 			<h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php
 				if ( is_front_page() ) {
