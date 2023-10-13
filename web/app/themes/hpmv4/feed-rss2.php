@@ -102,9 +102,12 @@ do_action( 'rss_tag_pre', 'rss2' );
 		}
 	}
 	if ( has_post_thumbnail() ) {
-		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id() ); ?>
+		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id() );
+		if ( $thumb !== false ) {?>
 		<media:thumbnail url="<?php echo $thumb[0]; ?>" width="<?php echo $thumb[1]; ?>" height="<?php echo $thumb[2]; ?>" />
-<?php }
+<?php
+		}
+	}
 	rss_enclosure();
 
 	/**

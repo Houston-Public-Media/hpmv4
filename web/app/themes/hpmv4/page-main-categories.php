@@ -81,7 +81,8 @@ get_header(); ?>
 				<?php
 						$pod = new WP_Query([
 							'post_type' => 'podcasts',
-							'tag' => str_replace( '-news', '', $main_cat )
+							'tag' => str_replace( '-news', '', $main_cat ),
+							'tag__not_in' => [ 48498 ]
 						]);
 						if ( $pod->have_posts() ) { ?>
 				<div class="podcasts highlights">
