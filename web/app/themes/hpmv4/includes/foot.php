@@ -216,21 +216,22 @@ function hpm_blank_footer(): void {
 
 add_action( 'wp_footer', function(){
 	if ( !empty( $_GET['utm_source'] ) && strtolower( $_GET['utm_source'] ) === 'high5media' && !empty( $_GET['utm_content'] ) ) {
+		$content = '';
 		if ( strtolower($_GET['utm_content'] ) === 'inspiring' ) {
-			$content = '<div id="campaign-splash" data-campaign="high5-inspiring" class="lightbox"><div id="splash" style="width: 85% !important; max-width: 85% !important;"><picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Mobile.png.webp" media="(max-width: 700px)" /><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Desktop.jpg.webp" /><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Mobile.png.webp" alt="Houston Public Media is informing and inspiring the people of Greater Houston. Wherever you are, whenever you want it." /></picture><div id="campaign-close">X</div></div></div>';
+			$content .= '<div id="campaign-splash" data-campaign="high5-inspiring" class="lightbox"><div id="splash" style="width: 85% !important; max-width: 85% !important;"><picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Mobile.png.webp" media="(max-width: 700px)" /><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Desktop.jpg.webp" /><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_Inspiring_Mobile.png.webp" alt="Houston Public Media is informing and inspiring the people of Greater Houston. Wherever you are, whenever you want it." /></picture><div id="campaign-close">X</div></div></div>';
 		} elseif ( strtolower($_GET['utm_content'] ) === 'trusted' ) {
-			$content = '<div id="campaign-splash" data-campaign="high5-trusted-news" class="lightbox""><div id="splash" style="width: 85% !important; max-width: 85% !important;"><picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Mobile.png.webp" media="(max-width: 700px)" /><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Desktop.png.webp" /><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Mobile.png.webp" alt="Houston Public Media is trusted news and information that matters to you. Wherever you are, whenever you want it." /></picture><div id="campaign-close">X</div></div></div>';
+			$content .= '<div id="campaign-splash" data-campaign="high5-trusted-news" class="lightbox""><div id="splash" style="width: 85% !important; max-width: 85% !important;"><picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Mobile.png.webp" media="(max-width: 700px)" /><source srcset="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Desktop.png.webp" /><img src="https://cdn.houstonpublicmedia.org/assets/images/HPM_SplashPage_TrustedNews_Mobile.png.webp" alt="Houston Public Media is trusted news and information that matters to you. Wherever you are, whenever you want it." /></picture><div id="campaign-close">X</div></div></div>';
 		}
 		echo <<<EOT
 <script>
 	(function(){
-		let lightBox = '{$content}';
+		let lightBox = '$content';
 		document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);
 		let campaign = document.querySelectorAll('#campaign-splash, #campaign-close');
 		let campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');
 		setTimeout(() => { gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'view'}); }, 1000);
 		setTimeout(() => { document.getElementById('campaign-splash').style.display = 'none'; }, 18000);
-		for (i = 0; i < campaign.length; ++i) {
+		for (let i = 0; i < campaign.length; ++i) {
 			campaign[i].addEventListener('click', (event) => {
 				event.stopPropagation();
 				document.getElementById('campaign-splash').style.display = 'none';

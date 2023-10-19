@@ -12,14 +12,12 @@
 						<h3>Houston Public Media</h3>
 						<nav id="second-navigation" class="footer-navigation" role="navigation">
 							<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 1956 ] ); ?>
-							<div class="clear"></div>
 						</nav>
 					</div>
 					<div class="foot-comply">
 						<h3>Compliance</h3>
 						<nav id="third-navigation" class="footer-navigation" role="navigation">
 							<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 42803 ] ); ?>
-							<div class="clear"></div>
 						</nav>
 					</div>
 					<div class="foot-newsletter">
@@ -55,6 +53,9 @@
 					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" rel="noopener" target="_blank">University of Houston</a></p>
 					<p>Copyright &copy; <?php echo date('Y'); ?></p>
 				</div>
+				<nav id="uh-foot-navigation" class="footer-navigation" role="navigation">
+					<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 58922 ] ); ?>
+				</nav>
 			</footer>
 		</div>
 <?php }
