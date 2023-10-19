@@ -898,6 +898,18 @@ function hpm_amp_additional_css( $amp_template ): void {
 		display: block;
 		padding: 0.25rem 0;
 	}
+	footer#colophon nav#uh-foot-navigation {
+		padding: 1rem;
+		border-top: 1px solid #808080;
+	}
+	footer#colophon nav#uh-foot-navigation div ul {
+		display: flex;
+		flex-flow: row wrap;
+		gap: 0 2rem;
+		justify-content: center;
+		font-size: 85%;
+		text-align: center;
+	}
 	@media screen and (min-width: 34em) {
 		footer#colophon section > div {
 			width: 32%;

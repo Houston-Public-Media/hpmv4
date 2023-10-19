@@ -216,6 +216,25 @@
 					<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" rel="noopener" target="_blank">University of Houston</a></p>
 					<p>Copyright © 2022</p>
 				</div>
+				<nav id="uh-foot-navigation" class="footer-navigation" role="navigation">
+					<div class="menu-footer-uh-container">
+						<ul id="menu-footer-uh" class="nav-menu">
+							<li><a href="https://www.texas.gov/">Texas.gov</a></li>
+							<li><a href="https://gov.texas.gov/organization/hsgd">Texas Homeland Security</a></li>
+							<li><a href="https://www.tsl.texas.gov/trail/index.html">TRAIL</a></li>
+							<li><a href="https://sao.fraud.texas.gov/ReportFraud/">Fraud Reporting</a></li>
+							<li><a href="https://www.uhsystem.edu/fraud-non-compliance/">Fraud &amp; Non-Compliance Hotline</a></li>
+							<li><a href="https://www.sos.state.tx.us/linkpolicy.shtml">Linking Notice</a></li>
+							<li><a href="https://uhsystem.edu/privacy-notice/">Privacy Notice</a></li>
+							<li><a href="https://uhsystem.edu/legal-affairs/general-counsel/public-information-act/">Open Records/Public Information Act</a></li>
+							<li><a href="https://apps.highered.texas.gov/resumes/">Institutional Résumé</a></li>
+							<li><a href="https://www.uh.edu/finance/pages/State_Report.htm">Required Reports</a></li>
+							<li><a href="https://www.uh.edu/equal-opportunity/eir-accessibility/">Electronic &amp; Information Resources Accessibility</a></li>
+							<li><a href="https://www.uh.edu/sexual-misconduct-reporting-form/">Discrimination and Sexual Misconduct Reporting and Awareness</a></li>
+							<li><a href="https://www.uh.edu/policies/">University Policies</a></li>
+						</ul>
+					</div>
+				</nav>
 			</footer>
 			<script type="text/javascript">hpm.audioPlayers();var pods = document.querySelectorAll('.pod-desc');if (pods !== null) { Array.from(pods).forEach((p) => {p.innerHTML = p.innerText; }); }</script>
 		</body>
