@@ -19,11 +19,11 @@ function hpm_site_header(): void { ?>
 						<div id="top-watch"><button aria-label="Watch Live" data-href="/watch-live" type="button" data-dialog="820:850"><?php echo hpm_svg_output( 'tv' ); ?>Watch</button></div>
 					</section>
 					<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div tabindex="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div>
+					<div tab-index="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tabindex="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
+						<div tab-index="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tab-index="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
 						<div class="nav-wrap">
-							<div id="top-search" tabindex="0" aria-expanded="false"><?php echo hpm_svg_output( 'search' ); get_search_form(); ?></div>
+							<div id="top-search" tab-index="0" aria-expanded="false"><?php echo hpm_svg_output( 'search' ); get_search_form(); ?></div>
 							<?php
 								// Primary navigation menu.
 								wp_nav_menu([
@@ -343,11 +343,11 @@ function hpm_body_open(): void {
 						<?php echo hpm_svg_output( 'hpm' ); ?>
 					</div>
 					<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>
-					<div tabindex="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div>
+					<div tab-index="0" id="top-mobile-close" class="nav-button"><?php echo hpm_svg_output( 'times' ); ?><br /><span class="top-mobile-text">CLOSE</span></div>
 					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<div tabindex="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tabindex="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
+						<div tab-index="0" id="top-mobile-menu" class="nav-button" aria-expanded="false"><?php echo hpm_svg_output( 'bars' ); ?><br /><span class="top-mobile-text">MENU</span></div><div id="focus-sink" tab-index="-1" style="position: absolute; top: 0; left: 0;height:1px; width: 1px;"></div>
 						<div class="nav-wrap">
-							<div id="top-search" tabindex="0" aria-expanded="false"><?php echo hpm_svg_output( 'search' ); get_search_form(); ?></div>
+							<div id="top-search" tab-index="0" aria-expanded="false"><?php echo hpm_svg_output( 'search' ); get_search_form(); ?></div>
 							<?php
 								wp_nav_menu([
 									'menu_class' => 'nav-menu',
