@@ -69,15 +69,24 @@ Template Name: NPR Content
 			<aside class="column-right">
 			<?php
 				if ( !empty( $nprdata['related'] ) ) { ?>
-				<section class="highlights">
-					<h4>Related</h4>
-					<ul>
+                <div class="row">
+
+                    <div class="col-12 news-list-right most-view">
+                        <h2 class="title title-full">
+                            <strong>Related</strong>
+                        </h2>
+                        <ul class="list-none news-links list-dashed">
 				<?php
 					foreach ( $nprdata['related'] as $related ) { ?>
-						<li><h2 class="entry-title"><a href="<?php echo $related['link']; ?>" rel="bookmark" target="_blank"><?PHP echo $related['text']; ?></a></h2></li>
+						<!--<li><h2 class="entry-title"><a href="<?php /*echo $related['link']; */?>" rel="bookmark" target="_blank"><?PHP /*echo $related['text']; */?></a></h2></li>-->
+                        <li>
+                            <a href="<?php echo $related['link']; ?>" rel="bookmark" target="_blank"><span><?PHP echo $related['text']; ?></span></a>
+                        </li>
 				<?php
 					} ?>
 					</ul>
+                    </div>
+                </div>
 				</section>
 			<?php
 				}

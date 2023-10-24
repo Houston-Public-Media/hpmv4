@@ -9,7 +9,7 @@ Template Name: Full-Width Page
 	} ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-<?PHP
+ <?PHP
 	while ( have_posts() ) {
 		the_post();
 		echo hpm_head_banners( get_the_ID(), 'page' ); ?>
@@ -17,6 +17,12 @@ Template Name: Full-Width Page
 				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content">
 					<?php the_content(); ?>
+
+
+
+
+
+
 				</div>
 				<footer class="entry-footer">
 <?PHP
@@ -34,5 +40,6 @@ Template Name: Full-Width Page
 	} ?>
 		</main>
 	</div>
+
 
 <?php get_footer(); ?>

@@ -20,19 +20,25 @@ get_header(); ?>
 				$show_content = get_the_content();
 				echo hpm_head_banners( get_the_ID(), 'series' );
 			} ?>
-			<div id="float-wrap">
+
+            <div class="party-politics-page">
+                <div class="about-party">
+
+                    <?php
+                    if ( $show_title == '#TXDecides' ) { ?>
+                        <div class="show-content">
+                            <p>Houston Public Media and its partners across the state are collaborating to provide comprehensive coverage on the important legislation, politics and new laws that will impact all Texans.</p>
+                        </div>
+                        <?php
+                    } ?>
+                    <h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
+                    <div class="show-content">
+                        <?php echo apply_filters( 'the_content', $show_content ); ?>
+                    </div>
+                </div>
+
 				<aside class="column-right">
-<?php
-	if ( $show_title == '#TXDecides' ) { ?>
-					<div class="show-content">
-						<p>Houston Public Media and its partners across the state are collaborating to provide comprehensive coverage on the important legislation, politics and new laws that will impact all Texans.</p>
-					</div>
-<?php
-	} ?>
-					<h2>About <?php echo $show_title; ?></h2>
-					<div class="show-content">
-						<?php echo apply_filters( 'the_content', $show_content ); ?>
-					</div>
+
 					<div class="sidebar-ad">
 						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-1">
@@ -55,7 +61,7 @@ get_header(); ?>
 <?php
 			} ?>
 				</aside>
-				<div class="article-wrap">
+                <section id="search-results">
 		<?php
 			$cat_no = get_post_meta( get_the_ID(), 'hpm_series_cat', true );
 			$top = get_post_meta( get_the_ID(), 'hpm_series_top', true );
@@ -81,6 +87,7 @@ get_header(); ?>
 					while ( $top_art->have_posts() ) {
 						$top_art->the_post();
 						$ka = 0;
+
 						get_template_part( 'content', get_post_type() );
 					}
 					$post_num = 14;
@@ -96,11 +103,12 @@ get_header(); ?>
 				}
 				while ( $cat->have_posts() ) {
 					$cat->the_post();
+
 					get_template_part( 'content', get_post_type() );
 					$ka += 2;
 				}
 			} ?>
-				</div>
+				</section>
 			</div>
 		<?php
 			if ( $cat->found_posts > 15 ) { ?>

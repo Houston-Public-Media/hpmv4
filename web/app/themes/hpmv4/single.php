@@ -28,11 +28,13 @@ if ( is_preview() ) { ?>
 		the_excerpt();
 		$single_id = get_the_ID(); ?>
 					<div class="byline-date">
+						<div class="byline-date-text">
 <?PHP
 		coauthors_posts_links(' / ', ' / ', '<address class="vcard author">', '</address>', true);
 		echo " | ";
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 		$pub = get_the_time( 'U' );
+
 		$mod = get_the_modified_time( 'U' );
 		$desc = $mod - $pub;
 		$mod_time = get_post_meta( $single_id, 'hpm_no_mod_time', true );
@@ -53,16 +55,18 @@ if ( is_preview() ) { ?>
 			_x('Posted on', 'Used before publish date.', 'hpmv4'),
 			$time_string
 		); ?>
+</div>
+<?php hpm_article_share(); ?>
 					</div>
 				</header>
-				<?php hpm_article_share(); ?>
+				
 				<div class="entry-content">
 					<?php the_content(); ?>
 				</div>
 				<footer class="entry-footer">
 					<div class="tags-links">
 <?PHP
-		$cat_list = get_the_category_list( ' ', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
+		$cat_list = get_the_category_list( ' ', _x( '# ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
 		if ( $cat_list ) {
 			echo $cat_list;
 		}
@@ -73,6 +77,7 @@ if ( is_preview() ) { ?>
 		edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 					</div>
 				</footer>
+               
 			</article>
 <?php
 	} ?>
@@ -119,10 +124,25 @@ if ( is_preview() ) { ?>
 	}
 	wp_reset_postdata();
 	get_template_part('sidebar', 'none'); ?>
+            <?php echo author_footer( $single_id ); ?>
 		</aside>
-		<div id="author-wrap">
-			<?php echo author_footer( $single_id ); ?>
-		</div>
+		
+		
+		
+		
+		<!-- <div id="author-wrap">
+		</div> -->
+		<div class="newslatter-form">
+			<?php
+					if ( is_single() && get_post_type() == 'post' ) {
+						if ( in_category( 'news' ) ) {
+							$form_id = '441232';
+							echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+						}
+					}
+
+			?>
+			</div>
 	</main>
 </div>
 <?php get_footer(); ?>

@@ -10,6 +10,8 @@
 get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
+
+
 <?php
 	while ( have_posts() ) {
 		the_post();
@@ -17,17 +19,21 @@ get_header(); ?>
 		$staff_authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', true );
 		$staff_pic = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' ); ?>
 			<header class="page-header">
-				<div id="author-wrap">
-					<div class="author-wrap-left">
-<?php
-		if ( !empty( $staff_pic ) ) { ?>
-						<img src="<?PHP	echo $staff_pic[0]; ?>" class="author-thumb" />
-<?php
-		} ?>
-						<h1 class="entry-title"><?php the_title(); ?></h1>
-						<?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">' . $staff['pronouns'] . '</p>' : '' ); ?>
-						<h3><?php echo $staff['title']; ?></h3>
-<?php
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-4">
+                                <?php
+                                if ( !empty( $staff_pic ) ) { ?>
+                                    <img src="<?PHP	echo $staff_pic[0]; ?>" class="author-thumb" />
+                                    <?php
+                                } ?>
+                            </div>
+                            <div class="col-8">
+                                <h1 class="entry-title"><?php the_title(); ?></h1>
+                                <?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">' . $staff['pronouns'] . '</p>' : '' ); ?>
+                                <h3><?php echo $staff['title']; ?></h3>
+                                <?php
 		if ( !empty( $staff ) ) { ?>
 						<div class="icon-wrap">
 <?php
@@ -60,17 +66,29 @@ get_header(); ?>
 								<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?></a>
 							</div>
 <?php
-			} ?>
-						</div>
-					</div>
-					<div class="author-info-wrap">
+			} }?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>&nbsp;</div>
+				<div class="row staff-bio">
+
+
+
+<?php
+		if ( !empty( $staff ) ) { ?>
+
+
+
 <?php
 			$author_bio = get_the_content();
 			if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) {
 				$author_bio = '';
 			}
 			echo apply_filters( 'hpm_filter_text', $author_bio ); ?>
-					</div>
+
 				</div>
 <?php
 		} ?>
@@ -96,10 +114,10 @@ get_header(); ?>
 				$auth->the_post();
 				get_template_part( 'content', get_post_type() );
 			}
-			wp_reset_postdata(); ?>
-				<div class="readmore">
-					<a href="/articles/author/<?php echo $nice_name; ?>/page/2">View More Stories</a>
-				</div>
+			wp_reset_postdata(); ?><?php wp_pagenavi( array( 'query' => $auth ) ); ?>
+				<!--<div class="readmore">
+					<a href="/articles/author/<?php /*echo $nice_name; */?>/page/2">View More Stories</a>
+				</div>-->
 			</section>
 <?php
 		}

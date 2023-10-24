@@ -1259,7 +1259,7 @@ ul.timeline li .timeline-date {
 }
 #campaign-splash.lightbox {
 	display: flex;
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: rgba(0, 0, 0, 0.5);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -1273,6 +1273,8 @@ ul.timeline li .timeline-date {
 	justify-items: center;
 	align-content: center;
 	align-items: center;
+	-webkit-backdrop-filter: blur(5px);
+	backdrop-filter: blur(5px);
 }
 #campaign-splash.lightbox #splash {
 	z-index: 10001;

@@ -99,7 +99,7 @@ get_header(); ?>
 			cursor: pointer;
 		}
 		#audio-nav ul li.current {
-			background-color: var(--main-red);
+			background-color: var(--main-blue);
 			color: white;
 			font: 700 1em/1em var(--hpm-font-main);
 		}
@@ -168,22 +168,31 @@ get_header(); ?>
 		$episodes = HPM_Podcasts::list_episodes( $show_id );
 		echo HPM_Podcasts::show_header( $show_id );
 	} ?>
-			<div id="float-wrap">
-				<aside class="column-right">
-					<h3>About <?php echo $show_title; ?></h3>
-					<div class="show-content">
-						<?php echo apply_filters( 'the_content', $show_content ); ?>
-					</div>
-					<div class="sidebar-ad">
-						<h4>Support Comes From</h4>
-						<div id="div-gpt-ad-1394579228932-1">
-							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-							</script>
-						</div>
-					</div>
-				</aside>
-				<div class="article-wrap">
+            <div class="party-politics-page">
+            <div class="row about-party">
+                <div class="col-sm-9">
+                    <h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
+                    <div class="show-content">
+                        <?php echo apply_filters( 'the_content', $show_content ); ?>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="sidebar-ad">
+                        <h4>Support Comes From</h4>
+                        <div id="div-gpt-ad-1394579228932-1">
+                            <script type='text/javascript'>
+                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+                <div class="episodes-block">
+                    <h2 class="title red-bar"> <strong><span>All Stories</span></strong> </h2>
+                    <div class="row">
 <?php
 	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
 	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
@@ -205,7 +214,7 @@ get_header(); ?>
 		if ( $top_art->have_posts() ) {
 			while ( $top_art->have_posts() ) {
 				$top_art->the_post();
-				get_template_part( 'content', get_post_type() );
+				get_template_part( 'content', 'shows' );
 				$ka += 2;
 			}
 			$post_num = 14;
@@ -216,17 +225,20 @@ get_header(); ?>
 	if ( $cat->have_posts() ) {
 		while ( $cat->have_posts() ) {
 			$cat->the_post();
-			get_template_part( 'content', get_post_type() );
+
+			get_template_part( 'content', 'shows' );
 			$ka += 2;
 		}
 	} ?>
 				</div>
 			</div>
 <?php
-	if ( $cat->found_posts > 15 ) { ?>
-			<div class="readmore">
-				<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
-			</div>
+	if ( $cat->found_posts > 15 ) {
+        wp_pagenavi( array( 'query' => $cat ) );?>
+
+			<!--<div class="readmore">
+				<a href="/topics/<?php /*echo $term->slug; */?>/page/2">View More <?php /*echo $term->name; */?></a>
+			</div>-->
 <?php
 	}
 	$atts = [
@@ -330,6 +342,7 @@ get_header(); ?>
 					</nav>
 				</aside>
 			</section>
+            </div>
 		</main>
 	</div>
 	<script>

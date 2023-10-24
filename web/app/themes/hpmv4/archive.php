@@ -4,6 +4,7 @@
  * @subpackage hpmv4
  * @since hpmv4 1.0
  */
+
 if ( is_category() ) {
 	$cat = get_term_by( 'name', single_cat_title( '', false ), 'category' );
 	if ( empty( $wp_query->query_vars['paged'] ) ) {
@@ -68,17 +69,28 @@ get_header(); ?>
 			<?php
 			while ( have_posts() ) {
 				the_post();
+
 				get_template_part( 'content', get_post_type() );
 			}
 
 			if ( is_post_type_archive( [ 'podcasts', 'shows' ] ) ) {
 				HPM_Podcasts::list_inactive( $post->post_type );
 			} else {
-				the_posts_pagination( [
+				/*the_posts_pagination( [
 					'prev_text' => __( '&lt;', 'hpmv4' ),
 					'next_text' => __( '&gt;', 'hpmv4' ),
 					'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'hpmv4' ) . ' </span>',
-				] );
+				] );*/
+                ?>
+                <div>
+                    <?php
+                    //if ( $cat->found_posts > 15 ) {
+                        wp_pagenavi( );
+                    //}
+                    ?>
+                    <p>&nbsp;</p>
+                </div>
+                    <?php
 			}
 
 		// If no content, include the "No posts found" template.
@@ -92,4 +104,10 @@ get_header(); ?>
 			</aside>
 		</main>
 	</div>
+
+
+
+
+
+
 <?php get_footer(); ?>

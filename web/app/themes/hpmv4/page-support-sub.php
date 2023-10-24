@@ -27,7 +27,7 @@ get_header(); ?>
 			padding-top: 0;
 		}
 		.page.page-template-page-support-sub .page-header {
-			background-color: var(--main-red);
+			background-color: var(--main-blue);
 			padding: 1em 1em 0 1em;
 		}
 		.page.page-template-page-support-sub .page-header .page-title {
@@ -47,16 +47,16 @@ get_header(); ?>
 		}
 		.page.page-template-page-support-sub .page-content h2 {
 			padding: 0;
-			color: var(--main-red);
-			font-family: var(--hpm-font-main); font-weight: 700;
+			color: var(--main-blue);
+
 		}
 		.page.page-template-page-support-sub p {
 			color: var(--main-text);
-			font: 100 1.25em/1.125em var(--hpm-font-main);
+
 			margin-bottom: 1em;
 		}
 		.page.page-template-page-support-sub .page-content h2 {
-			color: #016D94;
+			color: var(--main-blue);
 			padding: 1em 0 0.25em;
 			margin-bottom: 1em;
 			border-bottom: 2px solid #016D94;

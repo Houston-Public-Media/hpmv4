@@ -1037,3 +1037,32 @@ $timestamp = wp_next_scheduled( 'hpm_pull_podcasts' );
 if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hpm_30min', 'hpm_pull_podcasts' );
 }
+
+/* **shortcode** */
+function hpm_donation_events_shortcode(): string {
+    $args = [
+        'posts_per_page' => 4,
+        'ignore_sticky_posts' => 1,
+        'post_type' => 'event',
+        'post_status' => 'publish',
+        'order' => 'ASC'
+    ];
+    $article = new WP_Query( $args );
+    $output = '';
+    if ( $article->have_posts() ) {
+        //$output .= '<ul>';
+        while ( $article->have_posts() ) {
+            $article->the_post();
+            $title = get_the_title();
+            $summary = strip_tags( get_the_excerpt() );
+            //$output .= '<li><div class="box-img"><a href="'.get_the_permalink().'">'.get_the_post_thumbnail('','post-thumbnail').'</a></div><h3 class="text-light-gray">'.$title.'</h3><p>'.$summary.'</p></li>';
+            $output .= '<div class="col-sm-3"><div class="opportunity-img"><a href="'.get_the_permalink().'">'.get_the_post_thumbnail('','post-thumbnail').'</a></div><div class="opportunity-block"><h5>'.$title.'</h5><p>'.$summary.'</p><a href="'.get_the_permalink().'" class="btn outline"> View More </a></div></div>';
+        }
+        if ( !empty( $output ) ) {
+            //$output .= '</ul></div>';
+        }
+    }
+    wp_reset_query();
+    return $output;
+}
+add_shortcode( 'hpm_donation_events', 'hpm_donation_events_shortcode' );

@@ -45,14 +45,14 @@ Template Name: Radio Schedules
 			width: 100%;
 		}
 		.date-select .date-pick-right {
-			font: 700 1em/1em var(--hpm-font-main);
 			text-transform: uppercase;
 			float: right;
+            font-weight: bold;
 		}
 		.date-select .date-pick-left {
-			font: 700 1em/1em var(--hpm-font-main);
 			text-transform: uppercase;
 			float: left;
+            font-weight: bold;
 		}
 		#station-schedule-display {
 			width: 96%;
@@ -124,7 +124,6 @@ Template Name: Radio Schedules
 			margin: 1em 0;
 		}
 		#schedule-search label {
-			font: 400 1em/1em var(--hpm-font-main);
 			color: var(--main-text);
 		}
 		#schedule-search input {
@@ -135,7 +134,6 @@ Template Name: Radio Schedules
 			background-color: transparent;
 			padding: 0 0.25em;
 			width: 11em;
-			font: 100 1em/1em var(--hpm-font-main);
 			text-transform: lowercase;
 		}
 		body.page.page-template-page-schedules-radio #main {
@@ -143,14 +141,14 @@ Template Name: Radio Schedules
 			background-color: transparent;
 		}
 		body.page.page-template-page-schedules-radio .page-header .page-title {
-			color: #00b0bc;
+
 			text-transform: uppercase;
-			font: 400 2.5em/1.5em var(--hpm-font-condensed);
-			margin-bottom: 0.5em;
+
+			/*margin-bottom: 0.5em;*/
 		}
 		body.page.page-template-page-schedules-radio .page-header {
 			overflow: hidden;
-			margin-bottom: 1em;
+			/*margin-bottom: 1em;*/
 		}
 		body.page.page-template-page-schedules-radio .entry-content {
 			padding: 1em;
@@ -170,7 +168,6 @@ Template Name: Radio Schedules
 			padding: 0.6em;
 		}
 		.page-header #station-social .station-printable a {
-			font: 700 1em/1em var(--hpm-font-main);
 			background-color: transparent;
 			text-transform: uppercase;
 		}

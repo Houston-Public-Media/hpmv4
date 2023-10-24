@@ -57,7 +57,7 @@ get_header(); ?>
 			}
 			.page-template-page-passport.passport-faqs .page-content h2 {
 				padding: 2rem 0 1rem;
-				color: var(--main-red);
+				color: var(--main-blue);
 			}
 			.page-template-page-passport .page-content :is(.passport-donate,.passport-signin) {
 				width: 100%;
@@ -72,7 +72,7 @@ get_header(); ?>
 				color: white;
 			}
 			.page-template-page-passport .page-content .passport-donate a {
-				background-color: var(--main-red);
+				background-color: var(--main-blue);
 			}
 			.page-template-page-passport .page-content .passport-signin a {
 				background-color: #0A145A;
@@ -127,7 +127,7 @@ get_header(); ?>
 				border-top: 1rem solid #f5f5f5;
 				padding: 1rem 0 0;
 				background: #0A145A;
-				background: linear-gradient(90deg, var(--main-red) 0%, #0A145A 100%);
+				background: linear-gradient(90deg, var(--main-blue) 0%, #0A145A 100%);
 			}
 			.page-template-page-passport .page-content h2.device-options a {
 				color: white;
@@ -249,7 +249,7 @@ get_header(); ?>
 				background-color: #0A145A;
 			}
 			.page-template-page-passport .page-content form#passport-lookup button {
-				background-color: var(--main-red);
+				background-color: var(--main-blue);
 			}
 			.page-template-page-passport .page-content form input[type="text"] {
 				width: 70%;

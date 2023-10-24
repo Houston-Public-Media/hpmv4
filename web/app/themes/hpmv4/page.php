@@ -10,6 +10,7 @@
  * @subpackage HPMv4
  * @since HPMv4 4.0
  */
+
 	$pagename = get_query_var( 'pagename' );
 	$anc = get_post_ancestors( get_the_ID() );
 	get_header(); ?>

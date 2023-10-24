@@ -32,8 +32,8 @@ get_header(); ?>
 		.page.page-template-page-main-categories #main {
 			background-color: transparent;
 		}
-		.page.page-template-page-main-categories .page-header {
-			margin-bottom: 1rem;
+		.page.page-template-page-main-categories #search-results {
+			padding-top: 0px !important;
 		}
 	</style>
 	<div id="primary" class="content-area">
@@ -47,7 +47,7 @@ get_header(); ?>
 			<header class="page-header">
 				<h1 class="page-title"><?php the_title(); ?></h1>
 			</header>
-			<div id="float-wrap">
+
 			<?php
 				}
 				if ( $main_cat == 'education' ) {
@@ -81,8 +81,10 @@ get_header(); ?>
 				<?php
 						$pod = new WP_Query([
 							'post_type' => 'podcasts',
+                            'tag__not_in' => [ 48498 ],
 							'tag' => str_replace( '-news', '', $main_cat )
 						]);
+                        //print_r($pod);
 						if ( $pod->have_posts() ) { ?>
 				<div class="podcasts highlights">
 					<h4><?php echo str_replace( '-news', '', $main_cat ); ?> Podcasts</h4>
@@ -103,7 +105,7 @@ get_header(); ?>
 					</div>
 				</div>
 			</div>
-			<div class="article-wrap">
+                <section id="search-results">
 			<?php
 				if ( $main_cat == 'education-news' ) {
 					$main_cat_pull = 'education-news,texas-originals,uh-moment';
@@ -126,6 +128,7 @@ get_header(); ?>
 				while ( $q->have_posts() ) {
 					$q->the_post();
 					if ( !in_array( get_the_ID(), $exclude ) ) {
+
 						get_template_part( 'content', get_post_type() );
 						$ka++;
 						$c++;
@@ -134,7 +137,7 @@ get_header(); ?>
 				$post = $orig_post;
 				wp_reset_query();
 			?>
-			</div>
+			</section>
 			<div class="readmore">
 				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
 			</div>

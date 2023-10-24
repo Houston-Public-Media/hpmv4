@@ -285,18 +285,22 @@ function hpm_head_banners( $id, $location ): string {
 			}
 			$default = $options['banner']['desktop'] ?? $options['banner']['tablet'] ?? $options['banner']['mobile'];
 			$temp .= '<img src="' . wp_get_attachment_url( $default ) . '" alt="' . get_the_title( $id ) . ' page banner" /></picture></div>';
-			$output =
-				'<header class="page-header' . ( !empty( $temp ) ? ' banner' : '' ) . '">' .
-					'<h1 class="page-title"' . ( !empty( $temp ) ? ' hidden' : '' ) . '>' . get_the_title( $id ) . '</h1>' .
-					$temp .
-				'</header>';
+			if($id!= 450698) {
+                $output =
+                    '<header class="page-header' . (!empty($temp) ? ' banner' : '') . '">' .
+                    '<h1 class="page-title"' . (!empty($temp) ? ' hidden' : '') . '>' . get_the_title($id) . '</h1>' .
+                    $temp .
+                    '</header>';
+            }
 		}
 	} else {
 		if ( $location == 'entry' || $location == 'series' ) {
-			$output =
-				'<header class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-header">' .
-					'<h1 class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-title">' . get_the_title( $id ) . '</h1>' .
-				'</header>';
+            if($id!= 450698) {
+                $output =
+                    '<header class="' . ($location == 'entry' ? 'entry' : 'page') . '-header">' .
+                    '<h1 class="' . ($location == 'entry' ? 'entry' : 'page') . '-title">' . get_the_title($id) . '</h1>' .
+                    '</header>';
+            }
 		}
 	}
 	return $output;
