@@ -31,7 +31,10 @@ add_action( 'update_option_hpm_modules', function( $old_value, $value ) {
 }, 10, 2 );
 function hpm_modules_settings_page(): void
 {
-    $modules = get_option( 'hpm_modules' );
+    $modules = get_option( 'hpm_modules', [
+		'homepage' => [ '' ],
+		'number' => 1
+	] );
     $catArrays = [];
     $categories = get_terms(
         'category',

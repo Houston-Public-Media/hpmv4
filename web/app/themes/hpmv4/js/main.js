@@ -39,7 +39,7 @@ let hpm = {};
 
 hpm.navHandlers = () => {
 	let siteNav = document.querySelector('nav#site-navigation');
-	let buttonDiv = document.querySelectorAll('div[tabindex="0"]');
+	let buttonDiv = document.querySelectorAll('div[tab-index="0"]');
 	let topMenu = document.querySelector('#top-mobile-menu');
 	let closeMenu = document.querySelector('#top-mobile-close');
 	let topSearch = document.querySelector('#top-search');
