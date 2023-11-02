@@ -614,7 +614,9 @@ Template Name: Election Map Page
 			candidatesArray.sort((x, y) => y.Votes - x.Votes);
 			let maxThrees = [ candidatesArray[0], candidatesArray[1], candidatesArray[2] ];
 			for ( let j = 0; j < maxThrees.length; j++ ) {
-				TotalVotesperPrecint = ( Number( maxThrees[j].Votes ) / Number( TotalVotes ) ) * 100;
+				if ( Number( TotalVotes ) > 0 ) {
+					TotalVotesperPrecint = ( Number( maxThrees[j].Votes ) / Number( TotalVotes ) ) * 100;
+				}
 				htmlStr += '<div style="padding: 2px; font-size: 12px; font-weight: bold; color: #fff;background-color: #222054;">' +
 					maxThrees[j].Candidatename +
 					': <span>' +
@@ -655,8 +657,8 @@ Template Name: Election Map Page
 	geojson = L.geoJson(stateData, {style, onEachFeature}).addTo(map);
 	function checkIfElementPresentinElectionData(element) {
 		for ( let i = 0; i < ElectionData.length; i++) {
-			if ( ElectionData[i].id === element && ElectionData[i].TotalVotes > 0 ) {
-			// if ( ElectionData[i].id === element ) {
+			// if ( ElectionData[i].id === element && ElectionData[i].TotalVotes > 0 ) {
+			if ( ElectionData[i].id === element ) {
 				return true;
 			}
 		}
