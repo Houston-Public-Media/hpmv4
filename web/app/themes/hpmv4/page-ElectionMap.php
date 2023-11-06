@@ -611,7 +611,7 @@ Template Name: Election Map Page
 	fetchPrecincts();
 	setInterval( () => {
 		fetchElection(false);
-	}, 60000 ); // Set to 10 mins
+	}, 600000 ); // Set to 10 mins
 	function onEachFeature(feature, layer) {
 		if (feature.properties.Precinct) {
 			layer.bindPopup(feature.properties.Precinct);
