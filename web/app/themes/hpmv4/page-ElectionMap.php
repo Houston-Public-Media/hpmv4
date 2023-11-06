@@ -102,8 +102,19 @@ Template Name: Election Map Page
 </style>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
-		<header class="page-header">
-			<h1 class="page-title"><?php echo get_the_title(); ?></h1>
+		<header class="page-header banner">
+			<h1 class="page-title" hidden><?php echo get_the_title(); ?></h1>
+			<div class="page-banner">
+				<picture>
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Mobile-600x400.png.webp" media="(max-width: 34em)" type="image/webp">
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Mobile-600x400.png" media="(max-width: 34em)">
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Tablet-1600x400.png.webp" media="(max-width: 52.5em)" type="image/webp">
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Tablet-1600x400.png" media="(max-width: 52.5em)">
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png.webp" type="image/webp">
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png">
+					<img src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png" alt="Harris County Results from Election 2023">
+				</picture>
+			</div>
 		</header>
 		<div class="page-content">
 			<?php the_content(); ?>
