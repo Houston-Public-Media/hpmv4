@@ -547,39 +547,71 @@ Template Name: Election Map Page
 				ElectionData = data;
 				if ( createLayers ) {
 					geojson = L.geoJson(stateData, {style, onEachFeature}).addTo(map);
-					geojson.eachLayer((layer) => {
-						let result = checkIfElementPresentinElectionData(layer.feature.properties.Precinct);
-						let container = layer._path;
-						if (!result) {
-							layer.removeEventListener('click');
-							layer.removeEventListener('mouseover');
-							container.classList.add("disablelayer");
-							layer.setStyle({
-								weight: 1,
-								opacity: 1,
-								color: '#808080',
-								fillOpacity: 0.4,
-								fillColor: '#cccccc'
-							});
-						} else {
-							layer.setStyle({
-								fillColor: "#237bbd",
-								weight: 1,
-								opacity: 1,
-								color: '#808080',
-								fillOpacity: 0.4,
-								clickable: false,
-							});
-							container.classList.add("enablelayer");
-						}
-					});
 				}
+				geojson.eachLayer((layer) => {
+					let result = checkIfElementPresentinElectionData(layer.feature.properties.Precinct);
+					let container = layer._path;
+					if (!result) {
+						layer.removeEventListener('click');
+						layer.removeEventListener('mouseover');
+						container.classList.add("disablelayer");
+						layer.setStyle({
+							weight: 1,
+							opacity: 1,
+							color: '#808080',
+							fillOpacity: 0.4,
+							fillColor: '#cccccc'
+						});
+					} else {
+						let PrecinctID = layer.feature.properties.Precinct;
+						let clickedArray = [];
+						for ( let i = 0; i < ElectionData.length; i++) {
+							if ( PrecinctID === ElectionData[i].id ) {
+								clickedArray = ElectionData[i];
+							}
+						}
+						let candidatesArray = clickedArray['Candidates'];
+						let TotalVotes = clickedArray['TotalVotes'];
+						if ( TotalVotes >= 0 ) {
+							candidatesArray.sort((x, y) => y.Votes - x.Votes);
+							if ( candidatesArray[0].Candidatename === "Sheila Jackson Lee") {
+								layer.setStyle({
+									fillColor: "green",
+									weight: 1,
+									opacity: 1,
+									color: '#808080',
+									fillOpacity: 0.4,
+									clickable:false,
+								});container.classList.add("enablelayer");
+							} else if ( candidatesArray[0].Candidatename === "John Whitmire" ) {
+								layer.setStyle({
+									fillColor: "orange",
+									weight: 1,
+									opacity: 1,
+									color: '#808080',
+									fillOpacity: 0.4,
+									clickable:false,
+								});container.classList.add("enablelayer");
+							} else {
+								layer.setStyle({
+									fillColor: "#237bbd",
+									weight: 1,
+									opacity: 1,
+									color: '#808080',
+									fillOpacity: 0.4,
+									clickable: false,
+								});
+								container.classList.add("enablelayer");
+							}
+						}
+					}
+				});
 			});
 	};
 	fetchPrecincts();
 	setInterval( () => {
 		fetchElection(false);
-	}, 600000 ); // Set to 10 mins
+	}, 60000 ); // Set to 10 mins
 	function onEachFeature(feature, layer) {
 		if (feature.properties.Precinct) {
 			layer.bindPopup(feature.properties.Precinct);
@@ -642,15 +674,46 @@ Template Name: Election Map Page
 	function resetHighlight(e) {
 		let layer = e.target;
 		geojson.resetStyle(e.target);
-		let result = checkIfElementPresentinElectionData(layer.feature.properties.Precinct);
-		if ( result ) {
-			layer.setStyle({
-				weight: 1,
-				opacity: 1,
-				color: '#808080',
-				fillOpacity: 0.4,
-				fillColor: '#237bbd'
-			});
+
+		let PrecinctID = layer.feature.properties.Precinct;
+		let clickedArray = [];
+		for ( let i = 0; i < ElectionData.length; i++) {
+			if ( PrecinctID === ElectionData[i].id ) {
+				clickedArray = ElectionData[i];
+			}
+		}
+		let candidatesArray = clickedArray['Candidates'];
+		let TotalVotes = clickedArray['TotalVotes'];
+		if ( TotalVotes >= 0 ) {
+			candidatesArray.sort((x, y) => y.Votes - x.Votes);
+			if ( candidatesArray[0].Candidatename === "Sheila Jackson Lee" ) {
+				layer.setStyle({
+					fillColor: "green",
+					weight: 1,
+					opacity: 1,
+					color: '#808080',
+					fillOpacity: 0.4,
+					clickable:false,
+				});
+			} else if ( candidatesArray[0].Candidatename === "John Whitmire" ) {
+				layer.setStyle({
+					fillColor: "orange",
+					weight: 1,
+					opacity: 1,
+					color: '#808080',
+					fillOpacity: 0.4,
+					clickable:false,
+				});
+			} else {
+				layer.setStyle({
+					fillColor: "#237bbd",
+					weight: 1,
+					opacity: 1,
+					color: '#808080',
+					fillOpacity: 0.4,
+					clickable: false,
+				});
+			}
 		}
 		layer.closePopup();
 	}
@@ -675,33 +738,6 @@ Template Name: Election Map Page
 		}
 		return false;
 	}
-
-	geojson.eachLayer(function(layer){
-		let result = checkIfElementPresentinElectionData(layer.feature.properties.Precinct);
-		let container = layer._path;
-		if ( !result ) {
-			layer.removeEventListener('click');
-			layer.removeEventListener('mouseover');
-			container.classList.add("disablelayer");
-			layer.setStyle({
-				weight: 1,
-				opacity: 1,
-				color: '#808080',
-				fillOpacity: 0.4,
-				fillColor: '#cccccc'
-			});
-		} else {
-			layer.setStyle({
-				fillColor: "#237bbd",
-				weight: 1,
-				opacity: 1,
-				color: '#808080',
-				fillOpacity: 0.4,
-				clickable:false,
-			});
-			container.classList.add("enablelayer");
-		}
-	});
 </script>
 
 <?php get_footer(); ?>
