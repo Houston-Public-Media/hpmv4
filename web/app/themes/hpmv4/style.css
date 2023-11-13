@@ -668,7 +668,7 @@ svg:not(:root) {
 /* Social Icons */
 .icon-wrap {
 	display: grid;
-	grid-template-columns: repeat(5, 3rem);
+	grid-template-columns: repeat(6, 3rem);
 	align-items: center;
 	justify-content: start;
 	gap: 1rem;
@@ -758,6 +758,9 @@ svg:not(:root) {
 }
 .service-icon.linkedin :is(a,button) {
 	background: rgb(40, 103, 178);
+}
+.service-icon.mastodon :is(a,button) {
+	background-color: #6364ff;
 }
 .service-icon:last-child :is(a,button) {
 	margin-right: 0;

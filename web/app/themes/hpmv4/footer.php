@@ -46,6 +46,9 @@
 							<div class="service-icon linkedin">
 								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
 							</div>
+							<div class="service-icon mastodon">
+								<a href="https://mastodon.social/@houstonpublicmedia" rel="noopener me" target="_blank"><?php echo hpm_svg_output( 'mastodon' ); ?></a>
+							</div>
 						</div>
 					</div>
 				</section>
