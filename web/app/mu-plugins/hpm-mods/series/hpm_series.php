@@ -70,19 +70,19 @@ function hpm_header_image_meta_box( $object, $box ): void {
 			<div class="hpm-page-banner-image" id="hpm-page-banner-mobile"<?php echo $hpm_mobile_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="mobile">Mobile</button>
 			<input value="<?php echo $hpm_page_options['banner']['mobile']; ?>" type="hidden" id="hpm-page-banner-mobile-id" name="hpm-page-banner-mobile-id" />
-			<?php echo ( !empty( $hpm_page_options['banner']['mobile'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="mobile" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
+			<?php echo ( $hpm_page_options['banner']['mobile'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="mobile" style="border-color: red; color: red;">Remove</button>' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-tablet"<?php echo $hpm_tablet_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="tablet">Tablet</button>
 			<input value="<?php echo $hpm_page_options['banner']['tablet']; ?>" type="hidden" id="hpm-page-banner-tablet-id" name="hpm-page-banner-tablet-id" />
-			<?php echo ( !empty( $hpm_page_options['banner']['tablet'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="tablet" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
+			<?php echo ( $hpm_page_options['banner']['tablet'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="tablet" style="border-color: red; color: red;">Remove</button>' ); ?>
 		</div>
 		<div class="hpm-page-banner">
 			<div class="hpm-page-banner-image" id="hpm-page-banner-desktop"<?php echo $hpm_desktop_url; ?>></div>
 			<button class="hpm-page-banner-select button button-primary" data-show="desktop">Desktop</button>
 			<input value="<?php echo $hpm_page_options['banner']['desktop']; ?>" type="hidden" id="hpm-page-banner-desktop-id" name="hpm-page-banner-desktop-id" />
-			<?php echo ( !empty( $hpm_page_options['banner']['desktop'] ) ? '<button class="hpm-page-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' : '' ); ?>
+			<?php echo ( $hpm_page_options['banner']['desktop'] ?? '<button class="hpm-page-banner-remove button button-secondary" data-show="desktop" style="border-color: red; color: red;">Remove</button>' ); ?>
 		</div>
 	</div>
 	<script>
@@ -285,7 +285,7 @@ function hpm_head_banners( $id, $location ): string {
 			}
 			$default = $options['banner']['desktop'] ?? $options['banner']['tablet'] ?? $options['banner']['mobile'];
 			$temp .= '<img src="' . wp_get_attachment_url( $default ) . '" alt="' . get_the_title( $id ) . ' page banner" /></picture></div>';
-			if ( $id !== 450698 ) {
+			if($id!= 450698) {
                 $output =
                     '<header class="page-header' . (!empty($temp) ? ' banner' : '') . '">' .
                     '<h1 class="page-title"' . (!empty($temp) ? ' hidden' : '') . '>' . get_the_title($id) . '</h1>' .
@@ -295,7 +295,7 @@ function hpm_head_banners( $id, $location ): string {
 		}
 	} else {
 		if ( $location == 'entry' || $location == 'series' ) {
-            if ( $id !== 450698 ) {
+            if($id!= 450698) {
                 $output =
                     '<header class="' . ($location == 'entry' ? 'entry' : 'page') . '-header">' .
                     '<h1 class="' . ($location == 'entry' ? 'entry' : 'page') . '-title">' . get_the_title($id) . '</h1>' .

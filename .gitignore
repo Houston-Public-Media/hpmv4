@@ -1,13 +1,19 @@
 # Application
 web/app/plugins/*
 !web/app/plugins/.gitkeep
+!web/app/plugins/galleria/
 !web/app/plugins/kera-passport-tools/
-!web/app/plugins/better-image-credits/
+!web/app/plugins/google-sitemap-generator/
 web/app/debug.log
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
 auth.json
+web/app/themes/hpmv2/style-*
+web/app/themes/hpmv2/front-page-*
+web/app/themes/hpmv2/js/main-*
+web/app/themes/hpmv2/js/experiments*
+web/app/themes/hpmv2/includes/head-*
 web/app/ewww/lazy
 
 # WordPress

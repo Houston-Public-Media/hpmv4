@@ -149,17 +149,17 @@ function hpm_priority_settings_page(): void {
                                                 <label class="screen-reader-text"><?php _e( "Current Article in Homepage Position ".$position.":", 'hpmv4' ); ?></label>
                                                 <select id="hpm_priority-homepage-<?php echo $kp; ?>" class="hpm-priority-select homepage-select">
                                                     <option value=""></option>
-<?php
+                                                    <?php
                                                     foreach( $recents as $k => $v ) { ?>
                                                         <option value="<?php echo $k; ?>"<?php selected( $vp, $k, TRUE ); ?>><?php echo	$v; ?></option>
-<?php
+                                                        <?php
                                                     } ?>
                                                 </select>
                                             </td>
                                             <td><label for="hpm_priority[homepage][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
                                             <td><button class="hpm-clear button button-primary" data-position="<?php echo $kp; ?>">Reset</button></td>
                                             </tr>
-<?php
+                                            <?php
                                         } ?>
                                         </tbody>
                                     </table>

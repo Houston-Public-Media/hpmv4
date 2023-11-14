@@ -771,13 +771,11 @@ function hpm_segments( $name, $date ) {
 								$set = true;
 							}
 						} else {
-							if ( !empty( $json['channel']['item'] ) ) {
-								foreach ( $json['channel']['item'] as $item ) {
-									if ( !$set ) {
-										if ( strtolower( $item['title'] ) === $title ) {
-											$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $item['link'] . '" target="_blank">' . $item['title'] . '</a></li></ul></details>';
-											$set = true;
-										}
+							foreach ( $json['channel']['item'] as $item ) {
+								if ( !$set ) {
+									if ( strtolower( $item['title'] ) === $title ) {
+										$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $item['link'] . '" target="_blank">' . $item['title'] . '</a></li></ul></details>';
+										$set = true;
 									}
 								}
 							}

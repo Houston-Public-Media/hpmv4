@@ -26,7 +26,7 @@
 }
 
 body {
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: "helvetica", Arial, Helvetica, sans-serif;
   background-color: white;
 }
 img {
@@ -132,7 +132,13 @@ section {
     top: auto;
     bottom: 58px;
   }
-  body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-uh :is(div[tab-index="0"], a) {
+  body:not(.page-template-page-listen)
+  nav#site-navigation
+  > div.nav-wrap
+  > div
+  > ul
+  > li.nav-uh
+  :is(div[tabindex="0"], a) {
     color: var(--white);
   }
   /* .nav-passport,

@@ -501,10 +501,7 @@ class HPM_Promos {
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
 				if ( $meta['type'] == 'lightbox' ) {
-					if ( !empty( $_GET['utm_source'] ) && strtolower( $_GET['utm_source'] ) === 'high5media' && !empty( $_GET['utm_content'] ) && ( $_GET['utm_content'] === 'trusted' || $_GET['utm_content'] === 'inspiring' ) ) {
-						continue;
-					}
-					if ( $lightbox == 0  ) {
+					if ( $lightbox == 0 ) {
 						$output .= "var visited = getCookie('visited');";
 						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) {
 							$content_esc = str_replace(
@@ -535,12 +532,18 @@ class HPM_Promos {
 							"var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');" .
 							"var campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');" .
 							"setTimeout(() => {" .
+								"ga('hpmprod.send', 'event', 'Lightbox', 'view', campaignData);" .
+								"ga('hpmRollupprod.send', 'event', 'Lightbox', 'view', campaignData);" .
+								"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'view', campaignData);" .
 								"gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'view'});" .
 							"}, 1000);" .
 							"for (i = 0; i < campaign.length; ++i) {" .
 								"campaign[i].addEventListener('click', (event) => {" .
 									"event.stopPropagation();" .
 									"document.getElementById('campaign-splash').style.display = 'none';" .
+									"ga('hpmprod.send', 'event', 'Lightbox', 'dismiss', campaignData);" .
+									"ga('hpmRollupprod.send', 'event', 'Lightbox', 'dismiss', campaignData);" .
+									"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'dismiss', campaignData);" .
 									"gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'dismiss'});" .
 								"});".
 							"}".
@@ -562,6 +565,9 @@ class HPM_Promos {
 								"event.stopPropagation();" .
 								"let campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
 								"if ( typeof campaign !== typeof undefined && campaign !== false) {".
+									"ga('hpmprod.send', 'event', 'Lightbox', 'click', campaign);".
+									"ga('hpmRollupprod.send', 'event', 'Lightbox', 'click', campaign);".
+									"ga('hpmWebAmpprod.send', 'event', 'Lightbox', 'click', campaign);".
 									"gtag('event', 'lightbox', {'event_label': campaign,'event_category': 'click'});" .
 								"}".
 							"});".

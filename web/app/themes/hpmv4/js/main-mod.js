@@ -1,9 +1,9 @@
-let getCookie = (cname) => {
-	let name = cname + "=";
-	let decodedCookie = decodeURIComponent(document.cookie);
-	let ca = decodedCookie.split(';');
-	for(let i = 0; i <ca.length; i++) {
-		let c = ca[i];
+var getCookie = (cname) => {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i <ca.length; i++) {
+		var c = ca[i];
 		while (c.charAt(0) === ' ') {
 			c = c.substring(1);
 		}
@@ -13,49 +13,62 @@ let getCookie = (cname) => {
 	}
 	return null;
 }
-let timeOuts = [];
-let setCookie = (cname, cvalue, exhours) => {
-	let d = new Date();
+var timeOuts = [];
+var setCookie = (cname, cvalue, exhours) => {
+	var d = new Date();
 	d.setTime(d.getTime() + (exhours*60*60*1000));
-	let expires = 'expires=' + d.toUTCString();
+	var expires = 'expires=' + d.toUTCString();
 	document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/;SameSite=lax;Secure;';
 };
 
 if ( getCookie('inapp') !== null ) {
-	let css = document.createElement('style');
+	var css = document.createElement('style');
 	css.appendChild(document.createTextNode('#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }'));
 	document.getElementsByTagName("head")[0].appendChild(css);
 }
 
-let amPm = (timeString) => {
-	let hourEnd = timeString.indexOf(":");
-	let H = +timeString.substr(0, hourEnd);
-	let h = H % 12 || 12;
-	let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-	return h + timeString.substr(hourEnd, 3) + ampm;
+var amPm = (timeString) => {
+	var hourEnd = timeString.indexOf(":");
+	var H = +timeString.substr(0, hourEnd);
+	var h = H % 12 || 12;
+	var ampm = (H < 12 || H === 24) ? " AM" : " PM";
+	return timeString = h + timeString.substr(hourEnd, 3) + ampm;
 };
-
-let hpm = {};
+if ( typeof hpm === typeof undefined ) {
+const hpm = {};
+hpm.getJSON = function(url, callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url, true);
+	xhr.responseType = 'json';
+	xhr.onload = function() {
+		var status = xhr.status;
+		if (status === 200) {
+			callback(null, xhr.response);
+		} else {
+			callback(status, xhr.response);
+		}
+	};
+	xhr.send();
+};
+var eventType = ((document.ontouchstart !== null) ? 'click' : 'touchstart');
 
 hpm.navHandlers = () => {
-	let siteNav = document.querySelector('nav#site-navigation');
-	let buttonDiv = document.querySelectorAll('div[tabindex="0"]');
-	let topMenu = document.querySelector('#top-mobile-menu');
-	let closeMenu = document.querySelector('#top-mobile-close');
-	let topSearch = document.querySelector('#top-search');
-	let searchInput = document.querySelector('#top-search > form > input[type=search]');
+	var siteNav = document.querySelector('nav#site-navigation');
+	var buttonDiv = document.querySelectorAll('div[tabindex="0"]');
+	var topMenu = document.querySelector('#top-mobile-menu');
+	var closeMenu = document.querySelector('#top-mobile-close');
 	if ( siteNav !== null ) {
-		let menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
+		var menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
 		siteNav.addEventListener('focusin', () => {
 			document.body.classList.add('nav-active-menu');
 		});
 		siteNav.addEventListener('focusout', () => {
 			document.body.classList.remove('nav-active-menu');
 		});
-		topMenu.addEventListener('click', () => {
+		topMenu.addEventListener(eventType, () => {
 			document.body.classList.add('nav-active-menu');
 		});
-		closeMenu.addEventListener('click', () => {
+		closeMenu.addEventListener(eventType, () => {
 			document.body.classList.remove('nav-active-menu');
 		});
 		if ( menuWithChildren !== null ) {
@@ -69,12 +82,12 @@ hpm.navHandlers = () => {
 						menuC.classList.remove('nav-active');
 					}
 				});
-				menuC.addEventListener('click', () => {
+				menuC.addEventListener(eventType, () => {
 					menuC.classList.toggle('nav-active');
 				});
-				menuC.firstElementChild.addEventListener('click', (event) => {
+				menuC.firstElementChild.addEventListener(eventType, (event) => {
 					if (window.innerWidth < 1024) {
-						if (event.currentTarget.getAttribute('aria-expanded') === 'true' ) {
+						if (event.currentTarget.getAttribute('aria-expanded') == 'true' ) {
 							event.preventDefault();
 							document.getElementById('focus-sink').focus({preventScroll:true});
 						}
@@ -82,11 +95,6 @@ hpm.navHandlers = () => {
 				});
 			});
 		}
-	}
-	if ( topSearch !== null ) {
-		topSearch.addEventListener('click', () => {
-			searchInput.focus({preventScroll:true});
-		});
 	}
 	Array.from(buttonDiv).forEach((bD) => {
 		bD.addEventListener('focusin', () => {
@@ -99,38 +107,36 @@ hpm.navHandlers = () => {
 };
 
 hpm.videoHandlers = () => {
-	let allVideos = document.querySelectorAll("iframe[src*='vimeo.com'], iframe[src*='youtube.com']," +
+	var allVideos = document.querySelectorAll("iframe[src*='vimeo.com'], iframe[src*='youtube.com']," +
 		" iframe[src*='youtube-nocookie.com'],iframe[src*='ustream.tv'], iframe[src*='google.com/maps']," +
 		" iframe[src*='drive.google.com'], iframe[src*='vuhaus.com'], object, embed, .videoarchive," +
 		" iframe[src*='googleusercontent.com'], iframe[src*='player.pbs.org']," +
 		" iframe[src*='facebook.com/plugins/video.php'], iframe[src*='houstontranstar.org']," +
 		" iframe[src*='archive.org/embed'], iframe[src*='jwplayer.com']");
 	window.ytPlayers = [];
-	let youtube = false;
+	var youtube = false;
 	if ( document.getElementById('youtube-player') !== null ) {
 		youtube = true;
 	}
 	Array.from(allVideos).forEach((video) => {
-		let iframeClass;
-		let vidHigh = video.getAttribute('height');
-		let vidWide = video.getAttribute('width');
+		var iframeClass;
+		var vidHigh = video.getAttribute('height');
+		var vidWide = video.getAttribute('width');
 		video.removeAttribute('height');
 		video.removeAttribute('width');
-		let frameSrc = video.src;
-		let ratio = vidWide/vidHigh;
-		if ( vidWide === '100%' && vidHigh === '100%' ) {
-			ratio = 1.6667;
-		}
-		if ( typeof frameSrc !== 'string' ) {
-			return false;
+		var frameSrc = video.src;
+		if ( vidWide == '100%' && vidHigh == '100%' ) {
+			var ratio = 1.6667;
+		} else {
+			var ratio = vidWide/vidHigh;
 		}
 		if ( frameSrc.indexOf('google.com/maps') !== -1 || frameSrc.indexOf('googleusercontent.com') !== -1 || frameSrc.indexOf('houstontranstar.org') !== -1 ) {
 			iframeClass = 'iframe-embed-tall';
 		} else {
 			if ( frameSrc.indexOf('youtube') !== -1 ) {
-				let query = new URL(frameSrc);
-				if ( query.search.indexOf('enablejsapi') === -1 ) {
-					if (query.search === '') {
+				var query = new URL(frameSrc);
+				if ( query.search.indexOf('enablejsapi') == -1 ) {
+					if (query.search == '') {
 						video.src += '?enablejsapi=1';
 					} else {
 						video.src += '&enablejsapi=1';
@@ -157,19 +163,19 @@ hpm.videoHandlers = () => {
 		video.parentNode.classList.add(iframeClass);
 	});
 	if (youtube) {
-		let tag = document.createElement('script');
+		var tag = document.createElement('script');
 		tag.src = "https://cdn.houstonpublicmedia.org/assets/js/youtube.js?v=1";
-		let firstScriptTag = document.getElementsByTagName('script')[0];
+		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	}
 };
 
 hpm.shareHandlers = () => {
-	let popOut = document.querySelectorAll(".service-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
+	var popOut = document.querySelectorAll(".service-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
 	Array.from(popOut).forEach((pop) => {
-		pop.addEventListener('click', (e) =>{
-			let attr = pop.getAttribute('data-dialog');
-			let hrefCheck = pop.getAttribute('data-href');
+		pop.addEventListener(eventType, (e) =>{
+			var attr = pop.getAttribute('data-dialog');
+			var hrefCheck = pop.getAttribute('data-href');
 			if ( hrefCheck.includes('mailto:') ) {
 				return true;
 			} else {
@@ -180,23 +186,23 @@ hpm.shareHandlers = () => {
 					e.preventDefault();
 					attr = '576:730';
 				}
-				let size = attr.split(':');
-				let text = pop.innerText;
-				window.open(hrefCheck, text, "width=" + size[0] + ",height=" + size[1]);
+				var size = attr.split(':');
+				var text = pop.innerText;
+				var myWindow = window.open(hrefCheck, text, "width=" + size[0] + ",height=" + size[1]);
 			}
 		});
 	});
 };
 
 hpm.audioEmbeds = () => {
-	let embeds = document.querySelectorAll('.plyr-audio-embed')
+	var embeds = document.querySelectorAll('.plyr-audio-embed')
 	Array.from(embeds).forEach((emb) => {
 		emb.addEventListener('click', (e) => {
 			e.preventDefault();
 			emb.nextElementSibling.classList.toggle('plyr-audio-embed-active');
 		});
 	});
-	let embC = document.querySelectorAll('.plyr-audio-embed-close')
+	var embC = document.querySelectorAll('.plyr-audio-embed-close')
 	Array.from(embC).forEach((emC) => {
 		emC.addEventListener('click', () => {
 			emC.parentNode.parentNode.classList.remove('plyr-audio-embed-active');
@@ -205,13 +211,15 @@ hpm.audioEmbeds = () => {
 };
 
 hpm.localBanners = () => {
-	let topBanner = document.querySelectorAll('.top-banner');
+	var topBanner = document.querySelectorAll('.top-banner');
 	if (topBanner !== null) {
 		Array.from(topBanner).forEach((item) => {
 			item.addEventListener('click', () => {
-				let attr = item.id;
+				var attr = item.id;
 				if ( typeof attr !== typeof undefined && attr !== false) {
-					gtag('event', 'top_banner', {'event_label': attr,'event_category': 'click'});
+					ga('hpmprod.send', 'event', 'Top Banner', 'click', attr);
+					ga('hpmRollupprod.send', 'event', 'Top Banner', 'click', attr);
+					ga('hpmWebAmpprod.send', 'event', 'Top Banner', 'click', attr);
 				}
 			});
 		});
@@ -219,17 +227,22 @@ hpm.localBanners = () => {
 }
 
 hpm.audioPlayers = () => {
-	let jsPlay = document.querySelectorAll('.js-player');
+	var jsPlay = document.querySelectorAll('.js-player');
 	if (jsPlay !== null) {
-		hpm.players = Array.from(jsPlay).map(p => new Plyr(p));
+		const players = Array.from(jsPlay).map(p => new Plyr(p));
+		hpm.players = players;
 		hpm.players.forEach((player) => {
 			player.on('play', (event) => {
-				let mediaName = event.detail.plyr.media.currentSrc;
-				gtag('event', 'plyr', {'event_label': mediaName,'event_category': 'play'});
+				var mediaName = event.detail.plyr.media.currentSrc;
+				ga('hpmprod.send', 'event', 'Plyr', 'Play', mediaName);
+				ga('hpmRollupprod.send', 'event', 'Plyr', 'Play', mediaName);
+				ga('hpmWebAmpprod.send', 'event', 'Plyr', 'Play', mediaName);
 			});
 			player.on('ended', (event) => {
-				let mediaName = event.detail.plyr.media.currentSrc;
-				gtag('event', 'plyr', {'event_label': mediaName,'event_category': 'ended'});
+				var mediaName = event.detail.plyr.media.currentSrc;
+				ga('hpmprod.send', 'event', 'Plyr', 'Ended', mediaName);
+				ga('hpmRollupprod.send', 'event', 'Plyr', 'Ended', mediaName);
+				ga('hpmWebAmpprod.send', 'event', 'Plyr', 'Ended', mediaName);
 			});
 		});
 	}
@@ -238,61 +251,41 @@ hpm.audioPlayers = () => {
 hpm.stationIds = {
 	'news': {
 		'feed': 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json&show_song=true',
-		'nowPlaying': {},
-		'refresh': false,
-		'next': false,
-		'obj': {}
+		'nowPlaying': {}
 	},
 	'classical': {
 		'feed': 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
-		'nowPlaying': {},
-		'refresh': false,
-		'next': false,
-		'obj': {}
+		'nowPlaying': {}
 	},
 	'mixtape': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
-		'nowPlaying': {},
-		'refresh': false,
-		'next': false,
-		'obj': {}
+		'nowPlaying': {}
 	},
 	'tv81': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
-		'nowPlaying': {},
-		'refresh': false,
-		'next': false,
-		'obj': {}
+		'nowPlaying': {}
 	},
 	'tv82': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
-		'nowPlaying': {},
-		'refresh': false,
-		'next': false,
-		'obj': {}
+		'nowPlaying': {}
 	},
 	'tv83': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-		'nowPlaying': {},
-		'refresh': false,
-		'next': false,
-		'obj': {}
+		'nowPlaying': {}
 	},
 	'tv84': {
 		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
-		'nowPlaying': {},
-		'refresh': false,
-		'next': false,
-		'obj': {}
+		'nowPlaying': {}
 	}
 };
+hpm.stationLoad = {};
 hpm.npSearch = () => {
-	let nowPlay = document.querySelectorAll('.hpm-nowplay');
+	hpm.stationLoad = {};
+	var nowPlay = document.querySelectorAll('.hpm-nowplay');
 	Array.from(nowPlay).forEach((np) => {
-		let station = np.getAttribute('data-station');
-		hpm.stationIds[ station ].refresh = true;
-		hpm.stationIds[ station ].next = np.getAttribute('data-upnext');
-		hpm.stationIds[ station ].obj = np;
+		var station = np.getAttribute('data-station');
+		var next = np.getAttribute('data-upnext');
+		hpm.stationLoad[ station ] = { 'next': next, 'obj': np };
 	});
 	if ( document.body.classList.contains('page-template-page-listen') ) {
 		hpm.npDataDownload();
@@ -300,16 +293,14 @@ hpm.npSearch = () => {
 	timeOuts.push(setInterval('hpm.npDataDownload()',60000));
 };
 hpm.npDataDownload = () => {
-	for (let st in hpm.stationIds) {
-		if ( hpm.stationIds[st].refresh ) {
-			if ( hpm.stationIds[st].refresh ) {
-				fetch(hpm.stationIds[st].feed)
-					.then((response) => response.json())
-					.then((data) => {
-						hpm.npUpdateData(data,st);
-					});
+	for (let st in hpm.stationLoad) {
+		hpm.getJSON( hpm.stationIds[st].feed, (err, data) => {
+			if (err !== null) {
+				console.log(err);
+			} else {
+				hpm.npUpdateData(data,st);
 			}
-		}
+		});
 	}
 };
 hpm.npUpdateData = (data, station) => {
@@ -324,24 +315,25 @@ hpm.npUpdateData = (data, station) => {
 	}
 };
 document.addEventListener('hpm:npUpdate', (event) => {
-	let station = event['detail']['updated'];
-	hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
+	var station = event['detail']['updated'];
+	if ( typeof hpm.stationLoad[ station ] == 'object' ) {
+		hpm.npUpdateHtml(hpm.stationLoad[ station ]['obj'], station, hpm.stationLoad[ station ]['next']);
+	}
 });
 hpm.npUpdateHtml = (object,station,next) => {
-	let output = '';
-	let data;
-	data = hpm.stationIds[station]['nowPlaying'];
-	if (next === 'true') {
+	var output = '';
+	var data = hpm.stationIds[station]['nowPlaying'];
+	if (next == 'true') {
 		output = '<h2>On Now</h2>';
 	}
 	if ( station.startsWith('tv') ) {
-		if (next === 'true') {
+		if (next == 'true') {
 			output += '<ul>';
-			for ( let al = 0; al < data['airlist'].length; al++ ) {
-				if (al === 1) {
+			for ( var al = 0; al < data['airlist'].length; al++ ) {
+				if (al == 1) {
 					output += '</ul><h2>Coming Up</h2><ul>'
 				}
-				let airStart = new Date(data['airlist'][al]['air-start']);
+				var airStart = new Date(data['airlist'][al]['air-start']);
 				output += '<li>'+
 					airStart.toLocaleTimeString([],{hour:'numeric',minute: '2-digit' }) +
 					': ' + data['airlist'][al]['version']['series']['series-title'] + '</li>';
@@ -351,7 +343,7 @@ hpm.npUpdateHtml = (object,station,next) => {
 			output += '<h3>'+data['airlist'][0]['version']['series']['series-title']+'</h3>';
 		}
 	} else if ( station === 'mixtape' ) {
-		output += '<h3>'+data.artist+' - '+data.song+'</h3>';
+		output += '<h3>'+data[0]+' - '+data[1]+'</h3>';
 	} else {
 		if ( typeof data.onNow.song !== 'object') {
 			output += '<h3>'+data.onNow.program.name+'</h3>';
@@ -362,24 +354,54 @@ hpm.npUpdateHtml = (object,station,next) => {
 			}
 			output += data.onNow.song.trackName.replace('&','&amp;') + "</h3>";
 		}
-		if (next === 'true') {
-			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].start_time)+': '+data.nextUp[0].program.name+'</li></ul>';
+		if (next == 'true') {
+			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].fullstart)+': '+data.nextUp[0].program.name+'</li></ul>';
 		}
 	}
-	if (object === 'jpp') {
-		if ( station === jpp.prefStream ) {
-			jpp.elements.nowPlaying.innerHTML = '<div><p>Houston Public Media ' + station + '</p>' + output + '</div>';
-			if ( station === 'news' ) {
-				jpp.elements.nowPlaying.innerHTML += '<div class="playing-next"><p>Coming up @ ' + amPm(data.nextUp[0].start_time) + '</p><h3>' + data.nextUp[0].program.name + '</h3></div>';
-			}
-		}
-		document.getElementById('menu-station-'+station).innerHTML = '<p>Houston Public Media ' + station + '</p>' + output;
-	}
-	if (object !== 'jpp') {
-		object.innerHTML = output;
-	}
+	object.innerHTML = output;
 };
-document.addEventListener('DOMContentLoaded', () => {
+hpm.creditContainer = () => {
+	var setupOverlay = (overlay,target) => {
+		var contain = document.createElement('div');
+		contain.classList.add('credits-container');
+		Array.from(target.classList).forEach((tCl) => {
+			contain.classList.add(tCl);
+		});
+		var parent = target.parentNode;
+		contain.innerHTML = target.outerHTML + overlay.outerHTML;
+		if (parent.nodeName == 'a') {
+			parent.outerHTML = contain.outerHTML;
+		} else {
+			target.outerHTML = contain.outerHTML;
+		}
+	};
+	var credits = null;
+	credits = document.querySelectorAll('.credits-overlay');
+	var targets = [];
+	Array.from(credits).forEach((cred) => {
+		targets.push( {'target': 'img' + cred.getAttribute('data-target'), 'overlay': cred } );
+	});
+	targets.forEach((target) => {
+		var t = document.querySelector(target.target);
+		if (t !== null) {
+			setupOverlay( target.overlay, t );
+		}
+	});
+}
+
+// document.addEventListener('DOMContentLoaded', () => {
+// 	hpm.navHandlers();
+// 	hpm.videoHandlers();
+// 	hpm.shareHandlers();
+// 	hpm.audioEmbeds();
+// 	hpm.npSearch();
+// 	hpm.audioPlayers();
+// 	hpm.localBanners();
+// 	hpm.creditContainer();
+// });
+document.addEventListener('turbo:load', (event) => {
+	console.log('Turbo Load');
+	console.log(event);
 	hpm.navHandlers();
 	hpm.videoHandlers();
 	hpm.shareHandlers();
@@ -387,4 +409,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
+	hpm.creditContainer();
 });
+}

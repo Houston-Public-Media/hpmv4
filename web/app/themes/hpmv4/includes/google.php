@@ -70,6 +70,8 @@ function hpm_google_tracker(): void {
 				googletag.enableServices();
 			});
 		</script>
+		<script>addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)});</script>
+		<script async="true" src='https://www.google-analytics.com/analytics.js'></script>
 <?php
 }
 add_action( 'wp_head', 'hpm_google_tracker', 100 );
