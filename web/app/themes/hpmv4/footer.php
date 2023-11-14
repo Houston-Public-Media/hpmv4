@@ -31,6 +31,7 @@
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
 						<div class="icon-wrap">
+							<div class="service-icon"></div>
 							<div class="service-icon facebook">
 								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
 							</div>
@@ -46,9 +47,9 @@
 							<div class="service-icon linkedin">
 								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
 							</div>
-							<div class="service-icon mastodon">
-								<a href="https://mastodon.social/@houstonpublicmedia" rel="noopener me" target="_blank"><?php echo hpm_svg_output( 'mastodon' ); ?></a>
-							</div>
+							<!--<div class="service-icon mastodon">
+								<a href="https://mastodon.social/@houstonpublicmedia" rel="noopener me" target="_blank"><?php // echo hpm_svg_output( 'mastodon' ); ?></a>
+							</div>-->
 						</div>
 					</div>
 				</section>

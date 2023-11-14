@@ -97,6 +97,7 @@
 		$social_post = get_post_meta( $post_id, 'hpm_social_post', true );
 		$social_facebook_sent = get_post_meta( $post_id, 'hpm_social_facebook_sent', true );
 		$social_twitter_sent = get_post_meta( $post_id, 'hpm_social_twitter_sent', true );
+		$social_mastodon_sent = get_post_meta( $post_id, 'hpm_social_mastodon_sent', true );
 		if ( empty( $social_post ) ) {
 			return $post_id;
 		}
@@ -120,7 +121,10 @@
 				} catch (Exception|\GuzzleHttp\Exception\GuzzleException $e) {
 					log_it( $e );
 				}
-
+			}
+		}
+		if ( empty( $social_mastodon_sent ) ) {
+			if ( !empty( $social_post['twitter']['data'] ) ) {
 				$payload = [
 					'body' => [
 						'status' => $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id ),
@@ -138,6 +142,8 @@
 				if ( !is_wp_error( $result ) ) {
 					if ( $result['response']['code'] !== 200 ) {
 						log_it( json_decode( wp_remote_retrieve_body( $result ) ) );
+					} else {
+						update_post_meta( $post_id, 'hpm_social_mastodon_sent', 1 );
 					}
 				}
 			}
