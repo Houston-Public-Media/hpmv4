@@ -270,7 +270,7 @@ add_filter('upload_mimes', 'custom_upload_mimes');
 /*
  * Finds the last 5 entries in the specified YouTube playlist and saves into a site transient
  */
-function hpm_youtube_playlist( $key, $num = 5 ) {
+function hpm_youtube_playlist( $key, $num = 1 ) {
 	$list = get_transient( 'hpm_yt_' . $key . '_' . $num );
 	if ( !empty( $list ) ) {
 		return $list;
@@ -435,19 +435,32 @@ function analyticsPull_update(): void {
 		]),
 		'limit' => 5
 	]);
-	$output = "<ul>";
-	foreach ( $result->getRows() as $row ) {
-		preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row->getDimensionValues()[0]->getValue(), $match );
-		if ( !empty( $match ) ) {
-			$title = get_the_title( $match[1] );
-			if ( empty( $title ) ) {
-				$title = ucwords( str_replace( [ '-', '/' ], [ ' ', '' ] , $match[2] ) );
-			}
-			$output .= '<li><h2 class="entry-title"><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark">' . $title . '</a></h2></li>';
-		}
-	}
-	$output .= "</ul>";
-	update_option( 'hpm_most_popular', $output );
+    //$output = "<ul>";
+    $output = '<ul class="list-none news-links list-dashed">';
+    foreach ( $result->getRows() as $row ) {
+        preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row->getDimensionValues()[0]->getValue(), $match );
+        if ( !empty( $match ) ) {
+            $imageBlock = '';
+            $title = get_the_title( $match[1] );
+            if ( empty( $title ) ) {
+                $title = ucwords( str_replace( [ '-', '/' ], [ ' ', '' ] , $match[2] ) );
+            }
+            if ( has_post_thumbnail( $match[1] ) ) {
+                $imageBlock = get_the_post_thumbnail( $match[1], 'thumbnail' );
+            }
+
+            //$output .= '<li><h2 class="entry-title"><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark">' . $title . '</a></h2></li>';
+            $output .= '<li><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark"><span>' . $title . '</span><span class="img-w150">'.$imageBlock.'</span></a></li>';
+            /*<li>
+            <a href="#">
+            <span>Reflecting on the pandemic in Houston as the national emergency ends</span>
+            <span class="img-w150"><img src="<?php echo get_template_directory_uri(); ?>/images/news-img.jpg" /></span>
+            </a>
+            </li>*/
+        }
+    }
+    $output .= "</ul>";
+    update_option( 'hpm_most_popular', $output );
 }
 
 function analyticsPull() {
@@ -460,6 +473,18 @@ if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
 }
 
+function get_post_id_by_slug($slug) {
+
+    $post = get_page_by_path($slug, null, 'post');
+
+    if ($post) {
+        return $post->ID;
+    } else {
+        return null;
+    }
+}
+
+
 /**
  * @return mixed|string
  * Pull NPR API articles and save them to a transient
@@ -469,19 +494,19 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 	if ( !empty( $npr ) ) {
 		return $npr;
 	}
-	$output = '';
+	$output = '<ul class="list-none news-links link-thumb">';
 	if ( function_exists( 'npr_cds_activate' ) ) {
 		$npr = new NPR_CDS_WP();
 		$npr->request([
 			'collectionIds' => $api_id,
-			'profileIds' => 'story,renderable,publishable',
+			'profileIds' => 'story,renderable,publishable,slug',
 			'limit' => $num,
 			'sort' => 'publishDateTime:desc'
 		]);
 		$npr->parse();
 		if ( !empty( $npr->stories ) ) {
 			foreach ( $npr->stories as $story ) {
-				$output .= '<article class="card">';
+				//$output .= '<li>';
 				if ( !empty( $story->images[0] ) ) {
 					$image_id = $npr->extract_asset_id( $story->images[0]->href );
 					$image_asset = $story->assets->{$image_id};
@@ -492,12 +517,19 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 					}
 					$output .= '<a href="/npr' . $story->nprWebsitePath . '/" class="post-thumbnail"><img src="' . $image_url . '" alt="' . $story->title . '" loading="lazy" /></a>';
 				}
-				$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark">' . $story->title . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story->teaser . '</div></div></article>';
+				$output .= '<span><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark">' . $story->title . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story->teaser . '</div></div></article>';
+
+                /*<li>
+                            <a href="#">
+                                <span>Reflecting on the pandemic in Houston as the national emergency ends</span>
+                                <span class="img-w75"><img src="<?php echo get_template_directory_uri(); ?>/images/news-img.jpg" /></span>
+                            </a>
+                        </li>*/
 			}
 		}
 	} elseif ( function_exists( 'nprstory_activate' ) ) {
 		$api_key = get_option( 'ds_npr_api_key' );
-		$remote  = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
+		$remote  = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,slug,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
 		if ( is_wp_error( $remote ) ) {
 			return "<p></p>";
 		} else {
@@ -506,13 +538,15 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 		}
 		foreach ( $npr_json['list']['story'] as $story ) {
 			$npr_date = strtotime( $story['storyDate']['$text'] );
-			$output   .= '<article class="card">';
+			//$output   .= '<article class="card">';
 			if ( ! empty( $story['image'][0]['src'] ) ) {
-				$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
+
+			//	$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
 			}
-			$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story['teaser']['$text'] . '</div></div></article>';
-		}
+			$output .= '<li><span><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></span><span class="img-w75"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="" loading="lazy" /></a></span></li>';
+		} //' . $story['title']['$text'] . '
 	}
+    $output .="</ul>";
 	set_transient( 'hpm_nprapi_' . $api_id, $output, 300 );
 	return $output;
 }
@@ -771,11 +805,13 @@ function hpm_segments( $name, $date ) {
 								$set = true;
 							}
 						} else {
-							foreach ( $json['channel']['item'] as $item ) {
-								if ( !$set ) {
-									if ( strtolower( $item['title'] ) === $title ) {
-										$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $item['link'] . '" target="_blank">' . $item['title'] . '</a></li></ul></details>';
-										$set = true;
+							if ( !empty( $json['channel']['item'] ) ) {
+								foreach ( $json['channel']['item'] as $item ) {
+									if ( !$set ) {
+										if ( strtolower( $item['title'] ) === $title ) {
+											$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $item['link'] . '" target="_blank">' . $item['title'] . '</a></li></ul></details>';
+											$set = true;
+										}
 									}
 								}
 							}

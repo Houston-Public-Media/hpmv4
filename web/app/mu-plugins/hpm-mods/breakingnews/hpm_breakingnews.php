@@ -32,7 +32,12 @@ add_action( 'update_option_hpm_breakingnews', function( $old_value, $value ) {
 }, 10, 2 );
 function hpm_breakingnews_settings_page(): void
 {
-    $brekingnews = get_option( 'hpm_breakingnews' );
+	$brekingnews = get_option( 'hpm_breakingnews', [
+		'homepage' => [ '' ],
+		'expirationdate' => [ '' ],
+		'type' => '',
+		'number' => 1
+	]);
     $recents = $indepths = [];
     $recent = new WP_Query([
         'post_status' => 'publish',

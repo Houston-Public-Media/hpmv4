@@ -576,7 +576,7 @@ function hpm_careers_trans(): string {
 
 	$url = 'https://uhs.taleo.net/careersection/rest/jobboard/searchjobs?lang=en&portal=8100120292';
 	$options =[
-		'body' => '{"multilineEnabled":false,"sortingSelection":{"sortBySelectionParam":"3","ascendingSortingOrder":"false"},"fieldData":{"fields":{"KEYWORD":""},"valid":true},"filterSelectionParam":{"searchFilterSelections":[{"id":"POSTING_DATE","selectedValues":[]},{"id":"ORGANIZATION","selectedValues":["14400120292"]},{"id":"JOB_TYPE","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_SCHEDULE","selectedValues":[]}]},"advancedSearchFiltersSelectionParam":{"searchFilterSelections":[{"id":"ORGANIZATION","selectedValues":[]},{"id":"LOCATION","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_NUMBER","selectedValues":[]},{"id":"URGENT_JOB","selectedValues":[]},{"id":"EMPLOYEE_STATUS","selectedValues":[]},{"id":"STUDY_LEVEL","selectedValues":[]},{"id":"JOB_SHIFT","selectedValues":[]}]},"pageNo":1}',
+		'body' => '{"multilineEnabled":false,"sortingSelection":{"sortBySelectionParam":"3","ascendingSortingOrder":"false"},"fieldData":{"fields":{"KEYWORD":""},"valid":true},"filterSelectionParam":{"searchFilterSelections":[{"id":"POSTING_DATE","selectedValues":[]},{"id":"ORGANIZATION","selectedValues":["14400120292","166300023214"]},{"id":"JOB_TYPE","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_SCHEDULE","selectedValues":[]}]},"advancedSearchFiltersSelectionParam":{"searchFilterSelections":[{"id":"ORGANIZATION","selectedValues":[]},{"id":"LOCATION","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_NUMBER","selectedValues":[]},{"id":"URGENT_JOB","selectedValues":[]},{"id":"EMPLOYEE_STATUS","selectedValues":[]},{"id":"STUDY_LEVEL","selectedValues":[]},{"id":"JOB_SHIFT","selectedValues":[]}]},"pageNo":1}',
 		'headers' => [
 			'Referer' => 'https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)',
 			'Origin' => 'https://uhs.taleo.net',
@@ -607,6 +607,7 @@ function hpm_careers_trans(): string {
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
 	}
+	$output .= '<svg hidden xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><use href="#hpm-job-link"></use><symbol id="hpm-job-link"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></symbol></svg>';
 	foreach ( $json['requisitionList'] as $j ) {
 		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) {
 			if ( !empty( $desc[ $j['contestNo'] ]['title'] ) ) {
@@ -614,7 +615,7 @@ function hpm_careers_trans(): string {
 			} else {
 				$title = trim( $j['column'][0] );
 			}
-			$output .= "<details><summary>" . $title . "</strong></summary>";
+			$output .= '<details id="' . $j['contestNo'] . '"><summary>' . $title . '</strong></summary><div class="job-link" title="Click for a direct link to this job posting" data-job="#' . $j['contestNo'] . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><use href="#hpm-job-link"></use></svg></div>';
 			if ( !empty( $desc[ $j['contestNo'] ]['description'] ) ) {
 				$output .= $desc[ $j['contestNo'] ]['description'];
 			}
@@ -681,7 +682,8 @@ function hpm_indepth_bug(): string {
 add_shortcode( 'hpm_indepth', 'hpm_indepth_bug' );
 
 function hpm_newsletter_bug(): string {
-	return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
+	//return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
+	return '';
 }
 add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
 
@@ -963,7 +965,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'http://feeds.feedburner.com/unitedstatesofanxiety',
 				'title' => 'Notes from America with Kai Wright',
 				'image' => '',
-				'description' => '',
+				'description' => '<em>Notes from America with Kai Wright</em> is a show about the unfinished business of our history and its grip on our future.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -971,7 +973,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://feeds.simplecast.com/_xaPhs1s',
 				'title' => 'Our Body Politic',
 				'image' => '',
-				'description' => '',
+				'description' => 'Created and hosted by award-winning journalist Farai Chideya, <em>Our Body Politic</em> is unapologetically centered on not just how women of color experience the major political events of today, but how they&#039;re impacting those very issues.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -979,7 +981,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://latinousa.feeds.futuromedia.org/',
 				'title' => 'Latino USA',
 				'image' => '',
-				'description' => '',
+				'description' => '<em>Latino USA</em> offers insight into the lived experiences of Latino communities and is a window on the current and emerging cultural, political and social ideas impacting Latinos and the nation.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -987,7 +989,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://embodied.feed.wunc.org/',
 				'title' => 'Embodied',
 				'image' => '',
-				'description' => '',
+				'description' => 'Sex and relationships are intimate &mdash; and sometimes intimidating to talk about. In <em>Embodied</em>, host Anita Rao guides us on an exploration of our brains and our bodies that touches down in taboo territory.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			],
@@ -995,7 +997,7 @@ function hpm_pull_podcasts_update(): array {
 				'feed' => 'https://www.houstonpublicmedia.org/podcasts/i-see-u/',
 				'title' => 'I SEE U with Eddie Robinson',
 				'image' => '',
-				'description' => '',
+				'description' => 'Hosted by Houston Public Media’s Eddie Robinson, <em>I SEE U</em> explores cultural identity through the stories of people and places that have been transformed by the effects of long-standing biases. Eddie guides fascinating conversations with newsmakers who share their personal histories, their struggles and their triumphs.',
 				'latest-audio' => '',
 				'latest-title' => ''
 			]
@@ -1025,7 +1027,7 @@ function hpm_pull_podcasts_update(): array {
 			}
 		}
 		$podcasts[ $k ]['image'] = $image->__toString();
-		$podcasts[ $k ]['description'] = trim( $dom->channel->description );
+		//$podcasts[ $k ]['description'] = trim( $dom->channel->description );
 		$podcasts[ $k ]['latest-title'] = $dom->channel->item[0]->title->__toString();
 	}
 	update_option( 'hpm_pull_podcasts', $podcasts, false );

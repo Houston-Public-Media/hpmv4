@@ -36,7 +36,7 @@ get_header(); ?>
 		article.staff .card-content {
 			min-width: 69%;
 			flex: 1;
-			margin-bottom: 1rem;
+			margin-bottom: 1.75rem;
 		}
 		article.staff .post-thumbnail img {
 			aspect-ratio: initial;
@@ -84,7 +84,7 @@ get_header(); ?>
 		}
 		@media screen and (min-width: 52.55rem) {
 			.staff-grid {
-				grid-template-columns: 1fr 1fr 1fr;
+				/*grid-template-columns: 1fr 1fr 1fr;*/
 			}
 		}
 	</style>
@@ -94,7 +94,7 @@ get_header(); ?>
 			$query_obj = $wp_query->get_queried_object(); ?>
 
 			<header class="page-header">
-				<h1 class="page-title"><?php echo ( is_tax() ? 'Staff: ' . $query_obj->name  : 'MEET THE  TEAM' ) ?></h1>
+				<h1 class="page-title"><?php echo ( is_tax() ? 'Staff: ' . $query_obj->name  : 'MEET THE TEAM' ) ?></h1>
 				<?php wp_dropdown_categories([
 						'show_option_all'	=> __("Select Department"),
 						'taxonomy'			=> 'staff_category',

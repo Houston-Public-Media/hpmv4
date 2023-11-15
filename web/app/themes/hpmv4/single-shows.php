@@ -79,184 +79,103 @@ get_header(); ?>
 		$show_content = get_the_content();
 		$episodes = HPM_Podcasts::list_episodes( $show_id );
 		echo HPM_Podcasts::show_header( $show_id );
-	} ?>
-			<div id="float-wrap">
-				<aside class="column-right">
-					<h3>About <?php echo $show_title; ?></h3>
-					<div class="show-content">
-						<?php echo apply_filters( 'the_content', $show_content ); ?>
-					</div>
-					<div class="sidebar-ad">
-						<h4>Support Comes From</h4>
-						<div id="div-gpt-ad-1394579228932-1">
-							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-							</script>
-						</div>
-					</div>
-				</aside>
-				<div class="article-wrap">
-<?php
-	if ( !empty( $show['ytp'] ) ) {
-		$json = hpm_youtube_playlist( $show['ytp'] );
-		if ( !empty( $json ) ) {
-			$c = 0; ?>
-					<div id="shows-youtube">
-						<div id="youtube-wrap">
-<?php
-			foreach ( $json as $tubes ) {
-				$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
-				$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
-				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) { ?>
-							<div id="youtube-main">
-								<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
-									<?php echo hpm_svg_output( 'play' ); ?>
-								</div>
-								<h2><?php echo $yt_title; ?></h2>
-								<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
-								<div class="desc-wrap"><p class="desc"><?php echo str_replace( "\n", "<br />", $tubes['snippet']['description'] ); ?></p><button type="button" class="yt-readmore">Read More...</button></div>
-								<dialog id="yt-dialog">
-									<div class="yt-dialog-content">
-										<h3></h3>
-										<p></p>
-										<ul class="dialog-actions">
-											<li><button type="button" data-action="dismiss">Dismiss</button></li>
-										</ul>
-									</div>
-								</dialog>
-								<script>
-									const dialog = document.getElementById("yt-dialog");
-									const readMore = document.querySelector("#youtube-main .yt-readmore");
-
-									readMore.addEventListener("click", ({ target }) => {
-										var desc = document.querySelector("#youtube-main .desc");
-										var title = document.querySelector("#youtube-main h2");
-										dialog.querySelector("p").innerHTML = desc.innerHTML;
-										dialog.querySelector("h3").textContent = title.textContent;
-										dialog.showModal();
-									});
-
-									dialog.addEventListener("click", ({ target }) => {
-										if (target.matches('dialog') || target.matches('[data-action="dismiss"]')) {
-											dialog.close();
-										}
-									});
-								</script>
-							</div>
-							<div id="youtube-upcoming">
-								<h4>All Episodes</h4>
-								<div class="youtube-scroll">
-<?php
-				} ?>
-									<div class="youtube" id="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>" data-ytdate="<?php echo date( 'F j, Y', $pubtime); ?>" data-ytdesc="<?php echo htmlentities( str_replace( "\n", "<br />", $tubes['snippet']['description'] ) ); ?>">
-										<img src="<?php echo $tubes['snippet']['thumbnails']['medium']['url']; ?>" alt="<?php echo $yt_title; ?>" />
-										<h2><?php echo $yt_title; ?></h2>
-										<p class="date"><?php echo date( 'F j, Y', $pubtime); ?></p>
-									</div>
-<?php
-				$c++;
-			} ?>
-								</div>
-							</div>
-						</div>
-					</div>
-<?php
-		}
-	}
-	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
-	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
-	$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
-	$term = reset( $terms );
-	$cat_args = [
-		'cat' => $cat_no,
-		'orderby' => 'date',
-		'order'   => 'DESC',
-		'posts_per_page' => 15,
-		'ignore_sticky_posts' => 1
-	];
-	global $ka;
-	$ka = 0;
-	$tag_ids = [];
-	if ( !empty( $top ) && $top !== 'None' ) {
-		$top_art = new WP_Query( [ 'p' => $top ] );
-		$cat_args['posts_per_page'] = 14;
-		$cat_args['post__not_in'] = [ $top ];
-		if ( $top_art->have_posts() ) {
-			while ( $top_art->have_posts() ) {
-				$top_art->the_post();
-				get_template_part( 'content', get_post_type() );
-				$ka += 2;
-				if ( $show_id === 380127 || $show_id === 119016 ) {
-					$tags = wp_get_post_tags( get_the_ID() );
-					if ( $tags ) {
-						foreach ( $tags as $individual_tag ) {
-							if ( ! in_array( $individual_tag->term_id, $tag_ids ) ) {
-								$tag_ids[] = $individual_tag->term_id;
-							}
-						}
-					}
-				}
-			}
-			$post_num = 14;
-		}
-		wp_reset_query();
-	}
-	$cat = new WP_Query( $cat_args );
-	if ( $cat->have_posts() ) {
-		while ( $cat->have_posts() ) {
-			$cat->the_post();
-			get_template_part( 'content', get_post_type() );
-			if ( $show_id === 380127 || $show_id === 119016 ) {
-				$tags = wp_get_post_tags( get_the_ID() );
-				if ( $tags ) {
-					foreach( $tags as $individual_tag ) {
-						if ( !in_array( $individual_tag->term_id, $tag_ids ) )
-						$tag_ids[] = $individual_tag->term_id;
-					}
-				}
-			}
-			$ka += 2;
-		}
-	} ?>
-				</div>
-				<aside class="column-right">
-<?php
-	if ( $show_id === 380127 || $show_id === 119016 ) {
-		$rel_args = [
-			'tag__in' => $tag_ids,
-			'category__not_in' => [ 0, 1, 7636, 28, 37840, 54338, 60, $cat_no ],
-			'posts_per_page'=> 4,
-			'ignore_sticky_posts'=> 1
-		];
-		$rel_query = new WP_Query( $rel_args );
-		if ( $rel_query->have_posts() ) { ?>
-					<section class="highlights">
-						<h4>Related</h4>
-<?php
-			while ( $rel_query->have_posts() ) {
-				$rel_query->the_post();
-				get_template_part( 'content', get_post_format() );
-			} ?>
-					</section>
-		<?php
-		}
-		hpm_top_posts(); ?>
-					<section class="highlights">
-						<h4>News from NPR</h4>
-						<?php echo hpm_nprapi_output(); ?>
-					</section>
-				</aside>
-<?php
-	} ?>
-			</div>
-<?php
-	if ( $cat->found_posts > 15 ) { ?>
-			<div class="readmore">
-				<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
-			</div>
-<?php
+        //$options = get_post_meta( $id, 'hpm_show_meta', true );
 	} ?>
 
-		</main>
-	</div>
+
+	<div class="party-politics-page">
+        <div class="row about-party">
+            <div class="col-sm-9">
+            <h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
+            <div class="show-content">
+                <?php echo apply_filters( 'the_content', $show_content ); ?>
+            </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="sidebar-ad">
+                    <h4>Support Comes From</h4>
+                    <div id="div-gpt-ad-1394579228932-1">
+                        <script type='text/javascript'>
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+      <div class="episodes-block">
+            <h2 class="title red-bar"> <strong><span>All Stories</span></strong> </h2>
+            <div class="row">
+
+<?php
+$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
+$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
+$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
+$term = reset( $terms );
+$cat_args = [
+    'cat' => $cat_no,
+    'orderby' => 'date',
+    'order'   => 'DESC',
+    'posts_per_page' => 15,
+    'ignore_sticky_posts' => 1
+];
+global $ka;
+$ka = 0;
+$tag_ids = [];
+if ( !empty( $top ) && $top !== 'None' ) {
+    $top_art = new WP_Query( [ 'p' => $top ] );
+    $cat_args['posts_per_page'] = 14;
+    $cat_args['post__not_in'] = [ $top ];
+    if ( $top_art->have_posts() ) {
+        while ( $top_art->have_posts() ) {
+            $top_art->the_post();
+            get_template_part( 'content', get_post_type() );
+            $ka += 3;
+            if ( $show_id === 380127 || $show_id === 119016 ) {
+                $tags = wp_get_post_tags( get_the_ID() );
+                if ( $tags ) {
+                    foreach ( $tags as $individual_tag ) {
+                        if ( ! in_array( $individual_tag->term_id, $tag_ids ) ) {
+                            $tag_ids[] = $individual_tag->term_id;
+                        }
+                    }
+                }
+            }
+        }
+        $post_num = 14;
+    }
+    wp_reset_query();
+}
+$cat = new WP_Query( $cat_args );
+if ( $cat->have_posts() ) {
+    while ( $cat->have_posts() ) {
+        $cat->the_post();
+        //echo "Tras che: ".get_post_type();
+        get_template_part( 'content', "shows" );
+
+        $ka += 3;
+    }
+} ?>
+
+
+            </div>
+
+        </div>
+
+
+
+
+            <div>
+    <?php
+        if ( $cat->found_posts > 15 ) {
+            wp_pagenavi( array( 'query' => $cat ) );
+        }
+    ?>
+    <p>&nbsp;</p></div>
+    </div>
+    </main>
+    </div>
 <?php get_footer(); ?>

@@ -39,7 +39,8 @@ get_header(); ?>
 							get_template_part( 'content', get_post_format() );
 						}
 
-						wp_reset_postdata(); ?><?php wp_pagenavi( array( 'query' => $cat ) ); ?>
+						wp_reset_postdata();
+						wp_pagenavi( [ 'query' => $cat ] ); ?>
 				<!--<div class="readmore">
 					<a href="/topics/<?php /*echo $term->slug; */?>/page/2">View More <?php /*echo $term->name; */?></a>
 				</div>-->

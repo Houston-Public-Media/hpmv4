@@ -4,7 +4,6 @@
  * @subpackage hpmv4
  * @since hpmv4 1.0
  */
-
 if ( is_category() ) {
 	$cat = get_term_by( 'name', single_cat_title( '', false ), 'category' );
 	if ( empty( $wp_query->query_vars['paged'] ) ) {
@@ -34,7 +33,7 @@ if ( is_category() ) {
 		if ( !empty( $args ) ) {
 			$series_page = new WP_query( $args );
 			if ( $series_page->have_posts() ) {
-				while( $series_page->have_posts() ) {
+				while ( $series_page->have_posts() ) {
 					$series_page->the_post();
 					header( "HTTP/1.1 301 Moved Permanently" );
 					header( 'Location: ' . get_the_permalink() );
@@ -43,11 +42,11 @@ if ( is_category() ) {
 				wp_reset_postdata();
 			}
 		}
-	}
-	if ( $cat->term_id == 29328 ) {
-		header( "HTTP/1.1 301 Moved Permanently" );
-		header( 'Location: /news/indepth/' );
-		exit;
+		if ( $cat->term_id == 29328 ) {
+			header( "HTTP/1.1 301 Moved Permanently" );
+			header( 'Location: /news/indepth/' );
+			exit;
+		}
 	}
 }
 get_header(); ?>
@@ -69,7 +68,6 @@ get_header(); ?>
 			<?php
 			while ( have_posts() ) {
 				the_post();
-
 				get_template_part( 'content', get_post_type() );
 			}
 
@@ -104,10 +102,4 @@ get_header(); ?>
 			</aside>
 		</main>
 	</div>
-
-
-
-
-
-
 <?php get_footer(); ?>

@@ -39,8 +39,8 @@
 			];
 		} ?>
 		<p><?php _e( "Compose your social posts below. A link to the current article will be appended automatically.", 'hpm-podcasts' ); ?></p>
-		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_twitter_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
-		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
+		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter/Mastodon", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_twitter_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
+		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet/toot?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
 		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_facebook_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-facebook" name="hpm-social-post-facebook" placeholder="What would you like to post to Facebook?" style="width: 100%;" rows="2"><?php echo $social_post['facebook']['data']; ?></textarea></p>
 		<script>
@@ -97,6 +97,7 @@
 		$social_post = get_post_meta( $post_id, 'hpm_social_post', true );
 		$social_facebook_sent = get_post_meta( $post_id, 'hpm_social_facebook_sent', true );
 		$social_twitter_sent = get_post_meta( $post_id, 'hpm_social_twitter_sent', true );
+		$social_mastodon_sent = get_post_meta( $post_id, 'hpm_social_mastodon_sent', true );
 		if ( empty( $social_post ) ) {
 			return $post_id;
 		}
@@ -119,6 +120,31 @@
 					log_it( $return );
 				} catch (Exception|\GuzzleHttp\Exception\GuzzleException $e) {
 					log_it( $e );
+				}
+			}
+		}
+		if ( empty( $social_mastodon_sent ) ) {
+			if ( !empty( $social_post['twitter']['data'] ) ) {
+				$payload = [
+					'body' => [
+						'status' => $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id ),
+						'visibility' => 'public',
+						'language' => 'en'
+					],
+					'headers' => [
+						'Authorization' => 'Bearer ' . HPM_MASTODON_BEARER,
+						'Idempotency-Key' => microtime()
+					],
+					'method' => 'POST'
+				];
+				$url = 'https://mastodon.social/api/v1/statuses';
+				$result = wp_remote_post( $url, $payload );
+				if ( !is_wp_error( $result ) ) {
+					if ( $result['response']['code'] !== 200 ) {
+						log_it( json_decode( wp_remote_retrieve_body( $result ) ) );
+					} else {
+						update_post_meta( $post_id, 'hpm_social_mastodon_sent', 1 );
+					}
 				}
 			}
 		}

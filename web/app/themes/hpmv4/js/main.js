@@ -39,7 +39,7 @@ let hpm = {};
 
 hpm.navHandlers = () => {
 	let siteNav = document.querySelector('nav#site-navigation');
-	let buttonDiv = document.querySelectorAll('div[tabindex="0"]');
+	let buttonDiv = document.querySelectorAll('div[tab-index="0"]');
 	let topMenu = document.querySelector('#top-mobile-menu');
 	let closeMenu = document.querySelector('#top-mobile-close');
 	let topSearch = document.querySelector('#top-search');
@@ -387,4 +387,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
+	document.addEventListener("scroll", (event) => {
+		let scrollPosition =  window.scrollY;
+		let headerHeight = document.querySelector('.site-header').getBoundingClientRect().height;
+		if ( scrollPosition > headerHeight ) {
+			if ( !document.body.classList.contains('sticky-nav') ) {
+				document.body.classList.add('sticky-nav');
+			}
+		} else {
+			if ( document.body.classList.contains('sticky-nav') ) {
+				document.body.classList.remove('sticky-nav');
+			}
+		}
+	});
 });

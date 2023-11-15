@@ -1,6 +1,5 @@
 <?php
 
-
 $pagename = get_query_var( 'pagename' );
 $anc = get_post_ancestors( get_the_ID() );
 get_header(); ?>

@@ -29,9 +29,11 @@ function hpm_modules_register_settings(): void {
 add_action( 'update_option_hpm_modules', function( $old_value, $value ) {
     wp_cache_delete( 'hpm_modules', 'options' );
 }, 10, 2 );
-function hpm_modules_settings_page(): void
-{
-    $modules = get_option( 'hpm_modules' );
+function hpm_modules_settings_page(): void {
+	$modules = get_option( 'hpm_modules', [
+		'homepage' => [ '' ],
+		'number' => 1
+	] );
     $catArrays = [];
     $categories = get_terms(
         'category',

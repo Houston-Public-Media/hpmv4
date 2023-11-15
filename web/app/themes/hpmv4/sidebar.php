@@ -4,33 +4,29 @@
  * @subpackage HPMv4
  * @since HPMv4 4.0
  */
-	echo HPM_Promos::generate_static( 'sidebar' ); ?>
-
-<?php
-if( !is_single() && get_post_type() !== 'post' )
-{?>
+	echo HPM_Promos::generate_static( 'sidebar' );
+	if ( !is_single() && get_post_type() !== 'post' ) { ?>
 <section class="sidebar-ad">
-    <h4>Support Comes From</h4>
-        <?php
-	if ( $pagename == 'about' ) { ?>
+	<h4>Support Comes From</h4>
+<?php
+		if ( $pagename == 'about' ) { ?>
 	<div id="div-gpt-ad-1579034137004-0">
 		<script type='text/javascript'>
 			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1579034137004-0'); });
 		</script>
 	</div>
 <?php
-	} else { ?>
+		} else { ?>
 	<div id="div-gpt-ad-1394579228932-1">
 		<script type='text/javascript'>
 			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
 		</script>
 	</div>
 <?php
-	}?>
-    </section><?php
-}?>
-
+		} ?>
+</section>
 <?php
+	}
 	global $post;
 	if ( !empty( $post ) ) {
 		$tags = wp_get_post_tags( $post->ID );
@@ -57,17 +53,14 @@ if( !is_single() && get_post_type() !== 'post' )
             </h2>
             <ul class="list-none news-links list-dashed">
 
-            <?php
+<?php
 				while ( $my_query->have_posts() ) {
 					$my_query->the_post();
-                    ?>
-                    <?php if ( has_post_thumbnail() ) {
-                        $imgblock = get_the_post_thumbnail("thumbnail");
-                   }  ?>
+					if ( has_post_thumbnail() ) $imgblock = get_the_post_thumbnail( "thumbnail" ); ?>
                     <li>
-                        <a href="<?php the_permalink(); ?>>"><span><?php the_title(); ?></span><span class="img-w150"><?php the_post_thumbnail("thumbnail") ?></span></a>
+                        <a href="<?php the_permalink(); ?>"><span><?php the_title(); ?></span><span class="img-w150"><?php the_post_thumbnail( "thumbnail" ); ?></span></a>
                     </li>
-                        <?php
+<?php
 				} ?>
         </div>
     </div>
@@ -93,8 +86,7 @@ if( !is_single() && get_post_type() !== 'post' )
     </div>
 </section>
 <?php
-if( !is_single() && get_post_type() !== 'post' )
-{?>
+	if ( !is_single() && get_post_type() !== 'post' ) { ?>
 <section class="sidebar-ad">
 	<h4>Support Comes From</h4>
 	<div id="div-gpt-ad-1394579228932-2">

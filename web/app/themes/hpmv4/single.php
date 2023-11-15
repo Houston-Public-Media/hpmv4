@@ -77,7 +77,6 @@ if ( is_preview() ) { ?>
 		edit_post_link( __( 'Edit', 'hpmv4' ), '<span class="edit-link">', '</span>' ); ?>
 					</div>
 				</footer>
-               
 			</article>
 <?php
 	} ?>
@@ -126,23 +125,17 @@ if ( is_preview() ) { ?>
 	get_template_part('sidebar', 'none'); ?>
             <?php echo author_footer( $single_id ); ?>
 		</aside>
-		
-		
-		
-		
-		<!-- <div id="author-wrap">
-		</div> -->
 		<div class="newslatter-form">
 			<?php
 					if ( is_single() && get_post_type() == 'post' ) {
 						if ( in_category( 'news' ) ) {
 							$form_id = '441232';
-							echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+							// echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
 						}
 					}
 
 			?>
-			</div>
+		</div>
 	</main>
 </div>
 <?php get_footer(); ?>

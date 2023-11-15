@@ -10,8 +10,6 @@
 get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-
-
 <?php
 	while ( have_posts() ) {
 		the_post();
@@ -23,17 +21,17 @@ get_header(); ?>
                     <div class="col-12">
                         <div class="row">
                             <div class="col-4">
-                                <?php
+<?php
                                 if ( !empty( $staff_pic ) ) { ?>
                                     <img src="<?PHP	echo $staff_pic[0]; ?>" class="author-thumb" />
-                                    <?php
+<?php
                                 } ?>
                             </div>
                             <div class="col-8">
                                 <h1 class="entry-title"><?php the_title(); ?></h1>
                                 <?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">' . $staff['pronouns'] . '</p>' : '' ); ?>
                                 <h3><?php echo $staff['title']; ?></h3>
-                                <?php
+<?php
 		if ( !empty( $staff ) ) { ?>
 						<div class="icon-wrap">
 <?php
@@ -88,7 +86,6 @@ get_header(); ?>
 				$author_bio = '';
 			}
 			echo apply_filters( 'hpm_filter_text', $author_bio ); ?>
-
 				</div>
 <?php
 		} ?>
@@ -114,10 +111,8 @@ get_header(); ?>
 				$auth->the_post();
 				get_template_part( 'content', get_post_type() );
 			}
-			wp_reset_postdata(); ?><?php wp_pagenavi( array( 'query' => $auth ) ); ?>
-				<!--<div class="readmore">
-					<a href="/articles/author/<?php /*echo $nice_name; */?>/page/2">View More Stories</a>
-				</div>-->
+			wp_reset_postdata();
+			wp_pagenavi( [ 'query' => $auth ] ); ?>
 			</section>
 <?php
 		}

@@ -82,7 +82,7 @@ define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
 /**
  * Custom Settings
  */
-const FORCE_SSL_ADMIN = true;
+const FORCE_SSL_ADMIN = false;
 const WP_AUTO_UPDATE_CORE = false;
 const AUTOMATIC_UPDATER_DISABLED = true;
 define( 'DISABLE_WP_CRON', env( 'DISABLE_WP_CRON' ) ?: false );
@@ -106,6 +106,7 @@ define( 'HPM_FB_PAGE_ID', env( 'FACEBOOK_PAGE_ID' ) );
 define( 'HPM_FB_ACCESS_TOKEN', env( 'FACEBOOK_ACCESS_TOKEN' ) );
 define( 'HPM_FB_APPSECRET', env( 'FACEBOOK_APPSECRET' ) );
 define( 'HPM_YT_API_KEY', env( 'YT_API_KEY' ) );
+define( 'HPM_MASTODON_BEARER', env( 'MASTODON_BEARER' ) );
 const EWWW_IMAGE_OPTIMIZER_DEFER_S3 = true;
 
 /**
