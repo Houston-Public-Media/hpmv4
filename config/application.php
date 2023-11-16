@@ -107,6 +107,7 @@ define( 'HPM_FB_ACCESS_TOKEN', env( 'FACEBOOK_ACCESS_TOKEN' ) );
 define( 'HPM_FB_APPSECRET', env( 'FACEBOOK_APPSECRET' ) );
 define( 'HPM_YT_API_KEY', env( 'YT_API_KEY' ) );
 define( 'HPM_MASTODON_BEARER', env( 'MASTODON_BEARER' ) );
+define( 'HPM_OPEN_WEATHER', env( 'OPEN_WEATHER_API_KEY' ) );
 const EWWW_IMAGE_OPTIMIZER_DEFER_S3 = true;
 
 /**

@@ -76,7 +76,6 @@
 		"wpackagist-plugin/activitypub": "*",
 		"wpackagist-plugin/webfinger": "*",
 		"wpackagist-plugin/nodeinfo": "*",
-		"wpackagist-plugin/location-weather": "*",
 		"wpackagist-plugin/wp-pagenavi": "*"
 	},
 	"require-dev": {

@@ -1471,3 +1471,21 @@ $timestamp = wp_next_scheduled( 'hpm_nowplay_update' );
 if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hpm_2min', 'hpm_nowplay_update' );
 }
+
+function hpm_weather(): string {
+	$output = get_transient( 'hpm_weather' );
+	if ( !empty( $output ) ) {
+		return $output;
+	}
+	$remote = wp_remote_get( esc_url_raw( "https://api.openweathermap.org/data/2.5/weather?lat=29.7265396&lon=-95.3415406&units=imperial&appid=" . HPM_OPEN_WEATHER ) );
+	if ( is_wp_error( $remote ) ) {
+		return $output;
+	} else {
+		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
+		$output .= '<h3 style="color: white;">Weather for Houston, TX<h3>' .
+			'<p style="color: white;"><img src="https://openweathermap.org/img/wn/' . $weather->weather[0]->icon . '@2x.png" alt="' . $weather->weather[0]->description . '" style="max-height: 50px; float: left;" /> ' . round( $weather->main->temp ) . '&deg;F</p>' .
+			'<p style="color: white;">Humidity: ' . $weather->main->humidity . '%</p>';
+		set_transient( 'hpm_weather', $output, 180 );
+		return $output;
+	}
+}
