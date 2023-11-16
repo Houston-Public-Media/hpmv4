@@ -1659,6 +1659,7 @@ nav#site-navigation > div.nav-wrap > div > ul > li :is(a,div[tab-index="0"]) {
 	border: 0;
 	background-color: transparent;
 	width: 100%;
+	font-weight: bold;
 }
 nav#site-navigation > div.nav-wrap > div > ul > li > div {
 	position: relative;
