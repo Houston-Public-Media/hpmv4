@@ -301,7 +301,7 @@ section {
   position: absolute;
   right: -30px;
   top: 0;
-  width: 1;
+  width: 1px;
   height: 100%;
   border-right: solid 1px var(--black);
 }
@@ -1005,24 +1005,25 @@ select#hpm-staff-cat {
 .splw-main-wrapper {
 
 }
-.splw-weather-title {display: none;}
+.splw-weather-title.splw-weather-title {display: none;}
 .splw-lite-wrapper {
-  width:190px;
-  padding-top: 0;
+  width:190px !important;
+  padding-top: 0 !important;
 }
 .splw-lite-wrapper .splw-lite-header-title-wrapper {
   display: inline-block;
 }
 .splw-lite-wrapper .splw-lite-header {
   text-align: right;
-  margin: 0;
+  margin: 0 !important;
 }
 .splw-lite-wrapper .splw-cur-temp {
   justify-content: flex-end;
 }
 
+
 .splw-lite-wrapper .splw-lite-current-temp {
-  margin: 0;
+  margin: 0 !important;
 }
 .splw-lite-header-title-wrapper {
   text-align: right;
@@ -1033,7 +1034,7 @@ select#hpm-staff-cat {
   text-align: right;
 }
 .splw-lite-header-title{
-  display: none;
+  display: none !important;
 }
 
 
@@ -1044,6 +1045,29 @@ select#hpm-staff-cat {
   font-weight: bold;
   justify-content: flex-end;
 }
+
+#splw-location-weather-450650.splw-main-wrapper {
+  max-width: 320px; margin : auto;margin-bottom: 2em;
+}
+#splw-location-weather-450650 .splw-lite-wrapper,#splw-location-weather-450650 .splw-forecast-weather select,#splw-location-weather-450650 .splw-forecast-weather option,#splw-location-weather-450650 .splw-lite-wrapper .splw-weather-attribution a{
+  color:#fff;text-decoration: none;
+}
+#splw-location-weather-450650 .splw-lite-wrapper{
+  border: 0px solid #e2e2e2 !important;
+}
+#splw-location-weather-450650 .splw-lite-wrapper{
+  border-radius: 8px !important;
+}
+#splw-location-weather-450650 .splw-weather-title {
+  margin-top :0px !important;margin-right :0px !important;margin-bottom: 20px !important;margin-left: 0px !important;
+}
+#splw-location-weather-450650 .splw-weather-icons div svg path{
+  fill:#dfe6e9 !important;
+}
+#splw-location-weather-450650 .splw-lite-wrapper,#splw-location-weather-450650 .splw-forecast-weather option{
+  background:#222054 !important;
+}
+
 
 #top-search form {
   bottom:-7px ;
