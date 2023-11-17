@@ -468,7 +468,7 @@ function hpm_breaking_banner(): string {
 
 		$ptime = get_the_time('U', $hpm_breakingnews['homepage'][0]);
 		$diff = $now[0] - $ptime;
-		$expirationtime = $hpm_breakingnews['expirationdate'][0] * 3600;
+		$expirationtime = (int)$hpm_breakingnews['expirationdate'][0] * 3600;
 		$newstype = $hpm_breakingnews['type'];
 		$newsclasstype = ( $newstype == "Breaking News" ? "breakingnews" : "developingstory" );
 		$newclassheading = ( $newstype == "Breaking News" ? '<span class="breakingnews-header" style="background-color: #ee1812;"><strong>Breaking News</strong></span>' : '<span class="developingstory-header"><strong>Developing Story</strong></span>' );
