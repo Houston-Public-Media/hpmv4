@@ -1861,7 +1861,7 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li > ul > li a {
 		padding: 0 0 0.5rem 0;
 		font-size: 14px; /*1rem;*/
-		justify-content: center;
+		justify-content: left;
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li > ul > li.menu-item-has-children {
 		padding: 0.5rem;
