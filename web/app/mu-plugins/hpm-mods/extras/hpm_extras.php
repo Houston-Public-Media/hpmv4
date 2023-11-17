@@ -1483,8 +1483,7 @@ function hpm_weather(): string {
 	} else {
 		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
 		$output .= '<h3 style="color: white; font-size: 14px;">'.date("F d, Y").'<h3>' .
-			'<p style="color: white; font-size: 30px;"><img src="https://openweathermap.org/img/wn/' . $weather->weather[0]->icon . '@2x.png" alt="' . $weather->weather[0]->description . '" style="max-height: 50px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
-        //'<p style="color: white;">Humidity: ' . $weather->main->humidity . '%</p>'
+			'<p style="color: white; font-size: 30px;"><img src="https://openweathermap.org/img/wn/' . $weather->weather[0]->icon . '@2x.png" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
 		set_transient( 'hpm_weather', $output, 180 );
 		return $output;
 	}
