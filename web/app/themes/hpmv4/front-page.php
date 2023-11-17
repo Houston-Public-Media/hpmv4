@@ -10,99 +10,99 @@ $indepthArtcle[] = null;
 
 $tras = null;
 ?>
-    <style>
-        #station-schedules {
-            background-color: var(--main-element-background);
-        }
-        #station-schedules h4 {
-            border-bottom: 0.125em solid var(--main-blue);
-            padding: 0.25em 1em;
-            margin: 0;
-            font: 400 2rem var(--hpm-font-condensed);
-        }
-        #station-schedules .station-now-play {
-            padding: 0.5em 1em;
-            border-bottom: 0.125em solid var(--main-background);
-            min-height: 5em;
-            display: grid;
-            grid-template-columns: 30% 70%;
-            align-items: center;
-            gap: 1rem;
-        }
-        #station-schedules .station-now-play:last-child {
-            border: 0;
-        }
-        #station-schedules .station-now-play > * {
-            width: 100%;
-        }
-        #station-schedules .station-now-play h5 {
-            padding: 0;
-            margin: 0;
-            font-size: 1rem;
-            text-align: right;
-        }
-        #station-schedules .station-now-play h5 a {
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        #station-schedules .station-now-play h3 {
+	<style>
+		#station-schedules {
+			background-color: var(--main-element-background);
+		}
+		#station-schedules h4 {
+			border-bottom: 0.125em solid var(--main-blue);
+			padding: 0.25em 1em;
+			margin: 0;
+			font: 400 2rem var(--hpm-font-condensed);
+		}
+		#station-schedules .station-now-play {
+			padding: 0.5em 1em;
+			border-bottom: 0.125em solid var(--main-background);
+			min-height: 5em;
+			display: grid;
+			grid-template-columns: 30% 70%;
+			align-items: center;
+			gap: 1rem;
+		}
+		#station-schedules .station-now-play:last-child {
+			border: 0;
+		}
+		#station-schedules .station-now-play > * {
+			width: 100%;
+		}
+		#station-schedules .station-now-play h5 {
+			padding: 0;
+			margin: 0;
+			font-size: 1rem;
+			text-align: right;
+		}
+		#station-schedules .station-now-play h5 a {
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+		#station-schedules .station-now-play h3 {
 
-            font-size: 1.25rem;
-            font-family: var(--hpm-font-condensed);
-            padding: 0 0.5rem 0 0;
-            margin: 0;
-            color: var(--main-headline);
-        }
-        @media screen and (min-width: 34rem) {
-            #station-schedules {
-                display: grid;
-                grid-template-columns: 50% 50%;
-                width: 100%;
-            }
-            #station-schedules h4 {
-                grid-column: 1/-1;
-            }
-            #station-schedules .station-now-play:nth-child(even) {
-                border-right: 1px solid #808080;
-            }
-        }
-        @media screen and (min-width: 52.5rem) {
-            #station-schedules {
-                display: block;
-                width: 100%;
-            }
-            #station-schedules .station-now-play:nth-child(even) {
-                border-right: 0;
-            }
-        }
-    </style>
-    <div id="primary" class="content-area home-page">
-        <?php //election_homepage(); ?>
-        <section class="section breaking-news container-fluid">
-            <div class="row">
-                <?php echo hpm_showTopthreeArticles(); ?>
-            </div>
-        </section>
-     
-        <section class="section short-news">
-            <ul class="list-none d-flex">
-                <?php foreach ( $articles as $ka => $va ) {
-                    $post = $va;
-                    if($ka>=3 && $ka<8) {
+			font-size: 1.25rem;
+			font-family: var(--hpm-font-condensed);
+			padding: 0 0.5rem 0 0;
+			margin: 0;
+			color: var(--main-headline);
+		}
+		@media screen and (min-width: 34rem) {
+			#station-schedules {
+				display: grid;
+				grid-template-columns: 50% 50%;
+				width: 100%;
+			}
+			#station-schedules h4 {
+				grid-column: 1/-1;
+			}
+			#station-schedules .station-now-play:nth-child(even) {
+				border-right: 1px solid #808080;
+			}
+		}
+		@media screen and (min-width: 52.5rem) {
+			#station-schedules {
+				display: block;
+				width: 100%;
+			}
+			#station-schedules .station-now-play:nth-child(even) {
+				border-right: 0;
+			}
+		}
+	</style>
+	<div id="primary" class="content-area home-page">
+		<?php //election_homepage(); ?>
+		<section class="section breaking-news container-fluid">
+			<div class="row">
+				<?php echo hpm_showTopthreeArticles( $articles ); ?>
+			</div>
+		</section>
+	 
+		<section class="section short-news">
+			<ul class="list-none d-flex">
+				<?php foreach ( $articles as $ka => $va ) {
+					$post = $va;
+					if($ka>=3 && $ka<8) {
 
-                        get_template_part("content", "topnewsrail");
-                    }
-                    if($ka == 8)
-                    {
-                        $indepthArtcle = $post;
-                    }
-                }?>
-            </ul>
-        </section>
-        <!-- /.short-news -->
+						get_template_part("content", "topnewsrail");
+					}
+					if($ka == 8)
+					{
+						$indepthArtcle = $post;
+					}
+				}?>
+			</ul>
+		</section>
+		<!-- /.short-news -->
 
-        <section class="section ads-full">
-            <?php
+		<section class="section ads-full">
+			<?php
 	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
 				<!-- /9147267/HPM_Under_Nav -->
 				<div id='div-gpt-ad-1488818411584-0'>
@@ -112,72 +112,72 @@ $tras = null;
 				</div>
 <?php
 	}?>
-            <!--<a href="#"><img src="<?php /*echo get_template_directory_uri(); */?>/images/ads.jpg" /></a>-->
-        </section>
+			<!--<a href="#"><img src="<?php /*echo get_template_directory_uri(); */?>/images/ads.jpg" /></a>-->
+		</section>
 
-        <section class="section">
-            <div class="row">
-                <?php //foreach ( $indepthArtcle as $ika => $iva ) {
-                 // echo $ika;
-                    //print_r($iva);
-                    //$post = $iva;
-                    get_template_part("content", "indepth");
-               // echo $indepthArtcle->post_title;
-                ?>
-                <!--<div class="col-9">
-                    <div class="news-slider">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="news-slider-info">
-                                    <h4 class="text-light-gray">POLITICS</h4>
-                                    <h2>15 Texas women say abortion bans denied or delayed crucial medical care</h2>
-                                    <p>A lawsuit is asking the state of Texas to clarify what exactly the exceptions written in the law entail.</p>
-                                </div>
-                            </div>
-                            <div class="col-6"><img src="<?php /*echo get_template_directory_uri(); */?>/images/news-img.jpg" /></div>
-                        </div>
-                    </div>
-                </div>-->
-    <?php //} ?>
-                <div class="col-3">
-                    <?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
-                </div>
-            </div>
-        </section>
+		<section class="section">
+			<div class="row">
+				<?php //foreach ( $indepthArtcle as $ika => $iva ) {
+				 // echo $ika;
+					//print_r($iva);
+					//$post = $iva;
+					get_template_part("content", "indepth");
+			   // echo $indepthArtcle->post_title;
+				?>
+				<!--<div class="col-9">
+					<div class="news-slider">
+						<div class="row">
+							<div class="col-6">
+								<div class="news-slider-info">
+									<h4 class="text-light-gray">POLITICS</h4>
+									<h2>15 Texas women say abortion bans denied or delayed crucial medical care</h2>
+									<p>A lawsuit is asking the state of Texas to clarify what exactly the exceptions written in the law entail.</p>
+								</div>
+							</div>
+							<div class="col-6"><img src="<?php /*echo get_template_directory_uri(); */?>/images/news-img.jpg" /></div>
+						</div>
+					</div>
+				</div>-->
+	<?php //} ?>
+				<div class="col-3">
+					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
+				</div>
+			</div>
+		</section>
 
-        <section class="section news-list">
-            <div class="row">
-                <div class="col-9 news-list-left">
-                    <div class="row">
-                        <?php get_template_part("content", "localnews") ?>
-                    </div>
-                </div>
-                <div class="col-3 news-list-right most-view">
-                    <h2 class="title title-full">
-                        <strong>Most <span>Viewed</span></strong>
-                    </h2>
-                    <div class="news-links list-dashed">
-                     
+		<section class="section news-list">
+			<div class="row">
+				<div class="col-sm-12 col-md-9 news-list-left">
+					<div class="row">
+						<?php get_template_part("content", "localnews") ?>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-3 news-list-right most-view">
+					<h2 class="title title-full">
+						<strong>Most <span>Viewed</span></strong>
+					</h2>
+					<div class="news-links list-dashed">
+					 
 
-                        <?php hpm_top_posts(); ?>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <?php get_template_part("content", "localshows") ?>
-        <section class="section news-list">
-            <div class="row">
-                <div class="col-9 news-list-left">
-                    <div class="row">
-                        <?php get_template_part("content", "localnewsbottom") ?>
-                    </div>
-                </div>
-                <div class="col-3 news-list-right news-schedule">
-                    <h2 class="title title-full">
-                        <strong>TV8 &amp; NEWS 88.7 <span>SCHEDULE</span></strong>
-                    </h2>
+						<?php hpm_top_posts(); ?>
+					</div>
+				</div>
+			</div>
+		</section>
+		<?php get_template_part("content", "localshows") ?>
+		<section class="section news-list">
+			<div class="row">
+				<div class="col-sm-12 col-md-9 news-list-left">
+					<div class="row">
+						<?php get_template_part("content", "localnewsbottom") ?>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-3 news-list-right news-schedule">
+					<h2 class="title title-full">
+						<strong>TV8 &amp; NEWS 88.7 <span>SCHEDULE</span></strong>
+					</h2>
 
-                    <div id="station-schedules">
+					<div id="station-schedules">
 						
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8</a></h5>
@@ -209,38 +209,38 @@ $tras = null;
 						</div>
 					</div>
 
-                    <h2 class="title title-full" style="padding-top: 30px;">
-                        <strong>Support Comes <span>From</span></strong>
-                    </h2>
+					<h2 class="title title-full" style="padding-top: 30px;">
+						<strong>Support Comes <span>From</span></strong>
+					</h2>
 
-                    <div id="div-gpt-ad-1394579228932-1">
-                        <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
-                    </div>
+					<div id="div-gpt-ad-1394579228932-1">
+						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
+					</div>
 
-                  <!--  <div id="div-gpt-ad-1394579228932-2">
-                        <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
-                    </div>-->
+				  <!--  <div id="div-gpt-ad-1394579228932-2">
+						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
+					</div>-->
 
-                </div>
-        </section>
+				</div>
+		</section>
 
-        <section class="section news-list news-list-full">
-            <div class="row">
-                <div class="col-9 news-list-left">
-                    <h2 class="title">
-                        <strong>News from <span>NPR</span></strong>
-                    </h2>
-                    <?php echo hpm_nprapi_output(); ?>
+		<section class="section news-list news-list-full">
+			<div class="row">
+				<div class="col-sm-12 col-md-9 news-list-left">
+					<h2 class="title">
+						<strong>News from <span>NPR</span></strong>
+					</h2>
+					<?php echo hpm_nprapi_output(); ?>
 
-                </div>
-                <div class="col-3 news-list-right most-view">
+				</div>
+				<div class="col-sm-12 col-md-3 news-list-right most-view">
 
-                    <div id="div-gpt-ad-1394579228932-2">
-                        <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
-                    </div>
-                </div>
-            </div>
-        </section>
+					<div id="div-gpt-ad-1394579228932-2">
+						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
+					</div>
+				</div>
+			</div>
+		</section>
 
-    </div>
+	</div>
 <?php get_footer(); ?>

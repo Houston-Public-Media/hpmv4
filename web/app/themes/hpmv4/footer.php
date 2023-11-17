@@ -16,125 +16,64 @@
 				<div class="container">
 					<div class="footer-section footer-top">
 						<div class="row">
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Features</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56045,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56045 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Topic</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56046,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56046 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Art & Culture</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56047,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56047 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Awareness</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56048,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56048 ]); ?>
 							</div>
 						</div>
 					</div>
 					<div class="footer-section footer-middle">
 						<h2>Programs & podcasts</h2>
 						<div class="row">
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Local Programs</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56049,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56049 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>UH</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56050,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56050 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Education</h3>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Podcasts</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56051,
-                                ]);
-                                ?>
-
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56051 ]); ?>
 							</div>
 						</div>
 					</div>
 					<div class="footer-section footer-middle">
 						<h2>Support</h2>
 						<div class="row">
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Membership</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56052,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56052 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Giving Programs</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56053,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56053 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Volunteers</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56054,
-                                ]);
-                                ?>
-                                <h3>Partnerships</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 56055,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56054 ]); ?>
+								<h3>Partnerships</h3>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56055 ]); ?>
 							</div>
-							<div class="col-3">
+							<div class="col-sm-6 col-md-4 col-lg-3">
 								<h3>Compliance</h3>
-                                <?php
-                                wp_nav_menu([
-                                    'menu_class' => 'nav-menu',
-                                    'menu' => 42803,
-                                ]);
-                                ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 42803 ]); ?>
 							</div>
 						</div>
 					</div>

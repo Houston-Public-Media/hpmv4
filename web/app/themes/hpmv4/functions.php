@@ -587,16 +587,16 @@ function hpm_charset_clean( $content ): array|string {
 }
 add_filter( 'the_content', 'hpm_charset_clean', 10 );
 
-//function hpm_revue_signup( $content ) {
-//	global $post;
-//	if ( is_single() && $post->post_type == 'post' ) {
-//		if ( in_category( 'news' ) ) {
-//			$form_id = '441232';
-//			$content .= '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
-//		}
-//	}
-//	return $content;
-//}
+function hpm_revue_signup( $content ) {
+	global $post;
+	if ( is_single() && $post->post_type == 'post' ) {
+		if ( in_category( 'news' ) ) {
+			$form_id = '441232';
+			$content .= '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+		}
+	}
+	return $content;
+}
 // add_filter( 'the_content', 'hpm_revue_signup', 15 );
 
 function hpm_nprone_check( $post_id, $post ): void {
@@ -697,8 +697,8 @@ function hpm_showLatestArticlesbyShowID( $catID ): array {
             }
         }
     }
+	wp_reset_query();
     return $articles;
-    wp_reset_query();
 }
 
 function altered_post_time_ago_function() {
@@ -706,9 +706,8 @@ function altered_post_time_ago_function() {
 }
 add_filter( 'the_time', 'altered_post_time_ago_function' );
 
-function hpm_showTopthreeArticles(): string{
-    $result ="";
-    $articles = hpm_homepage_articles();
+function hpm_showTopthreeArticles( $articles ): string{
+    $result = "";
 	$kk = 0;
     if ( count( $articles ) > 0 ) {
         foreach ( $articles as $ka => $va ) {
@@ -736,21 +735,18 @@ function hpm_showTopthreeArticles(): string{
 				} else {
 					$breakingNewsButton = ''; //<span>11:12 AM </span>
 				}
-				$result .= '<div class="col-lg-8 col-md-12"><div class="row news-main"> <div class="col-5">'.$breakingNewsButton.'<div class="time-category"><strong class="text-light-gray text-uppercase">&nbsp;</strong></div><h1><a href="'.get_the_permalink($post).'" rel="bookmark">' . $post_title . '</a></h1><p>' . $summary . '</p></div><div class="col-7"><div class="box-img breaking-news-img">'.get_the_post_thumbnail($post, $post->ID).' </div> </div></div></div><div class="col-4"><ul class="news-listing">';
-			}
-                if($ka == 1  || $ka == 2)
-                {
-                    $result .= '<li><div class="d-flex flex-row-reverse"><div class="col-5"> <div class="box-img">'.get_the_post_thumbnail($post, get_the_ID()).'</div></div>
-                                    <div class="col-7"><h4 class="text-light-gray">'.hpm_top_cat($post->ID).'</h4><h3><a href="'.get_the_permalink($post).'">' . get_the_title($post) . '</a></h3></div></div> </li>';
-                }
-                if($ka >3) {
+				$result .= '<div class="col-lg-8 col-md-12"><div class="row news-main"> <div class="col-sm-5">'.$breakingNewsButton.'<div class="time-category"><strong class="text-light-gray text-uppercase">&nbsp;</strong></div><h1><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . $post_title . '</a></h1><p>' . $summary . '</p></div><div class="col-sm-7"><div class="box-img breaking-news-img">' . get_the_post_thumbnail( $post, $post->ID ) . ' </div> </div></div></div><div class="col-lg-4 col-md-12"><ul class="news-listing">';
+			} elseif ( $ka == 1 || $ka == 2 ) {
+				$result .= '<li class="col-lg-12 col-md-6"><div class="d-flex flex-row-reverse"><div class="col-5"><div class="box-img">' . get_the_post_thumbnail( $post, get_the_ID() ) . '</div></div>
+                                    <div class="col-7"><h4 class="text-light-gray">' . hpm_top_cat( $post->ID ) . '</h4><h3><a href="' . get_the_permalink( $post ) . '">' . get_the_title( $post ) . '</a></h3></div></div> </li>';
+			} elseif ( $ka > 3 ) {
                     $result .= '</ul>';
-                }
+			}
             $kk++;
         }
     }
+	wp_reset_query();
     return $result;
-    wp_reset_query();
 }
 
 function hpm_homepage_articles(): array {

@@ -10,8 +10,8 @@ Text Domain: hpmv4
 */
 /* Variables */
 :root {
-	--hpm-font-main: "Open Sans",helvetica,arial,sans-serif;
-	--hpm-font-condensed: "Open Sans",helvetica,arial,sans-serif;
+	--hpm-font-main: helvetica,arial,sans-serif;
+	--hpm-font-condensed: helvetica,arial,sans-serif;
 	--max-width: 75rem;
 }
 html {

@@ -19,7 +19,7 @@
             ];
             $posts = get_posts( $args );
     ?>
-    <div class="col-6">
+    <div class="col-sm-6">
         <h2 class="title">
             <strong><?php echo $category->name; ?></strong>
         </h2>

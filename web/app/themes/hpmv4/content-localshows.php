@@ -8,7 +8,7 @@
         <strong>THIS WEEK on <span>TALK RADIO</span></strong>
     </h2>
     <div class="row">
-        <div class="col-4">
+        <div class="col-sm-4">
             <h3 class="title-style2">
                 <strong>HOUSTON <span>MATTERS</span></strong>
             </h3>
@@ -26,7 +26,7 @@
 				} ?>
             </ul>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4">
             <h3 class="title-style2">
                 <strong>PARTY <span>POLITICS</span></strong>
             </h3>
@@ -45,7 +45,7 @@
 
             </ul>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4">
             <h3 class="title-style2">
                 <strong>I SEE <span>U</span></strong>
             </h3>
