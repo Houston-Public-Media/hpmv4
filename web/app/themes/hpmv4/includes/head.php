@@ -16,8 +16,8 @@ function hpm_site_header(): void { ?>
 						</div>
 
 						<div class="header-weather">
-							<?php  echo do_shortcode('[location-weather id="450650"]'); ?>
-
+							<?php /* echo do_shortcode('[location-weather id="450650"]'); */?>
+                        <?php echo hpm_weather(); ?>
 						<!--	<div class="header-weather">
 							<style id="sp_lw_dynamic_css450650">#splw-location-weather-450650.splw-main-wrapper {max-width: 320px;margin : auto;margin-bottom: 2em;}#splw-location-weather-450650 .splw-lite-wrapper,#splw-location-weather-450650 .splw-forecast-weather select,#splw-location-weather-450650 .splw-forecast-weather option,#splw-location-weather-450650 .splw-lite-wrapper .splw-weather-attribution a{color:#fff;text-decoration: none;}#splw-location-weather-450650 .splw-lite-wrapper{ border: 0px solid #e2e2e2}#splw-location-weather-450650 .splw-lite-wrapper{border-radius: 8px;}#splw-location-weather-450650 .splw-weather-title {margin-top :0px;margin-right :0px;margin-bottom: 20px;margin-left: 0px;}#splw-location-weather-450650 .splw-weather-icons div svg path{fill:#dfe6e9;}#splw-location-weather-450650 .splw-lite-wrapper,#splw-location-weather-450650 .splw-forecast-weather option{background:#222054}</style>
 							<div id="splw-location-weather-450650" class="splw-main-wrapper" data-shortcode-id="450650">
@@ -48,7 +48,7 @@ function hpm_site_header(): void { ?>
 					// Primary navigation menu.
 					wp_nav_menu([
 						'menu_class' => 'nav-menu',
-						'menu' => 59241,
+						'menu' => 2111,
 						'walker' => new HPM_Menu_Walker
 					]);
 					?>
