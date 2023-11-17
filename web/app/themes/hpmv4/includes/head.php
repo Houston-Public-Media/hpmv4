@@ -48,7 +48,7 @@ function hpm_site_header(): void { ?>
 					// Primary navigation menu.
 					wp_nav_menu([
 						'menu_class' => 'nav-menu',
-						'menu' => 2111,
+						'menu' => 59241,
 						'walker' => new HPM_Menu_Walker
 					]);
 					?>
