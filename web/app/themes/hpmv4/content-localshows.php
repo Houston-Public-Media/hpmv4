@@ -27,7 +27,7 @@
             </ul>
         </div>
         <div class="col-sm-4">
-            <h3 class="title-style2">
+            <h3 class="title-style3">
                 <strong>PARTY <span>POLITICS</span></strong>
             </h3>
             <div class="image">
@@ -46,7 +46,7 @@
             </ul>
         </div>
         <div class="col-sm-4">
-            <h3 class="title-style2">
+            <h3 class="title-style4">
                 <strong>I SEE <span>U</span></strong>
             </h3>
             <div class="image">

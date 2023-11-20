@@ -95,6 +95,134 @@ html[data-theme="dark"] {
 		border-bottom: 0.25rem solid var(--accent-dark-blue-1) !important;
 	}
 }
+/* Typography */
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 400;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 500;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 500;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.eot') format('truetype');
+	font-display: auto;
+	font-weight: 100;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 100;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src:url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 700;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 900;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PBS-Sans';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Black-It.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 900;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PBS-Sans-Condensed';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PBS-Sans-Condensed';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-It.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 400;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PBS-Sans-Condensed';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PBS-Sans-Condensed';
+	src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff2') format('woff2'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.woff') format('woff'),
+	url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond-Bold-It.ttf') format('truetype');
+	font-display: auto;
+	font-weight: 700;
+	font-style: italic;
+}
+
 /* Reset */
 *, *::before, *::after {
 	box-sizing: border-box;
@@ -118,7 +246,7 @@ body {
 	width: 100%;
 }
 a:not([class]) {
-	text-decoration-skip-ink: auto;
+ 	text-decoration-skip-ink: auto;
 }
 img, picture {
 	max-width: 100%;
@@ -205,7 +333,7 @@ body {
 	accent-color: var(--main-red);
 }
 input[type=search] {
-	-webkit-appearance: none;
+  -webkit-appearance: none;
 }
 #page {
 	width: 100%;
@@ -1651,7 +1779,7 @@ nav#site-navigation > div.nav-wrap > div > ul > li {
 	position: relative;
 }
 nav#site-navigation > div.nav-wrap > div > ul > li :is(a,div[tab-index="0"]) {
-
+	
 	text-decoration: none;
 	color: var(--main-headline);
 	display: inline-flex;
@@ -1659,7 +1787,6 @@ nav#site-navigation > div.nav-wrap > div > ul > li :is(a,div[tab-index="0"]) {
 	border: 0;
 	background-color: transparent;
 	width: 100%;
-	font-weight: bold;
 }
 nav#site-navigation > div.nav-wrap > div > ul > li > div {
 	position: relative;
@@ -1752,7 +1879,7 @@ body.nav-active-menu {
 }
 body.nav-active-menu #top-mobile-close {
 	display: block;
-
+	
 	left: 0;
 	top: 0;
 	z-index: 9999;
@@ -1861,7 +1988,8 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li > ul > li a {
 		padding: 0 0 0.5rem 0;
 		font-size: 14px; /*1rem;*/
-		justify-content: left;
+		justify-content: center;
+		font-weight: bold;
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li > ul > li.menu-item-has-children {
 		padding: 0.5rem;
@@ -2157,6 +2285,21 @@ footer#colophon section {
 	flex-flow: row wrap;
 	justify-content: space-between;
 }
+
+footer#colophon nav#uh-foot-navigation {
+	padding: 1rem;
+	border-top: 1px solid #808080;
+}
+footer#colophon nav#uh-foot-navigation div ul {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 0 2rem;
+	justify-content: center;
+	font-size: 85%;
+	text-align: center;
+}
+
+
 footer#colophon section > div {
 	width: 100%;
 	margin-top: 2rem;
@@ -2254,21 +2397,6 @@ footer#colophon ul li a {
 	/*padding: 0.25rem 0;*/
 	padding: 0.15rem 0;
 }
-
-footer#colophon nav#uh-foot-navigation {
-	padding: 1rem;
-	border-top: 1px solid #808080;
-}
-footer#colophon nav#uh-foot-navigation div ul {
-	display: flex;
-	flex-flow: row wrap;
-	gap: 0 2rem;
-	justify-content: center;
-	font-size: 85%;
-	text-align: center;
-}
-
-
 @media screen and (min-width: 34em) {
 	footer#colophon section > div {
 		width: 32%;
@@ -2630,10 +2758,10 @@ figure figcaption {
 	margin: 0 !important;
 }
 figure figcaption cite {
-	display: block;
-	text-align: right;
-	font-style: italic;
-	padding-top: 0.25em;
+    display: block;
+    text-align: right;
+    font-style: italic;
+    padding-top: 0.25em;
 }
 figure.npr-container,
 figure.wp-block-embed {
@@ -2949,10 +3077,10 @@ body.single #author-wrap .author-other-stories h2 a {
 	/*background-color: rgb(239,168,49);*/
 }
 #float-wrap article.card.card-large.tag-breaking header {
-	background-color: var(--main-red);
+    background-color: var(--main-red);
 }
 #float-wrap article.card.card-large.tag-breaking header * {
-	color: var(--main-element-background);
+    color: var(--main-element-background);
 }
 #search-results article {
 	background-color: var(--main-element-background);
@@ -3258,7 +3386,7 @@ article .entry-header p.staff-pronouns,
 		grid-template-columns: 3.5rem 3.5rem;
 		gap: 1rem;
 		position: sticky;
-		top: 1rem;
+    	top: 1rem;
 	}
 	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap :is(h1,h2,h3,h4,h5) {
 		grid-column: 1 / span 2;
@@ -3871,8 +3999,8 @@ article:not(.type-staff) :is(.entry-header,.entry-content,.card-content) > div.a
 }
 
 
-
-body {background: red;}
+  
+  body {background: red;}
 @media screen and (min-width: 34em) {
 	.plyr-audio-embed-popup .plyr-audio-embed-wrap {
 		margin: 2em 15%;
@@ -3895,7 +4023,7 @@ body {background: red;}
 	}
 }
 
-@media (max-width: 840px) {
+@media (max-width: 840px) { 
 	nav#site-navigation .nav-menu {
 		height: 100vh;
 		z-index: 9000;
@@ -3909,7 +4037,7 @@ body {background: red;}
 	}
 	.nav-active-menu nav#site-navigation .nav-menu,
 	nav#site-navigation:focus-within .nav-menu{
-
+		
 		left: 5rem;
 		height: 100vh;
 		width: calc(100% - 5rem);

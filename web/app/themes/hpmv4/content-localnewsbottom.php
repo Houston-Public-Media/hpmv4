@@ -37,7 +37,7 @@
         </ul></div>
 <?php
 			$rowCount++;
-			if ( $rowCount % 2 == 0 ) echo '</div><div class="row">';
+			if ( $rowCount % 2 == 0 ) echo '</div><div class="row" style="padding-top: 20px;">';
 		}
         $catCounter++;
 	}
