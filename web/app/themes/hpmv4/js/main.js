@@ -42,8 +42,8 @@ hpm.navHandlers = () => {
 	let buttonDiv = document.querySelectorAll('div[tab-index="0"]');
 	let topMenu = document.querySelector('#top-mobile-menu');
 	let closeMenu = document.querySelector('#top-mobile-close');
-	// let topSearch = document.querySelector('#top-search');
-	// let searchInput = document.querySelector('#top-search > form > input[type=search]');
+	 let topSearch = document.querySelector('#top-search');
+	 let searchInput = document.querySelector('#top-search > form > input[type=search]');
 	if ( siteNav !== null ) {
 		let menuWithChildren = siteNav.querySelectorAll('li.menu-item-has-children');
 		siteNav.addEventListener('focusin', () => {
@@ -83,11 +83,11 @@ hpm.navHandlers = () => {
 			});
 		}
 	}
-	// if ( topSearch !== null ) {
-	// 	topSearch.addEventListener('click', () => {
-	// 		searchInput.focus({preventScroll:true});
-	// 	});
-	// }
+	 if ( topSearch !== null ) {
+	 	topSearch.addEventListener('click', () => {
+	 		searchInput.focus({preventScroll:true});
+	 	});
+	 }
 	Array.from(buttonDiv).forEach((bD) => {
 		bD.addEventListener('focusin', () => {
 			bD.setAttribute('aria-expanded', 'true');

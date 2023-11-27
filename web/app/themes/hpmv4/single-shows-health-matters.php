@@ -29,7 +29,7 @@ get_header(); ?>
 		}
 		body.single-shows #station-social h3 {
 			font-size: 1.5em;
-			font-family: var(--hpm-font-condensed);
+			/*font-family: var(--hpm-font-condensed);*/
 			color: #3f1818;
 			margin-bottom: 1rem;
 		}
@@ -84,7 +84,7 @@ get_header(); ?>
 		section #audio-nav ul li {
 			border-bottom: 1px solid white;
 			padding: 1em;
-			font: 100 1em/1em var(--hpm-font-main);
+			/*font: 100 1em/1em var(--hpm-font-main);*/
 			overflow: hidden;
 			width: 100%;
 			height: auto;
@@ -101,7 +101,7 @@ get_header(); ?>
 		#audio-nav ul li.current {
 			background-color: var(--main-blue);
 			color: white;
-			font: 700 1em/1em var(--hpm-font-main);
+			/*font: 700 1em/1em var(--hpm-font-main);*/
 		}
 		#audio-nav ul li .audio-info {
 			width: 100%;

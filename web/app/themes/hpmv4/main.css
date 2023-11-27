@@ -2,15 +2,7 @@
 /* @import url(https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css); */
 
 /********* Fonts *********/
-@font-face {
-  font-family: "helvetica";
-  src: url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf")
-  format("woff"),
-  url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf")
-  format("opentype"),
-  url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf")
-  format("truetype");
-}
+
 
 /********* Common Classes *********/
 :root {
@@ -49,7 +41,7 @@ h4 {
   font-weight: bold;
 }
 h1 {
-  font-size: 1.8rem;
+  font-size: 2.2rem;/*1.8rem;*/
 }
 h2 {
   font-size: 1.25rem;
@@ -265,7 +257,8 @@ section {
 }
 .news-listing li {
   border-bottom: solid 1px var(--black);
-  padding-bottom: 25px;
+ /* padding-bottom: 25px;*/
+  padding-bottom: 10px;
   margin-bottom: 25px;
   padding-right: 0px;
 }
@@ -284,6 +277,7 @@ section {
 }
 .news-listing .col-5 {
   padding-right: 0;
+  padding-left: 5px;
 }
 .breaking-news h1 {
   margin-bottom: 15px;
@@ -303,7 +297,7 @@ section {
   position: absolute;
   right: -30px;
   top: 0;
-  width: 1;
+  width: 1px;
   height: 100%;
   border-right: solid 1px var(--black);
 }
@@ -387,7 +381,7 @@ section {
 
 .title-full,
 .title-full span {
-  font-size: 18px;
+  /*font-size: 18px;*/
   padding-bottom: 8px;
   text-transform: uppercase;
 }
@@ -710,17 +704,21 @@ footer#colophon .footer-tag p {
 }
 
 .page-template-page-npr-articles #article-share .icon-wrap {
-  display: flex;
+  /*display: flex;
   gap: 0.4rem;
   float: right;
   top: -39px;
-  position: relative;
+  position: relative;*/
+  display: flex;
+  gap: 0.4rem;
+  padding: 0;
 }
 .page-template-page-npr-articles #article-share .icon-wrap h4 {
   display: none;
 }
 .page-template-page-npr-articles #article-share .icon-wrap .service-icon {
-  --unit: 1rem;
+ /* --unit: 1rem;*/
+  --unit: 1.3rem;
 }
 .page-template-page-npr-articlest article .entry-footer .tags-links a {
   border: solid 1px #404040;
@@ -812,7 +810,7 @@ h2#foot-banner a {
 }
 .sa-pic {
   width: 33%;
-  height: 114px;
+  /*height: 114px;*/
   overflow: hidden;
   border-radius: 15px;
   margin-right: 15px;
@@ -827,7 +825,7 @@ h2#foot-banner a {
 
 .staff-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  /*grid-template-columns: 1fr 1fr 1fr;*/
   gap: 1rem;
   width: 100%;
 }
@@ -838,7 +836,7 @@ article.staff {
   position: relative;
   margin: 0;
   width: 100%;
-  margin: 1em;
+  /*margin: 1em;*/
   position: relative;
   background-color: #f5f5f5;
   border-bottom: solid 6px #237bbd;
@@ -949,6 +947,7 @@ article.staff .service-icon {
 
 .service-icon :is(a, button) svg {
   fill: white;
+  vertical-align: inherit;
 }
 
 .service-icon.phone :is(a, button) {
@@ -1441,7 +1440,7 @@ article .entry-header .byline-date a
   margin: 0 !important;
   padding: 0 !important;
   position: absolute;
-  left: -4rem;
+  left: -5rem;
   bottom: 7.25rem;
   font-size: 1rem;
   font-weight: 700;
@@ -1723,7 +1722,7 @@ article .entry-content .adv-contact p a {
 
 @media screen and (min-width: 52.5em) {
   #gs-chart {
-    overflow: initial;
+    /*overflow: initial;*/
   }
 }
 

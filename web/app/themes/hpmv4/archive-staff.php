@@ -84,7 +84,7 @@ get_header(); ?>
 		}
 		@media screen and (min-width: 52.55rem) {
 			.staff-grid {
-				/*grid-template-columns: 1fr 1fr 1fr;*/
+				grid-template-columns: 1fr 1fr 1fr;
 			}
 		}
 	</style>

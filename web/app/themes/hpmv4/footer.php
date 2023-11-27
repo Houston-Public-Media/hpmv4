@@ -1,13 +1,13 @@
 			</div>
             <?php
-            if ( get_queried_object_id() == 61383  ) { ?>
+/*            if ( get_queried_object_id() == 61383  ) { */?><!--
 
                 <section class="contactus-banner">
                     <h2>Interested in Studio Tour?</h2>
                     <a href="/contact-us">Contact Us</a>
 
                 </section>
-            <?php } ?>
+            --><?php /*} */?>
 <?php if ( is_page_template( 'page-blank.php' ) ) { ?>
 		</div>
 <?php } else { ?>
@@ -111,7 +111,7 @@
 
 				</div>
 				<nav id="uh-foot-navigation" class="footer-navigation" role="navigation">
-					<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 58922 ] ); ?>
+					<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 58922 ] ); //56058  58922 ?>
 				</nav>
 			</footer>
 		</div>

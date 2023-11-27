@@ -121,6 +121,46 @@ function hpm_calculate_datetime_difference( $pID ) {
 	return false;
 }
 
+// Custom Pagination
+function hpm_custom_pagination($pages = '', $range = 4) {
+    global $paged;
+    $showitems = ($range * 2)+1; // links to show
+// init paged
+    if(empty($paged))
+        $paged = 1;
+// init pages
+    if($pages == '') {
+        global $wp_query;
+        $pages = $wp_query->max_num_pages;
+        if(!$pages)
+            $pages = 1;
+    }
+// if $pages more then one post
+    if(1 != $pages) {
+        echo '<div class="wds-pagination"><span>Page ' . $paged . ' of ' . $pages . '</span>';
+// First link
+        if($paged > 2 && $paged > $range+1 && $showitems < $pages)
+            echo '<a href="' . get_pagenum_link(1) . '"><< First</a>';
+// Previous link
+        if($paged > 1 && $showitems < $pages)
+            echo '<a href="/topics/party-politics/'.get_pagenum_link($paged - 1).'">< Previous</a>';
+// Links of pages
+        for ($i=1; $i <= $pages; $i++)
+            if (1 != $pages && ( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
+                echo ($paged == $i) ? '<span class="current">' . $i . '</span>' : '<a href="/topics/party-politics/page/' . $i . '">' . $i .
+                    '</a>';
+// Next link
+        if ($paged < $pages && $showitems < $pages)
+            echo '<a href="' . get_pagenum_link($paged + 1) . '">Next ></a>';
+// Last link
+        if ($paged < $pages-1 && $paged+$range-1 < $pages && $showitems < $pages)
+            echo '<a href="' . get_pagenum_link($pages) . '">Last >></a>';
+        echo '</div>';
+    }
+}
+
+
+
 // Modification to the normal Menu Walker to add <div> elements in certain locations and remove links with '#' hrefs
 class HPM_Menu_Walker extends Walker_Nav_Menu {
 	function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {

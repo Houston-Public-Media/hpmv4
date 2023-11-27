@@ -11,7 +11,9 @@
 get_header();
 if ( is_preview() ) { ?>
 	<div id="preview-warn">You're viewing a preview. Some things might be a little squirrelly. --The Management</div>
-<?php } ?>
+<?php }
+
+?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
 <?PHP
@@ -123,14 +125,14 @@ if ( is_preview() ) { ?>
 	}
 	wp_reset_postdata();
 	get_template_part('sidebar', 'none'); ?>
-            <?php echo author_footer( $single_id ); ?>
+            <?php echo author_footer( $single_id, "" ); ?>
 		</aside>
 		<div class="newslatter-form">
 			<?php
 					if ( is_single() && get_post_type() == 'post' ) {
 						if ( in_category( 'news' ) ) {
 							$form_id = '441232';
-							// echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+							 echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
 						}
 					}
 

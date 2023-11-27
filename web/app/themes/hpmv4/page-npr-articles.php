@@ -27,6 +27,7 @@ Template Name: NPR Content
 					<h1 class="entry-title"><?php echo $nprdata['title']; ?></h1>
 					<p><?php echo $nprdata['excerpt']; ?></p>
 					<div class="byline-date">
+                        <div class="byline-date-text">
 					<?PHP
 						foreach ( $nprdata['bylines'] as $k => $byline ) {
 							if ( $k > 0 ) {
@@ -54,8 +55,10 @@ Template Name: NPR Content
 						);
 					?>
 					</div>
+                        <?php hpm_article_share( $nprdata ); ?>
+                    </div>
 				</header>
-				<?php hpm_article_share( $nprdata ); ?>
+
 				<div class="entry-content">
 					<?php echo do_shortcode( $nprdata['body'] ); ?>
 				</div>
