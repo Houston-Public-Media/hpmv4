@@ -72,10 +72,7 @@
 		"wpackagist-plugin/www-xml-sitemap-generator-org": "2.0.7",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"jwcounts/wp-missed-schedule": "1.0.1",
-		"noweh/twitter-api-v2-php": "1.7.3",
-		"wpackagist-plugin/activitypub": "*",
-		"wpackagist-plugin/webfinger": "*",
-		"wpackagist-plugin/nodeinfo": "*"
+		"noweh/twitter-api-v2-php": "1.7.3"
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^3.0.2"
