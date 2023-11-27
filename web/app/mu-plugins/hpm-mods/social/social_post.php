@@ -129,10 +129,10 @@
 				$tags = wp_get_post_tags( $post_id );
 				$keywords = [];
 				foreach( $cats as $cat ) {
-					$keywords[] = '#' . str_replace( ' ', '', ucwords( strtolower( $cat->name ) ) );
+					$keywords[] = '#' . str_replace( [ ' ', '&amp;', '-' ] , [ '', 'And', '' ], ucwords( strtolower( $cat->name ) ) );
 				}
 				foreach( $tags as $tag ) {
-					$keywords[] = '#' . str_replace( ' ', '', ucwords( strtolower( $tag->name ) ) );
+					$keywords[] = '#' . str_replace( [ ' ', '&amp;', '-' ] , [ '', 'And', '' ], ucwords( strtolower( $tag->name ) ) );
 				}
 
 				$payload = [
