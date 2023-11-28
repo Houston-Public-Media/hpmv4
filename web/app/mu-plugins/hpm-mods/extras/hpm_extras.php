@@ -543,7 +543,7 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 
 			//	$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
 			}
-			$output .= '<li><span><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></span><span class="img-w75"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="" loading="lazy" /></a></span></li>';
+			$output .= '<li><span><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></span><span class="img-w75"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a></span></li>';
 		} //' . $story['title']['$text'] . '
 	}
     $output .="</ul>";
