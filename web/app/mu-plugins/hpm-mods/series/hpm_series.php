@@ -295,7 +295,7 @@ function hpm_head_banners( $id, $location ): string {
 		}
 	} else {
 		if ( $location == 'entry' || $location == 'series' ) {
-            if( $id !== 450698 ) {
+            if( $id !== 469451 ) { //Local 450698
                 $output =
 					'<header class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-header">' .
 						'<h1 class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-title">' . get_the_title( $id ) . '</h1>' .
