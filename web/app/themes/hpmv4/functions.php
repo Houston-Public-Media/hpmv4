@@ -606,7 +606,7 @@ function hpm_article_share( $nprdata = null ): void {
 				</button>
 			</div>
 			<div class="service-icon twitter">
-				<button aria-label="Share to Twitter" data-href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
+				<button aria-label="Share to Twitter" data-href="https://twitter.com/intent/tweet?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
 					<?php echo hpm_svg_output( 'twitter' ); ?>
 				</button>
 			</div>

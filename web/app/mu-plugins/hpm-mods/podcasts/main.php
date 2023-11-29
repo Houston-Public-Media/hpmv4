@@ -203,9 +203,7 @@ class HPM_Podcasts {
 			'hpm-podcast-meta-class',
 			esc_html__( 'Podcast Feed Information', 'hpm-podcasts' ),
 			[ $this, 'podcast_episode_meta' ],
-			'post',
-			'advanced',
-			'default'
+			'post'
 		);
 		add_meta_box(
 			'hpm-show-meta-class',
