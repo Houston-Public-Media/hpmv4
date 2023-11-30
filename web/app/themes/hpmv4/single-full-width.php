@@ -80,9 +80,16 @@ if ( is_preview() ) { ?>
 			</article>
 <?php
 	} ?>
-		<div id="author-wrap">
-			<?php echo author_footer( get_the_ID(), "fullwidth" ); ?>
-		</div>
+		<!--<div id="author-wrap">
+			<?php /*echo author_footer( get_the_ID(), "fullwidth" ); */?>
+		</div>-->
+        <div id="author-wrap">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 ">
+                    <?php echo author_footer( get_the_ID(), "fullwidth" ); ?>
+                </div>
+            </div>
+        </div>
 	</main>
 </div>
 <?php get_footer(); ?>

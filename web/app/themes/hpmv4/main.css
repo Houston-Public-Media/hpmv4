@@ -67,7 +67,7 @@ section {
 }
 
 .text-light-gray {
-  color: var(--gray1);
+  color: #222054; /*var(--gray1);*/
   text-transform: uppercase;
   padding-bottom: 4px;
 }
@@ -281,6 +281,7 @@ section {
 }
 .breaking-news h1 {
   margin-bottom: 15px;
+  line-height: .9;
 }
 .breaking-news h1 a {
   font-weight: bold;
@@ -465,7 +466,7 @@ section {
   border-radius: 4px;
   font-size: 10px;
   font-weight: bold;
-  background: #13afbb;
+  background: #222054; /*#13afbb;*/
   color: #ffffff;
   margin: 0 10px 0 0;
   text-decoration: none;

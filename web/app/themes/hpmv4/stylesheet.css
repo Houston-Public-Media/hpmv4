@@ -2631,7 +2631,7 @@ article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.ar
 }
 article .entry-header h3 {
 	background-color: transparent;
-	color: var(--secondary-text);
+	color: #00566c; /*var(--secondary-text);*/
 	display: inline-block;
 	text-transform: uppercase;
 	font-weight: 700;
