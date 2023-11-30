@@ -1095,52 +1095,52 @@ class HPM_Podcasts {
 		if ( !empty( $pod_id ) && $template !== 'single-shows-podcast.php' ) {
 			$pod_link = get_post_meta( $pod_id, 'hpm_pod_link', true );
 			if ( !empty( $pod_link['itunes'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['itunes'] . '" rel="noopener" target="_blank" title="Subscribe on Apple Podcasts"><img src="' . $badges . 'apple.png" alt="Subscribe on Apple Podcasts" title="Subscribe on Apple Podcasts"></a></li>';
+				$temp .= '<li><a href="' . $pod_link['itunes'] . '" rel="noopener" target="_blank" title="Subscribe on Apple Podcasts"><img src="' . $badges . 'apple.png" alt="Subscribe on Apple Podcasts"></a></li>';
 			}
 			if ( !empty( $pod_link['gplay'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['gplay'] . '" rel="noopener" target="_blank" title="Subscribe on Google Podcasts"><img src="' . $badges . 'google_podcasts.png" alt="Subscribe on Google Podcasts" title="Subscribe on Google Podcasts"></a></li>';
+				$temp .= '<li><a href="' . $pod_link['gplay'] . '" rel="noopener" target="_blank" title="Subscribe on Google Podcasts"><img src="' . $badges . 'google_podcasts.png" alt="Subscribe on Google Podcasts"></a></li>';
 			}
 			if ( !empty( $pod_link['spotify'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['spotify'] . '" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="' . $badges . 'spotify.png" alt="Subscribe on Spotify" title="Subscribe on Spotify"></a></li>';
+				$temp .= '<li><a href="' . $pod_link['spotify'] . '" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="' . $badges . 'spotify.png" alt="Subscribe on Spotify"></a></li>';
 			}
 			if ( $full_list ) {
 				if ( !empty( $pod_link['tunein'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png" alt="Subscribe on TuneIn" title="Subscribe on TuneIn"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png" alt="Subscribe on TuneIn"></a></li>';
 				}
 				if ( !empty( $pod_link['iheart'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['iheart'] . '" rel="noopener" target="_blank" title="Subscribe on iHeart"><img src="' . $badges . 'iheart_radio.png" alt="Subscribe on iHeart" title="Subscribe on iHeart"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['iheart'] . '" rel="noopener" target="_blank" title="Subscribe on iHeart"><img src="' . $badges . 'iheart_radio.png" alt="Subscribe on iHeart"></a></li>';
 				}
 				if ( !empty( $pod_link['pandora'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['pandora'] . '" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="' . $badges . 'pandora.png" alt="Subscribe on Pandora" title="Subscribe on Pandora"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['pandora'] . '" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="' . $badges . 'pandora.png" alt="Subscribe on Pandora"></a></li>';
 				}
 				if ( !empty( $pod_link['radiopublic'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['radiopublic'] . '" rel="noopener" target="_blank" title="Subscribe on RadioPublic"><img src="' . $badges . 'radio_public.png" alt="Subscribe on RadioPublic" title="Subscribe on RadioPublic"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['radiopublic'] . '" rel="noopener" target="_blank" title="Subscribe on RadioPublic"><img src="' . $badges . 'radio_public.png" alt="Subscribe on RadioPublic"></a></li>';
 				}
 				if ( !empty( $pod_link['pcast'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['pcast'] . '" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="' . $badges . 'pocketcasts.png" alt="Subscribe on Pocket Casts" title="Subscribe on Pocket Casts"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['pcast'] . '" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="' . $badges . 'pocketcasts.png" alt="Subscribe on Pocket Casts"></a></li>';
 				}
 				if ( !empty( $pod_link['overcast'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['overcast'] . '" rel="noopener" target="_blank" title="Subscribe on Overcast"><img src="' . $badges . 'overcast.png" alt="Subscribe on Overcast" title="Subscribe on Overcast"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['overcast'] . '" rel="noopener" target="_blank" title="Subscribe on Overcast"><img src="' . $badges . 'overcast.png" alt="Subscribe on Overcast"></a></li>';
 				}
 				if ( !empty( $pod_link['amazon'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['amazon'] . '" rel="noopener" target="_blank" title="Subscribe on Amazon Music"><img src="' . $badges . 'amazon.png" alt="Subscribe on Amazon Music" title="Subscribe on Amazon Music"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['amazon'] . '" rel="noopener" target="_blank" title="Subscribe on Amazon Music"><img src="' . $badges . 'amazon.png" alt="Subscribe on Amazon Music"></a></li>';
 				}
 			}
-			$temp .= '<li><a href="' . ( !empty( $pod_link['rss-override'] ) ? $pod_link['rss-override'] : get_permalink( $pod_id ) ).'" target="_blank" title="Subscribe via RSS"><img src="' . $badges . 'rss.png" alt="Subscribe via RSS" title="Subscribe via RSS"></a></li>';
+			$temp .= '<li><a href="' . ( !empty( $pod_link['rss-override'] ) ? $pod_link['rss-override'] : get_permalink( $pod_id ) ).'" target="_blank" title="Subscribe via RSS"><img src="' . $badges . 'rss.png" alt="Subscribe via RSS"></a></li>';
 		}
 		if ( !empty( $show_id ) ) {
 			$social = get_post_meta( $show_id, 'hpm_show_social', true );
 			if ( !empty( $social['insta'] ) ) {
-				$temp .= '<li class="service-icon instagram"><a href="https://instagram.com/' . $social['insta'] . '" rel="noopener" target="_blank" title="Instagram">' . hpm_svg_output( 'instagram' ) . '</a></li>';
+				$temp .= '<li class="service-icon instagram"><a href="https://instagram.com/' . $social['insta'] . '" rel="noopener" target="_blank">' . hpm_svg_output( 'instagram' ) . '<span class="screen-reader-text">Instagram</span></a></li>';
 			}
 			if ( !empty( $social['yt'] ) ) {
-				$temp .= '<li class="service-icon youtube"><a href="' . $social['yt'] . '" rel="noopener" target="_blank" title="YouTube">' . hpm_svg_output( 'youtube' ) . '</a></li>';
+				$temp .= '<li class="service-icon youtube"><a href="' . $social['yt'] . '" rel="noopener" target="_blank">' . hpm_svg_output( 'youtube' ) . '<span class="screen-reader-text">YouTube</span></a></li>';
 			}
 			if ( !empty( $social['twitter'] ) ) {
-				$temp .= '<li class="service-icon twitter"><a href="https://twitter.com/' . $social['twitter'] . '" rel="noopener" target="_blank" title="Twitter">' . hpm_svg_output( 'twitter' ) . '</a></li>';
+				$temp .= '<li class="service-icon twitter"><a href="https://twitter.com/' . $social['twitter'] . '" rel="noopener" target="_blank">' . hpm_svg_output( 'twitter' ) . '<span class="screen-reader-text">Twitter/X</span></a></li>';
 			}
 			if ( !empty( $social['fb'] ) ) {
-				$temp .= '<li class="service-icon facebook"><a href="https://www.facebook.com/' . $social['fb'] . '" rel="noopener" target="_blank" title="Facebook">' . hpm_svg_output( 'facebook' ) . '</a></li>';
+				$temp .= '<li class="service-icon facebook"><a href="https://www.facebook.com/' . $social['fb'] . '" rel="noopener" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text">Facebook</span></a></li>';
 			}
 		}
 		if ( !empty( $pod_link ) && $lede ) {

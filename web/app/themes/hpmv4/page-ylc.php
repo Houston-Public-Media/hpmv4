@@ -16,7 +16,7 @@ get_header(); ?>
 						</div>
 						<h1 class="page-title"><?php the_title(); ?></h1>
 						<button class="down scrollto">
-							<?php echo hpm_svg_output( 'chevron-down' ) ?>
+							<?php echo hpm_svg_output( 'chevron-down' ) ?><span class="screen-reader-text">Scroll Down</span>
 						</button>
 					</header>
 					<div class="page-content">

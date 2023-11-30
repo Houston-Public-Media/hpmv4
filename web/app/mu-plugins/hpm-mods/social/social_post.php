@@ -125,8 +125,8 @@
 		}
 		if ( empty( $social_mastodon_sent ) ) {
 			if ( !empty( $social_post['twitter']['data'] ) ) {
-				$find = [ ' ', '&amp;', '-', '&', '\'', '"', '/', '@', '!', '¡', '$', '#', '[', ']', '(', ')', '• ' ];
-				$replace = [ '', 'And', '', 'And', '', '', '', '', '', '', '', '', '', '', '', '', '' ];
+				$find = [ ' ', '&amp;', '-', '&', '\'', '"', '/', '@', '!', '¡', '$', '#', '[', ']', '(', ')', '• ', '.' ];
+				$replace = [ '', 'And', '', 'And', '', '', '', '', '', '', '', '', '', '', '', '', '', '' ];
 				$cats = get_the_category( $post_id );
 				$tags = wp_get_post_tags( $post_id );
 				$keywords = [];

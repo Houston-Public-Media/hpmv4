@@ -602,22 +602,22 @@ function hpm_article_share( $nprdata = null ): void {
 			<h4>Share</h4>
 			<div class="service-icon facebook">
 				<button aria-label="Share to Facebook" data-href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" data-dialog="400:368">
-					<?php echo hpm_svg_output( 'facebook' ); ?>
+					<?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text">Facebook</span>
 				</button>
 			</div>
 			<div class="service-icon twitter">
 				<button aria-label="Share to Twitter" data-href="https://twitter.com/intent/tweet?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
-					<?php echo hpm_svg_output( 'twitter' ); ?>
+					<?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text">Twitter/X</span>
 				</button>
 			</div>
 			<div class="service-icon linkedin">
 				<button aria-label="Share to LinkedIn" data-href="https://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
-					<?php echo hpm_svg_output( 'linkedin' ); ?>
+					<?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text">LinkedIn</span>
 				</button>
 			</div>
 			<div class="service-icon envelope">
 				<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
-					<?php echo hpm_svg_output( 'envelope' ); ?>
+					<?php echo hpm_svg_output( 'envelope' ); ?><span class="screen-reader-text">Email</span>
 				</a>
 			</div>
 		</div>

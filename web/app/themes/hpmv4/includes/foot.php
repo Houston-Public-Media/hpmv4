@@ -57,27 +57,27 @@ function author_footer( $id ): string {
 			if ( !empty( $meta['phone'] ) ) {
 				$temp .= '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $meta['phone'] ) . '" rel="noopener" title="Call ' .
 				( $author->post->post_title ?? $coa->display_name ) .
-				' at ' . $meta['phone'] . '" data-phone="' . $meta['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>';
+				' at ' . $meta['phone'] . '" data-phone="' . $meta['phone'] . '">' . hpm_svg_output( 'phone' ) . '<span class="screen-reader-text">Call ' . ( $author->post->post_title ?? $coa->display_name ) . '</span></a></div>';
 			}
 			if ( !empty( $meta['facebook'] ) ) {
 				$temp .= '<div class="service-icon facebook"><a href="' . $meta['facebook'] . '" rel="noopener" title="' .
 					( $author->post->post_title ?? $coa->display_name ) .
-					' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '</a></div>';
+					' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text">Facebook</span></a></div>';
 			}
 			if ( !empty( $meta['twitter'] ) ) {
 				$temp .= '<div class="service-icon twitter"><a href="' . $meta['twitter'] . '" rel="noopener" title="' .
 				( $author->post->post_title ?? $coa->display_name ) .
-				' on Twitter" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>';
+				' on Twitter" target="_blank">' . hpm_svg_output( 'twitter' ) . '<span class="screen-reader-text">Twitter/X</span></a></div>';
 			}
 			if ( !empty( $meta['linkedin'] ) ) {
 				$temp .= '<div class="service-icon linkedin"><a href="' . $meta['linkedin'] . '" rel="noopener" title="' .
 				( $author->post->post_title ?? $coa->display_name ) .
-				' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>';
+				' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text">LinkedIn</span></a></div>';
 			}
 			if ( !empty( $meta['email'] ) ) {
 				$temp .= '<div class="service-icon envelope"><a href="mailto:' . $meta['email'] . '" rel="noopener" title="Email ' .
 				( $author->post->post_title ?? $coa->display_name ) .
-				'" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>';
+				'" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text">Email ' . ( $author->post->post_title ?? $coa->display_name ) . '</span></a></div>';
 			}
 			$author_bio = $author->post->post_content;
 			if ( str_contains( 'Biography pending', $author_bio ) ) {
@@ -85,10 +85,10 @@ function author_footer( $id ): string {
 			}
 		} else {
 			if ( !empty( $coa->user_email ) ) {
-				$temp .= '<div class="service-icon envelope"><a href="mailto:' . $coa->user_email . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>';
+				$temp .= '<div class="service-icon envelope"><a href="mailto:' . $coa->user_email . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text">Email</span></a></div>';
 			}
 			if ( !empty( $coa->website ) ) {
-				$temp .= '<div class="service-icon"><a href="' . $coa->website . '" target="_blank">' . hpm_svg_output( 'home' ) . '</a></div>';
+				$temp .= '<div class="service-icon"><a href="' . $coa->website . '" target="_blank">' . hpm_svg_output( 'home' ) . '<span class="screen-reader-text">Website</span></a></div>';
 			}
 		}
 		$temp .= "
