@@ -126,9 +126,9 @@ $tras = null;
                 ?>
 
                 <?php //} ?>
-                <div class="col-3">
+                <aside class="col-lg-3">
                     <?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
-                </div>
+                </aside>
             </div>
         </section>
 
