@@ -167,7 +167,7 @@ hpm.videoHandlers = () => {
 hpm.shareHandlers = () => {
 	let popOut = document.querySelectorAll(".service-icon button, #top-listen button, .nav-listen-live a, #top-watch button");
 	Array.from(popOut).forEach((pop) => {
-		pop.addEventListener('click', (e) =>{
+		pop.addEventListener('click', (e) => {
 			let attr = pop.getAttribute('data-dialog');
 			let hrefCheck = pop.getAttribute('data-href');
 			if ( hrefCheck.includes('mailto:') ) {
@@ -290,9 +290,11 @@ hpm.npSearch = () => {
 	let nowPlay = document.querySelectorAll('.hpm-nowplay');
 	Array.from(nowPlay).forEach((np) => {
 		let station = np.getAttribute('data-station');
-		hpm.stationIds[ station ].refresh = true;
-		hpm.stationIds[ station ].next = np.getAttribute('data-upnext');
-		hpm.stationIds[ station ].obj = np;
+		if (station !== null ) {
+			hpm.stationIds[ station ].refresh = true;
+			hpm.stationIds[ station ].next = np.getAttribute('data-upnext');
+			hpm.stationIds[ station ].obj = np;
+		}
 	});
 	if ( document.body.classList.contains('page-template-page-listen') ) {
 		hpm.npDataDownload();
