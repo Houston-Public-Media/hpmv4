@@ -124,20 +124,7 @@ $tras = null;
                 get_template_part("content", "indepth");
                 // echo $indepthArtcle->post_title;
                 ?>
-                <!--<div class="col-9">
-					<div class="news-slider">
-						<div class="row">
-							<div class="col-6">
-								<div class="news-slider-info">
-									<h4 class="text-light-gray">POLITICS</h4>
-									<h2>15 Texas women say abortion bans denied or delayed crucial medical care</h2>
-									<p>A lawsuit is asking the state of Texas to clarify what exactly the exceptions written in the law entail.</p>
-								</div>
-							</div>
-							<div class="col-6"><img src="<?php /*echo get_template_directory_uri(); */?>/images/news-img.jpg" /></div>
-						</div>
-					</div>
-				</div>-->
+
                 <?php //} ?>
                 <div class="col-3">
                     <?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
@@ -217,9 +204,6 @@ $tras = null;
                         <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
                     </div>
 
-                    <!--  <div id="div-gpt-ad-1394579228932-2">
-                          <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
-                      </div>-->
 
                 </div>
         </section>

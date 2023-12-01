@@ -12,9 +12,7 @@ if(post_type_archive_title('', false) == "Shows")
 {
     $ColumnClass = "col-sm-12 col-md-10";
 }
-
 ?>
-
 <div class="<?php echo $ColumnClass; ?>">
     <div class="episodes-content"> 
         <?php if ( has_post_thumbnail() ) { ?>

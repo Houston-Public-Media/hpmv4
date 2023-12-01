@@ -894,7 +894,7 @@ function hpm_article_share( $nprdata = null ): void {
 			</div>
 			<div class="service-icon envelope">
 				<a href="mailto:?subject=Someone%20Shared%20an%20Article%20From%20Houston%20Public%20Media%21&body=I%20would%20like%20to%20share%20an%20article%20I%20found%20on%20Houston%20Public%20Media!%0A%0A<?php the_title(); ?>%0A%0A<?php the_permalink(); ?>">
-					<?php echo hpm_svg_output( 'envelope' ); ?>
+					<?php echo hpm_svg_output( 'envelope' ); ?><span class="screen-reader-text">Email</span>
 				</a>
 			</div>
 		</div>

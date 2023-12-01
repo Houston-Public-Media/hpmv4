@@ -90,21 +90,21 @@
 							<p>&copy; <?php echo date('Y'); ?> Houston Public Media</p>
 						</div>
 						<div class="d-flex social-icon-wrap">
-							<div class="social-icon facebook">
-								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
-							</div>
-							<div class="social-icon twitter">
-								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></svg></a>
-							</div>
-							<div class="social-icon instagram">
-								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?></a>
-							</div>
-							<div class="social-icon youtube">
-								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?></a>
-							</div>
-							<div class="social-icon linkedin">
-								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
-							</div>
+                            <div class="social-icon facebook">
+                                <a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text" >Facebook</span></a>
+                            </div>
+                            <div class="social-icon twitter">
+                                <a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text" >Twitter</span></a>
+                            </div>
+                            <div class="social-icon instagram">
+                                <a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?><span class="screen-reader-text" >Instagram</span></a>
+                            </div>
+                            <div class="social-icon youtube">
+                                <a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?><span class="screen-reader-text" >YouTube</span></a>
+                            </div>
+                            <div class="social-icon linkedin">
+                                <a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text" >Linkedin</span></a>
+                            </div>
 						</div>
 
 					</div>
