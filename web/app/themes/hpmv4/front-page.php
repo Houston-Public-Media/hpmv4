@@ -103,8 +103,7 @@ $articles = hpm_homepage_articles(); ?>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8.4 (NHK)</a></h5>
-							<div class="hpm-nowplay">NHK World Japan</div>
-							<?php /* ?><div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpm_now_playing( 'tv8.4' ); ?></div><?php */ ?>
+							<h3>NHK World Japan</h3>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8.5 (World)</a></h5>
