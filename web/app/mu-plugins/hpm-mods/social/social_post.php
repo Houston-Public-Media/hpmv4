@@ -125,16 +125,26 @@
 		}
 		if ( empty( $social_mastodon_sent ) ) {
 			if ( !empty( $social_post['twitter']['data'] ) ) {
-				$find = [ ' ', '&amp;', '-', '&', '\'', '"', '/', '@', '!', '¡', '$', '#', '[', ']', '(', ')', '• ', '.', '+' ];
-				$replace = [ '', 'And', '', 'And', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' ];
 				$cats = get_the_category( $post_id );
 				$tags = wp_get_post_tags( $post_id );
 				$keywords = [];
 				foreach( $cats as $cat ) {
-					$keywords[] = '#' . str_replace( $find, $replace, trim( $cat->name ) );
+					preg_match_all('/([\w\d]+)/', $cat->name, $match );
+					if ( !empty( $match[1] ) ) {
+						for ( $v = 0; $v < count( $match[1] ); $v++ ) {
+							$match[1][$v] = ucwords( $match[1][$v] );
+						}
+						$keywords[] = '#' . implode( '', $match[1] );
+					}
 				}
 				foreach( $tags as $tag ) {
-					$keywords[] = '#' . str_replace( $find , $replace, trim( $tag->name ) );
+					preg_match_all('/([\w\d]+)/', $tag->name, $match );
+					if ( !empty( $match[1] ) ) {
+						for ( $v = 0; $v < count( $match[1] ); $v++ ) {
+							$match[1][$v] = ucwords( $match[1][$v] );
+						}
+						$keywords[] = '#' . implode( '', $match[1] );
+					}
 				}
 
 				$payload = [
