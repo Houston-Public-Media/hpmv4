@@ -325,7 +325,9 @@ get_header(); ?>
 			wp_reset_query(); ?>
                     </div>
                 </div>
-                <?php //wp_pagenavi( array( 'query' => $others ) ); ?>
+                <?php //wp_pagenavi( array( 'query' => $others ) );
+                echo hpm_custom_pagination($studio->max_num_pages, 4, "/topics/skyline-sessions/page/");
+                // ?>
 
 				</div>
 			</div>
