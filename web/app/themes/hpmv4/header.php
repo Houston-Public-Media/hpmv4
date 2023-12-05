@@ -9,7 +9,7 @@
  * @since HPMv4 4.0
  */
 ?><!DOCTYPE html>
-<html <?php language_attributes(); ?> xmlns="https://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml" dir="ltr" prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb#">
+<html <?php language_attributes(); ?> xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" dir="ltr" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<head>
 		<meta charset="<?php bloginfo( 'charset' ); ?>">
 		<?php wp_head(); ?>
