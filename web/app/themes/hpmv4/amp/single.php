@@ -183,20 +183,23 @@
 						<p class="foot-button"><a href="/contact-us/">Contact Us</a></p>
 						<p>4343 Elgin, Houston, TX 77204-0008</p>
 						<div class="icon-wrap">
-						<div class="service-icon facebook">
-								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?></a>
+							<div class="service-icon facebook">
+								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text">Facebook</span></a>
 							</div>
 							<div class="service-icon twitter">
-								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?></svg></a>
+								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text">Twitter</span></a>
 							</div>
 							<div class="service-icon instagram">
-								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?></a>
+								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?><span class="screen-reader-text">Instagram</span></a>
 							</div>
 							<div class="service-icon youtube">
-								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?></a>
+								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?><span class="screen-reader-text">YouTube</span></a>
 							</div>
 							<div class="service-icon linkedin">
-								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?></a>
+								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text">LinkedIn</span></a>
+							</div>
+							<div class="service-icon mastodon">
+								<a href="https://mastodon.social/@houstonpublicmedia" rel="noopener me" target="_blank"><?php echo hpm_svg_output( 'mastodon' ); ?><span class="screen-reader-text">Mastodon</span></a>
 							</div>
 						</div>
 					</div>

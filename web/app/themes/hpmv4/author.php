@@ -1,4 +1,5 @@
 <?php
+	global $wp_query;
 	$curauth = $wp_query->get_queried_object();
 	if ( is_a( $curauth, 'wp_user' ) ) {
 		$author_check = new WP_Query( [
@@ -61,11 +62,11 @@
 						) { ?>
 						<div class="icon-wrap">
 						<?php
-							echo ( !empty( $author['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $author['phone'] ) . '" title="Call ' . $curauth->display_name . ' at ' . $author['phone'] . '" data-phone="' . $author['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a></div>' : '' );
-							echo ( !empty( $author['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . ' </a></div>' : '' );
-							echo ( !empty( $author['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '</a></div>' : '' );
-							echo ( !empty( $author['linkedin'] ) ? '<div class="service-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '</a></div>' : '' );
-							echo ( !empty( $author['email'] ) ? '<div class="service-icon envelope"><a href="mailto:' . $author['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '</a></div>' : '' );
+							echo ( !empty( $author['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $author['phone'] ) . '" title="Call ' . $curauth->display_name . ' at ' . $author['phone'] . '" data-phone="' . $author['phone'] . '">' . hpm_svg_output( 'phone' ) . '<span class="screen-reader-text">Call ' . $curauth->display_name . '</span></a></div>' : '' );
+							echo ( !empty( $author['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text">Facebook</span></a></div>' : '' );
+							echo ( !empty( $author['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '<span class="screen-reader-text">Twitter/X</span></a></div>' : '' );
+							echo ( !empty( $author['linkedin'] ) ? '<div class="service-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text">LinkedIn</span></a></div>' : '' );
+							echo ( !empty( $author['email'] ) ? '<div class="service-icon envelope"><a href="mailto:' . $author['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text">Email ' . $curauth->display_name . '</span></a></div>' : '' );
 						} ?>
 						</div>
 					</div>

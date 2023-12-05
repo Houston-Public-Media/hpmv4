@@ -119,7 +119,7 @@ $aurthorName = "";
 			wp_reset_postdata();
 			//wp_pagenavi( [ 'query' => $auth ] );
 
-            echo "safdsf". hpm_custom_pagination($auth->max_num_pages, 4, "/articles/author/".$aurthorName."/page/");
+            echo hpm_custom_pagination( $auth->max_num_pages, 4, "/articles/author/" . $aurthorName . "/page/" );
 
  ?>
 			</section>

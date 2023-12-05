@@ -125,9 +125,31 @@
 		}
 		if ( empty( $social_mastodon_sent ) ) {
 			if ( !empty( $social_post['twitter']['data'] ) ) {
+				$cats = get_the_category( $post_id );
+				$tags = wp_get_post_tags( $post_id );
+				$keywords = [];
+				foreach( $cats as $cat ) {
+					preg_match_all('/([\w\d]+)/', $cat->name, $match );
+					if ( !empty( $match[1] ) ) {
+						for ( $v = 0; $v < count( $match[1] ); $v++ ) {
+							$match[1][$v] = ucwords( $match[1][$v] );
+						}
+						$keywords[] = '#' . implode( '', $match[1] );
+					}
+				}
+				foreach( $tags as $tag ) {
+					preg_match_all('/([\w\d]+)/', $tag->name, $match );
+					if ( !empty( $match[1] ) ) {
+						for ( $v = 0; $v < count( $match[1] ); $v++ ) {
+							$match[1][$v] = ucwords( $match[1][$v] );
+						}
+						$keywords[] = '#' . implode( '', $match[1] );
+					}
+				}
+
 				$payload = [
 					'body' => [
-						'status' => $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id ),
+						'status' => $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id ) . "\n\n" . implode( ' ', $keywords ),
 						'visibility' => 'public',
 						'language' => 'en'
 					],

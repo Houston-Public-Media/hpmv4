@@ -57,7 +57,7 @@ function hpm_audio_shortcode( $html, $attr ): string {
 					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
 				'</audio>';
 		if ( !is_admin() && !in_array( $post_id, [ 0, 58036 ] ) ) {
-			$html .= '<button class="plyr-audio-embed" data-id="' . $audio_id .'">' . hpm_svg_output( 'code' ) . '</button>' .
+			$html .= '<button class="plyr-audio-embed" data-id="' . $audio_id .'">' . hpm_svg_output( 'code' ) . '<span class="screen-reader-text">Audio Embed Popup</span></button>' .
 				'<div class="plyr-audio-embed-popup" id="plyr-' . $audio_id . '-popup">' .
 					'<div class="plyr-audio-embed-wrap">' .
 						'<p>To embed this piece of audio in your site, please use this code:</p>' .

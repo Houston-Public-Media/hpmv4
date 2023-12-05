@@ -588,24 +588,70 @@ function hpm_https_check(): void {
 	if ( 'post' !== $GLOBALS['post_type'] ) {
 		return;
 	}
+	if ( !current_user_can( 'publish_posts' ) ) {
+		return;
+	}
 	global $post; ?>
+	<style>
+		#hpm-check {
+			max-width: 1000px;
+		}
+		#hpm-check[open]::backdrop {
+			background-color: rgba(0, 0, 0, 0.5);
+			-webkit-backdrop-filter: blur(5px);
+			backdrop-filter: blur(5px);
+		}
+		#hpm-check img {
+			width: 70%;
+			margin: 0 15%;
+		}
+		#hpm-check a:has(img) {
+			display: block;
+		}
+		#hpm-check form {
+			text-align:  right;
+		}
+		#hpm-check form button {
+			background-color: #135e96;
+			color: white;
+			padding: 0.5rem;
+			font-size: 125%;
+		}
+	</style>
+	<dialog id="hpm-check">
+		<div id="hpm-check-content"></div>
+		<form method="dialog">
+			<button>Dismiss</button>
+		</form>
+	</dialog>
 	<script>
-		jQuery(document).ready(function($){
-			$('#publish, #save-post, #workflow_submit').on('click', function(e){
-				let content = $('#content').val();
-				if ( content.includes('src="http://') ) {
-					e.preventDefault();
-					alert( 'This post contains an embed or image from an insecure source.\nPlease check and see if that embed is available via HTTPS.\n\nTo check this:\n\n\t1.  Look for any <img> or <iframe> tags in your HTML\n\t2.  Find the src="" attribute and copy the URL\n\t3.  Change \'http:\' to \'https:\' and paste it into your browser\n\t4.  If it loads correctly, then great! Update the URL in your HTML\n\nIf you have any questions, email jcounts@houstonpublicmedia.org' );
-					return false;
-				} else {
-					return true;
-				}
-			});
-			$('#postimagediv .inside').append( '<p class="hide-if-no-js"><a href="/wp/wp-admin/edit.php?page=hpm-image-preview&p=<?php echo $post->ID; ?>" id="hpm-image-preview" style="color: white; font-weight: bolder; background-color: #0085ba; padding: 5px; text-decoration: none;">Preview featured image</a></p>' );
-			$('#hpm-image-preview').on('click', function(e){
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelector('#postimagediv .inside').innerHTML += '<p class="hide-if-no-js"><a href="/wp/wp-admin/edit.php?page=hpm-image-preview&p=<?php echo $post->ID; ?>" id="hpm-image-preview" style="color: white; font-weight: bolder; background-color: #0085ba; padding: 5px; text-decoration: none;">Preview featured image</a></p>';
+			document.querySelector('#hpm-image-preview').addEventListener('click', (e) => {
 				e.preventDefault();
-				let href = $(this).attr('href');
+				let href = e.target.getAttribute('href');
 				window.open(href, 'HPM Featured Image Preview', "width=850,height=800");
+			});
+			let pButtons = document.querySelectorAll("#publish, #save-post, #workflow_submit");
+			Array.from(pButtons).forEach((pB) => {
+				pB.addEventListener('click', (e) => {
+					let content = wp.editor.getContent('content');
+					let dialog = document.querySelector('#hpm-check');
+					let dialogContent = document.querySelector('#hpm-check-content');
+					if ( content.includes('src="http://') ) {
+						e.preventDefault();
+						dialogContent.innerHTML = '<h2>Using Insecure Embeds</h2><p>This post contains an embed or image from an insecure source. Please check and see if that embed is available via HTTPS.</p><p>To check this:</p><ol><li>Look for any &lt;img&gt; or &lt;iframe&gt; tags in your HTML</li><li>>Find the src="" attribute and copy the URL</li><li>Change \'http:\' to \'https:\' and paste it into your browser</li></ol><p>If it loads correctly, then great! Update the URL in your HTML</p><p>If you have any questions, email <a href="mailto:jcounts@houstonpublicmedia.org?subject=Question%20About%20HTTPS%20in%2-WordPress">jcounts@houstonpublicmedia.org</a><p>';
+						dialog.showModal();
+						return false;
+					} else if ( content.includes('alt=""') ) {
+						e.preventDefault();
+						dialogContent.innerHTML = '<h2>Image Alt Text Needed</h2><p>This post contains images with <strong>empty alt text tags</strong>. Alt text (or alternative text) is what displays in the event an image doesn\'t load, or is read by a screen reader, and <strong>typically describes the content of the image</strong>. Leaving these blank can <strong>cause problems for both accessibility and search engine optimization</strong>.</p><h3>Steps to Fix</h3><p>In the Visual editor mode, click on the image and click the pencil icon:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" alt="Clicking on an image in the editor reveals alignment tools as well as an edit button" /></a></p><p>In the popup, fill in the box at the top marked "Alternative Text":<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" alt="In the modal popup, fill in the top box marked Alternative Text" /></a></p><p>In the Text mode, look for the alt attribute in any <code>&lt;img&gt;</code> tags and enter your text there:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" alt="Look for any occurrences of alt that do not have any text in between the quotes" /></a></p><p>You can also enter the alt text in the Media Library popup when uploading the image:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" alt="The Media Library also contains a field for alt text" /></a></p>';
+						dialog.showModal();
+						return false;
+					} else {
+						return true;
+					}
+				});
 			});
 		});
 	</script>

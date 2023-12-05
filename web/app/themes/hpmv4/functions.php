@@ -125,43 +125,48 @@ function hpm_calculate_datetime_difference( $pID ) {
 
 
 // Custom Pagination
-function hpm_custom_pagination($pages = '', $range = 4, $pageLink = "") {
-    global $paged;
-    $showitems = ($range * 2)+1; // links to show
-    if(empty($paged))
-        $paged = 1;
-    if($pages == '') {
-        global $wp_query;
-        $pages = $wp_query->max_num_pages;
-        if(!$pages)
-            $pages = 1;
-    }
-    $pageURL ="";
-    if(1 != $pages) {
-        echo '<div class="wp-pagenavi"><span class="pages">Page ' . $paged . ' of ' . $pages . '</span>';
-        //echo ($pageLink!="")? "'.$pageLink.'1":get_pagenum_link(1);
+function hpm_custom_pagination( $pages = '', $range = 4, $pageLink = "" ): string {
+	global $paged;
+	$showitems = ( $range * 2 ) + 1; // links to show
+	if ( empty( $paged ) ) {
+		$paged = 1;
+	}
+	if ( empty( $pages ) ) {
+		global $wp_query;
+		$pages = $wp_query->max_num_pages;
+		if ( !$pages ) {
+			$pages = 1;
+		}
+	}
+	$output = '';
+	if ( 1 !== $pages ) {
+		$output .= '<div class="wp-pagenavi"><span class="pages">Page ' . $paged . ' of ' . $pages . '</span>';
+		//echo ($pageLink!="")? "'.$pageLink.'1":get_pagenum_link(1);
 
-        if($paged > 2 && $paged > $range+1 && $showitems < $pages)
-           // echo '<a href="'.($pageLink!="")? "'.$pageLink.'1":get_pagenum_link(1).'"><< First</a>';
-        if($paged > 1 && $showitems < $pages)
-           echo '<a href="'.($pageLink!="")?$pageLink.($paged - 1):get_pagenum_link($paged - 1).'">< Previous</a>';
+		//if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
+			// echo '<a href="'.($pageLink!="")? "'.$pageLink.'1":get_pagenum_link(1).'"><< First</a>';
+		//}
+		if ( $paged > 1 && $showitems < $pages ) {
+			$output .= '<a href="' . ( !empty( $pageLink ) ? $pageLink . ( $paged - 1 ) : get_pagenum_link( $paged - 1 ) ) . '">< Previous</a>';
+		}
 
-        for ($i=1; $i <= $pages; $i++)
-            if (1 != $pages && ( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )) {
-                $numLink = ($pageLink != "") ? $pageLink.$i : get_pagenum_link($i);
-                echo ($paged == $i) ? '<span aria-current="page" class="current">' . $i . '</span>' : '<a class="page larger" href="' . $numLink . '">' . $i .
-                    '</a>';
-            }
-        if ($paged < $pages && $showitems < $pages) {
-            $nextLink =  ($pageLink!="")? "'.$pageLink.($paged + 1).'1":get_pagenum_link($paged + 1);
-            echo '<span><a href="'.$nextLink . '">»</a></span>';
-        }
-        if ($paged < $pages-1 && $paged+$range-1 < $pages && $showitems < $pages) {
-            $lastLink = ($pageLink != "") ? "'.$pageLink.$pages.'" : get_pagenum_link($pages);
-            echo '<a class="last" aria-label="Last Page" href="' . $lastLink . '">Last »</a>';
-        }
-        echo '</div>';
-    }
+		for ( $i = 1; $i <= $pages; $i++ ) {
+			if ( 1 !== $pages && ( !( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
+				$numLink = !empty( $pageLink ) ? $pageLink . $i : get_pagenum_link( $i );
+				$output .= ( $paged == $i ) ? '<span aria-current="page" class="current">' . $i . '</span>' : '<a class="page larger" href="' . $numLink . '">' . $i . '</a>';
+			}
+		}
+		if ( $paged < $pages && $showitems < $pages ) {
+			$nextLink = !empty( $pageLink ) ? $pageLink . ( $paged + 1 ) : get_pagenum_link( $paged + 1 );
+			$output .= '<span><a href="' . $nextLink . '">»</a></span>';
+		}
+		if ( $paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages ) {
+			$lastLink = !empty( $pageLink) ? $pageLink . $pages : get_pagenum_link( $pages );
+			$output .= '<a class="last" aria-label="Last Page" href="' . $lastLink . '">Last »</a>';
+		}
+		$output .= '</div>';
+	}
+	return $output;
 }
 
 
@@ -883,17 +888,17 @@ function hpm_article_share( $nprdata = null ): void {
 			<h4>Share</h4>
 			<div class="service-icon facebook">
 				<button aria-label="Share to Facebook" data-href="https://www.facebook.com/sharer.php?u=<?php echo $facebook_link; ?>" data-dialog="400:368">
-					<?php echo hpm_svg_output( 'facebook' ); ?>
+					<?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text">Facebook</span>
 				</button>
 			</div>
 			<div class="service-icon twitter">
-				<button aria-label="Share to Twitter" data-href="https://twitter.com/share?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
-					<?php echo hpm_svg_output( 'twitter' ); ?>
+				<button aria-label="Share to Twitter" data-href="https://twitter.com/intent/tweet?text=<?PHP echo $uri_title; ?>&amp;url=<?PHP echo $twitter_link; ?>" data-dialog="364:250">
+					<?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text">Twitter/X</span>
 				</button>
 			</div>
 			<div class="service-icon linkedin">
 				<button aria-label="Share to LinkedIn" data-href="https://www.linkedin.com/shareArticle?mini=true&source=Houston+Public+Media&summary=<?PHP echo $uri_excerpt; ?>&title=<?PHP echo $uri_title; ?>&url=<?PHP echo $linkedin_link; ?>" target="_blank" data-dialog="600:471">
-					<?php echo hpm_svg_output( 'linkedin' ); ?>
+					<?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text">LinkedIn</span>
 				</button>
 			</div>
 			<div class="service-icon envelope">

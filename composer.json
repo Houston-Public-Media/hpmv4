@@ -45,7 +45,7 @@
 		}
 	],
 	"require": {
-		"php": ">=8.0",
+		"php": ">=8.1",
 		"composer/installers": "^1.4",
 		"vlucas/phpdotenv": "^2.0.1",
 		"johnpbloch/wordpress": "6.4.1",
@@ -61,7 +61,7 @@
 		"wpackagist-plugin/easy-primary-category": "1.1.1",
 		"wpackagist-plugin/ewww-image-optimizer": "^7.0.0",
 		"wpackagist-plugin/html-editor-syntax-highlighter": "2.4.4",
-		"wpackagist-plugin/members": "3.2.8",
+		"wpackagist-plugin/members": "3.2.9",
 		"wpackagist-plugin/metronet-tag-manager": "1.5.5",
 		"wpackagist-plugin/npr-story-api": "*",
 		"wpackagist-plugin/publish-to-apple-news": "2.4.0",
@@ -72,11 +72,7 @@
 		"wpackagist-plugin/www-xml-sitemap-generator-org": "2.0.7",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"jwcounts/wp-missed-schedule": "1.0.1",
-		"noweh/twitter-api-v2-php": "1.7.3",
-		"wpackagist-plugin/activitypub": "*",
-		"wpackagist-plugin/webfinger": "*",
-		"wpackagist-plugin/nodeinfo": "*",
-		"wpackagist-plugin/wp-pagenavi": "*"
+		"noweh/twitter-api-v2-php": "1.7.3"
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^3.0.2"

@@ -118,7 +118,7 @@ if ( is_preview() ) { ?>
 		} elseif ( $cats->term_id == 12 ) { ?>
 				<div class="sidebar-ad">
 					<h4>Support Comes From</h4>
-					<p><a href="https://www.texasmutual.com/employers/pr/driver-safety?utm_source=KUHF-KUHT&utm_medium=digital&utm_campaign=BIB-Driver-Safety&utm_id=BIB-Driver-Safety"><img src="https://cdn.houstonpublicmedia.org/assets/images/300x250-EN-TXM-Driver-Safety.jpg.webp" alt="Texas Mutual: Driving Texas business forward" /></a></p>
+					<p><a href="https://www.texasmutual.com/employers/pr/2023-employer-dividends?utm_source=Houston+Public+Media&utm_medium=display&utm_campaign=Dividends&utm_id=Dividends"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXM_BIB_Fraud_300x250.gif.webp" alt="Texas Mutual: You can count on us to fight fraud" /></a></p>
 				</div>
 <?php
 		}
@@ -127,17 +127,6 @@ if ( is_preview() ) { ?>
 	get_template_part('sidebar', 'none'); ?>
             <?php echo author_footer( $single_id, "" ); ?>
 		</aside>
-		<div class="newslatter-form">
-			<?php
-					if ( is_single() && get_post_type() == 'post' ) {
-						if ( in_category( 'news' ) ) {
-							$form_id = '441232';
-							 echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
-						}
-					}
-
-			?>
-		</div>
 	</main>
 </div>
 <?php get_footer(); ?>

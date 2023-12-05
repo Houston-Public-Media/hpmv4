@@ -89,24 +89,26 @@
 							<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" rel="noopener" target="_blank">University of Houston</a></p>
 							<p>&copy; <?php echo date('Y'); ?> Houston Public Media</p>
 						</div>
-						<div class="d-flex social-icon-wrap">
-                            <div class="social-icon facebook">
-                                <a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text" >Facebook</span></a>
-                            </div>
-                            <div class="social-icon twitter">
-                                <a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text" >Twitter</span></a>
-                            </div>
-                            <div class="social-icon instagram">
-                                <a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?><span class="screen-reader-text" >Instagram</span></a>
-                            </div>
-                            <div class="social-icon youtube">
-                                <a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?><span class="screen-reader-text" >YouTube</span></a>
-                            </div>
-                            <div class="social-icon linkedin">
-                                <a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text" >Linkedin</span></a>
-                            </div>
+						<div class="d-flex service-icon-wrap">
+							<div class="service-icon facebook">
+								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text">Facebook</span></a>
+							</div>
+							<div class="service-icon twitter">
+								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text">Twitter</span></a>
+							</div>
+							<div class="service-icon instagram">
+								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?><span class="screen-reader-text">Instagram</span></a>
+							</div>
+							<div class="service-icon youtube">
+								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?><span class="screen-reader-text">YouTube</span></a>
+							</div>
+							<div class="service-icon linkedin">
+								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text">LinkedIn</span></a>
+							</div>
+							<div class="service-icon mastodon">
+								<a href="https://mastodon.social/@houstonpublicmedia" rel="noopener me" target="_blank"><?php echo hpm_svg_output( 'mastodon' ); ?><span class="screen-reader-text">Mastodon</span></a>
+							</div>
 						</div>
-
 					</div>
 
 				</div>

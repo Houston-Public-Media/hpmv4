@@ -179,7 +179,7 @@ $tras = null;
                             <div class="hpm-nowplay" data-station="tv83" data-upnext="false"><?php echo hpm_now_playing( 'tv8.3' ); ?></div>
                         </div>
                         <div class="station-now-play">
-                            <h5><a href="/tv8">TV 8.4 (World)</a></h5>
+                            <h5><a href="/tv8">TV 8.4 (NHK)</a></h5>
                             <div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
                         </div>
                         <div class="station-now-play">
