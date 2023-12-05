@@ -171,7 +171,8 @@ if ( $cat->have_posts() ) {
             <div>
     <?php
         if ( $cat->found_posts > 15 ) {
-            wp_pagenavi( array( 'query' => $cat ) );
+            //wp_pagenavi( array( 'query' => $cat ) );
+            echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/".strtolower($term->name)."/page/");
         }
     ?>
     <p>&nbsp;</p></div>

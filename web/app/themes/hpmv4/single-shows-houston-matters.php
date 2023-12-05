@@ -199,14 +199,12 @@ if ( $cat->have_posts() ) {
         </div>
     </div>
 
-    <div>
-        <?php
-        if ( $cat->found_posts > 15 ) {
-            wp_pagenavi( array( 'query' => $cat ) );
-        }
-        ?>
-        <p>&nbsp;</p>
-    </div>
+            <?php
+            if ( $cat->found_posts > 15 ) {
+                echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/houston-matters/page/");
+            }
+            ?>
+            <p>&nbsp;</p>
 	</main>
 	</div>
 <?php get_footer(); ?>

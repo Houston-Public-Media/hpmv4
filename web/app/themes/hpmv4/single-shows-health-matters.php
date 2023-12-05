@@ -234,7 +234,10 @@ get_header(); ?>
 			</div>
 <?php
 	if ( $cat->found_posts > 15 ) {
-        wp_pagenavi( array( 'query' => $cat ) );?>
+        //wp_pagenavi( array( 'query' => $cat ) );
+        echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/health-matters/page/");
+
+        ?>
 
 			<!--<div class="readmore">
 				<a href="/topics/<?php /*echo $term->slug; */?>/page/2">View More <?php /*echo $term->name; */?></a>

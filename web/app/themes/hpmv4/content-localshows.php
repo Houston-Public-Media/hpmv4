@@ -13,7 +13,7 @@
                 <strong>HOUSTON <span>MATTERS</span></strong>
             </h3>
             <div class="image">
-                <a href="/shows/houston-matters/"><img src="<?php echo get_template_directory_uri(); ?>/images/Houston Matters with Craig Cohen.png" alt="Houston Matters with Craig Cohen" /></a>
+                <a href="/shows/houston-matters/"><img src="https://cdn.houstonpublicmedia.org/assets/images/Houston-Matters-with-Craig-Cohen-Logo.png.webp" alt="Houston Matters with Craig Cohen" /></a>
             </div>
             <ul class="list-none news-links">
 <?php
@@ -31,7 +31,7 @@
                 <strong>PARTY <span>POLITICS</span></strong>
             </h3>
             <div class="image">
-                <a href="/shows/party-politics/"><img src="<?php echo get_template_directory_uri(); ?>/images/Party-Politics.png" alt="Party Politics" /></a>
+                <a href="/shows/party-politics/"><img src="https://cdn.houstonpublicmedia.org/assets/images/Party-Politics-Logo.png.webp" alt="Party Politics" /></a>
             </div>
             <ul class="list-none news-links">
 <?php
@@ -50,7 +50,7 @@
                 <strong>I SEE <span>U</span></strong>
             </h3>
             <div class="image">
-                <a href="https://iseeushow.org/"><img src="<?php echo get_template_directory_uri(); ?>/images/I SEE U with Eddie Robinson.png" alt="I SEE U with Eddie Robinson" /></a>
+                <a href="https://iseeushow.org/"><img src="https://cdn.houstonpublicmedia.org/assets/images/I-SEE-U-with-Eddie-Robinson-Logo.png.webp" alt="I SEE U with Eddie Robinson" /></a>
             </div>
             <ul class="list-none news-links">
 <?php

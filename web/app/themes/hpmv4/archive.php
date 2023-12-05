@@ -83,8 +83,9 @@ get_header(); ?>
                 <div>
                     <?php
                     //if ( $cat->found_posts > 15 ) {
-                        wp_pagenavi( );
-                    //}
+                        //wp_pagenavi( );
+                    echo hpm_custom_pagination($cat->max_num_pages, 4, "");
+                   // }
                     ?>
                     <p>&nbsp;</p>
                 </div>

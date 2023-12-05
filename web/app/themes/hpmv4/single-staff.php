@@ -11,8 +11,12 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 <?php
+$aurthorName = "";
 	while ( have_posts() ) {
+
 		the_post();
+        $aurthorName = $post->post_name;
+
 		$staff = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
 		$staff_authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', true );
 		$staff_pic = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' ); ?>
@@ -98,6 +102,7 @@ get_header(); ?>
 <?php
 	if ( !empty( $staff_authid ) && $staff_authid > 0 ) {
 		$nice_name = get_the_author_meta( 'user_nicename', $staff_authid );
+
 		$auth = new WP_Query([
 			'author' => $staff_authid,
 			'posts_per_page' => 15,
@@ -112,7 +117,11 @@ get_header(); ?>
 				get_template_part( 'content', get_post_type() );
 			}
 			wp_reset_postdata();
-			wp_pagenavi( [ 'query' => $auth ] ); ?>
+			//wp_pagenavi( [ 'query' => $auth ] );
+
+            echo "safdsf". hpm_custom_pagination($auth->max_num_pages, 4, "/articles/author/".$aurthorName."/page/");
+
+ ?>
 			</section>
 <?php
 		}

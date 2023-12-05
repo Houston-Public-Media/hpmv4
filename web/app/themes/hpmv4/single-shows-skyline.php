@@ -307,7 +307,9 @@ get_header(); ?>
 			wp_reset_query(); ?>
                     </div>
 
-					</div><?php wp_pagenavi( array( 'query' => $studio ) ); ?>
+					</div><?php //wp_pagenavi( array( 'query' => $studio ) );
+                echo hpm_custom_pagination($studio->max_num_pages, 4, "/topics/in-studio/page/");
+                    ?>
 
 
                 <div class="episodes-block">
@@ -323,7 +325,7 @@ get_header(); ?>
 			wp_reset_query(); ?>
                     </div>
                 </div>
-                <?php wp_pagenavi( array( 'query' => $others ) ); ?>
+                <?php //wp_pagenavi( array( 'query' => $others ) ); ?>
 
 				</div>
 			</div>

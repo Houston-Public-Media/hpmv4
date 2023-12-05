@@ -40,7 +40,11 @@ get_header(); ?>
 						}
 
 						wp_reset_postdata();
-						wp_pagenavi( [ 'query' => $cat ] ); ?>
+						//wp_pagenavi( [ 'query' => $cat ] );
+                echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/press/page/");
+
+                        ?>
+
 				<!--<div class="readmore">
 					<a href="/topics/<?php /*echo $term->slug; */?>/page/2">View More <?php /*echo $term->name; */?></a>
 				</div>-->
