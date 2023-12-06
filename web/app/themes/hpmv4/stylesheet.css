@@ -3667,7 +3667,7 @@ h2.ss-join {
 	color: var(--main-text);
 }
 .page.support-ssac article.support-members .entry-content p {
-	display: none;
+	/*display: none;*/
 }
 .page.support-ssac article.support-members .entry-content h3 {
 	font-size: 150%;
