@@ -8,7 +8,7 @@ get_header(); ?>
 			.page-template-page-passport .page-header {
 				height: 0;
 				padding: 0 0 calc(100%/2.5) 0;
-				background-size: cover;
+				background-size: contain;
 				background-position: top center;
 				position: relative;
 				margin: 0;
