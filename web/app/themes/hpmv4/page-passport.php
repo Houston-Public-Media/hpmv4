@@ -63,7 +63,7 @@ get_header(); ?>
 				width: 100%;
 			}
 			.page-template-page-passport .page-content :is(.passport-donate,.passport-signin) a {
-				font: 100 1.5em/1em var(--hpm-font-main);
+				/*font: 100 1.5em/1em var(--hpm-font-main);*/
 				width: 60%;
 				display: block;
 				text-align: center;
@@ -100,13 +100,12 @@ get_header(); ?>
 			.page-template-page-passport .page-content .passport-example p {
 				padding-right: 0;
 				padding-left: 0;
-				font-family: var(--hpm-font-main);
+				/*font-family: var(--hpm-font-main);*/
 				color: #464646;
 				font-size: 1em;
 			}
 			.page-template-page-passport .page-content .passport-example h3 {
-				font-family: var(--hpm-font-main);
-				font-weight: 100;
+
 				color: #464646;
 				font-size: 1.25em;
 			}
@@ -243,7 +242,7 @@ get_header(); ?>
 				padding: 0.5em;
 				border: 1px solid #464646;
 				color: white;
-				font-family: var(--hpm-font-main); font-weight: 100;
+				/*font-family: var(--hpm-font-main); font-weight: 100;*/
 			}
 			.page-template-page-passport .page-content form#passport-activate button {
 				background-color: #0A145A;
@@ -255,7 +254,7 @@ get_header(); ?>
 				width: 70%;
 				padding: 0.5em;
 				border: 1px solid #464646;
-				font: 400 100%/1em var(--hpm-font-main);
+				/*font: 400 100%/1em var(--hpm-font-main);*/
 			}
 			@media screen and (min-width: 34em) {
 				.page-template-page-passport .page-header {
