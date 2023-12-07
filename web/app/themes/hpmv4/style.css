@@ -1,5 +1,5 @@
 /* Import old css because want to replace properties */
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;1,100;0,400;1,400;0,700;1,700;0,900;1,900");
 @import url(stylesheet.css);
 @import url(main.css);
 
