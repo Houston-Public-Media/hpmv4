@@ -18,7 +18,7 @@
 }
 
 body {
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: "Open Sans",arial,sans-serif;
   background-color: white;
 }
 img {
@@ -1763,8 +1763,8 @@ body.single-shows #station-social.station-social { grid-template-columns: unset;
 .about-houston-block ul.episode-list { padding: 10px 0 0; list-style: none;}
 .about-houston-block ul.episode-list li a.list-link {display: flex;align-items: center;padding: 15px;border-bottom: 1px solid #c5c5c5;}
 .houston-content { display: flex; }
-.houston-content .image-wrapper { max-width: 45%; width: 100%; background: #f5f5f5; padding: 20px;}
-.houston-content .content-wrapper { max-width: 55%; width: 100%; background: #e7f4fa; padding: 20px; }
+.houston-content .image-wrapper { max-width: 45%; width: 100%; background: #f5f5f5; padding: 10px;}
+.houston-content .content-wrapper { /*max-width: 55%;*/ width: 100%; background: #e7f4fa; padding: 10px; }
 .houston-content .image-wrapper .image-box { padding-bottom: 22px;display: block; }
 .houston-content .content-wrapper .content-box {
   border-bottom: 1px solid #c5c5c5;
@@ -1789,7 +1789,7 @@ body.single-shows #station-social.station-social { grid-template-columns: unset;
 
 .contact-block {
   margin-top: 20px; 
-  background: #e7f4fa;
+  /*background: #e7f4fa;*/
   padding: 20px;
 }
 
