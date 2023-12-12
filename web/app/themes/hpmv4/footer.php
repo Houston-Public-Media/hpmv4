@@ -89,7 +89,7 @@
 							<p>Houston Public Media is supported with your gifts to the Houston Public Media Foundation and is licensed to the <a href="https://www.uh.edu" rel="noopener" target="_blank">University of Houston</a></p>
 							<p>&copy; <?php echo date('Y'); ?> Houston Public Media</p>
 						</div>
-						<div class="d-flex service-icon-wrap">
+						<div class="icon-wrap">
 							<div class="service-icon facebook">
 								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text">Facebook</span></a>
 							</div>
