@@ -686,16 +686,16 @@ footer#colophon .footer-tag p {
 .single-post #article-share {
   margin: 0;
 }
-.single-post #article-share .icon-wrap {
-  display: flex;
-  gap: 0.4rem;
-  padding:0;
-}
+/*.single-post #article-share .icon-wrap {*/
+/*  display: flex;*/
+/*  gap: 0.4rem;*/
+/*  padding:0;*/
+/*}*/
 .single-post #article-share .icon-wrap h4 {
   display: none;
 }
 .single-post #article-share .icon-wrap .service-icon {
-  --unit: 1.3rem;
+  --unit: 2rem;
 }
 .single-post article .entry-footer .tags-links a {
   border: solid 1px #404040;

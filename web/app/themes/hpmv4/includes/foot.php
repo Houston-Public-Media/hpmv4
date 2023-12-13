@@ -56,7 +56,7 @@ function author_footer( $id, $type ): string {
                 {
                     $tempAuthorArticles .= '<div class="col-sm-6">';
                 }
-                $tempAuthorArticles .="<section class=\"highlights\">";
+                $tempAuthorArticles .="<section class=\"highlights col-md-6 col-lg-12\">";
                 $q = new WP_Query([
                     'posts_per_page' => 4,
                     'post_type' => 'post',
@@ -94,12 +94,11 @@ function author_footer( $id, $type ): string {
             $temp .= '<div class="col-sm-6">';
         }
             $temp .= "
-	<section class=\"sidebar-author\">
-		<div class=\"d-flex sa-header\">
-			<div class=\"author-image sa-pic\">" .
-                ($local ? get_the_post_thumbnail($author->post->ID, 'post-thumbnail', ['alt' => $author->post->post_title]) : '') .
-                "</div>
-			<div class=\"sa-info\">
+	<section class=\"sidebar-author col-md-6 col-lg-12\">
+		<div class=\"d-flex sa-header\">" .
+                ( $local ? '<div class="author-image sa-pic">'. get_the_post_thumbnail($author->post->ID, 'post-thumbnail', ['alt' => $author->post->post_title] ) . '</div>' : '') .
+                "
+			<div class=\"sa-info flex-grow-1\">
 				<h2>" . ($local ? $author->post->post_title : $coa->display_name) .
                 ($local && !empty($meta['pronouns']) ? ' <span class="staff-pronouns">' . $meta['pronouns'] . '</span>' : '') . "</h2>" .
                 "<h3>" . ($local ? $meta['title'] : '') . "</h3>
