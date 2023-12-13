@@ -2216,8 +2216,8 @@ footer#colophon .foot-logo a svg.hpm-logo .cls-6 {
 	fill: var(--main-blue);
 }
 footer#colophon .icon-wrap {
-	grid-template-columns: repeat(6, 3.5rem);
-	margin-bottom: 1rem;
+	grid-template-columns: repeat(6, 3rem);
+	margin: 1rem 0;
 }
 footer#colophon p {
 	padding: 0 0 1rem;
