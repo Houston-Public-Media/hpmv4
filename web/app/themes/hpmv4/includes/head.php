@@ -34,7 +34,7 @@ function hpm_site_header(): void { ?>
                     // Primary navigation menu.
                     wp_nav_menu([
                         'menu_class' => 'nav-menu',
-                        'menu' => 59241, //2111 59241
+                        'menu' => 2111, //2111 59241
                         'walker' => new HPM_Menu_Walker
                     ]);
                     ?>
@@ -66,6 +66,10 @@ function hpm_site_header(): void { ?>
                             <div class="social-icon linkedin">
                                 <a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text" >Linkedin</span></a>
                             </div>
+                            <div class="social-icon mastodon">
+                                <a href="https://mastodon.social/@houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'mastodon' ); ?><span class="screen-reader-text" >Mastodon</span></a>
+                            </div>
+
                         </div>
                     </div>
                 </div>

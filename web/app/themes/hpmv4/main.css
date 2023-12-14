@@ -645,7 +645,7 @@ footer#colophon .footer-tag p {
   display: flex;
 }
 .social-icon-wrap {
-  gap: 10px;
+  gap: 5px;
   position: absolute;
   right: 0;
   top: 35px;
