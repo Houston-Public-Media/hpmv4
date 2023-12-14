@@ -1163,6 +1163,7 @@ select#hpm-staff-cat {
   width:100px;
   height: auto;
   background: #222054;
+  align-self: center;
 }
 .support-opps .opp h2 {
   font-size: 18px;
@@ -1181,8 +1182,17 @@ select#hpm-staff-cat {
 }
 .support-tiles {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0 1rem;
+  gap: 1rem;
+}
+@media screen and (min-width: 34em) {
+  .support-tiles {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (min-width: 52.5em) {
+  .support-tiles {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 .quick-access {
   display: flex;
