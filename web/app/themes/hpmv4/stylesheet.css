@@ -2391,21 +2391,21 @@ footer#colophon ul li a {
 #content > .hpm-promo-wrap > .column-span {
 	grid-column: 1/span 2;
 }
-aside > .hpm-promo-wrap {
+aside > div > .hpm-promo-wrap {
 	display: none;
 }
 @media screen and (min-width: 52em) {
 	#content > .hpm-promo-wrap {
 		display: none;
 	}
-	aside > .hpm-promo-wrap {
+	aside > div > .hpm-promo-wrap {
 		display: grid;
 		grid-template-columns: 1fr;
 	}
-	aside > .hpm-promo-wrap > .column-one {
+	aside > div > .hpm-promo-wrap > .column-one {
 		grid-row: 1;
 	}
-	aside > .hpm-promo-wrap > .column-two {
+	aside > div > .hpm-promo-wrap > .column-two {
 		grid-row: 2;
 	}
 }
@@ -2689,7 +2689,7 @@ body:is(.single):not(.single-staff,.author) #main {
 	display: inline-block;
 	padding-right: 1em;
 }
-.single #main article.post .entry-footer {
+:is(.single,.page-template-page-npr-articles) #main article.post .entry-footer {
 	margin-top: 1rem;
 }
 aside > * + * {
@@ -3210,9 +3210,9 @@ article .entry-header p.staff-pronouns,
 		padding: 2rem;
 		gap: 2rem;
 	}
-	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap {
-		padding: 0 0 1rem 0;
-	}
+	/*:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap {*/
+	/*	padding: 0 0 1rem 0;*/
+	/*}*/
 	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap :is(h1,h2,h3,h4,h5) {
 		grid-column: 1;
 	}
@@ -3274,15 +3274,15 @@ article .entry-header p.staff-pronouns,
 	:is(.single,.page-template-page-npr-articles) #main > article.post .entry-footer {
 		grid-column: 2;
 	}
-	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap {
-		grid-template-columns: 3.5rem 3.5rem;
-		gap: 1rem;
-		position: sticky;
-    	top: 1rem;
-	}
-	:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap :is(h1,h2,h3,h4,h5) {
-		grid-column: 1 / span 2;
-	}
+	/*:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap {*/
+	/*	grid-template-columns: 3.5rem 3.5rem;*/
+	/*	gap: 1rem;*/
+	/*	position: sticky;*/
+    /*	top: 1rem;*/
+	/*}*/
+	/*:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap :is(h1,h2,h3,h4,h5) {*/
+	/*	grid-column: 1 / span 2;*/
+	/*}*/
 }
 
 /* In-Depth */
