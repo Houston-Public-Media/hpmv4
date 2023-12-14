@@ -675,8 +675,13 @@ footer#colophon .footer-tag p {
   justify-content: space-between;
   font-size: 14px;
 }
+
 .byline-date address {
   margin: 0;
+}
+
+:is(.single,.page-template-page-npr-articles) article.post {
+  /*display: block !important;*/
 }
 :is(.single,.page-template-page-npr-articles) #article-share {
   margin: 0;
@@ -792,6 +797,7 @@ footer#colophon .footer-tag p {
 article.staff {
   display: flex;
   flex-flow: row nowrap;
+  position: relative;
   margin: 0;
   width: 100%;
   /*margin: 1em;*/
