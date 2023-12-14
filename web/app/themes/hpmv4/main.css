@@ -681,7 +681,7 @@ footer#colophon .footer-tag p {
 }
 
 :is(.single,.page-template-page-npr-articles) article.post {
-  display: block !important;
+  /*display: block !important;*/
 }
 :is(.single,.page-template-page-npr-articles) #article-share {
   margin: 0;
