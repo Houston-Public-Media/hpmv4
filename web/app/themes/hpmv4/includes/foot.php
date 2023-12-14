@@ -94,7 +94,7 @@ function author_footer( $id, $type ): string {
             $temp .= '<div class="col-sm-6">';
         }
             $temp .= "
-	<section class=\"sidebar-author col-md-6 col-lg-12\">
+	<section class=\"sidebar-author col-md-6 col-lg-12\" style='margin-top: 10px;'>
 		<div class=\"d-flex sa-header\">" .
                 ( $local ? '<div class="author-image sa-pic">'. get_the_post_thumbnail($author->post->ID, 'post-thumbnail', ['alt' => $author->post->post_title] ) . '</div>' : '') .
                 "
