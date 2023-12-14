@@ -90,7 +90,6 @@ Template Name: NPR Content
 					</ul>
                     </div>
                 </div>
-				</section>
 			<?php
 				}
 				get_template_part( 'sidebar', 'none' ); ?>

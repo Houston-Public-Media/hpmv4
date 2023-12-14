@@ -2392,21 +2392,21 @@ footer#colophon ul li a {
 #content > .hpm-promo-wrap > .column-span {
 	grid-column: 1/span 2;
 }
-aside > div > .hpm-promo-wrap {
+aside .hpm-promo-wrap {
 	display: none;
 }
 @media screen and (min-width: 52em) {
 	#content > .hpm-promo-wrap {
 		display: none;
 	}
-	aside > div > .hpm-promo-wrap {
+	aside .hpm-promo-wrap {
 		display: grid;
 		grid-template-columns: 1fr;
 	}
-	aside > div > .hpm-promo-wrap > .column-one {
+	aside .hpm-promo-wrap > .column-one {
 		grid-row: 1;
 	}
-	aside > div > .hpm-promo-wrap > .column-two {
+	aside .hpm-promo-wrap > .column-two {
 		grid-row: 2;
 	}
 }
