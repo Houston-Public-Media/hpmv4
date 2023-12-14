@@ -1101,7 +1101,9 @@ select#hpm-staff-cat {
 
 .opportunity-img img{
   width: 100%;
-  aspect-ratio: 2/1;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .opportunity-block {
@@ -1147,27 +1149,20 @@ select#hpm-staff-cat {
 
 .support-opps .opp {
   border-bottom: dotted 2px #222054;
-  min-height: 150px;
 }
 
 .support-opps .educationpage {
   min-height: 265px !important;
 }
 
-.support-opps .opp a {
-  display: flex;
-  text-decoration: none ;
-  align-items: flex-start;
+.opp > a {
+  gap: 0 1rem;
 }
 
 .support-opps .opp img {
   width:100px;
   height: auto;
   background: #222054;
-}
-
-.support-opps .opp .opp-top{
-  padding-left: 20px;
 }
 .support-opps .opp h2 {
   font-size: 18px;
@@ -1182,9 +1177,13 @@ select#hpm-staff-cat {
 }
 
 .support-opps .opp  {
-  padding:20px 0;
+  padding: 1rem;
 }
-
+.support-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0 1rem;
+}
 .quick-access {
   display: flex;
   justify-content: flex-end;
