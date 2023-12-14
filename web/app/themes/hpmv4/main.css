@@ -680,50 +680,22 @@ footer#colophon .footer-tag p {
   margin: 0;
 }
 
-.single-post article.post {
+:is(.single,.page-template-page-npr-articles) article.post {
   display: block !important;
 }
-.single-post #article-share {
+:is(.single,.page-template-page-npr-articles) #article-share {
   margin: 0;
 }
-/*.single-post #article-share .icon-wrap {*/
-/*  display: flex;*/
-/*  gap: 0.4rem;*/
-/*  padding:0;*/
-/*}*/
-.single-post #article-share .icon-wrap h4 {
+:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap h4 {
   display: none;
 }
-.single-post #article-share .icon-wrap .service-icon {
+:is(.single,.page-template-page-npr-articles) #article-share .icon-wrap .service-icon {
   --unit: 2rem;
 }
-.single-post article .entry-footer .tags-links a {
+:is(.single,.page-template-page-npr-articles) article .entry-footer .tags-links a {
   border: solid 1px #404040;
   background: #e3dfdf;
 }
-
-.page-template-page-npr-articles #article-share .icon-wrap {
-  /*display: flex;
-  gap: 0.4rem;
-  float: right;
-  top: -39px;
-  position: relative;*/
-  display: flex;
-  gap: 0.4rem;
-  padding: 0;
-}
-.page-template-page-npr-articles #article-share .icon-wrap h4 {
-  display: none;
-}
-.page-template-page-npr-articles #article-share .icon-wrap .service-icon {
- /* --unit: 1rem;*/
-  --unit: 1.3rem;
-}
-.page-template-page-npr-articlest article .entry-footer .tags-links a {
-  border: solid 1px #404040;
-  background: #e3dfdf;
-}
-
 #revue-embed {
   background: #e4ebf5;
   text-align: center;
