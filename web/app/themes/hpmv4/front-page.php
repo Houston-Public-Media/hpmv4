@@ -134,12 +134,12 @@ $tras = null;
 
         <section class="section news-list">
             <div class="row">
-                <div class="col-sm-12 col-md-9 news-list-left">
+                <div class="col-sm-12 col-lg-9 news-list-left">
                     <div class="row">
                         <?php get_template_part("content", "localnews") ?>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3 news-list-right most-view">
+                <div class="col-sm-12 col-lg-3 news-list-right most-view">
                     <h2 class="title title-full">
                         <strong>Most <span>Viewed</span></strong>
                     </h2>
@@ -154,12 +154,12 @@ $tras = null;
         <?php get_template_part("content", "localshows") ?>
         <section class="section news-list">
             <div class="row">
-                <div class="col-sm-12 col-md-9 news-list-left">
+                <div class="col-sm-12 col-lg-9 news-list-left">
                     <div class="row">
                         <?php get_template_part("content", "localnewsbottom") ?>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3 news-list-right news-schedule">
+                <div class="col-sm-12 col-lg-3 news-list-right news-schedule">
                     <h2 class="title title-full">
                         <strong>TV8 &amp; NEWS 88.7 <span>SCHEDULE</span></strong>
                     </h2>
@@ -210,14 +210,14 @@ $tras = null;
 
         <section class="section news-list news-list-full">
             <div class="row">
-                <div class="col-sm-12 col-md-9 news-list-left">
+                <div class="col-sm-12 col-lg-9 news-list-left">
                     <h2 class="title">
                         <strong>News from <span>NPR</span></strong>
                     </h2>
                     <?php echo hpm_nprapi_output(); ?>
 
                 </div>
-                <div class="col-sm-12 col-md-3 news-list-right most-view">
+                <div class="col-sm-12 col-lg-3 news-list-right most-view">
 
                     <div id="div-gpt-ad-1394579228932-2">
                         <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>

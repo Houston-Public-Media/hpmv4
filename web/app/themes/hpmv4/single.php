@@ -83,6 +83,7 @@ if ( is_preview() ) { ?>
 <?php
 	} ?>
 		<aside class="column-right">
+			<div class="row">
 <?php
 	$categories = get_the_category( $single_id );
 	foreach ( $categories as $cats ) {
@@ -105,7 +106,7 @@ if ( is_preview() ) { ?>
 				} else {
 					$series_link = "/topics/" . $cats->slug;
 				} ?>
-						<div id="current-series">
+						<div id="current-series" class="col-md-6 col-lg-12">
 							<h4><a href="<?php echo $series_link; ?>">More from <?php echo $cats->cat_name; ?></a></h4>
 <?php
 				while ( $series->have_posts() ) {
@@ -116,7 +117,7 @@ if ( is_preview() ) { ?>
 <?php
 			}
 		} elseif ( $cats->term_id == 12 ) { ?>
-				<div class="sidebar-ad">
+				<div class="sidebar-ad col-md-6 col-lg-12">
 					<h4>Support Comes From</h4>
 					<p><a href="https://www.texasmutual.com/employers/pr/2023-employer-dividends?utm_source=Houston+Public+Media&utm_medium=display&utm_campaign=Dividends&utm_id=Dividends"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXM_BIB_Fraud_300x250.gif.webp" alt="Texas Mutual: You can count on us to fight fraud" /></a></p>
 				</div>
@@ -126,6 +127,7 @@ if ( is_preview() ) { ?>
 	wp_reset_postdata();
 	get_template_part('sidebar', 'none'); ?>
             <?php echo author_footer( $single_id, "" ); ?>
+			</div>
 		</aside>
 	</main>
 </div>
