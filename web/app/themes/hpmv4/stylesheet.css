@@ -2127,8 +2127,7 @@ h2#foot-banner {
 	text-align: center;
 	padding: 1.25rem clamp(1rem, 5%, 5rem);
 	color: #404040;
-	background: rgb(35, 123, 189);
-	background: #e4ebf5;
+	background: #e5ebf4 url(https://cdn.houstonpublicmedia.org/assets/images/donation-bg.jpg.webp) no-repeat right bottom;
 	margin: 0 auto;
 	clear: both;
 	font-weight: 900;
@@ -2139,7 +2138,8 @@ h2#foot-banner a {
 	color: #404040;
 	display: block;
 	margin: 0 auto;
-	max-width: var(--max-width);
+	max-width: 60rem;
+	font-size: 1.125rem;
 }
 h2#foot-banner span.donate {
 	background-color: #237bbd;
@@ -2150,6 +2150,7 @@ h2#foot-banner span.donate {
 	flex-flow: row nowrap;
 	width: 10rem;
 	margin: 0 auto;
+	justify-content: center;
 }
 h2#foot-banner svg {
 	fill: rgb(255, 255, 255);
