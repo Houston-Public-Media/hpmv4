@@ -37,54 +37,47 @@ $aurthorName = "";
                                 <h3><?php echo $staff['title']; ?></h3>
 <?php
 		if ( !empty( $staff ) ) { ?>
-						<div class="icon-wrap">
+								<div class="icon-wrap">
 <?php
 			if ( !empty( $staff['phone'] ) ) { ?>
-							<div class="service-icon phone">
-								<a href="tel://+1<?php echo str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ); ?>" title="Call <?php the_title(); ?> at <?php echo $staff['phone']; ?>" data-phone="<?php echo $staff['phone']; ?>"><?php echo hpm_svg_output( 'phone' ); ?><span class="screen-reader-text" >Call</span></a>
-							</div>
+									<div class="service-icon phone">
+										<a href="tel://+1<?php echo str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ); ?>" title="Call <?php the_title(); ?> at <?php echo $staff['phone']; ?>" data-phone="<?php echo $staff['phone']; ?>"><?php echo hpm_svg_output( 'phone' ); ?><span class="screen-reader-text" >Call</span></a>
+									</div>
 <?php
 			}
 			if ( !empty( $staff['facebook'] ) ) { ?>
-							<div class="service-icon facebook">
-								<a href="<?php echo $staff['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text" >Facebook</span></a>
-							</div>
+									<div class="service-icon facebook">
+										<a href="<?php echo $staff['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text" >Facebook</span></a>
+									</div>
 <?php
 			}
 			if ( !empty( $staff['twitter'] ) ) { ?>
-							<div class="service-icon twitter">
-								<a href="<?php echo $staff['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text" >Twitter</span></a>
-							</div>
+									<div class="service-icon twitter">
+										<a href="<?php echo $staff['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text" >Twitter</span></a>
+									</div>
 <?php
 			}
 			if ( !empty( $staff['linkedin'] ) ) { ?>
-							<div class="service-icon linkedin">
-								<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text" >Linkedln</span></a>
-							</div>
+									<div class="service-icon linkedin">
+										<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text" >Linkedln</span></a>
+									</div>
 <?php
 			}
 			if ( !empty( $staff['email'] ) ) { ?>
-							<div class="service-icon envelope">
-								<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?><span class="screen-reader-text" >Email</span></a>
-							</div>
+									<div class="service-icon envelope">
+										<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?><span class="screen-reader-text" >Email</span></a>
+									</div>
 <?php
-			} }?></div>
+			} }?>
+								</div>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <div>&nbsp;</div>
-				<div class="row staff-bio">
-
-
-
+				<div class="staff-bio">
 <?php
-		if ( !empty( $staff ) ) { ?>
-
-
-
-<?php
+		if ( !empty( $staff ) ) {
 			$author_bio = get_the_content();
 			if ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biography pending</p>" ) {
 				$author_bio = '';

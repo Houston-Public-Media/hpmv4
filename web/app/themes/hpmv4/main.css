@@ -453,6 +453,8 @@ section {
   align-items: center;
   font-size: 14px;
   font-weight: bold;
+  width: 100%;
+  justify-content: space-between;
 }
 .news-schedule label, .station-now-play h5 a {
   width: 75px;
@@ -500,7 +502,7 @@ section {
   position: absolute;
   top: 0;
   left: 0;
-  width: 270px;
+  width: 100%;
   height: 1px;
   background-color: #e6e6e6;
 }
@@ -527,7 +529,7 @@ section {
   position: absolute;
   top: 0;
   left: 0;
-  width: 270px;
+  width: 100%;
   height: 1px;
   background-color: #e6e6e6;
 }
@@ -554,7 +556,7 @@ section {
   position: absolute;
   top: 0;
   left: 0;
-  width: 270px;
+  width: 100%;
   height: 1px;
   background-color: #e6e6e6;
 }
@@ -958,7 +960,6 @@ select#hpm-staff-cat {
 
 .container, .container-fluid { background:none}
 .home-page > section { padding-left:1.5rem; padding-right:1.5rem;}
-
 .category-navigation { background: #f5f5f5; border-top: solid 8px #237bbd; padding:15px 0 !important;}
 .category-navigation h4 {
   background: none;
