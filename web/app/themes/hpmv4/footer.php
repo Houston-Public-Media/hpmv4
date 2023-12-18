@@ -18,19 +18,19 @@
 						<div class="row">
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Features</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56045 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59251 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Topic</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56046 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59257 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Art & Culture</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56047 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59249 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Awareness</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56048 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59250 ]); ?>
 							</div>
 						</div>
 					</div>
@@ -39,18 +39,18 @@
 						<div class="row">
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Local Programs</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56049 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59253 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>UH</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56050 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59258 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Education</h3>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Podcasts</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56051 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59255 ]); ?>
 							</div>
 						</div>
 					</div>
@@ -59,19 +59,19 @@
 						<div class="row">
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Membership</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56052 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59256 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Giving Programs</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56053 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59252 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Volunteers</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56054 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59259 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Partnerships</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 56055 ]); ?>
+								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59254 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Compliance</h3>
