@@ -277,7 +277,7 @@ section {
 }
 .news-listing .col-5 {
   padding-right: 0;
-  padding-left: 5px;
+  padding-left: 1rem;
 }
 .breaking-news h1 {
   margin-bottom: 15px;
@@ -957,7 +957,7 @@ select#hpm-staff-cat {
 
 
 .container, .container-fluid { background:none}
-.home-page > section { padding-left:15px; padding-right:15px;}
+.home-page > section { padding-left:1.5rem; padding-right:1.5rem;}
 
 .category-navigation { background: #f5f5f5; border-top: solid 8px #237bbd; padding:15px 0 !important;}
 .category-navigation h4 {
