@@ -561,7 +561,8 @@ svg:not(:root) {
 	padding-right: 1rem;
 }
 .service-icon {
-	--unit: 3rem;
+	/*--unit: 3rem;*/
+	--unit: 2rem;
 }
 .service-icon :is(a,button) {
 	display: block;
@@ -2529,7 +2530,7 @@ article .entry-header h1 {
 }
 article .entry-header p {
 	font-weight: 500;
-	font-size: 1.25em;
+	font-size: 1.15em;
 	color: var(--secondary-text);
 }
 article .entry-header .byline-date {
