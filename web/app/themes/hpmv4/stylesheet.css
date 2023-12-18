@@ -2519,6 +2519,7 @@ article .entry-header h3 {
 	display: inline-block;
 	text-transform: uppercase;
 	font-weight: 700;
+	padding-top:10px;
 }
 article .entry-header h1 {
 	font-family: var(--hpm-font-condensed);
@@ -2728,6 +2729,7 @@ article.card .entry-summary {
 	white-space: normal;
 	width: auto;
 	padding: 0 1rem 1rem;
+	margin-bottom: 10px;
 }
 #search-results article + article {
 	margin-top: 1rem;

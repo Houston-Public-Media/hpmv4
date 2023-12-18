@@ -840,7 +840,7 @@ details summary::marker
 
 article .post-thumbnail {
   display: block;
-  margin-right: 1rem;
+  /*margin-right: 1rem;*/
 }
 
 article.single-staff .post-thumbnail {
@@ -1935,6 +1935,7 @@ iframe { max-width: 100% !important;}
 
   .short-news ul { flex-wrap: wrap;}
   .short-news li { width:50%; padding: 0 10px 20px; margin-left:0; border: none;}
+  .short-news li:first-child{padding: 0 10px 20px; margin-left:0;}
 
  }
 
@@ -1956,7 +1957,7 @@ iframe { max-width: 100% !important;}
     font-size:14px !important;
   }
   #hm-top p a { padding: 5px; font-size: 12px !important}
-  h1 { font-size: 1.2rem;}
+  h1 { font-size: 1.6rem;}
   .breaking-news-img {
     padding:10px 0
   }
