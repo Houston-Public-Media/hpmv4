@@ -54,7 +54,7 @@
 		"google/apiclient": "^2.0",
 		"google/analytics-data": "^0.9.4",
 		"wpackagist-plugin/admin-category-filter": "1.6.1",
-		"wpackagist-plugin/amp": "2.5.0",
+		"wpackagist-plugin/amp": "2.5.1",
 		"wpackagist-plugin/classic-editor": "1.6.3",
 		"wpackagist-plugin/co-authors-plus": "3.5.15",
 		"wpackagist-plugin/documentcloud": "0.5.1",
