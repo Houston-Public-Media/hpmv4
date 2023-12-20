@@ -178,6 +178,25 @@ get_header(); ?>
 		.corona-local ul {
 			padding: 0 1rem 1rem 2rem;
 		}
+        .page-template-page-corona .link-thumb
+        {
+            display: flex;
+
+        }
+        .page-template-page-corona .link-thumb li
+        {
+            width: 100%;
+        }
+        .page-template-page-corona .highlights ul
+        {
+            margin:0;
+            padding: 0;
+        }
+        .page-template-page-corona .news-links li
+        {
+            border-bottom: dotted 1px var(--black);
+        }
+
 		@media screen and (min-width: 34em) {
 			.page-header {
 				padding: 0 0 calc(100%/4) 0;
