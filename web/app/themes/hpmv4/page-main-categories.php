@@ -137,10 +137,12 @@ get_header(); ?>
 				$post = $orig_post;
 				wp_reset_query();
 			?>
+            <?php echo hpm_custom_pagination($q->max_num_pages, 4, "/topics/$main_cat/page/"); ?>
 			</section>
-			<div class="readmore">
-				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
-			</div>
+
+
+				<!--<a href="/topics/<?php /*echo $main_cat; */?>/page/2">View More <?PHP /*the_title(); */?></a>-->
+
 		</main>
 	</div>
 <?php get_footer(); ?>
