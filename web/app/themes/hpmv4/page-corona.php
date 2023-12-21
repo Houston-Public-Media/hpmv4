@@ -92,7 +92,7 @@ get_header(); ?>
 			border-bottom: 1px solid #808080;
 			padding: 0 0 0.5em 0;
 			margin-bottom: 1em;
-			color: var(--main-blue);
+			/*color: var(--main-blue);*/
 			width: 100%;
 		}
 		.column-left article h2,

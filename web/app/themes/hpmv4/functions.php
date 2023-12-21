@@ -121,7 +121,15 @@ function hpm_calculate_datetime_difference( $pID ) {
 	return false;
 }
 
-
+function hpm_custom_pagination_shortcode( $atts ): string {
+    extract( shortcode_atts( [
+        'pages' => 50,
+        'range' => 4,
+        'pageLink' => "/topics/coronavirus/page/"
+    ], $atts, 'multilink' ) );
+    return hpm_custom_pagination( $pages, $range, $pageLink );
+}
+add_shortcode( 'hpm_custom_pagination_shortcode', 'hpm_custom_pagination_shortcode' );
 
 
 // Custom Pagination
@@ -141,15 +149,9 @@ function hpm_custom_pagination( $pages = '', $range = 4, $pageLink = "" ): strin
 	$output = '';
 	if ( 1 !== $pages ) {
 		$output .= '<div class="wp-pagenavi"><span class="pages">Page ' . $paged . ' of ' . $pages . '</span>';
-		//echo ($pageLink!="")? "'.$pageLink.'1":get_pagenum_link(1);
-
-		//if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
-			// echo '<a href="'.($pageLink!="")? "'.$pageLink.'1":get_pagenum_link(1).'"><< First</a>';
-		//}
 		if ( $paged > 1 && $showitems < $pages ) {
 			$output .= '<a href="' . ( !empty( $pageLink ) ? $pageLink . ( $paged - 1 ) : get_pagenum_link( $paged - 1 ) ) . '">< Previous</a>';
 		}
-
 		for ( $i = 1; $i <= $pages; $i++ ) {
 			if ( 1 !== $pages && ( !( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
 				$numLink = !empty( $pageLink ) ? $pageLink . $i : get_pagenum_link( $i );
