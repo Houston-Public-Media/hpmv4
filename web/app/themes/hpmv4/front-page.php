@@ -53,6 +53,21 @@ $tras = null;
             margin: 0;
             color: var(--main-headline);
         }
+        .text-light-gray a{
+            color:#237bbd;
+            font-weight: bold;
+        }
+        .news-listing h4 a
+        {
+            color:#237bbd;
+            font-size: 15px;
+        }
+        .news-listing p{
+            font-size: 0.9em;
+        }
+        news-main p{
+            font-size: 0.9em;
+        }
         @media screen and (min-width: 34rem) {
             #station-schedules {
                 display: grid;

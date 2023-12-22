@@ -73,12 +73,15 @@
 								<h3>Partnerships</h3>
 								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59254 ]); ?>
 							</div>
-							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
+							<!--<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Compliance</h3>
-								<?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 42803 ]); ?>
-							</div>
+								<?php /*wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 42803 ]); */?>
+							</div>-->
 						</div>
 					</div>
+                    <nav id="uh-foot-navigation" class="footer-navigation" role="navigation">
+                        <?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 42803 ] ); ?>
+                    </nav>
 
 					<div class="footer-section footer-last">
 						<div class="row">
