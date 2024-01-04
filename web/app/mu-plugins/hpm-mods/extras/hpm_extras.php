@@ -253,7 +253,7 @@ function hpm_local_cat_check(): bool {
 /*
  * Disallow certain MIME types from being accepted by the media uploader
  */
-function custom_upload_mimes ( $existing_mimes = [] ) {
+function custom_upload_mimes ( $existing_mimes = [] ): array {
 	unset( $existing_mimes['exe'] );
 	unset( $existing_mimes['wav'] );
 	unset( $existing_mimes['ra|ram'] );
@@ -270,7 +270,7 @@ add_filter('upload_mimes', 'custom_upload_mimes');
 /*
  * Finds the last 5 entries in the specified YouTube playlist and saves into a site transient
  */
-function hpm_youtube_playlist( $key, $num = 5 ) {
+function hpm_youtube_playlist( $key, $num = 5 ): array {
 	$list = get_transient( 'hpm_yt_' . $key . '_' . $num );
 	if ( !empty( $list ) ) {
 		return $list;
