@@ -141,7 +141,7 @@ if ( $cat4->have_posts() ) {
     ?>
        <li class="list-item">
                                 <a class="list-link" href="<?php the_permalink(); ?>">
-                                    <img class="list-icon" src="<?php echo get_template_directory_uri(); ?>/images/play-icon.png" alt="play-icon">
+                                    <img class="list-icon" src="https://cdn.houstonpublicmedia.org/assets/images/hpm-play-icon.png" alt="play-icon">
                                     <div class="list-content">
                                         <?php echo get_the_title(); ?>
                                     </div>
