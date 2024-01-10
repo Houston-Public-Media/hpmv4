@@ -333,9 +333,13 @@ function rel_canonical_w_npr(): void {
 	if ( !$id = get_queried_object_id() ) {
 		return;
 	}
+
+	if ( !empty( get_post_meta( $id, NPR_HTML_LINK_META_KEY, 1 ) ) ) {
+		return;
+	}
 	if ( is_page_template( 'page-npr-articles.php' ) ) {
 		global $nprdata;
-		$url = $nprdata['permalink'];
+		$url = $nprdata['canonical'];
 	} else {
 		$url = get_permalink( $id );
 		$page = get_query_var( 'page' );
@@ -1021,10 +1025,18 @@ function hpm_pull_npr_story( $npr_id ) {
 				$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
 			}
 		}
-
+		$webPage = '';
+		if ( !empty( $story->webPages ) ) {
+			foreach ( $story->webPages as $web ) {
+				if ( in_array( 'canonical', $web->rels ) ) {
+					$webPage = $web->href;
+				}
+			}
+		}
 		$story_date = new DateTime( $story->publishDateTime );
 		$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
 		$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title ) . '/';
+		$nprdata['canonical'] = $webPage;
 
 		if ( !empty( $story->bylines ) ) {
 			foreach ( $story->bylines as $byline ) {
@@ -1174,6 +1186,7 @@ function hpm_pull_npr_story( $npr_id ) {
 		$story_date = new DateTime( $story->storyDate->value );
 		$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
 		$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';
+		$nprdata['canonical'] = $story->link['html']->value;
 
 		if ( !empty( $story->byline ) ) {
 			if ( is_array( $story->byline ) ) {
