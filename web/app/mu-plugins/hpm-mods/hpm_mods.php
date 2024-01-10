@@ -8,6 +8,8 @@ define( 'HPM_MODS_URL', plugin_dir_url( __FILE__ ) );
 require( HPM_MODS_DIR . 'extras/hpm_extras.php' );
 require( HPM_MODS_DIR . 'podcasts/main.php' );
 require( HPM_MODS_DIR . 'priority/hpm_priority.php' );
+require( HPM_MODS_DIR . 'modules/hpm_modules.php' );
+require( HPM_MODS_DIR . 'breakingnews/hpm_breakingnews.php' );
 require( HPM_MODS_DIR . 'promos/hpm_promos.php' );
 require( HPM_MODS_DIR . 'series/hpm_series.php' );
 require( HPM_MODS_DIR . 'staff/hpm_staff.php' );
