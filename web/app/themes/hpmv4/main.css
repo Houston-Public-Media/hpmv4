@@ -485,12 +485,12 @@ section.breaking-news .row {
   text-decoration: none;
   line-height: normal;
 }
-#station-schedules {
-  padding-left:30px;
+.news-schedule .title.title-full {
+  margin-bottom: 0;
 }
 #station-schedules .station-now-play {
   border-bottom:dotted 2px #000 !important;
-  min-height:3.5em !important;;
+  min-height:3.5em !important;
   padding:5px 0px !important;
 }
 #station-schedules .station-now-play h3 {
@@ -500,7 +500,9 @@ section.breaking-news .row {
 .news-schedule .news-links {
   padding-left: 30px;
 }
-
+.news-list .most-view ul li:nth-child(5) {
+  display: none;
+}
 .title-style2 {
   font-size: 20px;
   position: relative;

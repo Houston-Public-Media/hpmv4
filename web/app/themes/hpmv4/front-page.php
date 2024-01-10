@@ -176,7 +176,7 @@ $tras = null;
                 </div>
                 <div class="col-sm-12 col-lg-3 news-list-right news-schedule">
                     <h2 class="title title-full">
-                        <strong>TV8 &amp; NEWS 88.7 <span>SCHEDULE</span></strong>
+                        <strong>ON-AIR <span>SCHEDULE</span></strong>
                     </h2>
 
                     <div id="station-schedules">
