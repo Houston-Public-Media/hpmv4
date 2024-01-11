@@ -106,7 +106,7 @@ if ( is_preview() ) { ?>
 				} else {
 					$series_link = "/topics/" . $cats->slug;
 				} ?>
-						<div id="current-series" class="col-md-6 col-lg-12">
+						<div id="current-series" class="col-sm-6 col-md-12">
 							<h4><a href="<?php echo $series_link; ?>">More from <?php echo $cats->cat_name; ?></a></h4>
 <?php
 				while ( $series->have_posts() ) {
@@ -117,7 +117,7 @@ if ( is_preview() ) { ?>
 <?php
 			}
 		} elseif ( $cats->term_id == 12 ) { ?>
-				<div class="sidebar-ad col-md-6 col-lg-12">
+				<div class="sidebar-ad col-sm-6 col-md-12">
 					<h4>Support Comes From</h4>
 					<p><a href="https://www.texasmutual.com/employers/pr/2023-employer-dividends?utm_source=Houston+Public+Media&utm_medium=display&utm_campaign=Dividends&utm_id=Dividends"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXM_BIB_Fraud_300x250.gif.webp" alt="Texas Mutual: You can count on us to fight fraud" /></a></p>
 				</div>

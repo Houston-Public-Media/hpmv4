@@ -44,7 +44,7 @@
 			];
 			$my_query = new WP_Query( $args );
 			if ( $my_query->have_posts() ) { ?>
-<section class="highlights col-md-6 col-lg-12">
+<section class="highlights col-sm-6 col-md-12">
     <div class="row">
 
         <div class="col-12 news-list-right most-view">
@@ -71,7 +71,7 @@
 	}
 	wp_reset_query();
 	//hpm_top_posts(); ?>
-<section class="section news-list col-md-6 col-lg-12">
+<section class="section news-list col-sm-6 col-md-12">
     <div class="row">
 
         <div class="col-12 news-list-right most-view">
@@ -87,7 +87,7 @@
 </section>
 <?php
 	if ( !is_single() && get_post_type() !== 'post' ) { ?>
-<section class="sidebar-ad col-md-6 col-lg-12">
+<section class="sidebar-ad col-sm-6 col-md-12">
 	<h4>Support Comes From</h4>
 	<div id="div-gpt-ad-1394579228932-2">
 		<script type='text/javascript'>

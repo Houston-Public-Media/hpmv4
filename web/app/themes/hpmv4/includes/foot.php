@@ -54,9 +54,9 @@ function author_footer( $id, $type ): string {
             {
                 if($type != null && $type == "fullwidth")
                 {
-                    $tempAuthorArticles .= '<div class="col-sm-6">';
+                    $tempAuthorArticles .= '<div class="col-sm-6 col-md-12">';
                 }
-                $tempAuthorArticles .="<section class=\"highlights col-md-6 col-lg-12\">";
+                $tempAuthorArticles .="<section class=\"highlights col-sm-6 col-md-12\">";
                 $q = new WP_Query([
                     'posts_per_page' => 4,
                     'post_type' => 'post',
@@ -91,10 +91,10 @@ function author_footer( $id, $type ): string {
 
         if($type != null && $type == "fullwidth")
         {
-            $temp .= '<div class="col-sm-6">';
+            $temp .= '<div class="col-sm-6 col-md-12">';
         }
             $temp .= "
-	<section class=\"sidebar-author col-md-6 col-lg-12\" style='margin-top: 10px;'>
+	<section class=\"sidebar-author col-sm-6 col-md-12\" style='margin-top: 10px;'>
 		<div class=\"d-flex sa-header\">" .
                 ( $local ? '<div class="author-image sa-pic">'. get_the_post_thumbnail($author->post->ID, 'post-thumbnail', ['alt' => $author->post->post_title] ) . '</div>' : '') .
                 "
