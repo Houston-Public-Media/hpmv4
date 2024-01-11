@@ -298,6 +298,7 @@ class HPM_Podcasts {
 					'limit'        => 0,
 					'itunes'       => '',
 					'gplay'        => '',
+					'youtube'        => '',
 					'spotify'      => '',
 					'radiopublic'  => '',
 					'pcast'        => '',
@@ -317,6 +318,7 @@ class HPM_Podcasts {
 				'limit'        => 0,
 				'itunes'       => '',
 				'gplay'        => '',
+				'youtube'        => '',
 				'spotify'      => '',
 				'radiopublic'  => '',
 				'pcast'        => '',
@@ -372,6 +374,7 @@ class HPM_Podcasts {
 				'page' => ( !empty( $_POST['hpm-podcast-link'] ) ? sanitize_text_field( $_POST['hpm-podcast-link'] ) : '' ),
 				'itunes' => ( !empty( $_POST['hpm-podcast-link-itunes'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-itunes'] ) : '' ),
 				'gplay' => ( !empty( $_POST['hpm-podcast-link-gplay'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-gplay'] ) : '' ),
+				'youtube' => ( !empty( $_POST['hpm-podcast-link-youtube'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-youtube'] ) : '' ),
 				'spotify' => ( !empty( $_POST['hpm-podcast-link-spotify'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-spotify'] ) : '' ),
 				'radiopublic' => ( !empty( $_POST['hpm-podcast-link-radiopublic'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-radiopublic'] ) : '' ),
 				'pcast' => ( !empty( $_POST['hpm-podcast-link-pcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pcast'] ) : '' ),
@@ -1104,6 +1107,9 @@ class HPM_Podcasts {
 				$temp .= '<li><a href="' . $pod_link['spotify'] . '" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="' . $badges . 'spotify.png" alt="Subscribe on Spotify"></a></li>';
 			}
 			if ( $full_list ) {
+				if ( !empty( $pod_link['youtube'] ) ) {
+					$temp .= '<li><a href="' . $pod_link['youtube'] . '" rel="noopener" target="_blank" title="Subscribe on YouTube"><img src="' . $badges . 'youtube.png" alt="Subscribe on YouTube"></a></li>';
+				}
 				if ( !empty( $pod_link['tunein'] ) ) {
 					$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png" alt="Subscribe on TuneIn"></a></li>';
 				}
