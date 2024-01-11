@@ -2151,7 +2151,7 @@ h2#foot-banner {
 	text-align: center;
 	padding: 1.25rem clamp(1rem, 5%, 5rem);
 	color: #404040;
-	background: #e5ebf4 url(https://cdn.houstonpublicmedia.org/assets/images/donation-bg.jpg.webp) no-repeat right bottom;
+	background: #e5ebf4; /*url(https://cdn.houstonpublicmedia.org/assets/images/donation-bg.jpg.webp) no-repeat right bottom;*/
 	margin: 0 auto;
 	clear: both;
 	font-weight: 900;
@@ -3671,10 +3671,10 @@ article .entry-header p.staff-pronouns,
 }
 .page.support-ssac article .entry-content p {
 	/*font-weight: 100;*/
-	font-size: 1.125em;
+	font-size: 1rem;
 	margin: 0;
-	padding: 0 0 1em;
-	color: var(--main-text);
+	/*padding: 0 0 1em;*/
+	color: #000;/*var(--main-text);*/
 }
 .page.support-ssac article .entry-content p a {
 	color: var(--secondary-text);
@@ -4034,7 +4034,7 @@ section {
 .header-weather {
 	position: absolute;
 	right: 0;
-	top: 0;
+	top: 0.5rem;
 	color: white;
 }
 @media screen and (min-width: 52.5em) {
@@ -5726,7 +5726,7 @@ body.single-shows #station-social.station-social {
 	display: flex;
 }
 .houston-content .image-wrapper {
-	max-width: 45%;
+	max-width: 48%;
 	width: 100%;
 	background: #f5f5f5;
 	padding: 10px;
@@ -5974,7 +5974,7 @@ iframe {
 		width: 100%
 	}
 	h2#foot-banner {
-		padding-bottom: 140px;
+		/*padding-bottom: 140px;*/
 	}
 }
 
@@ -5987,7 +5987,7 @@ iframe {
 		max-width: none;
 	}
 	h2#foot-banner {
-		padding-bottom: 150px;
+		/*padding-bottom: 150px;*/
 	}
 	footer .container {
 		max-width: none
