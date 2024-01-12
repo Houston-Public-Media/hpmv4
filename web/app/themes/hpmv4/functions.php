@@ -1192,3 +1192,24 @@ function hpm_uh_moment_blurb( $content ) {
 	return $content;
 }
 add_filter( 'the_content', 'hpm_uh_moment_blurb', 15 );
+
+function hpm_thumbnail_alt_text_check( $html ) {
+	if ( !str_contains( $html, 'alt=""' ) ) {
+		return $html;
+	}
+	$id = get_post_thumbnail_id();
+	$thumb = get_post( $id );
+	$alt_text = get_post_meta( $id, '_wp_attachment_image_alt', true );
+	if ( empty( $alt_text ) ) {
+		if ( !empty( $thumb->post_excerpt ) ) {
+			$alt_text = $thumb->post_excerpt;
+		} elseif ( !empty( $thumb->post_content ) ) {
+			$alt_text = $thumb->post_content;
+		} elseif ( !empty( $thumb->post_title ) ) {
+			$alt_text = $thumb->post_title;
+		}
+	}
+	$html = str_replace( 'alt=""', 'alt="' . $alt_text . '"', $html);
+	return $html;
+}
+add_filter( 'post_thumbnail_html', 'hpm_thumbnail_alt_text_check', 15 );
