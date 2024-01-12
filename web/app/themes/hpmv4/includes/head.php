@@ -5,7 +5,7 @@ function hpm_site_header(): void { ?>
         <div class="site-branding">
             <div class="site-logo">
                 <a href="/" rel="home" title="Houston Public Media, a service of the University of Houston">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/houston-public-media-logo.png" alt="Houston Public Media" rel="Houston Public Media">
+                    <img src="https://cdn.houstonpublicmedia.org/assets/images/houston-public-media-logo.png" alt="Houston Public Media" rel="Houston Public Media">
                 </a>
             </div>
             <div class="header-highlight-text">
@@ -461,12 +461,14 @@ function hpm_breaking_banner(): string {
         $diff = $now[0] - $ptime;
         $expirationtime = (int)$hpm_breakingnews['expirationdate'][0] * 3600;
         $newstype = $hpm_breakingnews['type'];
-        $newsclasstype = ( $newstype == "Breaking News" ? "breakingnews" : "developingstory" );
+        if($newstype != "")
+        {$newsclasstype = ( $newstype == "Breaking News" ? "breakingnews" : "developingstory" );
         $newclassheading = ( $newstype == "Breaking News" ? '<span class="breakingnews-header" style="background-color: #ee1812;"><strong>Breaking News</strong></span>' : '<span class="developingstory-header"><strong>Developing Story</strong></span>' );
          if ( $diff < $expirationtime ) {
         $output .= '<div id="hm-top" class="'.$newsclasstype.'"><p>'.$newclassheading.' <a href="' . get_the_permalink( $hpm_breakingnews['homepage'][0] ) . '">' . get_the_title( $hpm_breakingnews['homepage'][0] ) . '</a></p></div>';
         return $output;
          }
+        }
     }
     return $output;
 }
