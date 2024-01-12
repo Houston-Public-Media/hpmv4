@@ -1209,7 +1209,9 @@ function hpm_thumbnail_alt_text_check( $html ) {
 			$alt_text = $thumb->post_title;
 		}
 	}
-	$html = str_replace( 'alt=""', 'alt="' . $alt_text . '"', $html);
+	if ( !empty( $alt_text ) ) {
+		$html = str_replace( 'alt=""', 'alt="' . $alt_text . '"', $html );
+	}
 	return $html;
 }
 add_filter( 'post_thumbnail_html', 'hpm_thumbnail_alt_text_check', 15 );
