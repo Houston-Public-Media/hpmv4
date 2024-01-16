@@ -5021,6 +5021,15 @@ select#hpm-staff-cat {
 	height: 100%;
 	position: relative;
 }
+.hpmopportunity-block {
+	background: #f5f5f5;
+	border-top: solid 7px #237bbd;
+	/*padding: 15px 15px 65px;*/
+	overflow: hidden;
+	margin-bottom: 20px;
+	height: 100%;
+	position: relative;
+}
 
 .opportunity-block h5 {
 	font-size: 16px;
