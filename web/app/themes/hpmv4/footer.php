@@ -47,6 +47,7 @@
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Education</h3>
+                                <?php wp_nav_menu([ 'menu_class' => 'nav-menu', 'menu' => 59788 ]); ?>
 							</div>
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Podcasts</h3>
