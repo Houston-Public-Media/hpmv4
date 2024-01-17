@@ -126,22 +126,22 @@ if ( is_preview() ) { ?>
 	}
 	wp_reset_postdata();
 	get_template_part('sidebar', 'none'); ?>
-            <?php echo author_footer( $single_id, "" ); ?>
+			<?php echo author_footer( $single_id, "" ); ?>
 			</div>
 		</aside>
 
 
-        <div class="newsletter-form">
-            <?php
-            if ( is_single() && get_post_type() == 'post' ) {
-                if ( in_category( 'news' ) ) {
-                    $form_id = '441232';
-                    echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
-                }
-            }
+		<div class="newsletter-form">
+			<?php
+			if ( is_single() && get_post_type() == 'post' ) {
+				if ( in_category( 'news' ) ) {
+					$form_id = '441232';
+					echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+				}
+			}
 
-            ?>
-        </div>
+			?>
+		</div>
 
 	</main>
 </div>

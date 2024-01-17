@@ -2,166 +2,120 @@
 
 
 function author_footer( $id, $type ): string {
-    $output = '';
-    if($type != null && $type == "fullwidth")
-    {
-        $output .= '<div class="row">';
-    }
+	$output = '';
+	if ( $type != null && $type == "fullwidth" ) {
+		$output .= '<div class="row">';
+	}
 
 	$coauthors = get_coauthors( $id );
-	foreach ( $coauthors as $k => $coa ) :
-            $temp = '';
-            $tempAuthorArticles = '';
-            $author_trans = get_transient('hpm_author_' . $coa->user_nicename);
-            if (!empty($author_trans)) {
-                $output .= $author_trans;
-                continue;
-            }
-            $local = false;
-            $author = null;
-            $meta = '';
-            if (is_a($coa, 'wp_user')) {
-                $author = new WP_Query([
-                    'post_type' => 'staff',
-                    'post_status' => 'publish',
-                    'meta_query' => [[
-                        'key' => 'hpm_staff_authid',
-                        'compare' => '=',
-                        'value' => $coa->ID
-                    ]]
-                ]);
-            } elseif (!empty($coa->type) && $coa->type == 'guest-author') {
-                if (!empty($coa->linked_account)) {
-                    $authid = get_user_by('login', $coa->linked_account);
-                    if ($authid !== false) {
-                        $author = new WP_Query([
-                            'post_type' => 'staff',
-                            'post_status' => 'publish',
-                            'meta_query' => [[
-                                'key' => 'hpm_staff_authid',
-                                'compare' => '=',
-                                'value' => $authid->ID
-                            ]]
-                        ]);
-                    }
-                }
-            }
-            if (!empty($author) && $author->have_posts()) {
-                $local = true;
-                $meta = $author->post->hpm_staff_meta;
-            }
-            if(count($coauthors) <= 1 )
-            {
-                if($type != null && $type == "fullwidth")
-                {
-                    $tempAuthorArticles .= '<div class="col-sm-6 col-md-12">';
-                }
-                $tempAuthorArticles .="<section class=\"highlights col-sm-6 col-md-12\">";
-                $q = new WP_Query([
-                    'posts_per_page' => 4,
-                    'post_type' => 'post',
-                    'post_status' => 'publish',
-                    'author_name' => $coa->user_nicename
-                ]);
-                if ($q->have_posts()) {
-                    $tempAuthorArticles .= "
-			<div class=\"row\"><div class=\"col-12 news-list-right most-view\"><h2 class=\"title title-full\"><strong>Other Stories by <span>" . strtok($coa->first_name, "-") . "</span></strong></h2>
-			<ul class=\"list-none news-links list-dashed\">";
-                    foreach ($q->posts as $qp) {
-                        //  $post = $qp;
-                        $imgblock = "";
-                        if (has_post_thumbnail($qp->ID)) {
+	foreach ( $coauthors as $coa ) {
+		$temp = '';
+		$tempAuthorArticles = '';
+		$author_trans = get_transient( 'hpm_author_' . $coa->user_nicename );
+		if ( !empty( $author_trans ) ) {
+			$output .= $author_trans;
+			continue;
+		}
+		$local = false;
+		$author = null;
+		$meta = '';
+		if ( is_a( $coa, 'wp_user' ) ) {
+			$author = new WP_Query( [ 'post_type' => 'staff', 'post_status' => 'publish', 'meta_query' => [ [ 'key' => 'hpm_staff_authid', 'compare' => '=', 'value' => $coa->ID ] ] ] );
+		} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
+			if ( !empty( $coa->linked_account ) ) {
+				$authid = get_user_by( 'login', $coa->linked_account );
+				if ( $authid !== false ) {
+					$author = new WP_Query( [ 'post_type' => 'staff', 'post_status' => 'publish', 'meta_query' => [ [ 'key' => 'hpm_staff_authid', 'compare' => '=', 'value' => $authid->ID ] ] ] );
+				}
+			}
+		}
+		if ( !empty( $author ) && $author->have_posts() ) {
+			$local = true;
+			$meta = $author->post->hpm_staff_meta;
+		}
+		if ( count( $coauthors ) <= 1 ) {
+			if ( $type == "fullwidth" ) {
+				$tempAuthorArticles .= '<div class="col-sm-6 col-md-12">';
+			}
+			$tempAuthorArticles .= '<section class="highlights col-sm-6 col-md-12">';
+			$q = new WP_Query( [ 'posts_per_page' => 4, 'post_type' => 'post', 'post_status' => 'publish', 'author_name' => $coa->user_nicename ] );
+			if ( $q->have_posts() ) {
+				$tempAuthorArticles .= '<div class="row"><div class="col-12 news-list-right most-view"><h2 class="title title-full"><strong>Other Stories by <span>' . strtok( $coa->first_name, "-" ) . '</span></strong></h2><ul class="list-none news-links list-dashed">';
+				foreach ( $q->posts as $qp ) {
+					$imgblock = "";
+					if ( has_post_thumbnail( $qp->ID ) ) {
+						$imgblock = get_the_post_thumbnail( $qp->ID, "thumbnail" );
+					}
+					$tempAuthorArticles .= '<li><a href="' . esc_url( get_permalink( $qp->ID ) ) . '" rel="bookmark"><span>' . $qp->post_title . '</span></a><span class="img-w150">' . $imgblock . '</span></li>';
+				}
+				$tempAuthorArticles .= '</ul><p><a href="/articles/author/' . $coa->user_nicename . '">More Articles by This Author</a></p>';
+			}
+			$tempAuthorArticles .= "</div></div></section>";
+			if ( $type == "fullwidth" ) {
+				$tempAuthorArticles .= '</div>';
+			}
+		}
 
-                            $imgblock = get_the_post_thumbnail($qp->ID, "thumbnail");
-                        }
-                        $tempAuthorArticles .= '<li><a href="' . esc_url(get_permalink($qp->ID)) . '" rel="bookmark"><span>' . $qp->post_title . '</span></a><span class="img-w150">' . $imgblock . '</span></li>';
-                    }
-                    $tempAuthorArticles .= "
-			</ul>
-			<p><a href=\"/articles/author/" . $coa->user_nicename . "\">More Articles by This Author</a></p>";
-                }
-                $tempAuthorArticles .= "
-		</div></div></section>               
-                ";
-                if($type != null && $type == "fullwidth")
-                {
-                    $tempAuthorArticles .= '</div>';
-                }
-            }
+		if ( $type == "fullwidth" ) {
+			$temp .= '<div class="col-sm-6 col-md-12">';
+		}
+		$temp .= '<section class="sidebar-author col-sm-6 col-md-12" style="margin-top: 10px;">' .
+			'<div class="d-flex sa-header">' .
+				( $local && has_post_thumbnail( $author->post->ID ) ? '<div class="author-image sa-pic">' . get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) . '</div>' : '' ) .
+				'<div class="sa-info flex-grow-1">'.
+					'<h2>' .
+						( $local ? $author->post->post_title : $coa->display_name ) .
+						( $local && !empty( $meta[ 'pronouns' ] ) ? ' <span class="staff-pronouns">' . $meta[ 'pronouns' ] . '</span>' : '' ) .
+					'</h2>' .
+						( $local && !empty( $meta['title'] ) ? '<h3>' . $meta[ 'title' ] . '</h3>' : '' );
+		$icon_wrap = '';
+		if ( $local ) {
+			if ( !empty( $meta[ 'phone' ] ) ) {
+				$icon_wrap .= '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $meta[ 'phone' ] ) . '" rel="noopener" title="Call ' . ( $author->post->post_title ?? $coa->display_name ) . ' at ' . $meta[ 'phone' ] . '" data-phone="' . $meta[ 'phone' ] . '">' . hpm_svg_output( 'phone' ) . '<span class="screen-reader-text" >Call</span></a></div>';
+			}
+			if ( !empty( $meta[ 'facebook' ] ) ) {
+				$icon_wrap .= '<div class="service-icon facebook"><a href="' . $meta[ 'facebook' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text" >Facebook</span></a></div>';
+			}
+			if ( !empty( $meta[ 'twitter' ] ) ) {
+				$icon_wrap .= '<div class="service-icon twitter"><a href="' . $meta[ 'twitter' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Twitter" target="_blank">' . hpm_svg_output( 'twitter' ) . '<span class="screen-reader-text" >Twitter</span></a></div>';
+			}
+			if ( !empty( $meta[ 'linkedin' ] ) ) {
+				$icon_wrap .= '<div class="service-icon linkedin"><a href="' . $meta[ 'linkedin' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text" >Linkedln</span></a></div>';
+			}
+			if ( !empty( $meta[ 'email' ] ) ) {
+				$icon_wrap .= '<div class="service-icon envelope"><a href="mailto:' . $meta[ 'email' ] . '" rel="noopener" title="Email ' . ( $author->post->post_title ?? $coa->display_name ) . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text" >Email</span></a></div>';
+			}
+			$author_bio = $author->post->post_content;
+			if ( str_contains( 'Biography pending', $author_bio ) ) {
+				$author_bio = '';
+			}
+		} else {
+			if ( !empty( $coa->user_email ) ) {
+				$icon_wrap .= '<div class="service-icon envelope"><a href="mailto:' . $coa->user_email . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text" >Email</span></a></div>';
+			}
+			if ( !empty( $coa->website ) ) {
+				$icon_wrap .= '<div class="service-icon"><a href="' . $coa->website . '" target="_blank">' . hpm_svg_output( 'home' ) . '<span class="screen-reader-text" >Conact</span></a></div>';
+			}
+		}
+		if ( !empty( $icon_wrap ) ) {
+			$temp .= '<div class="icon-wrap">' . $icon_wrap . '</div>';
+		}
+		$temp .= '</div></div>';
+		if ( !empty( $author_bio ) ) {
+			$temp .= '<div class="sa-body">' . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . '</div>';
+		}
+		$temp .= ( $local ? '<p style="padding: 15px;"><a href="' . get_the_permalink( $author->post->ID ) . '"><strong>Know more about ' . $coa->display_name . '</strong></a></p>' : '' ) . '</section>';
+		if ( $type == "fullwidth" ) {
+			$temp .= '</div>';
+		}
+		// set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 7200 );
+		$output .= $temp . $tempAuthorArticles;
 
-        if($type != null && $type == "fullwidth")
-        {
-            $temp .= '<div class="col-sm-6 col-md-12">';
-        }
-            $temp .= "
-	<section class=\"sidebar-author col-sm-6 col-md-12\" style='margin-top: 10px;'>
-		<div class=\"d-flex sa-header\">" .
-                ( $local ? '<div class="author-image sa-pic">'. get_the_post_thumbnail($author->post->ID, 'post-thumbnail', ['alt' => $author->post->post_title] ) . '</div>' : '') .
-                "
-			<div class=\"sa-info flex-grow-1\">
-				<h2>" . ($local ? $author->post->post_title : $coa->display_name) .
-                ($local && !empty($meta['pronouns']) ? ' <span class="staff-pronouns">' . $meta['pronouns'] . '</span>' : '') . "</h2>" .
-                "<h3>" . ($local ? $meta['title'] : '') . "</h3>
-				<div class=\"icon-wrap\">";
-            if ($local) {
-                if (!empty($meta['phone'])) {
-                    $temp .= '<div class="service-icon phone"><a href="tel://+1' . str_replace(['(', ')', ' ', '-', '.'], ['', '', '', '', ''], $meta['phone']) . '" rel="noopener" title="Call ' .
-                        ($author->post->post_title ?? $coa->display_name) .
-                        ' at ' . $meta['phone'] . '" data-phone="' . $meta['phone'] . '">' . hpm_svg_output('phone') . '<span class="screen-reader-text" >Call</span></a></div>';
-                }
-                if (!empty($meta['facebook'])) {
-                    $temp .= '<div class="service-icon facebook"><a href="' . $meta['facebook'] . '" rel="noopener" title="' .
-                        ($author->post->post_title ?? $coa->display_name) .
-                        ' on Facebook" target="_blank">' . hpm_svg_output('facebook') . '<span class="screen-reader-text" >Facebook</span></a></div>';
-                }
-                if (!empty($meta['twitter'])) {
-                    $temp .= '<div class="service-icon twitter"><a href="' . $meta['twitter'] . '" rel="noopener" title="' .
-                        ($author->post->post_title ?? $coa->display_name) .
-                        ' on Twitter" target="_blank">' . hpm_svg_output('twitter') . '<span class="screen-reader-text" >Twitter</span></a></div>';
-                }
-                if (!empty($meta['linkedin'])) {
-                    $temp .= '<div class="service-icon linkedin"><a href="' . $meta['linkedin'] . '" rel="noopener" title="' .
-                        ($author->post->post_title ?? $coa->display_name) .
-                        ' on LinkedIn" target="_blank">' . hpm_svg_output('linkedin') . '<span class="screen-reader-text" >Linkedln</span></a></div>';
-                }
-                if (!empty($meta['email'])) {
-                    $temp .= '<div class="service-icon envelope"><a href="mailto:' . $meta['email'] . '" rel="noopener" title="Email ' .
-                        ($author->post->post_title ?? $coa->display_name) .
-                        '" target="_blank">' . hpm_svg_output('envelope') . '<span class="screen-reader-text" >Email</span></a></div>';
-                }
-                $author_bio = $author->post->post_content;
-                if (str_contains('Biography pending', $author_bio)) {
-                    $author_bio = '';
-                }
-            } else {
-                if (!empty($coa->user_email)) {
-                    $temp .= '<div class="service-icon envelope"><a href="mailto:' . $coa->user_email . '" target="_blank">' . hpm_svg_output('envelope') . '<span class="screen-reader-text" >Email</span></a></div>';
-                }
-                if (!empty($coa->website)) {
-                    $temp .= '<div class="service-icon"><a href="' . $coa->website . '" target="_blank">' . hpm_svg_output('home') . '<span class="screen-reader-text" >Conact</span></a></div>';
-                }
-            }
-            $temp .= "
-				</div></div></div>
-				<div class=\"sa-body\">" . ($local ? wp_trim_words($author_bio, 50, '...') : '') . "
-				</div><p style='padding: 15px;'>" . ($local ? '<a href="' . get_the_permalink($author->post->ID) . '"><strong>Know more about ' . $coa->display_name . '</strong></a>' : '') . "</p>
-			
-		</section>
-		
-	";
-        if($type != null && $type == "fullwidth")
-        {
-            $temp .= '</div>';
-        }
-            // set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 7200 );
-            $output .= $temp.$tempAuthorArticles;
-
-    endforeach;
-    if($type != null && $type == "fullwidth")
-    {
-        $output .= '</div>';
-    }
-    return $output;
+	}
+	if ( $type == "fullwidth" ) {
+		$output .= '</div>';
+	}
+	return $output;
 }
 
 function hpm_houston_matters_check(): array {
@@ -332,7 +286,7 @@ function hpm_dark_mode_toggle(): void {
 <script>
 	//determines if the user has a set theme
 	let detectColorScheme = () => {
-		let theme = "light";    //default to light
+		let theme = "light";	//default to light
 
 		//local storage is used to override OS theme settings
 		if ( localStorage.getItem("theme") ) {
