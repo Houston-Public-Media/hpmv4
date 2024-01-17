@@ -5083,13 +5083,11 @@ select#hpm-staff-cat {
 	color: #222054;
 	padding-bottom: 2px;
 }
-
 .support-opps .opp p {
 	font-size: 16px;
 	color: #222054;
 	line-height: normal;
 }
-
 .support-opps .opp {
 	padding: 1rem;
 }
@@ -5113,7 +5111,10 @@ select#hpm-staff-cat {
 	position: absolute;
 	right: 0px;
 	top: -30px;
-
+}
+.quick-access ul {
+	display: flex;
+	align-items: center;
 }
 .quick-access li {
 	display: inline-block;
@@ -5128,23 +5129,18 @@ select#hpm-staff-cat {
 .quick-access .nav-passport svg {
 	width: 100px
 }
-
 body:not(.page-template-page-listen) nav#site-navigation #top-search {
 	position: static;
 	padding-left: 5px;
-	padding-top: 2px;
 }
-
 .breakingnews p {
 	padding: 0px !important;
 	display: block;
 }
-
 .developingstory p {
 	padding: 0px !important;
 	display: block;
 }
-
 .breakingnews p .breakingnews-header {
 	background-color: #ee1812;
 	padding: 0.5rem 0.25rem;
@@ -5152,7 +5148,6 @@ body:not(.page-template-page-listen) nav#site-navigation #top-search {
 	text-transform: uppercase;
 	font-size: 16px !important;
 }
-
 .developingstory p .developingstory-header {
 	background-color: #ffce16;
 	padding: 0.5rem 0.25rem;
@@ -5161,21 +5156,18 @@ body:not(.page-template-page-listen) nav#site-navigation #top-search {
 	font-size: 16px !important;
 	color: #000 !important;
 }
-
 .breakingnews p a {
 	padding: 0 20px;
 	font-size: 15px !important;
 	color: #fff !important;
 	text-decoration: none !important;
 }
-
 .developingstory p a {
 	padding: 0 20px;
 	font-size: 15px !important;
 	color: #000 !important;
 	text-decoration: none !important;
 }
-
 .contactus-banner {
 	min-height: 200px;
 	background: url(https://cdn.houstonpublicmedia.org/assets/images/contact-banner.jpg.webp) no-repeat 0 0;
@@ -5185,13 +5177,11 @@ body:not(.page-template-page-listen) nav#site-navigation #top-search {
 	align-items: center;
 	flex-direction: column;
 }
-
 .contactus-banner h2 {
 	color: var(--main-white);
 	text-align: center;
 	font-size: 30px;
 }
-
 .contactus-banner a {
 	font-size: 18px;
 	padding: 10px;
@@ -5200,16 +5190,13 @@ body:not(.page-template-page-listen) nav#site-navigation #top-search {
 	font-weight: bold;
 	margin-top: 20px;
 }
-
 .contactus-banner a:hover {
 	text-decoration: none;
 }
-
 .newsletter-form {
 	order: 3;
 	margin-bottom: 50px;
-	background: #e4ebf5 url(https://cdn.houstonpublicmedia.org/assets/images/post-mail.png.webp) no-repeat;
-	background-position: left bottom;
+	background: #e4ebf5 url(https://cdn.houstonpublicmedia.org/assets/images/post-mail.png.webp) no-repeat left bottom;
 	padding-left: 180px;
 
 }
