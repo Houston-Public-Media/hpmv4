@@ -6,35 +6,33 @@
  * @subpackage HPMv4
  * @since HPMv4 4.0
  */
-
+global $post;
 get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 <?php
-$aurthorName = "";
+	$aurthorName = "";
 	while ( have_posts() ) {
-
 		the_post();
-        $aurthorName = $post->post_name;
-
+		$aurthorName = $post->post_name;
 		$staff = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
 		$staff_authid = get_post_meta( get_the_ID(), 'hpm_staff_authid', true );
 		$staff_pic = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' ); ?>
 			<header class="page-header">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-4">
+				<div class="row">
+					<div class="col-12">
+						<div class="row">
+							<div class="col-4">
 <?php
-                                if ( !empty( $staff_pic ) ) { ?>
-                                    <img src="<?PHP	echo $staff_pic[0]; ?>" class="author-thumb" />
+		if ( !empty( $staff_pic ) ) { ?>
+								<img src="<?PHP	echo $staff_pic[0]; ?>" class="author-thumb"  alt="<?php the_title(); ?>"/>
 <?php
-                                } ?>
-                            </div>
-                            <div class="col-8">
-                                <h1 class="entry-title"><?php the_title(); ?></h1>
-                                <?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">' . $staff['pronouns'] . '</p>' : '' ); ?>
-                                <h3><?php echo $staff['title']; ?></h3>
+								} ?>
+							</div>
+							<div class="col-8">
+								<h1 class="entry-title"><?php the_title(); ?></h1>
+								<?php echo ( !empty( $staff['pronouns'] ) ? '<p class="staff-pronouns">' . $staff['pronouns'] . '</p>' : '' ); ?>
+								<h3><?php echo $staff['title']; ?></h3>
 <?php
 		if ( !empty( $staff ) ) { ?>
 								<div class="icon-wrap">
@@ -70,11 +68,11 @@ $aurthorName = "";
 <?php
 			} }?>
 								</div>
-                            </div>
-                        </div>
-                    </div>
+							</div>
+						</div>
+					</div>
 
-                </div>
+				</div>
 				<div class="staff-bio">
 <?php
 		if ( !empty( $staff ) ) {
@@ -95,7 +93,6 @@ $aurthorName = "";
 <?php
 	if ( !empty( $staff_authid ) && $staff_authid > 0 ) {
 		$nice_name = get_the_author_meta( 'user_nicename', $staff_authid );
-
 		$auth = new WP_Query([
 			'author' => $staff_authid,
 			'posts_per_page' => 15,
@@ -110,11 +107,7 @@ $aurthorName = "";
 				get_template_part( 'content', get_post_type() );
 			}
 			wp_reset_postdata();
-			//wp_pagenavi( [ 'query' => $auth ] );
-
-            echo hpm_custom_pagination( $auth->max_num_pages, 4, "/articles/author/" . $aurthorName . "/page/" );
-
- ?>
+			echo hpm_custom_pagination( $auth->max_num_pages, 4, "/articles/author/" . $aurthorName . "/page/" ); ?>
 			</section>
 <?php
 		}

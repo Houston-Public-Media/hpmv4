@@ -79,172 +79,148 @@ get_header(); ?>
 		$show_content = get_the_content();
 		$episodes = HPM_Podcasts::list_episodes( $show_id );
 		echo HPM_Podcasts::show_header( $show_id );
-        //$options = get_post_meta( $id, 'hpm_show_meta', true );
 	} ?>
-
-
-	<div class="party-politics-page">
-        <div class="about-party">
-            <h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
-            <div class="show-content">
-                <?php echo apply_filters( 'the_content', $show_content ); ?>
-            </div>
-        </div>
-        <div id="station-social" class="station-social">
-           <div class="badges-box">
-				<span class="badge-title">SUBSCRIBE,  STREAM  &  FOLLOW US ON</span>
-               <?php echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
-		   </div>
-        </div>
-
-
-        <div class="row text-content">
-            <div class="col-12 col-lg-9">
-                <div class="the-latest-block">
-                    <h2 class="title red-bar"> <strong><span>the latest</span></strong> </h2>
-
-                    <?php
-                    if ( !empty( $show['ytp'] ) ) {
-                        $json = hpm_youtube_playlist( $show['ytp'] );
-                        if ( !empty( $json ) ) {
-                            $c = 0; ?>
-
-                            <?php
-                            foreach ( $json as $tubes ) {
-                                $yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
-                                $pubtime = strtotime( $tubes['snippet']['publishedAt'] );
-                                if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) { ?>
-                                    <div class="episodes-content" id="youtube-main">
-                                        <a href="" class="image-wrapper">
-                                            <div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
-                                                <?php echo hpm_svg_output( 'play' ); ?>
-                                            </div>
-                                        </a>
-                                        <div class="content-wrapper">
-                                            <span class="date"><?php echo date( 'F j, Y', $pubtime); ?></span>
-                                            <h2 class="content-title"><?php echo $yt_title; ?></h2>
-                                            <div class="desc-wrap"> <p class="desc"><?php echo str_replace( "\n", "<br />", $tubes['snippet']['description'] ); ?></p><button type="button" class="yt-readmore">Read More...</button></div>
-                                            <dialog id="yt-dialog">
-                                                <div class="yt-dialog-content">
-                                                    <h3></h3>
-                                                    <p></p>
-                                                    <ul class="dialog-actions">
-                                                        <li><button type="button" data-action="dismiss">Dismiss</button></li>
-                                                    </ul>
-                                                </div>
-                                            </dialog>
-                                            <script>
-                                                const dialog = document.getElementById("yt-dialog");
-                                                const readMore = document.querySelector("#youtube-main .yt-readmore");
-
-                                                readMore.addEventListener("click", ({ target }) => {
-                                                    var desc = document.querySelector("#youtube-main .desc");
-                                                    var title = document.querySelector("#youtube-main h2");
-                                                    dialog.querySelector("p").innerHTML = desc.innerHTML;
-                                                    dialog.querySelector("h3").textContent = title.textContent;
-                                                    dialog.showModal();
-                                                });
-
-                                                dialog.addEventListener("click", ({ target }) => {
-                                                    if (target.matches('dialog') || target.matches('[data-action="dismiss"]')) {
-                                                        dialog.close();
-                                                    }
-                                                });
-                                            </script>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                            }
-                        }
-                    }?>
-                </div>
-                </p>
-            </div>
-            <div class="col-md-3">
-                <div class="sidebar-ad">
-                    <h4>Support Comes From</h4>
-                    <div id="div-gpt-ad-1394579228932-1">
-                        <script type='text/javascript'>
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-                        </script>
-                    </div>
-                </div>
-            </div>
-            <div>
-            </div></div>
-
-
-
-        <div class="episodes-block">
-            <h2 class="title red-bar"> <strong><span>MORE episodes</span></strong> </h2>
-            <div class="row">
-
+			<div class="party-politics-page">
+				<div class="about-party">
+					<h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
+					<div class="show-content">
+						<?php echo apply_filters( 'the_content', $show_content ); ?>
+					</div>
+				</div>
+				<div id="station-social" class="station-social">
+				   <div class="badges-box">
+						<span class="badge-title">SUBSCRIBE,  STREAM  &  FOLLOW US ON</span>
+					   <?php echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
+				   </div>
+				</div>
+				<div class="row text-content">
+					<div class="col-12 col-lg-9">
+						<div class="the-latest-block">
+							<h2 class="title red-bar"> <strong><span>the latest</span></strong> </h2>
 <?php
-$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
-$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
-$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
-$term = reset( $terms );
-$cat_args = [
-    'cat' => $cat_no,
-    'orderby' => 'date',
-    'order'   => 'DESC',
-    'posts_per_page' => 15,
-    'ignore_sticky_posts' => 1
-];
-global $ka;
-$ka = 0;
-$tag_ids = [];
-if ( !empty( $top ) && $top !== 'None' ) {
-    $top_art = new WP_Query( [ 'p' => $top ] );
-    $cat_args['posts_per_page'] = 14;
-    $cat_args['post__not_in'] = [ $top ];
-    if ( $top_art->have_posts() ) {
-        while ( $top_art->have_posts() ) {
-            $top_art->the_post();
-            get_template_part( 'content', get_post_type() );
-            $ka += 3;
-            if ( $show_id === 380127 || $show_id === 119016 ) {
-                $tags = wp_get_post_tags( get_the_ID() );
-                if ( $tags ) {
-                    foreach ( $tags as $individual_tag ) {
-                        if ( ! in_array( $individual_tag->term_id, $tag_ids ) ) {
-                            $tag_ids[] = $individual_tag->term_id;
-                        }
-                    }
-                }
-            }
-        }
-        $post_num = 14;
-    }
-    wp_reset_query();
-}
-$cat = new WP_Query( $cat_args );
-if ( $cat->have_posts() ) {
-    while ( $cat->have_posts() ) {
-        $cat->the_post();
-        get_template_part( 'content', "shows" );
+	if ( !empty( $show['ytp'] ) ) {
+		$json = hpm_youtube_playlist( $show['ytp'] );
+		if ( !empty( $json ) ) {
+			$c = 0;
+			foreach ( $json as $tubes ) {
+				$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
+				$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
+				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) { ?>
+							<div class="episodes-content" id="youtube-main">
+								<a href="" class="image-wrapper">
+									<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
+										<?php echo hpm_svg_output( 'play' ); ?>
+									</div>
+								</a>
+								<div class="content-wrapper">
+									<span class="date"><?php echo date( 'F j, Y', $pubtime); ?></span>
+									<h2 class="content-title"><?php echo $yt_title; ?></h2>
+									<div class="desc-wrap"> <p class="desc"><?php echo str_replace( "\n", "<br />", $tubes['snippet']['description'] ); ?></p><button type="button" class="yt-readmore">Read More...</button></div>
+									<dialog id="yt-dialog">
+										<div class="yt-dialog-content">
+											<h3></h3>
+											<p></p>
+											<ul class="dialog-actions">
+												<li><button type="button" data-action="dismiss">Dismiss</button></li>
+											</ul>
+										</div>
+									</dialog>
+									<script>
+										const dialog = document.getElementById("yt-dialog");
+										const readMore = document.querySelector("#youtube-main .yt-readmore");
 
-        $ka += 3;
-    }
-} ?>
+										readMore.addEventListener("click", ({ target }) => {
+											var desc = document.querySelector("#youtube-main .desc");
+											var title = document.querySelector("#youtube-main h2");
+											dialog.querySelector("p").innerHTML = desc.innerHTML;
+											dialog.querySelector("h3").textContent = title.textContent;
+											dialog.showModal();
+										});
 
-
-            </div>
-
-        </div>
-    </div>
-
-
-
-
-    <?php
-        if ( $cat->found_posts > 15 ) {
-            echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/party-politics/page/");
-        }
-    ?>
-    <p>&nbsp;</p>
-
-    </main>
-    </div>
+										dialog.addEventListener("click", ({ target }) => {
+											if (target.matches('dialog') || target.matches('[data-action="dismiss"]')) {
+												dialog.close();
+											}
+										});
+									</script>
+								</div>
+							</div>
+<?php
+				}
+			}
+		}
+	} ?>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="sidebar-ad">
+							<h4>Support Comes From</h4>
+							<div id="div-gpt-ad-1394579228932-1">
+								<script type='text/javascript'>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="episodes-block">
+					<h2 class="title red-bar"> <strong><span>MORE episodes</span></strong> </h2>
+					<div class="row">
+<?php
+	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
+	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
+	$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
+	$term = reset( $terms );
+	$cat_args = [
+		'cat' => $cat_no,
+		'orderby' => 'date',
+		'order'   => 'DESC',
+		'posts_per_page' => 15,
+		'ignore_sticky_posts' => 1
+	];
+	global $ka;
+	$ka = 0;
+	$tag_ids = [];
+	if ( !empty( $top ) && $top !== 'None' ) {
+		$top_art = new WP_Query( [ 'p' => $top ] );
+		$cat_args['posts_per_page'] = 14;
+		$cat_args['post__not_in'] = [ $top ];
+		if ( $top_art->have_posts() ) {
+			while ( $top_art->have_posts() ) {
+				$top_art->the_post();
+				get_template_part( 'content', get_post_type() );
+				$ka += 3;
+				if ( $show_id === 380127 || $show_id === 119016 ) {
+					$tags = wp_get_post_tags( get_the_ID() );
+					if ( $tags ) {
+						foreach ( $tags as $individual_tag ) {
+							if ( ! in_array( $individual_tag->term_id, $tag_ids ) ) {
+								$tag_ids[] = $individual_tag->term_id;
+							}
+						}
+					}
+				}
+			}
+			$post_num = 14;
+		}
+		wp_reset_query();
+	}
+	$cat = new WP_Query( $cat_args );
+	if ( $cat->have_posts() ) {
+		while ( $cat->have_posts() ) {
+			$cat->the_post();
+			get_template_part( 'content', "shows" );
+			$ka += 3;
+		}
+	} ?>
+					</div>
+				</div>
+			</div>
+<?php
+	if ( $cat->found_posts > 15 ) {
+		echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/party-politics/page/");
+	} ?>
+			<p>&nbsp;</p>
+		</main>
+	</div>
 <?php get_footer(); ?>

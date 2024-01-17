@@ -74,22 +74,7 @@ get_header(); ?>
 			if ( is_post_type_archive( [ 'podcasts', 'shows' ] ) ) {
 				HPM_Podcasts::list_inactive( $post->post_type );
 			} else {
-				/*the_posts_pagination( [
-					'prev_text' => __( '&lt;', 'hpmv4' ),
-					'next_text' => __( '&gt;', 'hpmv4' ),
-					'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'hpmv4' ) . ' </span>',
-				] );*/
-                ?>
-                <div>
-                    <?php
-                    //if ( $cat->found_posts > 15 ) {
-                        //wp_pagenavi( );
-                    echo hpm_custom_pagination($cat->max_num_pages, 4, "");
-                   // }
-                    ?>
-                    <p>&nbsp;</p>
-                </div>
-                    <?php
+				echo '<div>' . hpm_custom_pagination( $cat->max_num_pages ) . '<p>&nbsp;</p></div>';
 			}
 
 		// If no content, include the "No posts found" template.

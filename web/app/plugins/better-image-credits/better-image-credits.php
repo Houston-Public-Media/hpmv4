@@ -146,7 +146,7 @@ class BetterImageCreditsPlugin {
 		$license = esc_attr( get_post_meta( $id, '_wp_attachment_license', true ) );
 		$license_link = esc_attr( get_post_meta( $id, '_wp_attachment_license_url', true ) );
 
-		if ( !empty($source ) ) {
+		if ( !empty( $source ) ) {
 			return str_replace(
 				[ '[title]', '[source]', '[link]', '[license]', '[license_link]', '{title}', '{source}', '{link}', '{license}', '{license_link}' ],
 				[ $title, $source, $link, $license, $license_link, $title, $source, $link, $license, $license_link ],

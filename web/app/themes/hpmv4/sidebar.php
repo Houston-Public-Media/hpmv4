@@ -45,45 +45,40 @@
 			$my_query = new WP_Query( $args );
 			if ( $my_query->have_posts() ) { ?>
 <section class="highlights col-sm-6 col-md-12">
-    <div class="row">
-
-        <div class="col-12 news-list-right most-view">
-            <h2 class="title title-full">
-                <strong>Related</strong>
-            </h2>
-            <ul class="list-none news-links list-dashed">
-
+	<div class="row">
+		<div class="col-12 news-list-right most-view">
+			<h2 class="title title-full">
+				<strong>Related</strong>
+			</h2>
+			<ul class="list-none news-links list-dashed">
 <?php
 				while ( $my_query->have_posts() ) {
 					$my_query->the_post();
 					if ( has_post_thumbnail() ) $imgblock = get_the_post_thumbnail( "thumbnail" ); ?>
-                    <li>
-                        <a href="<?php the_permalink(); ?>"><span><?php the_title(); ?></span><span class="img-w150"><?php the_post_thumbnail( "thumbnail" ); ?></span></a>
-                    </li>
+					<li>
+						<a href="<?php the_permalink(); ?>"><span><?php the_title(); ?></span><span class="img-w150"><?php the_post_thumbnail( "thumbnail" ); ?></span></a>
+					</li>
 <?php
 				} ?>
-        </div>
-    </div>
+		</div>
+	</div>
 </section>
 <?php
 			}
 		}
 	}
-	wp_reset_query();
-	//hpm_top_posts(); ?>
+	wp_reset_query(); ?>
 <section class="section news-list col-sm-6 col-md-12">
-    <div class="row">
-
-        <div class="col-12 news-list-right most-view">
-            <h2 class="title title-full">
-                <strong>Most <span>Viewed</span></strong>
-            </h2>
-            <div class="news-links list-dashed">
-            	<?php hpm_top_posts(); ?>
+	<div class="row">
+		<div class="col-12 news-list-right most-view">
+			<h2 class="title title-full">
+				<strong>Most <span>Viewed</span></strong>
+			</h2>
+			<div class="news-links list-dashed">
+				<?php hpm_top_posts(); ?>
 			</div>
-
-        </div>
-    </div>
+		</div>
+	</div>
 </section>
 <?php
 	if ( !is_single() && get_post_type() !== 'post' ) { ?>

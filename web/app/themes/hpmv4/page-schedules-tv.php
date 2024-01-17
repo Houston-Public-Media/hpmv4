@@ -8,11 +8,7 @@ Template Name: TV Schedule
 			background-color: transparent;
 		}
 		body.page.page-template-page-schedules-tv .page-header .page-title {
-
 			text-transform: uppercase;
-			/*font-size: 2.5em;
-			font-family: var(--hpm-font-condensed);
-            color: #00b0bc;*/
 			margin-bottom: 0.5em;
 		}
 		#main h2 {
@@ -23,10 +19,8 @@ Template Name: TV Schedule
 			background-color: var(--main-element-background);
 			padding: 1rem;
 		}
-        .schedule_subhead__dark .schedule_subhead__control-time button
-        {
+        .schedule_subhead__dark .schedule_subhead__control-time button {
             background: #237bbd !important;
-            background-color: #237bbd !important;
         }
 		@media screen and (min-width: 64.0625em) {
 			body.page-template-page-schedules-tv #content {

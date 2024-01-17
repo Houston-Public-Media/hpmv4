@@ -41,9 +41,9 @@ function hpm_scripts(): void {
 	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], $versions['js'], true );
 	wp_register_script( 'hpm-splide', 'https://cdn.houstonpublicmedia.org/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
 	wp_register_script( 'hpm-splide-js', 'https://cdn.houstonpublicmedia.org/assets/js/splide.min.js', [], $versions['js'], true );
-    wp_enqueue_script('bootstrap-js', get_template_directory_uri().'/bootstrap/js/bootstrap.min.js', [ 'jquery' ], NULL, true);
+	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri().'/bootstrap/js/bootstrap.min.js', [ 'jquery' ], NULL, true);
 	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], $versions['css'] );
-    wp_enqueue_style('bootstrap-css', get_template_directory_uri().'/bootstrap/css/bootstrap.min.css', false, NULL, 'all');
+	wp_enqueue_style( 'bootstrap-css', get_template_directory_uri().'/bootstrap/css/bootstrap.min.css', false, NULL );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
@@ -114,20 +114,20 @@ require( get_template_directory() . '/includes/shortcodes.php' );
 
 // Get Time Difference in post datetime and current time
 function hpm_calculate_datetime_difference( $pID ) {
-    if ( $pID ) {
-        $postTimeDifference = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) );
-        return $postTimeDifference;
-    }
+	if ( $pID ) {
+		$postTimeDifference = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) );
+		return $postTimeDifference;
+	}
 	return false;
 }
 
 function hpm_custom_pagination_shortcode( $atts ): string {
-    extract( shortcode_atts( [
-        'pages' => 50,
-        'range' => 4,
-        'pageLink' => "/topics/coronavirus/page/"
-    ], $atts, 'multilink' ) );
-    return hpm_custom_pagination( $pages, $range, $pageLink );
+	extract( shortcode_atts( [
+		'pages' => 50,
+		'range' => 4,
+		'pageLink' => "/topics/coronavirus/page/"
+	], $atts, 'multilink' ) );
+	return hpm_custom_pagination( $pages, $range, $pageLink );
 }
 add_shortcode( 'hpm_custom_pagination_shortcode', 'hpm_custom_pagination_shortcode' );
 
@@ -177,30 +177,23 @@ class HPM_Menu_Walker extends Walker_Nav_Menu {
 	function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 		$classes = empty( $item->classes ) ? [] : (array) $item->classes;
-		foreach ( $classes as $k => $v ) {
-			if ( !str_contains( $v, 'nav-' ) && !str_contains( $v, 'has-children' )  ) {
-				//unset( $classes[$k] );
-			}
+		if ( in_array( 'current-menu-item', $classes ) ||
+			in_array( 'current-menu-ancestor', $classes ) ||
+			in_array( 'current-menu-parent', $classes ) ||
+			in_array( 'current_page_parent', $classes ) ||
+			in_array( 'current_page_ancestor', $classes )
+		) {
+			$classes[] = "active";
 		}
-
-        if ( in_array( 'current-menu-item', $classes ) ||
-            in_array( 'current-menu-ancestor', $classes ) ||
-            in_array( 'current-menu-parent', $classes ) ||
-            in_array( 'current_page_parent', $classes ) ||
-            in_array( 'current_page_ancestor', $classes )
-        ) {
-            $classes[] = "active";
-        }
-
-        $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
 		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 		$id = '';
 		$output .= $indent . '<li' . $id . $class_names .'>';
 		$atts = [];
 		$atts['title']  = $item->attr_title ?? '';
-		$atts['target'] = $item->target     ?? '';
-		$atts['rel']    = $item->xfn        ?? '';
-		$atts['href']   = $item->url        ?? '';
+		$atts['target'] = $item->target	 ?? '';
+		$atts['rel']	= $item->xfn		?? '';
+		$atts['href']   = $item->url		?? '';
 		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
 		$attributes = '';
 
@@ -253,73 +246,73 @@ add_filter( 'pre_get_document_title', 'hpm_npr_article_title' );
 add_action( 'init', 'create_hpmevent_post' );
 
 function create_hpmevent_post(): void {
-    register_post_type( 'event', [
-        'labels' => [
-            'name' => __( 'Events' ),
-            'singular_name' => __( 'Event' ),
-            'menu_name' => __( 'Events' ),
-            'add_new_item' => __( 'Add New Event' ),
-            'edit_item' => __( 'Edit Event' ),
-            'new_item' => __( 'New Event' ),
-            'view_item' => __( 'View Event' ),
-            'search_items' => __( 'Search Event' ),
-            'not_found' => __( 'Event Not Found' ),
-            'not_found_in_trash' => __( 'Event not found in trash' )
-        ],
-        'description' => 'Houston Public Media Event',
-        'public' => true,
-        'menu_position' => 20,
-        'menu_icon' => 'dashicons-groups',
-        'has_archive' => true,
-        'rewrite' => [
-            'slug' => __( 'event' ),
-            'with_front' => false,
-            'feeds' => false,
-            'pages' => true
-        ],
-        'supports' => [ 'title', 'editor', 'thumbnail', 'excerpt', 'author' ],
-        'map_meta_cap' => true,
-        'show_in_graphql' => true,
-        'graphql_single_name' => 'Staff',
-        'graphql_plural_name' => 'Staff'
-    ]);
+	register_post_type( 'event', [
+		'labels' => [
+			'name' => __( 'Events' ),
+			'singular_name' => __( 'Event' ),
+			'menu_name' => __( 'Events' ),
+			'add_new_item' => __( 'Add New Event' ),
+			'edit_item' => __( 'Edit Event' ),
+			'new_item' => __( 'New Event' ),
+			'view_item' => __( 'View Event' ),
+			'search_items' => __( 'Search Event' ),
+			'not_found' => __( 'Event Not Found' ),
+			'not_found_in_trash' => __( 'Event not found in trash' )
+		],
+		'description' => 'Houston Public Media Event',
+		'public' => true,
+		'menu_position' => 20,
+		'menu_icon' => 'dashicons-groups',
+		'has_archive' => true,
+		'rewrite' => [
+			'slug' => __( 'event' ),
+			'with_front' => false,
+			'feeds' => false,
+			'pages' => true
+		],
+		'supports' => [ 'title', 'editor', 'thumbnail', 'excerpt', 'author' ],
+		'map_meta_cap' => true,
+		'show_in_graphql' => true,
+		'graphql_single_name' => 'Staff',
+		'graphql_plural_name' => 'Staff'
+	]);
 }
 add_action( 'admin_init', 'hpm_events_add_role_caps', 999 );
 function hpm_events_add_role_caps(): void {
-    // Add the roles you'd like to administer the custom post types
-    $roles = [ 'editor', 'administrator', 'author' ];
+	// Add the roles you'd like to administer the custom post types
+	$roles = [ 'editor', 'administrator', 'author' ];
 
-    // Loop through each role and assign capabilities
-    foreach( $roles as $the_role ) {
-        $role = get_role( $the_role );
-        $role->add_cap( 'read' );
-        $role->add_cap( 'read_hpm_event');
-        if ( $the_role !== 'author' ) {
-            $role->add_cap( 'add_hpm_event' );
-            $role->add_cap( 'add_hpm_events' );
-            $role->add_cap( 'read_private_hpm_events' );
-            $role->add_cap( 'edit_hpm_event' );
-            $role->add_cap( 'edit_hpm_events' );
-            $role->add_cap( 'edit_others_hpm_eventrs' );
-            $role->add_cap( 'edit_published_hpm_events' );
-            $role->add_cap( 'publish_hpm_events' );
-            $role->add_cap( 'delete_others_hpm_events' );
-            $role->add_cap( 'delete_private_hpm_events' );
-            $role->add_cap( 'delete_published_hpm_events' );
-        } else {
-            $role->remove_cap( 'add_hpm_event' );
-            $role->remove_cap( 'add_hpm_events' );
-            $role->remove_cap( 'read_private_hpm_events' );
-            $role->add_cap( 'edit_hpm_event' );
-            $role->add_cap( 'edit_hpm_events' );
-            $role->remove_cap( 'edit_others_hpm_events' );
-            $role->remove_cap( 'edit_published_hpm_events' );
-            $role->remove_cap( 'publish_hpm_events' );
-            $role->remove_cap( 'delete_others_hpm_events' );
-            $role->remove_cap( 'delete_private_hpm_events' );
-            $role->remove_cap( 'delete_published_hpm_events' );
-        }
-    }
+	// Loop through each role and assign capabilities
+	foreach( $roles as $the_role ) {
+		$role = get_role( $the_role );
+		$role->add_cap( 'read' );
+		$role->add_cap( 'read_hpm_event');
+		if ( $the_role !== 'author' ) {
+			$role->add_cap( 'add_hpm_event' );
+			$role->add_cap( 'add_hpm_events' );
+			$role->add_cap( 'read_private_hpm_events' );
+			$role->add_cap( 'edit_hpm_event' );
+			$role->add_cap( 'edit_hpm_events' );
+			$role->add_cap( 'edit_others_hpm_eventrs' );
+			$role->add_cap( 'edit_published_hpm_events' );
+			$role->add_cap( 'publish_hpm_events' );
+			$role->add_cap( 'delete_others_hpm_events' );
+			$role->add_cap( 'delete_private_hpm_events' );
+			$role->add_cap( 'delete_published_hpm_events' );
+		} else {
+			$role->remove_cap( 'add_hpm_event' );
+			$role->remove_cap( 'add_hpm_events' );
+			$role->remove_cap( 'read_private_hpm_events' );
+			$role->add_cap( 'edit_hpm_event' );
+			$role->add_cap( 'edit_hpm_events' );
+			$role->remove_cap( 'edit_others_hpm_events' );
+			$role->remove_cap( 'edit_published_hpm_events' );
+			$role->remove_cap( 'publish_hpm_events' );
+			$role->remove_cap( 'delete_others_hpm_events' );
+			$role->remove_cap( 'delete_private_hpm_events' );
+			$role->remove_cap( 'delete_published_hpm_events' );
+		}
+	}
 }
 
 /*Create Events Custom Post type ends here*/
@@ -387,8 +380,8 @@ function hpm_cat_tag_add_meta(): void {
 function hpm_cat_tag_meta_box( $object, $box ): void {
 	wp_nonce_field( basename( __FILE__ ), 'hpm_cat_tag_class_nonce' );
 
-    $hpm_cat_tag = get_post_meta( $object->ID, 'hpm_cat_tag', true );
-    if ( empty( $hpm_cat_tag ) ) {
+	$hpm_cat_tag = get_post_meta( $object->ID, 'hpm_cat_tag', true );
+	if ( empty( $hpm_cat_tag ) ) {
 		$hpm_cat_tag = '';
 	}
 	?>
@@ -412,10 +405,11 @@ function hpm_cat_tag_save_meta( $post_id, $post ) {
 	$hpm_cat_tag = ( $_POST['hpm-cat-tag'] ?? '' );
 
 	if ( empty( $hpm_cat_tag ) ) {
-        return $post_id;
+		return $post_id;
 	} else {
 		update_post_meta( $post_id, 'hpm_cat_tag', $hpm_cat_tag );
-    }
+	}
+	return $post_id;
 }
 
 // Pull custom category tag.  If one doesn't exist, return either the most deeply nested category, or a series or show category
@@ -452,54 +446,46 @@ function get_excerpt_by_id( $post_id ): string {
 	$the_post = get_post( $post_id );
 	if ( !empty( $the_post ) ) {
 		$the_excerpt = $the_post->post_excerpt;
-        $excerpt_length = 55;
+		$excerpt_length = 55;
 		if ( empty( $the_excerpt ) ) {
-
 			$the_excerpt = $the_post->post_content;
-
 			$the_excerpt = wp_strip_all_tags( strip_shortcodes( $the_excerpt ), true );
 			$words = explode(' ', $the_excerpt, $excerpt_length + 1);
-
 			if ( count( $words ) > $excerpt_length ) {
 				array_pop( $words );
 				$words[] = '...';
 				$the_excerpt = implode( ' ', $words );
 			}
 		}
-
 		return $the_excerpt;
 	}
 	return '';
 }
 
 function get_excerpt_by_id_ShowPages( $post_id ): string {
-    $the_post = get_post( $post_id );
-    if ( !empty( $the_post ) ) {
-        $the_excerpt = $the_post->post_excerpt;
-        $excerpt_length = 28;
-        if ( empty( $the_excerpt ) ) {
-            $the_excerpt = $the_post->post_content;
-        }
-            $the_excerpt = wp_strip_all_tags( strip_shortcodes( $the_excerpt ), true );
-            $words = explode(' ', $the_excerpt, $excerpt_length + 1);
+	$the_post = get_post( $post_id );
+	if ( !empty( $the_post ) ) {
+		$the_excerpt = $the_post->post_excerpt;
+		$excerpt_length = 28;
+		if ( empty( $the_excerpt ) ) {
+			$the_excerpt = $the_post->post_content;
+		}
+		$the_excerpt = wp_strip_all_tags( strip_shortcodes( $the_excerpt ), true );
+		$words = explode(' ', $the_excerpt, $excerpt_length + 1);
 
-            if ( count( $words ) > $excerpt_length ) {
-                array_pop( $words );
-                $words[] = '...';
-                $the_excerpt = implode( ' ', $words );
-            }
-
-
-        return $the_excerpt;
-    }
-    return '';
+		if ( count( $words ) > $excerpt_length ) {
+			array_pop( $words );
+			$words[] = '...';
+			$the_excerpt = implode( ' ', $words );
+		}
+		return $the_excerpt;
+	}
+	return '';
 }
-
 
 // Display Top Posts
 function hpm_top_posts(): void {
-    echo analyticsPull();
-	//echo '<section id="top-posts" class="highlights"><h4>Most Viewed</h4>' . analyticsPull() . '</section>';
+	echo analyticsPull();
 }
 
 // Remove Generator tag from RSS feeds
@@ -567,10 +553,10 @@ add_action( 'init', 'remove_plugin_image_sizes' );
 
 function remove_plugin_image_sizes(): void {
 	remove_image_size( 'guest-author-32' );
-    remove_image_size( 'guest-author-50' );
-    remove_image_size( 'guest-author-64' );
-    remove_image_size( 'guest-author-96' );
-    remove_image_size( 'guest-author-128' );
+	remove_image_size( 'guest-author-50' );
+	remove_image_size( 'guest-author-64' );
+	remove_image_size( 'guest-author-96' );
+	remove_image_size( 'guest-author-128' );
 }
 
 function wpf_dev_char_limit(): void {
@@ -716,58 +702,58 @@ function election_homepage(): void {
 }
 
 function hpm_homepage_modules( $catId ): array {
-    $articles = [];
-    if ( !empty( $catId ) ) {
-        $catposts_args = [
-            'posts_per_page' => 4,
-            'category' => $catId,
-            'ignore_sticky_posts' => 1,
-            'post_status' => 'publish'
-        ];
-        $catposts_query = new WP_Query( $catposts_args );
-        if ( $catposts_query->have_posts() ) {
-            foreach ( $catposts_query->posts as $stp ) {
-                $articles[] = $stp;
-            }
-        }
-    }
-    return $articles;
-    wp_reset_query();
+	$articles = [];
+	if ( !empty( $catId ) ) {
+		$catposts_args = [
+			'posts_per_page' => 4,
+			'category' => $catId,
+			'ignore_sticky_posts' => 1,
+			'post_status' => 'publish'
+		];
+		$catposts_query = new WP_Query( $catposts_args );
+		if ( $catposts_query->have_posts() ) {
+			foreach ( $catposts_query->posts as $stp ) {
+				$articles[] = $stp;
+			}
+		}
+	}
+	return $articles;
+	wp_reset_query();
 }
 
 function hpm_showLatestArticlesbyShowID( $catID ): array {
-    $articles = [];
-    if ( !empty( $catID ) ) {
-        $showposts_args = [
-            'posts_per_page' => 3,
-            'cat' => $catID,
-            'ignore_sticky_posts' => 1,
-            'post_status' => 'publish'
-        ];
-        $catposts_query = new WP_Query( $showposts_args );
-        //print_r( $catposts_query);
-        if ( $catposts_query->have_posts() ) {
-            foreach ( $catposts_query->posts as $stp ) {
-                $articles[] = $stp;
-            }
-        }
-    }
+	$articles = [];
+	if ( !empty( $catID ) ) {
+		$showposts_args = [
+			'posts_per_page' => 3,
+			'cat' => $catID,
+			'ignore_sticky_posts' => 1,
+			'post_status' => 'publish'
+		];
+		$catposts_query = new WP_Query( $showposts_args );
+		//print_r( $catposts_query);
+		if ( $catposts_query->have_posts() ) {
+			foreach ( $catposts_query->posts as $stp ) {
+				$articles[] = $stp;
+			}
+		}
+	}
 	wp_reset_query();
-    return $articles;
+	return $articles;
 }
 
 function altered_post_time_ago_function() {
-    return ( get_the_time('U') >= strtotime('-1 week') ) ? sprintf( esc_html__( '%s ago', 'textdomain' ), human_time_diff( get_the_time ( 'U' ), current_time( 'timestamp' ) ) ) : get_the_date();
+	return ( get_the_time('U') >= strtotime('-1 week') ) ? sprintf( esc_html__( '%s ago', 'textdomain' ), human_time_diff( get_the_time ( 'U' ), current_time( 'timestamp' ) ) ) : get_the_date();
 }
 add_filter( 'the_time', 'altered_post_time_ago_function' );
 
 function hpm_showTopthreeArticles( $articles ): string{
-    $result = "";
+	$result = "";
 	$kk = 0;
-    if ( count( $articles ) > 0 ) {
-        foreach ( $articles as $ka => $va ) {
-            $post = $va;
-            $post_title = get_the_title();
+	if ( count( $articles ) > 0 ) {
+		foreach ( $articles as $ka => $va ) {
+			$post = $va;
+			$post_title = get_the_title();
 			if ( is_front_page() ) {
 				$alt_headline = get_post_meta( get_the_ID(), 'hpm_alt_headline', true );
 				if ( !empty( $alt_headline ) ) {
@@ -788,24 +774,22 @@ function hpm_showTopthreeArticles( $articles ): string{
 				$result .= '<div class="col-lg-8 col-sm-12 breaking-news-first"><div class="row news-main"> <div class="col-sm-5">'.$breakingNewsButton.'<h1><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . $post_title . '</a></h1><p style="font-size: 0.875rem;">' . $summary . '</p></div><div class="col-sm-7"><div class="box-img breaking-news-img">' . get_the_post_thumbnail( $post, $post->ID ) . ' </div> </div></div></div><div class="col-lg-4 col-sm-12"><ul class="news-listing row">';
 			} elseif ( $ka == 1 || $ka == 2 ) {
 				$result .= '<li class="col-lg-12 col-sm-6"><div class="d-flex flex-row-reverse"><div class="col-5"><div class="box-img">' . get_the_post_thumbnail( $post, get_the_ID() ) . '</div></div>
-                                    <div class="col-7"><h4 class="text-light-gray" style="color:#237bbd;"><a href="' . get_the_permalink( $post ) . '">' . hpm_top_cat( $post->ID ) . '</a></h4><p><a href="' . get_the_permalink( $post ) . '">' . get_the_title( $post ) . '</a></p></div></div> </li>';
+									<div class="col-7"><h4 class="text-light-gray" style="color:#237bbd;"><a href="' . get_the_permalink( $post ) . '">' . hpm_top_cat( $post->ID ) . '</a></h4><p><a href="' . get_the_permalink( $post ) . '">' . get_the_title( $post ) . '</a></p></div></div> </li>';
 			} elseif ( $ka > 3 ) {
-                    $result .= '</ul>';
+					$result .= '</ul>';
 			}
-            $kk++;
-        }
-    }
+			$kk++;
+		}
+	}
 	wp_reset_query();
-    return $result;
+	return $result;
 }
 
 function hpm_homepage_articles(): array {
 	$articles = [];
 	$hpm_priority = get_option( 'hpm_priority' );
-
-    if ( !empty( $hpm_priority['homepage'] ) ) {
+	if ( !empty( $hpm_priority['homepage'] ) ) {
 		if ( empty( $hpm_priority['homepage'][1] ) ) {
-
 			$indepth = new WP_Query([
 				'posts_per_page' => 2,
 				'cat' => 29328,
@@ -832,12 +816,6 @@ function hpm_homepage_articles(): array {
 			foreach ( $sticky_query->posts as $stp ) {
 				$articles[] = $stp;
 			}
-		}
-	}
-	global $wp_query;
-	if ( $wp_query->have_posts() ) {
-		foreach ( $wp_query->posts as $wpp ) {
-			//$articles[] = $wpp;
 		}
 	}
 	return $articles;
@@ -989,6 +967,7 @@ function hpm_pull_npr_story( $npr_id ) {
 		'body' => '',
 		'related' => [],
 		'permalink' => '',
+		'canonical' => '',
 		'slug' => '',
 		'image' => [
 			'src' => 'https://cdn.houstonpublicmedia.org/assets/images/NPR-NEWS.gif',

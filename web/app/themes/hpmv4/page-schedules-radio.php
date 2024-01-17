@@ -141,14 +141,10 @@ Template Name: Radio Schedules
 			background-color: transparent;
 		}
 		body.page.page-template-page-schedules-radio .page-header .page-title {
-
 			text-transform: uppercase;
-
-			/*margin-bottom: 0.5em;*/
 		}
 		body.page.page-template-page-schedules-radio .page-header {
 			overflow: hidden;
-			/*margin-bottom: 1em;*/
 		}
 		body.page.page-template-page-schedules-radio .entry-content {
 			padding: 1em;

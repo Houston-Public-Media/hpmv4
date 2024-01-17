@@ -253,7 +253,7 @@ function hpm_local_cat_check(): bool {
 /*
  * Disallow certain MIME types from being accepted by the media uploader
  */
-function custom_upload_mimes ( $existing_mimes = [] ) {
+function custom_upload_mimes ( $existing_mimes = [] ): array {
 	unset( $existing_mimes['exe'] );
 	unset( $existing_mimes['wav'] );
 	unset( $existing_mimes['ra|ram'] );
@@ -270,7 +270,7 @@ add_filter('upload_mimes', 'custom_upload_mimes');
 /*
  * Finds the last 5 entries in the specified YouTube playlist and saves into a site transient
  */
-function hpm_youtube_playlist( $key, $num = 1 ) {
+function hpm_youtube_playlist( $key, $num = 5 ): array {
 	$list = get_transient( 'hpm_yt_' . $key . '_' . $num );
 	if ( !empty( $list ) ) {
 		return $list;
@@ -435,32 +435,24 @@ function analyticsPull_update(): void {
 		]),
 		'limit' => 5
 	]);
-    //$output = "<ul>";
-    $output = '<ul class="list-none news-links list-dashed">';
-    foreach ( $result->getRows() as $row ) {
-        preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row->getDimensionValues()[0]->getValue(), $match );
-        if ( !empty( $match ) ) {
-            $imageBlock = '';
-            $title = get_the_title( $match[1] );
-            if ( empty( $title ) ) {
-                $title = ucwords( str_replace( [ '-', '/' ], [ ' ', '' ] , $match[2] ) );
-            }
-            if ( has_post_thumbnail( $match[1] ) ) {
-                $imageBlock = get_the_post_thumbnail( $match[1], 'thumbnail' );
-            }
+	$output = '<ul class="list-none news-links list-dashed">';
+	foreach ( $result->getRows() as $row ) {
+		preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row->getDimensionValues()[0]->getValue(), $match );
+		if ( !empty( $match ) ) {
+			$imageBlock = '';
+			$title = get_the_title( $match[1] );
+			if ( empty( $title ) ) {
+				$title = ucwords( str_replace( [ '-', '/' ], [ ' ', '' ] , $match[2] ) );
+			}
+			if ( has_post_thumbnail( $match[1] ) ) {
+				$imageBlock = get_the_post_thumbnail( $match[1], 'thumbnail' );
+			}
 
-            //$output .= '<li><h2 class="entry-title"><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark">' . $title . '</a></h2></li>';
-            $output .= '<li><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark"><span>' . $title . '</span><span class="img-w150">'.$imageBlock.'</span></a></li>';
-            /*<li>
-            <a href="#">
-            <span>Reflecting on the pandemic in Houston as the national emergency ends</span>
-            <span class="img-w150"><img src="<?php echo get_template_directory_uri(); ?>/images/news-img.jpg" /></span>
-            </a>
-            </li>*/
-        }
-    }
-    $output .= "</ul>";
-    update_option( 'hpm_most_popular', $output );
+			$output .= '<li><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark"><span>' . $title . '</span><span class="img-w150">' . $imageBlock . '</span></a></li>';
+		}
+	}
+	$output .= "</ul>";
+	update_option( 'hpm_most_popular', $output );
 }
 
 function analyticsPull() {
@@ -473,15 +465,9 @@ if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
 }
 
-function get_post_id_by_slug($slug) {
-
-    $post = get_page_by_path($slug, null, 'post');
-
-    if ($post) {
-        return $post->ID;
-    } else {
-        return null;
-    }
+function get_post_id_by_slug( $slug ) {
+	$post = get_page_by_path( $slug, null, 'post' );
+	return $post?->ID;
 }
 
 
@@ -506,7 +492,6 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 		$npr->parse();
 		if ( !empty( $npr->stories ) ) {
 			foreach ( $npr->stories as $story ) {
-				//$output .= '<li>';
 				if ( !empty( $story->images[0] ) ) {
 					$image_id = $npr->extract_asset_id( $story->images[0]->href );
 					$image_asset = $story->assets->{$image_id};
@@ -518,13 +503,6 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 					$output .= '<a href="/npr' . $story->nprWebsitePath . '/" class="post-thumbnail"><img src="' . $image_url . '" alt="' . $story->title . '" loading="lazy" /></a>';
 				}
 				$output .= '<span><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark">' . $story->title . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story->teaser . '</div></div></article>';
-
-                /*<li>
-                            <a href="#">
-                                <span>Reflecting on the pandemic in Houston as the national emergency ends</span>
-                                <span class="img-w75"><img src="<?php echo get_template_directory_uri(); ?>/images/news-img.jpg" /></span>
-                            </a>
-                        </li>*/
 			}
 		}
 	} elseif ( function_exists( 'nprstory_activate' ) ) {
@@ -533,22 +511,16 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 		if ( is_wp_error( $remote ) ) {
 			return "<p></p>";
 		} else {
-			$npr      = wp_remote_retrieve_body( $remote );
+			$npr  = wp_remote_retrieve_body( $remote );
 			$npr_json = json_decode( $npr, true );
 		}
 		foreach ( $npr_json['list']['story'] as $story ) {
 			$npr_date = strtotime( $story['storyDate']['$text'] );
-			//$output   .= '<article class="card">';
-			if ( ! empty( $story['image'][0]['src'] ) ) {
-
-			//	$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
-			}
 			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark"><span>' . $story['title']['$text'] . '</span><span class="img-w75"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></span></a></li>';
-            //<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail">
 		}
 	}
-    $output .="</ul>";
-	//set_transient( 'hpm_nprapi_' . $api_id, $output, 300 );
+	$output .= "</ul>";
+	set_transient( 'hpm_nprapi_' . $api_id, $output, 300 );
 	return $output;
 }
 
@@ -696,9 +668,9 @@ function custom_register_coauthors(): void {
 	register_rest_field( 'post',
 		'coauthors',
 		[
-			'get_callback'    => 'custom_get_coauthors',
+			'get_callback' => 'custom_get_coauthors',
 			'update_callback' => null,
-			'schema'          => null,
+			'schema' => null,
 		]
 	);
 }
@@ -940,12 +912,12 @@ function hpm_image_preview_page(): void {
 		<style>
 			@media screen and (min-width: 52.5em) {
 				.article-wrap {
-    				width: 100%;
+					width: 100%;
 					margin: 1em auto;
 				}
 				.article-wrap :is(article.card.card-large,article.card.card-medium) {
 					width: 95%;
-    				margin: 0 2.5% 1em;
+					margin: 0 2.5% 1em;
 				}
 				.article-wrap article.card {
 					margin: 0 auto 1em;
@@ -1025,8 +997,8 @@ add_action('admin_menu', 'hpm_image_preview_page');
  * Displays meta box on post editor screen (both new and edit pages).
  */
 function postscript_meta_box_setup(): void {
-	$user    = wp_get_current_user();
-	$roles   = [ 'administrator' ];
+	$user = wp_get_current_user();
+	$roles = [ 'administrator' ];
 
 	// Add meta boxes only for allowed user roles.
 	if ( array_intersect( $roles, $user->roles ) ) {
@@ -1106,10 +1078,10 @@ function postscript_meta_box_callback( object $post, array $box ): void {
 /**
  * Saves the meta box form data upon submission.
  *
- * @param int     $post_id    Post ID.
- * @param WP_Post $post       Post object.
+ * @param int     $post_id  Post ID.
+ * @param WP_Post $post     Post object.
  *
- *@uses  postscript_sanitize_data()    Sanitizes $_POST array.
+ * @uses  postscript_sanitize_data()    Sanitizes $_POST array.
  *
  */
 function postscript_save_post_meta( int $post_id, WP_Post $post ): int {
@@ -1160,11 +1132,11 @@ function postscript_save_post_meta( int $post_id, WP_Post $post ): int {
  *
  * @link https://tommcfarlin.com/input-sanitization-with-the-wordpress-settings-api/
  *
- * @since    0.4.0
+ * @since	0.4.0
  *
  * @param array $data
  *
- * @return   array    $input_clean  The sanitized input.
+ * @return   array	$input_clean  The sanitized input.
  */
 function postscript_sanitize_data( $data = [] ): array {
 	// Initialize a new array to hold the sanitized values.
@@ -1199,12 +1171,9 @@ function postscript_sanitize_data( $data = [] ): array {
  * (Used by post meta-box form before writing post-meta to database.)
  *
  * @link https://tommcfarlin.com/input-sanitization-with-the-wordpress-settings-api/
- *
- * @since    0.4.0
- *
- * @param array $input        The address input.
- *
- * @return   array    $input_clean  The sanitized input.
+ * @since 0.4.0
+ * @param array   $input        The address input.
+ * @return array  $input_clean  The sanitized input.
  */
 function postscript_sanitize_array( array $input ): array {
 	// Initialize a new array to hold the sanitized values.
@@ -1382,7 +1351,7 @@ function hpm_page_script_setup(): void {
 function hpm_page_script_add_meta(): void {
 	$user = wp_get_current_user();
 	if ( in_array( 'administrator', $user->roles ) ) {
-    	add_meta_box(
+		add_meta_box(
 			'hpm-page-script-meta-class',
 			esc_html__( 'Injectable Scripts or Styling', 'example' ),
 			'hpm_page_script_meta_box',
