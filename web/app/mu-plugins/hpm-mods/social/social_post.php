@@ -115,7 +115,7 @@
 
 				try {
 					$client = new Client( $settings );
-					$return = $client->tweet()->performRequest( 'POST', [ 'text' => $social_post['twitter']['data'] . ' ' . get_the_permalink( $post_id ) ] );
+					$return = $client->tweet()->create()->performRequest( [ 'text' => $social_post['twitter']['data'] . ' ' . get_the_permalink( $post_id ) ] );
 					update_post_meta( $post_id, 'hpm_social_twitter_sent', 1 );
 					log_it( $return );
 				} catch (Exception|\GuzzleHttp\Exception\GuzzleException $e) {
