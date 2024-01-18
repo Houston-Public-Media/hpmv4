@@ -5782,8 +5782,7 @@ body.single-shows #station-social.station-social {
 		top: 0px;
 	}
 
-	body.sticky-nav header.site-header .breakingnews, body.sticky-nav header.site-header .header-weather,
-	body.sticky-nav header.site-header .header-highlight-text {
+	body.sticky-nav header.site-header :is(.breakingnews,.header-weather,.header-highlight-text,.quick-access) {
 		display: none;
 	}
 	body.sticky-nav header#masthead .site-branding {
