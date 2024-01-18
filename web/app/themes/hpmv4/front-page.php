@@ -190,12 +190,6 @@ $tras = null; ?>
 							<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"><?php echo hpm_now_playing( 'mixtape' ); ?></div>
 						</div>
 					</div>
-					<h2 class="title title-full" style="padding-top: 30px;">
-						<strong>Support Comes <span>From</span></strong>
-					</h2>
-					<div id="div-gpt-ad-1394579228932-1">
-						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
-					</div>
 				</div>
 		</section>
 		<section class="section news-list news-list-full">
@@ -207,8 +201,11 @@ $tras = null; ?>
 					<?php echo hpm_nprapi_output(); ?>
 				</div>
 				<div class="col-sm-12 col-lg-3 news-list-right most-view">
-					<div id="div-gpt-ad-1394579228932-2">
-						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
+					<h2 class="title title-full" style="padding-top: 30px;">
+						<strong>Support Comes <span>From</span></strong>
+					</h2>
+					<div id="div-gpt-ad-1394579228932-1">
+						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
 					</div>
 				</div>
 			</div>
