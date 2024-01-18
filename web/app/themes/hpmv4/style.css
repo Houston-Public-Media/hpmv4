@@ -1982,7 +1982,7 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation .nav-back {
 		display: none;
 	}
-	body:not(.page-template-page-listen) nav#site-navigation #top-search {
+	body:not(.page-template-page-listen) #masthead #top-search {
 		display: block;
 		position: absolute;
 		right: 0.25rem;
@@ -1991,7 +1991,7 @@ body.nav-active-menu #top-mobile-close {
 		top: 1.25rem;
 		padding: 0;
 	}
-	body:not(.page-template-page-listen) nav#site-navigation #top-search form {
+	body:not(.page-template-page-listen) #masthead #top-search form {
 		top: -0.25rem;
 		right: 3rem;
 		transform: rotateX(-90deg);
@@ -2003,14 +2003,14 @@ body.nav-active-menu #top-mobile-close {
 		background-color: #f2f3f3;
 		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
 	}
-	body:not(.page-template-page-listen) nav#site-navigation #top-search .search-field {
+	body:not(.page-template-page-listen) #masthead #top-search .search-field {
 		font-size: 1.25rem;
 		padding: 0.5rem;
 	}
-	body:not(.page-template-page-listen) nav#site-navigation #top-search:hover {
+	body:not(.page-template-page-listen) #masthead #top-search:hover {
 		cursor: pointer;
 	}
-	body:not(.page-template-page-listen) nav#site-navigation #top-search:focus-within form {
+	body:not(.page-template-page-listen) #masthead #top-search:focus-within form {
 		opacity: 1;
 		transform: rotateX(0);
 		visibility: visible;
@@ -5110,8 +5110,8 @@ select#hpm-staff-cat {
 	display: flex;
 	justify-content: flex-end;
 	position: absolute;
-	right: 0px;
-	top: -30px;
+	right: 0;
+	bottom: 0;
 }
 .quick-access ul {
 	display: flex;
@@ -5130,7 +5130,7 @@ select#hpm-staff-cat {
 .quick-access .nav-passport svg {
 	width: 100px
 }
-body:not(.page-template-page-listen) nav#site-navigation #top-search {
+body:not(.page-template-page-listen) #masthead #top-search {
 	position: static;
 	padding-left: 5px;
 }
@@ -5872,7 +5872,7 @@ iframe {
 		min-height: 80px;
 	}
 	.quick-access {
-		top: 14px;
+		bottom: -3rem;
 		right: 10px
 	}
 	.header-highlight-text {
@@ -5927,7 +5927,7 @@ iframe {
 	#masthead .top-mobile-text {
 		display: none;
 	}
-	body:not(.page-template-page-listen) nav#site-navigation #top-search {
+	body:not(.page-template-page-listen) #masthead #top-search {
 		position: relative;
 		top: -8px;
 	}
