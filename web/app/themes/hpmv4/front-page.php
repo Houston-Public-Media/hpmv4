@@ -211,19 +211,19 @@ $tras = null;
                         </div>
                     </div>
 
-                    <h2 class="title title-full" style="padding-top: 30px;">
+                    <!--<h2 class="title title-full" style="padding-top: 30px;">
                         <strong>Support Comes <span>From</span></strong>
                     </h2>
 
                     <div id="div-gpt-ad-1394579228932-1">
                         <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
-                    </div>
+                    </div>-->
 
 
                 </div>
         </section>
 
-        <section class="section news-list news-list-full">
+        <section class="section news-list news-list-full" style="padding: 0px !important;">
             <div class="row">
                 <div class="col-sm-12 col-lg-9 news-list-left">
                     <h2 class="title">
@@ -233,8 +233,14 @@ $tras = null;
 
                 </div>
                 <div class="col-sm-12 col-lg-3 news-list-right most-view">
+                    <h2 class="title title-full" style="padding-top: 30px;">
+                        <strong>Support Comes <span>From</span></strong>
+                    </h2>
+                    <div id="div-gpt-ad-1394579228932-1">
+                        <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
+                    </div>
 
-                    <div id="div-gpt-ad-1394579228932-2">
+                    <div id="div-gpt-ad-1394579228932-2" style="padding-top: 10px;">
                         <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
                     </div>
                 </div>
