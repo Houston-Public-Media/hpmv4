@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Default Show
+Template Name: Party Politics
 Template Post Type: shows
 */
 /**
@@ -99,7 +99,7 @@ get_header(); ?>
 							<h2 class="title red-bar"> <strong><span>the latest</span></strong> </h2>
 <?php
 	if ( !empty( $show['ytp'] ) ) {
-		$json = hpm_youtube_playlist( $show['ytp'] );
+		$json = hpm_youtube_playlist( $show['ytp'], 1 );
 		if ( !empty( $json ) ) {
 			$c = 0;
 			foreach ( $json as $tubes ) {
