@@ -1,4 +1,5 @@
 <?php
+	global $wp_query;
 	$curauth = $wp_query->get_queried_object();
 	if ( is_a( $curauth, 'wp_user' ) ) {
 		$author_check = new WP_Query( [

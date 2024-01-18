@@ -29,7 +29,6 @@ get_header(); ?>
 		}
 		body.single-shows #station-social h3 {
 			font-size: 1.5em;
-			font-family: var(--hpm-font-condensed);
 			color: #3f1818;
 			margin-bottom: 1rem;
 		}
@@ -84,7 +83,6 @@ get_header(); ?>
 		section #audio-nav ul li {
 			border-bottom: 1px solid white;
 			padding: 1em;
-			font: 100 1em/1em var(--hpm-font-main);
 			overflow: hidden;
 			width: 100%;
 			height: auto;
@@ -99,9 +97,8 @@ get_header(); ?>
 			cursor: pointer;
 		}
 		#audio-nav ul li.current {
-			background-color: var(--main-red);
+			background-color: var(--main-blue);
 			color: white;
-			font: 700 1em/1em var(--hpm-font-main);
 		}
 		#audio-nav ul li .audio-info {
 			width: 100%;
@@ -168,22 +165,28 @@ get_header(); ?>
 		$episodes = HPM_Podcasts::list_episodes( $show_id );
 		echo HPM_Podcasts::show_header( $show_id );
 	} ?>
-			<div id="float-wrap">
-				<aside class="column-right">
-					<h3>About <?php echo $show_title; ?></h3>
-					<div class="show-content">
-						<?php echo apply_filters( 'the_content', $show_content ); ?>
-					</div>
-					<div class="sidebar-ad">
-						<h4>Support Comes From</h4>
-						<div id="div-gpt-ad-1394579228932-1">
-							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-							</script>
+            <div class="party-politics-page">
+				<div class="row about-party">
+					<div class="col-sm-9">
+						<h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong></h2>
+						<div class="show-content">
+							<?php echo apply_filters( 'the_content', $show_content ); ?>
 						</div>
 					</div>
-				</aside>
-				<div class="article-wrap">
+					<div class="col-sm-3">
+						<div class="sidebar-ad">
+							<h4>Support Comes From</h4>
+							<div id="div-gpt-ad-1394579228932-1">
+								<script type='text/javascript'>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="episodes-block">
+					<h2 class="title red-bar"> <strong><span>All Stories</span></strong> </h2>
+					<div class="row">
 <?php
 	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
 	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
@@ -205,7 +208,7 @@ get_header(); ?>
 		if ( $top_art->have_posts() ) {
 			while ( $top_art->have_posts() ) {
 				$top_art->the_post();
-				get_template_part( 'content', get_post_type() );
+				get_template_part( 'content', 'shows' );
 				$ka += 2;
 			}
 			$post_num = 14;
@@ -216,18 +219,15 @@ get_header(); ?>
 	if ( $cat->have_posts() ) {
 		while ( $cat->have_posts() ) {
 			$cat->the_post();
-			get_template_part( 'content', get_post_type() );
+			get_template_part( 'content', 'shows' );
 			$ka += 2;
 		}
 	} ?>
+					</div>
 				</div>
-			</div>
 <?php
-	if ( $cat->found_posts > 15 ) { ?>
-			<div class="readmore">
-				<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
-			</div>
-<?php
+	if ( $cat->found_posts > 15 ) {
+        echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/health-matters/page/");
 	}
 	$atts = [
 		[ 'id' => '372956', 'title' => 'Episode 76: COVID-19 Testing (Dr. Brian Reed)', 'url' => 'https://cdn.houstonpublicmedia.org/wp-content/uploads/2018/12/28165247/UHCM_Ep076_COVID_COVIDtesting_DrReed.mp3' ],
@@ -307,29 +307,30 @@ get_header(); ?>
 		[ 'id' => '315979', 'title' => 'Episode 2: Combatting High Blood Pressure (Dr. Kathryn Horn)', 'url' => 'https://cdn.houstonpublicmedia.org/wp-content/uploads/2018/12/19113456/UHCM_Ep002_HighBloodPressure01.mp3' ],
 		[ 'id' => '315978', 'title' => 'Episode 1: Sadness vs. Depression (Dr. Kathryn Horn)', 'url' => 'https://cdn.houstonpublicmedia.org/wp-content/uploads/2018/12/19113453/UHCM_Ep001_MentalHealth01.mp3' ],
 	]; ?>
-			<section id="audio-playlist-player" class="column-left">
-				<div class="ap-split">
-					<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'"][/audio]' ); ?>
-					<h3 id="ap-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
-				</div>
-				<aside id="audio-nav">
-					<nav id="audio">
-						<div class="audio-playlist">
-							<p>Archived Episodes</p>
-						</div>
-						<ul>
-						<?php
-							foreach ( $atts as $a ) { ?>
-								<li <?php echo ( $a['id'] == $atts[0]['id'] ? 'class="current" ' : '' ); ?>id="hm<?php
-								echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
-									<div class="audio-info"><?php echo $a['title']; ?></div>
-								</li>
-						<?php
-							} ?>
-						</ul>
-					</nav>
-				</aside>
-			</section>
+				<section id="audio-playlist-player" class="column-left">
+					<div class="ap-split">
+						<?php echo do_shortcode( '[audio mp3="'.$atts[0]['url'].'"][/audio]' ); ?>
+						<h3 id="ap-title" data-next-id="hm<?php echo $atts[1]['id']; ?>"><?php echo $atts[0]['title']; ?></h3>
+					</div>
+					<aside id="audio-nav">
+						<nav id="audio">
+							<div class="audio-playlist">
+								<p>Archived Episodes</p>
+							</div>
+							<ul>
+							<?php
+								foreach ( $atts as $a ) { ?>
+									<li <?php echo ( $a['id'] == $atts[0]['id'] ? 'class="current" ' : '' ); ?>id="hm<?php
+									echo $a['id']; ?>" data-ytid="<?php echo $a['url']; ?>" data-yttitle="<?php echo $a['title']; ?>">
+										<div class="audio-info"><?php echo $a['title']; ?></div>
+									</li>
+							<?php
+								} ?>
+							</ul>
+						</nav>
+					</aside>
+				</section>
+            </div>
 		</main>
 	</div>
 	<script>

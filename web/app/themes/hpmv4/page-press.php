@@ -38,10 +38,8 @@ get_header(); ?>
 							$cat->the_post();
 							get_template_part( 'content', get_post_format() );
 						}
-						wp_reset_postdata(); ?>
-				<div class="readmore">
-					<a href="/topics/<?php echo $term->slug; ?>/page/2">View More <?php echo $term->name; ?></a>
-				</div>
+						wp_reset_postdata();
+						echo hpm_custom_pagination($cat->max_num_pages, 4, "/topics/press/page/"); ?>
 			</section>
 		<?php
 					}

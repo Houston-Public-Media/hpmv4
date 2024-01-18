@@ -9,7 +9,7 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 auth.json
 web/app/ewww/lazy
-.docker
+.docker/
 docker-compose.yml
 
 # WordPress

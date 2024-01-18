@@ -8,7 +8,7 @@ get_header(); ?>
 			.page-template-page-passport .page-header {
 				height: 0;
 				padding: 0 0 calc(100%/2.5) 0;
-				background-size: cover;
+				background-size: contain;
 				background-position: top center;
 				position: relative;
 				margin: 0;
@@ -57,13 +57,12 @@ get_header(); ?>
 			}
 			.page-template-page-passport.passport-faqs .page-content h2 {
 				padding: 2rem 0 1rem;
-				color: var(--main-red);
+				color: var(--main-blue);
 			}
 			.page-template-page-passport .page-content :is(.passport-donate,.passport-signin) {
 				width: 100%;
 			}
 			.page-template-page-passport .page-content :is(.passport-donate,.passport-signin) a {
-				font: 100 1.5em/1em var(--hpm-font-main);
 				width: 60%;
 				display: block;
 				text-align: center;
@@ -72,7 +71,7 @@ get_header(); ?>
 				color: white;
 			}
 			.page-template-page-passport .page-content .passport-donate a {
-				background-color: var(--main-red);
+				background-color: var(--main-blue);
 			}
 			.page-template-page-passport .page-content .passport-signin a {
 				background-color: #0A145A;
@@ -100,13 +99,10 @@ get_header(); ?>
 			.page-template-page-passport .page-content .passport-example p {
 				padding-right: 0;
 				padding-left: 0;
-				font-family: var(--hpm-font-main);
 				color: #464646;
 				font-size: 1em;
 			}
 			.page-template-page-passport .page-content .passport-example h3 {
-				font-family: var(--hpm-font-main);
-				font-weight: 100;
 				color: #464646;
 				font-size: 1.25em;
 			}
@@ -127,7 +123,7 @@ get_header(); ?>
 				border-top: 1rem solid #f5f5f5;
 				padding: 1rem 0 0;
 				background: #0A145A;
-				background: linear-gradient(90deg, var(--main-red) 0%, #0A145A 100%);
+				background: linear-gradient(90deg, var(--main-blue) 0%, #0A145A 100%);
 			}
 			.page-template-page-passport .page-content h2.device-options a {
 				color: white;
@@ -243,19 +239,17 @@ get_header(); ?>
 				padding: 0.5em;
 				border: 1px solid #464646;
 				color: white;
-				font-family: var(--hpm-font-main); font-weight: 100;
 			}
 			.page-template-page-passport .page-content form#passport-activate button {
 				background-color: #0A145A;
 			}
 			.page-template-page-passport .page-content form#passport-lookup button {
-				background-color: var(--main-red);
+				background-color: var(--main-blue);
 			}
 			.page-template-page-passport .page-content form input[type="text"] {
 				width: 70%;
 				padding: 0.5em;
 				border: 1px solid #464646;
-				font: 400 100%/1em var(--hpm-font-main);
 			}
 			@media screen and (min-width: 34em) {
 				.page-template-page-passport .page-header {

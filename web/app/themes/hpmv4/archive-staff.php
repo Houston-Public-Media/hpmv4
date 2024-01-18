@@ -94,9 +94,9 @@ get_header(); ?>
 			$query_obj = $wp_query->get_queried_object(); ?>
 
 			<header class="page-header">
-				<h1 class="page-title"><?php echo ( is_tax() ? 'Staff: ' . $query_obj->name  : 'Staff Directory' ) ?></h1>
+				<h1 class="page-title"><?php echo ( is_tax() ? 'Staff: ' . $query_obj->name  : 'MEET THE TEAM' ) ?></h1>
 				<?php wp_dropdown_categories([
-						'show_option_all'	=> __("Select Category"),
+						'show_option_all'	=> __("Select Department"),
 						'taxonomy'			=> 'staff_category',
 						'name'				=> 'hpm-staff-cat',
 						'orderby'			=> 'name',

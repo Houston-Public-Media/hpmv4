@@ -389,4 +389,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
+	document.addEventListener("scroll", (event) => {
+		let scrollPosition =  window.scrollY;
+		let headerHeight = document.querySelector('.site-header').getBoundingClientRect().height;
+		if ( scrollPosition > headerHeight ) {
+			if ( !document.body.classList.contains('sticky-nav') ) {
+				document.body.classList.add('sticky-nav');
+			}
+		} else {
+			if ( document.body.classList.contains('sticky-nav') ) {
+				document.body.classList.remove('sticky-nav');
+			}
+		}
+	});
 });

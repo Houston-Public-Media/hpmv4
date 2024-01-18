@@ -20,8 +20,8 @@ get_header(); ?>
 				$show_content = get_the_content();
 				echo hpm_head_banners( get_the_ID(), 'series' );
 			} ?>
-			<div id="float-wrap">
-				<aside class="column-right">
+			<div class="party-politics-page">
+				<div class="about-party">
 <?php
 	if ( $show_title == '#TXDecides' ) { ?>
 					<div class="show-content">
@@ -29,10 +29,12 @@ get_header(); ?>
 					</div>
 <?php
 	} ?>
-					<h2>About <?php echo $show_title; ?></h2>
+					<h2 class="title no-bar"><strong><span>ABOUT <?php echo $show_title; ?></span></strong></h2>
 					<div class="show-content">
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
+				</div>
+				<aside class="column-right">
 					<div class="sidebar-ad">
 						<h4>Support Comes From</h4>
 						<div id="div-gpt-ad-1394579228932-1">
@@ -55,7 +57,7 @@ get_header(); ?>
 <?php
 			} ?>
 				</aside>
-				<div class="article-wrap">
+				<section id="search-results">
 		<?php
 			$cat_no = get_post_meta( get_the_ID(), 'hpm_series_cat', true );
 			$top = get_post_meta( get_the_ID(), 'hpm_series_top', true );
@@ -100,7 +102,7 @@ get_header(); ?>
 					$ka += 2;
 				}
 			} ?>
-				</div>
+				</section>
 			</div>
 		<?php
 			if ( $cat->found_posts > 15 ) { ?>

@@ -18,8 +18,8 @@ Template Name: NPR Content
 	<style>
 		article .entry-content .fullattribution img { max-width: 1px; max-height: 1px; }
 	</style>
-    <div id="primary" class="content-area">
-        <main id="main" class="site-main" role="main">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
 			<article id="post-<?php the_ID(); ?>" <?php post_class('post'); ?>>
 				<header class="entry-header">
 					<?php echo hpm_pub_time_banner( strtotime( $nprdata['date'] ) ); ?>
@@ -27,6 +27,7 @@ Template Name: NPR Content
 					<h1 class="entry-title"><?php echo $nprdata['title']; ?></h1>
 					<p><?php echo $nprdata['excerpt']; ?></p>
 					<div class="byline-date">
+						<div class="byline-date-text">
 					<?PHP
 						foreach ( $nprdata['bylines'] as $k => $byline ) {
 							if ( $k > 0 ) {
@@ -53,9 +54,10 @@ Template Name: NPR Content
 							$time_string
 						);
 					?>
+						</div>
+						<?php hpm_article_share( $nprdata ); ?>
 					</div>
 				</header>
-				<?php hpm_article_share( $nprdata ); ?>
 				<div class="entry-content">
 					<?php echo do_shortcode( $nprdata['body'] ); ?>
 				</div>
@@ -69,16 +71,22 @@ Template Name: NPR Content
 			<aside class="column-right">
 			<?php
 				if ( !empty( $nprdata['related'] ) ) { ?>
-				<section class="highlights">
-					<h4>Related</h4>
-					<ul>
+				<div class="row">
+					<div class="col-12 news-list-right most-view">
+						<h2 class="title title-full">
+							<strong>Related</strong>
+						</h2>
+						<ul class="list-none news-links list-dashed">
 				<?php
 					foreach ( $nprdata['related'] as $related ) { ?>
-						<li><h2 class="entry-title"><a href="<?php echo $related['link']; ?>" rel="bookmark" target="_blank"><?PHP echo $related['text']; ?></a></h2></li>
+							<li>
+								<a href="<?php echo $related['link']; ?>" rel="bookmark" target="_blank"><span><?PHP echo $related['text']; ?></span></a>
+							</li>
 				<?php
 					} ?>
-					</ul>
-				</section>
+						</ul>
+					</div>
+				</div>
 			<?php
 				}
 				get_template_part( 'sidebar', 'none' ); ?>

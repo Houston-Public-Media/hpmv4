@@ -1,23 +1,7 @@
 <?php
-add_action( 'pre_update_option_hpm_priority', function( $old_value, $value ) {
-	$number = $old_value['number'];
-	if ( $number !== count( $old_value['homepage'] ) ) {
-		$new = [];
-		for ( $i = 0; $i < $number; $i++ ) {
-			if ( empty( $old_value['homepage'][ $i ] ) ) {
-				$new[ $i ] = '';
-			} else {
-				$new[ $i ] = $old_value['homepage'][ $i ];
-			}
-		}
-		$old_value['homepage'] = $new;
-	}
-	return $old_value;
-}, 10, 2 );
-
-add_action( 'update_option_hpm_priority', function( $old_value, $value ) {
+add_action('update_option_hpm_priority', function( $old_value, $value ) {
 	wp_cache_delete( 'hpm_priority', 'options' );
-}, 10, 2 );
+}, 10, 2);
 
 add_action( 'rest_api_init', function() {
 	register_rest_route( 'hpm-priority/v1', '/list', [
@@ -31,13 +15,9 @@ add_action( 'rest_api_init', function() {
 
 function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	$hpm_priority = get_option( 'hpm_priority' );
-	if ( empty( $hpm_priority['inDepthnumber'] ) ) {
-		$hpm_priority['inDepthnumber'] = 2;
-	}
 	$output = [];
-	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
-		if ( empty( $hpm_priority['homepage'][ $indepth_slot ] ) ) {
+		if ( empty( $hpm_priority['homepage'][1] ) ) {
 			$indepth = new WP_Query([
 				'posts_per_page' => 2,
 				'cat' => 29328,
@@ -46,9 +26,9 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			]);
 			if ( $indepth->have_posts() ) {
 				if ( $hpm_priority['homepage'][0] == $indepth->posts[0]->ID ) {
-					$hpm_priority['homepage'][ $indepth_slot ] = $indepth->posts[1]->ID;
+					$hpm_priority['homepage'][1] = $indepth->posts[1]->ID;
 				} else {
-					$hpm_priority['homepage'][ $indepth_slot ] = $indepth->posts[0]->ID;
+					$hpm_priority['homepage'][1] = $indepth->posts[0]->ID;
 				}
 			}
 		}
@@ -96,12 +76,6 @@ function hpm_priority_register_settings(): void {
 
 function hpm_priority_settings_page(): void {
 	$priority = get_option( 'hpm_priority' );
-	if ( empty( $priority['inDepthnumber'] ) ) {
-		$priority['inDepthnumber'] = 2;
-	}
-//	if ( empty( $priority['breaking'] ) ) {
-//		$priority['breaking'] = 0;
-//	}
 	$recents = $indepths = [];
 	$recent = new WP_Query([
 		'post_status' => 'publish',
@@ -122,7 +96,7 @@ function hpm_priority_settings_page(): void {
 		<?php settings_errors(); ?>
 		<h1><?php _e('Post Prioritization', 'hpmv4' ); ?></h1>
 		<p><?php _e('This page displays the posts that are currently set as "Priority Posts" on the homepage and main landing pages.', 'hpmv4' ); ?></p>
-		<p style="background-color: yellow; font-style: italic; font-size: 1rem;"><?php _e('<strong>NOTE:</strong> If position #' . $priority['inDepthnumber'] . ' is left blank, that slot will show the latest inDepth article. Otherwise, the slot will show the selected article.', 'hpmv4' ); ?></p>
+		<p style="background-color: yellow; font-style: italic; font-size: 1rem;"><?php _e('<strong>NOTE:</strong> If position #2 is left blank, that slot will show the latest inDepth article. Otherwise, the slot will show the selected article.', 'hpmv4' ); ?></p>
 		<form method="post" action="options.php" id="hpm-priority-slots">
 			<?php settings_fields( 'hpm-priority-settings-group' ); ?>
 			<?php do_settings_sections( 'hpm-priority-settings-group' ); ?>
@@ -144,10 +118,9 @@ function hpm_priority_settings_page(): void {
 										</thead>
 										<tbody>
 									<?php
-										$inDepthSlotNumber = (int)$priority['inDepthnumber'] - 1;
 										foreach ( $priority['homepage'] as $kp => $vp ) {
 											$position = $kp + 1;
-											if ( $kp == $inDepthSlotNumber ) { ?>
+											if ( $kp == 1 ) { ?>
 											<tr valign="top" style="border: 0.25rem solid #00566c;">
 												<th scope="row">Position <?PHP echo $position; ?><br /><strong>inDepth Position</strong></th>
 											<?php } else { ?>
@@ -172,17 +145,6 @@ function hpm_priority_settings_page(): void {
 										} ?>
 										</tbody>
 									</table>
-									<p><label for="hpm_priority[number]"><?php _e('Number of slots: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[number]" id="homepage-number" class="homepage-select-input" value="<?php echo ( !empty( $priority['number'] ) ? $priority['number'] : count( $priority['homepage'] ) ); ?>" style="width: 150px;" /></p>
-                                    <p><label for="hpm_priority[inDepthnumber]"><?php _e('inDepth Slot Number: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[inDepthnumber]" id="inDepthnumber" class="homepage-select-input" value="<?php echo ( !empty( $priority['inDepthnumber'] ) ? $priority['inDepthnumber'] : '' ); ?>" style="width: 150px;" /></p>
-									<?php /* ?><p><label for="hpm_priority[breaking]"><?php _e('Breaking News Top: ', 'hpmv4' ); ?></label><label class="screen-reader-text"><?php _e( "Breaking News Top:", 'hpmv4' ); ?></label>
-										<select id="hpm_priority-breaking" name="hpm_priority[breaking]" class="hpm-priority-select breaking-select">
-											<option value=""></option>
-											<?php
-											foreach( $recents as $k => $v ) { ?>
-												<option value="<?php echo $k; ?>"<?php selected( $priority['breaking'], $k, TRUE ); ?>><?php echo $v; ?></option>
-												<?php
-											} ?>
-										</select></p><?php */ ?>
 								</div>
 							</div>
 						</div>
@@ -212,11 +174,11 @@ function hpm_priority_settings_page(): void {
 						});
 					}
 				});
-				$("button.hpm-clear").click(function (event) {
+				$("#hpm-indepth-clear").click(function (event) {
 					event.preventDefault();
-					let pos = $(this).attr('data-position');
-					$('#hpm_priority-homepage-' + pos).val('');
-					$('#homepage-' + pos).val('');
+					$('#indepth-1').val('');
+					$('#hpm_priority-indepth-1').val('');
+
 				});
 				$( "input[type=number]" ).keyup(function(){
 					let inputId = $(this).attr('id');

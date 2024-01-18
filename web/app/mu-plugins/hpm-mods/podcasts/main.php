@@ -1203,9 +1203,6 @@ class HPM_Podcasts {
 		}
 		if ( $no > 0 ) {
 			$social = HPM_Podcasts::show_social( $options['podcast'], false, $id );
-			$output .= '<div id="station-social"' . ( empty( $social ) ? ' class="station-no-social"' : '' ) . '>';
-			$output .= '<h3>' . ( !empty( $options['times'] ) ? $options['times'] : '' ) .'</h3>';
-			$output .= $social . '</div>';
 		}
 		$output .= '</header>';
 		return $output;

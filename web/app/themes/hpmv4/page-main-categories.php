@@ -32,8 +32,8 @@ get_header(); ?>
 		.page.page-template-page-main-categories #main {
 			background-color: transparent;
 		}
-		.page.page-template-page-main-categories .page-header {
-			margin-bottom: 1rem;
+		.page.page-template-page-main-categories #search-results {
+			padding-top: 0px !important;
 		}
 	</style>
 	<div id="primary" class="content-area">
@@ -47,7 +47,6 @@ get_header(); ?>
 			<header class="page-header">
 				<h1 class="page-title"><?php the_title(); ?></h1>
 			</header>
-			<div id="float-wrap">
 			<?php
 				}
 				if ( $main_cat == 'education' ) {
@@ -70,19 +69,19 @@ get_header(); ?>
 						]);
 					?>
 				</nav>
-                <div class="sidebar-ad">
+				<div class="sidebar-ad">
 					<h4>Support Comes From</h4>
-                    <div id="div-gpt-ad-1394579228932-1">
-                        <script type='text/javascript'>
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-                        </script>
-                    </div>
-                </div>
+					<div id="div-gpt-ad-1394579228932-1">
+						<script type='text/javascript'>
+							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+						</script>
+					</div>
+				</div>
 				<?php
 						$pod = new WP_Query([
 							'post_type' => 'podcasts',
-							'tag' => str_replace( '-news', '', $main_cat ),
-							'tag__not_in' => [ 48498 ]
+							'tag__not_in' => [ 48498 ],
+							'tag' => str_replace( '-news', '', $main_cat )
 						]);
 						if ( $pod->have_posts() ) { ?>
 				<div class="podcasts highlights">
@@ -104,7 +103,7 @@ get_header(); ?>
 					</div>
 				</div>
 			</div>
-			<div class="article-wrap">
+			<section id="search-results">
 			<?php
 				if ( $main_cat == 'education-news' ) {
 					$main_cat_pull = 'education-news,texas-originals,uh-moment';
@@ -134,11 +133,8 @@ get_header(); ?>
 				}
 				$post = $orig_post;
 				wp_reset_query();
-			?>
-			</div>
-			<div class="readmore">
-				<a href="/topics/<?php echo $main_cat; ?>/page/2">View More <?PHP the_title(); ?></a>
-			</div>
+				 echo hpm_custom_pagination( $q->max_num_pages, 4, "/topics/$main_cat/page/" ); ?>
+			</section>
 		</main>
 	</div>
 <?php get_footer(); ?>

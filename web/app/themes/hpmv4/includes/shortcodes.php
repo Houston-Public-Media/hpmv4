@@ -195,13 +195,13 @@ function article_display_shortcode ( $atts ): bool|string {
 			'relation' => 'OR',
 			[
 				'taxonomy' => 'category',
-				'field'    => 'slug',
-				'terms'    => [ $category ]
+				'field'	=> 'slug',
+				'terms'	=> [ $category ]
 			],
 			[
 				'taxonomy' => 'post_tag',
-				'field'    => 'slug',
-				'terms'    => [ $tag ]
+				'field'	=> 'slug',
+				'terms'	=> [ $tag ]
 			]
 		];
 	} else {
@@ -705,17 +705,17 @@ function hpm_splide_gallery( $attr ): string {
 	// extract the shortcode attributes into the current variable space
 	extract( shortcode_atts([
 		// standard WP [gallery] shortcode options
-		'order'        => 'ASC',
-		'orderby'      => 'menu_order ID',
-		'id'           => $post->ID,
-		'itemtag'      => 'dl',
-		'icontag'      => 'dt',
-		'captiontag'   => 'dd',
-		'columns'      => 3,
-		'size'         => 'thumbnail',
-		'include'      => '',
-		'exclude'      => '',
-		'ids'          => ''
+		'order'			=> 'ASC',
+		'orderby'		=> 'menu_order ID',
+		'id'			=> $post->ID,
+		'itemtag'		=> 'dl',
+		'icontag'		=> 'dt',
+		'captiontag'	=> 'dd',
+		'columns'		=> 3,
+		'size'			=> 'thumbnail',
+		'include'		=> '',
+		'exclude'		=> '',
+		'ids'			=> ''
 	], $attr ) );
 
 	// the id of the current post, or a different post if specified in the shortcode
@@ -878,8 +878,8 @@ function hpm_impact_shortcode(): string {
 		return $output;
 	}
 	$args = [
-		'post_parent'    => $page_id,
-		'post_type'      => 'attachment',
+		'post_parent'	 => $page_id,
+		'post_type'		 => 'attachment',
 		'post_mime_type' => 'application/pdf',
 		'posts_per_page' => -1,
 		'post_status'	 => 'inherit'
@@ -1039,3 +1039,27 @@ $timestamp = wp_next_scheduled( 'hpm_pull_podcasts' );
 if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hpm_30min', 'hpm_pull_podcasts' );
 }
+
+/* **shortcode** */
+function hpm_donation_events_shortcode(): string {
+	$args = [
+		'posts_per_page' => 4,
+		'ignore_sticky_posts' => 1,
+		'post_type' => 'event',
+		'post_status' => 'publish',
+		'order' => 'ASC'
+	];
+	$article = new WP_Query( $args );
+	$output = '';
+	if ( $article->have_posts() ) {
+	   while ( $article->have_posts() ) {
+			$article->the_post();
+			$title = get_the_title();
+			$summary = strip_tags( get_the_excerpt() );
+			$output .= '<div class="col-sm-3"><div class="opportunity-img"><a href="' . get_the_permalink() . '">' . get_the_post_thumbnail() . '</a></div><div class="opportunity-block"><h5>' . $title . '</h5><p>' . $summary . '</p><a href="' . get_the_permalink() . '" class="btn outline"> View More </a></div></div>';
+		}
+	}
+	wp_reset_query();
+	return $output;
+}
+add_shortcode( 'hpm_donation_events', 'hpm_donation_events_shortcode' );

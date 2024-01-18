@@ -28,6 +28,7 @@ if ( is_preview() ) { ?>
 		the_excerpt();
 		$single_id = get_the_ID(); ?>
 					<div class="byline-date">
+						<div class="byline-date-text">
 <?PHP
 		coauthors_posts_links(' / ', ' / ', '<address class="vcard author">', '</address>', true);
 		echo " | ";
@@ -53,16 +54,17 @@ if ( is_preview() ) { ?>
 			_x('Posted on', 'Used before publish date.', 'hpmv4'),
 			$time_string
 		); ?>
+						</div>
+						<?php hpm_article_share(); ?>
 					</div>
 				</header>
-				<?php hpm_article_share(); ?>
 				<div class="entry-content">
 					<?php the_content(); ?>
 				</div>
 				<footer class="entry-footer">
 					<div class="tags-links">
-<?PHP
-		$cat_list = get_the_category_list( ' ', _x( ' ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
+<?php
+		$cat_list = get_the_category_list( ' ', _x( '# ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
 		if ( $cat_list ) {
 			echo $cat_list;
 		}
@@ -77,6 +79,7 @@ if ( is_preview() ) { ?>
 <?php
 	} ?>
 		<aside class="column-right">
+			<div class="row">
 <?php
 	$categories = get_the_category( $single_id );
 	foreach ( $categories as $cats ) {
@@ -99,7 +102,7 @@ if ( is_preview() ) { ?>
 				} else {
 					$series_link = "/topics/" . $cats->slug;
 				} ?>
-						<div id="current-series">
+						<div id="current-series" class="col-sm-6 col-md-12">
 							<h4><a href="<?php echo $series_link; ?>">More from <?php echo $cats->cat_name; ?></a></h4>
 <?php
 				while ( $series->have_posts() ) {
@@ -110,7 +113,7 @@ if ( is_preview() ) { ?>
 <?php
 			}
 		} elseif ( $cats->term_id == 12 ) { ?>
-				<div class="sidebar-ad">
+				<div class="sidebar-ad col-sm-6 col-md-12">
 					<h4>Support Comes From</h4>
 					<p><a href="https://www.texasmutual.com/employers/pr/2023-employer-dividends?utm_source=Houston+Public+Media&utm_medium=display&utm_campaign=Dividends&utm_id=Dividends"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXM_BIB_Fraud_300x250.gif.webp" alt="Texas Mutual: You can count on us to fight fraud" /></a></p>
 				</div>
@@ -119,9 +122,17 @@ if ( is_preview() ) { ?>
 	}
 	wp_reset_postdata();
 	get_template_part('sidebar', 'none'); ?>
+			<?php echo author_footer( $single_id, "" ); ?>
+			</div>
 		</aside>
-		<div id="author-wrap">
-			<?php echo author_footer( $single_id ); ?>
+		<div class="newsletter-form">
+<?php
+			if ( is_single() && get_post_type() == 'post' ) {
+				if ( in_category( 'news' ) ) {
+					$form_id = '441232';
+					echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
+				}
+			} ?>
 		</div>
 	</main>
 </div>

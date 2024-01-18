@@ -7,8 +7,7 @@
 get_header();
 if ( is_preview() ) { ?>
 	<div id="preview-warn">You're viewing a preview. Some things might be a little squirrelly. --The Management</div>
-<?php
-	} ?>
+<?php } ?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
 <?PHP
@@ -26,6 +25,7 @@ if ( is_preview() ) { ?>
 						the_excerpt();
 						$single_id = get_the_ID(); ?>
 					<div class="byline-date">
+                        <div class="byline-date-text">
 					<?PHP
 						coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>', true );
 						echo " | ";
@@ -50,10 +50,10 @@ if ( is_preview() ) { ?>
 							'<span class="posted-on"><span class="screen-reader-text">%1$s </span>%2$s</span>',
 							_x('Posted on', 'Used before publish date.', 'hpmv4'),
 							$time_string
-						); ?>
+						); ?></div>
+                    <?php hpm_article_share(); ?>
 					</div>
 				</header>
-				<?php hpm_article_share(); ?>
 				<div class="entry-content">
 					<?php the_content(); ?>
 				</div>
@@ -75,9 +75,13 @@ if ( is_preview() ) { ?>
 			</article>
 <?php
 	} ?>
-		<div id="author-wrap">
-			<?php echo author_footer( get_the_ID() ); ?>
-		</div>
+        <div id="author-wrap">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 ">
+                    <?php echo author_footer( get_the_ID(), "fullwidth" ); ?>
+                </div>
+            </div>
+        </div>
 	</main>
 </div>
 <?php get_footer(); ?>

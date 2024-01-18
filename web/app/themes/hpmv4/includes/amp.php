@@ -45,9 +45,10 @@ add_action( 'amp_post_template_css', 'hpm_amp_additional_css' );
 
 function hpm_amp_additional_css( $amp_template ): void {
 	?>
+	@import url("https://fonts.googleapis.com/css2?family=Open+Sans");
 	:root {
-		--hpm-font-main: 'PBS-Sans',helvetica,arial,sans-serif;
-		--hpm-font-condensed: 'PBS-Sans-Condensed',helvetica,arial,sans-serif;
+		--hpm-font-main: 'Open Sans',helvetica,arial,sans-serif;
+		--hpm-font-condensed: 'Open Sans',helvetica,arial,sans-serif;
 		--max-width: 75rem;
 	}
 	html {
@@ -68,87 +69,7 @@ function hpm_amp_additional_css( $amp_template ): void {
 		--accent-dark-blue-1: #00566C;
 		--accent-dark-blue-2: #408091;
 	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 400;
-		font-style: normal;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-It.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 400;
-		font-style: italic;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 500;
-		font-style: normal;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Medium-It.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 500;
-		font-style: italic;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light.eot') format('truetype');
-		font-display: auto;
-		font-weight: 100;
-		font-style: normal;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Light-It.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 100;
-		font-style: italic;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src:url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 700;
-		font-style: normal;
-	}
-	@font-face {
-		font-family: 'PBS-Sans';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Bold-It.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 700;
-		font-style: italic;
-	}
-	@font-face {
-		font-family: 'PBS-Sans-Condensed';
-		src: url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.woff2') format('woff2'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.woff') format('woff'),
-		url('https://cdn.houstonpublicmedia.org/assets/fonts/pbs-sans/PBSSans-Cond.ttf') format('truetype');
-		font-display: auto;
-		font-weight: 400;
-		font-style: normal;
-	}
+
 
 	/* Reset */
 	*, *::before, *::after {

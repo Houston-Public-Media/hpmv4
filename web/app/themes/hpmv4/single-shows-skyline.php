@@ -258,22 +258,28 @@ get_header(); ?>
 					</div>
 				</div>
 			</section>
-			<div id="float-wrap">
-				<aside class="column-right">
-					<h3>About <?php echo $show_title; ?></h3>
-					<div class="show-content">
-						<?php echo apply_filters( 'the_content', $show_content ); ?>
-					</div>
-					<div class="sidebar-ad">
-						<h4>Support Comes From</h4>
-						<div id="div-gpt-ad-1470409396951-0">
-							<script type='text/javascript'>
-								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1470409396951-0'); });
-							</script>
+			<div class="party-politics-page">
+				<div class="row about-party">
+					<div class="col-sm-9">
+						<h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
+						<div class="show-content">
+							<?php echo apply_filters( 'the_content', $show_content ); ?>
 						</div>
 					</div>
-				</aside>
-				<div class="article-wrap">
+					<div class="col-sm-3">
+						<div class="sidebar-ad">
+							<h4>Support Comes From</h4>
+							<div id="div-gpt-ad-1470409396951-0">
+								<script type='text/javascript'>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1470409396951-0'); });
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="episodes-block">
+					<h2 class="title red-bar"> <strong><span>All Stories</span></strong> </h2>
+					<div class="row">
 		<?php
 			$studio = new WP_Query([
 				'category__in' => [ 38141 ],
@@ -290,25 +296,26 @@ get_header(); ?>
 			if ( $studio->have_posts() ) {
 				while ( $studio->have_posts() ) {
 					$studio->the_post();
-					get_template_part( 'content', get_post_type() );
+					get_template_part( 'content', 'shows' );
 				}
 			}
 			wp_reset_query(); ?>
-					<div class="readmore" style="clear: both; width: 100%">
-						<a href="/topics/in-studio/page/2">View More Performances</a>
 					</div>
+				</div>
+				<?php echo hpm_custom_pagination( $studio->max_num_pages, 4, "/topics/in-studio/page/"); ?>
+				<div class="episodes-block">
+					<div class="row">
 <?php
 			if ( $others->have_posts() ) {
 				while ( $others->have_posts() ) {
 					$others->the_post();
-					get_template_part( 'content', get_post_type() );
+					get_template_part( 'content', 'shows' );
 				}
 			}
 			wp_reset_query(); ?>
-					<div class="readmore" style="clear: both; width: 100%">
-						<a href="/topics/skyline-sessions/page/2">View More Related Articles</a>
 					</div>
 				</div>
+				<?php echo hpm_custom_pagination( $studio->max_num_pages, 4, "/topics/skyline-sessions/page/" ); ?>
 			</div>
 		</main>
 	</div>
