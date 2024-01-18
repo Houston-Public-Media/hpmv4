@@ -201,7 +201,7 @@ $tras = null; ?>
 					<?php echo hpm_nprapi_output(); ?>
 				</div>
 				<div class="col-sm-12 col-lg-3 news-list-right most-view">
-					<h2 class="title title-full" style="padding-top: 30px;">
+					<h2 class="title title-full">
 						<strong>Support Comes <span>From</span></strong>
 					</h2>
 					<div id="div-gpt-ad-1394579228932-1">
