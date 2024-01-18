@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Default Show
+Template Name: Party Politics
 Template Post Type: shows
 */
 /**

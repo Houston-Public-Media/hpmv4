@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Default Show
+Template Name: Houston Matters
 Template Post Type: shows
 */
 /**
