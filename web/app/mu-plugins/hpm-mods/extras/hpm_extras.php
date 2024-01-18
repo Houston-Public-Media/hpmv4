@@ -253,7 +253,7 @@ function hpm_local_cat_check(): bool {
 /*
  * Disallow certain MIME types from being accepted by the media uploader
  */
-function custom_upload_mimes ( $existing_mimes = [] ) {
+function custom_upload_mimes ( $existing_mimes = [] ): array {
 	unset( $existing_mimes['exe'] );
 	unset( $existing_mimes['wav'] );
 	unset( $existing_mimes['ra|ram'] );
@@ -270,7 +270,7 @@ add_filter('upload_mimes', 'custom_upload_mimes');
 /*
  * Finds the last 5 entries in the specified YouTube playlist and saves into a site transient
  */
-function hpm_youtube_playlist( $key, $num = 5 ) {
+function hpm_youtube_playlist( $key, $num = 5 ): array {
 	$list = get_transient( 'hpm_yt_' . $key . '_' . $num );
 	if ( !empty( $list ) ) {
 		return $list;
@@ -435,15 +435,20 @@ function analyticsPull_update(): void {
 		]),
 		'limit' => 5
 	]);
-	$output = "<ul>";
+	$output = '<ul class="list-none news-links list-dashed">';
 	foreach ( $result->getRows() as $row ) {
 		preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row->getDimensionValues()[0]->getValue(), $match );
 		if ( !empty( $match ) ) {
+			$imageBlock = '';
 			$title = get_the_title( $match[1] );
 			if ( empty( $title ) ) {
-				$title = ucwords( str_replace( '-', ' ', $match[2] ) );
+				$title = ucwords( str_replace( [ '-', '/' ], [ ' ', '' ] , $match[2] ) );
 			}
-			$output .= '<li><h2 class="entry-title"><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark">' . $title . '</a></h2></li>';
+			if ( has_post_thumbnail( $match[1] ) ) {
+				$imageBlock = get_the_post_thumbnail( $match[1], 'thumbnail' );
+			}
+
+			$output .= '<li><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark"><span>' . $title . '</span><span class="img-w150">' . $imageBlock . '</span></a></li>';
 		}
 	}
 	$output .= "</ul>";
@@ -460,6 +465,11 @@ if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
 }
 
+function get_post_id_by_slug( $slug ) {
+	$post = get_page_by_path( $slug, null, 'post' );
+	return $post?->ID;
+}
+
 /**
  * @return mixed|string
  * Pull NPR API articles and save them to a transient
@@ -469,23 +479,47 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 	if ( !empty( $npr ) ) {
 		return $npr;
 	}
-	$output = '';
-	$api_key = get_option( 'ds_npr_api_key' );
-	$remote = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
-	if ( is_wp_error( $remote ) ) {
-		return "<p></p>";
-	} else {
-		$npr = wp_remote_retrieve_body( $remote );
-		$npr_json = json_decode( $npr, TRUE );
-	}
-	foreach ( $npr_json['list']['story'] as $story ) {
-		$npr_date = strtotime( $story['storyDate']['$text'] );
-		$output .= '<article class="card">';
-		if ( !empty( $story['image'][0]['src'] ) ) {
-			$output .= '<a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" class="post-thumbnail"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></a>';
+	$output = '<ul class="list-none news-links link-thumb">';
+	if ( function_exists( 'npr_cds_activate' ) ) {
+		$npr = new NPR_CDS_WP();
+		$npr->request([
+			'collectionIds' => $api_id,
+			'profileIds' => 'story,renderable,publishable,slug',
+			'limit' => $num,
+			'sort' => 'publishDateTime:desc'
+		]);
+		$npr->parse();
+		if ( !empty( $npr->stories ) ) {
+			foreach ( $npr->stories as $story ) {
+				if ( !empty( $story->images[0] ) ) {
+					$image_id = $npr->extract_asset_id( $story->images[0]->href );
+					$image_asset = $story->assets->{$image_id};
+					foreach ( $image_asset->enclosures as $enclosure ) {
+						if ( in_array( 'primary', $enclosure->rels ) ) {
+							$image_url = $npr->get_image_url( $enclosure );
+						}
+					}
+					$output .= '<a href="/npr' . $story->nprWebsitePath . '/" class="post-thumbnail"><img src="' . $image_url . '" alt="' . $story->title . '" loading="lazy" /></a>';
+				}
+				$output .= '<span><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark">' . $story->title . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story->teaser . '</div></div></article>';
+			}
+		}
+	} elseif ( function_exists( 'nprstory_activate' ) ) {
+		$api_key = get_option( 'ds_npr_api_key' );
+		$remote  = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,slug,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
+		if ( is_wp_error( $remote ) ) {
+			return "<p></p>";
+		} else {
+			$npr  = wp_remote_retrieve_body( $remote );
+			$npr_json = json_decode( $npr, true );
+		}
+		foreach ( $npr_json['list']['story'] as $story ) {
+			$npr_date = strtotime( $story['storyDate']['$text'] );
+			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark"><span>' . $story['title']['$text'] . '</span><span class="img-w75"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></span></a></li>';
 		}
 		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story['teaser']['$text'] . '</div></div></article>';
 	}
+	$output .= "</ul>";
 	set_transient( 'hpm_nprapi_' . $api_id, $output, 300 );
 	return $output;
 }
@@ -526,24 +560,70 @@ function hpm_https_check(): void {
 	if ( 'post' !== $GLOBALS['post_type'] ) {
 		return;
 	}
+	if ( !current_user_can( 'publish_posts' ) ) {
+		return;
+	}
 	global $post; ?>
+	<style>
+		#hpm-check {
+			max-width: 1000px;
+		}
+		#hpm-check[open]::backdrop {
+			background-color: rgba(0, 0, 0, 0.5);
+			-webkit-backdrop-filter: blur(5px);
+			backdrop-filter: blur(5px);
+		}
+		#hpm-check img {
+			width: 70%;
+			margin: 0 15%;
+		}
+		#hpm-check a:has(img) {
+			display: block;
+		}
+		#hpm-check form {
+			text-align:  right;
+		}
+		#hpm-check form button {
+			background-color: #135e96;
+			color: white;
+			padding: 0.5rem;
+			font-size: 125%;
+		}
+	</style>
+	<dialog id="hpm-check">
+		<div id="hpm-check-content"></div>
+		<form method="dialog">
+			<button>Dismiss</button>
+		</form>
+	</dialog>
 	<script>
-		jQuery(document).ready(function($){
-			$('#publish, #save-post, #workflow_submit').on('click', function(e){
-				let content = $('#content').val();
-				if ( content.includes('src="http://') ) {
-					e.preventDefault();
-					alert( 'This post contains an embed or image from an insecure source.\nPlease check and see if that embed is available via HTTPS.\n\nTo check this:\n\n\t1.  Look for any <img> or <iframe> tags in your HTML\n\t2.  Find the src="" attribute and copy the URL\n\t3.  Change \'http:\' to \'https:\' and paste it into your browser\n\t4.  If it loads correctly, then great! Update the URL in your HTML\n\nIf you have any questions, email jcounts@houstonpublicmedia.org' );
-					return false;
-				} else {
-					return true;
-				}
-			});
-			$('#postimagediv .inside').append( '<p class="hide-if-no-js"><a href="/wp/wp-admin/edit.php?page=hpm-image-preview&p=<?php echo $post->ID; ?>" id="hpm-image-preview" style="color: white; font-weight: bolder; background-color: #0085ba; padding: 5px; text-decoration: none;">Preview featured image</a></p>' );
-			$('#hpm-image-preview').on('click', function(e){
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelector('#postimagediv .inside').innerHTML += '<p class="hide-if-no-js"><a href="/wp/wp-admin/edit.php?page=hpm-image-preview&p=<?php echo $post->ID; ?>" id="hpm-image-preview" style="color: white; font-weight: bolder; background-color: #0085ba; padding: 5px; text-decoration: none;">Preview featured image</a></p>';
+			document.querySelector('#hpm-image-preview').addEventListener('click', (e) => {
 				e.preventDefault();
-				let href = $(this).attr('href');
+				let href = e.target.getAttribute('href');
 				window.open(href, 'HPM Featured Image Preview', "width=850,height=800");
+			});
+			let pButtons = document.querySelectorAll("#publish, #save-post, #workflow_submit");
+			Array.from(pButtons).forEach((pB) => {
+				pB.addEventListener('click', (e) => {
+					let content = wp.editor.getContent('content');
+					let dialog = document.querySelector('#hpm-check');
+					let dialogContent = document.querySelector('#hpm-check-content');
+					if ( content.includes('src="http://') ) {
+						e.preventDefault();
+						dialogContent.innerHTML = '<h2>Using Insecure Embeds</h2><p>This post contains an embed or image from an insecure source. Please check and see if that embed is available via HTTPS.</p><p>To check this:</p><ol><li>Look for any &lt;img&gt; or &lt;iframe&gt; tags in your HTML</li><li>>Find the src="" attribute and copy the URL</li><li>Change \'http:\' to \'https:\' and paste it into your browser</li></ol><p>If it loads correctly, then great! Update the URL in your HTML</p><p>If you have any questions, email <a href="mailto:jcounts@houstonpublicmedia.org?subject=Question%20About%20HTTPS%20in%2-WordPress">jcounts@houstonpublicmedia.org</a><p>';
+						dialog.showModal();
+						return false;
+					} else if ( content.includes('alt=""') ) {
+						e.preventDefault();
+						dialogContent.innerHTML = '<h2>Image Alt Text Needed</h2><p>This post contains images with <strong>empty alt text tags</strong>. Alt text (or alternative text) is what displays in the event an image doesn\'t load, or is read by a screen reader, and <strong>typically describes the content of the image</strong>. Leaving these blank can <strong>cause problems for both accessibility and search engine optimization</strong>.</p><h3>Steps to Fix</h3><p>In the Visual editor mode, click on the image and click the pencil icon:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" alt="Clicking on an image in the editor reveals alignment tools as well as an edit button" /></a></p><p>In the popup, fill in the box at the top marked "Alternative Text":<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" alt="In the modal popup, fill in the top box marked Alternative Text" /></a></p><p>In the Text mode, look for the alt attribute in any <code>&lt;img&gt;</code> tags and enter your text there:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" alt="Look for any occurrences of alt that do not have any text in between the quotes" /></a></p><p>You can also enter the alt text in the Media Library popup when uploading the image:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" alt="The Media Library also contains a field for alt text" /></a></p>';
+						dialog.showModal();
+						return false;
+					} else {
+						return true;
+					}
+				});
 			});
 		});
 	</script>
@@ -588,9 +668,9 @@ function custom_register_coauthors(): void {
 	register_rest_field( 'post',
 		'coauthors',
 		[
-			'get_callback'    => 'custom_get_coauthors',
+			'get_callback' => 'custom_get_coauthors',
 			'update_callback' => null,
-			'schema'          => null,
+			'schema' => null,
 		]
 	);
 }
@@ -744,11 +824,13 @@ function hpm_segments( $name, $date ) {
 								$set = true;
 							}
 						} else {
-							foreach ( $json['channel']['item'] as $item ) {
-								if ( !$set ) {
-									if ( strtolower( $item['title'] ) === $title ) {
-										$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $item['link'] . '" target="_blank">' . $item['title'] . '</a></li></ul></details>';
-										$set = true;
+							if ( !empty( $json['channel']['item'] ) ) {
+								foreach ( $json['channel']['item'] as $item ) {
+									if ( !$set ) {
+										if ( strtolower( $item['title'] ) === $title ) {
+											$output .= '<details class="progsegment"><summary>Program for ' . $date . '</summary><ul><li><a href="' . $item['link'] . '" target="_blank">' . $item['title'] . '</a></li></ul></details>';
+											$set = true;
+										}
 									}
 								}
 							}
@@ -830,12 +912,12 @@ function hpm_image_preview_page(): void {
 		<style>
 			@media screen and (min-width: 52.5em) {
 				.article-wrap {
-    				width: 100%;
+					width: 100%;
 					margin: 1em auto;
 				}
 				.article-wrap :is(article.card.card-large,article.card.card-medium) {
 					width: 95%;
-    				margin: 0 2.5% 1em;
+					margin: 0 2.5% 1em;
 				}
 				.article-wrap article.card {
 					margin: 0 auto 1em;
@@ -915,8 +997,8 @@ add_action('admin_menu', 'hpm_image_preview_page');
  * Displays meta box on post editor screen (both new and edit pages).
  */
 function postscript_meta_box_setup(): void {
-	$user    = wp_get_current_user();
-	$roles   = [ 'administrator' ];
+	$user = wp_get_current_user();
+	$roles = [ 'administrator' ];
 
 	// Add meta boxes only for allowed user roles.
 	if ( array_intersect( $roles, $user->roles ) ) {
@@ -996,10 +1078,10 @@ function postscript_meta_box_callback( object $post, array $box ): void {
 /**
  * Saves the meta box form data upon submission.
  *
- * @param int     $post_id    Post ID.
- * @param WP_Post $post       Post object.
+ * @param int     $post_id  Post ID.
+ * @param WP_Post $post     Post object.
  *
- *@uses  postscript_sanitize_data()    Sanitizes $_POST array.
+ * @uses  postscript_sanitize_data()    Sanitizes $_POST array.
  *
  */
 function postscript_save_post_meta( int $post_id, WP_Post $post ): int {
@@ -1050,11 +1132,11 @@ function postscript_save_post_meta( int $post_id, WP_Post $post ): int {
  *
  * @link https://tommcfarlin.com/input-sanitization-with-the-wordpress-settings-api/
  *
- * @since    0.4.0
+ * @since	0.4.0
  *
  * @param array $data
  *
- * @return   array    $input_clean  The sanitized input.
+ * @return   array	$input_clean  The sanitized input.
  */
 function postscript_sanitize_data( $data = [] ): array {
 	// Initialize a new array to hold the sanitized values.
@@ -1272,7 +1354,7 @@ function hpm_page_script_setup(): void {
 function hpm_page_script_add_meta(): void {
 	$user = wp_get_current_user();
 	if ( in_array( 'administrator', $user->roles ) ) {
-    	add_meta_box(
+		add_meta_box(
 			'hpm-page-script-meta-class',
 			esc_html__( 'Injectable Scripts or Styling', 'example' ),
 			'hpm_page_script_meta_box',
@@ -1407,4 +1489,21 @@ add_action( 'hpm_nowplay_update', 'hpm_now_playing_update' );
 $timestamp = wp_next_scheduled( 'hpm_nowplay_update' );
 if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hpm_2min', 'hpm_nowplay_update' );
+}
+
+function hpm_weather(): string {
+	$output = get_transient( 'hpm_weather' );
+	if ( !empty( $output ) ) {
+		return $output;
+	}
+	$remote = wp_remote_get( esc_url_raw( "https://api.openweathermap.org/data/2.5/weather?lat=29.7265396&lon=-95.3415406&units=imperial&appid=" . HPM_OPEN_WEATHER ) );
+	if ( is_wp_error( $remote ) ) {
+		return $output;
+	} else {
+		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
+		$output .= '<h3 style="color: white; font-size: 14px;">'.date("F d, Y").'<h3>' .
+			'<p style="color: white; font-size: 30px;"><img src="https://openweathermap.org/img/wn/' . $weather->weather[0]->icon . '@2x.png" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
+		set_transient( 'hpm_weather', $output, 180 );
+		return $output;
+	}
 }

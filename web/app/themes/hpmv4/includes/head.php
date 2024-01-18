@@ -41,13 +41,13 @@ function hpm_site_header(): void { ?>
 					<div class="d-flex nav-right">
 						<div class="nav-buttons" id="top-listen">
 							<button aria-label="Listen Live" data-href="/listen-live" type="button" data-dialog="480:855">
-								<img src="<?php echo get_template_directory_uri(); ?>/images/icon-listen.png" alt="Listen Live"> Listen
+								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-listen.png" alt="Listen Live"> Listen
 							</button>
 							<button aria-label="Watch Live" data-href="/watch-live" type="button" data-dialog="820:850">
-								<img src="<?php echo get_template_directory_uri(); ?>/images/icon-watch.png" alt="Watch Live"> Watch
+								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-watch.png" alt="Watch Live"> Watch
 							</button>
 							<a href="/support" class="btn-donate" >
-								<img src="<?php echo get_template_directory_uri(); ?>/images/icon-donate.png" alt="Donate Now"> Donate
+								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-donate.png" alt="Donate Now"> Donate
 							</a>
 						</div>
 						<div class="d-flex social-icon-wrap">
@@ -380,7 +380,7 @@ function hpm_body_open(): void {
 				<div class="site-logo">
 					<?php //echo hpm_svg_output( 'hpm' ); ?>
 					<a href="/" rel="home" title="Houston Public Media, a service of the University of Houston">
-						<img src="<?php echo get_template_directory_uri(); ?>/images/houston-public-media-logo.png" alt="Houston Public Media" rel="Houston Public Media">
+						<img src="https://cdn.houstonpublicmedia.org/assets/images/houston-public-media-logo.png" alt="Houston Public Media" rel="Houston Public Media">
 					</a>
 				</div>
 				<div id="top-donate"><a href="/donate"><?php echo hpm_svg_output( 'heart' ); ?><br /><span class="top-mobile-text">Donate</span></a></div>

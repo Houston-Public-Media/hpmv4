@@ -41,9 +41,9 @@ function hpm_scripts(): void {
 	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], $versions['js'], true );
 	wp_register_script( 'hpm-splide', 'https://cdn.houstonpublicmedia.org/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
 	wp_register_script( 'hpm-splide-js', 'https://cdn.houstonpublicmedia.org/assets/js/splide.min.js', [], $versions['js'], true );
-	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri().'/bootstrap/js/bootstrap.min.js', [ 'jquery' ], NULL, true);
+	wp_enqueue_script( 'bootstrap-js', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/js/bootstrap.min.js', [ 'jquery' ], '5.3.2', true);
 	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], $versions['css'] );
-	wp_enqueue_style( 'bootstrap-css', get_template_directory_uri().'/bootstrap/css/bootstrap.min.css', false, NULL );
+	wp_enqueue_style( 'bootstrap-css', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/css/bootstrap.min.css', false, '5.3.2' );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
