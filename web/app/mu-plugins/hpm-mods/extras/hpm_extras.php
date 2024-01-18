@@ -517,7 +517,6 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 			$npr_date = strtotime( $story['storyDate']['$text'] );
 			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark"><span>' . $story['title']['$text'] . '</span><span class="img-w75"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></span></a></li>';
 		}
-		$output .= '<div class="card-content"><div class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark">' . $story['title']['$text'] . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story['teaser']['$text'] . '</div></div></article>';
 	}
 	$output .= "</ul>";
 	set_transient( 'hpm_nprapi_' . $api_id, $output, 300 );
