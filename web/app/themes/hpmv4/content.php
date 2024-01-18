@@ -16,7 +16,6 @@ if ( $ka !== null ) {
 		$extra .= ' card-medium';
 	}
 }
-
 $postClass = get_post_class();
 if ( is_home() && in_array( 'category-in-depth', $postClass ) && ( $ka !== null && $ka < 2 ) ) {
 	$indepth = true;

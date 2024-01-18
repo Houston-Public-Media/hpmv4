@@ -82,7 +82,11 @@ define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
 /**
  * Custom Settings
  */
-const FORCE_SSL_ADMIN = false;
+if ( WP_ENV == 'development' ) {
+	define( 'FORCE_SSL_ADMIN', false );
+} else {
+	define( 'FORCE_SSL_ADMIN', true );
+}
 const WP_AUTO_UPDATE_CORE = false;
 const AUTOMATIC_UPDATER_DISABLED = true;
 define( 'DISABLE_WP_CRON', env( 'DISABLE_WP_CRON' ) ?: false );

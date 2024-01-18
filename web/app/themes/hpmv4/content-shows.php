@@ -7,34 +7,29 @@
 $social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
 $show = get_post_meta( get_the_ID(), 'hpm_show_meta', true ); ?>
 <?php
-$ColumnClass = "col-sm-6 col-md-4";
-if(post_type_archive_title('', false) == "Shows")
-{
-    $ColumnClass = "col-sm-12 col-md-10";
-}
+	$ColumnClass = "col-sm-6 col-md-4";
+	if ( post_type_archive_title( '', false ) == "Shows" ) {
+		$ColumnClass = "col-sm-12 col-md-10";
+	}
 ?>
 <div class="<?php echo $ColumnClass; ?>">
-    <div class="episodes-content"> 
-        <?php if ( has_post_thumbnail() ) { ?>
-            <a class="post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
-        <?php } ?>
-        <div class="content-wrapper"> <span class="date"><?php echo date( 'F j, Y', get_the_date('U')); ?></span>
-            <h4 class="content-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h4>
-            <p><?php //echo strip_tags( get_the_excerpt() );
-
-                echo get_excerpt_by_id_ShowPages(get_the_ID());
-                $social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
-                $show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
-                if ( !empty( $show['times'] ) && !empty( $show['hosts'] ) ) {
-                    echo $show['times']." with ".$show['hosts'];
-                } elseif ( empty( $show['times'] ) && !empty( $show['hosts'] ) ) {
-                    echo "With ".$show['hosts'];
-                } elseif ( !empty( $show['times'] ) && empty( $show['hosts'] ) ) {
-                    echo $show['times'];
-                } ?></p>
-        </div>
-    </div>
+	<div class="episodes-content"> 
+		<?php if ( has_post_thumbnail() ) { ?>
+			<a class="post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
+		<?php } ?>
+		<div class="content-wrapper"> <span class="date"><?php echo date( 'F j, Y', get_the_date( 'U' ) ); ?></span>
+			<h4 class="content-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h4>
+			<p><?php
+				echo get_excerpt_by_id_ShowPages(get_the_ID());
+				$social = get_post_meta( get_the_ID(), 'hpm_show_social', true );
+				$show = get_post_meta( get_the_ID(), 'hpm_show_meta', true );
+				if ( !empty( $show['times'] ) && !empty( $show['hosts'] ) ) {
+					echo $show['times']." with ".$show['hosts'];
+				} elseif ( empty( $show['times'] ) && !empty( $show['hosts'] ) ) {
+					echo "With ".$show['hosts'];
+				} elseif ( !empty( $show['times'] ) && empty( $show['hosts'] ) ) {
+					echo $show['times'];
+				} ?></p>
+		</div>
+	</div>
 </div>
-
-
-

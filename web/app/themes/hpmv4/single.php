@@ -11,9 +11,7 @@
 get_header();
 if ( is_preview() ) { ?>
 	<div id="preview-warn">You're viewing a preview. Some things might be a little squirrelly. --The Management</div>
-<?php }
-
-?>
+<?php } ?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
 <?PHP
@@ -36,7 +34,6 @@ if ( is_preview() ) { ?>
 		echo " | ";
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 		$pub = get_the_time( 'U' );
-
 		$mod = get_the_modified_time( 'U' );
 		$desc = $mod - $pub;
 		$mod_time = get_post_meta( $single_id, 'hpm_no_mod_time', true );
@@ -57,17 +54,16 @@ if ( is_preview() ) { ?>
 			_x('Posted on', 'Used before publish date.', 'hpmv4'),
 			$time_string
 		); ?>
-</div>
-<?php hpm_article_share(); ?>
+						</div>
+						<?php hpm_article_share(); ?>
 					</div>
 				</header>
-				
 				<div class="entry-content">
 					<?php the_content(); ?>
 				</div>
 				<footer class="entry-footer">
 					<div class="tags-links">
-<?PHP
+<?php
 		$cat_list = get_the_category_list( ' ', _x( '# ', 'Used between list items, there is a space after the comma.', 'hpmv4' ) );
 		if ( $cat_list ) {
 			echo $cat_list;
@@ -129,20 +125,15 @@ if ( is_preview() ) { ?>
 			<?php echo author_footer( $single_id, "" ); ?>
 			</div>
 		</aside>
-
-
 		<div class="newsletter-form">
-			<?php
+<?php
 			if ( is_single() && get_post_type() == 'post' ) {
 				if ( in_category( 'news' ) ) {
 					$form_id = '441232';
 					echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
 				}
-			}
-
-			?>
+			} ?>
 		</div>
-
 	</main>
 </div>
 <?php get_footer(); ?>

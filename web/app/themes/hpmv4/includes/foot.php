@@ -1,12 +1,9 @@
 <?php
-
-
 function author_footer( $id, $type ): string {
 	$output = '';
 	if ( $type != null && $type == "fullwidth" ) {
 		$output .= '<div class="row">';
 	}
-
 	$coauthors = get_coauthors( $id );
 	foreach ( $coauthors as $coa ) {
 		$temp = '';

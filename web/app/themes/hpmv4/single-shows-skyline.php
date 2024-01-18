@@ -258,33 +258,28 @@ get_header(); ?>
 					</div>
 				</div>
 			</section>
-
-
-            <div class="party-politics-page">
-                <div class="row about-party">
-                    <div class="col-sm-9">
-                        <h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
-                        <div class="show-content">
-                            <?php echo apply_filters( 'the_content', $show_content ); ?>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="sidebar-ad">
-                            <h4>Support Comes From</h4>
-                            <div id="div-gpt-ad-1470409396951-0">
-                                <script type='text/javascript'>
-                                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1470409396951-0'); });
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="episodes-block">
-                    <h2 class="title red-bar"> <strong><span>All Stories</span></strong> </h2>
-                    <div class="row">
+			<div class="party-politics-page">
+				<div class="row about-party">
+					<div class="col-sm-9">
+						<h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
+						<div class="show-content">
+							<?php echo apply_filters( 'the_content', $show_content ); ?>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="sidebar-ad">
+							<h4>Support Comes From</h4>
+							<div id="div-gpt-ad-1470409396951-0">
+								<script type='text/javascript'>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1470409396951-0'); });
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="episodes-block">
+					<h2 class="title red-bar"> <strong><span>All Stories</span></strong> </h2>
+					<div class="row">
 		<?php
 			$studio = new WP_Query([
 				'category__in' => [ 38141 ],
@@ -305,16 +300,11 @@ get_header(); ?>
 				}
 			}
 			wp_reset_query(); ?>
-                    </div>
-
-					</div><?php //wp_pagenavi( array( 'query' => $studio ) );
-                echo hpm_custom_pagination($studio->max_num_pages, 4, "/topics/in-studio/page/");
-                    ?>
-
-
-                <div class="episodes-block">
-
-                    <div class="row">
+					</div>
+				</div>
+				<?php echo hpm_custom_pagination( $studio->max_num_pages, 4, "/topics/in-studio/page/"); ?>
+				<div class="episodes-block">
+					<div class="row">
 <?php
 			if ( $others->have_posts() ) {
 				while ( $others->have_posts() ) {
@@ -323,13 +313,9 @@ get_header(); ?>
 				}
 			}
 			wp_reset_query(); ?>
-                    </div>
-                </div>
-                <?php //wp_pagenavi( array( 'query' => $others ) );
-                echo hpm_custom_pagination($studio->max_num_pages, 4, "/topics/skyline-sessions/page/");
-                // ?>
-
+					</div>
 				</div>
+				<?php echo hpm_custom_pagination( $studio->max_num_pages, 4, "/topics/skyline-sessions/page/" ); ?>
 			</div>
 		</main>
 	</div>

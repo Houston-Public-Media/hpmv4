@@ -290,9 +290,11 @@ hpm.npSearch = () => {
 	let nowPlay = document.querySelectorAll('.hpm-nowplay');
 	Array.from(nowPlay).forEach((np) => {
 		let station = np.getAttribute('data-station');
-		hpm.stationIds[ station ].refresh = true;
-		hpm.stationIds[ station ].next = np.getAttribute('data-upnext');
-		hpm.stationIds[ station ].obj = np;
+		if (station !== null ) {
+			hpm.stationIds[ station ].refresh = true;
+			hpm.stationIds[ station ].next = np.getAttribute('data-upnext');
+			hpm.stationIds[ station ].obj = np;
+		}
 	});
 	if ( document.body.classList.contains('page-template-page-listen') ) {
 		hpm.npDataDownload();

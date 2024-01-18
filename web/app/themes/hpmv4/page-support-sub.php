@@ -48,11 +48,9 @@ get_header(); ?>
 		.page.page-template-page-support-sub .page-content h2 {
 			padding: 0;
 			color: var(--main-blue);
-
 		}
 		.page.page-template-page-support-sub p {
 			color: var(--main-text);
-
 			margin-bottom: 1em;
 		}
 		.page.page-template-page-support-sub .page-content h2 {

@@ -79,103 +79,87 @@ get_header(); ?>
 		$show_content = get_the_content();
 		$episodes = HPM_Podcasts::list_episodes( $show_id );
 		echo HPM_Podcasts::show_header( $show_id );
-        //$options = get_post_meta( $id, 'hpm_show_meta', true );
 	} ?>
-
-
-	<div class="party-politics-page">
-        <div class="row about-party">
-            <div class="col-sm-9">
-            <h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
-            <div class="show-content">
-                <?php echo apply_filters( 'the_content', $show_content ); ?>
-            </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="sidebar-ad">
-                    <h4>Support Comes From</h4>
-                    <div id="div-gpt-ad-1394579228932-1">
-                        <script type='text/javascript'>
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-                        </script>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-      <div class="episodes-block">
-            <h2 class="title red-bar"> <strong><span>All Stories</span></strong> </h2>
-            <div class="row">
-
+			<div class="party-politics-page">
+				<div class="row about-party">
+					<div class="col-sm-9">
+						<h2 class="title no-bar"> <strong><span>ABOUT <?php echo $show_title; ?></span></strong> </h2>
+						<div class="show-content">
+							<?php echo apply_filters( 'the_content', $show_content ); ?>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="sidebar-ad">
+							<h4>Support Comes From</h4>
+							<div id="div-gpt-ad-1394579228932-1">
+								<script type='text/javascript'>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="episodes-block">
+					<h2 class="title red-bar"> <strong><span>All Stories</span></strong></h2>
+					<div class="row">
 <?php
-$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
-$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
-$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
-$term = reset( $terms );
-$cat_args = [
-    'cat' => $cat_no,
-    'orderby' => 'date',
-    'order'   => 'DESC',
-    'posts_per_page' => 15,
-    'ignore_sticky_posts' => 1
-];
-global $ka;
-$ka = 0;
-$tag_ids = [];
-if ( !empty( $top ) && $top !== 'None' ) {
-    $top_art = new WP_Query( [ 'p' => $top ] );
-    $cat_args['posts_per_page'] = 14;
-    $cat_args['post__not_in'] = [ $top ];
-    if ( $top_art->have_posts() ) {
-        while ( $top_art->have_posts() ) {
-            $top_art->the_post();
-            get_template_part( 'content', get_post_type() );
-            $ka += 3;
-            if ( $show_id === 380127 || $show_id === 119016 ) {
-                $tags = wp_get_post_tags( get_the_ID() );
-                if ( $tags ) {
-                    foreach ( $tags as $individual_tag ) {
-                        if ( ! in_array( $individual_tag->term_id, $tag_ids ) ) {
-                            $tag_ids[] = $individual_tag->term_id;
-                        }
-                    }
-                }
-            }
-        }
-        $post_num = 14;
-    }
-    wp_reset_query();
-}
-$cat = new WP_Query( $cat_args );
-if ( $cat->have_posts() ) {
-    while ( $cat->have_posts() ) {
-        $cat->the_post();
-        //echo "Tras che: ".get_post_type();
-        get_template_part( 'content', "shows" );
-
-        $ka += 3;
-    }
-} ?>
-
-
-            </div>
-
-        </div>
-
-
-
-
-            <div>
-    <?php
-        if ( $cat->found_posts > 15 ) {
-            echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/" . $term->slug . "/page/" );
-        }
-    ?>
-    <p>&nbsp;</p></div>
-    </div>
-    </main>
-    </div>
+	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
+	$top =  get_post_meta( get_the_ID(), 'hpm_shows_top', true );
+	$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
+	$term = reset( $terms );
+	$cat_args = [
+		'cat' => $cat_no,
+		'orderby' => 'date',
+		'order'   => 'DESC',
+		'posts_per_page' => 15,
+		'ignore_sticky_posts' => 1
+	];
+	global $ka;
+	$ka = 0;
+	$tag_ids = [];
+	if ( !empty( $top ) && $top !== 'None' ) {
+		$top_art = new WP_Query( [ 'p' => $top ] );
+		$cat_args['posts_per_page'] = 14;
+		$cat_args['post__not_in'] = [ $top ];
+		if ( $top_art->have_posts() ) {
+			while ( $top_art->have_posts() ) {
+				$top_art->the_post();
+				get_template_part( 'content', get_post_type() );
+				$ka += 3;
+				if ( $show_id === 380127 || $show_id === 119016 ) {
+					$tags = wp_get_post_tags( get_the_ID() );
+					if ( $tags ) {
+						foreach ( $tags as $individual_tag ) {
+							if ( ! in_array( $individual_tag->term_id, $tag_ids ) ) {
+								$tag_ids[] = $individual_tag->term_id;
+							}
+						}
+					}
+				}
+			}
+			$post_num = 14;
+		}
+		wp_reset_query();
+	}
+	$cat = new WP_Query( $cat_args );
+	if ( $cat->have_posts() ) {
+		while ( $cat->have_posts() ) {
+			$cat->the_post();
+			get_template_part( 'content', "shows" );
+			$ka += 3;
+		}
+	} ?>
+						</div>
+					</div>
+				<div>
+<?php
+	if ( $cat->found_posts > 15 ) {
+		echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/" . $term->slug . "/page/" );
+	}
+?>
+					<p>&nbsp;</p>
+				</div>
+			</div>
+		</main>
+	</div>
 <?php get_footer(); ?>
