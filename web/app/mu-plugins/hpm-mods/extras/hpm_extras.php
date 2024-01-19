@@ -1170,12 +1170,9 @@ function postscript_sanitize_data( $data = [] ): array {
  * (Used by post meta-box form before writing post-meta to database.)
  *
  * @link https://tommcfarlin.com/input-sanitization-with-the-wordpress-settings-api/
- *
- * @since    0.4.0
- *
- * @param array $input        The address input.
- *
- * @return   array    $input_clean  The sanitized input.
+ * @since 0.4.0
+ * @param array   $input        The address input.
+ * @return array  $input_clean  The sanitized input.
  */
 function postscript_sanitize_array( array $input ): array {
 	// Initialize a new array to hold the sanitized values.

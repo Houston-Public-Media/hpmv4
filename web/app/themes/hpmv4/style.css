@@ -5837,6 +5837,9 @@ iframe {
 }
 
 /* Responsive */
+body.sticky-nav {
+	padding-top: 150px;
+}
 
 @media (max-width: 1199px) {
 	.social-icon-wrap {
@@ -5894,6 +5897,9 @@ iframe {
 	}
 	.news-listing li:first-child {
 		padding-right: 1rem;
+	}
+	body.sticky-nav {
+		padding-top: 235px;
 	}
 }
 
@@ -5967,6 +5973,9 @@ iframe {
 	}
 	h2#foot-banner {
 		/*padding-bottom: 140px;*/
+	}
+	body.sticky-nav {
+		padding-top: 0px;
 	}
 }
 
@@ -6070,7 +6079,6 @@ iframe {
 	}
 	#hm-top p a {
 		padding: 5px;
-		font-size: 12px !important
 	}
 	h1 {
 		font-size: 1.8rem;

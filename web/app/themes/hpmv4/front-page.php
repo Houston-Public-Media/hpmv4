@@ -44,7 +44,6 @@ $tras = null; ?>
 			text-transform: uppercase;
 		}
 		#station-schedules .station-now-play h3 {
-
 			font-size: 1.25rem;
 			font-family: var(--hpm-font-condensed);
 			padding: 0 0.5rem 0 0;
@@ -95,7 +94,6 @@ $tras = null; ?>
 				<?php echo hpm_showTopthreeArticles( $articles ); ?>
 			</div>
 		</section>
-
 		<section class="section short-news" style="padding-top: 0px !important;">
 			<ul class="list-none d-flex">
 			<?php
