@@ -432,7 +432,6 @@ function hpm_talkshows(): string {
     if ( empty( $wp_query->post ) ) {
         return '';
     }
-    $hm_air[ $now['hours'] ]= "yes";
 
     if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && !empty( $wp_query->post ) && $wp_query->post->post_type !== 'embeds' ) {
         if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 || $now['hours'] == 15 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
