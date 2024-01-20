@@ -1,7 +1,7 @@
 <?php
-function author_footer( $id, $type ): string {
+function author_footer( $id, $type = 'single' ): string {
 	$output = '';
-	if ( $type != null && $type == "fullwidth" ) {
+	if ( $type == "fullwidth" ) {
 		$output .= '<div class="row">';
 	}
 	$coauthors = get_coauthors( $id );

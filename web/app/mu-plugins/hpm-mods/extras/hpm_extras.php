@@ -470,7 +470,6 @@ function get_post_id_by_slug( $slug ) {
 	return $post?->ID;
 }
 
-
 /**
  * @return mixed|string
  * Pull NPR API articles and save them to a transient

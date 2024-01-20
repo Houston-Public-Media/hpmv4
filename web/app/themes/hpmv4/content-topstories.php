@@ -34,7 +34,7 @@ if ( $ka == 0 ) { ?>
 		</div>
 		<div class="col-7">
 			<div class="box-img breaking-news-img">
-				<img src="<?php echo get_template_directory_uri(); ?>/images/news-img.jpg">
+				<img src="https://cdn.houstonpublicmedia.org/assets/images/news-img.jpg" alt="Breaking News">
 			</div>
 		</div>
 	</div>
