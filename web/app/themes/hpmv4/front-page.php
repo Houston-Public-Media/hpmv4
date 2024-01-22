@@ -192,18 +192,25 @@ $tras = null; ?>
 		</section>
 		<section class="section news-list news-list-full">
 			<div class="row">
-				<div class="col-sm-12 col-lg-9 news-list-left">
+				<div class="col-sm-12 col-lg-8 news-list-left">
 					<h2 class="title">
 						<strong>News from <span>NPR</span></strong>
 					</h2>
 					<?php echo hpm_nprapi_output(); ?>
 				</div>
-				<div class="col-sm-12 col-lg-3 news-list-right most-view">
+				<div class="col-sm-12 col-lg-4 news-list-right most-view">
 					<h2 class="title title-full">
 						<strong>Support Comes <span>From</span></strong>
 					</h2>
-					<div id="div-gpt-ad-1394579228932-1">
-						<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
+					<div class="sidebar-ad">
+						<div id="div-gpt-ad-1394579228932-1">
+							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
+						</div>
+					</div>
+					<div class="sidebar-ad">
+						<div id="div-gpt-ad-1394579228932-2">
+							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
+						</div>
 					</div>
 				</div>
 			</div>

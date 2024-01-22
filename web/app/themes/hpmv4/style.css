@@ -2359,13 +2359,13 @@ footer#colophon ul li a {
 
 /* Ad and Promos */
 .sidebar-ad {
-	height: 20rem;
+	height: 16.5rem;
 }
 .sidebar-ad div {
 	max-width: 300px;
 	width: 100%;
 	margin: 0 auto;
-	min-height: 300px;
+	min-height: 250px;
 }
 #div-gpt-ad-1488818411584-0 {
 	max-width: 970px;
