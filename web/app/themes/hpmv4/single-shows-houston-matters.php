@@ -108,7 +108,7 @@ get_header(); ?>
 							<a class="image-box" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
 							<?php } ?>
 							<h2 class="date-title"> <strong><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></strong></h2>
-                            <p><?php echo get_excerpt_by_id_ShowPages(get_the_ID()); ?></p>
+                            <p><?php echo get_the_excerpt(get_the_ID());  ?></p>
 						</div>
 <?php
 			$topcat_args['posts_per_page'] = 3;
