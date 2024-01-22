@@ -2359,6 +2359,9 @@ footer#colophon ul li a {
 
 /* Ad and Promos */
 .sidebar-ad {
+	height: 20rem;
+}
+.home .sidebar-ad {
 	height: 16.5rem;
 }
 .sidebar-ad div {

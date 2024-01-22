@@ -5,7 +5,7 @@
  * @since HPMv4 4.0
  */
 	echo HPM_Promos::generate_static( 'sidebar' );
-	if ( !is_single() && get_post_type() !== 'post' ) { ?>
+	//if ( !is_single() && get_post_type() !== 'post' ) { ?>
 <section class="sidebar-ad">
 	<h4>Support Comes From</h4>
 <?php
@@ -26,7 +26,7 @@
 		} ?>
 </section>
 <?php
-	}
+	//}
 	global $post;
 	if ( !empty( $post ) ) {
 		$tags = wp_get_post_tags( $post->ID );
@@ -81,7 +81,7 @@
 	</div>
 </section>
 <?php
-	if ( !is_single() && get_post_type() !== 'post' ) { ?>
+	//if ( !is_single() && get_post_type() !== 'post' ) { ?>
 <section class="sidebar-ad col-sm-6 col-md-12">
 	<h4>Support Comes From</h4>
 	<div id="div-gpt-ad-1394579228932-2">
@@ -90,4 +90,4 @@
 		</script>
 	</div>
 </section>
-<?php } ?>
+<?php //} ?>
