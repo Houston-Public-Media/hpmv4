@@ -46,7 +46,7 @@ function hpm_site_header(): void { ?>
 							<button aria-label="Watch Live" data-href="/watch-live" type="button" data-dialog="820:850">
 								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-watch.png" alt="Watch Live"> Watch
 							</button>
-							<a href="/support" class="btn-donate" >
+							<a href="/donate" class="btn-donate" >
 								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-donate.png" alt="Donate Now"> Donate
 							</a>
 						</div>
