@@ -142,10 +142,24 @@ get_header(); ?>
 		wp_reset_query();
 	}
 	$cat = new WP_Query( $cat_args );
+	$hmcounter = 0;
 	if ( $cat->have_posts() ) {
 		while ( $cat->have_posts() ) {
 			$cat->the_post();
+            if ( $hmcounter == 5 ) { ?>
+                <div class="col-sm-6 col-md-4">
+                    <div class="sidebar-ad">
+                        <h4>Support Comes From</h4>
+                        <div id="div-gpt-ad-1394579228932-2">
+                            <script type='text/javascript'>
+                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            <?php }
 			get_template_part( 'content', "shows" );
+            $hmcounter++;
 			$ka += 3;
 		}
 	} ?>
