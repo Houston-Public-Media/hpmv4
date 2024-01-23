@@ -396,12 +396,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		if ( scrollPosition > headerHeight ) {
 			if ( !document.body.classList.contains('sticky-nav') ) {
 				document.body.classList.add('sticky-nav');
-				//jQuery(".site-content").addClass('traswadi');
 			}
 		} else {
 			if ( document.body.classList.contains('sticky-nav') ) {
 				document.body.classList.remove('sticky-nav');
-				//jQuery(".site-content").removeClass('traswadi');
 			}
 		}
 	});
