@@ -11,7 +11,7 @@
 	foreach ( $categories as $category ) {
 		if ( $catCounter > 3 ) {
 			$args = [
-				'showposts' => 5,
+				'showposts' => 4,
 				'category__in' => [ $category->term_id ],
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => 4,
@@ -19,25 +19,26 @@
 			];
 			$posts = get_posts( $args );
 ?>
-	<div class="col-sm-6">
+	<div class="col-sm-12">
 		<h2 class="title">
 			<strong><?php echo $category->name; ?></strong>
 		</h2>
-		<ul class="list-none news-links">
+		<ul class="list-none news-links link-thumb">
 <?php
 			if ( $posts ) {
 				foreach ( $posts as $post ) {
 					setup_postdata( $post );  ?>
-			<li>
-				<a href="<?php the_permalink(); ?>"><span class="cat-title"><?php echo hpm_top_cat( get_the_ID() ); ?></span> <?php the_title(); ?></a>
-			</li>
+			<!--<li>
+				<a href="<?php /*the_permalink(); */?>"><span class="cat-title"><?php /*echo hpm_top_cat( get_the_ID() ); */?></span> <?php /*the_title(); */?></a>
+			</li>-->
+                    <li><a href="<?php the_permalink(); ?>" rel="bookmark"><span><?php the_title(); ?></span><span class="img-w75"><?php echo get_the_post_thumbnail( $post, get_the_ID(), "thumbnail" ); ?>></span></a></li>
 <?php
 				}
 			} ?>
 		</ul></div>
 <?php
 			$rowCount++;
-			if ( $rowCount % 2 == 0 ) echo '</div><div class="row" style="padding-top: 20px;">';
+
 		}
 		$catCounter++;
 	}
