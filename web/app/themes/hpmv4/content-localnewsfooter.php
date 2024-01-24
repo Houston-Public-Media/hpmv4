@@ -23,7 +23,7 @@
 		<h2 class="title">
 			<strong><?php echo $category->name; ?></strong>
 		</h2>
-		<ul class="news-footerlinks">
+		<ul class="list-none news-footerlinks">
 <?php
 			if ( $posts ) {
 				foreach ( $posts as $post ) {
