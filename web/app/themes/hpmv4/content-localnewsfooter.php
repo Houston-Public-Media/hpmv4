@@ -31,7 +31,7 @@
 			<!--<li>
 				<a href="<?php /*the_permalink(); */?>"><span class="cat-title"><?php /*echo hpm_top_cat( get_the_ID() ); */?></span> <?php /*the_title(); */?></a>
 			</li>-->
-                    <li><a href="<?php the_permalink(); ?>" rel="bookmark"><span><?php the_title(); ?></span><span class="img-w75"><?php echo get_the_post_thumbnail( $post, get_the_ID(), "thumbnail" ); ?>></span></a></li>
+                    <li><a href="<?php the_permalink(); ?>" rel="bookmark"><span><?php the_title(); ?></span></a></li>
 <?php
 				}
 			} ?>
