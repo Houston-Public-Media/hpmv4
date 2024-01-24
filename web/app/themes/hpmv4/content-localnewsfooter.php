@@ -23,15 +23,13 @@
 		<h2 class="title">
 			<strong><?php echo $category->name; ?></strong>
 		</h2>
-		<ul class="list-none news-links link-thumb">
+		<ul class="news-footerlinks">
 <?php
 			if ( $posts ) {
 				foreach ( $posts as $post ) {
 					setup_postdata( $post );  ?>
-			<!--<li>
-				<a href="<?php /*the_permalink(); */?>"><span class="cat-title"><?php /*echo hpm_top_cat( get_the_ID() ); */?></span> <?php /*the_title(); */?></a>
-			</li>-->
-                    <li><a href="<?php the_permalink(); ?>" rel="bookmark"><span><?php the_title(); ?></span></a></li>
+
+                    <li><a href="<?php the_permalink(); ?>" rel="bookmark"><span class="cat-title"><?php echo hpm_top_cat( get_the_ID() ); ?></span> <?php the_title(); ?></a></li>
 <?php
 				}
 			} ?>
