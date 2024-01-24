@@ -9,7 +9,7 @@
 	$rowCount = 0;
 	$catCounter = 0;
 	foreach ( $categories as $category ) {
-		if ( $catCounter > 1 &&  $catCounter<=3) {
+		if ( $catCounter > 3 ) {
 			$args = [
 				'showposts' => 5,
 				'category__in' => [ $category->term_id ],
@@ -37,7 +37,7 @@
 		</ul></div>
 <?php
 			$rowCount++;
-			if ( $rowCount % 2 == 0 ) echo '</div><div class="row">';  /*style="padding-top: 20px;"*/
+			if ( $rowCount % 2 == 0 ) echo '</div><div class="row" style="padding-top: 20px;">';
 		}
 		$catCounter++;
 	}

@@ -198,6 +198,9 @@ $tras = null; ?>
 					</h2>
 					<?php echo hpm_nprapi_output(); ?>
 				</div>
+
+
+
 				<div class="col-sm-12 col-lg-4 news-list-right most-view">
 					<h2 class="title title-full">
 						<strong>Support Comes <span>From</span></strong>
@@ -207,13 +210,37 @@ $tras = null; ?>
 							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
 						</div>
 					</div>
-					<div class="sidebar-ad">
+					<!--<div class="sidebar-ad">
 						<div id="div-gpt-ad-1394579228932-2">
 							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
 						</div>
-					</div>
+					</div>-->
 				</div>
+
 			</div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-8 news-list-left">
+                    <div class="row">
+                        <?php get_template_part( "content", "localnewsfooter" ); ?>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-4 news-list-right most-view">
+                    <!--<h2 class="title title-full">
+                        <strong>Support Comes <span>From</span></strong>
+                    </h2>
+                    <div class="sidebar-ad">
+                        <div id="div-gpt-ad-1394579228932-1">
+                            <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
+                        </div>
+                    </div>-->
+                    <div class="sidebar-ad">
+                        <div id="div-gpt-ad-1394579228932-2">
+                            <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 		</section> 
 	</div>
 <?php get_footer(); ?>
