@@ -4377,6 +4377,13 @@ section.breaking-news .row {
 	font-weight: bold;
 	width: 100%;
 	justify-content: space-between;
+	gap: 0.5rem;
+}
+.list-dashed li a span {
+	flex: 1 1 auto;
+}
+.list-dashed li a :is(picture,img) {
+	width: 100px;
 }
 .news-schedule label, .station-now-play h5 a {
 	width: 75px;
