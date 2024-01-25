@@ -56,7 +56,7 @@
 					$my_query->the_post();
 					if ( has_post_thumbnail() ) $imgblock = get_the_post_thumbnail( "thumbnail" ); ?>
 					<li>
-						<a href="<?php the_permalink(); ?>"><span><?php the_title(); ?></span><span class="img-w150"><?php the_post_thumbnail( "thumbnail" ); ?></span></a>
+						<a href="<?php the_permalink(); ?>"><span><?php the_title(); ?></span><?php the_post_thumbnail( "thumbnail" ); ?></a>
 					</li>
 <?php
 				} ?>

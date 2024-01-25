@@ -117,10 +117,10 @@ function hpm_modules_settings_page(): void {
 					let inputVal = $(this).val();
 					var numeric = inputVal.replace(/[^0-9]+/,"");
 					// Check if input is numeric and even, if not empty field
-					//if (numeric.length != inputVal.length || numeric%2 != 0) {
-						//$(this).val('');
-						//$('#sloterrMsg').css('visibility','visible');
-					//}
+					// if (numeric.length != inputVal.length || numeric%2 != 0) {
+						// $(this).val('');
+						// $('#sloterrMsg').css('visibility','visible');
+					// }
 				});
 			});
 		</script>

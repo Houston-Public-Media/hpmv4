@@ -125,15 +125,15 @@ if ( is_preview() ) { ?>
 			<?php echo author_footer( $single_id, "" ); ?>
 			</div>
 		</aside>
-<!--		<div class="newsletter-form">
 <?php
-/*			if ( is_single() && get_post_type() == 'post' ) {
+/* 		echo '<div class="newsletter-form">';
+			if ( is_single() && get_post_type() == 'post' ) {
 				if ( in_category( 'news' ) ) {
 					$form_id = '441232';
 					echo '<div id="revue-embed">' . do_shortcode( '[wpforms id="' . $form_id . '" title="true" description="true"]' ) . '</div>';
 				}
-			} */?>
-		</div>-->
+			}
+		echo '</div>'; */ ?>
 	</main>
 </div>
 <?php get_footer(); ?>

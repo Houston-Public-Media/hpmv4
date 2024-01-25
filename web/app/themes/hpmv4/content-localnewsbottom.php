@@ -9,7 +9,7 @@
 	$rowCount = 0;
 	$catCounter = 0;
 	foreach ( $categories as $category ) {
-		if ( $catCounter > 1 &&  $catCounter<=3) {
+		if ( $catCounter > 1 && $catCounter <= 3) {
 			$args = [
 				'showposts' => 5,
 				'category__in' => [ $category->term_id ],

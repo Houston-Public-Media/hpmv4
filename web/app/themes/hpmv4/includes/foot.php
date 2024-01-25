@@ -43,7 +43,7 @@ function author_footer( $id, $type = 'single' ): string {
 					if ( has_post_thumbnail( $qp->ID ) ) {
 						$imgblock = get_the_post_thumbnail( $qp->ID, "thumbnail" );
 					}
-					$tempAuthorArticles .= '<li><a href="' . esc_url( get_permalink( $qp->ID ) ) . '" rel="bookmark"><span>' . $qp->post_title . '</span></a><span class="img-w150">' . $imgblock . '</span></li>';
+					$tempAuthorArticles .= '<li><a href="' . esc_url( get_permalink( $qp->ID ) ) . '" rel="bookmark"><span>' . $qp->post_title . '</span>' . $imgblock . '</a></li>';
 				}
 				$tempAuthorArticles .= '</ul><p><a href="/articles/author/' . $coa->user_nicename . '">More Articles by This Author</a></p>';
 			}
