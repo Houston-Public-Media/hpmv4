@@ -120,7 +120,7 @@ get_header(); ?>
                             <p><?php echo get_the_excerpt( get_the_ID() );  ?></p>
 						</div>
 <?php
-			$topcat_args['posts_per_page'] = 13;
+			$topcat_args['posts_per_page'] = 16;
 			$topcat_args['post__not_in'][] = get_the_ID();
 		}
 	} ?>
