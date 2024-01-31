@@ -84,13 +84,19 @@ get_header(); ?>
 	$top = get_post_meta( get_the_ID(), 'hpm_shows_top', true );
 	$terms = get_terms( [ 'include'  => $cat_no, 'taxonomy' => 'category' ] );
 	$term = reset( $terms );
-	$HMExcludedIds = [];
 	$ta = 0;
 	$topcat_args = [
 		'cat' => $cat_no,
 		'orderby' => 'date',
 		'order'   => 'DESC',
 		'posts_per_page' => 1,
+		'ignore_sticky_posts' => 1
+	];
+	$latest_ep_args = [
+		'cat' => 13761,
+		'orderby' => 'date',
+		'order'   => 'DESC',
+		'posts_per_page' => 3,
 		'ignore_sticky_posts' => 1
 	];
 	$tposts = new WP_Query( $topcat_args ); ?>
@@ -100,19 +106,18 @@ get_header(); ?>
 <?php
 	if( $tposts->have_posts() ) {
 		while ( $tposts->have_posts() ) {
-			$tposts->the_post();
-			$HMExcludedIds = get_the_ID(); ?>
+			$tposts->the_post(); ?>
 						<div class="image-wrapper">
 							<h2 class="title no-bar uppercase"> <strong><span>the latest</span></strong></h2>
 							<?php if ( has_post_thumbnail() ) { ?>
 							<a class="image-box" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
 							<?php } ?>
 							<h2 class="date-title"> <strong><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></strong></h2>
-                            <p><?php echo get_the_excerpt(get_the_ID());  ?></p>
+                            <p><?php echo get_the_excerpt( get_the_ID() );  ?></p>
 						</div>
 <?php
-			$topcat_args['posts_per_page'] = 3;
-			$topcat_args['post__not_in'] = [ $HMExcludedIds ];
+			$topcat_args['posts_per_page'] = 13;
+			$topcat_args['post__not_in'][] = get_the_ID();
 		}
 	} ?>
 						<div class="content-wrapper">
@@ -124,13 +129,10 @@ get_header(); ?>
 								<h3 class="content-title">Latest EPISODES</h3>
 								<ul class="episode-list">
 <?php
-	$cat4 = new WP_Query( $topcat_args );
+	$cat4 = new WP_Query( $latest_ep_args );
 	if ( $cat4->have_posts() ) {
 		while ( $cat4->have_posts() ) {
-			$cat4->the_post();
-			$HMExcludedIds = get_the_ID();
-			$topcat_args['posts_per_page'] = 14;
-			$topcat_args['post__not_in'] = [ $HMExcludedIds ]; ?>
+			$cat4->the_post(); ?>
 									<li class="list-item">
 										<a class="list-link" href="<?php the_permalink(); ?>">
 											<img class="list-icon" src="https://cdn.houstonpublicmedia.org/assets/images/hpm-play-icon.png" alt="play-icon">
@@ -176,31 +178,29 @@ get_header(); ?>
 								</div>
 							</div>
 						</div>
-		<?php }
-            else if($hmcounter == 7)
-            {?>
-                <div class="col-sm-6 col-md-4">
-                    <div class="sidebar-ad">
-                        <h4>Support Comes From</h4>
-                        <div id="div-gpt-ad-1394579228932-2">
-                            <script type='text/javascript'>
-                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            <?php }
-			get_template_part('content', "shows");
-		$hmcounter++;
+<?php
+			} else if ( $hmcounter == 7 ) { ?>
+				<div class="col-sm-6 col-md-4">
+					<div class="sidebar-ad">
+						<h4>Support Comes From</h4>
+						<div id="div-gpt-ad-1394579228932-2">
+							<script type='text/javascript'>
+								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
+							</script>
+						</div>
+					</div>
+				</div>
+<?php
+			}
+			get_template_part( 'content', "shows" );
+			$hmcounter++;
 		}
 	} ?>
 					</div>
 				</div>
 			</div>
 <?php
-		if ( $cat->found_posts > 15 ) {
-			echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/houston-matters/page/" );
-		} ?>
+		echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/houston-matters/page/" ); ?>
 			<p>&nbsp;</p>
 		</main>
 	</div>
