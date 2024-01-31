@@ -2268,14 +2268,9 @@ footer#colophon .foot-contact {
 footer#colophon .foot-contact p {
 	padding: 0 0 1rem;
 }
-footer#colophon .foot-contact p.foot-button {
-	margin-bottom: 0.5rem;
-	font-size: 1rem;
-}
-footer#colophon .foot-contact p.foot-button a {
-	padding: 0.5rem;
+footer#colophon ul li.foot-button a {
+	padding: 0.15rem 0.5rem;
 	background-color: var(--main-red);
-	font-size: 1.125rem;
 }
 footer#colophon .foot-newsletter a {
 	color: var(--accent-light-blue-2);
