@@ -90,14 +90,18 @@ get_header(); ?>
 		'orderby' => 'date',
 		'order'   => 'DESC',
 		'posts_per_page' => 1,
-		'ignore_sticky_posts' => 1
+		'ignore_sticky_posts' => 1,
+		'post_status' => 'publish',
+		'post_type' => 'post'
 	];
 	$latest_ep_args = [
 		'cat' => 13761,
 		'orderby' => 'date',
 		'order'   => 'DESC',
 		'posts_per_page' => 3,
-		'ignore_sticky_posts' => 1
+		'ignore_sticky_posts' => 1,
+		'post_status' => 'publish',
+		'post_type' => 'post'
 	];
 	$tposts = new WP_Query( $topcat_args ); ?>
 			<div class="houston-matters-page">
