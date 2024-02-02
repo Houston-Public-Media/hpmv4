@@ -448,7 +448,7 @@ function analyticsPull_update(): void {
 				$imageBlock = get_the_post_thumbnail( $match[1], 'thumbnail' );
 			}
 
-			$output .= '<li><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark"><span>' . $title . '</span>' . $imageBlock . '</a></li>';
+			$output .= '<li><a href="' . $row->getDimensionValues()[0]->getValue() . '" rel="bookmark"><span>' . $title . '</span></a></li>';
 		}
 	}
 	$output .= "</ul>";
