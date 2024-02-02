@@ -107,11 +107,11 @@ get_header(); ?>
 				$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
 				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) { ?>
 							<div class="episodes-content" id="youtube-main">
-								<a href="" class="image-wrapper">
+								<div class="image-wrapper">
 									<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
 										<?php echo hpm_svg_output( 'play' ); ?>
 									</div>
-								</a>
+								</div>
 								<div class="content-wrapper">
 									<span class="date"><?php echo date( 'F j, Y', $pubtime); ?></span>
 									<h2 class="content-title"><?php echo $yt_title; ?></h2>
