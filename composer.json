@@ -65,7 +65,7 @@
 		"wpackagist-plugin/metronet-tag-manager": "1.5.5",
 		"wpackagist-plugin/npr-story-api": "*",
 		"wpackagist-plugin/npr-content-distribution-service": "*",
-		"wpackagist-plugin/publish-to-apple-news": "2.4.5",
+		"wpackagist-plugin/publish-to-apple-news": "2.4.6",
 		"wpackagist-plugin/redirection": "5.4.2",
 		"wpackagist-plugin/tinymce-advanced": "5.9.2",
 		"wpackagist-plugin/redis-cache": "^2.0.17",
