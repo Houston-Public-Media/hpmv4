@@ -10,7 +10,7 @@ function parseURL(url) {
 	parser.href = url;
 	// Convert query string to object
 	queries = parser.search.replace(/^\?/, '').split('&');
-	for( i = 0; i < queries.length; i++ ) {
+	for ( i = 0; i < queries.length; i++ ) {
 		split = queries[i].split('=');
 		searchObject[split[0]] = split[1];
 	}
@@ -59,8 +59,7 @@ function onPlayerStateChange(event) {
 		let current = parseURL(player.getVideoUrl());
 		let nextVid = document.getElementById(current.searchObject.v).nextSibling();
 		let newYtid = nextVid.getAttribute('data-ytid');
-		if ( newYtid !== undefined )
-		{
+		if ( newYtid !== undefined ) {
 			let yttitle = nextVid.getAttribute('data-yttitle');
 			let ytdesc = nextVid.getAttribute('data-ytdesc');
 			let ytdate = nextVid.getAttribute('data-ytdate');
@@ -76,9 +75,7 @@ function onPlayerStateChange(event) {
 			let c = document.getElementById('yt-nowplay');
 			c.parentNode.removeChild(c);
 			document.getElementById(newYtid).innerHTML += '<div id="yt-nowplay">Now Playing</div>';
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	} else if (event.data === YT.PlayerState.PLAYING) {
@@ -92,13 +89,16 @@ function onPlayerStateChange(event) {
 if (document.getElementById('youtube-player') !== null) {
 	ytdimensions();
 	timeOuts.push(setInterval('ytdimensions()', 5000));
-	document.getElementById('play-button').addEventListener('click', function(){
+	document.getElementById('play-button').addEventListener('click', () => {
 		window.ytid = this.parentNode.getAttribute('data-ytid');
 		let f = document.getElementById('yt-nowplay');
+		let selectedVid = document.getElementById(ytid);
 		if ( f !== null ) {
 			f.parentNode.removeChild(f);
 		}
-		document.getElementById(ytid).innerHTML += '<div id="yt-nowplay">Now Playing</div>';
+		if ( selectedVid !== null ) {
+			document.getElementById(ytid).innerHTML += '<div id="yt-nowplay">Now Playing</div>';
+		}
 		window.ytPlayers.push('youtube-player');
 		window['ytPlay_youtube-player'] = new YT.Player('youtube-player', {
 			height: ythigh,
@@ -144,11 +144,8 @@ if (document.getElementById('youtube-player') !== null) {
 						'onStateChange': onPlayerStateChange
 					}
 				});
-			}
-			else if ( typeof window.ytid !== typeof undefined )
-			{
-				if ( window.ytid !== newYtid )
-				{
+			} else if ( typeof window.ytid !== typeof undefined ) {
+				if ( window.ytid !== newYtid ) {
 					window.ytid = newYtid;
 					window['ytPlay_youtube-player'].stopVideo();
 					window['ytPlay_youtube-player'].loadVideoById({
@@ -167,14 +164,10 @@ if (document.getElementById('youtube-player') !== null) {
 						c.parentNode.removeChild(c);
 					}
 					document.getElementById(newYtid).innerHTML += '<div id="yt-nowplay">Now Playing</div>';
-				}
-				else
-				{
+				} else {
 					return false;
 				}
-			}
-			else
-			{
+			} else {
 				return false;
 			}
 		});
