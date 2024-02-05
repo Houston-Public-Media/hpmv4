@@ -25,8 +25,30 @@ function hpm_google_tracker(): void {
 					}
 				}
 				googletag.defineSlot('/9147267/HPM_Music_Sidebar', [300, 250], 'div-gpt-ad-1470409396951-0').addService(googletag.pubads());
+
+<?php
+	if ( is_home() ) { ?>
+				if ( dfpWide < 1000 ) {
+					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-3').addService(googletag.pubads());
+					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-4').addService(googletag.pubads());
+					let desktopGdc = document.querySelectorAll('.homepage-desktop-gdc');
+					Array.from(desktopGdc).forEach((gdc) => {
+						gdc.classList.add('hidden');
+					});
+				} else {
+					let mobileGdc = document.querySelectorAll('.homepage-mobile-gdc');
+					Array.from(mobileGdc).forEach((gdc) => {
+						gdc.classList.add('hidden');
+					});
+					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').addService(googletag.pubads());
+					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
+				}
+<?php
+	} else { ?>
 				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').addService(googletag.pubads());
 				googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
+<?php
+	} ?>
 				googletag.defineSlot('/9147267/HPM_About_300x250', [300, 250], 'div-gpt-ad-1579034137004-0').addService(googletag.pubads());
 				googletag.pubads().addEventListener('slotRenderEnded', function(event) {
 					var slotId = event.slot.getSlotElementId();
