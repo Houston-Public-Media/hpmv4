@@ -5198,7 +5198,7 @@ body:not(.page-template-page-listen) #masthead #top-search {
 	text-decoration: none !important;
 }
 .contactus-banner {
-	min-height: 200px;
+	min-height: 160px;
 	background: url(https://cdn.houstonpublicmedia.org/assets/images/contact-banner.jpg.webp) no-repeat 0 0;
 	background-size: cover;
 	display: flex;
@@ -5217,7 +5217,7 @@ body:not(.page-template-page-listen) #masthead #top-search {
 	background: var(--main-white);
 	border-radius: 15px;
 	font-weight: bold;
-	margin-top: 20px;
+	/*margin-top: 20px;*/
 }
 .contactus-banner a:hover {
 	text-decoration: none;
