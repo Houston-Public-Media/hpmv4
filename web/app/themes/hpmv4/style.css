@@ -3202,8 +3202,7 @@ article .entry-header p.staff-pronouns,
 		width: 33%;
 		margin: 0;
 		float: right;
-		padding: 1rem;
-		padding-top: 0 !important;
+		padding: 0 1rem 1rem 1rem;
 	}
 	#float-wrap {
 		overflow: hidden;
