@@ -71,7 +71,7 @@
 							</div>-->
 						</div>
 					</div>
-					<nav id="uh-foot-navigation" class="footer-navigation" role="navigation">
+					<nav id="compliance-foot-navigation" class="footer-navigation" role="navigation">
 						<?php wp_nav_menu( [ 'menu_class' => 'nav-menu', 'menu' => 42803 ] ); ?>
 					</nav>
 					<div class="footer-section footer-last">
