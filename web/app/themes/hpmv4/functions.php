@@ -327,7 +327,7 @@ function rel_canonical_w_npr(): void {
 		return;
 	}
 
-	if ( !empty( get_post_meta( $id, NPR_HTML_LINK_META_KEY, 1 ) ) ) {
+	if ( !empty( get_post_meta( $id, 'npr_html_link', 1 ) ) ) {
 		return;
 	}
 	if ( is_page_template( 'page-npr-articles.php' ) ) {
