@@ -491,6 +491,7 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 		$npr->parse();
 		if ( !empty( $npr->stories ) ) {
 			foreach ( $npr->stories as $story ) {
+				$image_url = '';
 				if ( !empty( $story->images[0] ) ) {
 					$image_id = $npr->extract_asset_id( $story->images[0]->href );
 					$image_asset = $story->assets->{$image_id};
@@ -499,9 +500,8 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 							$image_url = $npr->get_image_url( $enclosure );
 						}
 					}
-					$output .= '<a href="/npr' . $story->nprWebsitePath . '/" class="post-thumbnail"><img src="' . $image_url . '" alt="' . $story->title . '" loading="lazy" /></a>';
 				}
-				$output .= '<span><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark">' . $story->title . '</a></h2></div><div class="entry-summary screen-reader-text">' . $story->teaser . '</div></div></article>';
+				$output .= '<li><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url ) ? '<img src="' . $image_url . '" alt="' . $story->teaser . '" loading="lazy" />' : '' ) .'</span></a></li>';
 			}
 		}
 	} elseif ( function_exists( 'nprstory_activate' ) ) {

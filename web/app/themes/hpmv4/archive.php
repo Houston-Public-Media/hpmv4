@@ -74,7 +74,11 @@ get_header(); ?>
 			if ( is_post_type_archive( [ 'podcasts', 'shows' ] ) ) {
 				HPM_Podcasts::list_inactive( $post->post_type );
 			} else {
-				echo '<div>' . hpm_custom_pagination( $cat->max_num_pages ) . '<p>&nbsp;</p></div>';
+				$max_pages = 0;
+				if ( !empty( $cat->max_num_pages ) ) {
+					$max_pages = $cat->max_num_pages;
+				}
+				echo '<div>' . hpm_custom_pagination( $max_pages ) . '<p>&nbsp;</p></div>';
 			}
 
 		// If no content, include the "No posts found" template.

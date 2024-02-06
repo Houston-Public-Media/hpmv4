@@ -2196,12 +2196,11 @@ footer#colophon section {
 	flex-flow: row wrap;
 	justify-content: space-between;
 }
-
-footer#colophon nav#uh-foot-navigation {
+footer#colophon nav.footer-navigation {
 	padding: 1rem;
 	border-top: 1px solid #808080;
 }
-footer#colophon nav#uh-foot-navigation div ul {
+footer#colophon nav.footer-navigation div ul {
 	display: flex;
 	flex-flow: row wrap;
 	gap: 0 2rem;
@@ -2209,8 +2208,6 @@ footer#colophon nav#uh-foot-navigation div ul {
 	font-size: 85%;
 	text-align: center;
 }
-
-
 footer#colophon section > div {
 	width: 100%;
 	margin-top: 2rem;
