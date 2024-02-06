@@ -74,7 +74,7 @@ get_header(); ?>
 			if ( is_post_type_archive( [ 'podcasts', 'shows' ] ) ) {
 				HPM_Podcasts::list_inactive( $post->post_type );
 			} else {
-				$max_pages = 1;
+				$max_pages = 0;
 				if ( !empty( $cat->max_num_pages ) ) {
 					$max_pages = $cat->max_num_pages;
 				}
