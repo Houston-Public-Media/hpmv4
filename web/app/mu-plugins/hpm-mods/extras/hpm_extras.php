@@ -501,7 +501,7 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 						}
 					}
 				}
-				$output .= '<li><a href="/npr/' . $story->nprWebsitePath . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url ) ? '<img src="' . $image_url . '" alt="' . $story->teaser . '" loading="lazy" />' : '' ) .'</span></a></li>';
+				$output .= '<li><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url ) ? '<img src="' . $image_url . '" alt="' . $story->teaser . '" loading="lazy" />' : '' ) .'</span></a></li>';
 			}
 		}
 	} elseif ( function_exists( 'nprstory_activate' ) ) {
