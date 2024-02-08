@@ -1921,7 +1921,7 @@ body.nav-active-menu #top-mobile-close {
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:last-child > ul {
 		left: auto;
-		right: -50%;
+		right: -200px;
 		transform: rotateX(-90deg) translateX(0);
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:hover,
