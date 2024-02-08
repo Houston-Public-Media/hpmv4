@@ -1,0 +1,1 @@
+/opt/elasticbeanstalk/bin/get-config environment -k COMPOSER_AUTH >> auth.json
