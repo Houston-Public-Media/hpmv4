@@ -1925,8 +1925,12 @@ body.nav-active-menu #top-mobile-close {
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:last-child > ul {
 		left: auto;
-		right: 0;
-		transform: rotateX(-90deg) translateX(0);
+		right: -200px;
+		transform: rotateX(-90deg) translate(-50%, 0);
+		/*left: 50% !important;
+		right: auto !important;
+
+		transform:translate(-50%, 0) !important;*/
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:hover,
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:focus-within {
