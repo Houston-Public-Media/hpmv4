@@ -1,1 +1,2 @@
-/opt/elasticbeanstalk/bin/get-config environment -k COMPOSER_AUTH >> auth.json
+#!/bin/sh
+/opt/elasticbeanstalk/bin/get-config environment -k COMPOSER_AUTH >> /var/app/staging/auth.json
