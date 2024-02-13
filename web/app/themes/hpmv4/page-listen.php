@@ -9,7 +9,7 @@ get_header(); ?>
 		border-right: 0.125em solid var(--secondary-text);
 	}
 	body.page-template-page-listen .np-selector-wrap div {
-		flex-basis: 1;
+		flex-basis: content;
 		flex-grow: 2;
 		text-align: center;
 		font: 100 21px/25px var(--hpm-font-main);
@@ -19,6 +19,7 @@ get_header(); ?>
 		border-top: 0.125em solid var(--secondary-text);
 		border-bottom: 0.125em solid var(--secondary-text);
 		border-left: 0.125em solid var(--secondary-text);
+		margin-top: 0 !important;
 	}
 	body.page-template-page-listen .np-selector-wrap div:hover {
 		opacity: 0.8;

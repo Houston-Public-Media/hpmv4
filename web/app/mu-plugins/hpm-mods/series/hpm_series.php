@@ -294,7 +294,6 @@ function hpm_head_banners( $id, $location ): string {
             }
 		}
 	} else {
-
 		if ( $location == 'entry' || $location == 'series' ) {
             if( $id !== 469451 && $id !== 378369 ) { //Local 450698
                  $output =
