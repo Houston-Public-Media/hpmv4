@@ -681,6 +681,18 @@ function hpm_indepth_bug(): string {
 }
 add_shortcode( 'hpm_indepth', 'hpm_indepth_bug' );
 
+function hpm_listen_live_button(): string {
+    return '<div id="top-listen" class="text-center"><iframe loading="lazy" src="https://player.streamguys.com/hpm-news/sgplayer3/player.php?l=layout-banner-ad" frameBorder="0" scrolling="no" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" allow="autoplay" style="width:100%; height:200px; border:0;"></iframe></div>';
+}
+add_shortcode( 'hpm_listenlive_btn', 'hpm_listen_live_button' );
+
+function hpm_listen_live_button_option2(): string {
+
+    return '<div id="top-listen" class="text-center"><button aria-label="Listen Live" data-href="/listen-live" type="button" class="btn btn-danger" data-dialog="480:855" style="padding: 10px 30px 10px 30px;font-weight: bold;">Listen Live!</button></div>';
+}
+//add_shortcode( 'hpm_listenlive_btnoption2', 'hpm_listen_live_button_option2' );
+
+
 function hpm_newsletter_bug(): string {
 	//return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
 	return '';
