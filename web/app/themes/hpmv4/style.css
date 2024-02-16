@@ -5891,7 +5891,7 @@ body.sticky-nav {
 		position: static;
 		transform: none;
 		width: 270px;
-		padding: 10px !important;
+		padding: 6px 10px;
 		min-height: unset;
 	}
 	body:not(.page-template-page-listen) #masthead .site-branding {
@@ -6008,7 +6008,9 @@ body.sticky-nav {
 }
 
 @media (max-width: 767px) {
-
+	body:not(.page-template-page-listen) .site-header .nav-buttons {
+		top: -34px;
+	}
 	.sidebar-ad {
 		width: 100%
 	}

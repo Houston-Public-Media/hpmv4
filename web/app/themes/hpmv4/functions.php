@@ -113,7 +113,7 @@ require( get_template_directory() . '/includes/shortcodes.php' );
 
 
 // Get Time Difference in post datetime and current time
-function hpm_calculate_datetime_difference( $pID ) {
+function hpm_calculate_datetime_difference( $pID ): bool|string {
 	if ( $pID ) {
 		$postTimeDifference = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) );
 		return $postTimeDifference;
