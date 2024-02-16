@@ -98,7 +98,7 @@ function add_query_vars( $aVars ): array {
 	$aVars[] = "npr_id";
 	return $aVars;
 }
-add_filter('query_vars', 'add_query_vars');
+add_filter( 'query_vars', 'add_query_vars' );
 
 /*
  * Creating new rewrite rules to feed those special sections and external data pulls
@@ -114,7 +114,7 @@ function add_rewrite_rules( $aRules ): array {
 	];
 	return $aNewRules + $aRules;
 }
-add_filter('rewrite_rules_array', 'add_rewrite_rules');
+add_filter( 'rewrite_rules_array', 'add_rewrite_rules' );
 
 /**
  *  Add new options for Cron Schedules
@@ -206,7 +206,7 @@ function hpm_no_mod_time(): bool {
 	return true;
 }
 
-add_action( 'save_post', 'save_hpm_no_mod_time');
+add_action( 'save_post', 'save_hpm_no_mod_time' );
 function save_hpm_no_mod_time(): bool {
 	global $post;
 	if ( empty( $post ) || $post->post_type != 'post' ) {
@@ -230,7 +230,7 @@ function save_hpm_no_mod_time(): bool {
 /*
  *  If post is in "Houston" or "Harris County" category, add "Local" category
  */
-add_action( 'save_post', 'hpm_local_cat_check');
+add_action( 'save_post', 'hpm_local_cat_check' );
 function hpm_local_cat_check(): bool {
 	global $post;
 	if ( empty( $post ) || $post->post_type != 'post' ) {
@@ -265,7 +265,7 @@ function custom_upload_mimes ( $existing_mimes = [] ): array {
 	unset( $existing_mimes['js'] );
 	return $existing_mimes;
 }
-add_filter('upload_mimes', 'custom_upload_mimes');
+add_filter( 'upload_mimes', 'custom_upload_mimes' );
 
 /*
  * Finds the last 5 entries in the specified YouTube playlist and saves into a site transient
@@ -645,7 +645,7 @@ function hpm_npr_api_contributor(): void {
 <?php
 }
 
-if ( !function_exists('hpm_add_allowed_tags' ) ) {
+if ( !function_exists( 'hpm_add_allowed_tags' ) ) {
 	function hpm_add_allowed_tags( $tags ) {
 		$tags['script'] = [
 			'src' => true,
@@ -894,7 +894,7 @@ add_filter( 'xmlrpc_enabled', '__return_false' );
 
 function hpm_image_preview_page(): void {
 	$hook = add_submenu_page( 'edit.php', 'Featured Image Preview', 'Featured Image Preview', 'edit_posts', 'hpm-image-preview', function() {} );
-	add_action('load-' . $hook, function() {
+	add_action( 'load-' . $hook, function() {
 		$post_id = sanitize_text_field( $_GET['p'] );
 		$top_cat = hpm_top_cat( $post_id );
 		$title = get_the_title( $post_id );
@@ -984,7 +984,7 @@ function hpm_image_preview_page(): void {
 	});
 }
 
-add_action('admin_menu', 'hpm_image_preview_page');
+add_action( 'admin_menu', 'hpm_image_preview_page' );
 
 
 /* ------------------------------------------------------------------------ *
