@@ -51,6 +51,8 @@
 			$agg_pod_temp[ $aplk ] = $aplv;
 		}
 		$agg_pod_list = $agg_pod_temp;
+	} else {
+		$hpm_podcast_link['aggregate_feed'] = [];
 	}
 	foreach ( $agg_pod_list as $aplk => $aplv ) {
 		$checked = in_array( $aplk, $hpm_podcast_link['aggregate_feed'] ); ?>
