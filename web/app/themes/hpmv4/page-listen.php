@@ -42,8 +42,7 @@ get_header(); ?>
 		border-right: 0.125em solid var(--secondary-text);
 		border-bottom: 0.125em solid var(--secondary-text);
 	}
-	body.page-template-page-listen #np-classical,
-	body.page-template-page-listen #np-mixtape {
+	body.page-template-page-listen .player-wrap:not(#np-news, #np-main) {
 		display: none;
 	}
 	body.page-template-page-listen .np-info {
