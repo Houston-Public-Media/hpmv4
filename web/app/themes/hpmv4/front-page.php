@@ -19,13 +19,14 @@ $tras = null; ?>
 			font: 400 2rem var(--hpm-font-condensed);
 		}
 		#station-schedules .station-now-play {
-			padding: 0.5em 1em;
+			padding: 0.5em;
 			border-bottom: 0.125em solid var(--main-background);
-			min-height: 5em;
+			min-height: 3.5rem;
 			display: grid;
-			grid-template-columns: 30% 70%;
+			grid-template-columns: 3fr 7fr;
 			align-items: center;
 			gap: 1rem;
+			border-bottom: dotted 2px #000 !important;
 		}
 		#station-schedules .station-now-play:last-child {
 			border: 0;
@@ -44,11 +45,12 @@ $tras = null; ?>
 			text-transform: uppercase;
 		}
 		#station-schedules .station-now-play h3 {
-			font-size: 1.25rem;
+			font-size: 0.825rem;
 			font-family: var(--hpm-font-condensed);
 			padding: 0 0.5rem 0 0;
 			margin: 0;
 			color: var(--main-headline);
+			text-decoration: none;
 		}
 		.text-light-gray a{
 			color:#237bbd;
