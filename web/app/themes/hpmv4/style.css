@@ -2392,7 +2392,6 @@ footer#colophon ul li a {
 .hpm-promo-wrap {
 	display: grid;
 	gap: 1rem;
-	padding: 0 1rem;
 	grid-template-columns: 1fr 1fr;
 	background-color: var(--main-element-background);
 }
@@ -4381,9 +4380,6 @@ section.breaking-news .row {
 	width: 100px;
 }
 .news-schedule label, .station-now-play h5 a {
-	width: 75px;
-	height: auto;
-	overflow: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -4394,21 +4390,9 @@ section.breaking-news .row {
 	font-weight: bold;
 	background: #222054; /*#13afbb;*/
 	color: #ffffff;
-	margin: 0 10px 0 0;
-	text-decoration: none;
-	line-height: normal;
 }
 .news-schedule .title.title-full {
 	margin-bottom: 0;
-}
-#station-schedules .station-now-play {
-	border-bottom: dotted 2px #000 !important;
-	min-height: 3.5em !important;
-	padding: 5px 0px !important;
-}
-#station-schedules .station-now-play h3 {
-	font-size: 14px !important;
-	text-decoration: none !important;
 }
 .news-schedule .news-links {
 	padding-left: 30px;
