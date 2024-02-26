@@ -2392,7 +2392,7 @@ footer#colophon ul li a {
 .hpm-promo-wrap {
 	display: grid;
 	gap: 1rem;
-	padding: 1rem;
+	padding: 0 1rem;
 	grid-template-columns: 1fr 1fr;
 	background-color: var(--main-element-background);
 }
