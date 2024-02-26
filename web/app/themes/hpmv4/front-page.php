@@ -127,7 +127,7 @@ $tras = null; ?>
 				<aside class="col-lg-3">
 					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 				</aside>
-				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4">
+				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
 					<h2 class="title title-full">
 						<strong>Support Comes <span>From</span></strong>
 					</h2>
@@ -154,7 +154,7 @@ $tras = null; ?>
 						<?php hpm_top_posts(); ?>
 					</div>
 				</div>
-				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4">
+				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
 					<h2 class="title title-full">
 						<strong>Support Comes <span>From</span></strong>
 					</h2>
@@ -169,12 +169,12 @@ $tras = null; ?>
 		<?php get_template_part("content", "localshows") ?>
 		<section class="section news-list">
 			<div class="row">
-				<div class="col-sm-12 col-lg-9 news-list-left">
+				<div class="col-sm-12 col-lg-8 news-list-left">
 					<div class="row">
 						<?php get_template_part("content", "localnewsbottom") ?>
 					</div>
 				</div>
-				<div class="col-sm-12 col-lg-3 news-list-right news-schedule">
+				<div class="col-sm-12 col-lg-4 news-list-right news-schedule">
 					<h2 class="title title-full">
 						<strong>ON-AIR <span>SCHEDULE</span></strong>
 					</h2>
@@ -218,7 +218,7 @@ $tras = null; ?>
 					</h2>
 					<?php echo hpm_nprapi_output(); ?>
 				</div>
-				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc">
+				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
 					<h2 class="title title-full">
 						<strong>Support Comes <span>From</span></strong>
 					</h2>
@@ -235,7 +235,7 @@ $tras = null; ?>
                         <?php get_template_part( "content", "localnewsfooter" ); ?>
                     </div>
                 </div>
-                <div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc">
+                <div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
                     <div class="sidebar-ad">
                         <div id="div-gpt-ad-1394579228932-2">
                             <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>

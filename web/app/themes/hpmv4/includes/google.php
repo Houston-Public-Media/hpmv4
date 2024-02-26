@@ -28,17 +28,18 @@ function hpm_google_tracker(): void {
 
 <?php
 	if ( is_home() ) { ?>
+				let mobileGdc = document.querySelectorAll('.homepage-mobile-gdc');
+				let desktopGdc = document.querySelectorAll('.homepage-desktop-gdc');
 				if ( dfpWide < 1000 ) {
 					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-3').addService(googletag.pubads());
 					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-4').addService(googletag.pubads());
-					let desktopGdc = document.querySelectorAll('.homepage-desktop-gdc');
-					Array.from(desktopGdc).forEach((gdc) => {
-						gdc.classList.add('hidden');
+					Array.from(mobileGdc).forEach((gdc) => {
+						gdc.classList.remove('hidden');
 					});
 				} else {
-					let mobileGdc = document.querySelectorAll('.homepage-mobile-gdc');
-					Array.from(mobileGdc).forEach((gdc) => {
-						gdc.classList.add('hidden');
+
+					Array.from(desktopGdc).forEach((gdc) => {
+						gdc.classList.remove('hidden');
 					});
 					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-1').addService(googletag.pubads());
 					googletag.defineSlot('/9147267/HPM_Support_Sidebar', [300, 250], 'div-gpt-ad-1394579228932-2').addService(googletag.pubads());
