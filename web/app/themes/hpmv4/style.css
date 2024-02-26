@@ -4239,9 +4239,11 @@ section.breaking-news .row {
 }
 .news-slider {
 	background-color: #e7e7e8;
+	padding: 1.5rem;
 }
-.news-slider-info {
-	padding: 25px;
+.news-slider > .row > div:nth-child(2) {
+	display: flex;
+	align-items: center;
 }
 .news-slider-info h2 {
 	padding: 10px 0;
