@@ -9,6 +9,4 @@ Disallow: /pages/
 Disallow: /news/awards/
 Disallow: /support/studio-society/members/
 Disallow: /support/affinity-council/members/
-
-User-agent: Amazonbot
 Disallow: /wp-json/
