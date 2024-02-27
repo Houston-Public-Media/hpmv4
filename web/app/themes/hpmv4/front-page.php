@@ -135,7 +135,7 @@ $tras = null; ?>
 					</h2>
 					<div class="sidebar-ad">
 						<div id="div-gpt-ad-1394579228932-3">
-							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-3'); });</script>
+							<script>if (window.innerWidth < 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-3'); });}</script>
 						</div>
 					</div>
 				</div>
@@ -162,7 +162,7 @@ $tras = null; ?>
 					</h2>
 					<div class="sidebar-ad">
 						<div id="div-gpt-ad-1394579228932-4">
-							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-4'); });</script>
+							<script>if (window.innerWidth < 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-4'); });}</script>
 						</div>
 					</div>
 				</div>
@@ -226,26 +226,25 @@ $tras = null; ?>
 					</h2>
 					<div class="sidebar-ad">
 						<div id="div-gpt-ad-1394579228932-1">
-							<script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });</script>
+							<script>if (window.innerWidth >= 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });}</script>
 						</div>
 					</div>
 				</div>
 			</div>
-            <div class="row">
-                <div class="col-sm-12 col-lg-8 news-list-left">
-                    <div class="row">
-                        <?php get_template_part( "content", "localnewsfooter" ); ?>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
-                    <div class="sidebar-ad">
-                        <div id="div-gpt-ad-1394579228932-2">
-                            <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });</script>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+			<div class="row">
+				<div class="col-sm-12 col-lg-8 news-list-left">
+					<div class="row">
+						<?php get_template_part( "content", "localnewsfooter" ); ?>
+					</div>
+				</div>
+				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
+					<div class="sidebar-ad">
+						<div id="div-gpt-ad-1394579228932-2">
+							<script>if (window.innerWidth >= 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); }); }</script>
+						</div>
+					</div>
+				</div>
+			</div>
 		</section> 
 	</div>
 <?php get_footer(); ?>
