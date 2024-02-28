@@ -3,6 +3,9 @@
 		</div>
 <?php } else { ?>
 			<h2 id="foot-banner"><a href="/donate">Resources like these are made possible by the generosity of our community of donors, foundations, and corporate partners. Join others and make your gift to Houston Public Media today!<br /><br /><span class="donate"><?php echo hpm_svg_output( 'heart' ); ?> DONATE</span></a></h2>
+    <div class="clear"><p>&nbsp;</p></div>
+    <h2 id="foot-banner"><a href="/hellohouston">Sign up for our daily weekday newsletter - Hello, Houston!<br /><br /><span class="donate">SIGN UP NOW</span></a></h2>
+
 			<footer id="colophon" class="site-footer" role="contentinfo">
 				<div class="container">
 					<div class="footer-section footer-top">
