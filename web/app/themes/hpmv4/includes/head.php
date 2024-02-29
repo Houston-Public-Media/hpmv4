@@ -405,13 +405,13 @@ function hpm_body_open(): void {
 	<div id="page" class="hfeed site">
 		<div id="content" class="site-content">
 <?php
-			if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
+			if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) && !is_home() ) { ?>
 			<!-- /9147267/HPM_Under_Nav -->
-			<!--<div id='div-gpt-ad-1488818411584-0'>
+			<div id='div-gpt-ad-1488818411584-0'>
 				<script>
 					googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
 				</script>
-			</div>-->
+			</div>
 <?php
 }
 	echo HPM_Promos::generate_static( 'top' );
