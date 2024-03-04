@@ -116,6 +116,13 @@
 			</footer>
 		</div>
 <?php }
-		wp_footer(); ?>
+		wp_footer();
+		if ( defined( 'SAVEQUERIES' ) && SAVEQUERIES ) {
+			if ( str_contains( $_SERVER['REQUEST_URI'], '/author/' ) || str_contains( $_SERVER['REQUEST_URI'], '/tag/' ) || str_contains( $_SERVER['REQUEST_URI'], '/topics/' ) ) {
+				global $wpdb;
+				error_log( $_SERVER['REQUEST_URI'] );
+				error_log( print_r( $wpdb->queries, true ) );
+			}
+		} ?>
 	</body>
 </html>

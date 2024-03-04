@@ -1388,10 +1388,12 @@ class HPM_Podcasts {
 				$temp['external_links'] = $podlink;
 				$temp['name'] = get_the_title();
 				$temp['description'] = get_the_content();
-				$a_meta = get_post_meta( $last_id['id'], 'hpm_podcast_enclosure', true );
-				$temp['latest_episode']['audio'] = str_replace( 'http://', $protocol, $a_meta['url'] );
-				$temp['latest_episode']['title'] = get_the_title( $last_id['id'] );
-				$temp['latest_episode']['link'] = get_the_permalink( $last_id['id'] );
+				if ( is_array( $last_id ) ) {
+					$a_meta = get_post_meta( $last_id[ 'id' ], 'hpm_podcast_enclosure', true );
+					$temp[ 'latest_episode' ][ 'audio' ] = str_replace( 'http://', $protocol, $a_meta[ 'url' ] );
+					$temp[ 'latest_episode' ][ 'title' ] = get_the_title( $last_id[ 'id' ] );
+					$temp[ 'latest_episode' ][ 'link' ] = get_the_permalink( $last_id[ 'id' ] );
+				}
 				$temp['feed_json'] = WP_HOME . '/wp-json/hpm-podcast/v1/list/' . $post->post_name;
 				$list[] = $temp;
 			}
