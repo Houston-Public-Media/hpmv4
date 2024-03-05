@@ -6,7 +6,7 @@
  */
 if ( is_category() ) {
 	$cat = get_term_by( 'name', single_cat_title( '', false ), 'category' );
-	if ( empty( $wp_query->query_vars['paged'] ) ) {
+	if ( empty( $wp_query->query_vars['paged'] ) && $cat !== false ) {
 		if ( $cat->parent == 9 ) {
 			$args = [
 				'post_type' => 'page',

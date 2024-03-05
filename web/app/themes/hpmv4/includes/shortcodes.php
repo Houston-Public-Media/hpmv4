@@ -823,7 +823,7 @@ function hpm_splide_gallery( $attr ): string {
 		$alt = str_replace( '"', '&quot;', strip_tags( $description ) );
 		if ( amp_is_request() ) {
 			$meta = get_post_meta( $attachmentId, '_wp_attachment_metadata', true );
-			$output .= '<div class="slide"><amp-img src="' . $thumb[0] . '" layout="responsive" height="' . $meta['height'] . '" width="' . $meta['width'] . '" alt="' . $alt . '"></amp-img><div class="caption">' . $description . '</div></div>';
+			$output .= '<div class="slide"><amp-img src="' . $thumb[0] . '" layout="responsive" height="' . ( !empty( $meta['height'] ) ? $meta['height'] : '600px' ) . '" width="' . ( !empty( $meta['width'] ) ? $meta['width'] : '900px' ). '" alt="' . $alt . '"></amp-img><div class="caption">' . $description . '</div></div>';
 		} else {
 			$output .= '<li class="splide__slide"><a href="' . $big[0] . '" target="_blank" title="Click for full size"><img data-splide-lazy="' . $thumb[0] . '" alt="' . $alt . '"></a><div>' . $description . '</div></li>';
 		}

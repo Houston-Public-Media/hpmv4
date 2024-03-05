@@ -105,7 +105,7 @@ function author_footer( $id, $type = 'single' ): string {
 		if ( $type == "fullwidth" ) {
 			$temp .= '</div>';
 		}
-		// set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 7200 );
+		set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 600 );
 		$output .= $temp . $tempAuthorArticles;
 
 	}
