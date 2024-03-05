@@ -108,27 +108,29 @@ function hpm_header_info(): void {
 		if ( is_author() ) {
 			global $curauth;
 			global $author_check;
-			$reqs['og_type'] = 'profile';
-			$reqs['permalink'] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
-			$reqs['title'] = $curauth->display_name." | Houston Public Media";
-			if ( !empty( $author_check ) ) {
-				while ( $author_check->have_posts() ) {
-					$author_check->the_post();
-					$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
-					if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) {
-						$reqs['description'] = $head_excerpt;
-					}
-					$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', TRUE );
-					$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
-					if ( !empty( $head_categories ) ) {
-						$reqs['keywords'] = [];
-						foreach( $head_categories as $hcat ) {
-							$reqs['keywords'][] = $hcat->name;
+			if ( $curauth !== false ) {
+				$reqs[ 'og_type' ] = 'profile';
+				$reqs[ 'permalink' ] = get_author_posts_url( $curauth->ID, $curauth->user_nicename );
+				$reqs[ 'title' ] = $curauth->display_name . " | Houston Public Media";
+				if ( !empty( $author_check ) ) {
+					while ( $author_check->have_posts() ) {
+						$author_check->the_post();
+						$head_excerpt = htmlentities( wp_strip_all_tags( get_the_content(), true ), ENT_QUOTES );
+						if ( !empty( $head_excerpt ) && $head_excerpt !== 'Biography pending.' ) {
+							$reqs[ 'description' ] = $head_excerpt;
 						}
+						$author = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
+						$head_categories = get_the_terms( get_the_ID(), 'staff_category' );
+						if ( !empty( $head_categories ) ) {
+							$reqs[ 'keywords' ] = [];
+							foreach ( $head_categories as $hcat ) {
+								$reqs[ 'keywords' ][] = $hcat->name;
+							}
+						}
+						$reqs[ 'title' ] = $curauth->display_name . ", " . $author[ 'title' ] . " | Houston Public Media";
 					}
-					$reqs['title'] = $curauth->display_name.", ".$author['title']." | Houston Public Media";
+					wp_reset_query();
 				}
-				wp_reset_query();
 			}
 		} elseif ( is_archive() ) {
 			if ( is_post_type_archive() ) {

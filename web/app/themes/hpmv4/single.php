@@ -122,7 +122,7 @@ if ( is_preview() ) { ?>
 	}
 	wp_reset_postdata();
 	get_template_part('sidebar' ); ?>
-			<?php echo author_footer( $single_id, "" ); ?>
+			<?php echo author_footer( $single_id ); ?>
 			</div>
 		</aside>
 <?php

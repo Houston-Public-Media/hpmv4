@@ -1138,6 +1138,12 @@ function hpm_pull_npr_story( $npr_id ) {
 		$npr->parse();
 		if ( !empty( $npr->stories[0] ) ) {
 			$story = $npr->stories[0];
+		} else {
+			global $wp_query;
+			$wp_query->set_404();
+			status_header( 404 );
+			get_template_part( 404 );
+			exit();
 		}
 
 		$use_npr_layout = !empty( get_option( 'dp_npr_query_use_layout' ) );
@@ -1162,10 +1168,11 @@ function hpm_pull_npr_story( $npr_id ) {
 			}
 		}
 
+
 		$story_date = new DateTime( $story->storyDate->value );
-		$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
-		$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';
-		$nprdata['canonical'] = $story->link['html']->value;
+		$nprdata[ 'date' ] = $story_date->format( 'F j, Y, g:i A' );
+		$nprdata[ 'permalink' ] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';
+		$nprdata[ 'canonical' ] = $story->link[ 'html' ]->value;
 
 		if ( !empty( $story->byline ) ) {
 			if ( is_array( $story->byline ) ) {
@@ -1222,9 +1229,11 @@ function hpm_pull_npr_story( $npr_id ) {
 
 		if ( isset( $story->parent ) ) {
 			foreach ( (array)$story->parent as $parent ) {
-				if ( $parent->type == 'topic' || $parent->type == 'program' ) {
-					$nprdata['keywords'][] = $parent->title->value;
-					$nprdata['keywords_html'][] = '<a href="' . hpm_link_extract( $parent->link ) . '">' . $parent->title->value . '</a>';
+				if ( !empty( $parent->type ) ) {
+					if ( $parent->type == 'topic' || $parent->type == 'program' ) {
+						$nprdata[ 'keywords' ][] = $parent->title->value;
+						$nprdata[ 'keywords_html' ][] = '<a href="' . hpm_link_extract( $parent->link ) . '">' . $parent->title->value . '</a>';
+					}
 				}
 			}
 		}

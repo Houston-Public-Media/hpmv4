@@ -93,7 +93,7 @@
 		<?php
 				}
 			} else { ?>
-					<h1 class="entry-title"><?php echo $curauth->display_name; ?></h1>
+					<h1 class="entry-title"><?php echo ( $curauth !== false ? $curauth->display_name : '' ); ?></h1>
 			<?php
 				if ( !empty( $curauth->user_email ) || !empty( $curauth->website ) ) { ?>
 					<ul>

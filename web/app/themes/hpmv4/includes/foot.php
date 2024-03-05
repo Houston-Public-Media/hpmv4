@@ -1,19 +1,15 @@
 <?php
-function author_footer( $id, $type = 'single' ): string {
-	$output = '';
-	if ( $type == "fullwidth" ) {
-		$output .= '<div class="row">';
-	}
+function author_footer( $id ): string {
+	global $wp_query;
+	$output = '<div id="author-wrap">';
 	$coauthors = get_coauthors( $id );
 	foreach ( $coauthors as $coa ) {
-		$temp = '';
-		$tempAuthorArticles = '';
-		$author_trans = get_transient( 'hpm_author_' . $coa->user_nicename );
-		if ( !empty( $author_trans ) ) {
-			$output .= $author_trans;
+		$temp = get_transient( 'hpm_author_' . $coa->user_nicename );
+		if ( !empty( $temp ) ) {
+			$output .= $temp;
 			continue;
 		}
-		$local = false;
+		$local = $guest = false;
 		$author = null;
 		$meta = '';
 		if ( is_a( $coa, 'wp_user' ) ) {
@@ -24,39 +20,16 @@ function author_footer( $id, $type = 'single' ): string {
 				if ( $authid !== false ) {
 					$author = new WP_Query( [ 'post_type' => 'staff', 'post_status' => 'publish', 'meta_query' => [ [ 'key' => 'hpm_staff_authid', 'compare' => '=', 'value' => $authid->ID ] ] ] );
 				}
+			} else {
+				$guest = true;
 			}
 		}
 		if ( !empty( $author ) && $author->have_posts() ) {
 			$local = true;
 			$meta = $author->post->hpm_staff_meta;
 		}
-		if ( count( $coauthors ) <= 1 ) {
-			if ( $type == "fullwidth" ) {
-				$tempAuthorArticles .= '<div class="col-sm-6 col-md-12">';
-			}
-			$tempAuthorArticles .= '<section class="highlights col-sm-6 col-md-12">';
-			$q = new WP_Query( [ 'posts_per_page' => 4, 'post_type' => 'post', 'post_status' => 'publish', 'author_name' => $coa->user_nicename ] );
-			if ( $q->have_posts() ) {
-				$tempAuthorArticles .= '<div class="row"><div class="col-12 news-list-right most-view"><h2 class="title title-full"><strong>Other Stories by <span>' . strtok( $coa->first_name, "-" ) . '</span></strong></h2><ul class="list-none news-links list-dashed">';
-				foreach ( $q->posts as $qp ) {
-					$imgblock = "";
-					if ( has_post_thumbnail( $qp->ID ) ) {
-						$imgblock = get_the_post_thumbnail( $qp->ID, "thumbnail" );
-					}
-					$tempAuthorArticles .= '<li><a href="' . esc_url( get_permalink( $qp->ID ) ) . '" rel="bookmark"><span>' . $qp->post_title . '</span>' . $imgblock . '</a></li>';
-				}
-				$tempAuthorArticles .= '</ul><p><a href="/articles/author/' . $coa->user_nicename . '">More Articles by This Author</a></p>';
-			}
-			$tempAuthorArticles .= "</div></div></section>";
-			if ( $type == "fullwidth" ) {
-				$tempAuthorArticles .= '</div>';
-			}
-		}
 
-		if ( $type == "fullwidth" ) {
-			$temp .= '<div class="col-sm-6 col-md-12">';
-		}
-		$temp .= '<section class="sidebar-author col-sm-6 col-md-12" style="margin-top: 10px;">' .
+		$temp .= '<div class="author-card"><section class="sidebar-author">' .
 			'<div class="d-flex sa-header">' .
 				( $local && has_post_thumbnail( $author->post->ID ) ? '<div class="author-image sa-pic">' . get_the_post_thumbnail( $author->post->ID, 'post-thumbnail', [ 'alt' => $author->post->post_title ] ) . '</div>' : '' ) .
 				'<div class="sa-info flex-grow-1">'.
@@ -102,16 +75,26 @@ function author_footer( $id, $type = 'single' ): string {
 			$temp .= '<div class="sa-body">' . ( $local ? wp_trim_words( $author_bio, 50, '...' ) : '' ) . '</div>';
 		}
 		$temp .= ( $local ? '<p style="padding: 15px;"><a href="' . get_the_permalink( $author->post->ID ) . '"><strong>Know more about ' . $coa->display_name . '</strong></a></p>' : '' ) . '</section>';
-		if ( $type == "fullwidth" ) {
-			$temp .= '</div>';
+		if ( $local || $guest ) {
+			$q = new WP_Query( [ 'posts_per_page' => 4, 'post_type' => 'post', 'post_status' => 'publish', 'author_name' => $coa->user_nicename, 'no_found_posts' => true, 'post__not_in' => [ $wp_query->post->ID ] ] );
+			if ( $q->have_posts() ) {
+				$temp .= '<section class="highlights">';
+				$temp .= '<div class="news-list-right most-view"><h2 class="title title-full"><strong>Other Stories by <span>' . strtok( $coa->first_name, "-" ) . '</span></strong></h2><ul class="list-none news-links list-dashed">';
+				foreach ( $q->posts as $qp ) {
+					$imgblock = "";
+					if ( has_post_thumbnail( $qp->ID ) ) {
+						$imgblock = get_the_post_thumbnail( $qp->ID, "thumbnail" );
+					}
+					$temp .= '<li><a href="' . esc_url( get_permalink( $qp->ID ) ) . '" rel="bookmark"><span>' . $qp->post_title . '</span>' . $imgblock . '</a></li>';
+				}
+				$temp .= '</ul><p><a href="/articles/author/' . $coa->user_nicename . '">More Articles by This Author</a></p></div></section>';
+			}
 		}
-		// set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 7200 );
-		$output .= $temp . $tempAuthorArticles;
-
+		$temp .= "</div>";
+		set_transient( 'hpm_author_' . $coa->user_nicename, $temp, 600 );
+		$output .= $temp;
 	}
-	if ( $type == "fullwidth" ) {
-		$output .= '</div>';
-	}
+	$output .= "</div>";
 	return $output;
 }
 
