@@ -3667,32 +3667,23 @@ article .entry-header p.staff-pronouns,
 .page.support-ssac section h2 {
 	padding: 0;
 	margin: 0 0 0.5em 0;
-	/*font-weight: 100;
-	color: var(--secondary-text);*/
-	font-size: 1.25em;
-
+	font-size: 1.25rem;
 	border: 0;
 	text-align: left;
 }
 .page.support-ssac article .entry-content p {
-	/*font-weight: 100;*/
 	font-size: 1rem;
 	margin: 0;
-	/*padding: 0 0 1em;*/
-	color: #000;/*var(--main-text);*/
-}
-.page.support-ssac article .entry-content p a {
-	color: var(--secondary-text);
-	text-decoration: none;
+	color: #000;
 }
 .page.support-ssac article .entry-content p a.ss-give {
 	color: white;
-	font: 500 1.5em/1em var(--hpm-font-main);
+	font: 500 1.5rem/1rem var(--hpm-font-main);
 	background-color: var(--main-red);
-	padding: 0.5em 0;
+	padding: 0.5rem 0;
 	width: 50%;
 	display: block;
-	margin: 0 25% 0.25em;
+	margin: 0 25% 0.25rem;
 }
 h2.ss-join {
 	color: #11A6B3;
