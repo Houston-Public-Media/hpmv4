@@ -1,6 +1,5 @@
 <?php
 function author_footer( $id ): string {
-	global $wp_query;
 	$output = '<div id="author-wrap">';
 	$coauthors = get_coauthors( $id );
 	foreach ( $coauthors as $coa ) {
@@ -76,7 +75,7 @@ function author_footer( $id ): string {
 		}
 		$temp .= ( $local ? '<p style="padding: 15px;"><a href="' . get_the_permalink( $author->post->ID ) . '"><strong>Know more about ' . $coa->display_name . '</strong></a></p>' : '' ) . '</section>';
 		if ( $local || $guest ) {
-			$q = new WP_Query( [ 'posts_per_page' => 4, 'post_type' => 'post', 'post_status' => 'publish', 'author_name' => $coa->user_nicename, 'no_found_posts' => true, 'post__not_in' => [ $wp_query->post->ID ] ] );
+			$q = new WP_Query( [ 'posts_per_page' => 4, 'post_type' => 'post', 'post_status' => 'publish', 'author_name' => $coa->user_nicename, 'no_found_posts' => true ] );
 			if ( $q->have_posts() ) {
 				$temp .= '<section class="highlights">';
 				$temp .= '<div class="news-list-right most-view"><h2 class="title title-full"><strong>Other Stories by <span>' . strtok( $coa->first_name, "-" ) . '</span></strong></h2><ul class="list-none news-links list-dashed">';
