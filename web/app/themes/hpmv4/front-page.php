@@ -64,6 +64,9 @@ $tras = null; ?>
 		.news-listing p {
 			font-size: 0.9em;
 		}
+		.news-main {
+			padding-bottom: 1rem;
+		}
 		.news-main p {
 			font-size: 0.9em;
 		}
