@@ -75,13 +75,13 @@ Template Name: Presidential Election Map
 			background-color: #808080;
 		}
 		.vote-dem {
-			background-color: var(--main-blue);
+			background-color: #0044c9;
 		}
 		.vote-repub {
 			background-color: var(--main-red);
 		}
 		.states :hover {
-			fill: red;
+			fill: yellow;
 		}
 		.states{
 			fill:#808080;
@@ -113,18 +113,9 @@ Template Name: Presidential Election Map
 		}
 		.vote-dbar
 		{
-			background-color: blue;
+			background-color: #0044c9;
 		}
-		.collagemap-block {
-			background: #f5f5f5;
 
-			padding: 10px 15px 10px;
-			overflow: hidden;
-			margin-bottom: 0px;
-			height: 100%;
-			position: relative;
-			font-size: 14px;
-		}
 		.noneblock
 		{
 			border-top: solid 7px #808080;
@@ -137,25 +128,7 @@ Template Name: Presidential Election Map
 		{
 			border-top: solid 7px #da1333;
 		}
-		.collagemap-block h5 {
-			font-size: 16px;
-			color: #00566c;
-			font-weight: bold;
-		}
-		.collagemap-tiles {
-			display: grid;
-			gap: 1rem;
-		}
-		@media screen and (min-width: 52.5em) {
-			.collagemap-tiles {
-				grid-template-columns: 1fr 1fr 1fr;
-			}
-		}
-			@media screen and (min-width: 34em) {
-				.collagemap-tiles {
-					grid-template-columns: 1fr 1fr 1fr;
-				}
-			}
+
 
 	</style>
 	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -172,7 +145,7 @@ Template Name: Presidential Election Map
 			<picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png" /></picture><br />
 			<picture><img src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png" alt="Harris County Results from Election 2023" /></picture></div>
 
-		<section class="section opportunities">
+		<!-- <section class="section opportunities">
 
 			<div class="collagemap-tiles">
 				<div class="collagemap-block demblock">
@@ -189,7 +162,7 @@ Template Name: Presidential Election Map
 				</div>
 
 			</div>
-		</section>
+		</section> -->
 
 		<div class="row">
 			<div class="col-md-12">
@@ -212,7 +185,7 @@ Template Name: Presidential Election Map
 				<div id="map"></div>
 			</div>
 			<div class="col-md-1">
-				<section id="vote-buttons"></section>
+				<section id="vote-buttons" style="display: block; padding: 0;"></section>
 			</div>
 
 		</div>
@@ -302,7 +275,7 @@ Template Name: Presidential Election Map
 
 		document.addEventListener('DOMContentLoaded', () => {
 			for ( let key in skippedStates ) {
-				voteButtons.innerHTML += '<div><button data-state="' + key +'" data-affiliation="' + states[key].affiliation + '" data-votes="' + states[key].votes + '" class="states vote-none">' + states[key].Abbr + ' (' + states[key].votes + ')</button></div>';
+				voteButtons.innerHTML += '<div><button style="border: none;" data-state="' + key +'" data-affiliation="' + states[key].affiliation + '" data-votes="' + states[key].votes + '" class="states vote-none">' + states[key].Abbr + ' (' + states[key].votes + ')</button></div>';
 			}
 			let vButtonList = document.querySelectorAll('#vote-buttons button');
 			Array.from(vButtonList).forEach((vb) => {
@@ -325,11 +298,6 @@ Template Name: Presidential Election Map
 			});
 		});
 		const updateStateVotes = (d, Abbr) => {
-		   // console.log(d3.selectAll("path").filter((d) => d.properties.ABBR));
-
-		  //  alert(d3.selectAll("path").filter(d => d.properties.STATE === "48"));
-
-		  //  console.log("d.properties: "+JSON.stringify(d3.selectAll("path").filter((d) => d.properties.ABBR)));
 			let paths = document.querySelector("path[data-state=" + Abbr + "]");
 			let aff = paths.getAttribute("data-affiliation");
 			let stateAb = paths.getAttribute('data-state');
@@ -664,7 +632,6 @@ Template Name: Presidential Election Map
 										if (width <= 400) {
 											new_y += 2;
 										}
-										// console.log("new_y"+new_y);
 										return new_y;
 									}
 								})
@@ -680,7 +647,6 @@ Template Name: Presidential Election Map
 					}
 					let new_x = path.centroid(d)[0] + (parseInt(stateLabelPositions[d.properties.STATE + "x"]) * factor);
 					if ( d.properties.ABBR == "FL" ) {
-						//console.log(new_x);
 					}
 					if (!isNaN(new_x)) {
 						return new_x;
@@ -703,42 +669,10 @@ Template Name: Presidential Election Map
 							new_y += 2;
 						}
 						if(d.properties.ABBR == "MS") {
-							//console.log(new_y);
-							//console.log(d.properties.STATE+"hi: "+parseInt(stateLabelPositions[d.properties.STATE + "y"]));
 						}
 						return new_y;
 					}
 				})
-				/*.attr("x", function(d){
-					/!*if(d.properties.ABBR == "FL")
-					{
-						return 1260.2086982131382;
-					}*!/
-					/!*if(d.properties.ABBR == "HI")
-					{
-						return 627.59366077239565;
-					}*!/
-					return path.centroid(d)[0];
-				})
-				.attr("y", function(d){
-					/!*if(d.properties.ABBR == "FL")
-					{
-						return 876.661656418421;
-					}*!/
-					/!*if(d.properties.ABBR == "HI")
-					{
-						return 992.0623450835138;
-					}
-					if(d.properties.ABBR == "LA")
-					{
-						return 805.2209808581275;
-					}
-					if(d.properties.ABBR == "MI")
-					{
-						return 430.6417691128858;
-					}*!/
-					return  path.centroid(d)[1];
-				})*/
 				.attr("text-anchor","middle")
 				.attr('fill', '#fff')
 				.attr("font-weight", "bold")
