@@ -246,16 +246,16 @@ Template Name: Presidential Election Map
 			"WI": {"Abbr": "WI","code": "WI 10","name": "Wisconsin", "affiliation": 0, "votes": 10 },
 			"WY": {"Abbr": "WY","code": "WY 3","name": "Wyoming", "affiliation": 0, "votes": 3 }
 		};
-		let skippedStates ={
-			"NJ": { "Abbr": "NJ","code": "NJ 3","name": "New Jersey", "affiliation": 0, "votes": 14 },
+		let skippedStates = {
 			"CT": { "Abbr": "CT","code": "CT 3","name": "Connecticut", "affiliation": 0, "votes": 7 },
-			"MA": { "Abbr": "MA","code": "MA 3","name": "Massachusetts", "affiliation": 0, "votes": 11 },
-			"RI": { "Abbr": "RI","code": "RI 3","name": "Rhode Island", "affiliation": 0, "votes": 4 },
-			"DE": { "Abbr": "DE","code": "DE 3","name": "Delaware", "affiliation": 0, "votes": 3 },
-			"MD": { "Abbr": "MD","code": "MD 3","name": "Maryland", "affiliation": 0, "votes": 10 },
 			"DC": { "Abbr": "DC","code": "DC 3","name": "District of Columbia", "affiliation": 0, "votes": 3 },
+			"DE": { "Abbr": "DE","code": "DE 3","name": "Delaware", "affiliation": 0, "votes": 3 },
+			"MA": { "Abbr": "MA","code": "MA 3","name": "Massachusetts", "affiliation": 0, "votes": 11 },
+			"MD": { "Abbr": "MD","code": "MD 3","name": "Maryland", "affiliation": 0, "votes": 10 },
+			"NJ": { "Abbr": "NJ","code": "NJ 3","name": "New Jersey", "affiliation": 0, "votes": 14 },
+			"RI": { "Abbr": "RI","code": "RI 3","name": "Rhode Island", "affiliation": 0, "votes": 4 }
 		};
-		let skippedAbbr = ["NJ", "CT", "MA", "RI","DE","MD","DC"];
+		let skippedAbbr = [ "CT", "DC", "DE", "MA", "MD", "NJ", "RI" ];
 		let voteButtons = document.querySelector('#vote-buttons');
 		let voteTotals = [
 			document.querySelector('#none-total'),
