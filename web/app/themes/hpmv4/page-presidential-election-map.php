@@ -573,8 +573,8 @@ Template Name: Presidential Election Map
 			.attr("width", width)
 			.attr("height", height);
 
-		//d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
-        d3.json("http://localhost/us_states_topo.json", function(error, us) {
+		d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
+        //d3.json("http://localhost/us_states_topo.json", function(error, us) {
 
 			let data = topojson.feature(us, us.objects.layer1).features;
 			let g = svg.append("g");
