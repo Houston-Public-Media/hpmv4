@@ -158,8 +158,8 @@ Template Name: Presidential Election Map
             }
 
     </style>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <div id="primary" class="content-area">
@@ -596,7 +596,7 @@ Template Name: Presidential Election Map
             .attr("width", width)
             .attr("height", height);
 
-        d3.json("http://localhost/us_states_topo.json", function(error, us) {
+        d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
             var data = topojson.feature(us, us.objects.layer1).features;
             var g = svg.append("g");
             g.attr("class", "states")
