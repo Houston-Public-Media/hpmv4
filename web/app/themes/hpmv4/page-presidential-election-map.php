@@ -197,7 +197,7 @@ Template Name: Presidential Election Map
 		let states = {"AL": {"Abbr": "AL","code": "AL 9","name": "Alabama", "affiliation": 0, "votes": 9 },
 			"AK": {"Abbr": "AK","code": "AK 3","name": "Alaska", "affiliation": 0, "votes": 3 },
 			"AZ": {"Abbr": "AZ","code": "AZ 11","name": "Arizona", "affiliation": 0, "votes": 11 },
-			"AR": {"Abbr": "AK","code": "AK 6","name": "Arkansas", "affiliation": 0, "votes": 6 },
+			"AR": {"Abbr": "AR","code": "AR 6","name": "Arkansas", "affiliation": 0, "votes": 6 },
 			"CA": {"Abbr": "CA","code": "CA 54","name": "California", "affiliation": 0, "votes": 54 },
 			"CO": {"Abbr": "CO","code": "CO 10","name": "Colorado", "affiliation": 0, "votes": 10 },
 			"CT": {"Abbr": "CT","code": "CT 7","name": "Connecticut", "affiliation": 0, "votes": 7 },
@@ -226,7 +226,7 @@ Template Name: Presidential Election Map
 			"NH": {"Abbr": "NH","code": "NH 4","name": "New Hampshire", "affiliation": 0, "votes": 4 },
 			"NJ": {"Abbr": "NJ","code": "NJ 14","name": "New Jersey", "affiliation": 0, "votes": 14 },
 			"NM": {"Abbr": "NM","code": "NM 5","name": "New Mexico", "affiliation": 0, "votes": 5 },
-			"NY": {"Abbr": "NW","code": "NW 28","name": "New York", "affiliation": 0, "votes": 28 },
+			"NY": {"Abbr": "NY","code": "NY 28","name": "New York", "affiliation": 0, "votes": 28 },
 			"NC": {"Abbr": "NC","code": "NC 16","name": "North Carolina", "affiliation": 0, "votes": 16 },
 			"ND": {"Abbr": "ND","code": "ND 3","name": "North Dakota", "affiliation": 0, "votes": 3 },
 			"OH": {"Abbr": "OH","code": "OH 17","name": "Ohio", "affiliation": 0, "votes": 17 },
@@ -536,14 +536,21 @@ Template Name: Presidential Election Map
 		// Override State Positions
 		stateLabelPositions["12x"] = "10";
 		stateLabelPositions["15y"] = "16";
-		stateLabelPositions["15x"] = "20";
+		stateLabelPositions["15x"] = "18";
 		stateLabelPositions["12y"] = "0";
 		stateLabelPositions["13x"] = "-12";
-		stateLabelPositions["23x"] = "-12";
-		stateLabelPositions["28y"] = "-55";
+		stateLabelPositions["23x"] = "-4";
+        stateLabelPositions["26x"] = "4";
+        stateLabelPositions["26y"] = "20";
+		stateLabelPositions["28y"] = "-15";
+        stateLabelPositions["28x"] = "2";
 		stateLabelPositions["25y"] = "-6";
 		stateLabelPositions["33x"] = "1";
-		stateLabelPositions["33y"] = "-6";
+		stateLabelPositions["33y"] = "-2";
+        stateLabelPositions["36x"] = "2";
+        stateLabelPositions["36y"] = "2";
+        stateLabelPositions["50x"] = "0";
+        stateLabelPositions["50y"] = "1";
 		stateLabelPositions["45x"] = "-6";
 		stateLabelPositions["47y"] = "-10";
 		stateLabelPositions["42y"] = "-12";
@@ -566,7 +573,9 @@ Template Name: Presidential Election Map
 			.attr("width", width)
 			.attr("height", height);
 
-		d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
+		//d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
+        d3.json("http://localhost/us_states_topo.json", function(error, us) {
+
 			let data = topojson.feature(us, us.objects.layer1).features;
 			let g = svg.append("g");
 			g.attr("class", "states")
