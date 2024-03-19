@@ -551,8 +551,12 @@ Template Name: Presidential Election Map
         stateLabelPositions["36y"] = "2";
         stateLabelPositions["50x"] = "0";
         stateLabelPositions["50y"] = "1";
+        stateLabelPositions["42x"] = "4";
+        stateLabelPositions["42y"] = "4";
+
+        stateLabelPositions["51y"] = "2";
 		stateLabelPositions["45x"] = "-6";
-		stateLabelPositions["47y"] = "-10";
+		stateLabelPositions["47y"] = "-2";
 		stateLabelPositions["42y"] = "-12";
 		let electMap = document.querySelector("#map");
 		let width = electMap.getBoundingClientRect().width;
