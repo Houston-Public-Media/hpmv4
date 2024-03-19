@@ -194,7 +194,8 @@ Template Name: Presidential Election Map
 </div>
 	<script>
 
-		let states = {"AL": {"Abbr": "AL","code": "AL 9","name": "Alabama", "affiliation": 0, "votes": 9 },
+		let states = {
+			"AL": {"Abbr": "AL","code": "AL 9","name": "Alabama", "affiliation": 0, "votes": 9 },
 			"AK": {"Abbr": "AK","code": "AK 3","name": "Alaska", "affiliation": 0, "votes": 3 },
 			"AZ": {"Abbr": "AZ","code": "AZ 11","name": "Arizona", "affiliation": 0, "votes": 11 },
 			"AR": {"Abbr": "AR","code": "AR 6","name": "Arkansas", "affiliation": 0, "votes": 6 },
@@ -579,7 +580,6 @@ Template Name: Presidential Election Map
 
 		d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
         //d3.json("http://localhost/us_states_topo.json", function(error, us) {
-
 			let data = topojson.feature(us, us.objects.layer1).features;
 			let g = svg.append("g");
 			g.attr("class", "states")
