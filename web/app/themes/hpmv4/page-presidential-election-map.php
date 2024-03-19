@@ -281,36 +281,32 @@ Template Name: Presidential Election Map
 			let vButtonList = document.querySelectorAll('#vote-buttons button');
 			Array.from(vButtonList).forEach((vb) => {
 				vb.addEventListener('click', function(e) {
-
-					let aff = this.getAttribute('data-affiliation');
 					let stateAb = this.getAttribute('data-state');
-					this.classList.remove(affiliations[aff].class);
-					aff++;
-					if (aff > 2) {
-						aff = 0;
-					}
-					this.classList.add(affiliations[aff].class);
-					states[stateAb].affiliation = aff;
-					this.setAttribute('data-affiliation', aff);
-					let d = '';
-					updateStateVotes(d, stateAb);
+					updateStateVotes(stateAb);
 					updateVotes();
 				});
 			});
 		});
-		const updateStateVotes = (d, Abbr) => {
+		const updateStateVotes = (Abbr) => {
+			let updateButton = skippedAbbr.includes(Abbr);
 			let paths = document.querySelector("path[data-state=" + Abbr + "]");
 			let aff = paths.getAttribute("data-affiliation");
-			let stateAb = paths.getAttribute('data-state');
-
+			let buttonUp = document.querySelector("button[data-state=" + Abbr + "]");
 			paths.classList.toggle(affiliations[aff].class);
+			if (updateButton) {
+				buttonUp.classList.toggle(affiliations[aff].class);
+			}
 			aff++;
 			if (aff > 2) {
 				aff = 0;
 			}
 			paths.classList.toggle(affiliations[aff].class);
 			paths.setAttribute('data-affiliation', aff);
-			states[stateAb].affiliation = aff;
+			if (updateButton) {
+				buttonUp.classList.toggle(affiliations[aff].class);
+				buttonUp.setAttribute('data-affiliation', aff);
+			}
+			states[Abbr].affiliation = aff;
 			updateVotes();
 		};
 
@@ -599,7 +595,7 @@ Template Name: Presidential Election Map
 				.attr("data-affiliation", 0)
 				.attr("class", "states vote-none")
 				.on("click", function (d) {
-					updateStateVotes(d, d.properties.ABBR);
+					updateStateVotes(d.properties.ABBR);
 				})
 				.attr("fill", function (d) {
 					return '#808080';
@@ -695,7 +691,7 @@ Template Name: Presidential Election Map
 					return d.properties.STATE + "_text";
 				})
 				.on("click", function (d) {
-					updateStateVotes(d, d.properties.ABBR);
+					updateStateVotes(d.properties.ABBR);
 				});
 		});
 	</script>
