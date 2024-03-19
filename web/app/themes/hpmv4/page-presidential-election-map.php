@@ -536,8 +536,8 @@ Template Name: Presidential Election Map
 
 		// Override State Positions
 		stateLabelPositions["12x"] = "10";
-		stateLabelPositions["15y"] = "16";
-		stateLabelPositions["15x"] = "18";
+		stateLabelPositions["15y"] = "14";
+		stateLabelPositions["15x"] = "16";
 		stateLabelPositions["12y"] = "0";
 		stateLabelPositions["13x"] = "-12";
 		stateLabelPositions["23x"] = "-4";
@@ -554,11 +554,12 @@ Template Name: Presidential Election Map
         stateLabelPositions["50y"] = "1";
         stateLabelPositions["42x"] = "4";
         stateLabelPositions["42y"] = "4";
-
         stateLabelPositions["51y"] = "2";
 		stateLabelPositions["45x"] = "-6";
 		stateLabelPositions["47y"] = "-2";
 		stateLabelPositions["42y"] = "-12";
+        stateLabelPositions["54x"] = "1";
+        stateLabelPositions["54y"] = "4";
 		let electMap = document.querySelector("#map");
 		let width = electMap.getBoundingClientRect().width;
 		let height = width * .68;
