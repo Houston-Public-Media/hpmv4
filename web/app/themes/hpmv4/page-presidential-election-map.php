@@ -4,7 +4,7 @@ Template Name: Presidential Election Map
 */
 	get_header(); ?>
 	<style>
-		section {
+        article {
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 			gap: 1rem;
@@ -126,7 +126,9 @@ Template Name: Presidential Election Map
 		{
 			border-top: solid 7px #da1333;
 		}
-
+        svg .state {
+            cursor: pointer;
+        }
 
 	</style>
 	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -142,51 +144,34 @@ Template Name: Presidential Election Map
 			<picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png.webp" type="image/webp" /></picture><br />
 			<picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png" /></picture><br />
 			<picture><img src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png" alt="Harris County Results from Election 2023" /></picture></div>
-
+        <div class="entry-content">
+            <section class="section">
 		<div class="row">
 			<div class="col-md-12">
-				<section id="vote-totals">
+				<article id="vote-totals">
 					<div class="vote-dem">Democratic: <span id="democrat-total">0</span></div>
 					<div class="vote-none">None: <span id="none-total">538</span></div>
 					<div class="vote-repub">Republican: <span id="republican-total">0</span></div>
-				</section>
-				<section id="vote-bar">
+				</article>
+				<article id="vote-bar" style="padding: 10px 0px;">
 					<div>
 						<div id="dem-bar" class="vote-dem" style="width: 0"></div>
 						<div id="repub-bar" class="vote-repub" style="width: 0"></div>
 					</div>
-				</section>
+				</article>
 			</div>
 
 		</div>
 		<div class="row">
-			<div class="col-12 col-xl-10" style="padding-top: 50px;">
+			<div class="col-12 col-xl-10">
 				<div id="map"></div>
+
 			</div>
 			<div class="col-12 col-xl-2">
-				<section id="vote-buttons" style="display: block; padding: 0;" class="text-light float-end text-end"></section>
+				<article id="vote-buttons" style="display: block; padding: 0;" class="text-light float-end text-end"></article>
 			</div>
 		</div>
-        <div class="row">
-            <div class="col-12">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-12">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-12">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-12">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-12">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-12">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-12">&nbsp;</div>
+            </section>
         </div>
 	</main>
 </div>
@@ -601,12 +586,12 @@ Template Name: Presidential Election Map
     };
     let map = d3.select("#map");
     width = electMap.getBoundingClientRect().width;
-    let height = width / 2;
+    let height = width / 1.5;
 
     let projection = d3.geo.albersUsa().scale(width * 1.38).translate([width / 2, height / 2]);
 	let path = d3.geo.path().projection(projection);
     let svg = d3.select("#map").append("svg").style("width", width).style("height", height);
-    $("#map").css('height', height);
+
 
 	svg.append("rect")
 	    .attr("class", "background")
@@ -634,6 +619,7 @@ Template Name: Presidential Election Map
 			.attr("data-affiliation", 0)
 			.attr("class", "states vote-none")
 			.on("click", function (d) {
+                alert(d.properties.ABBR);
 				updateStateVotes(d.properties.ABBR);
 			})
 			.attr("fill", function (d) {
