@@ -619,7 +619,7 @@ Template Name: Presidential Election Map
 			.attr("data-affiliation", 0)
 			.attr("class", "states vote-none")
 			.on("click", function (d) {
-                alert(d.properties.ABBR);
+
 				updateStateVotes(d.properties.ABBR);
 			})
 			.attr("fill", function (d) {
