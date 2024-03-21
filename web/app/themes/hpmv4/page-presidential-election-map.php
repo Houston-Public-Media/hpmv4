@@ -3,9 +3,7 @@
 Template Name: Presidential Election Map
 */
 	get_header(); ?>
-
 	<style>
-
 		section {
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -145,25 +143,6 @@ Template Name: Presidential Election Map
 			<picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png" /></picture><br />
 			<picture><img src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-BANNER-Desktop-2400x400-1.png" alt="Harris County Results from Election 2023" /></picture></div>
 
-		<!-- <section class="section opportunities">
-
-			<div class="collagemap-tiles">
-				<div class="collagemap-block demblock">
-					<h5> Democrats</h5>
-					<p> Need 270</p>
-				</div>
-				<div class="collagemap-block noneblock">
-					<h5> Total</h5>
-					<p> 538</p>
-				</div>
-				<div class="collagemap-block repblock">
-					<h5> Republicans</h5>
-					<p> Need 270</p>
-				</div>
-
-			</div>
-		</section> -->
-
 		<div class="row">
 			<div class="col-md-12">
 				<section id="vote-totals">
@@ -181,20 +160,38 @@ Template Name: Presidential Election Map
 
 		</div>
 		<div class="row">
-			<div class="col-md-11">
+			<div class="col-12 col-xl-10" style="padding-top: 50px;">
 				<div id="map"></div>
 			</div>
-			<div class="col-md-1">
-				<section id="vote-buttons" style="display: block; padding: 0;"></section>
+			<div class="col-12 col-xl-2">
+				<section id="vote-buttons" style="display: block; padding: 0;" class="text-light float-end text-end"></section>
 			</div>
-
 		</div>
-
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
 	</main>
 </div>
-	<script>
-
-		let states = {
+<script>
+    let states = {
 			"AL": {"Abbr": "AL","code": "AL 9","name": "Alabama", "affiliation": 0, "votes": 9 },
 			"AK": {"Abbr": "AK","code": "AK 3","name": "Alaska", "affiliation": 0, "votes": 3 },
 			"AZ": {"Abbr": "AZ","code": "AZ 11","name": "Arizona", "affiliation": 0, "votes": 11 },
@@ -247,7 +244,7 @@ Template Name: Presidential Election Map
 			"WI": {"Abbr": "WI","code": "WI 10","name": "Wisconsin", "affiliation": 0, "votes": 10 },
 			"WY": {"Abbr": "WY","code": "WY 3","name": "Wyoming", "affiliation": 0, "votes": 3 }
 		};
-		let skippedStates = {
+	let skippedStates = {
 			"CT": { "Abbr": "CT","code": "CT 3","name": "Connecticut", "affiliation": 0, "votes": 7 },
 			"DC": { "Abbr": "DC","code": "DC 3","name": "District of Columbia", "affiliation": 0, "votes": 3 },
 			"DE": { "Abbr": "DE","code": "DE 3","name": "Delaware", "affiliation": 0, "votes": 3 },
@@ -256,77 +253,77 @@ Template Name: Presidential Election Map
 			"NJ": { "Abbr": "NJ","code": "NJ 3","name": "New Jersey", "affiliation": 0, "votes": 14 },
 			"RI": { "Abbr": "RI","code": "RI 3","name": "Rhode Island", "affiliation": 0, "votes": 4 }
 		};
-		let skippedAbbr = [ "CT", "DC", "DE", "MA", "MD", "NJ", "RI" ];
-		let voteButtons = document.querySelector('#vote-buttons');
-		let voteTotals = [
+	let skippedAbbr = [ "CT", "DC", "DE", "MA", "MD", "NJ", "RI" ];
+	let voteButtons = document.querySelector('#vote-buttons');
+	let voteTotals = [
 			document.querySelector('#none-total'),
 			document.querySelector('#democrat-total'),
 			document.querySelector('#republican-total')
 		];
-		let voteBars = [
+	let voteBars = [
 			document.querySelector('#none-bar'),
 			document.querySelector('#dem-bar'),
 			document.querySelector('#repub-bar')
 		];
-		let affiliations = [
-			{ "name": 'None', "votes": 538, "class": 'vote-none' },
-			{ "name": 'Democrat', "votes": 0, "class": 'vote-dem' },
-			{ "name": 'Republican', "votes": 0, "class": 'vote-repub'}
-		];
+	let affiliations = [
+		{ "name": 'None', "votes": 538, "class": 'vote-none' },
+		{ "name": 'Democrat', "votes": 0, "class": 'vote-dem' },
+		{ "name": 'Republican', "votes": 0, "class": 'vote-repub'}
+	];
+    default_font_size = 9;
+    default_line_height = 8.5;
+	document.addEventListener('DOMContentLoaded', () => {
+	    for ( let key in skippedStates ) {
+		    voteButtons.innerHTML += '<div><button style="border: none;" data-state="' + key +'" data-affiliation="' + states[key].affiliation + '" data-votes="' + states[key].votes + '" class="states vote-none">' + states[key].Abbr + ' (' + states[key].votes + ')</button></div>';
+        }
+		let vButtonList = document.querySelectorAll('#vote-buttons button');
+		Array.from(vButtonList).forEach((vb) => {
+			vb.addEventListener('click', function(e) {
+			    let stateAb = this.getAttribute('data-state');
+				updateStateVotes(stateAb);
+				updateVotes();
+            });
+        });
+    });
+	const updateStateVotes = (Abbr) => {
+	    let updateButton = skippedAbbr.includes(Abbr);
+		let paths = document.querySelector("path[data-state=" + Abbr + "]");
+		let aff = paths.getAttribute("data-affiliation");
+		let buttonUp = document.querySelector("button[data-state=" + Abbr + "]");
+		paths.classList.toggle(affiliations[aff].class);
+		if (updateButton) {
+			buttonUp.classList.toggle(affiliations[aff].class);
+		}
+		aff++;
+		if (aff > 2) {
+			aff = 0;
+		}
+		paths.classList.toggle(affiliations[aff].class);
+		paths.setAttribute('data-affiliation', aff);
+		if (updateButton) {
+			buttonUp.classList.toggle(affiliations[aff].class);
+			buttonUp.setAttribute('data-affiliation', aff);
+		}
+		states[Abbr].affiliation = aff;
+		updateVotes();
+    };
 
-		document.addEventListener('DOMContentLoaded', () => {
-			for ( let key in skippedStates ) {
-				voteButtons.innerHTML += '<div><button style="border: none;" data-state="' + key +'" data-affiliation="' + states[key].affiliation + '" data-votes="' + states[key].votes + '" class="states vote-none">' + states[key].Abbr + ' (' + states[key].votes + ')</button></div>';
+	const updateVotes = () => {
+	    let parties = [ 0, 0, 0 ];
+		for ( let key in states ) {
+			parties[ states[key].affiliation ] += states[key].votes;
+		}
+		for (let i = 0; i < affiliations.length; i++) {
+			affiliations[i].votes = parties[i];
+            voteTotals[i].innerHTML = parties[i].toString();
+			let percent = (( parties[i] / 538 ) * 100).toFixed(1);
+			if (i > 0) {
+				voteBars[i].style.width = percent + "%";
 			}
-			let vButtonList = document.querySelectorAll('#vote-buttons button');
-			Array.from(vButtonList).forEach((vb) => {
-				vb.addEventListener('click', function(e) {
-					let stateAb = this.getAttribute('data-state');
-					updateStateVotes(stateAb);
-					updateVotes();
-				});
-			});
-		});
-		const updateStateVotes = (Abbr) => {
-			let updateButton = skippedAbbr.includes(Abbr);
-			let paths = document.querySelector("path[data-state=" + Abbr + "]");
-			let aff = paths.getAttribute("data-affiliation");
-			let buttonUp = document.querySelector("button[data-state=" + Abbr + "]");
-			paths.classList.toggle(affiliations[aff].class);
-			if (updateButton) {
-				buttonUp.classList.toggle(affiliations[aff].class);
-			}
-			aff++;
-			if (aff > 2) {
-				aff = 0;
-			}
-			paths.classList.toggle(affiliations[aff].class);
-			paths.setAttribute('data-affiliation', aff);
-			if (updateButton) {
-				buttonUp.classList.toggle(affiliations[aff].class);
-				buttonUp.setAttribute('data-affiliation', aff);
-			}
-			states[Abbr].affiliation = aff;
-			updateVotes();
-		};
+        }
+    };
 
-		const updateVotes = () => {
-			let parties = [ 0, 0, 0 ];
-			for ( let key in states ) {
-				parties[ states[key].affiliation ] += states[key].votes;
-			}
-			for (let i = 0; i < affiliations.length; i++) {
-				affiliations[i].votes = parties[i];
-				//alert("voteTotals[i]: "+voteTotals[i]);
-				voteTotals[i].innerHTML = parties[i].toString();
-				let percent = (( parties[i] / 538 ) * 100).toFixed(1);
-				if (i > 0) {
-					voteBars[i].style.width = percent + "%";
-				}
-			}
-		};
-
-		let stateLabelPositions = {
+	let stateLabelPositions = {
 
 			// AL
 			"01x": "-10",
@@ -528,172 +525,207 @@ Template Name: Presidential Election Map
 			"56x": "-10",
 			"56y": "-15",
 		};
-		let smallStates = ["11", "25", "44", "09", "34", "10", "24","28", "33"];
-
+	let smallStates = ["11", "25", "44", "09", "34", "10", "24","28", "33"];
 		// Override State Positions
-		stateLabelPositions["12x"] = "10";
-		stateLabelPositions["15y"] = "14";
-		stateLabelPositions["15x"] = "16";
-		stateLabelPositions["12y"] = "0";
-		stateLabelPositions["13x"] = "-12";
-		stateLabelPositions["23x"] = "-4";
-        stateLabelPositions["26x"] = "4";
-        stateLabelPositions["26y"] = "20";
-		stateLabelPositions["28y"] = "-15";
-        stateLabelPositions["28x"] = "2";
-		stateLabelPositions["25y"] = "-6";
-		stateLabelPositions["33x"] = "1";
-		stateLabelPositions["33y"] = "-2";
-        stateLabelPositions["36x"] = "2";
-        stateLabelPositions["36y"] = "2";
-        stateLabelPositions["50x"] = "0";
-        stateLabelPositions["50y"] = "1";
-        stateLabelPositions["42x"] = "4";
-        stateLabelPositions["42y"] = "4";
-        stateLabelPositions["51y"] = "2";
-		stateLabelPositions["45x"] = "-6";
-		stateLabelPositions["47y"] = "-2";
-		stateLabelPositions["42y"] = "-12";
-        stateLabelPositions["54x"] = "1";
-        stateLabelPositions["54y"] = "4";
-		let electMap = document.querySelector("#map");
-		let width = electMap.getBoundingClientRect().width;
-		let height = width * .68;
-		electMap.style.height = height;
+    stateLabelPositions["12x"] = "10";
+	stateLabelPositions["15y"] = "14";
+	stateLabelPositions["15x"] = "16";
+	stateLabelPositions["12y"] = "0";
+	stateLabelPositions["13x"] = "-12";
+	stateLabelPositions["23x"] = "-4";
+    stateLabelPositions["26x"] = "4";
+    stateLabelPositions["26y"] = "20";
+	stateLabelPositions["28y"] = "-15";
+    stateLabelPositions["28x"] = "2";
+	stateLabelPositions["25y"] = "-6";
+	stateLabelPositions["33x"] = "1";
+	stateLabelPositions["33y"] = "-2";
+    stateLabelPositions["36x"] = "2";
+    stateLabelPositions["36y"] = "2";
+    stateLabelPositions["50x"] = "0";
+    stateLabelPositions["50y"] = "1";
+    stateLabelPositions["42x"] = "4";
+    stateLabelPositions["42y"] = "4";
+    stateLabelPositions["51y"] = "2";
+	stateLabelPositions["45x"] = "-6";
+	stateLabelPositions["47y"] = "-2";
+	stateLabelPositions["42y"] = "-12";
+    stateLabelPositions["54x"] = "1";
+    stateLabelPositions["54y"] = "4";
+	let electMap = document.querySelector("#map");
+	let width = electMap.getBoundingClientRect().width;
 
-		let projection = d3.geo.albersUsa()
-			.scale(width * 1.38) //width * 1.38
-			.translate([width / 2, height / 2]);
+    let addGlow = function (url) {
+        var stdDeviation = 2,
+        rgb = "#000",
+        colorMatrix = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0";
+        if (!arguments.length) {
+            url = "glow";
+        }
+        function glow() {
+        var filter = d3.select('#defs').append("filter")
+            .attr("id", url)
+            .attr("x", "-10%")
+            .attr("y", "-10%")
+            .attr("width", "120%")
+            .attr("height", "120%");
+            filter.append("feColorMatrix")
+                .attr("type", "matrix")
+                .attr("values", colorMatrix);
+            filter.append("feGaussianBlur")
+                .attr("stdDeviation", stdDeviation)
+                .attr("result", "coloredBlur");
+            var merge = filter.append("feMerge");
+            merge.append("feMergeNode")
+            .attr("in", "coloredBlur");
+            merge.append("feMergeNode")
+            .attr("in", "SourceGraphic");
+        }
+        glow.rgb = function (value) {
+            if (!arguments.length) return color;
+            rgb = value;
+            var color = d3.rgb(value);
+            var matrix = "0 0 0 red 0 0 0 0 0 green 0 0 0 0 blue 0 0 0 0.5 0";
+            colorMatrix = matrix
+            .replace("red", color.r)
+            .replace("green", color.g)
+            .replace("blue", color.b);
+            return glow;
+        };
+        glow.stdDeviation = function (value) {
+            if (!arguments.length) return stdDeviation;
+                stdDeviation = value;
+                return glow;
+            };
+        return glow;
+    };
+    let map = d3.select("#map");
+    width = electMap.getBoundingClientRect().width;
+    let height = width / 2;
 
-		let path = d3.geo.path()
-			.projection(projection);
-		let svg = d3.select("#map").append("svg")
-			.style("width", width)
-			.style("height", height);
-		svg.append("rect")
-			.attr("class", "background")
-			.attr("width", width)
-			.attr("height", height);
+    let projection = d3.geo.albersUsa().scale(width * 1.38).translate([width / 2, height / 2]);
+	let path = d3.geo.path().projection(projection);
+    let svg = d3.select("#map").append("svg").style("width", width).style("height", height);
+    $("#map").css('height', height);
 
-		d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
-        //d3.json("http://localhost/us_states_topo.json", function(error, us) {
-			let data = topojson.feature(us, us.objects.layer1).features;
-			let g = svg.append("g");
-			g.attr("class", "states")
-				.selectAll("path")
-				.data(topojson.feature(us, us.objects.layer1).features)
-				.enter()
-				.append("path")
-				.attr("d", path)
-				.attr("id", function (d) {
-					return d.properties.STATE;
-				})
-				.attr("data-state", function (d) {
-					return d.properties.ABBR;
-				})
-				.attr("stroke", "white")
-				.attr("data-affiliation", 0)
-				.attr("class", "states vote-none")
-				.on("click", function (d) {
-					updateStateVotes(d.properties.ABBR);
-				})
-				.attr("fill", function (d) {
-					return '#808080';
-				});
+	svg.append("rect")
+	    .attr("class", "background")
+		.attr("width", width)
+		.attr("height", height);
+        svg.append("defs").attr('id', 'defs');
+        svg.call(addGlow("mouseOverGlow").rgb("#000").stdDeviation(4));
 
-			g.selectAll("text")
-				.data(topojson.feature(us, us.objects.layer1).features)
-				.enter()
-				.append("svg:text")
-				.each(function(d) {
-					if(d.properties.ABBR != "PR" && !skippedAbbr.includes(d.properties.ABBR)) {
-						let lines = states[d.properties.ABBR].code.split(' ');
+    d3.json("https://hpmwebv2.s3-us-west-2.amazonaws.com/projects/elections/us_states_topo.json", function(error, us) {
+	    let data = topojson.feature(us, us.objects.layer1).features;
+		let g = svg.append("g");
+		g.attr("class", "states")
+        .selectAll("path")
+		    .data(topojson.feature(us, us.objects.layer1).features)
+			.enter()
+			.append("path")
+			.attr("d", path)
+			.attr("id", function (d) {
+			    return d.properties.STATE;
+			})
+			.attr("data-state", function (d) {
+			    return d.properties.ABBR;
+            })
+			.attr("stroke", "white")
+			.attr("data-affiliation", 0)
+			.attr("class", "states vote-none")
+			.on("click", function (d) {
+				updateStateVotes(d.properties.ABBR);
+			})
+			.attr("fill", function (d) {
+				return '#808080';
+			});
 
-						for (let i = 0; i < lines.length; i++) {
-							d3.select(this).append("tspan")
-								.text(lines[i]).attr("class","maptext")
-								.attr("x", function(d) {
-									let factor = 1.2;
-									let full_size = 820;
-									if (width < 520) {
-										factor = width / full_size;
-									}
-
-									let new_x = path.centroid(d)[0] + (parseInt(stateLabelPositions[d.properties.STATE + "x"]) * factor);
-
-									if (!isNaN(new_x)) {
-										return new_x;
-									}
-									//return path.centroid(d)[0];
+		g.selectAll("text")
+		    .data(topojson.feature(us, us.objects.layer1).features)
+			.enter()
+			.append("svg:text")
+			.each(function(d) {
+				if(d.properties.ABBR != "PR" && !skippedAbbr.includes(d.properties.ABBR)) {
+					let lines = states[d.properties.ABBR].code.split(' ');
+					for (let i = 0; i < lines.length; i++) {
+					    d3.select(this).append("tspan")
+						    .text(lines[i]).attr("class","maptext")
+							.attr("x", function(d) {
+							    let factor = 1.2;
+								let full_size = 820;
+								if (width < 520) {
+									factor = width / full_size;
+								}
+								let new_x = path.centroid(d)[0] + (parseInt(stateLabelPositions[d.properties.STATE + "x"]) * factor);
+                                if (!isNaN(new_x)) {
 									return new_x;
-								})
-								.attr("y", function (d) {
-									let new_y = path.centroid(d)[1] + parseInt(stateLabelPositions[d.properties.STATE + "y"]);
-									if (!isNaN(new_y)) {
-										if (width <= 576) {
-											new_y -= 2;
-										}
-										if (width <= 576 &&  (d.properties.STATE == "12" || d.properties.STATE == "15" || d.properties.STATE == "33"  || d.properties.STATE == "25"  || d.properties.STATE == "28")) {
-											new_y += 4;
-										}
-										if (width <= 576 && (d.properties.STATE != "33")) {
-											new_y += 4;
-										}
-										if (width <= 400) {
-											new_y += 2;
-										}
-										return new_y;
+								}
+								return new_x;
+							})
+							.attr("y", function (d) {
+								let new_y = path.centroid(d)[1] + parseInt(stateLabelPositions[d.properties.STATE + "y"]);
+								if (!isNaN(new_y)) {
+									if (width <= 576) {
+										new_y -= 2;
 									}
-								})
-								.attr("dy", i ? "1em" : 0) // Line spacing
-						}
+									if (width <= 576 &&  (d.properties.STATE == "12" || d.properties.STATE == "15" || d.properties.STATE == "33"  || d.properties.STATE == "25"  || d.properties.STATE == "28")) {
+										new_y += 4;
+									}
+									if (width <= 576 && (d.properties.STATE != "33")) {
+										new_y += 4;
+									}
+									if (width <= 400) {
+										new_y += 2;
+									}
+									return new_y;
+								}
+                            })
+						.attr("dy", i ? "1em" : 0)
+                    }
+				}
+			})
+			.attr("x", function (d) {
+			    let factor = 1;
+				let full_size = 820;
+				if (width < 520) {
+					factor = width / full_size;
+				}
+				let new_x = path.centroid(d)[0] + (parseInt(stateLabelPositions[d.properties.STATE + "x"]) * factor);
+				if (!isNaN(new_x)) {
+					return new_x;
+				}
+			})
+			.attr("y", function (d) {
+			    let new_y = path.centroid(d)[1] + parseInt(stateLabelPositions[d.properties.STATE + "y"]);
+                if (!isNaN(new_y)) {
+					if (width <= 576) {
+						new_y -= 2;
 					}
-				})
-				.attr("x", function (d) {
-					let factor = 1;
-					let full_size = 820;
-					if (width < 520) {
-						factor = width / full_size;
+					if (width <= 576 &&  (d.properties.STATE == "33" || d.properties.STATE == "42" || d.properties.STATE == "15" || d.properties.STATE == "25" || d.properties.STATE == "12" || d.properties.STATE == "28")) {
+						new_y += 4;
 					}
-					let new_x = path.centroid(d)[0] + (parseInt(stateLabelPositions[d.properties.STATE + "x"]) * factor);
-					if ( d.properties.ABBR == "FL" ) {
+					if (width <= 576 && (d.properties.STATE != "33")) {
+						new_y += 4;
 					}
-					if (!isNaN(new_x)) {
-						return new_x;
+					if (width <= 400) {
+						new_y += 2;
 					}
-				})
-				.attr("y", function (d) {
-					let new_y = path.centroid(d)[1] + parseInt(stateLabelPositions[d.properties.STATE + "y"]);
-
-					if (!isNaN(new_y)) {
-						if (width <= 576) {
-							new_y -= 2;
-						}
-						if (width <= 576 &&  (d.properties.STATE == "33" || d.properties.STATE == "42" || d.properties.STATE == "15" || d.properties.STATE == "25" || d.properties.STATE == "12" || d.properties.STATE == "28")) {
-							new_y += 4;
-						}
-						if (width <= 576 && (d.properties.STATE != "33")) {
-							new_y += 4;
-						}
-						if (width <= 400) {
-							new_y += 2;
-						}
-						if(d.properties.ABBR == "MS") {
-						}
-						return new_y;
-					}
-				})
-				.attr("text-anchor","middle")
-				.attr('fill', '#fff')
-				.attr("font-weight", "bold")
-				.attr("font-size", "13px")
-				.attr("id", function (d) {
-					return d.properties.STATE + "_text";
-				})
-				.on("click", function (d) {
-					updateStateVotes(d.properties.ABBR);
-				});
+					return new_y;
+                }
+            })
+			.attr("text-anchor","middle")
+            .attr('font-weight', 'bold')
+			.attr('fill', '#fff')
+			.attr("id", function (d) {
+				return d.properties.STATE + "_text";
+			})
+			.on("click", function (d) {
+				updateStateVotes(d.properties.ABBR);
+			});
+            let full_size = 820;
+            let fontsizefactor = Math.min(width / full_size, 1);
+            $('.maptext').css('font-size', (fontsizefactor * default_font_size + 0.5) + 'pt').css('visibility', 'inherit').css('font-weight', 'bold');
+            $('.maptext').css('line-height', (fontsizefactor * default_line_height) + 0.5 + 'pt').css('visibility', 'inherit');
 		});
 	</script>
-
 <?php get_footer(); ?>
