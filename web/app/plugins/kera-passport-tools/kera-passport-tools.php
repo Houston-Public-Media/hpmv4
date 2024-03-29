@@ -121,7 +121,7 @@ function kera_passport_lookup() {
 				if ( $obscured ) :
 					$obs_msg = "</h3><p>This is the email that was used to activate your account:<br /><b>".$obscured."</b><br />We've obscured all but the first characters and changed the lengths of each part of the email address to protect your privacy.</p><h3>";
 				endif;
-				$return['errors'] = [ 'message' => 'Your Passport has already been activated. <a href="http://www.pbs.org/?showSignIn=true&returnURL=http://video.houstonpbs.org/" target="_blank">Sign in or create an account</a>.<br /><br />', 'class' => 'info' ];
+				$return['errors'] = [ 'message' => 'Your Passport has already been activated. <a href="https://video.houstonpublicmedia.org/?showSignIn=true&returnURL=https://video.houstonpublicmedia.org/" target="_blank">Sign in or create an account</a>.<br /><br />', 'class' => 'info' ];
 			endif;
 
 			if ( empty( $return['errors'] ) ) : 
