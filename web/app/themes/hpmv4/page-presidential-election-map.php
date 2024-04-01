@@ -645,11 +645,17 @@ get_header(); ?>
             "56y": "-15",
         };
         // Override State Positions
+        stateLabelPositions["02x"] = "4";
+        stateLabelPositions["06x"] = "0";
         stateLabelPositions["12x"] = "10";
-        stateLabelPositions["15y"] = "14";
-        stateLabelPositions["15x"] = "16";
+        stateLabelPositions["15y"] = "10";
+        stateLabelPositions["15x"] = "10";
+        stateLabelPositions["18x"] = "2";
+        stateLabelPositions["22x"] = "-4";
         stateLabelPositions["12y"] = "0";
         stateLabelPositions["13x"] = "-12";
+        stateLabelPositions["17x"] = "2";
+        stateLabelPositions["21y"] = "0";
         stateLabelPositions["23x"] = "-4";
         stateLabelPositions["26x"] = "4";
         stateLabelPositions["26y"] = "20";
@@ -660,10 +666,11 @@ get_header(); ?>
         stateLabelPositions["33y"] = "-2";
         stateLabelPositions["36x"] = "2";
         stateLabelPositions["36y"] = "2";
+        stateLabelPositions["37y"] = "0";
         stateLabelPositions["50x"] = "0";
         stateLabelPositions["50y"] = "1";
         stateLabelPositions["42x"] = "4";
-        stateLabelPositions["42y"] = "4";
+        stateLabelPositions["42y"] = "6";
         stateLabelPositions["51y"] = "2";
         stateLabelPositions["45x"] = "-6";
         stateLabelPositions["47y"] = "-2";
@@ -862,7 +869,7 @@ get_header(); ?>
                 });
             let full_size = 820;
             let fontsizefactor = Math.min(width / full_size, 1);
-            $('.maptext').css('font-size', (fontsizefactor * default_font_size + 0.5) + 'pt').css('visibility', 'inherit').css('font-weight', 'bold');
+            $('.maptext').css('font-size', (fontsizefactor * default_font_size + 0.5) + 'px').css('visibility', 'inherit').css('font-weight', 'bold');
             $('.btnstate').css('font-size', (fontsizefactor * default_font_size + 0.5) + 'pt').css('visibility', 'inherit').css('font-weight', 'bold');
             $('.maptext').css('line-height', (fontsizefactor * default_line_height) + 0.5 + 'pt').css('visibility', 'inherit');
         });
