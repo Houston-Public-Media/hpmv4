@@ -183,7 +183,7 @@ class HPM_Promos {
 			<select id="hpm_promo[location]" name="hpm_promo[location]">
 				<option value="any" <?PHP selected( $hpm_promo['location'], 'any' ); ?>>Any Page</option>
 				<option value="homepage" <?PHP selected( $hpm_promo['location'], 'homepage' ); ?>>Homepage Only</option>
-				<option value="no-homepage" <?PHP selected( $hpm_promo['location'], 'no-homepage' ); ?>>Homepage Only</option>
+				<option value="no-homepage" <?PHP selected( $hpm_promo['location'], 'no-homepage' ); ?>>Everywhere But the Homepage</option>
 			</select>
 		</p>
 		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>></div>
