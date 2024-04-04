@@ -392,10 +392,6 @@ get_header(); ?>
                 }
                 paths.classList.remove(affiliations[aff].class);
                 paths.classList.remove(affiliations[aff].class + '-partial');
-               /* paths.classList.remove("repub-first");
-                paths.classList.remove("repub-second");
-                paths.classList.remove("dem-first");
-                paths.classList.remove("dem-second");*/
 
                 paths.classList.remove('vote-tied');
                 buttonUp.classList.remove(affiliations[aff].class);
@@ -803,40 +799,30 @@ get_header(); ?>
 
         let defs = svg.append("defs");
 
-        // default partial Petern
+        // default partial Pattern
 
         const stateCodeArray = Object.keys(states);
-        const petternState = stateCodeArray.filter(ele=>states[ele].districts)
+        const patternState = stateCodeArray.filter(ele=>states[ele].districts)
 
-        petternState.forEach(stCode => {
+        patternState.forEach(stCode => {
             defs.append("pattern").attr({ id:`${stCode}_pattern`, width:"20", height:"20", patternUnits:"userSpaceOnUse", fill:"#0044c9", patternTransform:"rotate(-25)"});
-
             const pattern = d3.select(`#${stCode}_pattern`);
-
             const districts = Object.keys(states[stCode].districts)
-
             const discCount = districts.length - 1
             const bgWidth = Math.floor(18/discCount)
             let bgTransform = 0;
-
             for (let index = 1; index < districts.length; index++) {
                 const disCode = districts[index];
-
                 pattern.append("rect").attr({ id:`${stCode}_rect`, width:`${bgWidth}`, height:"20", transform:`translate(${bgTransform},0)`, fill:"#808080", "data-rect" : `${stCode}_rect` });
                 bgTransform = bgWidth*index
-
                 pattern.append("rect").attr({ id:`${disCode}_rect`, width:"2", height:"20", transform:`translate(${bgTransform},0)`, fill:"#0044c9", "data-rect" : `${disCode}_rect` });
-
                 bgTransform = bgWidth*index + 2;
             }
-
         })
 
         // patternPartialDem.append("rect").style('fill', '#808080').attr({ width:"2", height:"20", transform:"translate(0,0)", fill:"#0044c9", background:"#0044c9" });
         // patternPartialDem.append("rect").style('fill', '#808080').attr({ width:"18", height:"20", transform:"translate(2,0)", fill:"#808080", background:"#808080" });
         // patternPartialDem.append("rect").style('fill', '#808080').attr({ width:"2", height:"20", transform:"translate(0,0)", fill:"#0044c9", background:"#0044c9" });
-
-
 
         svg.call(addGlow("mouseOverGlow").rgb("#000").stdDeviation(4));
 
