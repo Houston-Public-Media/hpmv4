@@ -65,16 +65,20 @@ get_header(); ?>
             padding: 1rem;
             margin-bottom: 1rem;
         }
-        section#vote-buttons  div{
+
+        section#vote-buttons div {
             min-width: 60px !important;
             font-size: 12px !important;
         }
+
         .vote-none {
             background-color: #808080;
         }
+
         .vote-dem {
             background-color: #0044c9;
         }
+
         .vote-repub {
             background-color: var(--main-red);
         }
@@ -82,26 +86,29 @@ get_header(); ?>
         .states :hover {
             fill: yellow;
         }
+
         .states {
-            fill:#808080;
-            color:#fff;
+            fill: #808080;
+            color: #fff;
         }
-        .states.vote-tied {
-            fill: url(#tiedpattern);
+
+        .states.states-NE.vote-fill {
+            fill: url(#NE_pattern) !important;
         }
-        .states.vote-dem-partial {
-            fill: url(#dempattern);
+
+        .states.states-ME.vote-fill {
+            fill: url(#ME_pattern) !important;
         }
-        .states.vote-repub-partial {
-            fill: url(#reppattern);
-        }
+
         svg {
             fill: none;
         }
-        #map svg{
-            width:100%;
-            height:auto;
+
+        #map svg {
+            width: 100%;
+            height: auto;
         }
+
         .state-borders {
             fill: none;
             stroke: #fff;
@@ -110,36 +117,41 @@ get_header(); ?>
             stroke-linecap: round;
             pointer-events: none;
         }
+
         .state-boundary {
             fill: #13afbb;
             stroke: #fff;
         }
-        .vote-dem {
-            fill: #0044c9 !important;
+
+        .states.vote-dem {
+            fill: #0044c9;
         }
-        .vote-repub {
-            fill: #da1333 !important;
+
+        .states.vote-repub {
+            fill: #da1333;
         }
-        .vote-none {
-            fill: #808080 !important; /*13afbb*/
+
+        .states.vote-none {
+            fill: #808080;
+            /*13afbb*/
         }
-        .vote-dbar
-        {
+
+        .vote-dbar {
             background-color: #0044c9;
         }
 
-        .noneblock
-        {
+        .noneblock {
             border-top: solid 7px #808080;
         }
-        .demblock
-        {
+
+        .demblock {
             border-top: solid 7px #0044c9;
         }
-        .repblock
-        {
+
+        .repblock {
             border-top: solid 7px #da1333;
         }
+
         svg .state {
             cursor: pointer;
         }
@@ -334,9 +346,7 @@ get_header(); ?>
                 }
                 paths = document.querySelector("path[data-state=" + Abbr + "]");
                 aff = paths.getAttribute("data-affiliation");
-                paths.classList.remove(affiliations[aff].class);
-                paths.classList.remove(affiliations[aff].class + '-partial');
-                paths.classList.remove('vote-tied');
+                paths.classList = 'states'
                 if ( updateButton.status ) {
                     if ( updateButton.parent ) {
                         for ( let uB in states[Abbr].districts ) {
@@ -374,6 +384,7 @@ get_header(); ?>
                 }
                 paths = document.querySelector("path[data-state=" + parentAbbr + "]");
                 let buttonUp = document.querySelector("button[data-state=" + Abbr + "]");
+
                 if ( parentAbbr !== Abbr ) {
                     aff = buttonUp.getAttribute("data-affiliation");
                 } else {
@@ -381,6 +392,11 @@ get_header(); ?>
                 }
                 paths.classList.remove(affiliations[aff].class);
                 paths.classList.remove(affiliations[aff].class + '-partial');
+               /* paths.classList.remove("repub-first");
+                paths.classList.remove("repub-second");
+                paths.classList.remove("dem-first");
+                paths.classList.remove("dem-second");*/
+
                 paths.classList.remove('vote-tied');
                 buttonUp.classList.remove(affiliations[aff].class);
                 aff++;
@@ -389,34 +405,80 @@ get_header(); ?>
                 }
                 buttonUp.classList.add(affiliations[aff].class);
                 buttonUp.setAttribute( 'data-affiliation', aff );
+
                 states[parentAbbr].affiliation = aff;
-                if ( parentAbbr !== Abbr ) {
+                if (parentAbbr !== Abbr) {
                     states[parentAbbr].districts[Abbr].affiliation = aff;
                     states[parentAbbr].affiliation = 0;
-                    paths.setAttribute('data-affiliation', '0');
-                    let stateVotes = [0,0,0];
-                    for ( let kd in states[parentAbbr].districts ) {
-                        stateVotes[ states[parentAbbr].districts[kd].affiliation ] += states[parentAbbr].districts[kd].votes;
+                    paths.setAttribute("data-affiliation", "0");
+                    let stateVotes = [0, 0, 0];
+                    for (let kd in states[parentAbbr].districts) {
+                        stateVotes[states[parentAbbr].districts[kd].affiliation] +=
+                            states[parentAbbr].districts[kd].votes;
                     }
-                    if ( stateVotes[2] === 0 && stateVotes[0] === 0 ) {
-                        paths.classList.add('vote-dem');
-                        paths.setAttribute('data-affiliation', '1');
-                    } else if ( stateVotes[1] === 0 && stateVotes[0] === 0 ) {
-                        paths.classList.add('vote-repub');
-                        paths.setAttribute('data-affiliation', '2');
-                    } else if ( stateVotes[1] === 0 && stateVotes[2] === 0 ) {
-                        paths.classList.add('vote-none');
-                        paths.setAttribute('data-affiliation', '0');
-                    } else if ( stateVotes[1] > stateVotes[2] ) {
-                        paths.classList.add('vote-dem-partial');
-                    } else if ( stateVotes[1] < stateVotes[2] ) {
-                        paths.classList.add('vote-repub-partial');
-                    } else if ( stateVotes[1] === stateVotes[2] ) {
-                        paths.classList.add('vote-tied');
+
+                    const className = `states states-${parentAbbr}`
+                    const otherDist = states[parentAbbr].districts
+
+                    for (const key in otherDist) {
+                        let patternBg = document.querySelectorAll("[data-rect="+ key +"_rect]");
+                        const otherAttr = otherDist[key].affiliation
+                        if(otherAttr == 1){
+                            patternBg.forEach(rect => {
+                                rect.setAttribute("fill","0044c9")
+                            })
+                        }
+                        else if(otherAttr == 2){
+                            patternBg.forEach(rect => {
+                                rect.setAttribute("fill","#da1333")
+                            })
+                        }
+                        else{
+                            patternBg.forEach(rect => {
+                                rect.setAttribute("fill","#808080")
+                            })
+                        }
                     }
+
+                    const mainAttr = states[parentAbbr].districts[`${parentAbbr}0`].affiliation
+                    let patternBg = document.querySelectorAll("[data-rect="+ parentAbbr +"_rect]");
+
+                    if(mainAttr == 1){
+                        patternBg.forEach(rect => {
+                            rect.setAttribute("fill","0044c9")
+                        })
+                    }
+                    else if(mainAttr == 2){
+                        patternBg.forEach(rect => {
+                            rect.setAttribute("fill","#da1333")
+                        })
+                    }
+                    else{
+                        patternBg.forEach(rect => {
+                            rect.setAttribute("fill","#808080")
+                        })
+                    }
+
+
+                    if (stateVotes[2] === 0 && stateVotes[0] === 0) {
+                        paths.classList = `${className} vote-dem`;
+                        paths.setAttribute("data-affiliation", "1");
+
+                    } else if (stateVotes[1] === 0 && stateVotes[0] === 0) {
+                        paths.classList = `${className} vote-repub`;
+                        paths.setAttribute("data-affiliation", "2");
+                    } else if (stateVotes[1] === 0 && stateVotes[2] === 0) {
+                        paths.classList = `${className} vote-none`;
+                        paths.setAttribute("data-affiliation", "0");
+                    }
+                    else {
+                        paths.classList = "";
+                        paths.classList = `${className} vote-fill`;
+                    }
+
                 } else {
                     paths.classList.add(affiliations[aff].class);
-                    paths.setAttribute('data-affiliation', aff);
+                    paths.setAttribute("data-affiliation", aff);
                 }
             }
             updateVotes();
@@ -740,21 +802,39 @@ get_header(); ?>
         //svg.append("defs").attr('id', 'defs');
 
         let defs = svg.append("defs");
-        defs.append("pattern").style('background-color', '#0044c9').attr({ id:"dempattern", width:"20", height:"20", patternUnits:"userSpaceOnUse", fill:"#0044c9", patternTransform:"rotate(-35)"});
-        defs.append("pattern").style('fill', '#da1333').attr({ id:"reppattern", width:"20", height:"20", patternUnits:"userSpaceOnUse", fill:"#da1333", patternTransform:"rotate(-35)"});
-        defs.append("pattern").style('fill', '#0044c9').attr({ id:"tiedpattern", width:"20", height:"20", patternUnits:"userSpaceOnUse", fill:"#0044c9", patternTransform:"rotate(-35)"});
-        let patternDem = d3.select('#dempattern');
-        let patternRep = d3.select('#reppattern');
-        let patternTied = d3.select( '#tiedpattern' );
 
-        patternDem.append("rect").style('fill', '#0044c9').attr({ width:"10", height:"20", transform:"translate(0,0)", fill:"#0044c9", background:"#0044c9" });
-        patternDem.append("rect").style('fill', '#808080').attr({ width:"10", height:"20", transform:"translate(10,0)", fill:"#808080", background:"#808080" });
+        // default partial Petern
 
-        patternRep.append("rect").style('fill', '#da1333').attr({ width:"10", height:"20", transform:"translate(0,0)", fill:"#da1333", background:"#da1333" });
-        patternRep.append("rect").style('fill', '#808080').attr({ width:"10", height:"20", transform:"translate(10,0)", fill:"#808080", background:"#808080" });
+        const stateCodeArray = Object.keys(states);
+        const petternState = stateCodeArray.filter(ele=>states[ele].districts)
 
-        patternTied.append("rect").style('fill', '#0044c9').attr({ width:"10", height:"20", transform:"translate(0,0)", fill:"#0044c9", background:"#0044c9" });
-        patternTied.append("rect").style('fill', '#da1333').attr({ width:"10", height:"20", transform:"translate(10,0)", fill:"#da1333", background:"#da1333" });
+        petternState.forEach(stCode => {
+            defs.append("pattern").attr({ id:`${stCode}_pattern`, width:"20", height:"20", patternUnits:"userSpaceOnUse", fill:"#0044c9", patternTransform:"rotate(-25)"});
+
+            const pattern = d3.select(`#${stCode}_pattern`);
+
+            const districts = Object.keys(states[stCode].districts)
+
+            const discCount = districts.length - 1
+            const bgWidth = Math.floor(18/discCount)
+            let bgTransform = 0;
+
+            for (let index = 1; index < districts.length; index++) {
+                const disCode = districts[index];
+
+                pattern.append("rect").attr({ id:`${stCode}_rect`, width:`${bgWidth}`, height:"20", transform:`translate(${bgTransform},0)`, fill:"#808080", "data-rect" : `${stCode}_rect` });
+                bgTransform = bgWidth*index
+
+                pattern.append("rect").attr({ id:`${disCode}_rect`, width:"2", height:"20", transform:`translate(${bgTransform},0)`, fill:"#0044c9", "data-rect" : `${disCode}_rect` });
+
+                bgTransform = bgWidth*index + 2;
+            }
+
+        })
+
+        // patternPartialDem.append("rect").style('fill', '#808080').attr({ width:"2", height:"20", transform:"translate(0,0)", fill:"#0044c9", background:"#0044c9" });
+        // patternPartialDem.append("rect").style('fill', '#808080').attr({ width:"18", height:"20", transform:"translate(2,0)", fill:"#808080", background:"#808080" });
+        // patternPartialDem.append("rect").style('fill', '#808080').attr({ width:"2", height:"20", transform:"translate(0,0)", fill:"#0044c9", background:"#0044c9" });
 
 
 
