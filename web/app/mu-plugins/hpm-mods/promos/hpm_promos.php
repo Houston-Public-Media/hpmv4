@@ -171,18 +171,19 @@ class HPM_Promos {
 		<p><label for="hpm_promo[type]"><?php _e( "Type:", 'hpmv4' ); ?></label>
 			<select id="hpm_promo_type" name="hpm_promo[type]">
 				<option value="">Select Type</option>
-				<option value="sidebar" <?PHP selected( $hpm_promo['type'], 'sidebar', TRUE ); ?>>Sidebar Banner/Poll</option>
-				<option value="dont-miss" <?PHP selected( $hpm_promo['type'], 'dont-miss', TRUE ); ?>>Don't Miss Bullet Point</option>
-				<option value="lightbox" <?PHP selected( $hpm_promo['type'], 'lightbox', TRUE ); ?>>Lightbox</option>
-				<option value="emergency" <?PHP selected( $hpm_promo['type'], 'emergency', TRUE ); ?>>Emergency Notification</option>
-				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth', TRUE ); ?>>Full-Width Banner</option>
+				<option value="sidebar" <?PHP selected( $hpm_promo['type'], 'sidebar' ); ?>>Sidebar Banner/Poll</option>
+				<option value="dont-miss" <?PHP selected( $hpm_promo['type'], 'dont-miss' ); ?>>Don't Miss Bullet Point</option>
+				<option value="lightbox" <?PHP selected( $hpm_promo['type'], 'lightbox' ); ?>>Lightbox</option>
+				<option value="emergency" <?PHP selected( $hpm_promo['type'], 'emergency' ); ?>>Emergency Notification</option>
+				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth' ); ?>>Full-Width Banner</option>
 			</select>
 		</p>
 		<h3><?PHP _e( "Where do you want your element to show up?", 'hpmv4' ); ?></h3>
 		<p><label for="hpm_promo[location]"><?php _e( "Location:", 'hpmv4' ); ?></label>
 			<select id="hpm_promo[location]" name="hpm_promo[location]">
-				<option value="any" <?PHP selected( $hpm_promo['location'], 'any', TRUE ); ?>>Any Page</option>
-				<option value="homepage" <?PHP selected( $hpm_promo['location'], 'homepage', TRUE ); ?>>Homepage Only</option>
+				<option value="any" <?PHP selected( $hpm_promo['location'], 'any' ); ?>>Any Page</option>
+				<option value="homepage" <?PHP selected( $hpm_promo['location'], 'homepage' ); ?>>Homepage Only</option>
+				<option value="no-homepage" <?PHP selected( $hpm_promo['location'], 'no-homepage' ); ?>>Everywhere But the Homepage</option>
 			</select>
 		</p>
 		<div id="hpm-sidebar" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'sidebar' ? '' : ' style="display: none;"' ); ?>></div>
@@ -645,7 +646,10 @@ class HPM_Promos {
 				if ( empty( $meta ) ) {
 					continue;
 				}
-				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) {
+				if ( $meta['location'] === 'homepage' && ! $wp_global->is_home ) {
+					continue;
+				}
+				if ( $meta['location'] === 'no-homepage' && $wp_global->is_home ) {
 					continue;
 				}
 				$content = do_shortcode( get_the_content(), false );

@@ -3,18 +3,19 @@ web/app/plugins/*
 !web/app/plugins/.gitkeep
 !web/app/plugins/kera-passport-tools/
 !web/app/plugins/better-image-credits/
+web/app/mu-plugins/*/
+!web/app/mu-plugins/hpm-mods/*
 web/app/debug.log
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
+web/app/cache/*
 auth.json
 web/app/ewww/lazy
-.docker/
-docker-compose.yml
 
 # WordPress
 web/wp
-.htaccess
+web/.htaccess
 
 # Dotenv
 .env
@@ -34,3 +35,5 @@ env.production
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+wp-cli.local.yml

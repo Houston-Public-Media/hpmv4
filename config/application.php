@@ -1,22 +1,48 @@
 <?php
+/**
+ * Your base production configuration goes in this file. Environment-specific
+ * overrides go in their respective config/environments/{{WP_ENV}}.php file.
+ *
+ * A good default policy is to deviate from the production config as little as
+ * possible. Try to define as much of your configuration in this file as you
+ * can.
+ */
 
+use Roots\WPConfig\Config;
+use function Env\env;
+
+/**
+ * Directory containing all of the site's files
+ *
+ * @var string
+ */
 $root_dir = dirname( __DIR__ );
 define( 'SITE_ROOT', $root_dir );
 
+/**
+ * Document Root
+ *
+ * @var string
+ */
 $webroot_dir = $root_dir . '/web';
 
 /**
- * Expose global env() function from oscarotero/env
- */
-Env::init();
-
-/**
  * Use Dotenv to set required environment variables and load .env file in root
+ * .env.local will override .env if it exists
  */
-$dotenv = new Dotenv\Dotenv( $root_dir );
 if ( file_exists( $root_dir . '/.env' ) ) {
-    $dotenv->load();
-    $dotenv->required( [ 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'WP_HOME', 'WP_SITEURL' ] );
+	$env_files = file_exists( $root_dir . '/.env.local' )
+		? ['.env', '.env.local']
+		: ['.env'];
+
+	$dotenv = Dotenv\Dotenv::createUnsafeImmutable( $root_dir, $env_files, false );
+
+	$dotenv->load();
+
+	$dotenv->required( [ 'WP_HOME', 'WP_SITEURL' ] );
+	if ( !env( 'DATABASE_URL' ) ) {
+		$dotenv->required( [ 'DB_NAME', 'DB_USER', 'DB_PASSWORD' ] );
+	}
 }
 
 /**
@@ -25,16 +51,16 @@ if ( file_exists( $root_dir . '/.env' ) ) {
  */
 define( 'WP_ENV', env( 'WP_ENV' ) ?: 'production' );
 
-$env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
-
-if ( file_exists( $env_config ) ) {
-    require_once $env_config;
+/**
+ * Infer WP_ENVIRONMENT_TYPE based on WP_ENV
+ */
+if ( !env( 'WP_ENVIRONMENT_TYPE' ) && in_array( WP_ENV, [ 'production', 'staging', 'development', 'local' ] ) ) {
+	Config::define( 'WP_ENVIRONMENT_TYPE', WP_ENV );
 }
 
 /**
  * URLs
  */
-// define('WP_CACHE', true);
 if ( empty( $_SERVER['HTTP_HOST'] ) && WP_ENV == 'development' ) {
 	$_SERVER['HTTP_HOST'] = 'dev.houstonpublicmedia.org';
 }
@@ -42,82 +68,120 @@ if ( empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) && !empty( $_SERVER['HTTP_HOST']
 	$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
 }
 if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && str_contains( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok.io' ) ) {
-	define( 'WP_HOME', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] );
-	define( 'WP_SITEURL', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] . '/wp' );
+	Config::define( 'WP_HOME', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] );
+	Config::define( 'WP_SITEURL', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] . '/wp' );
 } else {
-	define( 'WP_HOME', env( 'WP_HOME' ) );
-	define( 'WP_SITEURL', env( 'WP_SITEURL' ) );
+	Config::define( 'WP_HOME', env( 'WP_HOME' ) );
+	Config::define( 'WP_SITEURL', env( 'WP_SITEURL' ) );
 }
 
 /**
  * Custom Content Directory
  */
-const CONTENT_DIR = '/app';
-define( 'WP_CONTENT_DIR', $webroot_dir . CONTENT_DIR );
-const WP_CONTENT_URL = WP_HOME . CONTENT_DIR;
+Config::define( 'CONTENT_DIR', '/app' );
+Config::define( 'WP_CONTENT_DIR', $webroot_dir . Config::get( 'CONTENT_DIR' ) );
+Config::define( 'WP_CONTENT_URL', Config::get( 'WP_HOME' ) . Config::get( 'CONTENT_DIR' ) );
 
 /**
  * DB settings
  */
-define( 'DB_NAME', env('DB_NAME' ) );
-define( 'DB_USER', env( 'DB_USER' ) );
-define( 'DB_PASSWORD', env( 'DB_PASSWORD' ) );
-define( 'DB_HOST', env( 'DB_HOST' ) ?: '127.0.0.1' );
-const DB_CHARSET = 'utf8mb4';
-const DB_COLLATE = 'utf8mb4_unicode_ci';
+if ( env( 'DB_SSL' ) ) {
+	Config::define( 'MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL );
+}
+
+Config::define( 'DB_NAME', env( 'DB_NAME' ) );
+Config::define( 'DB_USER', env( 'DB_USER' ) );
+Config::define( 'DB_PASSWORD', env( 'DB_PASSWORD' ) );
+Config::define( 'DB_HOST', env( 'DB_HOST' ) ?: 'localhost' );
+Config::define( 'DB_CHARSET', 'utf8mb4' );
+Config::define( 'DB_COLLATE', 'utf8mb4_unicode_ci' );
 $table_prefix = env( 'DB_PREFIX' ) ?: 'wp_';
+
+if ( env( 'DATABASE_URL' ) ) {
+	$dsn = (object) parse_url( env( 'DATABASE_URL' ) );
+
+	Config::define( 'DB_NAME', substr( $dsn->path, 1 ) );
+	Config::define( 'DB_USER', $dsn->user );
+	Config::define( 'DB_PASSWORD', isset( $dsn->pass ) ? $dsn->pass : null );
+	Config::define( 'DB_HOST', isset( $dsn->port ) ? "{$dsn->host}:{$dsn->port}" : $dsn->host );
+}
 
 /**
  * Authentication Unique Keys and Salts
  */
-define( 'AUTH_KEY', env( 'AUTH_KEY' ) );
-define( 'SECURE_AUTH_KEY', env( 'SECURE_AUTH_KEY' ) );
-define( 'LOGGED_IN_KEY', env( 'LOGGED_IN_KEY' ) );
-define( 'NONCE_KEY', env( 'NONCE_KEY' ) );
-define( 'AUTH_SALT', env( 'AUTH_SALT' ) );
-define( 'SECURE_AUTH_SALT', env( 'SECURE_AUTH_SALT' ) );
-define( 'LOGGED_IN_SALT', env( 'LOGGED_IN_SALT' ) );
-define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
+Config::define( 'AUTH_KEY', env( 'AUTH_KEY' ) );
+Config::define( 'SECURE_AUTH_KEY', env( 'SECURE_AUTH_KEY' ) );
+Config::define( 'LOGGED_IN_KEY', env( 'LOGGED_IN_KEY' ) );
+Config::define( 'NONCE_KEY', env( 'NONCE_KEY' ) );
+Config::define( 'AUTH_SALT', env( 'AUTH_SALT' ) );
+Config::define( 'SECURE_AUTH_SALT', env( 'SECURE_AUTH_SALT' ) );
+Config::define( 'LOGGED_IN_SALT', env( 'LOGGED_IN_SALT' ) );
+Config::define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
 
 /**
  * Custom Settings
  */
 if ( WP_ENV == 'development' ) {
-	define( 'FORCE_SSL_ADMIN', false );
+	Config::define( 'FORCE_SSL_ADMIN', false );
 } else {
-	define( 'FORCE_SSL_ADMIN', true );
+	Config::define( 'FORCE_SSL_ADMIN', true );
 }
-const WP_AUTO_UPDATE_CORE = false;
-const AUTOMATIC_UPDATER_DISABLED = true;
-define( 'DISABLE_WP_CRON', env( 'DISABLE_WP_CRON' ) ?: false );
-const DISALLOW_FILE_EDIT = true;
-const EMPTY_TRASH_DAYS   = 30;
-const WP_POST_REVISIONS  = 7;
-const WP_MAX_MEMORY_LIMIT = '1024M';
-define( 'AWS_ACCESS_KEY_ID', env( 'AWS_ACCESS_KEY_ID' ) );
-define( 'AWS_SECRET_ACCESS_KEY', env( 'AWS_SECRET_ACCESS_KEY' ) );
-define( 'HPM_SFTP_PASSWORD', env( 'HPM_SFTP_PASSWORD' ) );
-define( 'HPM_PBS_TVSS', env( 'HPM_PBS_TVSS' ) );
-define( 'HPM_MVAULT_ID', env( 'HPM_MVAULT_ID' ) );
-define( 'HPM_MVAULT_SECRET', env( 'HPM_MVAULT_SECRET' ) );
-define( 'WP_CACHE_KEY_SALT', env( 'WP_HOME' ) );
-define( 'HPM_TW_CONSUMER_KEY', env( 'TWITTER_CONSUMER_KEY' ) );
-define( 'HPM_TW_CONSUMER_SECRET', env( 'TWITTER_CONSUMER_SECRET' ) );
-define( 'HPM_TW_BEARER_TOKEN', env( 'TWITTER_BEARER_TOKEN' ) );
-define( 'HPM_TW_ACCESS_TOKEN', env( 'TWITTER_ACCESS_TOKEN' ) );
-define( 'HPM_TW_ACCESS_TOKEN_SECRET', env( 'TWITTER_ACCESS_TOKEN_SECRET' ) );
-define( 'HPM_FB_PAGE_ID', env( 'FACEBOOK_PAGE_ID' ) );
-define( 'HPM_FB_ACCESS_TOKEN', env( 'FACEBOOK_ACCESS_TOKEN' ) );
-define( 'HPM_FB_APPSECRET', env( 'FACEBOOK_APPSECRET' ) );
-define( 'HPM_YT_API_KEY', env( 'YT_API_KEY' ) );
-define( 'HPM_MASTODON_BEARER', env( 'MASTODON_BEARER' ) );
-define( 'HPM_OPEN_WEATHER', env( 'OPEN_WEATHER_API_KEY' ) );
-define( 'NPR_CDS_TOKEN', env( 'NPR_CDS_TOKEN' ) );
-const EWWW_IMAGE_OPTIMIZER_DEFER_S3 = true;
+Config::define( 'WP_AUTO_UPDATE_CORE', false );
+Config::define( 'AUTOMATIC_UPDATER_DISABLED', true );
+Config::define( 'DISABLE_WP_CRON', env( 'DISABLE_WP_CRON' ) ?: false );
+Config::define( 'DISALLOW_FILE_EDIT', true );
+Config::define( 'EMPTY_TRASH_DAYS', 30 );
+Config::define( 'WP_POST_REVISIONS', 7 );
+Config::define( 'WP_MAX_MEMORY_LIMIT', '1024M' );
+Config::define( 'AWS_ACCESS_KEY_ID', env( 'AWS_ACCESS_KEY_ID' ) );
+Config::define( 'AWS_SECRET_ACCESS_KEY', env( 'AWS_SECRET_ACCESS_KEY' ) );
+Config::define( 'HPM_SFTP_PASSWORD', env( 'HPM_SFTP_PASSWORD' ) );
+Config::define( 'HPM_PBS_TVSS', env( 'HPM_PBS_TVSS' ) );
+Config::define( 'HPM_MVAULT_ID', env( 'HPM_MVAULT_ID' ) );
+Config::define( 'HPM_MVAULT_SECRET', env( 'HPM_MVAULT_SECRET' ) );
+Config::define( 'WP_CACHE_KEY_SALT', env( 'WP_HOME' ) );
+Config::define( 'HPM_TW_CONSUMER_KEY', env( 'TWITTER_CONSUMER_KEY' ) );
+Config::define( 'HPM_TW_CONSUMER_SECRET', env( 'TWITTER_CONSUMER_SECRET' ) );
+Config::define( 'HPM_TW_BEARER_TOKEN', env( 'TWITTER_BEARER_TOKEN' ) );
+Config::define( 'HPM_TW_ACCESS_TOKEN', env( 'TWITTER_ACCESS_TOKEN' ) );
+Config::define( 'HPM_TW_ACCESS_TOKEN_SECRET', env( 'TWITTER_ACCESS_TOKEN_SECRET' ) );
+Config::define( 'HPM_FB_PAGE_ID', env( 'FACEBOOK_PAGE_ID' ) );
+Config::define( 'HPM_FB_ACCESS_TOKEN', env( 'FACEBOOK_ACCESS_TOKEN' ) );
+Config::define( 'HPM_FB_APPSECRET', env( 'FACEBOOK_APPSECRET' ) );
+Config::define( 'HPM_YT_API_KEY', env( 'YT_API_KEY' ) );
+Config::define( 'HPM_MASTODON_BEARER', env( 'MASTODON_BEARER' ) );
+Config::define( 'HPM_OPEN_WEATHER', env( 'OPEN_WEATHER_API_KEY' ) );
+Config::define( 'NPR_CDS_TOKEN', env( 'NPR_CDS_TOKEN' ) );
+Config::define( 'EWWW_IMAGE_OPTIMIZER_DEFER_S3', true );
+
+/**
+ * Debugging Settings
+ */
+Config::define( 'WP_DEBUG_DISPLAY', false );
+Config::define( 'WP_DEBUG_LOG', false );
+Config::define( 'SCRIPT_DEBUG', false );
+ini_set('display_errors', '0');
+
+/**
+ * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
+ * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
+ */
+if ( ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ) || WP_ENV === 'production' ) {
+	$_SERVER['HTTPS'] = 'on';
+	$protocol = 'https';
+}
+
+$env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
+
+if ( file_exists( $env_config ) ) {
+	require_once $env_config;
+}
+
+Config::apply();
 
 /**
  * Bootstrap WordPress
  */
-if ( !defined( 'ABSPATH' ) ) {
-    define( 'ABSPATH', $webroot_dir . '/wp/' );
+if ( !defined('ABSPATH' ) ) {
+	define( 'ABSPATH', $webroot_dir . '/wp/' );
 }
