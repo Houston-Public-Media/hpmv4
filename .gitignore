@@ -3,6 +3,7 @@ web/app/plugins/*
 !web/app/plugins/.gitkeep
 !web/app/plugins/kera-passport-tools/
 !web/app/plugins/better-image-credits/
+!web/app/plugins/wp-missed-schedule/
 web/app/mu-plugins/*/
 !web/app/mu-plugins/hpm-mods/*
 web/app/debug.log
