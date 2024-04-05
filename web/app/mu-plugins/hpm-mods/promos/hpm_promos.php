@@ -722,7 +722,7 @@ class HPM_Promos {
 				if ( empty( $meta ) || empty( $meta['location'] ) ) {
 					echo __( 'None' );
 				} else {
-					echo __( ucwords( $meta['location'] ) );
+					echo __( ucwords( str_replace( '-', ' ', $meta['location'] ) ) );
 				}
 				break;
 			case 'promo_expiration' :
