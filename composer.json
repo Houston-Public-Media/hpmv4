@@ -40,10 +40,6 @@
 		{
 			"type": "composer",
 			"url": "https://composer.deliciousbrains.com"
-		},
-		{
-			"type": "git",
-			"url": "https://github.com/jwcounts/wp-missed-schedule.git"
 		}
 	],
 	"require": {
@@ -77,7 +73,6 @@
 		"wpackagist-plugin/wp-ses": "*",
 		"wpackagist-plugin/www-xml-sitemap-generator-org": "2.0.7",
 		"deliciousbrains-plugin/wp-offload-media": "*",
-		"jwcounts/wp-missed-schedule": "1.0.1",
 		"noweh/twitter-api-v2-php": "3.4.0"
 	},
 	"require-dev": {
