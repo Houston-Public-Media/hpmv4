@@ -7,7 +7,7 @@ get_header(); ?>
         article {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            /*gap: 1rem;*/
             padding: 1rem;
             margin-bottom: 1rem;
         /*border: 1px solid black;*/
@@ -194,7 +194,7 @@ get_header(); ?>
 
                         </div>
                         <div class="col-12 col-xl-2">
-                            <article id="vote-buttons" style="display: block; padding: 0;" class="text-light float-end text-end"></article>
+                            <article id="vote-buttons" style="padding: 0;" class="text-light float-end text-end"></article>
                         </div>
                     </div>
                 </section>
@@ -321,7 +321,7 @@ get_header(); ?>
                 // if ( states[key].parent ) {
                 // 	btnLabel = states[key].name;
                 // }
-                voteButtons.innerHTML += '<div><button style="border: none;" data-state="' + key +'" data-affiliation="0" data-votes="' + skippedStates[key].votes + '" class="btnstate states vote-none">' + btnLabel + ' (' + skippedStates[key].votes + ')</button></div>';
+                voteButtons.innerHTML += '<div class="col"><button style="border: none;" data-state="' + key +'" data-affiliation="0" data-votes="' + skippedStates[key].votes + '" class="btnstate states vote-none">' + btnLabel + ' (' + skippedStates[key].votes + ')</button></div>';
             }
             let vButtonList = document.querySelectorAll('#vote-buttons button');
             Array.from(vButtonList).forEach((vb) => {
