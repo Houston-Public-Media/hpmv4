@@ -48,13 +48,13 @@ function hpm_audio_shortcode( $html, $attr ): string {
 	}
 	$html = '';
 	if ( is_feed() || amp_is_request() ) {
-		$html .= '<audio preload="' . $preload . '" src="'.$audio_url.'source=rss-feed"><source type="audio/mpeg" src="'.$audio_url.'source=rss-feed"></audio>';
+		$html .= '<audio preload="' . $preload . '" src="'.$audio_url.'srcid=rss-feed"><source type="audio/mpeg" src="'.$audio_url.'srcid=rss-feed"></audio>';
 	} else {
 		wp_enqueue_script('hpm-plyr');
 		$html .= '<div class="article-player-wrap">'.
 				'<h3>'.htmlentities( wp_trim_words( $audio_title, 10, '...' ), ENT_COMPAT | ENT_HTML5, 'UTF-8', false ) .'</h3>'.
 				'<audio class="js-player" id="audio-' . $audio_id . '" data-title="' . ( !empty( $audio_data_title ) ? urlencode( $audio_data_title ) : '' ) . '" controls preload="' . $preload . '">'.
-					'<source src="'.$audio_url.'source=plyr-article" type="audio/mpeg" />'.
+					'<source src="'.$audio_url.'srcid=hpm-website" type="audio/mpeg" />'.
 				'</audio>';
 		if ( !is_admin() && !in_array( $post_id, [ 0, 58036 ] ) ) {
 			$html .= '<button class="plyr-audio-embed" data-id="' . $audio_id .'">' . hpm_svg_output( 'code' ) . '<span class="screen-reader-text">Audio Embed Popup</span></button>' .

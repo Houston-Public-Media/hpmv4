@@ -4,8 +4,9 @@
  *
  * @package WordPress
  */
+global $wp_query;
 if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
-	header( 'Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ), true );
+	header( 'Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ) );
 	$more = 1;
 	echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
 	do_action( 'rss_tag_pre', 'rss2' ); ?>
@@ -57,7 +58,7 @@ if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
 		}
 	}
 	if ( has_post_thumbnail() ) {
-		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumbnail' ); ?>
+		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id() ); ?>
 		<media:thumbnail url="<?php echo $thumb[0]; ?>" width="<?php echo $thumb[1]; ?>" height="<?php echo $thumb[2]; ?>" />
 <?php
 	}
@@ -69,6 +70,34 @@ if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
 </channel>
 </rss><?php
 } else {
-	header('Content-Type: text/xml; charset=' . get_option('blog_charset'), true);
-	echo get_option( 'hpm_podcast-'.$wp_query->query['name'] );
+	header('Content-Type: text/xml; charset=' . get_option( 'blog_charset' ) );
+	$content = get_option( 'hpm_podcast-' . $wp_query->query['name'] );
+	$sources = [
+		'noad',
+		'apple-podcasts',
+		'spotify',
+		'npr-one',
+		'simplecast',
+		'tunein',
+		'amazon-music',
+		'iheart',
+		'radiopublic'
+	];
+	$find = $replace_str = '';
+	$replace = [];
+	if ( !empty( $_GET['source'] ) && in_array( strtolower( $_GET['source'] ), $sources ) ) {
+		$replace[] = 'srcid=' . sanitize_text_field( $_GET['source'] );
+	}
+	if ( str_contains( $content, '?{{REPLACE}}{{AGGREGATE_FEED}}' ) ) {
+		$find = '?{{REPLACE}}{{AGGREGATE_FEED}}';
+		$replace[] = 'srctype=aggregate';
+	} else {
+		$find = '?{{REPLACE}}';
+	}
+	$replace_str = implode( '&amp;', $replace );
+	if ( !empty( $replace_str ) ) {
+		$replace_str = '?' . $replace_str;
+	}
+	$content = str_replace( $find, $replace_str, $content );
+	echo $content;
 }
