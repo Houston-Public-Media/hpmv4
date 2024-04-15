@@ -776,13 +776,6 @@ svg:not(:root) {
 #hm-top.townsquare p a {
 	color: var(--main-red);
 }
-
-
-
-
-
-
-
 #hm-top p {
 	padding: 0.5rem;
 	font-size: 1.125rem;
@@ -815,12 +808,14 @@ svg:not(:root) {
 	padding: 0.5rem;
 	text-align: center;
 	font-size: 1.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
 }
 #emergency svg {
 	fill: var(--main-red);
 	width: 1.25rem;
-	position: relative;
-	top: 3px;
 }
 #emergency a {
 	color: var(--main-red);
