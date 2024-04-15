@@ -299,7 +299,6 @@ class HPM_Podcasts {
 					'itunes'       => '',
 					'youtube'      => '',
 					'spotify'      => '',
-					'radiopublic'  => '',
 					'pcast'        => '',
 					'overcast'     => '',
 					'amazon'       => '',
@@ -318,7 +317,6 @@ class HPM_Podcasts {
 				'itunes'       => '',
 				'youtube'      => '',
 				'spotify'      => '',
-				'radiopublic'  => '',
 				'pcast'        => '',
 				'overcast'     => '',
 				'amazon'       => '',
@@ -373,7 +371,6 @@ class HPM_Podcasts {
 				'itunes' => ( !empty( $_POST['hpm-podcast-link-itunes'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-itunes'] ) : '' ),
 				'youtube' => ( !empty( $_POST['hpm-podcast-link-youtube'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-youtube'] ) : '' ),
 				'spotify' => ( !empty( $_POST['hpm-podcast-link-spotify'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-spotify'] ) : '' ),
-				'radiopublic' => ( !empty( $_POST['hpm-podcast-link-radiopublic'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-radiopublic'] ) : '' ),
 				'pcast' => ( !empty( $_POST['hpm-podcast-link-pcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pcast'] ) : '' ),
 				'overcast' => ( !empty( $_POST['hpm-podcast-link-overcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-overcast'] ) : '' ),
 				'amazon' => ( !empty( $_POST['hpm-podcast-link-amazon'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-amazon'] ) : '' ),
@@ -1173,9 +1170,6 @@ class HPM_Podcasts {
 				}
 				if ( !empty( $pod_link['pandora'] ) ) {
 					$temp .= '<li><a href="' . $pod_link['pandora'] . '" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="' . $badges . 'pandora.png" alt="Subscribe on Pandora"></a></li>';
-				}
-				if ( !empty( $pod_link['radiopublic'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['radiopublic'] . '" rel="noopener" target="_blank" title="Subscribe on RadioPublic"><img src="' . $badges . 'radio_public.png" alt="Subscribe on RadioPublic"></a></li>';
 				}
 				if ( !empty( $pod_link['pcast'] ) ) {
 					$temp .= '<li><a href="' . $pod_link['pcast'] . '" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="' . $badges . 'pocketcasts.png" alt="Subscribe on Pocket Casts"></a></li>';
