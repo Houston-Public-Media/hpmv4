@@ -157,6 +157,7 @@ class HPM_Promos {
 						'total' => ''
 					],
 					'emergency' => [],
+					'non-emergency' => [],
 					'dont-miss' => []
 				]
 			];
@@ -178,6 +179,7 @@ class HPM_Promos {
 				<option value="dont-miss" <?PHP selected( $hpm_promo['type'], 'dont-miss' ); ?>>Don't Miss Bullet Point</option>
 				<option value="lightbox" <?PHP selected( $hpm_promo['type'], 'lightbox' ); ?>>Lightbox</option>
 				<option value="emergency" <?PHP selected( $hpm_promo['type'], 'emergency' ); ?>>Emergency Notification</option>
+				<option value="non-emergency" <?PHP selected( $hpm_promo['type'], 'non-emergency' ); ?>>Non-Emergency Notification</option>
 				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth' ); ?>>Full-Width Banner</option>
 			</select>
 		</p>
@@ -218,6 +220,7 @@ class HPM_Promos {
 			</ul>
 		</div>
 		<div id="hpm-emergency" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'emergency' ? '' : ' style="display: none;"'); ?>></div>
+		<div id="hpm-non-emergency" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'non-emergency' ? '' : ' style="display: none;"'); ?>></div>
 		<div id="hpm-dont-miss" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'dont-miss' ? '' : ' style="display: none;"'); ?>></div>
 		<script>
 			jQuery(document).ready(function($){
@@ -588,7 +591,7 @@ class HPM_Promos {
 				'sidebar', 'fullwidth', 'dont-miss'
 			],
 			'emergency' => [
-				'emergency'
+				'emergency', 'non-emergency'
 			],
 			'sidebar' => [
 				'sidebar'
@@ -667,9 +670,9 @@ class HPM_Promos {
 							$output .= $content_esc;
 							$fullwidth = true;
 						}
-					} elseif ( $meta['type'] == 'emergency' ) {
+					} elseif ( $meta['type'] === 'emergency' || $meta['type'] === 'non-emergency' ) {
 						$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
-						$output .= '<div id="emergency">'. hpm_svg_output( 'exclamation-circle' ) . " " . $content_esc . '</div>';
+						$output .= '<div id="emergency" class="' . $meta['type'] . '">'. hpm_svg_output( 'exclamation-circle' ) . " " . $content_esc . '</div>';
 					} elseif ( $meta['type'] == 'dont-miss' ) {
 						$dont[] = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
 					}
