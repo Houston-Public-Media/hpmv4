@@ -460,10 +460,11 @@ class HPM_Podcasts {
 				if ( $hpm_podcast_feed->have_posts() ) {
 					$pod_id = $hpm_podcast_feed->posts[0]->ID;
 					$pod_last_id = get_post_meta( $pod_id, 'hpm_pod_last_id', true );
-					if ( $pod_last_id !== false ) {
-						$pod_last_id['modified'] = 0;
-						update_post_meta($pod_id, 'hpm_pod_last_id', $pod_last_id);
+					if ( empty( $pod_last_id ) ) {
+						$pod_last_id = [];
 					}
+					$pod_last_id['modified'] = 0;
+					update_post_meta( $pod_id, 'hpm_pod_last_id', $pod_last_id );
 				}
 			}
 		}
