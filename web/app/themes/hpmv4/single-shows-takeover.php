@@ -43,6 +43,9 @@ get_header(); ?>
 		.show-content > * + * {
 			margin-top: 1rem;
 		}
+		.shows-template-single-shows-takeover article .post-thumbnail :is(img,picture) {
+			aspect-ratio: 1 / 1;
+		}
 		@media screen and (min-width: 34em) {
 			body.single-shows #station-social {
 				display: grid;
@@ -110,12 +113,18 @@ get_header(); ?>
 	$cat = new WP_Query( $cat_args );
 	if ( $cat->have_posts() ) {
 		while ( $cat->have_posts() ) {
-			$cat->the_post(); ?>
+			$cat->the_post();
+			$hpm_pod_desc = get_post_meta( get_the_ID(), 'hpm_podcast_ep_meta', true );
+			if ( empty( $hpm_pod_desc['title'] ) ) {
+				$ep_title = get_the_title();
+			} else {
+				$ep_title = $hpm_pod_desc['title'];
+			} ?>
 				<article id="post-<?php the_ID(); ?>" <?php post_class( 'card' ); ?>>
 					<a class="post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ); ?></a>
 					<div class="card-content">
 						<header class="entry-header">
-							<h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
+							<h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php echo $ep_title; ?></a></h2>
 							<div class="screen-reader-text"><?PHP coauthors_posts_links( ' / ', ' / ', '<address class="vcard author">', '</address>' ); ?> </div>
 						</header>
 						<div class="entry-summary">
