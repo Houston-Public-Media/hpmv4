@@ -43,7 +43,8 @@ if ( !empty( $pods['upload-media'] ) ) {
 		'post_type' => 'podcasts',
 		'post_status' => 'publish',
 		'orderby' => 'name',
-		'order' => 'ASC'
+		'order' => 'ASC',
+		'posts_per_page' => -1
 	]); ?>
 	<p>&nbsp;</p>
 	<h3><?PHP _e( "Podcast Feed", 'hpm-podcasts' ); ?></h3>
