@@ -88,7 +88,8 @@
 		'post_type' => 'podcasts',
 		'post_status' => 'publish',
 		'orderby' => 'name',
-		'order' => 'ASC'
+		'order' => 'ASC',
+		'posts_per_page' => -1
 	]); ?>
 <h3><?PHP _e( "Podcast Feed", 'hpm-podcasts' ); ?></h3>
 <p><?php _e( "If this show has/is a podcast, select it from the dropdown." , 'hpm-podcasts' ); ?><br />

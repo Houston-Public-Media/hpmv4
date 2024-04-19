@@ -16,9 +16,9 @@
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder columns-2">
 				<div id="post-body-content">
-					<div class="meta-box-sortables ui-sortable">
+					<div>
 						<div class="postbox">
-							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Ownership Information', 'hpm-podcasts' ); ?></h2></div>
+							<div class="postbox-header"><h2><?php _e('Ownership Information', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('iTunes and other podcasting directories ask for you to give a name and email address of the "owner" of the podcast, which can be a single person or an organization.', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
@@ -34,9 +34,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="meta-box-sortables ui-sortable">
+					<div>
 						<div class="postbox">
-							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('User Roles', 'hpm-podcasts' ); ?></h2></div>
+							<div class="postbox-header"><h2><?php _e('User Roles', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('Select all of the user roles that you would like to be able to manage your podcast feeds.  Anyone
 										who can create new posts can create an episode of a podcast, but only the roles selected here can
@@ -58,9 +58,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="meta-box-sortables ui-sortable">
+					<div>
 						<div class="postbox">
-							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Background Tasks', 'hpm-podcasts' ); ?></h2></div>
+							<div class="postbox-header"><h2><?php _e('Background Tasks', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('To save server resources, we use a cron job to generate a flat XML file.  Use the options below to choose how often you want to run that job.', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
@@ -80,9 +80,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="meta-box-sortables ui-sortable">
+					<div>
 						<div class="postbox">
-							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Upload Options', 'hpm-podcasts' ); ?></h2></div>
+							<div class="postbox-header"><h2><?php _e('Upload Options', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e('**NOTE**: Please do not include any leading or trailing slashes in your domains, URLs, folder names, etc. You can include slashes within them (e.g. you might store your files in the "files/podcasts" folder, but the public URL is "http://example.com/podcasts").',
 										'hpm-podcasts' );
@@ -110,9 +110,9 @@
 							</div>
 						</div>
 					</div>
-					<div id="hpm-sftp" class="meta-box-sortables ui-sortable hpm-uploads">
+					<div id="hpm-sftp" class="hpm-uploads">
 						<div class="postbox">
-							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('FTP Credentials', 'hpm-podcasts' ); ?></h2></div>
+							<div class="postbox-header"><h2><?php _e('FTP Credentials', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e("If you aren't comfortable storing your FTP password in your database, you can define it as a Wordpress default.  Add the following line to your wp-config.php file:",	'hpm-podcasts' );
 									?></p>
@@ -150,9 +150,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="meta-box-sortables ui-sortable">
+					<div>
 						<div class="postbox">
-							<div class="postbox-header"><h2 class="hndle ui-sortable-handle"><?php _e('Feed Refresh', 'hpm-podcasts' ); ?></h2></div>
+							<div class="postbox-header"><h2><?php _e('Feed Refresh', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
 								<p><?php _e("Made some changes to your podcast feeds and don't want to wait for the cron job to fire? Click the button below to force a refresh.", 'hpm-podcasts'	); ?></p>
 								<p><em>Feeds last refreshed: <span class="hpm-last-refresh-time"><?php echo $last_refresh; ?></span></em></p>

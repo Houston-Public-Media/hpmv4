@@ -396,30 +396,30 @@ class HPM_Podcasts {
 		} elseif ( $post->post_type == 'shows' ) {
 			/* Get the posted data and sanitize it for use as an HTML class. */
 			$hpm_social = [
-				'fb' => ( sanitize_text_field( $_POST['hpm-social-fb'] ) ?? '' ),
-				'twitter' => ( sanitize_text_field( $_POST['hpm-social-twitter'] ) ?? '' ),
-				'yt' => ( sanitize_text_field( $_POST['hpm-social-yt'] ) ?? '' ),
-				'sc' => ( sanitize_text_field( $_POST['hpm-social-sc'] ) ?? '' ),
-				'insta' => ( sanitize_text_field( $_POST['hpm-social-insta'] ) ?? ''),
-				'tumblr' => ( sanitize_text_field( $_POST['hpm-social-tumblr'] ) ?? ''),
-				'snapchat' => ( sanitize_text_field( $_POST['hpm-social-snapchat'] ) ?? '')
+				'fb' => ( !empty( $_POST['hpm-social-fb'] ) ? sanitize_text_field( $_POST['hpm-social-fb'] ) : '' ),
+				'twitter' => ( !empty( $_POST['hpm-social-twitter'] ) ? sanitize_text_field( $_POST['hpm-social-twitter'] ) : '' ),
+				'yt' => ( !empty( $_POST['hpm-social-yt'] ) ? sanitize_text_field( $_POST['hpm-social-yt'] ) : '' ),
+				'sc' => ( !empty( $_POST['hpm-social-sc'] ) ? sanitize_text_field( $_POST['hpm-social-sc'] ) : '' ),
+				'insta' => ( !empty( $_POST['hpm-social-insta'] ) ? sanitize_text_field( $_POST['hpm-social-insta'] ) : '' ),
+				'tumblr' => ( !empty( $_POST['hpm-social-tumblr'] ) ? sanitize_text_field( $_POST['hpm-social-tumblr'] ) : '' ),
+				'snapchat' => ( !empty( $_POST['hpm-social-snapchat'] ) ? sanitize_text_field( $_POST['hpm-social-snapchat'] ) : '' )
 			];
 
 			$hpm_show = [
-				'times'	=> ( $_POST['hpm-show-times'] ?? '' ),
-				'hosts'	=> ( sanitize_text_field( $_POST['hpm-show-hosts'] ) ?? '' ),
-				'ytp' => ( sanitize_text_field( $_POST['hpm-show-ytp'] ) ?? '' ),
-				'podcast' => ( $_POST['hpm-show-pod'] ?? '' ),
+				'times'	=> ( !empty( $_POST['hpm-show-times'] ) ? $_POST['hpm-show-times'] : '' ),
+				'hosts'	=> ( !empty( $_POST['hpm-show-hosts'] ) ? sanitize_text_field( $_POST['hpm-show-hosts'] ) : '' ),
+				'ytp' => ( !empty( $_POST['hpm-show-ytp'] ) ? sanitize_text_field( $_POST['hpm-show-ytp'] ) : '' ),
+				'podcast' => ( !empty( $_POST['hpm-show-pod'] ) ? $_POST['hpm-show-pod'] : '' ),
 				'banners' => [
-					'mobile' => ( sanitize_text_field( $_POST['hpm-show-banner-mobile-id'] ) ?? '' ),
-					'tablet' => ( sanitize_text_field( $_POST['hpm-show-banner-tablet-id'] ) ?? '' ),
-					'desktop' => ( sanitize_text_field( $_POST['hpm-show-banner-desktop-id'] ) ?? '' ),
+					'mobile' => ( !empty( $_POST['hpm-show-banner-mobile-id'] ) ? sanitize_text_field( $_POST['hpm-show-banner-mobile-id'] ) : '' ),
+					'tablet' => ( !empty( $_POST['hpm-show-banner-tablet-id'] ) ? sanitize_text_field( $_POST['hpm-show-banner-tablet-id'] ) : '' ),
+					'desktop' => ( !empty( $_POST['hpm-show-banner-desktop-id'] ) ? sanitize_text_field( $_POST['hpm-show-banner-desktop-id'] ) : '' ),
 				]
 
 			];
 
-			$hpm_shows_cat = ( sanitize_text_field( $_POST['hpm-shows-cat'] ) ?? '' );
-			$hpm_shows_top = ( sanitize_text_field( $_POST['hpm-shows-top'] ) ?? '' );
+			$hpm_shows_cat = ( !empty( $_POST['hpm-shows-cat'] ) ? sanitize_text_field( $_POST['hpm-shows-cat'] ) : '' );
+			$hpm_shows_top = ( !empty( $_POST['hpm-shows-top'] ) ? sanitize_text_field( $_POST['hpm-shows-top'] ) : '' );
 
 			update_post_meta( $post_id, 'hpm_show_social', $hpm_social );
 			update_post_meta( $post_id, 'hpm_show_meta', $hpm_show );
