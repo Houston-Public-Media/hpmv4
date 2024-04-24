@@ -57,7 +57,7 @@
 					<xsl:attribute name="type">text/javascript</xsl:attribute>
 					<xsl:attribute name="src">https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js?v=1</xsl:attribute>
 				</xsl:element>
-				<style type="text/css">.pod-desc { font: 500 1.125em/1.125em var(--hpm-font-main); color: rgb(142,144,144); } article.card { display: block !important; border-bottom: 1px solid #808080; }</style>
+				<style type="text/css">.pod-desc { font: 500 1.125em/1.125em var(--hpm-font-main); color: rgb(142,144,144); } .pod-desc > * + * { margin-top: 1rem; } article.card { display: block !important; border-bottom: 1px solid #808080; }</style>
 			</head>
 			<xsl:apply-templates select="rss/channel" />
 		</xsl:element>
