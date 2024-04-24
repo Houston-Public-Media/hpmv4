@@ -38,7 +38,7 @@ get_header(); ?>
 			background-color: var(--main-element-background);
 		}
 		body.single-shows .podcast-badges {
-			justify-content: flex-end;
+			justify-content: center;
 		}
 		.show-content > * + * {
 			margin-top: 1rem;

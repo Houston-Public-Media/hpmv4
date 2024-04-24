@@ -29,7 +29,7 @@ get_header(); ?>
 			background-color: var(--main-element-background);
 		}
 		body.single-shows .podcast-badges {
-			justify-content: flex-end;
+			justify-content: center;
 		}
 		body.single-shows.shows-template-single-shows-hpm-newscast .page-header {
 			padding: 0;
