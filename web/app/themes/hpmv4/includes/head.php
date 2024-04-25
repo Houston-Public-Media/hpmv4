@@ -380,7 +380,6 @@ function hpm_body_open(): void {
 		<header id="masthead" class="site-header" role="banner">
 			<div class="site-branding">
 				<div class="site-logo">
-					<?php //echo hpm_svg_output( 'hpm' ); ?>
 					<a href="/" rel="home" title="Houston Public Media, a service of the University of Houston">
 						<img src="https://cdn.houstonpublicmedia.org/assets/images/houston-public-media-logo.png" alt="Houston Public Media" rel="Houston Public Media">
 					</a>

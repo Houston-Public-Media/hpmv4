@@ -124,7 +124,7 @@ function hpm_houston_matters_check(): array {
 			}
 		}
 	}
-	set_transient( 'hpm_hm_airing', $hm_airtimes, 3600 );
+	set_transient( 'hpm_hm_airing', $hm_airtimes, 600 );
 	return $hm_airtimes;
 }
 
