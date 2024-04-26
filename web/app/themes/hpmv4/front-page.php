@@ -151,7 +151,17 @@ $tras = null; ?>
         <section>
             <div class="row text-center flex-row">
                 <div class="col-md-12">
-                    <img src="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_2970X50-2.png.webp" alt="Houston Public Media - The Takeover" title="Houston Public Media - The Takeover" style="display: inline;" />
+                    <a href="#">
+                        <picture>
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg.webp" media="(max-width: 34em)" type="image/webp">
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg" media="(max-width: 34em)">
+
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg.webp" type="image/webp">
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg">
+                            <img src="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg" alt="The Takeover page banner">
+                        </picture>
+                    </a>
+
                 </div>
             </div>
         </section>
