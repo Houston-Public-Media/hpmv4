@@ -151,7 +151,7 @@ $tras = null; ?>
         <section>
             <div class="row text-center flex-row">
                 <div class="col-md-12">
-                    <a href="#">
+                    <a href="/shows/the-takeover/">
                         <picture>
                             <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg.webp" media="(max-width: 34em)" type="image/webp">
                             <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg" media="(max-width: 34em)">
