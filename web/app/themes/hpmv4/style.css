@@ -2522,10 +2522,13 @@ article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.ar
 	margin-top: 1.25rem;
 }
 article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.article-player-wrap) > :is(div,section) > * + * {
-	margin-top: 0;
+	margin-top: 1rem;
 }
 article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.article-player-wrap) > :is(div,section) > div > * + * {
 	margin-top: 1rem;
+}
+article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.article-player-wrap) > :is(div,section) a {
+	text-decoration: underline;
 }
 article .entry-header h3 {
 	background-color: transparent;
@@ -5681,6 +5684,7 @@ body.single-shows #station-social.station-social {
 	max-width: 60%;
 	width: 100%;
 	aspect-ratio: 16/9;
+	align-self: center;
 }
 .the-latest-block .image-wrapper > div {
 	display: flex;
