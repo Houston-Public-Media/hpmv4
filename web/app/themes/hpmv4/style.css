@@ -242,8 +242,8 @@ body:not(.single,.page-template-page-npr-articles) #main {
 	margin: 0 auto;
 }
 a {
-	text-decoration: none;
-	color: var(--base);
+	text-decoration: underline;
+	color: var(--main-blue);
 }
 a:hover {
 	opacity: 0.75;
