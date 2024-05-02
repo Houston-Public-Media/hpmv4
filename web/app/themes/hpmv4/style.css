@@ -2159,6 +2159,7 @@ h2#foot-banner a {
 	margin: 0 auto;
 	max-width: 60rem;
 	font-size: 1.125rem;
+	text-decoration: none;
 }
 h2#foot-banner span.donate {
 	background-color: #237bbd;
@@ -4154,6 +4155,10 @@ section {
 .news-listing p {
 	font-size: 0.9em;
 }
+.news-listing p a {
+	color: var(--base);
+	text-decoration: none;
+}
 .news-listing h4 a {
 	color: var(--gray1);
 }
@@ -4170,6 +4175,7 @@ section {
 .breaking-news h1 a {
 	font-weight: bold;
 	font-size: 1.6rem;
+	text-decoration: none;
 }
 .breaking-news-img {
 	padding: 0;
@@ -4223,6 +4229,8 @@ section.breaking-news .row {
 }
 .short-news h3 a {
 	font-weight: bold;
+	text-decoration: none;
+	color: var(--base);
 }
 .short-news h4 {
 	font-size: 0.875rem;
@@ -4296,6 +4304,10 @@ section.breaking-news .row {
 }
 .news-links li h2 {
 	font-size: 14px;
+}
+:is(.news-links,.news-footerlinks) li a {
+	color: var(--base);
+	text-decoration: none;
 }
 
 /*Footer New module on home page*/
