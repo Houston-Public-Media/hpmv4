@@ -154,12 +154,12 @@ $tras = null; ?>
                 <div class="col-md-12">
                     <a href="/shows/the-takeover/">
                         <picture>
-                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg.webp" media="(max-width: 34em)" type="image/webp">
-                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg" media="(max-width: 34em)">
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast_800x41.jpg.webp" media="(max-width: 34em)" type="image/webp">
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast_800x41.jpg" media="(max-width: 34em)">
 
-                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg.webp" type="image/webp">
-                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg">
-                            <img src="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg" alt="The Takeover page banner">
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast1200X62.jpg.webp" type="image/webp">
+                            <source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast1200X62.jpg">
+                            <img src="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast1200X62.jpg" alt="The Takeover page banner">
                         </picture>
                     </a>
 
