@@ -58,22 +58,21 @@ function hpm_scripts(): void {
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
 
 function hpm_inline_script(): void {
-	if ( WP_ENV == 'production' ) {
-		$js = file_get_contents( get_template_directory() . '/js/main.js' );
-		echo '<script>' . $js . '</script>';
-	} else {
+//	if ( WP_ENV == 'production' ) {
+//		$js = file_get_contents( get_template_directory() . '/js/main.js' );
+//		echo '<script>' . $js . '</script>';
+//	} else {
 		echo '<script src="' . get_template_directory_uri() . '/js/main.js"></script>';
-	}
+	//}
 }
 function hpm_inline_style(): void {
-	if ( WP_ENV == 'production' ) {
-		$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
-		$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
-		echo '<style>' . $styles . '</style>';
-	} else {
+//	if ( WP_ENV == 'production' ) {
+//		$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
+//		$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
+//		echo '<style>' . $styles . '</style>';
+//	} else {
 		echo '<link rel="stylesheet" id="hpm-css" href="' . get_template_directory_uri() . '/style.css" type="text/css" media="all">';
-	}
-
+	//}
 }
 
 add_action( 'wp_footer', 'hpm_inline_script', 100 );
