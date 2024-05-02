@@ -149,7 +149,7 @@ $tras = null; ?>
                 </div>
             </div>
         </section>
-        <section>
+        <!--<section>
             <div class="row text-center flex-row">
                 <div class="col-md-12">
                     <a href="/shows/the-takeover/">
@@ -165,7 +165,7 @@ $tras = null; ?>
 
                 </div>
             </div>
-        </section>
+        </section>-->
         <section class="section news-list">
             <div class="row">
                 <div class="col-sm-12 col-lg-8 news-list-left">
