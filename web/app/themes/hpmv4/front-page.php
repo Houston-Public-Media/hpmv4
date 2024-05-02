@@ -52,14 +52,15 @@ $tras = null; ?>
             color: var(--main-headline);
             text-decoration: none;
         }
-        .text-light-gray a{
+        .text-light-gray a {
             color:#237bbd;
             font-weight: bold;
+			text-decoration: none;
         }
-        .news-listing h4 a
-        {
+        .news-listing h4 a {
             color:#237bbd;
             font-size: 15px;
+			text-decoration: none;
         }
         .news-listing p {
             font-size: 0.9em;

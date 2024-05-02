@@ -483,10 +483,10 @@
 				<xsl:copy-of select="xhtml:div" />
 			</xsl:when>
 			<xsl:when xmlns:content="http://purl.org/rss/1.0/modules/content/" test="content:encoded">
-				<xsl:value-of select="content:encoded" disable-output-escaping="yes" />
+				<xsl:copy-of select="content:encoded" />
 			</xsl:when>
 			<xsl:when test="description">
-				<xsl:value-of select="description" disable-output-escaping="yes" />
+				<xsl:copy-of select="description" />
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
