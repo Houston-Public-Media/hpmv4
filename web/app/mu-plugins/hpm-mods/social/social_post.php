@@ -101,6 +101,9 @@
 		if ( empty( $social_post ) ) {
 			return $post_id;
 		}
+		if ( WP_ENV !== 'production' ) {
+			return $post_id;
+		}
 		if ( empty( $social_twitter_sent ) ) {
 			if ( !empty( $social_post['twitter']['data'] ) ) {
 				$account_id = explode( '-', HPM_TW_ACCESS_TOKEN );
@@ -123,7 +126,7 @@
 				}
 			}
 		}
-		if ( empty( $social_mastodon_sent ) ) {
+		if ( empty( $social_mastodon_sent ) && empty( $social_twitter_sent ) ) {
 			if ( !empty( $social_post['twitter']['data'] ) ) {
 				$cats = get_the_category( $post_id );
 				$tags = wp_get_post_tags( $post_id );
