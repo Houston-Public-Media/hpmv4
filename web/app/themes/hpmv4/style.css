@@ -4751,10 +4751,11 @@ details summary::marker {
 #search-results article .entry-title a {
 	font-weight: bold;
 	color: #237bbd;
+	text-decoration: none;
 }
 
 #search-results article .entry-summary {
-	padding-bottom: 0px !important;
+	padding-bottom: 0 !important;
 }
 
 article .post-thumbnail {
