@@ -478,8 +478,12 @@ function hpm_blank_header(): void {
 	add_action( 'wp_head', function(){
 		wp_dequeue_style( 'hpm-css' );
 		wp_deregister_style( 'hpm-css' );
+		wp_dequeue_style( 'bootstrap-css' );
+		wp_deregister_style( 'bootstrap-css' );
 		wp_dequeue_script( 'hpm-js' );
 		wp_deregister_script( 'hpm-js' );
+		wp_dequeue_script( 'bootstrap-js' );
+		wp_deregister_script( 'bootstrap-js' );
 	}, 1 );
 
 	remove_action( 'wp_head', 'hpm_inline_style', 100 );
