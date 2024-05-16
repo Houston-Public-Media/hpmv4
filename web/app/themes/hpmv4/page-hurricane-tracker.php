@@ -7,7 +7,7 @@ get_header(); ?>
         #mapcontainer {
             height: 100%;
             width: 100%;
-            min-height: 80vh;
+            min-height: 50vh;
             border: 1px solid #404040;
             margin-bottom: 4vh;
         }
@@ -176,7 +176,8 @@ get_header(); ?>
         }
         async function fetchAndProcessStormData() {
             try {
-                const response = await fetch('http://localhost/NHC_JSON_Sample.json'); // Path to your JSON file NHC_JSON_Sample.json CurrentStorms
+                const response = await fetch('https://hpmwebv2.s3-us-west-2.amazonaws.com/assets/NHC_JSON_Sample.json');
+                // https://hpmwebv2.s3-us-west-2.amazonaws.com/assets/NHC_JSON_Sample.json  https://hpmwebv2.s3-us-west-2.amazonaws.com/assets/noaa-current-storms.json
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -195,7 +196,6 @@ get_header(); ?>
         }
         function noStormsLayer()
         {
-           // document.getElementById("inactivelayer").style.display= display;
             noStormLayerID.classList.remove('visually-hidden');
         }
 
