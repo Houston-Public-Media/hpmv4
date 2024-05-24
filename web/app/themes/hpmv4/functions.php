@@ -959,287 +959,158 @@ function hpm_pull_npr_story( $npr_id ) {
 			'mime-type' => 'image/gif'
 		]
 	];
-	if ( function_exists( 'npr_cds_activate' ) ) {
-		$npr = new NPR_CDS_WP();
-		$npr->request([
-			'id' => $npr_id
-		]);
-		$npr->parse();
-		if ( !empty( $npr->stories[0] ) ) {
-			$story = $npr->stories[0];
+	$npr = new NPR_CDS_WP();
+	$npr->request([
+		'id' => $npr_id
+	]);
+	$npr->parse();
+	if ( !empty( $npr->stories[0] ) ) {
+		$story = $npr->stories[0];
+	}
+
+	$npr_body = $npr->get_body_with_layout( $story );
+
+	$nprdata['body'] = $npr_body['body'];
+
+	// add the transcript
+	$nprdata['body'] .= $npr->get_transcript_body( $story );
+
+	// Use oEmbed to flesh out external embeds
+	preg_match_all( '/<div class\="wp\-block\-embed__[ \-a-z0-9]+">\s+(.+)\s+<\/div>/', $nprdata['body'], $match );
+	if ( !empty( $match[1] ) ) {
+		foreach ( $match[1] as $v ) {
+			$embed = wp_oembed_get( $v );
+			if ( str_contains( $embed, '<iframe ' ) ) {
+				$embed = '<p>' . $embed . '</p>';
+			}
+			$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
 		}
-
-		$npr_body = $npr->get_body_with_layout( $story );
-
-		$nprdata['body'] = $npr_body['body'];
-
-		// add the transcript
-		$nprdata['body'] .= $npr->get_transcript_body( $story );
-
-		// Use oEmbed to flesh out external embeds
-		preg_match_all( '/<div class\="wp\-block\-embed__[ \-a-z0-9]+">\s+(.+)\s+<\/div>/', $nprdata['body'], $match );
-		if ( !empty( $match[1] ) ) {
-			foreach ( $match[1] as $v ) {
-				$embed = wp_oembed_get( $v );
-				if ( str_contains( $embed, '<iframe ' ) ) {
-					$embed = '<p>' . $embed . '</p>';
-				}
-				$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
+	}
+	$webPage = '';
+	if ( !empty( $story->webPages ) ) {
+		foreach ( $story->webPages as $web ) {
+			if ( in_array( 'canonical', $web->rels ) ) {
+				$webPage = $web->href;
 			}
 		}
-		$webPage = '';
-		if ( !empty( $story->webPages ) ) {
-			foreach ( $story->webPages as $web ) {
-				if ( in_array( 'canonical', $web->rels ) ) {
-					$webPage = $web->href;
-				}
-			}
-		}
-		$story_date = new DateTime( $story->publishDateTime );
-		$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
-		$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title ) . '/';
-		$nprdata['canonical'] = $webPage;
+	}
+	$story_date = new DateTime( $story->publishDateTime );
+	$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
+	$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title ) . '/';
+	$nprdata['canonical'] = $webPage;
 
-		if ( !empty( $story->bylines ) ) {
-			foreach ( $story->bylines as $byline ) {
-				$byl_id = $npr->extract_asset_id( $byline->href );
-				$byl_current = $story->assets->{$byl_id};
-				$byl_profile = $npr->extract_asset_profile( $byl_current );
-				if ( $byl_profile === 'reference-byline' ) {
-					foreach ( $byl_current->bylineDocuments as $byl_doc ) {
-						$byl_data = $npr->get_document( $byl_doc->href );
-						if ( !empty( $byl_data ) ) {
-							$byl_link = '';
-							if ( !empty( $byl_data->webPages ) ) {
-								foreach ( $byl_data->webPages as $byl_web ) {
-									if ( !empty( $byl_web->rels ) && in_array( 'canonical', $byl_web->rels ) ) {
-										$byl_link = $byl_web->href;
-									}
-								}
-							}
-							$nprdata['bylines'][] = [
-								'name' => $byl_data->title,
-								'link' => $byl_link
-							];
-						}
-					}
-				}
-			}
-		}
-		if ( empty( $nprdata['bylines'] ) ) {
-			$nprdata['bylines'][] = [
-				'name' => 'NPR Staff',
-				'link' => ''
-			];
-		}
-
-		$nprdata['title'] = $story->title;
-		if ( !empty( $story->teaser ) ) {
-			$nprdata['excerpt'] = $story->teaser;
-		}
-
-		$slug = [];
-		if ( !empty( $story->collections ) ) {
-			foreach ( $story->collections as $collect ) {
-				if ( in_array( 'topic', $collect->rels ) || in_array( 'program', $collect->rels ) ) {
-					$coll_temp = $npr->get_document( $collect->href );
-					if ( !empty( $coll_temp ) ) {
-						$nprdata['keywords'][] = $coll_temp->title;
-						if ( !empty( $coll_temp->webPages ) ) {
-							foreach ( $coll_temp->webPages as $coll_web ) {
-								if ( in_array( 'canonical', $coll_web->rels ) ) {
-									$nprdata['keywords_html'][] = '<a href="' . $coll_web->href . '">' . $coll_temp->title . '</a>';
+	if ( !empty( $story->bylines ) ) {
+		foreach ( $story->bylines as $byline ) {
+			$byl_id = $npr->extract_asset_id( $byline->href );
+			$byl_current = $story->assets->{$byl_id};
+			$byl_profile = $npr->extract_asset_profile( $byl_current );
+			if ( $byl_profile === 'reference-byline' ) {
+				foreach ( $byl_current->bylineDocuments as $byl_doc ) {
+					$byl_data = $npr->get_document( $byl_doc->href );
+					if ( !empty( $byl_data ) ) {
+						$byl_link = '';
+						if ( !empty( $byl_data->webPages ) ) {
+							foreach ( $byl_data->webPages as $byl_web ) {
+								if ( !empty( $byl_web->rels ) && in_array( 'canonical', $byl_web->rels ) ) {
+									$byl_link = $byl_web->href;
 								}
 							}
 						}
-						if ( in_array( 'slug', $collect->rels ) ) {
-							$slug[] = $coll_temp->title;
-						}
-					}
-				}
-			}
-		}
-		if ( !empty( $story->brandings ) ) {
-			foreach ( $story->brandings as $brand ) {
-				$brand_get = wp_remote_get( $brand->href );
-				if ( !is_wp_error( $brand_get ) && $brand_get['response']['code'] == 200 ) {
-					$brand_json = json_decode( $brand_get['body'] );
-					$slug[] = $brand_json->brand->displayName;
-				}
-			}
-		}
-		$nprdata['slug'] = implode( " | ", $slug );
-
-		if ( !empty( $story->relatedItems ) ) {
-			foreach ( $story->relatedItems as $related ) {
-				$relate_get = wp_remote_get( $related->href );
-				if ( !is_wp_error( $relate_get ) && $relate_get['response']['code'] == 200 ) {
-					$relate_json = json_decode( $relate_get['body'] );
-					$relate_link = '';
-					if ( !empty( $relate_json->webPages ) ) {
-						foreach ( $relate_json->webPages as $rel_web ) {
-							if ( in_array( 'canonical', $rel_web->rels ) ) {
-								$relate_link = $rel_web->href;
-							}
-						}
-					}
-					if ( !empty( $relate_link ) ) {
-						$nprdata['related'][] = [
-							'text' => $relate_json->title,
-							'link' => $relate_link
+						$nprdata['bylines'][] = [
+							'name' => $byl_data->title,
+							'link' => $byl_link
 						];
 					}
 				}
 			}
 		}
+	}
+	if ( empty( $nprdata['bylines'] ) ) {
+		$nprdata['bylines'][] = [
+			'name' => 'NPR Staff',
+			'link' => ''
+		];
+	}
 
-		if ( !empty( $story->images ) ) {
-			foreach ( $story->images as $image ) {
-				if ( !empty( $image->rels ) && in_array( 'primary', $image->rels ) ) {
-					$image_id = $npr->extract_asset_id( $image->href );
-					$image_asset = $story->assets->{$image_id};
-					if ( !empty( $image_asset->enclosures ) ) {
-						foreach ( $image_asset->enclosures as $enclose ) {
-							if ( in_array( 'primary', $enclose->rels ) ) {
-								$nprdata['image']['src'] = $enclose->href;
-								$nprdata['image']['width'] = $enclose->width;
-								$nprdata['image']['height'] = $enclose->height;
-								$nprdata['image']['mime-type'] = $enclose->type;
+	$nprdata['title'] = $story->title;
+	if ( !empty( $story->teaser ) ) {
+		$nprdata['excerpt'] = $story->teaser;
+	}
+
+	$slug = [];
+	if ( !empty( $story->collections ) ) {
+		foreach ( $story->collections as $collect ) {
+			if ( in_array( 'topic', $collect->rels ) || in_array( 'program', $collect->rels ) ) {
+				$coll_temp = $npr->get_document( $collect->href );
+				if ( !empty( $coll_temp ) ) {
+					$nprdata['keywords'][] = $coll_temp->title;
+					if ( !empty( $coll_temp->webPages ) ) {
+						foreach ( $coll_temp->webPages as $coll_web ) {
+							if ( in_array( 'canonical', $coll_web->rels ) ) {
+								$nprdata['keywords_html'][] = '<a href="' . $coll_web->href . '">' . $coll_temp->title . '</a>';
 							}
 						}
 					}
-				}
-			}
-		}
-	} elseif ( function_exists( 'nprstory_activate' ) ) {
-		$npr = new NPRAPIWordpress();
-		$npr->request([
-			'id' => $npr_id,
-			'fields' => 'all',
-			'profileTypeId' => '1,15'
-		]);
-		$npr->parse();
-		if ( !empty( $npr->stories[0] ) ) {
-			$story = $npr->stories[0];
-		} else {
-			global $wp_query;
-			$wp_query->set_404();
-			status_header( 404 );
-			get_template_part( 404 );
-			exit();
-		}
-
-		$use_npr_layout = !empty( get_option( 'dp_npr_query_use_layout' ) );
-
-		$npr_layout = $npr->get_body_with_layout( $story, $use_npr_layout );
-		if ( !empty( $npr_layout['body'] ) ) {
-			$nprdata['body'] = $npr_layout['body'];
-		}
-
-		// add the transcript
-		$nprdata['body'] .= $npr->get_transcript_body( $story );
-
-		// Use oEmbed to flesh out external embeds
-		preg_match_all( '/<div class\="wp\-block\-embed__[ \-a-z0-9]+">\s+(.+)\s+<\/div>/', $nprdata['body'], $match );
-		if ( !empty( $match[1] ) ) {
-			foreach ( $match[1] as $k => $v ) {
-				$embed = wp_oembed_get( $v );
-				if ( str_contains( $embed, '<iframe ' ) ) {
-					$embed = '<p>' . $embed . '</p>';
-				}
-				$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
-			}
-		}
-
-
-		$story_date = new DateTime( $story->storyDate->value );
-		$nprdata[ 'date' ] = $story_date->format( 'F j, Y, g:i A' );
-		$nprdata[ 'permalink' ] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';
-		$nprdata[ 'canonical' ] = $story->link[ 'html' ]->value;
-
-		if ( !empty( $story->byline ) ) {
-			if ( is_array( $story->byline ) ) {
-				foreach( $story->byline as $single ) {
-					$nprdata['bylines'][] = hpm_npr_byline( $single );
-				}
-			} else {
-				$nprdata['bylines'][] = hpm_npr_byline( $story->byline );
-			}
-		} else {
-			$nprdata['bylines'][] = [
-				'name' => 'NPR Staff',
-				'link' => ''
-			];
-		}
-
-		$nprdata['title'] = $story->title->value;
-		if ( !empty( $story->teaser->value ) ) {
-			$nprdata['excerpt'] = $story->teaser->value;
-		} elseif ( !empty( $story->miniTeaser->value ) ) {
-			$nprdata['excerpt'] = $story->miniTeaser->value;
-		}
-
-		$slug = [];
-		if ( !empty( $story->slug->value ) ) {
-			$slug[] = $story->slug->value;
-		}
-		if ( !empty( $story->organization ) ) {
-			if ( is_array( $story->organization ) ) {
-				foreach ( $story->organization as $org ) {
-					$slug[] = $org->name->value;
-				}
-			} else {
-				$slug[] = $story->organization->name->value;
-			}
-		}
-		$nprdata['slug'] = implode( " | ", $slug );
-
-		if ( !empty( $story->relatedLink ) ) {
-			if ( is_array( $story->relatedLink ) ) {
-				foreach( $story->relatedLink as $link ) {
-					$nprdata['related'][] = [
-						'text' => $link->caption->value,
-						'link' => hpm_link_extract( $link->link )
-					];
-				}
-			} else {
-				$nprdata['related'][] = [
-					'text' => $story->relatedLink->caption->value,
-					'link' => hpm_link_extract( $story->relatedLink->link )
-				];
-			}
-		}
-
-		if ( isset( $story->parent ) ) {
-			foreach ( (array)$story->parent as $parent ) {
-				if ( !empty( $parent->type ) ) {
-					if ( $parent->type == 'topic' || $parent->type == 'program' ) {
-						$nprdata[ 'keywords' ][] = $parent->title->value;
-						$nprdata[ 'keywords_html' ][] = '<a href="' . hpm_link_extract( $parent->link ) . '">' . $parent->title->value . '</a>';
+					if ( in_array( 'slug', $collect->rels ) ) {
+						$slug[] = $coll_temp->title;
 					}
 				}
 			}
 		}
+	}
+	if ( !empty( $story->brandings ) ) {
+		foreach ( $story->brandings as $brand ) {
+			$brand_get = wp_remote_get( $brand->href );
+			if ( !is_wp_error( $brand_get ) && $brand_get['response']['code'] == 200 ) {
+				$brand_json = json_decode( $brand_get['body'] );
+				$slug[] = $brand_json->brand->displayName;
+			}
+		}
+	}
+	$nprdata['slug'] = implode( " | ", $slug );
 
-		if ( !empty( $story->image ) ) {
-			foreach ( (array)$story->image as $image ) {
-				if ( $image->type == 'primary' ) {
-					if ( !empty( $image->crop ) ) {
-						foreach ( $image->crop as $crop ) {
-							if ( !empty( $crop->primary ) ) {
-								$nprdata['image']['src'] = $crop->src;
-								$nprdata['image']['width'] = $crop->width;
-								$nprdata['image']['height'] = $crop->height;
-								$parse_url = parse_url( $crop->src );
-								$ext = wp_check_filetype( $parse_url['path'] );
-								$nprdata['image']['mime-type'] = $ext['type'];
-							}
+	if ( !empty( $story->relatedItems ) ) {
+		foreach ( $story->relatedItems as $related ) {
+			$relate_get = wp_remote_get( $related->href );
+			if ( !is_wp_error( $relate_get ) && $relate_get['response']['code'] == 200 ) {
+				$relate_json = json_decode( $relate_get['body'] );
+				$relate_link = '';
+				if ( !empty( $relate_json->webPages ) ) {
+					foreach ( $relate_json->webPages as $rel_web ) {
+						if ( in_array( 'canonical', $rel_web->rels ) ) {
+							$relate_link = $rel_web->href;
+						}
+					}
+				}
+				if ( !empty( $relate_link ) ) {
+					$nprdata['related'][] = [
+						'text' => $relate_json->title,
+						'link' => $relate_link
+					];
+				}
+			}
+		}
+	}
+
+	if ( !empty( $story->images ) ) {
+		foreach ( $story->images as $image ) {
+			if ( !empty( $image->rels ) && in_array( 'primary', $image->rels ) ) {
+				$image_id = $npr->extract_asset_id( $image->href );
+				$image_asset = $story->assets->{$image_id};
+				if ( !empty( $image_asset->enclosures ) ) {
+					foreach ( $image_asset->enclosures as $enclose ) {
+						if ( in_array( 'primary', $enclose->rels ) ) {
+							$nprdata['image']['src'] = $enclose->href;
+							$nprdata['image']['width'] = $enclose->width;
+							$nprdata['image']['height'] = $enclose->height;
+							$nprdata['image']['mime-type'] = $enclose->type;
 						}
 					}
 				}
 			}
 		}
 	}
+
 
 	set_transient( 'hpm_nprdata_' . $npr_id, $nprdata, 3600 );
 	return $nprdata;
