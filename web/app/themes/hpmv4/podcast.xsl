@@ -9,7 +9,7 @@
 				<title><xsl:value-of select="$title" /> from Houston Public Media</title>
 				<link rel="alternate" type="application/rss+xml" title="{$title}" href="{$feedUrl}" />
 				<link href="https://cdn.houstonpublicmedia.org/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
-				<link href="/app/themes/hpmv4/style.css" rel="stylesheet" type="text/css" media="all" />
+				<link href="https://assets.houstonpublicmedia.org/app/themes/hpmv4/style.css" rel="stylesheet" type="text/css" media="all" />
 				<xsl:element name="meta">
 					<xsl:attribute name="charset">UTF-8</xsl:attribute>
 				</xsl:element>
@@ -51,11 +51,11 @@
 				</xsl:element>
 				<xsl:element name="script">
 					<xsl:attribute name="type">text/javascript</xsl:attribute>
-					<xsl:attribute name="src">/app/themes/hpmv4/js/main.js?v=1</xsl:attribute>
+					<xsl:attribute name="src">https://assets.houstonpublicmedia.org/app/themes/hpmv4/js/main.js</xsl:attribute>
 				</xsl:element>
 				<xsl:element name="script">
 					<xsl:attribute name="type">text/javascript</xsl:attribute>
-					<xsl:attribute name="src">https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js?v=1</xsl:attribute>
+					<xsl:attribute name="src">https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js</xsl:attribute>
 				</xsl:element>
 				<style type="text/css">.pod-desc { font: 500 1.125em/1.125em var(--hpm-font-main); color: rgb(142,144,144); } .pod-desc > * + * { margin-top: 1rem; } article.card { display: block !important; border-bottom: 1px solid #808080; }</style>
 			</head>

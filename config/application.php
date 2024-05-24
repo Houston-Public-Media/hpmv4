@@ -135,6 +135,8 @@ Config::define( 'WP_POST_REVISIONS', 7 );
 Config::define( 'WP_MAX_MEMORY_LIMIT', '1024M' );
 Config::define( 'AWS_ACCESS_KEY_ID', env( 'AWS_ACCESS_KEY_ID' ) );
 Config::define( 'AWS_SECRET_ACCESS_KEY', env( 'AWS_SECRET_ACCESS_KEY' ) );
+Config::define( 'AWS_S3_BUCKET_NAME', env( 'AWS_S3_BUCKET_NAME' ) );
+Config::define( 'AWS_REGION', env( 'AWS_REGION' ) );
 Config::define( 'HPM_SFTP_PASSWORD', env( 'HPM_SFTP_PASSWORD' ) );
 Config::define( 'HPM_PBS_TVSS', env( 'HPM_PBS_TVSS' ) );
 Config::define( 'HPM_MVAULT_ID', env( 'HPM_MVAULT_ID' ) );

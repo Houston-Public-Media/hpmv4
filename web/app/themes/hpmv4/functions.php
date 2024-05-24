@@ -44,6 +44,8 @@ function hpm_scripts(): void {
 	wp_enqueue_script( 'bootstrap-js', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/js/bootstrap.min.js', [ 'jquery' ], '5.3.2', true);
 	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], $versions['css'] );
 	wp_enqueue_style( 'bootstrap-css', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/css/bootstrap.min.css', false, '5.3.2' );
+	wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [ 'bootstrap-css' ], '6' );
+	wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], '6', true );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
@@ -56,27 +58,6 @@ function hpm_scripts(): void {
 	wp_deregister_style( 'global-styles' );
 }
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
-
-function hpm_inline_script(): void {
-//	if ( WP_ENV == 'production' ) {
-//		$js = file_get_contents( get_template_directory() . '/js/main.js' );
-//		echo '<script>' . $js . '</script>';
-//	} else {
-		echo '<script src="' . get_template_directory_uri() . '/js/main.js"></script>';
-	//}
-}
-function hpm_inline_style(): void {
-//	if ( WP_ENV == 'production' ) {
-//		$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
-//		$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
-//		echo '<style>' . $styles . '</style>';
-//	} else {
-		echo '<link rel="stylesheet" id="hpm-css" href="' . get_template_directory_uri() . '/style.css" type="text/css" media="all">';
-	//}
-}
-
-add_action( 'wp_footer', 'hpm_inline_script', 100 );
-add_action( 'wp_head', 'hpm_inline_style', 100 );
 
 /*
  * Modifies homepage query

@@ -715,6 +715,8 @@ class HPM_Podcasts {
 	 */
 	static public function generate( WP_REST_Request $request = null ): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		global $post;
+		require HPM_PODCAST_PLUGIN_DIR . 'inc' . DIRECTORY_SEPARATOR . 'marco_s3.php';
+		$s3 = new S3( AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_S3_BUCKET_NAME, AWS_REGION, '' );
 		$pods = get_option( 'hpm_podcast_settings' );
 		$ds = DIRECTORY_SEPARATOR;
 		$protocol = 'https://';
@@ -746,7 +748,9 @@ class HPM_Podcasts {
 			]]
 		]);
 
-		$xsl = str_replace( 'http://', $protocol, get_stylesheet_directory_uri() . $ds . 'podcast.xsl' );
+		// $xsl = str_replace( 'http://', $protocol, get_stylesheet_directory_uri() . $ds . 'podcast.xsl' );
+		$xsl = 'https://cdn.houstonpublicmedia.org/podcasts/podcast.xsl';
+		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart', 'radiopublic' ];
 
 		if ( !empty( $pods['recurrence'] ) ) {
 			if ( $pods['recurrence'] == 'hpm_5min' ) {
@@ -1009,8 +1013,37 @@ class HPM_Podcasts {
 </rss><?php
 				$getContent = ob_get_contents();
 				ob_end_clean();
+				$json_encoded = json_encode( $json );
 				update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
-				update_option( 'hpm_podcast-json-' . $podcast_title, json_encode( $json ), false );
+				update_option( 'hpm_podcast-json-' . $podcast_title, $json_encoded, false );
+				try {
+					$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', $getContent );
+					$s3->put( 'podcasts/' . $podcast_title . '.json', 'application/json', 'public-read', $json_encoded );
+				} catch ( Exception $e ) {
+					$error = print_r( $e, true );
+					error_log( 'Error uploading podcast flat file to S3: ' . $error );
+				}
+				foreach ( $sources as $ps ) {
+					$replace = [ 'srcid=' . $ps ];
+					if ( !empty( $podlink['aggregate_feed'] ) ) {
+						$find = '?{{REPLACE}}{{AGGREGATE_FEED}}';
+						$replace[] = 'srctype=aggregate';
+					} else {
+						$find = '?{{REPLACE}}';
+					}
+					$replace_str_json = implode( '&', $replace );
+					$replace_str_xml = implode( '&amp;', $replace );
+
+					$content_xml = str_replace( $find, '?' . $replace_str_xml, $getContent );
+					$content_json = str_replace( $find, '?' . $replace_str_json, $json_encoded );
+					try {
+						$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
+						$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.json', 'application/json', 'public-read', $content_json );
+					} catch ( Exception $e ) {
+						$error = print_r( $e, true );
+						error_log( 'Error uploading podcast flat file to S3: ' . $error );
+					}
+				}
 			}
 			$t = time();
 			$offset = get_option( 'gmt_offset' ) * 3600;
