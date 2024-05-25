@@ -2657,7 +2657,7 @@ figure {
 	margin: 0 auto 1em;
 	max-width: 100%;
 	clear: both;
-	background-color: var(--main-background);
+	background-color: #f5f5f5;
 }
 figure img, figure iframe {
 	max-width: 100%;
