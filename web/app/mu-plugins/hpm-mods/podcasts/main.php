@@ -750,7 +750,7 @@ class HPM_Podcasts {
 
 		// $xsl = str_replace( 'http://', $protocol, get_stylesheet_directory_uri() . $ds . 'podcast.xsl' );
 		$xsl = 'https://cdn.houstonpublicmedia.org/podcasts/podcast.xsl';
-		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart', 'radiopublic' ];
+		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart' ];
 
 		if ( !empty( $pods['recurrence'] ) ) {
 			if ( $pods['recurrence'] == 'hpm_5min' ) {

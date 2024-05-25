@@ -480,42 +480,28 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 		return $npr;
 	}
 	$output = '<ul class="list-none news-links link-thumb">';
-	if ( function_exists( 'npr_cds_activate' ) ) {
-		$npr = new NPR_CDS_WP();
-		$npr->request([
-			'collectionIds' => $api_id,
-			'profileIds' => 'story,renderable,publishable,slug',
-			'limit' => $num,
-			'sort' => 'publishDateTime:desc'
-		]);
-		$npr->parse();
-		if ( !empty( $npr->stories ) ) {
-			foreach ( $npr->stories as $story ) {
-				$image_url = '';
-				if ( !empty( $story->images[0] ) ) {
-					$image_id = $npr->extract_asset_id( $story->images[0]->href );
-					$image_asset = $story->assets->{$image_id};
-					foreach ( $image_asset->enclosures as $enclosure ) {
-						if ( in_array( 'primary', $enclosure->rels ) ) {
-							$image_url = $npr->get_image_url( $enclosure );
-						}
+	$npr = new NPR_CDS_WP();
+	$npr->request([
+		'collectionIds' => $api_id,
+		'profileIds' => 'story,publishable,buildout',
+		'limit' => $num,
+		'sort' => 'publishDateTime:desc'
+	]);
+	$npr->parse();
+	if ( !empty( $npr->stories ) ) {
+		foreach ( $npr->stories as $story ) {
+			$image_url = '';
+			$npr_date = strtotime( $story->publishDateTime );
+			if ( !empty( $story->images[0] ) ) {
+				$image_id = $npr->extract_asset_id( $story->images[0]->href );
+				$image_asset = $story->assets->{$image_id};
+				foreach ( $image_asset->enclosures as $enclosure ) {
+					if ( in_array( 'primary', $enclosure->rels ) ) {
+						$image_url = $npr->get_image_url( $enclosure );
 					}
 				}
-				$output .= '<li><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url ) ? '<img src="' . $image_url . '" alt="' . $story->teaser . '" loading="lazy" />' : '' ) .'</span></a></li>';
 			}
-		}
-	} elseif ( function_exists( 'nprstory_activate' ) ) {
-		$api_key = get_option( 'ds_npr_api_key' );
-		$remote  = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,slug,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
-		if ( is_wp_error( $remote ) ) {
-			return "<p></p>";
-		} else {
-			$npr  = wp_remote_retrieve_body( $remote );
-			$npr_json = json_decode( $npr, true );
-		}
-		foreach ( $npr_json['list']['story'] as $story ) {
-			$npr_date = strtotime( $story['storyDate']['$text'] );
-			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark"><span>' . $story['title']['$text'] . '</span><span class="img-w75"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></span></a></li>';
+			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url ) ? '<img src="' . $image_url . '" alt="' . $story->teaser . '" loading="lazy" />' : '' ) .'</span></a></li>';
 		}
 	}
 	$output .= "</ul>";
