@@ -912,7 +912,7 @@ add_filter( 'the_excerpt', 'hpm_add_autop', 2 );
 add_filter( 'the_content', 'hpm_add_autop', 2 );
 
 function hpm_add_autop( $content ) {
-	if ( get_post_type() == 'post' ) {
+	if ( get_post_type() == 'post' && get_the_ID() != 476075 ) {
 		add_filter( 'the_content', 'wpautop', 11 );
 		add_filter( 'the_excerpt', 'wpautop', 11 );
 	}
