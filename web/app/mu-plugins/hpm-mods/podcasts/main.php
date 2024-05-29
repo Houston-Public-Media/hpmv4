@@ -1017,8 +1017,8 @@ class HPM_Podcasts {
 				update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
 				update_option( 'hpm_podcast-json-' . $podcast_title, $json_encoded, false );
 				try {
-					$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', $getContent );
-					$s3->put( 'podcasts/' . $podcast_title . '.json', 'application/json', 'public-read', $json_encoded );
+					$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $getContent ) );
+					$s3->put( 'podcasts/' . $podcast_title . '.json', 'application/json', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $json_encoded ) );
 				} catch ( Exception $e ) {
 					$error = print_r( $e, true );
 					error_log( 'Error uploading podcast flat file to S3: ' . $error );
