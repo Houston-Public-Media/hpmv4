@@ -155,6 +155,9 @@ Config::define( 'HPM_MASTODON_BEARER', env( 'MASTODON_BEARER' ) );
 Config::define( 'HPM_OPEN_WEATHER', env( 'OPEN_WEATHER_API_KEY' ) );
 Config::define( 'NPR_CDS_TOKEN', env( 'NPR_CDS_TOKEN' ) );
 Config::define( 'EWWW_IMAGE_OPTIMIZER_DEFER_S3', true );
+Config::define( 'WP_REDIS_HOST', env( 'WP_REDIS_HOST' ) );
+Config::define( 'WP_REDIS_PORT', env( 'WP_REDIS_PORT' ) );
+Config::define( 'WP_REDIS_SCHEME', env( 'WP_REDIS_SCHEME' ) );
 
 /**
  * Debugging Settings
