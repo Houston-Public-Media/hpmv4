@@ -70,6 +70,27 @@ if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
 </channel>
 </rss><?php
 } else {
+	if ( $wp_query->query['name'] === 'moonwalk' ) {
+		$sources = [
+			'noad',
+			'apple-podcasts',
+			'spotify',
+			'npr-one',
+			'simplecast',
+			'tunein',
+			'amazon-music',
+			'iheart'
+		];
+		$source = '';
+		if ( !empty( $_GET['source'] ) && in_array( strtolower( $_GET['source'] ), $sources ) ) {
+			$source .= '-' . $_GET['source'];
+		}
+		$xml = $wp_query->query['name'] . $source . '.xml';
+		header( "HTTP/1.1 301 Moved Permanently" );
+		header( 'Location: https://cdn.houstonpublicmedia.org/podcasts/' . $xml );
+		exit;
+	}
+
 	header('Content-Type: text/xml; charset=' . get_option( 'blog_charset' ) );
 	$content = get_option( 'hpm_podcast-' . $wp_query->query['name'] );
 	$sources = [
@@ -98,6 +119,6 @@ if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
 	if ( !empty( $replace_str ) ) {
 		$replace_str = '?' . $replace_str;
 	}
-	$content = str_replace( $find, $replace_str, $content );
+	$content = str_replace( [ $find, '<?xml-stylesheet type="application/xml" media="screen" href="https://cdn.houstonpublicmedia.org/podcasts/podcast.xsl"?>' ], [ $replace_str, '<?xml-stylesheet type="application/xml" media="screen" href="/app/themes/hpmv4/podcast.xsl"?>' ], $content );
 	echo $content;
 }

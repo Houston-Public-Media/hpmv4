@@ -1016,32 +1016,34 @@ class HPM_Podcasts {
 				$json_encoded = json_encode( $json );
 				update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
 				update_option( 'hpm_podcast-json-' . $podcast_title, $json_encoded, false );
-				try {
-					$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $getContent ) );
-					$s3->put( 'podcasts/' . $podcast_title . '.json', 'application/json', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $json_encoded ) );
-				} catch ( Exception $e ) {
-					$error = print_r( $e, true );
-					error_log( 'Error uploading podcast flat file to S3: ' . $error );
-				}
-				foreach ( $sources as $ps ) {
-					$replace = [ 'srcid=' . $ps ];
-					if ( !empty( $podlink['aggregate_feed'] ) ) {
-						$find = '?{{REPLACE}}{{AGGREGATE_FEED}}';
-						$replace[] = 'srctype=aggregate';
-					} else {
-						$find = '?{{REPLACE}}';
-					}
-					$replace_str_json = implode( '&', $replace );
-					$replace_str_xml = implode( '&amp;', $replace );
-
-					$content_xml = str_replace( $find, '?' . $replace_str_xml, $getContent );
-					$content_json = str_replace( $find, '?' . $replace_str_json, $json_encoded );
+				if ( WP_ENV === 'production' ) {
 					try {
-						$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
-						$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.json', 'application/json', 'public-read', $content_json );
+						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $getContent ) );
+						$s3->put( 'podcasts/' . $podcast_title . '.json', 'application/json', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $json_encoded ) );
 					} catch ( Exception $e ) {
 						$error = print_r( $e, true );
 						error_log( 'Error uploading podcast flat file to S3: ' . $error );
+					}
+					foreach ( $sources as $ps ) {
+						$replace = [ 'srcid=' . $ps ];
+						if ( !empty( $podlink[ 'aggregate_feed' ] ) ) {
+							$find = '?{{REPLACE}}{{AGGREGATE_FEED}}';
+							$replace[] = 'srctype=aggregate';
+						} else {
+							$find = '?{{REPLACE}}';
+						}
+						$replace_str_json = implode( '&', $replace );
+						$replace_str_xml = implode( '&amp;', $replace );
+
+						$content_xml = str_replace( $find, '?' . $replace_str_xml, $getContent );
+						$content_json = str_replace( $find, '?' . $replace_str_json, $json_encoded );
+						try {
+							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
+							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.json', 'application/json', 'public-read', $content_json );
+						} catch ( Exception $e ) {
+							$error = print_r( $e, true );
+							error_log( 'Error uploading podcast flat file to S3: ' . $error );
+						}
 					}
 				}
 			}
