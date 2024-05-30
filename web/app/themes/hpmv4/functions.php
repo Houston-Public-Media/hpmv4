@@ -899,39 +899,6 @@ function hpm_add_autop( $content ) {
 	return $content;
 }
 
-function hpm_link_extract( $links ) {
-	$output = '';
-	if ( !empty( $links ) ) {
-		if ( is_string( $links ) ) {
-			$output = $links;
-		} elseif ( is_array( $links ) ) {
-			foreach ( $links as $link ) {
-				if ( empty( $link->type ) ) {
-					continue;
-				}
-				if ( 'html' === $link->type ) {
-					$output = $link->value;
-				}
-			}
-		} elseif ( $links instanceof NPRMLElement && !empty( $links->value ) && $links->type === 'html' ) {
-			$output = $links->value;
-		}
-	}
-	return $output;
-}
-
-function hpm_npr_byline( $author ): array {
-	$output = [];
-	if ( !$author instanceof NPRMLElement && !empty( $author ) ) {
-		return $output;
-	}
-	$output = [
-		'name' => ( $author->name->value ?? '' ),
-		'link' => ( !empty( $author->link ) ? hpm_link_extract( $author->link ) : '' )
-	];
-	return $output;
-}
-
 /**
  * @throws Exception
  */
