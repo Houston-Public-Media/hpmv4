@@ -70,7 +70,8 @@ if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
 </channel>
 </rss><?php
 } else {
-	if ( $wp_query->query['name'] === 'moonwalk' ) {
+	$inactive = [ 'moonwalk', 'hurricane-season', 'stories-from-the-storm', 'below-the-waterlines', 'hot-stops', 'next-question', 'town-square', 'unwrap-your-candies-now' ];
+	if ( in_array( $wp_query->query['name'], $inactive ) ) {
 		$sources = [
 			'noad',
 			'apple-podcasts',

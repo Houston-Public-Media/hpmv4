@@ -1019,7 +1019,7 @@ class HPM_Podcasts {
 				if ( WP_ENV === 'production' ) {
 					try {
 						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $getContent ) );
-						$s3->put( 'podcasts/' . $podcast_title . '.json', 'application/json', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $json_encoded ) );
+						//$s3->put( 'podcasts/' . $podcast_title . '.json', 'application/json', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $json_encoded ) );
 					} catch ( Exception $e ) {
 						$error = print_r( $e, true );
 						error_log( 'Error uploading podcast flat file to S3: ' . $error );
@@ -1032,14 +1032,14 @@ class HPM_Podcasts {
 						} else {
 							$find = '?{{REPLACE}}';
 						}
-						$replace_str_json = implode( '&', $replace );
+						//$replace_str_json = implode( '&', $replace );
 						$replace_str_xml = implode( '&amp;', $replace );
 
 						$content_xml = str_replace( $find, '?' . $replace_str_xml, $getContent );
-						$content_json = str_replace( $find, '?' . $replace_str_json, $json_encoded );
+						//$content_json = str_replace( $find, '?' . $replace_str_json, $json_encoded );
 						try {
 							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
-							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.json', 'application/json', 'public-read', $content_json );
+							//$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.json', 'application/json', 'public-read', $content_json );
 						} catch ( Exception $e ) {
 							$error = print_r( $e, true );
 							error_log( 'Error uploading podcast flat file to S3: ' . $error );
@@ -1453,7 +1453,7 @@ class HPM_Podcasts {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feed specified. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
 
-		$output = get_option( 'hpm_podcast-json-'.$request['feed'] );
+		$output = get_option( 'hpm_podcast-json-' . $request['feed'] );
 		if ( !$output ) {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feed specified. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
