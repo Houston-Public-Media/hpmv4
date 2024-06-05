@@ -483,7 +483,7 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 	$npr = new NPR_CDS_WP();
 	$npr->request([
 		'collectionIds' => $api_id,
-		'profileIds' => 'story,publishable,buildout',
+		'profileIds' => 'story,publishable,renderable,buildout',
 		'limit' => $num,
 		'sort' => 'publishDateTime:desc'
 	]);
