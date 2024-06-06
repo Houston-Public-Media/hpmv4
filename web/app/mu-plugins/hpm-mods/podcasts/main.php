@@ -956,7 +956,7 @@ class HPM_Podcasts {
 </rss><?php
 				$getContent = ob_get_contents();
 				ob_end_clean();
-				update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
+				//update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
 				if ( WP_ENV === 'production' ) {
 					try {
 						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $getContent ) );
