@@ -730,22 +730,17 @@ function altered_post_time_ago_function() {
 }
 add_filter( 'the_time', 'altered_post_time_ago_function' );
 
-function hpm_showTopthreeArticles( $articles ): string{
+function hpm_showTopthreeArticles( $articles ): string {
 	$result = "";
-	$kk = 0;
 	if ( count( $articles ) > 0 ) {
 		foreach ( $articles as $ka => $va ) {
 			$post = $va;
-			$post_title = get_the_title();
+			$post_title = get_the_title( $post );
 			if ( is_front_page() ) {
-				$alt_headline = get_post_meta( get_the_ID(), 'hpm_alt_headline', true );
+				$alt_headline = get_post_meta( $post->ID, 'hpm_alt_headline', true );
 				if ( !empty( $alt_headline ) ) {
-					echo $alt_headline;
-				} else {
-					$post_title = get_the_title( $post );
+					$post_title = $alt_headline;
 				}
-			} else {
-				$post_title = get_the_title();
 			}
 			$summary = strip_tags( get_the_excerpt( $post ) );
 			if ( $ka == 0 ) {
@@ -761,7 +756,6 @@ function hpm_showTopthreeArticles( $articles ): string{
 			} elseif ( $ka > 3 ) {
 					$result .= '</ul>';
 			}
-			$kk++;
 		}
 	}
 	wp_reset_query();
