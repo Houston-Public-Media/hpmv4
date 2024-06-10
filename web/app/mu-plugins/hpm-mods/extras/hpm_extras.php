@@ -501,7 +501,7 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 					}
 				}
 			}
-			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url ) ? '<img src="' . $image_url . '" alt="' . $story->teaser . '" loading="lazy" />' : '' ) .'</span></a></li>';
+			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url['url'] ) ? '<img src="' . $image_url['url'] . '" alt="' . strip_tags( $story->teaser ) . '" loading="lazy" />' : '' ) .'</span></a></li>';
 		}
 	}
 	$output .= "</ul>";
