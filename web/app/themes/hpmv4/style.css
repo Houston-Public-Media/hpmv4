@@ -2387,6 +2387,7 @@ footer#colophon ul li a {
 	gap: 1rem;
 	grid-template-columns: 1fr 1fr;
 	background-color: var(--main-element-background);
+	padding: 0.5rem;
 }
 #content > .hpm-promo-wrap > .column-one {
 	grid-column-start: 1;
@@ -3351,6 +3352,7 @@ article .entry-header p.staff-pronouns,
 		display: flex;
 		flex-flow: row wrap;
 		align-content: center;
+		align-items: center;
 	}
 	.single article.category-in-depth .entry-header .indepth + h3 {
 		width: auto;
@@ -3833,6 +3835,7 @@ h2.ss-join {
 	width: max-content;
 	position: relative;
 	left: -1rem;
+	margin-right: 2.5rem;
 }
 .old-article-banner svg {
 	width: 1rem;
