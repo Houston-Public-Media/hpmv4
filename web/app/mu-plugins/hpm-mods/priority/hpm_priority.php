@@ -66,7 +66,8 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 					'ID' => $stp->ID,
 					'title' => $stp->post_title,
 					'excerpt' => $stp->post_excerpt,
-					'picture' => get_the_post_thumbnail_url( $stp->ID, 'medium' )
+					'picture' => get_the_post_thumbnail_url( $stp->ID, 'medium' ),
+					'permalink' => get_the_permalink( $stp->ID ),
 				];
 				$output[] = $arr;
 			}
