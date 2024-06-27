@@ -254,7 +254,7 @@ $tras = null; ?>
 					<h2 class="title">
 						<strong>News from <span>NPR</span></strong>
 					</h2>
-					<?php //echo hpm_nprapi_output(); ?>
+					<?php  echo hpm_nprapi_output(); ?>
 				</div>
 				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
 					<h2 class="title title-full">
