@@ -6,6 +6,7 @@
  */
 get_header();
 $articles = hpm_homepage_articles();
+
 $indepthArtcle[] = null;
 $tras = null; ?>
 	<style>
@@ -75,6 +76,32 @@ $tras = null; ?>
 			display: flex;
 			justify-content: center;
 		}
+        .card
+        {
+            border-radius: 0px;
+            border-color: #237bbd;
+        }
+        .card-header
+        {
+            background-color: #237bbd;
+            color:#fff;
+            font-weight: bold;
+            border-radius: 0px;
+        }
+        .card-header:first-child
+        {
+            border-radius: 0px;
+        }
+        .card-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #237bbd;
+        }
+        .card-body
+        {
+            padding-top: 5px;
+        }
+
 		@media screen and (min-width: 34rem) {
 			#station-schedules {
 				display: grid;
@@ -149,35 +176,7 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-		<!--<section>
-			<div class="row text-center flex-row">
-				<div class="col-md-12">
-					<a href="/shows/the-takeover/">
-<?php
-/*	$t = time();
-	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset;
-	if ( $t >= ( mktime( 5, 0, 0, 5, 3, 2024 ) + $offset ) ) { */?>
-						<picture>
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast_800x41.jpg.webp" media="(max-width: 34em)" type="image/webp">
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast_800x41.jpg" media="(max-width: 34em)">
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast1200X62.jpg.webp" type="image/webp">
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast1200X62.jpg">
-							<img src="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_Podcast1200X62.jpg" alt="The Takeover page banner">
-						</picture>
-<?php /*} else { */?>
-						<picture>
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg.webp" media="(max-width: 34em)" type="image/webp">
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_800x41.jpg" media="(max-width: 34em)">
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg.webp" type="image/webp">
-							<source srcset="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg">
-							<img src="https://cdn.houstonpublicmedia.org/assets/images/TheTakeOver_PencilAd_1200x62.jpg" alt="The Takeover page banner">
-						</picture>
-<?php /*} */?>
-					</a>
-				</div>
-			</div>
-		</section>-->
+
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
@@ -255,7 +254,7 @@ $tras = null; ?>
 					<h2 class="title">
 						<strong>News from <span>NPR</span></strong>
 					</h2>
-					<?php echo hpm_nprapi_output(); ?>
+					<?php //echo hpm_nprapi_output(); ?>
 				</div>
 				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
 					<h2 class="title title-full">
@@ -283,5 +282,7 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
+
+        <?php get_template_part("content", "exclusives"); ?>
 	</div>
 <?php get_footer(); ?>

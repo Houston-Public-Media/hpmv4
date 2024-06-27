@@ -745,6 +745,49 @@ function hpm_showLatestArticlesbyShowID( $catID ): array {
 	return $articles;
 }
 
+function hpm_showLatestWeatherArticlesbyShowID( $catID ): array {
+    $articles = [];
+    if ( !empty( $catID ) ) {
+        $showposts_args = [
+            'posts_per_page' => 2,
+            'cat' => $catID,
+            'ignore_sticky_posts' => 1,
+            'post_status' => 'publish'
+        ];
+        $catposts_query = new WP_Query( $showposts_args );
+        //print_r( $catposts_query);
+        if ( $catposts_query->have_posts() ) {
+            foreach ( $catposts_query->posts as $stp ) {
+                $articles[] = $stp;
+            }
+        }
+    }
+    wp_reset_query();
+    return $articles;
+}
+
+function hpm_showLatestPresidentialElectionArticlesbyShowID( $catID ): array {
+    $articles = [];
+    if ( !empty( $catID ) ) {
+        $showposts_args = [
+            'posts_per_page' => 2,
+            'cat' => $catID,
+            'ignore_sticky_posts' => 1,
+            'post_status' => 'publish'
+        ];
+        $catposts_query = new WP_Query( $showposts_args );
+        //print_r( $catposts_query);
+        if ( $catposts_query->have_posts() ) {
+            foreach ( $catposts_query->posts as $stp ) {
+                $articles[] = $stp;
+            }
+        }
+    }
+    wp_reset_query();
+    return $articles;
+}
+
+
 function altered_post_time_ago_function() {
 	return ( get_the_time('U') >= strtotime('-1 week') ) ? sprintf( esc_html__( '%s ago', 'textdomain' ), human_time_diff( get_the_time ( 'U' ), current_time( 'timestamp' ) ) ) : get_the_date();
 }
