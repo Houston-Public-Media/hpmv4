@@ -12,8 +12,8 @@ $PE2024Articles = hpm_showLatestPresidentialElectionArticlesbyShowID( 20 );?>
                     </div>
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="https://cdn.houstonpublicmedia.org/assets/images/Hurricane-and-storm-tracker-hpm-interactives.png.webp" alt="Hurricane and Tropical Storm Tracker" style="padding: 6px;">
-                            <h4 class="text-center" style="color:#237bbd; font-size: 14px;">Hurricane & Tropical Strom Tracker</h4>
+                            <a href="https://www.houstonpublicmedia.org/articles/news/hurricane/2024/05/30/489073/hurricane-tracker-houston-texas-united-states/"><img src="https://cdn.houstonpublicmedia.org/assets/images/Hurricane-and-storm-tracker-hpm-interactives.png.webp" alt="Hurricane and Tropical Storm Tracker" style="padding: 6px;"></a>
+                            <h4 class="text-center" style="color:#237bbd; font-size: 14px;"><a style="text-decoration: none;" href="https://www.houstonpublicmedia.org/articles/news/hurricane/2024/05/30/489073/hurricane-tracker-houston-texas-united-states/">Hurricane & Tropical Strom Tracker</a></h4>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -36,9 +36,9 @@ $PE2024Articles = hpm_showLatestPresidentialElectionArticlesbyShowID( 20 );?>
             </div>
 
         <div class="col-sm-2" style="padding: 10px;">
-            <h4 class="text-center" style="color:#237bbd; font-size: 14px;">HEAT TRACKER</h4>
+            <h4 class="text-center" style="color:#237bbd; font-size: 14px;"><a style="text-decoration: none;" href="http://172.21.136.142/articles/news/2024/06/11/476089/heat-tracker-2024/">HEAT TRACKER</a></h4>
             <div class="image" style="border: 1px solid #237bbd; padding: 5px;">
-                    <img src="https://cdn.houstonpublicmedia.org/assets/images/Heat-Tracker-Interactive-Map.png.webp" alt="Heat Tracker Interactive Map" style="padding: 6px;">
+                <a href="http://172.21.136.142/articles/news/2024/06/11/476089/heat-tracker-2024/"> <img src="https://cdn.houstonpublicmedia.org/assets/images/Heat-Tracker-Interactive-Map.png.webp" alt="Heat Tracker Interactive Map" style="padding: 6px;"></a>
             </div>
 
 
