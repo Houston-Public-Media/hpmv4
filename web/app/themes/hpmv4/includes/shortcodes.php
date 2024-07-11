@@ -699,7 +699,7 @@ function hpm_newsletter_bug(): string {
 }
 add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
 
-remove_shortcode( 'gallery', 'gallery_shortcode' );
+remove_shortcode( 'gallery' );
 add_shortcode( 'gallery', 'hpm_splide_gallery' );
 
 function hpm_splide_gallery( $attr ): string {

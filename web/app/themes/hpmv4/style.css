@@ -2389,23 +2389,25 @@ footer#colophon ul li a {
 	background-color: var(--main-element-background);
 	padding: 0.5rem;
 }
-#content > .hpm-promo-wrap > .column-one {
-	grid-column-start: 1;
-}
-#content > .hpm-promo-wrap > .column-two {
-	grid-column-start: 2;
-}
-#content > .hpm-promo-wrap > .row-one {
-	grid-row-start: 1;
-}
-#content > .hpm-promo-wrap > .row-two {
-	grid-row-start: 2;
-}
-#content > .hpm-promo-wrap > .row-span {
-	grid-row: 1/span 2;
-}
-#content > .hpm-promo-wrap > .column-span {
-	grid-column: 1/span 2;
+#content > .hpm-promo-wrap {
+	> .column-one {
+		grid-column-start: 1;
+	}
+	> .column-two {
+		grid-column-start: 2;
+	}
+	> .row-one {
+		grid-row-start: 1;
+	}
+	> .row-two {
+		grid-row-start: 2;
+	}
+	> .row-span {
+		grid-row: 1/span 2;
+	}
+	> .column-span, > .full-width {
+		grid-column: 1/span 2;
+	}
 }
 aside .hpm-promo-wrap {
 	display: none;
