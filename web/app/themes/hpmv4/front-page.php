@@ -75,6 +75,28 @@ $tras = null; ?>
 			display: flex;
 			justify-content: center;
 		}
+        .card {
+            border-radius: 0px;
+            border-color: #237bbd;
+        }
+        .card-header {
+            background-color: #237bbd;
+            color:#fff;
+            font-weight: bold;
+            border-radius: 0px;
+            min-height: 56px;
+        }
+        .card-header:first-child {
+            border-radius: 0px;
+        }
+        .card-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #237bbd;
+        }
+        .card-body {
+            padding-top: 5px;
+        }
 		@media screen and (min-width: 34rem) {
 			#station-schedules {
 				display: grid;
@@ -254,5 +276,6 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
+        <?php get_template_part("content", "interactives"); ?>
 	</div>
 <?php get_footer(); ?>
