@@ -53,7 +53,7 @@
         <div class="col-sm-3">
             <div class="card mb-3">
                 <div class="card-header">
-                    <a style="text-decoration: none; color:#fff;" href="/electoral-college-interactive-map-2024-election">Presidential Election Collage Map</a>
+                    <a style="text-decoration: none; color:#fff;" href="/electoral-college-interactive-map-2024-election">Electoral College Map: 2024 Election</a>
                 </div>
                 <div class="row g-0">
                     <div class="col-md-12">
