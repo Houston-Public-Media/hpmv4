@@ -7,7 +7,7 @@
         <div class="col-sm-3">
                 <div class="card mb-3">
                     <div class="card-header">
-                        <a style="text-decoration: none; color:#fff;" href="/hurricane-tropical-storm-tracker-texas-houston">Hurricane & Tropical Strom Tracker</a>
+                        <a style="text-decoration: none; color:#fff;" href="/hurricane-tropical-storm-tracker-texas-houston">Hurricane & Tropical Storm Tracker</a>
                     </div>
                     <div class="row g-0">
                         <div class="col-md-12">
