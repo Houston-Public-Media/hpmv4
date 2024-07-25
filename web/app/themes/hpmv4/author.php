@@ -58,7 +58,9 @@
 							!empty( $author['facebook'] ) ||
 							!empty( $author['twitter'] ) ||
 							!empty( $author['linkedin'] ) ||
-							!empty( $author['email'] )
+							!empty( $author['email'] ) ||
+							!empty( $author['fediverse'] ) ||
+							!empty( $author['bluesky'] )
 						) { ?>
 						<div class="icon-wrap">
 						<?php
@@ -66,6 +68,14 @@
 							echo ( !empty( $author['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text">Facebook</span></a></div>' : '' );
 							echo ( !empty( $author['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '<span class="screen-reader-text">Twitter/X</span></a></div>' : '' );
 							echo ( !empty( $author['linkedin'] ) ? '<div class="service-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text">LinkedIn</span></a></div>' : '' );
+							if ( !empty( $author['fediverse'] ) ) {
+								if ( str_contains( $author['fediverse'], 'threads.net' ) ) {
+									echo '<div class="service-icon threads"><a href="' . $author['fediverse'] . '" target="_blank">' . hpm_svg_output( 'threads' ) . '<span class="screen-reader-text">Threads</span></a></div>';
+								} else {
+									echo '<div class="service-icon mastodon"><a href="' . $author['fediverse'] . '" target="_blank">' . hpm_svg_output( 'mastodon' ) . '<span class="screen-reader-text">Mastodon</span></a></div>';
+								}
+							}
+							echo ( !empty( $author['bluesky'] ) ? '<div class="service-icon bluesky"><a href="' . $author['bluesky'] . '" target="_blank">' . hpm_svg_output( 'bluesky' ) . '<span class="screen-reader-text">Bluesky</span></a></div>' : '' );
 							echo ( !empty( $author['email'] ) ? '<div class="service-icon envelope"><a href="mailto:' . $author['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text">Email ' . $curauth->display_name . '</span></a></div>' : '' );
 						} ?>
 						</div>

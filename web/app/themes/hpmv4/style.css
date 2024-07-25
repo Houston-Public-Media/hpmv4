@@ -566,6 +566,10 @@ svg:not(:root) {
 	overflow: visible;
 }
 
+/*@view-transition {*/
+/*	navigation: auto;*/
+/*}*/
+
 /* Social Icons */
 .icon-wrap {
 	display: grid;
@@ -651,7 +655,7 @@ svg:not(:root) {
 	background: rgb(59, 89, 152);
 }
 .service-icon.twitter :is(a,button) {
-	background: rgb(29, 161, 242);
+	background: #000000;
 }
 .service-icon.youtube :is(a,button) {
 	background: rgb(234, 50, 35);
@@ -665,6 +669,15 @@ svg:not(:root) {
 }
 .service-icon.mastodon :is(a,button) {
 	background-color: #6364ff;
+}
+.service-icon.threads :is(a,button) {
+	background-color: #000000;
+	padding-left: 0.3rem;
+	padding-right: 0.15rem;
+}
+.service-icon.bluesky :is(a,button) {
+	background-color: #3d83f6;
+	padding-right: 0.4rem;
 }
 .service-icon:last-child :is(a,button) {
 	margin-right: 0;
@@ -4821,38 +4834,6 @@ article.staff .icon-wrap {
 
 article.staff .service-icon {
 	--unit: 2rem;
-}
-
-.service-icon :is(a, button) {
-	display: block;
-	background-color: var(--accent-black-3);
-	padding: 0.25rem;
-	border: 0;
-	width: var(--unit);
-	height: var(--unit);
-	text-align: center;
-	border-radius: 0.5rem;
-}
-
-.service-icon :is(a, button) svg {
-	fill: white;
-	vertical-align: inherit;
-}
-
-.service-icon.phone :is(a, button) {
-	padding: calc(var(--unit) / 6);
-	background: rgb(131, 242, 131);
-	background: linear-gradient(180deg, rgba(131, 242, 131, 1) 0%, rgba(86, 186, 68, 1) 100%);
-	position: relative;
-}
-
-.service-icon.twitter :is(a, button) {
-	background: rgb(29, 161, 242);
-}
-
-.service-icon.envelope :is(a, button) {
-	background: rgb(73, 121, 227);
-	background: linear-gradient(180deg, rgba(73, 121, 227, 1) 0%, rgba(116, 187, 240, 1) 100%);
 }
 
 .service-icon:last-child :is(a, button) {

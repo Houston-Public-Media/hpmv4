@@ -51,6 +51,16 @@ function author_footer( $id ): string {
 			if ( !empty( $meta[ 'linkedin' ] ) ) {
 				$icon_wrap .= '<div class="service-icon linkedin"><a href="' . $meta[ 'linkedin' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text" >Linkedln</span></a></div>';
 			}
+			if ( !empty( $meta[ 'fediverse' ] ) ) {
+				if ( str_contains( $meta['fediverse'], 'threads.net' ) ) {
+					$icon_wrap .= '<div class="service-icon threads"><a href="' . $meta[ 'fediverse' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Threads" target="_blank">' . hpm_svg_output( 'threads' ) . '<span class="screen-reader-text" >Threads</span></a></div>';
+				} else {
+					$icon_wrap .= '<div class="service-icon mastodon"><a href="' . $meta[ 'fediverse' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Mastodon" target="_blank">' . hpm_svg_output( 'mastodon' ) . '<span class="screen-reader-text" >Mastodon</span></a></div>';
+				}
+			}
+			if ( !empty( $meta[ 'bluesky' ] ) ) {
+				$icon_wrap .= '<div class="service-icon bluesky"><a href="' . $meta[ 'bluesky' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Bluesky" target="_blank">' . hpm_svg_output( 'bluesky' ) . '<span class="screen-reader-text" >Bluesky</span></a></div>';
+			}
 			if ( !empty( $meta[ 'email' ] ) ) {
 				$icon_wrap .= '<div class="service-icon envelope"><a href="mailto:' . $meta[ 'email' ] . '" rel="noopener" title="Email ' . ( $author->post->post_title ?? $coa->display_name ) . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text" >Email</span></a></div>';
 			}
