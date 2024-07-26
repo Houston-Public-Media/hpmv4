@@ -28,6 +28,18 @@
 		$social_post = get_post_meta( $object->ID, 'hpm_social_post', true );
 		$social_facebook_sent = get_post_meta( $object->ID, 'hpm_social_facebook_sent', true );
 		$social_twitter_sent = get_post_meta( $object->ID, 'hpm_social_twitter_sent', true );
+		$social_mastodon_sent = get_post_meta( $object->ID, 'hpm_social_mastodon_sent', true );
+		$social_bluesky_sent = get_post_meta( $object->ID, 'hpm_social_bluesky_sent', true );
+		$twitter_sent = [];
+		if ( $social_twitter_sent == 1 ) {
+			$twitter_sent[] = 'Twitter/X';
+		}
+		if ( $social_mastodon_sent == 1 ) {
+			$twitter_sent[] = 'Mastodon';
+		}
+		if ( $social_bluesky_sent == 1 ) {
+			$twitter_sent[] = 'Bluesky';
+		}
 		if ( empty( $social_post ) ) {
 			$social_post = [
 				'twitter' => [
@@ -39,7 +51,7 @@
 			];
 		} ?>
 		<p><?php _e( "Compose your social posts below. A link to the current article will be appended automatically.", 'hpm-podcasts' ); ?></p>
-		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter/Mastodon/Bluesky", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_twitter_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
+		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter/Mastodon/Bluesky", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( !empty( $twitter_sent ) ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted to: ' . implode( ', ', $twitter_sent ) . '</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet/toot/skeet?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
 		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_facebook_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-facebook" name="hpm-social-post-facebook" placeholder="What would you like to post to Facebook?" style="width: 100%;" rows="2"><?php echo $social_post['facebook']['data']; ?></textarea></p>
