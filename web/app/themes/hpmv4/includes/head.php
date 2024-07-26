@@ -272,7 +272,7 @@ function hpm_header_info(): void {
 		<link rel="profile" href="https://gmpg.org/xfn/11" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
-		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
+		<meta name="keywords" content="<?php echo ( !empty( $reqs['keywords'] ) ? implode( ', ', $reqs['keywords'] ) : '' ); ?>" />
 		<meta name="bitly-verification" content="7777946f1a0a" />
 		<meta name="google-site-verification" content="WX07OGEaNirk2km8RjRBernE0mA7_QL6ywgu6NXl1TM" />
 		<meta name="theme-color" content="#f5f5f5" />

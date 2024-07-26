@@ -216,7 +216,7 @@ class HPM_Menu_Walker extends Walker_Nav_Menu {
 function hpm_npr_article_title( $title ) {
 	if ( is_page_template( 'page-npr-articles.php' ) ) {
 		global $nprdata;
-		return $nprdata['title']." | NPR &amp; Houston Public Media";
+		return ( !empty( $nprdata['title'] ) ? $nprdata['title'] : 'Page Not Found' ) . " | NPR &amp; Houston Public Media";
 	}
 	return $title;
 }
@@ -927,6 +927,8 @@ function hpm_pull_npr_story( $npr_id ) {
 	$npr->parse();
 	if ( !empty( $npr->stories[0] ) ) {
 		$story = $npr->stories[0];
+	} else {
+		return $nprdata;
 	}
 
 	$npr_body = $npr->get_body_with_layout( $story );
@@ -1061,10 +1063,21 @@ function hpm_pull_npr_story( $npr_id ) {
 				if ( !empty( $image_asset->enclosures ) ) {
 					foreach ( $image_asset->enclosures as $enclose ) {
 						if ( in_array( 'primary', $enclose->rels ) ) {
+							$npr_mime_type = 'image/jpeg';
+							if ( !empty( $enclose->type ) ) {
+								$npr_mime_type = $enclose->type;
+							} else {
+								$npr_image_type = strtolower( pathinfo( parse_url( $enclose->href, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
+								if ( $npr_image_type === 'png' ) {
+									$npr_mime_type = 'image/png';
+								} elseif ( $npr_image_type === 'webp' ) {
+									$npr_mime_type = 'image/webp';
+								}
+							}
 							$nprdata['image']['src'] = $enclose->href;
-							$nprdata['image']['width'] = $enclose->width;
-							$nprdata['image']['height'] = $enclose->height;
-							$nprdata['image']['mime-type'] = $enclose->type;
+							$nprdata['image']['width'] = ( !empty( $enclose->width ) ? $enclose->width : 1200 );
+							$nprdata['image']['height'] = ( !empty( $enclose->height ) ? $enclose->height : 630 );
+							$nprdata['image']['mime-type'] = $npr_mime_type;
 						}
 					}
 				}

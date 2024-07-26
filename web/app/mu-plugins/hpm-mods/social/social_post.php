@@ -39,8 +39,8 @@
 			];
 		} ?>
 		<p><?php _e( "Compose your social posts below. A link to the current article will be appended automatically.", 'hpm-podcasts' ); ?></p>
-		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter/Mastodon/Bluesky", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_twitter_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
-		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet/toot/skeet?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
+		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter/Mastodon", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_twitter_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted</span>' : '' ); ?><br />
+		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet/toot?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
 		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_facebook_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-facebook" name="hpm-social-post-facebook" placeholder="What would you like to post to Facebook?" style="width: 100%;" rows="2"><?php echo $social_post['facebook']['data']; ?></textarea></p>
 		<script>
@@ -130,7 +130,8 @@
 				}
 			}
 			$keywords = array_unique( $keywords );
-			$post_body = $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id ) . "\n\n" . implode( ' ', $keywords );
+			$post_body = $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id );
+			$masto_post_body = $post_body . "\n\n" . implode( ' ', $keywords );
 			if ( empty( $social_twitter_sent ) && !empty( HPM_TW_BEARER_TOKEN ) ) {
 				$account_id = explode( '-', HPM_TW_ACCESS_TOKEN );
 				$settings = [
@@ -153,7 +154,7 @@
 			if ( empty( $social_mastodon_sent ) && !empty( HPM_MASTODON_BEARER ) ) {
 				$payload = [
 					'body' => [
-						'status' => $post_body,
+						'status' => $masto_post_body,
 						'visibility' => 'public',
 						'language' => 'en'
 					],
@@ -173,53 +174,53 @@
 					}
 				}
 			}
-			if ( empty( $social_bluesky_sent ) && !empty( BSKY_HANDLE ) ) {
-				$bsky_options = [
-					'headers' => [
-						"Content-Type" => "application/json"
-					],
-					'method' => 'POST',
-					'body' => json_encode( [
-						'identifier' => BSKY_HANDLE,
-						'password' => BSKY_APP_PASSWORD
-					] )
-				];
-
-				$bsky_urls = [
-					'auth' => 'https://bsky.social/xrpc/com.atproto.server.createSession',
-					'post' => 'https://bsky.social/xrpc/com.atproto.repo.createRecord'
-				];
-				$bsky_auth_result = wp_remote_request( $bsky_urls['auth'], $bsky_options );
-				if ( !is_wp_error( $bsky_auth_result ) ) {
-					if ( $bsky_auth_result['response']['code'] === 200 ) {
-						$bsky_auth_body = wp_remote_retrieve_body( $bsky_auth_result );
-						if ( $bsky_auth_body ) {
-							$bsky_auth = json_decode( $bsky_auth_body );
-							if ( !empty( $bsky_auth->accessJwt ) ) {
-								$bsky_options['body'] = json_encode( [ 'repo' => BSKY_HANDLE, 'collection' => 'app.bsky.feed.post', 'record' => [ 'text' => $post_body, 'createdAt' => date( 'c' ) ] ] );
-								$bsky_options['headers']['Authorization'] = "Bearer " . $bsky_auth->accessJwt;
-								$bsky_post_result = wp_remote_request( $bsky_urls['post'], $bsky_options );
-								if ( !is_wp_error( $bsky_post_result ) ) {
-									if ( $bsky_post_result[ 'response' ][ 'code' ] === 200 ) {
-										$bsky_post_result_body = wp_remote_retrieve_body( $bsky_post_result );
-										if ( $bsky_post_result_body ) {
-											update_post_meta( $post_id, 'hpm_social_bluesky_sent', 1 );
-										} else {
-											log_it( $post_id . ": The Bluesky post request was successful but the body was empty" );
-										}
-									}
-								} else {
-									log_it( $bsky_post_result->get_error_message() );
-								}
-							}
-						} else {
-							log_it( $post_id . ": The Bluesky authorization request was successful but the body was empty" );
-						}
-					}
-				} else {
-					log_it( $bsky_auth_result->get_error_message() );
-				}
-			}
+//			if ( empty( $social_bluesky_sent ) && !empty( BSKY_HANDLE ) ) {
+//				$bsky_options = [
+//					'headers' => [
+//						"Content-Type" => "application/json"
+//					],
+//					'method' => 'POST',
+//					'body' => json_encode( [
+//						'identifier' => BSKY_HANDLE,
+//						'password' => BSKY_APP_PASSWORD
+//					] )
+//				];
+//
+//				$bsky_urls = [
+//					'auth' => 'https://bsky.social/xrpc/com.atproto.server.createSession',
+//					'post' => 'https://bsky.social/xrpc/com.atproto.repo.createRecord'
+//				];
+//				$bsky_auth_result = wp_remote_request( $bsky_urls['auth'], $bsky_options );
+//				if ( !is_wp_error( $bsky_auth_result ) ) {
+//					if ( $bsky_auth_result['response']['code'] === 200 ) {
+//						$bsky_auth_body = wp_remote_retrieve_body( $bsky_auth_result );
+//						if ( $bsky_auth_body ) {
+//							$bsky_auth = json_decode( $bsky_auth_body );
+//							if ( !empty( $bsky_auth->accessJwt ) ) {
+//								$bsky_options['body'] = json_encode( [ 'repo' => BSKY_HANDLE, 'collection' => 'app.bsky.feed.post', 'record' => [ 'text' => $post_body, 'createdAt' => date( 'c' ) ] ] );
+//								$bsky_options['headers']['Authorization'] = "Bearer " . $bsky_auth->accessJwt;
+//								$bsky_post_result = wp_remote_request( $bsky_urls['post'], $bsky_options );
+//								if ( !is_wp_error( $bsky_post_result ) ) {
+//									if ( $bsky_post_result[ 'response' ][ 'code' ] === 200 ) {
+//										$bsky_post_result_body = wp_remote_retrieve_body( $bsky_post_result );
+//										if ( $bsky_post_result_body ) {
+//											update_post_meta( $post_id, 'hpm_social_bluesky_sent', 1 );
+//										} else {
+//											log_it( $post_id . ": The Bluesky post request was successful but the body was empty" );
+//										}
+//									}
+//								} else {
+//									log_it( $bsky_post_result->get_error_message() );
+//								}
+//							}
+//						} else {
+//							log_it( $post_id . ": The Bluesky authorization request was successful but the body was empty" );
+//						}
+//					}
+//				} else {
+//					log_it( $bsky_auth_result->get_error_message() );
+//				}
+//			}
 		}
 
 		if ( empty( $social_facebook_sent ) && !empty( HPM_FB_ACCESS_TOKEN ) ) {

@@ -502,7 +502,9 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 					}
 				}
 			}
-			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url['url'] ) ? '<img src="' . $image_url['url'] . '" alt="' . strip_tags( $story->teaser ) . '" loading="lazy" />' : '' ) .'</span></a></li>';
+			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url['url'] ) ? '<img src="' . $image_url['url'] . '" alt="' .
+				( !empty( $story->teaser ) ? strip_tags( $story->teaser ) : $story->title ) .
+				'" loading="lazy" />' : '' ) .'</span></a></li>';
 		}
 	}
 	$output .= "</ul>";
@@ -1317,7 +1319,7 @@ function hpm_alt_headline_save_meta( $post_id, $post ) {
  */
 function hpm_article_seo_title( $title ) {
 	global $wp_query;
-	if ( $wp_query->is_single() ) {
+	if ( $wp_query->is_single() && !empty( $wp_query->post->ID ) ) {
 		$seo_headline = get_post_meta( $wp_query->post->ID, 'hpm_seo_headline', true );
 		if ( !empty( $seo_headline ) ) {
 			return wp_strip_all_tags( $seo_headline ) . ' | Houston Public Media';
