@@ -997,7 +997,7 @@ function hpm_pull_npr_story( $npr_id ) {
 
 	$nprdata['title'] = $story->title;
 	if ( !empty( $story->teaser ) ) {
-		$nprdata['excerpt'] = $story->teaser;
+		$nprdata['excerpt'] = trim( preg_replace( '/<br ?\/?>/', '', $story->teaser ) );
 	}
 
 	$slug = [];
