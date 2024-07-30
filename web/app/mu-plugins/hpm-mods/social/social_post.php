@@ -268,22 +268,26 @@
 			}
 		}
 
-		if ( empty( $social_facebook_sent ) && !empty( HPM_FB_ACCESS_TOKEN ) ) {
-			if ( !empty( $social_post['facebook']['data'] ) ) {
-				$url = add_query_arg([
+		if ( !empty( $social_post['facebook']['data'] ) ) {
+			if ( empty( $social_facebook_sent ) && !empty( HPM_FB_ACCESS_TOKEN ) ) {
+				$fb_url = add_query_arg([
 					'message'  => $social_post['facebook']['data'],
 					'link' => get_the_permalink( $post_id ),
 					'access_token' => HPM_FB_ACCESS_TOKEN,
 					'appsecret_proof' => HPM_FB_APPSECRET
 				],  'https://graph.facebook.com/' . HPM_FB_PAGE_ID . '/feed' );
-				$result = wp_remote_post( $url );
-				if ( !is_wp_error( $result ) ) {
-					if ( $result['response']['code'] == 200 ) {
-						log_it( wp_remote_retrieve_body( $result ) );
-						update_post_meta( $post_id, 'hpm_social_facebook_sent', 1 );
-					} else {
-						log_it( wp_remote_retrieve_body( $result ) );
+				$fb_result = wp_remote_post( $fb_url );
+				if ( !is_wp_error( $fb_result ) ) {
+					if ( $fb_result['response']['code'] === 200 ) {
+						$fb_result_body = wp_remote_retrieve_body( $fb_result );
+						if ( $fb_result_body ) {
+							update_post_meta( $post_id, 'hpm_social_facebook_sent', 1 );
+						} else {
+							log_it( $post_id . ": The Facebook post request was successful but the body was empty" );
+						}
 					}
+				} else {
+					log_it( $fb_result->get_error_message() );
 				}
 			}
 		}
