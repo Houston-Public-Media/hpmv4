@@ -6,7 +6,6 @@
 	function hpm_social_post_setup(): void {
 		add_action( 'add_meta_boxes', 'hpm_social_post_add_meta' );
 		add_action( 'save_post', 'hpm_social_post_save_meta', 10, 2 );
-		add_action( 'save_post', 'hpm_social_post_send', 10, 2 );
 	}
 
 	function hpm_social_post_add_meta():void {
@@ -98,6 +97,9 @@
 			]
 		];
 		update_post_meta( $post_id, 'hpm_social_post', $social_post );
+		if ( $post->post_status === 'publish' ) {
+			hpm_social_post_send( $post_id, $post );
+		}
 		return $post_id;
 	}
 
