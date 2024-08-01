@@ -160,6 +160,7 @@ Config::define( 'WP_REDIS_PORT', env( 'WP_REDIS_PORT' ) );
 Config::define( 'WP_REDIS_SCHEME', env( 'WP_REDIS_SCHEME' ) );
 Config::define( 'BSKY_HANDLE', env( 'BSKY_HANDLE' ) );
 Config::define( 'BSKY_APP_PASSWORD', env( 'BSKY_APP_PASSWORD' ) );
+Config::define( 'THREADS_USER_ID', env( 'THREADS_USER_ID' ) );
 
 /**
  * Debugging Settings

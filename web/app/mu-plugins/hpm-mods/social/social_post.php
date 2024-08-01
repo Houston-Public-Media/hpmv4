@@ -267,7 +267,44 @@
 				}
 			}
 			if ( empty( $social_threads_sent ) && !empty( THREADS_USER_ID ) ) {
-				// Threads stuff will go here
+				$token = hpm_social_threads_token();
+				if ( $token !== false ) {
+					$threads_url = add_query_arg([
+						'access_token' => $token['access_token'],
+						'media_type' => 'text',
+						'text' => $post_body
+					],  'https://graph.threads.net/v1.0/' . THREADS_USER_ID . '/threads' );
+					$threads_result = wp_remote_post( $threads_url );
+					if ( !is_wp_error( $threads_result ) ) {
+						if ( $threads_result['response']['code'] === 200 ) {
+							$threads_result_body = wp_remote_retrieve_body( $threads_result );
+							if ( !empty( $threads_result_body ) ) {
+								$threads_id = json_decode( $threads_result_body, true );
+								$threads_publish_url = add_query_arg([
+									'access_token' => $token['access_token'],
+									'creation_id' => $threads_id['id']
+								],  'https://graph.threads.net/v1.0/' . THREADS_USER_ID . '/threads_publish' );
+								$threads_publish_result = wp_remote_post( $threads_publish_url );
+								if ( !is_wp_error( $threads_publish_result ) ) {
+									if ( $threads_publish_result[ 'response' ][ 'code' ] === 200 ) {
+										$threads_publish_result_body = wp_remote_retrieve_body( $threads_publish_result );
+										if ( !empty( $threads_publish_result_body ) ) {
+											update_post_meta( $post_id, 'hpm_social_threads_sent', 1 );
+										} else {
+											log_it( $post_id . ": The Threads publish request was not successful" );
+										}
+									}
+								} else {
+									log_it( $threads_publish_result->get_error_message() );
+								}
+							} else {
+								log_it( $post_id . ": The Threads container request was successful but the body was empty" );
+							}
+						}
+					} else {
+						log_it( $threads_result->get_error_message() );
+					}
+				}
 			}
 		}
 
@@ -295,4 +332,30 @@
 			}
 		}
 		return $post_id;
+	}
+
+	function hpm_social_threads_token(): array|bool {
+		$token = get_option( 'hpm_social_threads_token' );
+		if ( $token['expiration_date'] <= time() ) {
+			$threads_url = add_query_arg([
+				'access_token' => $token['access_token'],
+				'grant_type' => 'th_refresh_token'
+			],  'https://graph.threads.net/refresh_access_token' );
+			$response = wp_remote_get( $threads_url );
+			if ( !is_wp_error( $response ) ) {
+				if ( $response['response']['code'] === 200 ) {
+					$body = wp_remote_retrieve_body( $response );
+					$decode = json_decode( $body, true );
+					$decode['expiration_date'] = $decode['expires_at'] + time();
+					update_option( 'hpm_social_threads_token', $decode );
+				} else {
+					log_it( 'Error refreshing Threads Token' );
+					return false;
+				}
+			} else {
+				log_it( $response->get_error_message() );
+				return false;
+			}
+		}
+		return $token;
 	}
