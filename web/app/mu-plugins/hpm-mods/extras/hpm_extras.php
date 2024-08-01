@@ -179,13 +179,7 @@ function hpm_schedules( $station, $date ) {
  */
 if ( !function_exists( 'log_it' ) ) {
 	function log_it( $message ): void {
-		if ( WP_DEBUG === true ) {
-			if ( is_array( $message ) || is_object( $message ) ) {
-				error_log( print_r( $message, true ) );
-			} else {
-				error_log( $message );
-			}
-		}
+		error_log( print_r( $message, true ) );
 	}
 }
 

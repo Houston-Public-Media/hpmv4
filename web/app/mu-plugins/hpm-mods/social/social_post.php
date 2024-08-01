@@ -6,8 +6,8 @@
 	function hpm_social_post_setup(): void {
 		add_action( 'add_meta_boxes', 'hpm_social_post_add_meta' );
 		add_action( 'save_post', 'hpm_social_post_save_meta', 10, 2 );
+		add_action( 'save_post', 'hpm_social_post_send', 10, 2 );
 	}
-	add_action( 'publish_post', 'hpm_social_post_send', 10, 2 );
 
 	function hpm_social_post_add_meta():void {
 		$user = wp_get_current_user();
@@ -30,6 +30,7 @@
 		$social_twitter_sent = get_post_meta( $object->ID, 'hpm_social_twitter_sent', true );
 		$social_mastodon_sent = get_post_meta( $object->ID, 'hpm_social_mastodon_sent', true );
 		$social_bluesky_sent = get_post_meta( $object->ID, 'hpm_social_bluesky_sent', true );
+		$social_threads_sent = get_post_meta( $object->ID, 'hpm_social_threads_sent', true );
 		$twitter_sent = [];
 		if ( $social_twitter_sent == 1 ) {
 			$twitter_sent[] = 'Twitter/X';
@@ -39,6 +40,9 @@
 		}
 		if ( $social_bluesky_sent == 1 ) {
 			$twitter_sent[] = 'Bluesky';
+		}
+		if ( $social_threads_sent == 1 ) {
+			$twitter_sent[] = 'Threads';
 		}
 		if ( empty( $social_post ) ) {
 			$social_post = [
@@ -52,7 +56,7 @@
 		} ?>
 		<p><?php _e( "Compose your social posts below. A link to the current article will be appended automatically.", 'hpm-podcasts' ); ?></p>
 		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter/Mastodon/Bluesky", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( !empty( $twitter_sent ) ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted to: ' . implode( ', ', $twitter_sent ) . '</span>' : '' ); ?><br />
-		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet/toot/skeet?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
+		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet/toot/skeet/thread?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
 		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_facebook_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-facebook" name="hpm-social-post-facebook" placeholder="What would you like to post to Facebook?" style="width: 100%;" rows="2"><?php echo $social_post['facebook']['data']; ?></textarea></p>
 		<script>
@@ -84,35 +88,29 @@
 			return $post_id;
 		}
 
-		if ( empty( $_POST['hpm-social-post-facebook'] ) && empty( $_POST['hpm-social-post-twitter'] ) ) {
-			delete_post_meta( $post_id, 'hpm_social_post' );
-			delete_post_meta( $post_id, 'hpm_social_facebook_sent' );
-			delete_post_meta( $post_id, 'hpm_social_twitter_sent' );
-			delete_post_meta( $post_id, 'hpm_social_mastodon_sent' );
-			delete_post_meta( $post_id, 'hpm_social_bluesky_sent' );
-		} else {
-			$social_post = [
-				'facebook' => [
-					'data' => sanitize_text_field( $_POST['hpm-social-post-facebook'] )
-				],
-				'twitter' => [
-					'data' => sanitize_text_field( $_POST['hpm-social-post-twitter'] )
-				]
-			];
-			update_post_meta( $post_id, 'hpm_social_post', $social_post );
-			if ( $post->post_status == 'publish' ) {
-				hpm_social_post_send( $post_id, $post );
-			}
-		}
+
+		$social_post = [
+			'facebook' => [
+				'data' => sanitize_text_field( $_POST['hpm-social-post-facebook'] )
+			],
+			'twitter' => [
+				'data' => sanitize_text_field( $_POST['hpm-social-post-twitter'] )
+			]
+		];
+		update_post_meta( $post_id, 'hpm_social_post', $social_post );
 		return $post_id;
 	}
 
 	function hpm_social_post_send( $post_id, $post ) {
+		if ( $post->post_status !== 'publish' ) {
+			return $post_id;
+		}
 		$social_post = get_post_meta( $post_id, 'hpm_social_post', true );
 		$social_facebook_sent = get_post_meta( $post_id, 'hpm_social_facebook_sent', true );
 		$social_twitter_sent = get_post_meta( $post_id, 'hpm_social_twitter_sent', true );
 		$social_mastodon_sent = get_post_meta( $post_id, 'hpm_social_mastodon_sent', true );
 		$social_bluesky_sent = get_post_meta( $post_id, 'hpm_social_bluesky_sent', true );
+		$social_threads_sent = get_post_meta( $post_id, 'hpm_social_threads_sent', true );
 		if ( empty( $social_post ) ) {
 			return $post_id;
 		}
@@ -265,6 +263,9 @@
 				} else {
 					log_it( $bsky_auth_result->get_error_message() );
 				}
+			}
+			if ( empty( $social_threads_sent ) && !empty( THREADS_USER_ID ) ) {
+				// Threads stuff will go here
 			}
 		}
 
