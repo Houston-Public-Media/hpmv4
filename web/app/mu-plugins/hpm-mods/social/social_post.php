@@ -158,9 +158,8 @@
 					$client = new Client( $settings );
 					$return = $client->tweet()->create()->performRequest( [ 'text' => $post_body ] );
 					update_post_meta( $post_id, 'hpm_social_twitter_sent', 1 );
-					log_it( $return );
 				} catch (Exception|\GuzzleHttp\Exception\GuzzleException $e) {
-					log_it( $e );
+					log_it( "X (" . $post_id . "): " . print_r( $e->getMessage(), true ) );
 				}
 			}
 			if ( empty( $social_mastodon_sent ) && !empty( HPM_MASTODON_BEARER ) ) {
@@ -177,13 +176,15 @@
 					'method' => 'POST'
 				];
 				$url = 'https://mastodon.social/api/v1/statuses';
-				$result = wp_remote_post( $url, $payload );
-				if ( !is_wp_error( $result ) ) {
-					if ( $result['response']['code'] !== 200 ) {
-						log_it( json_decode( wp_remote_retrieve_body( $result ) ) );
+				$masto_result = wp_remote_post( $url, $payload );
+				if ( !is_wp_error( $masto_result ) ) {
+					if ( $masto_result['response']['code'] !== 200 ) {
+						log_it( "Mastodon (" . $post_id . "): " . json_decode( wp_remote_retrieve_body( $masto_result ) ) );
 					} else {
 						update_post_meta( $post_id, 'hpm_social_mastodon_sent', 1 );
 					}
+				} else {
+					log_it( "Mastodon (" . $post_id . "): " . print_r( $masto_result->get_error_message(), true ) );
 				}
 			}
 			if ( empty( $social_bluesky_sent ) && !empty( BSKY_HANDLE ) ) {
@@ -234,11 +235,11 @@
 													$bsky_image_json = json_decode( $bsky_image_result_body, true );
 													$bsky_embed["external"]["thumb"] = $bsky_image_json['blob'];
 												} else {
-													log_it( $post_id . ": The Bluesky post request was successful but the body was empty" );
+													log_it( "Bluesky (" . $post_id . "): The Bluesky post request was successful but the body was empty" );
 												}
 											}
 										} else {
-											log_it( $bsky_image_result->get_error_message() );
+											log_it( "Bluesky (" . $post_id . "): " . print_r( $bsky_image_result->get_error_message(), true ) );
 										}
 									}
 								}
@@ -251,19 +252,19 @@
 										if ( $bsky_post_result_body ) {
 											update_post_meta( $post_id, 'hpm_social_bluesky_sent', 1 );
 										} else {
-											log_it( $post_id . ": The Bluesky post request was successful but the body was empty" );
+											log_it( "Bluesky (" . $post_id . "): The Bluesky post request was successful but the body was empty" );
 										}
 									}
 								} else {
-									log_it( $bsky_post_result->get_error_message() );
+									log_it( "Bluesky (" . $post_id . "): " . print_r( $bsky_post_result->get_error_message(), true ) );
 								}
 							}
 						} else {
-							log_it( $post_id . ": The Bluesky authorization request was successful but the body was empty" );
+							log_it( "Bluesky (" . $post_id . "): The Bluesky authorization request was successful but the body was empty" );
 						}
 					}
 				} else {
-					log_it( $bsky_auth_result->get_error_message() );
+					log_it( "Bluesky (" . $post_id . "): " . print_r( $bsky_auth_result->get_error_message(), true ) );
 				}
 			}
 			if ( empty( $social_threads_sent ) && !empty( THREADS_USER_ID ) ) {
@@ -291,18 +292,18 @@
 										if ( !empty( $threads_publish_result_body ) ) {
 											update_post_meta( $post_id, 'hpm_social_threads_sent', 1 );
 										} else {
-											log_it( $post_id . ": The Threads publish request was not successful" );
+											log_it( "Threads (" . $post_id . "): The Threads publish request was not successful" );
 										}
 									}
 								} else {
-									log_it( $threads_publish_result->get_error_message() );
+									log_it( "Threads (" . $post_id . "): " . print_r( $threads_publish_result->get_error_message(), true ) );
 								}
 							} else {
-								log_it( $post_id . ": The Threads container request was successful but the body was empty" );
+								log_it( "Threads (" . $post_id . "): The Threads container request was successful but the body was empty" );
 							}
 						}
 					} else {
-						log_it( $threads_result->get_error_message() );
+						log_it( "Threads (" . $post_id . "): " . print_r( $threads_result->get_error_message(), true ) );
 					}
 				}
 			}
@@ -323,11 +324,11 @@
 						if ( $fb_result_body ) {
 							update_post_meta( $post_id, 'hpm_social_facebook_sent', 1 );
 						} else {
-							log_it( $post_id . ": The Facebook post request was successful but the body was empty" );
+							log_it( "Facebook (" . $post_id . "): The Facebook post request was successful but the body was empty" );
 						}
 					}
 				} else {
-					log_it( $fb_result->get_error_message() );
+					log_it( "Facebook (" . $post_id . "): " . print_r( $fb_result->get_error_message(), true ) );
 				}
 			}
 		}

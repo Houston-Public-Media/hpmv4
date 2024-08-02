@@ -970,7 +970,7 @@ function hpm_pull_npr_story( $npr_id ) {
 			if ( $byl_profile === 'reference-byline' ) {
 				foreach ( $byl_current->bylineDocuments as $byl_doc ) {
 					$byl_data = $npr->get_document( $byl_doc->href );
-					if ( !empty( $byl_data ) ) {
+					if ( !is_wp_error( $byl_data ) ) {
 						$byl_link = '';
 						if ( !empty( $byl_data->webPages ) ) {
 							foreach ( $byl_data->webPages as $byl_web ) {
@@ -1005,7 +1005,7 @@ function hpm_pull_npr_story( $npr_id ) {
 		foreach ( $story->collections as $collect ) {
 			if ( in_array( 'topic', $collect->rels ) || in_array( 'program', $collect->rels ) ) {
 				$coll_temp = $npr->get_document( $collect->href );
-				if ( !empty( $coll_temp ) ) {
+				if ( !is_wp_error( $coll_temp ) ) {
 					$nprdata['keywords'][] = $coll_temp->title;
 					if ( !empty( $coll_temp->webPages ) ) {
 						foreach ( $coll_temp->webPages as $coll_web ) {
