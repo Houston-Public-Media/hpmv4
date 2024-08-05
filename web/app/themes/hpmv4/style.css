@@ -566,9 +566,9 @@ svg:not(:root) {
 	overflow: visible;
 }
 
-/*@view-transition {*/
-/*	navigation: auto;*/
-/*}*/
+@view-transition {
+	navigation: auto;
+}
 
 /* Social Icons */
 .icon-wrap {
