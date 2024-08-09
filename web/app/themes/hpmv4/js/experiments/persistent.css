@@ -45,7 +45,7 @@ body {
 	border-radius: calc(var(--persist-unit) / 2);
 	width: calc(var(--persist-unit) - 2rem);
 	height: calc(var(--persist-unit) - 2rem);
-	padding: 0.625rem 0.75rem 0.5rem 0.5rem;
+	padding: 0.375rem 0.75rem 0.5rem 0.5rem;
 }
 #jpp-now-playing {
 	font-weight: 500;

@@ -27,6 +27,6 @@
 	"theme_color": "#C8102E",
 	"background_color": "#ffffff",
 	"display": "standalone",
-	"scope": "/",
-	"start_url": "/?source=pwa"
+	"scope": "https://www.houstonpublicmedia.org/",
+	"start_url": "https://www.houstonpublicmedia.org/?source=pwa"
 }

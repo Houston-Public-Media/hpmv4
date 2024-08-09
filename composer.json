@@ -71,7 +71,7 @@
 		"wpackagist-plugin/redis-cache": "^2.0.17",
 		"wpackagist-plugin/wp-ses": "*",
 		"wpackagist-plugin/www-xml-sitemap-generator-org": "2.0.7",
-		"wpackagist-plugin/dark-visitors": "*",
+		"wpackagist-plugin/event-tickets": "*",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"noweh/twitter-api-v2-php": "3.4.0"
 	},

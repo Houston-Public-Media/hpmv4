@@ -67,7 +67,7 @@ if ( empty( $_SERVER['HTTP_HOST'] ) && WP_ENV == 'development' ) {
 if ( empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) && !empty( $_SERVER['HTTP_HOST'] ) ) {
 	$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
 }
-if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && str_contains( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok.io' ) ) {
+if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && str_contains( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok-free.app' ) ) {
 	Config::define( 'WP_HOME', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] );
 	Config::define( 'WP_SITEURL', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] . '/wp' );
 } else {

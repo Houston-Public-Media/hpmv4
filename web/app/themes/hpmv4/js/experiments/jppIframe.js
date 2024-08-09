@@ -197,6 +197,7 @@ jpp.receiveMessage = (event) => {
 	if (event.data.sender !== 'jpp') {
 		return false;
 	}
+	console.log(event.data);
 	if (event.data.message === 'iframeload') {
 		document.title = event.data.payload.title;
 		let historyPrev = history.state;
@@ -280,10 +281,27 @@ jpp.childFrame = () => {
 		});
 	});
 };
+let getQueryVariable = ( variable ) => {
+	let query = window.location.search.substring(1);
+	let vars = query.split("&");
+	for (let i= 0; i < vars.length; i++) {
+		let pair = vars[i].split("=");
+		if (pair[0] === variable) {
+			return pair[1];
+		}
+	}
+};
 window.addEventListener('DOMContentLoaded', (event) => {
-	if ( !jpp.inIframe() ) {
-		jpp.parentFrame();
-	} else {
-		jpp.childFrame();
+	let sourceVar = getQueryVariable("source");
+	if ( sourceVar === 'pwa' ) {
+		sessionStorage.setItem('source', sourceVar);
+	}
+	if ( sessionStorage.getItem('source') === 'pwa' ) {
+		document.querySelector('#jpp-player-persist').classList.remove('hidden');
+		if ( !jpp.inIframe() ) {
+			jpp.parentFrame();
+		} else {
+			jpp.childFrame();
+		}
 	}
 });
