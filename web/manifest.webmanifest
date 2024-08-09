@@ -26,7 +26,7 @@
 	],
 	"theme_color": "#C8102E",
 	"background_color": "#ffffff",
-	"display": "standalone",
+	"display": "minimal-ui",
 	"scope": "https://www.houstonpublicmedia.org/",
 	"start_url": "https://www.houstonpublicmedia.org/?source=pwa"
 }
