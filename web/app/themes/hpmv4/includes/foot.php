@@ -372,5 +372,5 @@ function hpm_persistent_player_foot(): void {
 	}
 }
 
-add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
-add_action( 'wp_head', 'hpm_persistent_player_head', 102 );
+//add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
+//add_action( 'wp_head', 'hpm_persistent_player_head', 102 );
