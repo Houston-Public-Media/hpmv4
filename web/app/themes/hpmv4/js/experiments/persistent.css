@@ -1,6 +1,9 @@
 body {
 	--persist-unit: 4rem;
-	--persist-height: calc(var(--persist-unit) + 1.5rem);
+	--persist-height: var(--persist-unit);
+	@media (display-mode: standalone) {
+		--persist-height: calc(var(--persist-unit) + 1.5rem);
+	}
 	@media (width >= 52.5em) {
 		--persist-unit: 4.5rem;
 		--persist-height: var(--persist-unit);
