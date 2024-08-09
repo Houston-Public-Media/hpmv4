@@ -197,7 +197,6 @@ jpp.receiveMessage = (event) => {
 	if (event.data.sender !== 'jpp') {
 		return false;
 	}
-	console.log(event.data);
 	if (event.data.message === 'iframeload') {
 		document.title = event.data.payload.title;
 		let historyPrev = history.state;
@@ -221,7 +220,8 @@ jpp.clickManage = () => {
 		} else {
 			link.addEventListener('click', (e) => {
 				e.preventDefault();
-				if ( ( link.hostname && link.hostname.replace('www.','') !== location.hostname.replace('www.','') ) || link.pathname.includes('/wp-admin/') ) {
+				let onSite = link.hostname.includes('houstonpublicmedia.org');
+				if ( ( link.hostname && !onSite ) || link.pathname.includes('/wp-admin/') ) {
 					window.open(link.href,'_blank');
 				} else {
 					let hrefN = new URL(link.href);

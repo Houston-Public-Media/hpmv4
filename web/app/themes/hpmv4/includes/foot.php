@@ -348,7 +348,7 @@ function hpm_persistent_player_foot(): void {
 				<div id="jpp-player-wrap" class="jpp-button-wrap">
 					<button id="jpp-player-play"><?php echo hpm_svg_output( 'play' ); ?></button>
 					<button id="jpp-player-stop" class="hidden"><?php echo hpm_svg_output( 'pause' ); ?></button>
-					<video id="jpp-player" preload="none" hidden></video>
+					<audio id="jpp-player" preload="none" hidden></audio>
 				</div>
 				<div id="jpp-player-controls" class="jpp-button-wrap">
 					<button id="jpp-player-volume"><?php echo hpm_svg_output( 'volume-up' ); ?></button>
@@ -372,5 +372,5 @@ function hpm_persistent_player_foot(): void {
 	}
 }
 
-//add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
-//add_action( 'wp_head', 'hpm_persistent_player_head', 102 );
+add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
+add_action( 'wp_head', 'hpm_persistent_player_head', 102 );
