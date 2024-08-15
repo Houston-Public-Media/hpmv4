@@ -18,6 +18,9 @@ body {
 		}
 	}
 }
+.hidden {
+	display: none;
+}
 #jpp-player-persist {
 	width: 100%;
 	bottom: 0;
