@@ -828,6 +828,7 @@ svg:not(:root) {
 	}
 	&.emergency {
 		background-color: var(--main-red);
+		color: white;
 		a {
 			color: white;
 		}
