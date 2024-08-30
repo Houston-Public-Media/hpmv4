@@ -50,6 +50,7 @@ add_action( 'plugins_loaded', [ 'BetterImageCreditsPlugin', 'get_instance' ] );
 
 class BetterImageCreditsPlugin {
 	private static $instance;
+	private $admin;
 
 	public static function get_instance() {
 		if ( !self::$instance ) {
