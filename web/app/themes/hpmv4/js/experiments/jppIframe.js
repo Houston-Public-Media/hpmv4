@@ -297,8 +297,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
 		sessionStorage.setItem('source', sourceVar);
 	}
 	if ( sessionStorage.getItem('source') === 'pwa' ) {
+		let tagCss = document.createElement('link');
+		let firstScriptTag = document.getElementsByTagName('script')[0];
+		tagCss.href = 'https://assets.houstonpublicmedia.org/app/themes/hpmv4/js/experiments/persistent.css?v=20240903';
+		tagCss.rel = 'stylesheet';
+		tagCss.type = 'text/css';
+		tagCss.media = 'all';
+		tagCss.id = 'hpm-persistent';
+		firstScriptTag.parentNode.insertBefore(tagCss, firstScriptTag);
 		document.querySelector('#jpp-player-persist').classList.remove('hidden');
-		if ( !jpp.inIframe() ) {
+		if (!jpp.inIframe()) {
 			jpp.parentFrame();
 		} else {
 			jpp.childFrame();

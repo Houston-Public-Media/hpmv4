@@ -329,8 +329,7 @@ function hpm_persistent_player_head(): void {
 	$queried_object = $wp_query->get_queried_object_id();
 	if ( !is_admin() && $queried_object !== 61263 ) {
 		echo '<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>' .
-			'<script src="' . get_template_directory_uri() .'/js/experiments/jppIframe.js"></script>';
-		wp_enqueue_style( 'hpm-persistent', get_template_directory_uri().'/js/experiments/persistent.css', [], date('Y-m-d-H') );
+			'<script src="https://assets.houstonpublicmedia.org/app/themes/hpmv4/js/experiments/jppIframe.js?v=20240903"></script>';
 	}
 }
 
