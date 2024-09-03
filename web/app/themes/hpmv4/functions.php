@@ -1190,8 +1190,11 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 
 	$user_obj = get_userdata( $user_id );
 	$search_author = $coauthors_plus->search_authors( $user_obj->data->user_login, [] );
+	if ( empty( $search_author ) ) {
+		$search_author = $coauthors_plus->search_authors( $user_obj->data->user_nicename, [] );
+	}
 	foreach ( $search_author as $a ) {
-		if ( $a->linked_account == $user_obj->data->user_login ) {
+		if ( $a->linked_account === $user_obj->data->user_login ) {
 			$author = $a;
 		}
 	}
@@ -1231,13 +1234,13 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 		$coauth = [];
 		foreach ( $v as $co ) {
 			if ( $co->type == 'guest-author' ) {
-				if ( $co->linked_account == $user_obj->data->user_login ) {
+				if ( $co->linked_account === $user_obj->data->user_login ) {
 					$coauth[] = $author->user_login;
 				} else {
 					$coauth[] = $co->user_login;
 				}
 			} elseif ( $co->type == 'wpuser' ) {
-				if ( $co->data->user_login == $user_obj->data->user_login ) {
+				if ( $co->data->user_login === $user_obj->data->user_login ) {
 					$coauth[] = $author->user_login;
 				} else {
 					$coauth[] = $co->user_login;
@@ -1246,7 +1249,7 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 		}
 		$output[ $k ] = $coauth;
 	}
-	update_option( 'hpm_user_backup_'.$user_id, $output, false );
+	update_option( 'hpm_user_backup_' . $user_id, $output, false );
 	update_post_meta( $author->ID, 'cap-linked_account', '' );
 	Red_Item::create([
 		"url" => "/articles/author/" . $user_obj->data->user_login,
