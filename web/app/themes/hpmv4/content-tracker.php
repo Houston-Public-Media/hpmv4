@@ -38,7 +38,7 @@ $size = 'thumbnail';
                     $img = get_the_post_thumbnail_url(494124, $size);
 
 ?>
-                    <img src="http://localhost/test.png">
+                    <img src="<?php echo $img; ?>" alt="Hurricane Tracker 2024 - Houston Public Media">
                 </a>
 			<?php } ?></div>
 		</div>
