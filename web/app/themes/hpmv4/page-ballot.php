@@ -56,7 +56,7 @@ foreach ($json as $j) {
                                             </ul>
                                             <?php
                                             if ( !empty( $v['special'] ) ) { ?>
-                                                <h3>Special Election</h3>
+                                                <h3 style="padding: 10px;">Special Election</h3>
                                                 <ul class="list-group">
                                                     <?php
                                                     foreach ( $v['special'] as $candidate ) { ?>
