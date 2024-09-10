@@ -44,7 +44,9 @@ foreach ($json as $j) {
                                 foreach ( $offices as $office ) {
                                     foreach( $races[ $office ] as $k => $v ) { ?>
                                         <div class="col-sm-4">
-                                            <h3 class="title title-full"><?php echo $office . ' ' . ucwords( $k ); ?></h3>
+                                            <h3 class="title title-full"><?php //echo $office . ' ' . ucwords( $k ); ?>
+                                                <?php echo  ($office == "U.S. Senate") ? $office : $office . ' ' . ucwords( $k ); ?>
+                                            </h3>
                                             <ul class="list-group">
                                                 <?php
                                                 foreach ( $v as $kk => $candidate ) {
