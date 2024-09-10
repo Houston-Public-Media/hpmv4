@@ -155,7 +155,7 @@ $tras = null; ?>
 		</section>
 		<section class="section">
 			<div class="row">
-				<?php get_template_part("content", "indepth"); ?>
+				<?php get_template_part("content", "tracker"); ?>
 				<aside class="col-lg-3">
 					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 				</aside>
