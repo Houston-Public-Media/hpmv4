@@ -679,6 +679,30 @@ svg:not(:root) {
 	background-color: #3d83f6;
 	padding-right: 0.4rem;
 }
+.social-icon.facebook svg {
+	fill: rgb(59, 89, 152);
+}
+.social-icon.twitter svg {
+	fill: #000000;
+}
+.social-icon.youtube svg {
+	fill: rgb(234, 50, 35);
+}
+.social-icon.instagram svg {
+	fill: rgb(81, 91, 212);
+}
+.social-icon.linkedin svg {
+	fill: rgb(40, 103, 178);
+}
+.social-icon.mastodon svg {
+	fill: #6364ff;
+}
+.social-icon.threads svg {
+	fill: #000000;
+}
+.social-icon.bluesky svg {
+	fill: #3d83f6;
+}
 .service-icon:last-child :is(a,button) {
 	margin-right: 0;
 }
@@ -4597,7 +4621,7 @@ footer#colophon .footer-tag p {
 	width: 14px;
 }
 .social-icon-wrap svg path {
-	fill: #237bbd;
+	/*fill: #237bbd;*/
 }
 
 /* News details */
