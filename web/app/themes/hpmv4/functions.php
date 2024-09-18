@@ -444,6 +444,74 @@ function hpm_top_cat( $post_id ) {
 	return $top_cat['name'];
 }
 
+// Calculate date difference between election day and now to display the countdown of days
+function CalculateElectionCountdowndays(): string {
+    /*$now = time(); // or your date as well
+    $your_date = strtotime("2024-11-05");
+    $datediff =  $your_date - $now;
+    return round($datediff / (60 * 60 * 24));*/
+
+
+    $electionDay = mktime(7,0,0,11,05,2024);
+    $now = time();
+    $secondsRemaining = $electionDay - $now;
+
+    define('SECONDS_PER_MINUTE', 60);
+    define('SECONDS_PER_HOUR', 3600);
+    define('SECONDS_PER_DAY', 86400);
+
+    $daysRemaining = floor($secondsRemaining / SECONDS_PER_DAY); //days until end
+    $secondsRemaining -= ($daysRemaining * SECONDS_PER_DAY); //update variable
+    $hoursRemaining = floor($secondsRemaining / SECONDS_PER_HOUR); //hours until end
+    $secondsRemaining -= ($hoursRemaining * SECONDS_PER_HOUR); //update variable
+    $minutesRemaining = floor($secondsRemaining / SECONDS_PER_MINUTE); //minutes until end
+
+    $countdownString = $daysRemaining." Days ".$hoursRemaining." Hrs ".$minutesRemaining." Mins <br> to election day";
+
+    return $countdownString;
+}
+
+//Show top three news articles under Elections 2024 category on Elections landing page
+function hpm_ShowElectionTopThreeArticles( ): string {
+    wp_reset_postdata();
+    $result = "";
+    //$cat_no = '21, 60140';
+    $cat_no = [21, 60140];
+    $latest_ep_args = [
+        'cat' => [21, 60140],
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'posts_per_page' => 4,
+        'ignore_sticky_posts' => 1,
+        'post_status' => 'publish',
+        'post_type' => 'post'
+    ];
+    $ka =0;
+    $tposts = new WP_Query( $latest_ep_args );
+    if ( $tposts->have_posts() ) {
+        while ( $tposts->have_posts() ) {
+
+            $tposts->the_post();
+            $post_title = get_the_title( );
+            if ( $ka == 0 ) {
+
+                $result .='<div class="col-sm-12 col-lg-8"><div class="box-img latest-news-img"><a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_post_thumbnail() . ' </a></div><h1 style="font-size:1.6rem;"><a href="' . get_the_permalink() . '" rel="bookmark">' . $post_title . '</a></h1></div><div class="col-sm-4 col-lg-4"><ul class="electionnews-listing">';
+
+            } elseif ( $ka > 0 && $ka < 4) {
+                $result .= '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a> </li>';
+            } elseif ( $ka > 4 ) {
+                $result .= '</ul>';
+            }
+            $ka++;
+        }
+    }
+    wp_reset_query();
+    $result .= "</div>";
+    return $result;
+}
+
+
+
 // Generate excerpt outside of the WP Loop
 function get_excerpt_by_id( $post_id ): string {
 	$the_post = get_post( $post_id );
@@ -745,35 +813,15 @@ function hpm_showLatestArticlesbyShowID( $catID ): array {
 	return $articles;
 }
 
-function hpm_showLatestWeatherArticlesbyShowID( $catID ): array {
+function hpm_ShowLatestArticlesByCategoryID($catID): array {
     $articles = [];
     if ( !empty( $catID ) ) {
         $showposts_args = [
             'posts_per_page' => 2,
             'cat' => $catID,
             'ignore_sticky_posts' => 1,
-            'post_status' => 'publish'
-        ];
-        $catposts_query = new WP_Query( $showposts_args );
-        //print_r( $catposts_query);
-        if ( $catposts_query->have_posts() ) {
-            foreach ( $catposts_query->posts as $stp ) {
-                $articles[] = $stp;
-            }
-        }
-    }
-    wp_reset_query();
-    return $articles;
-}
-
-function hpm_showLatestPresidentialElectionArticlesbyShowID( $catID ): array {
-    $articles = [];
-    if ( !empty( $catID ) ) {
-        $showposts_args = [
-            'posts_per_page' => 2,
-            'cat' => $catID,
-            'ignore_sticky_posts' => 1,
-            'post_status' => 'publish'
+            'post_status' => 'publish',
+           // 'post__not_in' => $excludedIds
         ];
         $catposts_query = new WP_Query( $showposts_args );
         //print_r( $catposts_query);
@@ -827,6 +875,7 @@ function hpm_showTopthreeArticles( $articles ): string {
 
 function hpm_homepage_articles(): array {
 	$articles = [];
+
 	$hpm_priority = get_option( 'hpm_priority' );
 	if ( !empty( $hpm_priority['homepage'] ) ) {
 		if ( empty( $hpm_priority['homepage'][1] ) ) {

@@ -9,6 +9,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: hpmv4
 */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700;1,900");
+@import url("https://use.typekit.net/dsa4bnx.css");
+
 /* Variables */
 :root {
 	--hpm-font-main: "Open Sans",arial,sans-serif;
