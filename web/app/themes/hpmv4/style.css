@@ -4123,7 +4123,7 @@ section {
 .nav-right .social-icon-wrap {
 	position: relative;
 	top: auto;
-	margin-left: 30px;
+	margin-left: 10px;
 }
 .nav-buttons,
 .nav-buttons a {
@@ -4136,7 +4136,7 @@ section {
 	padding: 12px !important;
 	color: white !important;
 	background-color: #3987c3 !important;
-	margin: 0 10px;
+	margin: 0 7px;
 	display: flex;
 	border: none !important;
 }
@@ -4609,8 +4609,8 @@ footer#colophon .footer-tag p {
 	top: 35px;
 }
 .social-icon-wrap a {
-	width: 22px;
-	height: 22px;
+	width: 28px;
+	height: 28px;
 	background-color: white;
 	border-radius: 50px;
 	display: flex;
@@ -4618,7 +4618,8 @@ footer#colophon .footer-tag p {
 	justify-content: center;
 }
 .social-icon-wrap svg {
-	width: 14px;
+	/*width: 14px;*/
+	width: 20px;
 }
 .social-icon-wrap svg path {
 	/*fill: #237bbd;*/
@@ -6018,9 +6019,6 @@ body.sticky-nav {
 }
 
 @media (max-width: 767px) {
-	body:not(.page-template-page-listen) .site-header .nav-buttons {
-		top: -34px;
-	}
 	.sidebar-ad {
 		width: 100%
 	}
@@ -6083,8 +6081,8 @@ body.sticky-nav {
 	#masthead .site-branding {
 		min-height: 100px;
 	}
-	.site-header .nav-buttons {
-		top: -40px;
+	body:not(.page-template-page-listen) .site-header .nav-buttons {
+		top: -34px;
 	}
 	.nav-buttons a, .nav-buttons button {
 		padding: 5px 12px !important
