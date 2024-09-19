@@ -4,7 +4,7 @@
  * @subpackage HPMv4
  * @since HPMv4 4.0
  */
-	$ColumnClass = "col-sm-6 col-md-4";
+	$ColumnClass = "col-sm-6 col-md-4 mb-4";
 	if ( post_type_archive_title( '', false ) == "Shows" ) {
 		$ColumnClass = "col-sm-12";
 	}

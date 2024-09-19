@@ -242,6 +242,18 @@ $other_ep_args = [
                         while ( $cat->have_posts() ) {
                             $cat->the_post();
                             if ( $elmcounter == 2 ) { ?>
+                                <div class="col-sm-6 col-md-4 mb-4">
+                                    <div class="sidebar-ad">
+                                        <h4>Support Comes From</h4>
+                                        <div id="div-gpt-ad-1394579228932-2">
+                                            <script type='text/javascript'>
+                                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            } /* else if ( $elmcounter == 7 ) { ?>
                                 <div class="col-sm-6 col-md-4">
                                     <div class="sidebar-ad">
                                         <h4>Support Comes From</h4>
@@ -253,19 +265,7 @@ $other_ep_args = [
                                     </div>
                                 </div>
                                 <?php
-                            } /*else if ( $elmcounter == 7 ) { */?><!--
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="sidebar-ad">
-                                        <h4>Support Comes From</h4>
-                                        <div id="div-gpt-ad-1394579228932-2">
-                                            <script type='text/javascript'>
-                                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-                                --><?php
-/*                            }*/
+                            }*/
                             get_template_part( 'content', "elections" );
                             $elmcounter++;
                         }
