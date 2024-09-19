@@ -189,11 +189,12 @@ $other_ep_args = [
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="btncountdown">
-                                            <div class="flex-row">
+                                            <!--<div class="flex-row">
                                                 <div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">45</div>
                                                 <div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">24</div>
                                                 <div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">34</div>
-                                            </div>
+                                            </div>-->
+                                            <?php echo CalculateElectionCountdowndays();?>
                                             <div class="flex-row">
                                                 <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Days</div>
                                                 <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Hrs</div>

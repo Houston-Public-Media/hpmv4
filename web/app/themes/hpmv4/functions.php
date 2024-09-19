@@ -467,7 +467,7 @@ function CalculateElectionCountdowndays(): string {
     $minutesRemaining = floor($secondsRemaining / SECONDS_PER_MINUTE); //minutes until end
 
     $countdownString = $daysRemaining." Days ".$hoursRemaining." Hrs ".$minutesRemaining." Mins <br> to election day";
-
+    $countdownString = '<div class="flex-row"><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$daysRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$hoursRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$minutesRemaining.' </div></div>';
     return $countdownString;
 }
 
