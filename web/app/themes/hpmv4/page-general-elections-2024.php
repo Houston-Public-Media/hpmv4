@@ -156,14 +156,14 @@ $other_ep_args = [
                                 <div class="col-sm-3">
                                     <div class="card mb-3">
                                         <div class="card-header">
-                                            <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/04/478356/whats-on-my-2024-texas-primary-ballot/">What's in my Ballot?</a>
+                                            <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/04/478356/whats-on-my-2024-texas-primary-ballot/">What's on my Ballot?</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="card mb-3">
                                         <div class="card-header">
-                                            <a style="text-decoration: none; color:#fff;" href="#">Presidential College Map</a>
+                                            <a style="text-decoration: none; color:#fff;" href="#">Electoral College Map</a>
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@ $other_ep_args = [
                         <div class="row elections-main">
                             <div class="col-sm-12 col-lg-9">
 
-                                <h2 class="title"> <strong><span>Latest Elections </span> Coverage</strong> </h2>
+                                <h2 class="title"> <strong><span>Latest Election </span> Coverage</strong> </h2>
                                     <div class="row">
                                         <?php echo hpm_ShowElectionTopThreeArticles(); ?>
                                     </div>
@@ -253,19 +253,7 @@ $other_ep_args = [
                                     </div>
                                 </div>
                                 <?php
-                            } /* else if ( $elmcounter == 7 ) { ?>
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="sidebar-ad">
-                                        <h4>Support Comes From</h4>
-                                        <div id="div-gpt-ad-1394579228932-2">
-                                            <script type='text/javascript'>
-                                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php
-                            }*/
+                            }
                             get_template_part( 'content', "elections" );
                             $elmcounter++;
                         }
