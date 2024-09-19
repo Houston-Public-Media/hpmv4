@@ -454,13 +454,12 @@ function CalculateElectionCountdowndays(): string {
     define('SECONDS_PER_HOUR', 3600);
     define('SECONDS_PER_DAY', 86400);
 
-    $daysRemaining = floor($secondsRemaining / SECONDS_PER_DAY); //days until end
-    $secondsRemaining -= ($daysRemaining * SECONDS_PER_DAY); //update variable
-    $hoursRemaining = floor($secondsRemaining / SECONDS_PER_HOUR); //hours until end
-    $secondsRemaining -= ($hoursRemaining * SECONDS_PER_HOUR); //update variable
-    $minutesRemaining = floor($secondsRemaining / SECONDS_PER_MINUTE); //minutes until end
+    $daysRemaining = str_pad(floor($secondsRemaining / SECONDS_PER_DAY), 2, "0", STR_PAD_LEFT);
+    $secondsRemaining -= ($daysRemaining * SECONDS_PER_DAY);
+    $hoursRemaining = str_pad(floor($secondsRemaining / SECONDS_PER_HOUR), 2, "0", STR_PAD_LEFT);
+    $secondsRemaining -= ($hoursRemaining * SECONDS_PER_HOUR);
+    $minutesRemaining = str_pad(floor($secondsRemaining / SECONDS_PER_MINUTE), 2,   "0", STR_PAD_LEFT);
 
-    //$countdownString = $daysRemaining." Days ".$hoursRemaining." Hrs ".$minutesRemaining." Mins <br> to election day";
     $countdownString = '<div class="flex-row"><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$daysRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$hoursRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$minutesRemaining.' </div></div>';
     return $countdownString;
 }
@@ -486,7 +485,7 @@ function hpm_ShowElectionTopThreeArticles( ): string {
         while ( $tposts->have_posts() ) {
 
             $tposts->the_post();
-            $post_title = get_the_title( );
+            $post_title = get_the_title();
             if ( $ka == 0 ) {
 
                 $result .='<div class="col-sm-12 col-lg-8"><div class="box-img latest-news-img"><a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_post_thumbnail() . ' </a></div><h1 style="font-size:1.6rem;"><a href="' . get_the_permalink() . '" rel="bookmark">' . $post_title . '</a></h1></div><div class="col-sm-4 col-lg-4"><ul class="electionnews-listing">';
@@ -527,11 +526,12 @@ function get_excerpt_by_id( $post_id ): string {
 	return '';
 }
 
-function get_excerpt_by_id_ShowPages( $post_id ): string {
+function get_excerpt_by_id_ShowPages( $post_id, $excerpt_length = NULL ): string {
 	$the_post = get_post( $post_id );
 	if ( !empty( $the_post ) ) {
 		$the_excerpt = $the_post->post_excerpt;
-		$excerpt_length = 28;
+        if(is_null($excerpt_length)) $excerpt_length=28;
+
 		if ( empty( $the_excerpt ) ) {
 			$the_excerpt = $the_post->post_content;
 		}
