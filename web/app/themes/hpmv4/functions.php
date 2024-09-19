@@ -446,12 +446,6 @@ function hpm_top_cat( $post_id ) {
 
 // Calculate date difference between election day and now to display the countdown of days
 function CalculateElectionCountdowndays(): string {
-    /*$now = time(); // or your date as well
-    $your_date = strtotime("2024-11-05");
-    $datediff =  $your_date - $now;
-    return round($datediff / (60 * 60 * 24));*/
-
-
     $electionDay = mktime(7,0,0,11,05,2024);
     $now = time();
     $secondsRemaining = $electionDay - $now;
@@ -466,7 +460,7 @@ function CalculateElectionCountdowndays(): string {
     $secondsRemaining -= ($hoursRemaining * SECONDS_PER_HOUR); //update variable
     $minutesRemaining = floor($secondsRemaining / SECONDS_PER_MINUTE); //minutes until end
 
-    $countdownString = $daysRemaining." Days ".$hoursRemaining." Hrs ".$minutesRemaining." Mins <br> to election day";
+    //$countdownString = $daysRemaining." Days ".$hoursRemaining." Hrs ".$minutesRemaining." Mins <br> to election day";
     $countdownString = '<div class="flex-row"><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$daysRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$hoursRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$minutesRemaining.' </div></div>';
     return $countdownString;
 }
