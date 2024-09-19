@@ -440,7 +440,6 @@ function hpm_top_cat( $post_id ) {
 			];
 		}
 	}
-
 	return $top_cat['name'];
 }
 
@@ -448,6 +447,9 @@ function hpm_top_cat( $post_id ) {
 function CalculateElectionCountdowndays(): string {
     $electionDay = mktime(7,0,0,11,05,2024);
     $now = time();
+    $offset = get_option( 'gmt_offset' ) * 3600;
+    $now += $offset;
+    $electionDay += $offset;
     $secondsRemaining = $electionDay - $now;
 
     $daysRemaining = str_pad(floor($secondsRemaining / DAY_IN_SECONDS), 2, "0", STR_PAD_LEFT);
