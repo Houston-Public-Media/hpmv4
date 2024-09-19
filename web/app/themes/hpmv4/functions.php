@@ -450,15 +450,11 @@ function CalculateElectionCountdowndays(): string {
     $now = time();
     $secondsRemaining = $electionDay - $now;
 
-    define('SECONDS_PER_MINUTE', 60);
-    define('SECONDS_PER_HOUR', 3600);
-    define('SECONDS_PER_DAY', 86400);
-
-    $daysRemaining = str_pad(floor($secondsRemaining / SECONDS_PER_DAY), 2, "0", STR_PAD_LEFT);
-    $secondsRemaining -= ($daysRemaining * SECONDS_PER_DAY);
-    $hoursRemaining = str_pad(floor($secondsRemaining / SECONDS_PER_HOUR), 2, "0", STR_PAD_LEFT);
-    $secondsRemaining -= ($hoursRemaining * SECONDS_PER_HOUR);
-    $minutesRemaining = str_pad(floor($secondsRemaining / SECONDS_PER_MINUTE), 2,   "0", STR_PAD_LEFT);
+    $daysRemaining = str_pad(floor($secondsRemaining / DAY_IN_SECONDS), 2, "0", STR_PAD_LEFT);
+    $secondsRemaining -= ($daysRemaining * DAY_IN_SECONDS);
+    $hoursRemaining = str_pad(floor($secondsRemaining / HOUR_IN_SECONDS), 2, "0", STR_PAD_LEFT);
+    $secondsRemaining -= ($hoursRemaining * HOUR_IN_SECONDS);
+    $minutesRemaining = str_pad(floor($secondsRemaining / MINUTE_IN_SECONDS), 2,   "0", STR_PAD_LEFT);
 
     $countdownString = '<div class="flex-row"><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$daysRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$hoursRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$minutesRemaining.' </div></div>';
     return $countdownString;
