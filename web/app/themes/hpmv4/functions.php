@@ -313,11 +313,14 @@ function rel_canonical_w_npr(): void {
 	if ( !empty( get_post_meta( $id, 'npr_html_link', 1 ) ) ) {
 		return;
 	}
+
+	$url = get_permalink( $id );
 	if ( is_page_template( 'page-npr-articles.php' ) ) {
 		global $nprdata;
-		$url = $nprdata['canonical'];
+		if ( !empty( $nprdata['canonical'] ) ) {
+			$url = $nprdata['canonical'];
+		}
 	} else {
-		$url = get_permalink( $id );
 		$page = get_query_var( 'page' );
 		if ( $page >= 2 ) {
 			if ( '' == get_option( 'permalink_structure' ) ) {
@@ -1003,7 +1006,7 @@ function hpm_pull_npr_story( $npr_id ) {
 	$slug = [];
 	if ( !empty( $story->collections ) ) {
 		foreach ( $story->collections as $collect ) {
-			if ( in_array( 'topic', $collect->rels ) || in_array( 'program', $collect->rels ) ) {
+			if ( !empty( $collect->rels ) && ( in_array( 'topic', $collect->rels ) || in_array( 'program', $collect->rels ) ) ) {
 				$coll_temp = $npr->get_document( $collect->href );
 				if ( !is_wp_error( $coll_temp ) ) {
 					$nprdata['keywords'][] = $coll_temp->title;
