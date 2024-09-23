@@ -6,7 +6,6 @@
  */
 get_header();
 $articles = hpm_homepage_articles();
-
 $indepthArtcle[] = null;
 $tras = null; ?>
 	<style>
@@ -177,6 +176,16 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
+
+        <section class="section ads-full text-center">
+            <div class="page-banner" style="display: inline-block;"><a href="/general-elections-2024" title="Election 2024"><picture> <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" media="(max-width: 34em)" /></picture>
+                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" media="(max-width: 34em)" /></picture>
+                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" media="(max-width: 52.5em)" /></picture>
+                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" media="(max-width: 52.5em)" /></picture>
+                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" /></picture>
+                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" /></picture>
+                <picture><img src="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" alt="Election 2024" /></picture></a></div>
+        </section>
 
 		<section class="section news-list">
 			<div class="row">
