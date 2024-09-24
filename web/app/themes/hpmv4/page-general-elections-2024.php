@@ -110,6 +110,9 @@ $electionArticles = hpm_ShowElectionOtherStories();
         box-sizing:border-box;
         max-height: 24px;
     }
+	section.section {
+		padding: 1rem;
+	}
     @media (max-width:767px) {
         .flex-col {
            /* flex-basis: calc(50% - 12px);*/
@@ -153,7 +156,7 @@ if ( $cat->have_posts() ) {
 
             <section class="section">
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-lg-9">
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="card mb-3">
@@ -204,7 +207,7 @@ if ( $cat->have_posts() ) {
                         </div>
 
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-lg-3">
                         <div class="btncountdown">
                             <?php echo CalculateElectionCountdowndays();?>
                             <div class="flex-row">

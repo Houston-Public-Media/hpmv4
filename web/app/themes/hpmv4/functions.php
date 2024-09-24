@@ -486,7 +486,7 @@ function hpm_ShowElectionTopThreeArticles( ): string {
             $post_title = get_the_title();
             if ( $ka == 0 ) {
 
-                $result .='<div class="col-sm-12 col-lg-8"><div class="box-img latest-news-img"><a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_post_thumbnail() . ' </a></div><h1 style="font-size:1.6rem;"><a href="' . get_the_permalink() . '" rel="bookmark">' . $post_title . '</a></h1></div><div class="col-sm-4 col-lg-4"><ul class="electionnews-listing">';
+                $result .='<div class="col-lg-12 col-xl-8"><div class="box-img latest-news-img"><a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_post_thumbnail() . ' </a></div><h1 style="font-size:1.6rem;"><a href="' . get_the_permalink() . '" rel="bookmark">' . $post_title . '</a></h1></div><div class="col-lg-4 col-xl-4"><ul class="electionnews-listing">';
 
             } elseif ( $ka > 0 && $ka < 4) {
                 $result .= '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a> </li>';
