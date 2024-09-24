@@ -113,6 +113,11 @@ $electionArticles = hpm_ShowElectionOtherStories();
 	section.section {
 		padding: 1rem;
 	}
+    .title::before
+    {
+        left: unset;
+        width: 95%;
+    }
     @media (max-width:767px) {
         .flex-col {
            /* flex-basis: calc(50% - 12px);*/
@@ -196,7 +201,7 @@ if ( $cat->have_posts() ) {
                             </div>
                         </div>
                         <div class="row section" style="padding-top: 25px;">
-                            <h2 class="title"> <strong><span>Other </span> Stories</strong> </h2>
+                            <h2 class="title"><strong><span>Other </span> Stories</strong> </h2>
                             <?php
                             foreach ( $electionArticles as $eka => $eva ) {
                                 $post = $eva;
