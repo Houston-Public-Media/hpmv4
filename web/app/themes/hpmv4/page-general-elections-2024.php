@@ -110,10 +110,6 @@ $electionArticles = hpm_ShowElectionOtherStories();
         box-sizing:border-box;
         max-height: 24px;
     }
-    #hearken-embed-module-11328-15878 .hk-prefix__d3cc3bcb0e49f9ed5dab__footer--image {
-        padding: 0px 0px 4px !important;
-        background-color: #15355D !important;
-    }
     @media (max-width:767px) {
         .flex-col {
            /* flex-basis: calc(50% - 12px);*/
