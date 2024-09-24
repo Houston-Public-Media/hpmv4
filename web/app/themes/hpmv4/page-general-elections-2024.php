@@ -116,13 +116,13 @@ $electionArticles = hpm_ShowElectionOtherStories();
     }
     @media (max-width:767px) {
         .flex-col {
-            flex-basis: calc(50% - 12px);
+           /* flex-basis: calc(50% - 12px);*/
         }
     }
 
     @media (max-width:460px) {
         .flex-col {
-            flex-basis: 100%;
+            /*flex-basis: 100%;*/
         }
     }
 
