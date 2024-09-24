@@ -310,6 +310,27 @@ function hpm_youtube_playlist( $key, $num = 5 ): array {
 	return $json_r;
 }
 
+function hpm_youtube_playlist_rss( $key, $num = 0 ): array {
+	$list = get_transient( 'hpm_yt_' . $key );
+	if ( !empty( $list ) ) {
+		return $list;
+	}
+	$remote = wp_remote_get( esc_url_raw( 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $key ) );
+	if ( is_wp_error( $remote ) || $remote['response']['code'] !== 200 ) {
+		return [];
+	} else {
+		$yt = wp_remote_retrieve_body( $remote );
+		$dom = simplexml_load_string( $yt );
+		$json = json_decode( json_encode( $dom ), true );
+	}
+	$items = $json['entry'];
+	if ( $num > 0 ) {
+		$items = array_slice( $items, 0, $num );
+	}
+	set_transient( 'hpm_yt_' . $key, $items, 600 );
+	return $items;
+}
+
 /*
  * Ping Facebook's OpenGraph servers whenever a post is published, in order to prime their cache
  */
@@ -592,6 +613,12 @@ function hpm_https_check(): void {
 					let content = wp.editor.getContent('content');
 					let dialog = document.querySelector('#hpm-check');
 					let dialogContent = document.querySelector('#hpm-check-content');
+					let postTitle = document.querySelector('#title');
+					let altTitle = document.querySelector('#hpm-alt-headline');
+					let seoTitle = document.querySelector('#hpm-seo-headline');
+					postTitle.classList.remove('hpm-editor-error');
+					altTitle.classList.remove('hpm-editor-error');
+					seoTitle.classList.remove('hpm-editor-error');
 					if ( content.includes('src="http://') ) {
 						e.preventDefault();
 						dialogContent.innerHTML = '<h2>Using Insecure Embeds</h2><p>This post contains an embed or image from an insecure source. Please check and see if that embed is available via HTTPS.</p><p>To check this:</p><ol><li>Look for any &lt;img&gt; or &lt;iframe&gt; tags in your HTML</li><li>>Find the src="" attribute and copy the URL</li><li>Change \'http:\' to \'https:\' and paste it into your browser</li></ol><p>If it loads correctly, then great! Update the URL in your HTML</p><p>If you have any questions, email <a href="mailto:jcounts@houstonpublicmedia.org?subject=Question%20About%20HTTPS%20in%2-WordPress">jcounts@houstonpublicmedia.org</a><p>';
@@ -602,6 +629,25 @@ function hpm_https_check(): void {
 						dialogContent.innerHTML = '<h2>Image Alt Text Needed</h2><p>This post contains images with <strong>empty alt text tags</strong>. Alt text (or alternative text) is what displays in the event an image doesn\'t load, or is read by a screen reader, and <strong>typically describes the content of the image</strong>. Leaving these blank can <strong>cause problems for both accessibility and search engine optimization</strong>.</p><h3>Steps to Fix</h3><p>In the Visual editor mode, click on the image and click the pencil icon:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" alt="Clicking on an image in the editor reveals alignment tools as well as an edit button" /></a></p><p>In the popup, fill in the box at the top marked "Alternative Text":<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" alt="In the modal popup, fill in the top box marked Alternative Text" /></a></p><p>In the Text mode, look for the alt attribute in any <code>&lt;img&gt;</code> tags and enter your text there:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" alt="Look for any occurrences of alt that do not have any text in between the quotes" /></a></p><p>You can also enter the alt text in the Media Library popup when uploading the image:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" alt="The Media Library also contains a field for alt text" /></a></p>';
 						dialog.showModal();
 						return false;
+					} else if ( postTitle.value.length > 100 || altTitle.value.length > 100 || seoTitle.value.length > 100 ) {
+						e.preventDefault();
+						let tooLongOutput = '<h2>One (or more) of your headlines is too long</h2><p>See below. Please rewrite it to be 100 characters or less.</p><ul class="ul-disc">';
+						if ( postTitle.value.length > 100 ) {
+							tooLongOutput += '<li>Main Headline <strong>(' + postTitle.value.length + ' characters)</strong></li>';
+							postTitle.classList.add('hpm-editor-error');
+						}
+						if ( altTitle.value.length > 100 ) {
+							tooLongOutput += '<li>Alternate/Homepage Headline <strong>(' + altTitle.value.length + ' characters)</strong></li>';
+							altTitle.classList.add('hpm-editor-error');
+						}
+						if ( seoTitle.value.length > 100 ) {
+							tooLongOutput += '<li>SEO Headline <strong>(' + seoTitle.value.length + ' characters)</strong></li>';
+							seoTitle.classList.add('hpm-editor-error');
+						}
+						tooLongOutput += '</ul>';
+						dialogContent.innerHTML = tooLongOutput;
+						dialog.showModal();
+						return false;
 					} else {
 						return true;
 					}
@@ -609,6 +655,11 @@ function hpm_https_check(): void {
 			});
 		});
 	</script>
+	<style>
+		.hpm-editor-error {
+			border: 2px solid red !important;
+		}
+	</style>
 <?php
 }
 
