@@ -501,6 +501,27 @@ function hpm_ShowElectionTopThreeArticles( ): string {
     return $result;
 }
 
+function hpm_ShowElectionOtherStories(): array {
+    $articles = [];
+    $other_ep_args = [
+        'cat' => [21, 60140],
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'posts_per_page' => 18,
+        'offset' => 4,
+        'ignore_sticky_posts' => 1,
+        'post_status' => 'publish',
+        'post_type' => 'post'
+    ];
+
+    $sticky_query = new WP_Query( $other_ep_args );
+    if ( $sticky_query->have_posts() ) {
+        foreach ( $sticky_query->posts as $stp ) {
+            $articles[] = $stp;
+        }
+    }
+    return $articles;
+}
 
 
 // Generate excerpt outside of the WP Loop

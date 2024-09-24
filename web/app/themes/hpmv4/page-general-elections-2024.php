@@ -3,6 +3,7 @@
 Template Name: General Elections 2024 Page
 */
 	get_header();
+$electionArticles = hpm_ShowElectionOtherStories();
 ?>
 <style>
     .btncountdown {
@@ -11,12 +12,13 @@ Template Name: General Elections 2024 Page
         background: #237bbd content-box;
         margin: 0 auto;
         width: 100%;
-        height: 4.4em;
+        height: 4.2em;
         color: #fff;
         font: 700 1.6em / 1.6em "watch-mn", sans serif;
         text-align: center;
         font-weight: bold;
         font-family: "watch-mn" !important;
+        margin-bottom: 10px;
     }
     .card
     {
@@ -98,7 +100,7 @@ Template Name: General Elections 2024 Page
 
     .flex-col {
        /* margin: 6px;*/
-        padding: 16px;
+        padding: 12px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -106,9 +108,12 @@ Template Name: General Elections 2024 Page
         flex-direction: column;
         color: white;
         box-sizing:border-box;
-        max-height: 27px;
+        max-height: 24px;
     }
-
+    #hearken-embed-module-11328-15878 .hk-prefix__d3cc3bcb0e49f9ed5dab__footer--image {
+        padding: 0px 0px 4px !important;
+        background-color: #15355D !important;
+    }
     @media (max-width:767px) {
         .flex-col {
             flex-basis: calc(50% - 12px);
@@ -130,7 +135,6 @@ Template Name: General Elections 2024 Page
 ?>
 	    <?php the_content(); ?>
 <?php  }
-
 $other_ep_args = [
     'cat' => [21, 60140],
     'orderby' => 'date',
@@ -141,76 +145,92 @@ $other_ep_args = [
     'post_status' => 'publish',
     'post_type' => 'post'
 ];
+$cat = new WP_Query( $other_ep_args );
+
+if ( $cat->have_posts() ) {
+    while ($cat->have_posts()) {
+        $cat->the_post();
+    }
+}
 
 ?>
 
             <section class="section">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            <a style="text-decoration: none; color:#fff;" href="#">Voters Guide</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/04/478356/whats-on-my-2024-texas-primary-ballot/">What's on my Ballot?</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            <a style="text-decoration: none; color:#fff;" href="#">Electoral College Map</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/05/479760/election-results-texas-harris-county-primary-super-tuesday-2024/">2024 Primary Election Results</a>
-                                        </div>
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <a style="text-decoration: none; color:#fff;" href="#">Voters Guide</a>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-            <section class="section">
+                            <div class="col-sm-4">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/04/478356/whats-on-my-2024-texas-primary-ballot/">What's on my Ballot?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <a style="text-decoration: none; color:#fff;" href="/electoral-college-interactive-map-2024-election">Electoral College Map</a>
+                                    </div>
+                                </div>
+                            </div>
+                           <!-- <div class="col-sm-3">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/05/479760/election-results-texas-harris-county-primary-super-tuesday-2024/">2024 Primary Election Results</a>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
                         <div class="row elections-main">
-                            <div class="col-sm-12 col-lg-9">
-
+                            <div class="col-sm-12">
                                 <h2 class="title"> <strong><span>Latest Election </span> Coverage</strong> </h2>
-                                    <div class="row">
-                                        <?php echo hpm_ShowElectionTopThreeArticles(); ?>
-                                    </div>
-                            </div>
-                            <div class="col-sm-12 col-lg-3">
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="btncountdown">
-                                            <!--<div class="flex-row">
-                                                <div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">45</div>
-                                                <div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">24</div>
-                                                <div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">34</div>
-                                            </div>-->
-                                            <?php echo CalculateElectionCountdowndays();?>
-                                            <div class="flex-row">
-                                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Days</div>
-                                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Hrs</div>
-                                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Mins</div>
-                                            </div>
-                                            <span style="font-size:22px;font-family: 'Open Sans', Arial, Helvetica, sans-serif;">to Election Day!</span>
-                                            <?php //echo CalculateElectionCountdowndays();?>
+                                    <?php echo hpm_ShowElectionTopThreeArticles(); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row section" style="padding-top: 25px;">
+                            <h2 class="title"> <strong><span>Other </span> Stories</strong> </h2>
+                            <?php
+                            foreach ( $electionArticles as $eka => $eva ) {
+                                $post = $eva;
+                                if ( $eka > 0 && $eka < 4 ) {
+                                    get_template_part("content", "elections");
+                                }
+                            } ?>
+                        </div>
 
-                                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="btncountdown">
+                            <?php echo CalculateElectionCountdowndays();?>
+                            <div class="flex-row">
+                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Days</div>
+                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Hrs</div>
+                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Mins</div>
+                            </div>
+                            <span style="font-size:22px;font-family: 'Open Sans', Arial, Helvetica, sans-serif;">to Election Day!</span>
+                        </div>
+                        <script async src="https://modules.wearehearken.com/america-amplified-elections/embed/11328.js"></script>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                        <?php
+                        foreach ( $electionArticles as $eka => $eva ) {
+                            $post = $eva;
+                            if ( $eka > 4) {
 
-
-
-                                    </div>
-
-
-                                    <div class="col-sm-12" style="padding-top: 25px;">
+                                if ( $eka == 7 ) { ?>
+                                    <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
                                             <h4>Support Comes From</h4>
                                             <div id="div-gpt-ad-1394579228932-1">
@@ -219,57 +239,36 @@ $other_ep_args = [
                                                 </script>
                                             </div>
                                         </div>
-
                                     </div>
-
-                                </div>
-                            </div>
-                        </div>
-            </section>
-
-            <!-- Other Stories  -->
-            <section class="section" style="padding-top: 25px;">
-                <div class="row">
-                    <h2 class="title"> <strong><span>Other </span> Stories</strong> </h2>
-
-                    <?php
-                    global $ka;
-                    $ka = 0;
-                    $tag_ids = [];
-                    $cat = new WP_Query( $other_ep_args );
-                    $elmcounter = 0;
-                    if ( $cat->have_posts() ) {
-                        while ( $cat->have_posts() ) {
-                            $cat->the_post();
-                            if ( $elmcounter == 2 ) { ?>
-                                <div class="col-sm-6 col-md-4 mb-4">
-                                    <div class="sidebar-ad">
-                                        <h4>Support Comes From</h4>
-                                        <div id="div-gpt-ad-1394579228932-2">
-                                            <script type='text/javascript'>
-                                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
-                                            </script>
+                                    <?php
+                                } else if ( $eka == 12 ) { ?>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="sidebar-ad">
+                                            <h4>Support Comes From</h4>
+                                            <div id="div-gpt-ad-1394579228932-2">
+                                                <script type='text/javascript'>
+                                                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
+                                                </script>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <?php
+                                    <?php
+                                }
+
+
+
+                                get_template_part("content", "elections");
                             }
-                            get_template_part( 'content', "elections" );
-                            $elmcounter++;
-                        }
-                    } ?>
-
-
+                        } ?>
                 </div>
             </section>
 
             <?php
+
             echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/politics/election-2024/page/" ); ?>
 
 
             <p>&nbsp;</p>
-
-
         </main>
     </div>
 <?php get_footer(); ?>
