@@ -226,7 +226,7 @@ if ( $cat->have_posts() ) {
                     </div>
                 </div>
             </section>
-            <section>
+            <section class="section">
                 <div class="row">
                         <?php
                         foreach ( $electionArticles as $eka => $eva ) {
