@@ -5537,30 +5537,30 @@ article .entry-content p.gs-donate a {
 	padding: 0;
 }
 
-article .entry-content section > p:not(.gs-member-button,.gs-donate,.gs-engagement-extra) {
+.gs article .entry-content section > p:not(.gs-member-button,.gs-donate,.gs-engagement-extra) {
 	font-style: italic;
 	text-align: center;
 	margin: 0 auto;
 	max-width: 800px;
 }
 
-article .entry-content section:first-child > p:not(.gs-donate) {
+.gs article .entry-content section:first-child > p:not(.gs-donate) {
 	font-style: normal;
 	text-align: left;
 	max-width: initial;
 }
 
-article .entry-content section > p:not(.gs-member-button,.gs-donate,.gs-engagement-extra) a {
+.gs article .entry-content section > p:not(.gs-member-button,.gs-donate,.gs-engagement-extra) a {
 	color: var(--main-red);
 	text-decoration: none;
 }
 
-article .entry-content p.gs-member-button {
+.gs article .entry-content p.gs-member-button {
 	text-align: center;
 	margin: 0 0 2rem;
 }
 
-article .entry-content p.gs-member-button a {
+.gs article .entry-content p.gs-member-button a {
 	display: inline-block;
 	padding: 1rem 1.5rem;
 	background-color: var(--accent-light-blue-1);
@@ -5575,7 +5575,7 @@ article .entry-content p.gs-member-button a {
 	text-transform: uppercase;
 }
 
-article .entry-content p.gs-member-button a span {
+.gs article .entry-content p.gs-member-button a span {
 	color: white;
 }
 
