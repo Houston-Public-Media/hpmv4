@@ -156,9 +156,7 @@ if ( $cat->have_posts() ) {
         $cat->the_post();
     }
 }
-
 ?>
-
             <section class="section">
                 <div class="row">
                     <div class="col-lg-9">
@@ -166,14 +164,14 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-4">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="#">Voters Guide</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/09/26/501028/voter-guide-2024-election-houston-harris-county/">Voters Guide</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/04/478356/whats-on-my-2024-texas-primary-ballot/">What's on my Ballot?</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-ballot-2024-harris-county-texas-sample-ballot">What's on my Ballot?</a>
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +208,6 @@ if ( $cat->have_posts() ) {
                                 }
                             } ?>
                         </div>
-
                     </div>
                     <div class="col-lg-3">
                         <div class="btncountdown">
@@ -232,7 +229,6 @@ if ( $cat->have_posts() ) {
                         foreach ( $electionArticles as $eka => $eva ) {
                             $post = $eva;
                             if ( $eka > 4) {
-
                                 if ( $eka == 7 ) { ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
@@ -258,20 +254,13 @@ if ( $cat->have_posts() ) {
                                     </div>
                                     <?php
                                 }
-
-
-
                                 get_template_part("content", "elections");
                             }
                         } ?>
                 </div>
             </section>
-
             <?php
-
             echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/politics/election-2024/page/" ); ?>
-
-
             <p>&nbsp;</p>
         </main>
     </div>
