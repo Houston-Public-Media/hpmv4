@@ -61,6 +61,25 @@ get_header(); ?>
 									</div>
 <?php
 			}
+			if ( !empty( $staff['fediverse'] ) ) {
+				if ( str_contains( $staff['fediverse'], 'threads.net' ) ) { ?>
+									<div class="service-icon threads">
+										<a href="<?php echo $staff['fediverse']; ?>" target="_blank"><?php echo hpm_svg_output( 'threads' ); ?><span class="screen-reader-text">Threads</span></a>
+									</div>
+<?php
+				} else { ?>
+									<div class="service-icon mastodon">
+										<a href="<?php echo $staff['fediverse']; ?>" target="_blank"><?php echo hpm_svg_output( 'mastodon' ); ?><span class="screen-reader-text">Mastodon</span></a>
+									</div>
+<?php
+				}
+			}
+			if ( !empty( $staff['bluesky'] ) ) { ?>
+									<div class="service-icon bluesky">
+										<a href="<?php echo $staff['bluesky']; ?>" target="_blank"><?php echo hpm_svg_output( 'bluesky' ); ?><span class="screen-reader-text">Bluesky</span></a>
+									</div>
+<?php
+			}
 			if ( !empty( $staff['email'] ) ) { ?>
 									<div class="service-icon envelope">
 										<a href="mailto:<?php echo $staff['email']; ?>" target="_blank"><?php echo hpm_svg_output( 'envelope' ); ?><span class="screen-reader-text" >Email</span></a>

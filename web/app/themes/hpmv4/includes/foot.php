@@ -51,6 +51,16 @@ function author_footer( $id ): string {
 			if ( !empty( $meta[ 'linkedin' ] ) ) {
 				$icon_wrap .= '<div class="service-icon linkedin"><a href="' . $meta[ 'linkedin' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on LinkedIn" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text" >Linkedln</span></a></div>';
 			}
+			if ( !empty( $meta[ 'fediverse' ] ) ) {
+				if ( str_contains( $meta['fediverse'], 'threads.net' ) ) {
+					$icon_wrap .= '<div class="service-icon threads"><a href="' . $meta[ 'fediverse' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Threads" target="_blank">' . hpm_svg_output( 'threads' ) . '<span class="screen-reader-text" >Threads</span></a></div>';
+				} else {
+					$icon_wrap .= '<div class="service-icon mastodon"><a href="' . $meta[ 'fediverse' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Mastodon" target="_blank">' . hpm_svg_output( 'mastodon' ) . '<span class="screen-reader-text" >Mastodon</span></a></div>';
+				}
+			}
+			if ( !empty( $meta[ 'bluesky' ] ) ) {
+				$icon_wrap .= '<div class="service-icon bluesky"><a href="' . $meta[ 'bluesky' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Bluesky" target="_blank">' . hpm_svg_output( 'bluesky' ) . '<span class="screen-reader-text" >Bluesky</span></a></div>';
+			}
 			if ( !empty( $meta[ 'email' ] ) ) {
 				$icon_wrap .= '<div class="service-icon envelope"><a href="mailto:' . $meta[ 'email' ] . '" rel="noopener" title="Email ' . ( $author->post->post_title ?? $coa->display_name ) . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text" >Email</span></a></div>';
 			}
@@ -317,28 +327,27 @@ function hpm_dark_mode_toggle(): void {
 function hpm_persistent_player_head(): void {
 	global $wp_query;
 	$queried_object = $wp_query->get_queried_object_id();
-	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' && $queried_object !== 61263 ) {
+	if ( !is_admin() && $queried_object !== 61263 ) {
 		echo '<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>' .
-			'<script src="' . get_template_directory_uri() .'/js/experiments/jppIframe.js"></script>';
-		wp_enqueue_style( 'hpm-persistent', get_template_directory_uri().'/js/experiments/persistent.css', [], date('Y-m-d-H') );
+			'<script src="https://assets.houstonpublicmedia.org/app/themes/hpmv4/js/experiments/jppIframe.js?v=20240903"></script>';
 	}
 }
 
 function hpm_persistent_player_foot(): void {
 	global $wp_query;
 	$queried_object = $wp_query->get_queried_object_id();
-	if ( $_SERVER['HTTP_X_FORWARDED_HOST'] !== 'jcounts.ngrok.io' && !is_admin() && WP_ENV !== 'production' && $queried_object !== 61263 ) {
+	if ( !is_admin() && $queried_object !== 61263 ) {
 		$prefStream = "news";
 		if ( !empty( $_COOKIE ) && !empty( $_COOKIE['prefStream'] ) && preg_match( '/[clasimxtpenw]{4,9}/', $_COOKIE['prefStream'] ) ) {
 			$prefStream = $_COOKIE['prefStream'];
 		}
 		?>
-		<div id="jpp-player-persist" data-turbo-permanent>
+		<div id="jpp-player-persist" class="hidden">
 			<div id="jpp-main">
 				<div id="jpp-player-wrap" class="jpp-button-wrap">
 					<button id="jpp-player-play"><?php echo hpm_svg_output( 'play' ); ?></button>
 					<button id="jpp-player-stop" class="hidden"><?php echo hpm_svg_output( 'pause' ); ?></button>
-					<video id="jpp-player" preload="none" hidden></video>
+					<audio id="jpp-player" preload="none" hidden></audio>
 				</div>
 				<div id="jpp-player-controls" class="jpp-button-wrap">
 					<button id="jpp-player-volume"><?php echo hpm_svg_output( 'volume-up' ); ?></button>
@@ -362,5 +371,5 @@ function hpm_persistent_player_foot(): void {
 	}
 }
 
-// add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
-// add_action( 'wp_head', 'hpm_persistent_player_head', 102 );
+add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
+add_action( 'wp_head', 'hpm_persistent_player_head', 102 );

@@ -6,9 +6,8 @@ Template Name: NPR Content
 	if ( isset( $wp_query->query_vars['npr_id'] ) ) {
 		$npr_id = urldecode( $wp_query->query_vars['npr_id'] );
 	}
-	try {
-		$nprdata = hpm_pull_npr_story( $npr_id );
-	} catch ( Exception $e ) {
+	$nprdata = hpm_pull_npr_story( $npr_id );
+	if ( empty( $nprdata['title'] ) ) {
 		status_header(404);
 		include( get_404_template() );
 		exit;

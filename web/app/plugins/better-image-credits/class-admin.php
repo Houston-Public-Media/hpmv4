@@ -1,7 +1,7 @@
 <?php
 
 class BetterImageCreditsAdmin {
-
+	private $plugin;
 	function __construct( $plugin ) {
 		$this->plugin = $plugin;
 		add_filter( 'attachment_fields_to_edit', [ $this, 'add_fields' ], 10, 2 );

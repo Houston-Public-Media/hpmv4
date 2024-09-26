@@ -19,23 +19,7 @@ echo '<?xml version="1.0" encoding="' . get_option('blog_charset') . '"?>';
  */
 do_action( 'rss_tag_pre', 'rss2' );
 ?>
-<rss version="2.0"
-	xmlns:content="http://purl.org/rss/1.0/modules/content/"
-	xmlns:media="http://search.yahoo.com/mrss/"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:atom="http://www.w3.org/2005/Atom"
-	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
-	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
-	<?php
-	/**
-	 * Fires at the end of the RSS root to add namespaces.
-	 *
-	 * @since 2.0.0
-	 */
-	do_action( 'rss2_ns' );
-	?>
->
-
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" <?php do_action( 'rss2_ns' ); ?>>
 <channel>
 	<title><?php wp_title_rss(); ?></title>
 	<atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />

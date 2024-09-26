@@ -90,14 +90,14 @@ get_header(); ?>
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
 				</div>
-				<div id="station-social" class="station-social">
+				<?php /* ?><div id="station-social" class="station-social">
 				   <div class="badges-box">
 						<span class="badge-title">SUBSCRIBE, STREAM &amp; FOLLOW US ON</span>
 					   <?php echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
 				   </div>
-				</div>
+				</div><?php */ ?>
 			</div>
-			<section id="search-results">
+			<?php /* ?><section id="search-results">
 				<h2 class="title red-bar"> <strong><span>Episodes</span></strong> </h2>
 <?php
 	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
@@ -170,7 +170,7 @@ get_header(); ?>
 						</script>
 					</div>
 				</div>
-			</aside>
+			</aside><?php */ ?>
 		</main>
 	</div>
 <?php get_footer(); ?>

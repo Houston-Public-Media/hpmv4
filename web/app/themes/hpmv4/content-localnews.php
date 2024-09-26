@@ -15,7 +15,8 @@
 				'category__in' => [ $category->term_id ],
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => 4,
-				'post__not_in' => $excludedIds
+				'post__not_in' => $excludedIds,
+				'category__not_in' => [ 0, 1, 7636, 28, 37840, 54338, 60 ]
 			];
 			$posts = get_posts( $args );
 ?>

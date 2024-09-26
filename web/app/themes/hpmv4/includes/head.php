@@ -180,6 +180,7 @@ function hpm_header_info(): void {
 			$reqs['description'] = htmlentities( wp_strip_all_tags( get_excerpt_by_id( $ID ), true ), ENT_QUOTES );
 			$reqs['og_type'] = 'article';
 			$coauthors = get_coauthors( $ID );
+			$author_fedi = [];
 			foreach ( $coauthors as $coa ) {
 				$author_fb = '';
 				if ( is_a( $coa, 'wp_user' ) ) {
@@ -196,6 +197,16 @@ function hpm_header_info(): void {
 						$author_meta = get_post_meta( $author_check->post->ID, 'hpm_staff_meta', true );
 						if ( !empty( $author_meta['facebook'] ) ) {
 							$author_fb = $author_meta['facebook'];
+						}
+						if ( !empty( $author_meta['fediverse'] ) ) {
+							$fedi_parse = parse_url( $author_meta['fediverse'] );
+							$fedi_path = str_replace( '/', '', $fedi_parse['path'] );
+							$fedi_path_x = explode( '@', $fedi_path );
+							if ( count( $fedi_path_x ) === 2 ) {
+								$author_fedi[] = $fedi_path . '@' . $fedi_parse['host'];
+							} else {
+								$author_fedi[] = $fedi_path;
+							}
 						}
 					}
 				} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
@@ -215,6 +226,16 @@ function hpm_header_info(): void {
 								$author_meta = get_post_meta( $author_check->post->ID, 'hpm_staff_meta', true );
 								if ( !empty( $author_meta['facebook'] ) ) {
 									$author_fb = $author_meta['facebook'];
+								}
+								if ( !empty( $author_meta['fediverse'] ) ) {
+									$fedi_parse = parse_url( $author_meta['fediverse'] );
+									$fedi_path = str_replace( '/', '', $fedi_parse['path'] );
+									$fedi_path_x = explode( '@', $fedi_path );
+									if ( count( $fedi_path_x ) === 2 ) {
+										$author_fedi[] = $fedi_path . '@' . $fedi_parse['host'];
+									} else {
+										$author_fedi[] = $fedi_path;
+									}
 								}
 							}
 						}
@@ -251,7 +272,7 @@ function hpm_header_info(): void {
 		<link rel="profile" href="https://gmpg.org/xfn/11" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 		<meta name="description" content="<?PHP echo $reqs['description']; ?>" />
-		<meta name="keywords" content="<?php echo implode( ', ', $reqs['keywords'] ); ?>" />
+		<meta name="keywords" content="<?php echo ( !empty( $reqs['keywords'] ) ? implode( ', ', $reqs['keywords'] ) : '' ); ?>" />
 		<meta name="bitly-verification" content="7777946f1a0a" />
 		<meta name="google-site-verification" content="WX07OGEaNirk2km8RjRBernE0mA7_QL6ywgu6NXl1TM" />
 		<meta name="theme-color" content="#f5f5f5" />
@@ -299,6 +320,12 @@ function hpm_header_info(): void {
 		<meta property="article:publisher" content="https://www.facebook.com/houstonpublicmedia/" />
 		<meta property="article:section" content="<?php echo $reqs['hpm_section']; ?>" />
 <?php
+		if ( !empty( $author_fedi ) ) {
+			foreach ( $author_fedi as $afed ) { ?>
+		<meta property="fediverse:creator" content="<?php echo $afed; ?>" />
+<?php
+			}
+		}
 		if ( !empty( $reqs['keywords'] ) ) {
 			foreach( $reqs['keywords'] as $keys ) { ?>
 		<meta property="article:tag" content="<?php echo $keys; ?>" />
@@ -478,8 +505,12 @@ function hpm_blank_header(): void {
 	add_action( 'wp_head', function(){
 		wp_dequeue_style( 'hpm-css' );
 		wp_deregister_style( 'hpm-css' );
+		wp_dequeue_style( 'bootstrap-css' );
+		wp_deregister_style( 'bootstrap-css' );
 		wp_dequeue_script( 'hpm-js' );
 		wp_deregister_script( 'hpm-js' );
+		wp_dequeue_script( 'bootstrap-js' );
+		wp_deregister_script( 'bootstrap-js' );
 	}, 1 );
 
 	remove_action( 'wp_head', 'hpm_inline_style', 100 );

@@ -110,7 +110,7 @@ function add_rewrite_rules( $aRules ): array {
 		'^(news887|classical)/schedule/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=01&sched_day=01',
 		'^(news887|classical)/schedule/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
 		'^(news887|classical)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
-		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]+)/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]'
+		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([a-z\-0-9]+)/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]'
 	];
 	return $aNewRules + $aRules;
 }
@@ -179,13 +179,7 @@ function hpm_schedules( $station, $date ) {
  */
 if ( !function_exists( 'log_it' ) ) {
 	function log_it( $message ): void {
-		if ( WP_DEBUG === true ) {
-			if ( is_array( $message ) || is_object( $message ) ) {
-				error_log( print_r( $message, true ) );
-			} else {
-				error_log( $message );
-			}
-		}
+		error_log( print_r( $message, true ) );
 	}
 }
 
@@ -314,6 +308,27 @@ function hpm_youtube_playlist( $key, $num = 5 ): array {
 	$json_r = array_slice( $items, 0, $num );
 	set_transient( 'hpm_yt_' . $key . '_' . $num, $json_r, 600 );
 	return $json_r;
+}
+
+function hpm_youtube_playlist_rss( $key, $num = 0 ): array {
+	$list = get_transient( 'hpm_yt_' . $key );
+	if ( !empty( $list ) ) {
+		return $list;
+	}
+	$remote = wp_remote_get( esc_url_raw( 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $key ) );
+	if ( is_wp_error( $remote ) || $remote['response']['code'] !== 200 ) {
+		return [];
+	} else {
+		$yt = wp_remote_retrieve_body( $remote );
+		$dom = simplexml_load_string( $yt );
+		$json = json_decode( json_encode( $dom ), true );
+	}
+	$items = $json['entry'];
+	if ( $num > 0 ) {
+		$items = array_slice( $items, 0, $num );
+	}
+	set_transient( 'hpm_yt_' . $key, $items, 600 );
+	return $items;
 }
 
 /*
@@ -480,42 +495,31 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 		return $npr;
 	}
 	$output = '<ul class="list-none news-links link-thumb">';
-	if ( function_exists( 'npr_cds_activate' ) ) {
-		$npr = new NPR_CDS_WP();
-		$npr->request([
-			'collectionIds' => $api_id,
-			'profileIds' => 'story,renderable,publishable,slug',
-			'limit' => $num,
-			'sort' => 'publishDateTime:desc'
-		]);
-		$npr->parse();
-		if ( !empty( $npr->stories ) ) {
-			foreach ( $npr->stories as $story ) {
-				$image_url = '';
-				if ( !empty( $story->images[0] ) ) {
-					$image_id = $npr->extract_asset_id( $story->images[0]->href );
-					$image_asset = $story->assets->{$image_id};
-					foreach ( $image_asset->enclosures as $enclosure ) {
-						if ( in_array( 'primary', $enclosure->rels ) ) {
-							$image_url = $npr->get_image_url( $enclosure );
-						}
+	$npr = new NPR_CDS_WP();
+	$npr->request([
+		'collectionIds' => $api_id,
+		'profileIds' => [ 'story', 'publishable', 'renderable', 'buildout' ],
+		'limit' => $num,
+		'sort' => 'publishDateTime:desc',
+		'ownerHrefs' => 'https://organization.api.npr.org/v4/services/s1'
+	]);
+	$npr->parse();
+	if ( !empty( $npr->stories ) ) {
+		foreach ( $npr->stories as $story ) {
+			$image_url = '';
+			$npr_date = strtotime( $story->publishDateTime );
+			if ( !empty( $story->images[0] ) ) {
+				$image_id = $npr->extract_asset_id( $story->images[0]->href );
+				$image_asset = $story->assets->{$image_id};
+				foreach ( $image_asset->enclosures as $enclosure ) {
+					if ( in_array( 'primary', $enclosure->rels ) ) {
+						$image_url = $npr->get_image_url( $enclosure );
 					}
 				}
-				$output .= '<li><a href="/npr' . $story->nprWebsitePath . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url ) ? '<img src="' . $image_url . '" alt="' . $story->teaser . '" loading="lazy" />' : '' ) .'</span></a></li>';
 			}
-		}
-	} elseif ( function_exists( 'nprstory_activate' ) ) {
-		$api_key = get_option( 'ds_npr_api_key' );
-		$remote  = wp_remote_get( esc_url_raw( "https://api.npr.org/query?id=" . $api_id . "&fields=title,teaser,slug,image,storyDate&requiredAssets=image,audio,text&startNum=0&dateType=story&output=JSON&numResults=" . $num . "&apiKey=" . $api_key ) );
-		if ( is_wp_error( $remote ) ) {
-			return "<p></p>";
-		} else {
-			$npr  = wp_remote_retrieve_body( $remote );
-			$npr_json = json_decode( $npr, true );
-		}
-		foreach ( $npr_json['list']['story'] as $story ) {
-			$npr_date = strtotime( $story['storyDate']['$text'] );
-			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story['id'] . '/' . sanitize_title( $story['title']['$text'] ) . '/" rel="bookmark"><span>' . $story['title']['$text'] . '</span><span class="img-w75"><img src="' . $story['image'][0]['src'] . '" alt="' . $story['title']['$text'] . '" loading="lazy" /></span></a></li>';
+			$output .= '<li><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span><span class="img-w75">' . ( !empty( $image_url['url'] ) ? '<img src="' . $image_url['url'] . '" alt="' .
+				( !empty( $story->teaser ) ? strip_tags( $story->teaser ) : $story->title ) .
+				'" loading="lazy" />' : '' ) .'</span></a></li>';
 		}
 	}
 	$output .= "</ul>";
@@ -609,6 +613,12 @@ function hpm_https_check(): void {
 					let content = wp.editor.getContent('content');
 					let dialog = document.querySelector('#hpm-check');
 					let dialogContent = document.querySelector('#hpm-check-content');
+					let postTitle = document.querySelector('#title');
+					let altTitle = document.querySelector('#hpm-alt-headline');
+					let seoTitle = document.querySelector('#hpm-seo-headline');
+					postTitle.classList.remove('hpm-editor-error');
+					altTitle.classList.remove('hpm-editor-error');
+					seoTitle.classList.remove('hpm-editor-error');
 					if ( content.includes('src="http://') ) {
 						e.preventDefault();
 						dialogContent.innerHTML = '<h2>Using Insecure Embeds</h2><p>This post contains an embed or image from an insecure source. Please check and see if that embed is available via HTTPS.</p><p>To check this:</p><ol><li>Look for any &lt;img&gt; or &lt;iframe&gt; tags in your HTML</li><li>>Find the src="" attribute and copy the URL</li><li>Change \'http:\' to \'https:\' and paste it into your browser</li></ol><p>If it loads correctly, then great! Update the URL in your HTML</p><p>If you have any questions, email <a href="mailto:jcounts@houstonpublicmedia.org?subject=Question%20About%20HTTPS%20in%2-WordPress">jcounts@houstonpublicmedia.org</a><p>';
@@ -619,6 +629,25 @@ function hpm_https_check(): void {
 						dialogContent.innerHTML = '<h2>Image Alt Text Needed</h2><p>This post contains images with <strong>empty alt text tags</strong>. Alt text (or alternative text) is what displays in the event an image doesn\'t load, or is read by a screen reader, and <strong>typically describes the content of the image</strong>. Leaving these blank can <strong>cause problems for both accessibility and search engine optimization</strong>.</p><h3>Steps to Fix</h3><p>In the Visual editor mode, click on the image and click the pencil icon:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" alt="Clicking on an image in the editor reveals alignment tools as well as an edit button" /></a></p><p>In the popup, fill in the box at the top marked "Alternative Text":<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" alt="In the modal popup, fill in the top box marked Alternative Text" /></a></p><p>In the Text mode, look for the alt attribute in any <code>&lt;img&gt;</code> tags and enter your text there:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" alt="Look for any occurrences of alt that do not have any text in between the quotes" /></a></p><p>You can also enter the alt text in the Media Library popup when uploading the image:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" alt="The Media Library also contains a field for alt text" /></a></p>';
 						dialog.showModal();
 						return false;
+					} else if ( postTitle.value.length > 100 || altTitle.value.length > 100 || seoTitle.value.length > 100 ) {
+						e.preventDefault();
+						let tooLongOutput = '<h2>One (or more) of your headlines is too long</h2><p>See below. Please rewrite it to be 100 characters or less.</p><ul class="ul-disc">';
+						if ( postTitle.value.length > 100 ) {
+							tooLongOutput += '<li>Main Headline <strong>(' + postTitle.value.length + ' characters)</strong></li>';
+							postTitle.classList.add('hpm-editor-error');
+						}
+						if ( altTitle.value.length > 100 ) {
+							tooLongOutput += '<li>Alternate/Homepage Headline <strong>(' + altTitle.value.length + ' characters)</strong></li>';
+							altTitle.classList.add('hpm-editor-error');
+						}
+						if ( seoTitle.value.length > 100 ) {
+							tooLongOutput += '<li>SEO Headline <strong>(' + seoTitle.value.length + ' characters)</strong></li>';
+							seoTitle.classList.add('hpm-editor-error');
+						}
+						tooLongOutput += '</ul>';
+						dialogContent.innerHTML = tooLongOutput;
+						dialog.showModal();
+						return false;
 					} else {
 						return true;
 					}
@@ -626,6 +655,11 @@ function hpm_https_check(): void {
 			});
 		});
 	</script>
+	<style>
+		.hpm-editor-error {
+			border: 2px solid red !important;
+		}
+	</style>
 <?php
 }
 
@@ -1330,7 +1364,7 @@ function hpm_alt_headline_save_meta( $post_id, $post ) {
  */
 function hpm_article_seo_title( $title ) {
 	global $wp_query;
-	if ( $wp_query->is_single() ) {
+	if ( $wp_query->is_single() && !empty( $wp_query->post->ID ) ) {
 		$seo_headline = get_post_meta( $wp_query->post->ID, 'hpm_seo_headline', true );
 		if ( !empty( $seo_headline ) ) {
 			return wp_strip_all_tags( $seo_headline ) . ' | Houston Public Media';

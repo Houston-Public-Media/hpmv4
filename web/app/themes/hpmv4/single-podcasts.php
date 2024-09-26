@@ -5,7 +5,7 @@
  * @package WordPress
  */
 global $wp_query;
-if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
+if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] === 'feed' ) {
 	header( 'Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ) );
 	$more = 1;
 	echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
@@ -70,8 +70,6 @@ if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
 </channel>
 </rss><?php
 } else {
-	header('Content-Type: text/xml; charset=' . get_option( 'blog_charset' ) );
-	$content = get_option( 'hpm_podcast-' . $wp_query->query['name'] );
 	$sources = [
 		'noad',
 		'apple-podcasts',
@@ -80,24 +78,14 @@ if ( empty( $wp_query->query['name'] ) && $wp_query->query['feed'] == 'feed' ) {
 		'simplecast',
 		'tunein',
 		'amazon-music',
-		'iheart',
-		'radiopublic'
+		'iheart'
 	];
-	$find = $replace_str = '';
-	$replace = [];
+	$source = '';
 	if ( !empty( $_GET['source'] ) && in_array( strtolower( $_GET['source'] ), $sources ) ) {
-		$replace[] = 'srcid=' . sanitize_text_field( $_GET['source'] );
+		$source .= '-' . $_GET['source'];
 	}
-	if ( str_contains( $content, '?{{REPLACE}}{{AGGREGATE_FEED}}' ) ) {
-		$find = '?{{REPLACE}}{{AGGREGATE_FEED}}';
-		$replace[] = 'srctype=aggregate';
-	} else {
-		$find = '?{{REPLACE}}';
-	}
-	$replace_str = implode( '&amp;', $replace );
-	if ( !empty( $replace_str ) ) {
-		$replace_str = '?' . $replace_str;
-	}
-	$content = str_replace( $find, $replace_str, $content );
-	echo $content;
+	$xml = $wp_query->query['name'] . $source . '.xml';
+	header( "HTTP/1.1 301 Moved Permanently" );
+	header( 'Location: https://cdn.houstonpublicmedia.org/podcasts/' . $xml );
+	exit;
 }

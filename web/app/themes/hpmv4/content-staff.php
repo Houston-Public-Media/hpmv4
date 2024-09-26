@@ -36,6 +36,14 @@ if ( ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biograph
 				echo ( !empty( $staff['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ) . '" title="Call ' . get_the_title() . ' at ' . $staff['phone'] . '" data-phone="' . $staff['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a><span class="screen-reader-text">Call ' . get_the_title() . '</span></div>' : '' );
 				echo ( !empty( $staff['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $staff['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text">Facebook</span></a></div>' : '' );
 				echo ( !empty( $staff['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $staff['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) .'<span class="screen-reader-text">Twitter</span></a></div>' : '' );
+				if ( !empty( $staff['fediverse'] ) ) {
+					if ( str_contains( $staff['fediverse'], 'threads.net' ) ) {
+						echo '<div class="service-icon threads"><a href="' . $staff['fediverse'] . '" target="_blank">' . hpm_svg_output( 'threads' ) . '<span class="screen-reader-text">Threads</span></a></div>';
+					} else {
+						echo '<div class="service-icon mastodon"><a href="' . $staff['fediverse'] . '" target="_blank">' . hpm_svg_output( 'mastodon' ) . '<span class="screen-reader-text">Mastodon</span></a></div>';
+					}
+				}
+				echo ( !empty( $staff['bluesky'] ) ? '<div class="service-icon bluesky"><a href="' . $staff['bluesky'] .'" target="_blank">' . hpm_svg_output( 'bluesky' ) . '<span class="screen-reader-text">Bluesky</span></a></div>' : '' );
 				echo ( !empty( $staff['linkedin'] ) ? '<div class="service-icon linkedin"><a href="' . $staff['linkedin'] .'" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text">LinkedIn</span></a></div>' : '' );
 				echo ( !empty( $staff['email'] ) ? '<div class="service-icon envelope"><a href="mailto:' . $staff['email'] . '" target="_blank">' . hpm_svg_output( 'envelope' ) . '<span class="screen-reader-text">Email ' . get_the_title() . '</span></a></div>' : '' ); ?>
 			</div>

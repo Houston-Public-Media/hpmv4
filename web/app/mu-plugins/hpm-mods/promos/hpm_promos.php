@@ -113,7 +113,6 @@ class HPM_Promos {
 		}
 	}
 
-
 	public function add_meta(): void {
 		add_meta_box(
 			'hpm-promos-meta-class',
@@ -157,8 +156,7 @@ class HPM_Promos {
 						'total' => ''
 					],
 					'emergency' => [],
-					'non-emergency' => [],
-					'dont-miss' => []
+					'non-emergency' => []
 				]
 			];
 		}
@@ -176,11 +174,10 @@ class HPM_Promos {
 			<select id="hpm_promo_type" name="hpm_promo[type]">
 				<option value="">Select Type</option>
 				<option value="sidebar" <?PHP selected( $hpm_promo['type'], 'sidebar' ); ?>>Sidebar Banner/Poll</option>
-				<option value="dont-miss" <?PHP selected( $hpm_promo['type'], 'dont-miss' ); ?>>Don't Miss Bullet Point</option>
 				<option value="lightbox" <?PHP selected( $hpm_promo['type'], 'lightbox' ); ?>>Lightbox</option>
 				<option value="emergency" <?PHP selected( $hpm_promo['type'], 'emergency' ); ?>>Emergency Notification</option>
 				<option value="non-emergency" <?PHP selected( $hpm_promo['type'], 'non-emergency' ); ?>>Non-Emergency Notification</option>
-				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth' ); ?>>Full-Width Banner</option>
+				<option value="fullwidth" <?PHP selected( $hpm_promo['type'], 'fullwidth' ); ?>>Flexible Banner</option>
 			</select>
 		</p>
 		<h3><?PHP _e( "Where do you want your element to show up?", 'hpmv4' ); ?></h3>
@@ -221,7 +218,6 @@ class HPM_Promos {
 		</div>
 		<div id="hpm-emergency" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'emergency' ? '' : ' style="display: none;"'); ?>></div>
 		<div id="hpm-non-emergency" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'non-emergency' ? '' : ' style="display: none;"'); ?>></div>
-		<div id="hpm-dont-miss" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'dont-miss' ? '' : ' style="display: none;"'); ?>></div>
 		<script>
 			jQuery(document).ready(function($){
 				$( "#hpm_promo_type" ).change(function () {
@@ -231,9 +227,9 @@ class HPM_Promos {
 					if (typeVal === 'sidebar') {
 						send_to_editor("<div id=\"[[ CAMPAIGN ID ]]\" class=\"top-banner\">\n\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n</div>\n");
 					} else if (typeVal === 'fullwidth') {
-						send_to_editor("<div id=\"[[ CAMPAIGN ID ]]\" class=\"top-banner\">\n\t<a href=\"[[ CLICKTHROUGH LINK ]]\">\n\t\t<picture>\n\t\t\t<source srcset=\"[[ MOBILE IMAGE URL ]]\" media=\"(max-width: 34em)\" />\n\t\t\t<source srcset=\"[[ TABLET IMAGE URL ]]\" media=\"(max-width: 52.5em)\" />\n\t\t\t<source srcset=\"[[ DESKTOP IMAGE URL ]]\" />\n\t\t\t<img src=\"[[ DESKTOP IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" />\n\t\t</picture>\n\t</a>\n</div>\n");
+						send_to_editor("<div id=\"[[ CAMPAIGN ID ]]\" class=\"top-banner full-width\">\n\t<a href=\"[[ CLICKTHROUGH LINK ]]\">\n\t\t<picture>\n\t\t\t<source srcset=\"[[ MOBILE IMAGE URL ]]\" media=\"(max-width: 34em)\" />\n\t\t\t<source srcset=\"[[ TABLET IMAGE URL ]]\" media=\"(max-width: 52.5em)\" />\n\t\t\t<source srcset=\"[[ DESKTOP IMAGE URL ]]\" />\n\t\t\t<img src=\"[[ DESKTOP IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" />\n\t\t</picture>\n\t</a>\n</div>\n");
 					} else if (typeVal === 'lightbox') {
-						send_to_editor("<div id=\"campaign-splash\" data-campaign=\"[[ LIGHTBOX DESCRIPTION ]]\" class=\"lightbox\">\n\t<div id=\"splash\">\n\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n\t\t<div class=\"campaign-push\">\n\t\t\t<p>[[ LIGHTBOX COPY ]]</p>\n\t\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><path d=\"M438.1,85.3c-48.4-41.2-120.3-33.8-164.7,12L256,115.2l-17.4-17.9c-44.3-45.8-116.4-53.2-164.7-12 c-55.4,47.3-58.4,132.2-8.7,183.5L236,445.2c11,11.4,29,11.4,40,0l170.8-176.4C496.5,217.5,493.6,132.6,438.1,85.3L438.1,85.3z\"></path></svg> [[ BUTTON TEXT ]]</a>\n\t\t</div>\n\t\t<div id=\"campaign-close\">X</div>\n\t</div>\n</div>\n");
+						send_to_editor("<div id=\"campaign-splash\" data-campaign=\"[[ LIGHTBOX DESCRIPTION ]]\" data-dismissed=\"false\" data-clicked=\"false\" class=\"lightbox\">\n\t<div id=\"splash\">\n\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><img src=\"[[ IMAGE URL ]]\" alt=\"[[ IMAGE ALTERNATE TEXT ]]\" /></a>\n\t\t<div class=\"campaign-push\">\n\t\t\t<p>[[ LIGHTBOX COPY ]]</p>\n\t\t\t<a href=\"[[ CLICKTHROUGH LINK ]]\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><path d=\"M438.1,85.3c-48.4-41.2-120.3-33.8-164.7,12L256,115.2l-17.4-17.9c-44.3-45.8-116.4-53.2-164.7-12 c-55.4,47.3-58.4,132.2-8.7,183.5L236,445.2c11,11.4,29,11.4,40,0l170.8-176.4C496.5,217.5,493.6,132.6,438.1,85.3L438.1,85.3z\"></path></svg> [[ BUTTON TEXT ]]</a>\n\t\t</div>\n\t\t<div id=\"campaign-close\">X</div>\n\t</div>\n</div>\n");
 					}
 					document.getElementById('publish').disabled = typeVal === '';
 				});
@@ -504,14 +500,14 @@ class HPM_Promos {
 				if ( $meta['location'] == 'homepage' && ! $wp_global->is_home ) {
 					continue;
 				}
-				$content = do_shortcode( get_the_content(), false );
+				$content = do_shortcode( get_the_content() );
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
 				if ( $meta['type'] == 'lightbox' ) {
 					if ( !empty( $_GET['utm_source'] ) && strtolower( $_GET['utm_source'] ) === 'high5media' && !empty( $_GET['utm_content'] ) && ( $_GET['utm_content'] === 'trusted' || $_GET['utm_content'] === 'inspiring' ) ) {
 						continue;
 					}
-					if ( $lightbox == 0  ) {
+					if ( $lightbox == 0 ) {
 						$output .= "var visited = getCookie('visited');";
 						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) {
 							$content_esc = str_replace(
@@ -537,7 +533,7 @@ class HPM_Promos {
 						}
 						$output .= "var lightBox = '" . $content_esc . "';" .
 						"if (visited === null) {" .
-							"setCookie('visited','true',4);" .
+							"setCookie('visited','true',72);" .
 							"document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);" .
 							"var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');" .
 							"var campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');" .
@@ -548,9 +544,12 @@ class HPM_Promos {
 								"campaign[i].addEventListener('click', (event) => {" .
 									"event.stopPropagation();" .
 									"document.getElementById('campaign-splash').style.display = 'none';" .
+									"document.getElementById('campaign-splash').setAttribute('data-dismissed', 'true');" .
 									"gtag('event', 'lightbox', {'event_label': campaignData,'event_category': 'dismiss'});" .
 								"});".
 							"}".
+							"window.addEventListener('beforeunload', function() { hardExit(); } );" .
+							"window.addEventListener('unload', function() { hardExit(); } );" .
 						"}";
 						$lightbox++;
 					}
@@ -567,14 +566,16 @@ class HPM_Promos {
 						"Array.from(lBox).forEach((item) => {".
 							"item.addEventListener('click', (event) => {".
 								"event.stopPropagation();" .
-								"let campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');".
-								"if ( typeof campaign !== typeof undefined && campaign !== false) {".
+								"let campaign = document.querySelector('#campaign-splash').getAttribute('data-campaign');" .
+								"if ( typeof campaign !== typeof undefined && campaign !== false) {" .
+									"document.getElementById('campaign-splash').setAttribute('data-clicked', 'true');" .
 									"gtag('event', 'lightbox', {'event_label': campaign,'event_category': 'click'});" .
 								"}".
 							"});".
 						"});".
 					"}".
 				"}());".
+				"function hardExit() { let splash = document.querySelector('#campaign-splash'); if ( splash.getAttribute('data-dismissed') !== 'true' && splash.getAttribute('data-clicked') !== 'true' ) { gtag('event', 'lightbox', {'event_label': splash.getAttribute('data-campaign'),'event_category': 'hardexit'}); } return null; }" .
 			"</script>";
 		}
 		return $output;
@@ -584,17 +585,16 @@ class HPM_Promos {
 		global $wp_query;
 		$wp_global = $wp_query;
 		$output = '';
-		$dont = [];
-		$fullwidth = $sidebar = false;
+		$sidebar = false;
 		$positions = [
 			'top' => [
-				'sidebar', 'fullwidth', 'dont-miss'
+				'sidebar', 'fullwidth'
 			],
 			'emergency' => [
 				'emergency', 'non-emergency'
 			],
 			'sidebar' => [
-				'sidebar'
+				'sidebar', 'fullwidth'
 			]
 		];
 		if ( empty( $wp_query->post ) ) {
@@ -662,29 +662,15 @@ class HPM_Promos {
 				$content_esc = str_replace( "'", "\'", $content );
 				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
 				if ( in_array( $meta['type'], $positions[ $position ] ) ) {
-					if ( $meta['type'] == 'sidebar' ) {
+					if ( $meta['type'] == 'sidebar' || $meta['type'] == 'fullwidth' ) {
 						$output .= $content_esc;
 						$sidebar = true;
-					} elseif ( $meta['type'] == 'fullwidth' ) {
-						if ( !$fullwidth ) {
-							$output .= $content_esc;
-							$fullwidth = true;
-						}
 					} elseif ( $meta['type'] === 'emergency' || $meta['type'] === 'non-emergency' ) {
 						$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
 						$output .= '<div id="emergency" class="' . $meta['type'] . '">'. hpm_svg_output( 'exclamation-circle' ) . " " . $content_esc . '</div>';
-					} elseif ( $meta['type'] == 'dont-miss' ) {
-						$dont[] = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
 					}
 				}
 			}
-		}
-		if ( !empty( $dont ) ) {
-			$output .= '<div id="hpm-promo-bullets"><h2>Don&#39;t Miss:</h2><ul>';
-			foreach ( $dont as $d ) {
-				$output .= "<li>" . $d . "</li>";
-			}
-			$output .= "</ul></div>";
 		}
 		if ( $sidebar ) {
 			$output = '<div class="hpm-promo-wrap">' . $output . '</div>';
