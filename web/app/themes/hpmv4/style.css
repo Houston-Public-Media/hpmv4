@@ -757,6 +757,54 @@ svg:not(:root) {
 	}
 }
 
+/* Copy link to text fragment */
+#copyLink-container {
+	height: 0;
+	width: 100%;
+	position: relative;
+	display: grid;
+	margin: 0 !important;
+	&.fadeout {
+		animation-name: fadeOut;
+		animation-duration: 0.3s;
+		animation-delay: 2s;
+		animation-fill-mode: both;
+	}
+	#copyLink {
+		position: absolute;
+		top: -1rem;
+		justify-self: center;
+		margin: 0 auto;
+		background-color: black;
+		color: white;
+		padding: 0.25rem;
+		z-index: 10;
+		transition: all 0.5ms;
+		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+		&:hover {
+			cursor: pointer;
+		}
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: -0.25rem;
+			left: calc(50% - 0.25rem);
+			width: 0.5rem;
+			height: 0.5rem;
+			background-color: black;
+			transform: rotate(45deg);
+		}
+	}
+}
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
 /* iFrame Sizing */
 .iframe-embed {
 	position: relative;

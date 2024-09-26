@@ -423,9 +423,89 @@ function hpm_top_cat( $post_id ) {
 			];
 		}
 	}
-
 	return $top_cat['name'];
 }
+
+// Calculate date difference between election day and now to display the countdown of days
+function CalculateElectionCountdowndays(): string {
+    $electionDay = mktime(7,0,0,11,05,2024);
+    $now = time();
+    $offset = get_option( 'gmt_offset' ) * 3600;
+    $now += $offset;
+    $electionDay += $offset;
+    $secondsRemaining = $electionDay - $now;
+
+    $daysRemaining = str_pad(floor($secondsRemaining / DAY_IN_SECONDS), 2, "0", STR_PAD_LEFT);
+    $secondsRemaining -= ($daysRemaining * DAY_IN_SECONDS);
+    $hoursRemaining = str_pad(floor($secondsRemaining / HOUR_IN_SECONDS), 2, "0", STR_PAD_LEFT);
+    $secondsRemaining -= ($hoursRemaining * HOUR_IN_SECONDS);
+    $minutesRemaining = str_pad(floor($secondsRemaining / MINUTE_IN_SECONDS), 2,   "0", STR_PAD_LEFT);
+
+    $countdownString = '<div class="flex-row"><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$daysRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$hoursRemaining.'</div><div class="flex-col" style="padding-top: 20px; border-bottom: 1px dashed; margin-right: 10px;">'.$minutesRemaining.' </div></div>';
+    return $countdownString;
+}
+
+//Show top three news articles under Elections 2024 category on Elections landing page
+function hpm_ShowElectionTopThreeArticles( ): string {
+    wp_reset_postdata();
+    $result = "";
+    //$cat_no = '21, 60140';
+    $cat_no = [21, 60140];
+    $latest_ep_args = [
+        'cat' => [21, 60140],
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'posts_per_page' => 4,
+        'ignore_sticky_posts' => 1,
+        'post_status' => 'publish',
+        'post_type' => 'post'
+    ];
+    $ka =0;
+    $tposts = new WP_Query( $latest_ep_args );
+    if ( $tposts->have_posts() ) {
+        while ( $tposts->have_posts() ) {
+
+            $tposts->the_post();
+            $post_title = get_the_title();
+            if ( $ka == 0 ) {
+
+                $result .='<div class="col-lg-12 col-xl-8"><div class="box-img latest-news-img"><a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_post_thumbnail() . ' </a></div><h1 style="font-size:1.6rem;"><a href="' . get_the_permalink() . '" rel="bookmark">' . $post_title . '</a></h1></div><div class="col-lg-4 col-xl-4"><ul class="electionnews-listing">';
+
+            } elseif ( $ka > 0 && $ka < 4) {
+                $result .= '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a> </li>';
+            } elseif ( $ka > 4 ) {
+                $result .= '</ul>';
+            }
+            $ka++;
+        }
+    }
+    wp_reset_query();
+    $result .= "</div>";
+    return $result;
+}
+
+function hpm_ShowElectionOtherStories(): array {
+    $articles = [];
+    $other_ep_args = [
+        'cat' => [21, 60140],
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'posts_per_page' => 18,
+        'offset' => 4,
+        'ignore_sticky_posts' => 1,
+        'post_status' => 'publish',
+        'post_type' => 'post'
+    ];
+
+    $sticky_query = new WP_Query( $other_ep_args );
+    if ( $sticky_query->have_posts() ) {
+        foreach ( $sticky_query->posts as $stp ) {
+            $articles[] = $stp;
+        }
+    }
+    return $articles;
+}
+
 
 // Generate excerpt outside of the WP Loop
 function get_excerpt_by_id( $post_id ): string {
@@ -448,11 +528,12 @@ function get_excerpt_by_id( $post_id ): string {
 	return '';
 }
 
-function get_excerpt_by_id_ShowPages( $post_id ): string {
+function get_excerpt_by_id_ShowPages( $post_id, $excerpt_length = NULL ): string {
 	$the_post = get_post( $post_id );
 	if ( !empty( $the_post ) ) {
 		$the_excerpt = $the_post->post_excerpt;
-		$excerpt_length = 28;
+        if ( is_null( $excerpt_length ) ) $excerpt_length = 28;
+
 		if ( empty( $the_excerpt ) ) {
 			$the_excerpt = $the_post->post_content;
 		}
@@ -727,6 +808,29 @@ function hpm_showLatestArticlesbyShowID( $catID ): array {
 	wp_reset_query();
 	return $articles;
 }
+
+function hpm_ShowLatestArticlesByCategoryID( $catID ): array {
+    $articles = [];
+    if ( !empty( $catID ) ) {
+        $showposts_args = [
+            'posts_per_page' => 2,
+            'cat' => $catID,
+            'ignore_sticky_posts' => 1,
+            'post_status' => 'publish',
+           // 'post__not_in' => $excludedIds
+        ];
+        $catposts_query = new WP_Query( $showposts_args );
+        //print_r( $catposts_query);
+        if ( $catposts_query->have_posts() ) {
+            foreach ( $catposts_query->posts as $stp ) {
+                $articles[] = $stp;
+            }
+        }
+    }
+    wp_reset_query();
+    return $articles;
+}
+
 
 function altered_post_time_ago_function() {
 	return ( get_the_time('U') >= strtotime('-1 week') ) ? sprintf( esc_html__( '%s ago', 'textdomain' ), human_time_diff( get_the_time ( 'U' ), current_time( 'timestamp' ) ) ) : get_the_date();
