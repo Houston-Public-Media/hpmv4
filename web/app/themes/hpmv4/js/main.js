@@ -381,6 +381,31 @@ hpm.npUpdateHtml = (object,station,next) => {
 		object.innerHTML = output;
 	}
 };
+
+// document.addEventListener("mouseup", (event) => {
+// 	let selection = document.getSelection();
+// 	let selectionText = document.getSelection ? document.getSelection().toString() : document.selection.createRange().toString();
+// 	if ( selectionText.length > 0 ) {
+// 		let copyLink = document.querySelector('#copyLink-container');
+// 		if ( copyLink !== null ) {
+// 			copyLink.remove();
+// 		}
+// 		let parent = selection.baseNode.parentElement;
+// 		parent.insertAdjacentHTML( 'beforebegin', '<div id="copyLink-container"><span id="copyLink" data-text="' + encodeURIComponent( selectionText ) + '" onclick="copyToClip()">Copy 🔗 to Clipboard</span></div>' );
+// 	}
+// });
+// let copyToClip = () => {
+// 	let copyLink = document.querySelector('#copyLink');
+// 	let copyLinkContain = document.querySelector('#copyLink-container');
+// 	let selectionText = copyLink.getAttribute('data-text');
+// 	let currentLink = window.location.href + "#:~:text=" + selectionText;
+// 	console.log('Copied to clipboard: ' + currentLink);
+// 	navigator.clipboard.writeText(currentLink);
+// 	copyLink.innerHTML = "Copied!";
+// 	copyLinkContain.classList.add('fadeout');
+// 	setTimeout(function(){ document.querySelector('#copyLink-container').remove() }, 5000);
+// }
+
 document.addEventListener('DOMContentLoaded', () => {
 	hpm.navHandlers();
 	hpm.videoHandlers();
