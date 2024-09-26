@@ -3,10 +3,9 @@ Sitemap: https://www.houstonpublicmedia.org/sitemap.xml
 Sitemap: https://www.houstonpublicmedia.org/newssitemap.xml
 
 User-agent: *
-Disallow: /ProdStage
 Disallow: /wp-admin/
 Disallow: /wp/wp-admin/
-Allow: /wp/wp-admin/admin-ajax.php
+Disallow: /wp/wp-admin/admin-ajax.php
 Disallow: /videos/
 Disallow: /pages/
 Disallow: /news/awards/
@@ -14,61 +13,135 @@ Disallow: /support/studio-society/members/
 Disallow: /support/affinity-council/members/
 Disallow: /wp-json/
 
+# START DARK VISITORS BLOCK
+# ---------------------------
+# AI Search Crawler
+# https://darkvisitors.com/agents/amazonbot
+
 User-agent: Amazonbot
 Disallow: /
+
+# Undocumented AI Agent
+# https://darkvisitors.com/agents/anthropic-ai
 
 User-agent: anthropic-ai
 Disallow: /
 
-User-agent: AwarioRssBot
-User-agent: AwarioSmartBot
+# AI Search Crawler
+# https://darkvisitors.com/agents/applebot
+
+User-agent: Applebot
 Disallow: /
+
+# AI Data Scraper
+# https://darkvisitors.com/agents/applebot-extended
+
+User-agent: Applebot-Extended
+Disallow: /
+
+# AI Data Scraper
+# https://darkvisitors.com/agents/bytespider
 
 User-agent: Bytespider
 Disallow: /
 
+# AI Data Scraper
+# https://darkvisitors.com/agents/ccbot
+
 User-agent: CCBot
 Disallow: /
+
+# AI Assistant
+# https://darkvisitors.com/agents/chatgpt-user
 
 User-agent: ChatGPT-User
 Disallow: /
 
-User-agent: ClaudeBot
-Disallow: /
+# Undocumented AI Agent
+# https://darkvisitors.com/agents/claude-web
 
 User-agent: Claude-Web
 Disallow: /
 
+# AI Data Scraper
+# https://darkvisitors.com/agents/claudebot
+
+User-agent: ClaudeBot
+Disallow: /
+
+# Undocumented AI Agent
+# https://darkvisitors.com/agents/cohere-ai
+
 User-agent: cohere-ai
 Disallow: /
 
-User-agent: DataForSeoBot
+# AI Data Scraper
+# https://darkvisitors.com/agents/diffbot
+
+User-agent: Diffbot
 Disallow: /
+
+# AI Data Scraper
+# https://darkvisitors.com/agents/facebookbot
 
 User-agent: FacebookBot
 Disallow: /
 
+# AI Data Scraper
+# https://darkvisitors.com/agents/google-extended
+
 User-agent: Google-Extended
 Disallow: /
+
+# AI Data Scraper
+# https://darkvisitors.com/agents/gptbot
 
 User-agent: GPTBot
 Disallow: /
 
-User-agent: magpie-crawler
+# AI Data Scraper
+# https://darkvisitors.com/agents/meta-externalagent
+
+User-agent: Meta-ExternalAgent
 Disallow: /
+
+# AI Assistant
+# https://darkvisitors.com/agents/meta-externalfetcher
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+# AI Search Crawler
+# https://darkvisitors.com/agents/oai-searchbot
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+# AI Data Scraper
+# https://darkvisitors.com/agents/omgili
 
 User-agent: omgili
 Disallow: /
 
-User-agent: omgilibot
-Disallow: /
-
-User-agent: peer39_crawler
-User-agent: peer39_crawler/1.0
-Disallow: /
+# AI Search Crawler
+# https://darkvisitors.com/agents/perplexitybot
 
 User-agent: PerplexityBot
 Disallow: /
+
+# AI Data Scraper
+# https://darkvisitors.com/agents/timpibot
+
+User-agent: Timpibot
+Disallow: /
+
+# AI Search Crawler
+# https://darkvisitors.com/agents/youbot
+
+User-agent: YouBot
+Disallow: /
+# ---------------------------
+# END DARK VISITORS BLOCK
 
 # Other Bot Rules
 

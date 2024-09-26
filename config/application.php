@@ -67,7 +67,7 @@ if ( empty( $_SERVER['HTTP_HOST'] ) && WP_ENV == 'development' ) {
 if ( empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) && !empty( $_SERVER['HTTP_HOST'] ) ) {
 	$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
 }
-if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && str_contains( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok.io' ) ) {
+if ( !empty( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'dev.houstonpublicmedia.org' && str_contains( $_SERVER['HTTP_X_FORWARDED_HOST'], 'ngrok-free.app' ) ) {
 	Config::define( 'WP_HOME', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] );
 	Config::define( 'WP_SITEURL', 'https://' . $_SERVER['HTTP_X_FORWARDED_HOST'] . '/wp' );
 } else {
@@ -135,6 +135,8 @@ Config::define( 'WP_POST_REVISIONS', 7 );
 Config::define( 'WP_MAX_MEMORY_LIMIT', '1024M' );
 Config::define( 'AWS_ACCESS_KEY_ID', env( 'AWS_ACCESS_KEY_ID' ) );
 Config::define( 'AWS_SECRET_ACCESS_KEY', env( 'AWS_SECRET_ACCESS_KEY' ) );
+Config::define( 'AWS_S3_BUCKET_NAME', env( 'AWS_S3_BUCKET_NAME' ) );
+Config::define( 'AWS_REGION', env( 'AWS_REGION' ) );
 Config::define( 'HPM_SFTP_PASSWORD', env( 'HPM_SFTP_PASSWORD' ) );
 Config::define( 'HPM_PBS_TVSS', env( 'HPM_PBS_TVSS' ) );
 Config::define( 'HPM_MVAULT_ID', env( 'HPM_MVAULT_ID' ) );
@@ -153,6 +155,12 @@ Config::define( 'HPM_MASTODON_BEARER', env( 'MASTODON_BEARER' ) );
 Config::define( 'HPM_OPEN_WEATHER', env( 'OPEN_WEATHER_API_KEY' ) );
 Config::define( 'NPR_CDS_TOKEN', env( 'NPR_CDS_TOKEN' ) );
 Config::define( 'EWWW_IMAGE_OPTIMIZER_DEFER_S3', true );
+Config::define( 'WP_REDIS_HOST', env( 'WP_REDIS_HOST' ) );
+Config::define( 'WP_REDIS_PORT', env( 'WP_REDIS_PORT' ) );
+Config::define( 'WP_REDIS_SCHEME', env( 'WP_REDIS_SCHEME' ) );
+Config::define( 'BSKY_HANDLE', env( 'BSKY_HANDLE' ) );
+Config::define( 'BSKY_APP_PASSWORD', env( 'BSKY_APP_PASSWORD' ) );
+Config::define( 'THREADS_USER_ID', env( 'THREADS_USER_ID' ) );
 
 /**
  * Debugging Settings

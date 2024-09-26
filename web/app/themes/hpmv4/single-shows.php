@@ -99,6 +99,14 @@ get_header(); ?>
 						</div>
 					</div>
 				</div>
+<?php if ( !empty( $show['podcast'] ) ) { ?>
+				<div id="station-social" class="station-social">
+					<div class="badges-box">
+						<span class="badge-title">SUBSCRIBE, STREAM &amp; FOLLOW US ON</span>
+						<?php echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
+					</div>
+				</div>
+<?php } ?>
 				<div class="episodes-block">
 					<h2 class="title red-bar"> <strong><span>All Stories</span></strong></h2>
 					<div class="row">

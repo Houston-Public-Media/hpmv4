@@ -220,7 +220,8 @@ jpp.clickManage = () => {
 		} else {
 			link.addEventListener('click', (e) => {
 				e.preventDefault();
-				if ( ( link.hostname && link.hostname.replace('www.','') !== location.hostname.replace('www.','') ) || link.pathname.includes('/wp-admin/') ) {
+				let onSite = link.hostname.includes('houstonpublicmedia.org');
+				if ( ( link.hostname && !onSite ) || link.pathname.includes('/wp-admin/') ) {
 					window.open(link.href,'_blank');
 				} else {
 					let hrefN = new URL(link.href);
@@ -280,10 +281,35 @@ jpp.childFrame = () => {
 		});
 	});
 };
+let getQueryVariable = ( variable ) => {
+	let query = window.location.search.substring(1);
+	let vars = query.split("&");
+	for (let i= 0; i < vars.length; i++) {
+		let pair = vars[i].split("=");
+		if (pair[0] === variable) {
+			return pair[1];
+		}
+	}
+};
 window.addEventListener('DOMContentLoaded', (event) => {
-	if ( !jpp.inIframe() ) {
-		jpp.parentFrame();
-	} else {
-		jpp.childFrame();
+	let sourceVar = getQueryVariable("source");
+	if ( sourceVar === 'pwa' ) {
+		sessionStorage.setItem('source', sourceVar);
+	}
+	if ( sessionStorage.getItem('source') === 'pwa' ) {
+		let tagCss = document.createElement('link');
+		let firstScriptTag = document.getElementsByTagName('script')[0];
+		tagCss.href = 'https://assets.houstonpublicmedia.org/app/themes/hpmv4/js/experiments/persistent.css?v=20240903';
+		tagCss.rel = 'stylesheet';
+		tagCss.type = 'text/css';
+		tagCss.media = 'all';
+		tagCss.id = 'hpm-persistent';
+		firstScriptTag.parentNode.insertBefore(tagCss, firstScriptTag);
+		document.querySelector('#jpp-player-persist').classList.remove('hidden');
+		if (!jpp.inIframe()) {
+			jpp.parentFrame();
+		} else {
+			jpp.childFrame();
+		}
 	}
 });

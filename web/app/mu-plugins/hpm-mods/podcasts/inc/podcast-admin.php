@@ -84,8 +84,7 @@
 						<div class="postbox">
 							<div class="postbox-header"><h2><?php _e('Upload Options', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
-								<p><?php _e('**NOTE**: Please do not include any leading or trailing slashes in your domains, URLs, folder names, etc. You can include slashes within them (e.g. you might store your files in the "files/podcasts" folder, but the public URL is "http://example.com/podcasts").',
-										'hpm-podcasts' );
+								<p><?php _e('**NOTE**: Please do not include any leading or trailing slashes in your domains, URLs, folder names, etc. You can include slashes within them (e.g. you might store your files in the "files/podcasts" folder, but the public URL is "http://example.com/podcasts").', 'hpm-podcasts' );
 									?></p>
 								<table class="form-table">
 									<tr valign="top">

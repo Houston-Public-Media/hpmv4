@@ -105,10 +105,16 @@ get_header(); ?>
 			foreach ( $json as $tubes ) {
 				$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
 				$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
+				$ytimage = $tubes['snippet']['thumbnails']['default']['url'];
+				if ( !empty( $tubes['snippet']['thumbnails']['high']['url'] ) ) {
+					$ytimage = $tubes['snippet']['thumbnails']['high']['url'];
+				} elseif ( !empty( $tubes['snippet']['thumbnails']['standard']['url'] ) ) {
+					$ytimage = $tubes['snippet']['thumbnails']['standard']['url'];
+				}
 				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) { ?>
 							<div class="episodes-content" id="youtube-main">
 								<div class="image-wrapper">
-									<div id="youtube-player" style="background-image: url( '<?php echo $tubes['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
+									<div id="youtube-player" style="background-image: url( '<?php echo $ytimage; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
 										<?php echo hpm_svg_output( 'play' ); ?>
 									</div>
 								</div>

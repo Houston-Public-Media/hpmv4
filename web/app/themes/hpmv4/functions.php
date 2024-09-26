@@ -44,6 +44,8 @@ function hpm_scripts(): void {
 	wp_enqueue_script( 'bootstrap-js', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/js/bootstrap.min.js', [ 'jquery' ], '5.3.2', true);
 	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], $versions['css'] );
 	wp_enqueue_style( 'bootstrap-css', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/css/bootstrap.min.css', false, '5.3.2' );
+	wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [ 'bootstrap-css' ], '6' );
+	wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], '6', true );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
@@ -56,28 +58,6 @@ function hpm_scripts(): void {
 	wp_deregister_style( 'global-styles' );
 }
 add_action( 'wp_enqueue_scripts', 'hpm_scripts' );
-
-function hpm_inline_script(): void {
-	if ( WP_ENV == 'production' ) {
-		$js = file_get_contents( get_template_directory() . '/js/main.js' );
-		echo '<script>' . $js . '</script>';
-	} else {
-		echo '<script src="' . get_template_directory_uri() . '/js/main.js"></script>';
-	}
-}
-function hpm_inline_style(): void {
-	if ( WP_ENV == 'production' ) {
-		$styles = str_replace( [ "\n", "\t" ], [ '', '' ], file_get_contents( get_template_directory() . '/style.css' ) );
-		$styles = preg_replace( '/\/\*([\n\t\sA-Za-z0-9:\/\-\.!@\(\){}#,;]+)\*\//', '', $styles );
-		echo '<style>' . $styles . '</style>';
-	} else {
-		echo '<link rel="stylesheet" id="hpm-css" href="' . get_template_directory_uri() . '/style.css" type="text/css" media="all">';
-	}
-
-}
-
-add_action( 'wp_footer', 'hpm_inline_script', 100 );
-add_action( 'wp_head', 'hpm_inline_style', 100 );
 
 /*
  * Modifies homepage query
@@ -236,7 +216,7 @@ class HPM_Menu_Walker extends Walker_Nav_Menu {
 function hpm_npr_article_title( $title ) {
 	if ( is_page_template( 'page-npr-articles.php' ) ) {
 		global $nprdata;
-		return $nprdata['title']." | NPR &amp; Houston Public Media";
+		return ( !empty( $nprdata['title'] ) ? $nprdata['title'] : 'Page Not Found' ) . " | NPR &amp; Houston Public Media";
 	}
 	return $title;
 }
@@ -333,11 +313,14 @@ function rel_canonical_w_npr(): void {
 	if ( !empty( get_post_meta( $id, 'npr_html_link', 1 ) ) ) {
 		return;
 	}
+
+	$url = get_permalink( $id );
 	if ( is_page_template( 'page-npr-articles.php' ) ) {
 		global $nprdata;
-		$url = $nprdata['canonical'];
+		if ( !empty( $nprdata['canonical'] ) ) {
+			$url = $nprdata['canonical'];
+		}
 	} else {
-		$url = get_permalink( $id );
 		$page = get_query_var( 'page' );
 		if ( $page >= 2 ) {
 			if ( '' == get_option( 'permalink_structure' ) ) {
@@ -549,7 +532,7 @@ function get_excerpt_by_id_ShowPages( $post_id, $excerpt_length = NULL ): string
 	$the_post = get_post( $post_id );
 	if ( !empty( $the_post ) ) {
 		$the_excerpt = $the_post->post_excerpt;
-        if(is_null($excerpt_length)) $excerpt_length=28;
+        if ( is_null( $excerpt_length ) ) $excerpt_length = 28;
 
 		if ( empty( $the_excerpt ) ) {
 			$the_excerpt = $the_post->post_content;
@@ -826,7 +809,7 @@ function hpm_showLatestArticlesbyShowID( $catID ): array {
 	return $articles;
 }
 
-function hpm_ShowLatestArticlesByCategoryID($catID): array {
+function hpm_ShowLatestArticlesByCategoryID( $catID ): array {
     $articles = [];
     if ( !empty( $catID ) ) {
         $showposts_args = [
@@ -855,40 +838,39 @@ function altered_post_time_ago_function() {
 add_filter( 'the_time', 'altered_post_time_ago_function' );
 
 function hpm_showTopthreeArticles( $articles ): string {
-    $result = "";
-    if ( count( $articles ) > 0 ) {
-        foreach ( $articles as $ka => $va ) {
-            $post = $va;
-            $post_title = get_the_title( $post );
-            if ( is_front_page() ) {
-                $alt_headline = get_post_meta( $post->ID, 'hpm_alt_headline', true );
-                if ( !empty( $alt_headline ) ) {
-                    $post_title = $alt_headline;
-                }
-            }
-            $summary = strip_tags( get_the_excerpt( $post ) );
-            if ( $ka == 0 ) {
-                if ( in_array( 'tag-breaking-news-button', get_post_class( '', $post->ID ) ) ) {
-                    $breakingNewsButton = '<div class="blue-label"><strong>Breaking News | </strong><span>'.hpm_top_cat( $post->ID ).'</span></div>';
-                } else {
-                    $breakingNewsButton = '';
-                }
-                $result .= '<div class="col-lg-8 col-sm-12 breaking-news-first"><div class="row news-main"> <div class="col-sm-5">' . $breakingNewsButton . '<h1><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . $post_title . '</a></h1><p style="font-size: 0.875rem;">' . $summary . '</p></div><div class="col-sm-7"><div class="box-img breaking-news-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, $post->ID ) . ' </a></div> </div></div></div><div class="col-lg-4 col-sm-12"><ul class="news-listing row">';
-            } elseif ( $ka == 1 || $ka == 2 ) {
-                $result .= '<li class="col-lg-12 col-sm-6"><div class="d-flex flex-row-reverse"><div class="col-5"><div class="box-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, get_the_ID() ) . '</a></div></div>
+	$result = "";
+	if ( count( $articles ) > 0 ) {
+		foreach ( $articles as $ka => $va ) {
+			$post = $va;
+			$post_title = get_the_title( $post );
+			if ( is_front_page() ) {
+				$alt_headline = get_post_meta( $post->ID, 'hpm_alt_headline', true );
+				if ( !empty( $alt_headline ) ) {
+					$post_title = $alt_headline;
+				}
+			}
+			$summary = strip_tags( get_the_excerpt( $post ) );
+			if ( $ka == 0 ) {
+				if ( in_array( 'tag-breaking-news-button', get_post_class( '', $post->ID ) ) ) {
+					$breakingNewsButton = '<div class="blue-label"><strong>Breaking News | </strong><span>'.hpm_top_cat( $post->ID ).'</span></div>';
+				} else {
+					$breakingNewsButton = '';
+				}
+				$result .= '<div class="col-lg-8 col-sm-12 breaking-news-first"><div class="row news-main"> <div class="col-sm-5">' . $breakingNewsButton . '<h1><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . $post_title . '</a></h1><p style="font-size: 0.875rem;">' . $summary . '</p></div><div class="col-sm-7"><div class="box-img breaking-news-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, $post->ID ) . ' </a></div> </div></div></div><div class="col-lg-4 col-sm-12"><ul class="news-listing row">';
+			} elseif ( $ka == 1 || $ka == 2 ) {
+				$result .= '<li class="col-lg-12 col-sm-6"><div class="d-flex flex-row-reverse"><div class="col-5"><div class="box-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, get_the_ID() ) . '</a></div></div>
 									<div class="col-7"><h4 class="text-light-gray" style="color:#237bbd;"><a href="' . get_the_permalink( $post ) . '">' . hpm_top_cat( $post->ID ) . '</a></h4><p><a href="' . get_the_permalink( $post ) . '">' . get_the_title( $post ) . '</a></p></div></div> </li>';
-            } elseif ( $ka > 3 ) {
-                $result .= '</ul>';
-            }
-        }
-    }
-    wp_reset_query();
-    return $result;
+			} elseif ( $ka > 3 ) {
+					$result .= '</ul>';
+			}
+		}
+	}
+	wp_reset_query();
+	return $result;
 }
 
 function hpm_homepage_articles(): array {
 	$articles = [];
-
 	$hpm_priority = get_option( 'hpm_priority' );
 	if ( !empty( $hpm_priority['homepage'] ) ) {
 		if ( empty( $hpm_priority['homepage'][1] ) ) {
@@ -1011,44 +993,11 @@ add_filter( 'the_excerpt', 'hpm_add_autop', 2 );
 add_filter( 'the_content', 'hpm_add_autop', 2 );
 
 function hpm_add_autop( $content ) {
-	if ( get_post_type() == 'post' && get_the_ID() != 489073 ) {
+	if ( get_post_type() === 'post' && get_the_ID() !== 489073 ) {
 		add_filter( 'the_content', 'wpautop', 11 );
 		add_filter( 'the_excerpt', 'wpautop', 11 );
 	}
 	return $content;
-}
-
-function hpm_link_extract( $links ) {
-	$output = '';
-	if ( !empty( $links ) ) {
-		if ( is_string( $links ) ) {
-			$output = $links;
-		} elseif ( is_array( $links ) ) {
-			foreach ( $links as $link ) {
-				if ( empty( $link->type ) ) {
-					continue;
-				}
-				if ( 'html' === $link->type ) {
-					$output = $link->value;
-				}
-			}
-		} elseif ( $links instanceof NPRMLElement && !empty( $links->value ) && $links->type === 'html' ) {
-			$output = $links->value;
-		}
-	}
-	return $output;
-}
-
-function hpm_npr_byline( $author ): array {
-	$output = [];
-	if ( !$author instanceof NPRMLElement && !empty( $author ) ) {
-		return $output;
-	}
-	$output = [
-		'name' => ( $author->name->value ?? '' ),
-		'link' => ( !empty( $author->link ) ? hpm_link_extract( $author->link ) : '' )
-	];
-	return $output;
 }
 
 /**
@@ -1078,287 +1027,171 @@ function hpm_pull_npr_story( $npr_id ) {
 			'mime-type' => 'image/gif'
 		]
 	];
-	if ( function_exists( 'npr_cds_activate' ) ) {
-		$npr = new NPR_CDS_WP();
-		$npr->request([
-			'id' => $npr_id
-		]);
-		$npr->parse();
-		if ( !empty( $npr->stories[0] ) ) {
-			$story = $npr->stories[0];
+	$npr = new NPR_CDS_WP();
+	$npr->request([
+		'id' => $npr_id
+	]);
+	$npr->parse();
+	if ( !empty( $npr->stories[0] ) ) {
+		$story = $npr->stories[0];
+	} else {
+		return $nprdata;
+	}
+
+	$npr_body = $npr->get_body_with_layout( $story );
+
+	$nprdata['body'] = $npr_body['body'];
+
+	// add the transcript
+	$nprdata['body'] .= $npr->get_transcript_body( $story );
+
+	// Use oEmbed to flesh out external embeds
+	preg_match_all( '/<div class\="wp\-block\-embed__[ \-a-z0-9]+">\s+(.+)\s+<\/div>/', $nprdata['body'], $match );
+	if ( !empty( $match[1] ) ) {
+		foreach ( $match[1] as $v ) {
+			$embed = wp_oembed_get( $v );
+			if ( str_contains( $embed, '<iframe ' ) ) {
+				$embed = '<p>' . $embed . '</p>';
+			}
+			$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
 		}
-
-		$npr_body = $npr->get_body_with_layout( $story );
-
-		$nprdata['body'] = $npr_body['body'];
-
-		// add the transcript
-		$nprdata['body'] .= $npr->get_transcript_body( $story );
-
-		// Use oEmbed to flesh out external embeds
-		preg_match_all( '/<div class\="wp\-block\-embed__[ \-a-z0-9]+">\s+(.+)\s+<\/div>/', $nprdata['body'], $match );
-		if ( !empty( $match[1] ) ) {
-			foreach ( $match[1] as $v ) {
-				$embed = wp_oembed_get( $v );
-				if ( str_contains( $embed, '<iframe ' ) ) {
-					$embed = '<p>' . $embed . '</p>';
-				}
-				$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
+	}
+	$webPage = '';
+	if ( !empty( $story->webPages ) ) {
+		foreach ( $story->webPages as $web ) {
+			if ( in_array( 'canonical', $web->rels ) ) {
+				$webPage = $web->href;
 			}
 		}
-		$webPage = '';
-		if ( !empty( $story->webPages ) ) {
-			foreach ( $story->webPages as $web ) {
-				if ( in_array( 'canonical', $web->rels ) ) {
-					$webPage = $web->href;
-				}
-			}
-		}
-		$story_date = new DateTime( $story->publishDateTime );
-		$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
-		$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title ) . '/';
-		$nprdata['canonical'] = $webPage;
+	}
+	$story_date = new DateTime( $story->publishDateTime );
+	$nprdata['date'] = $story_date->format( 'F j, Y, g:i A' );
+	$nprdata['permalink'] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title ) . '/';
+	$nprdata['canonical'] = $webPage;
 
-		if ( !empty( $story->bylines ) ) {
-			foreach ( $story->bylines as $byline ) {
-				$byl_id = $npr->extract_asset_id( $byline->href );
-				$byl_current = $story->assets->{$byl_id};
-				$byl_profile = $npr->extract_asset_profile( $byl_current );
-				if ( $byl_profile === 'reference-byline' ) {
-					foreach ( $byl_current->bylineDocuments as $byl_doc ) {
-						$byl_data = $npr->get_document( $byl_doc->href );
-						if ( !empty( $byl_data ) ) {
-							$byl_link = '';
-							if ( !empty( $byl_data->webPages ) ) {
-								foreach ( $byl_data->webPages as $byl_web ) {
-									if ( !empty( $byl_web->rels ) && in_array( 'canonical', $byl_web->rels ) ) {
-										$byl_link = $byl_web->href;
-									}
-								}
-							}
-							$nprdata['bylines'][] = [
-								'name' => $byl_data->title,
-								'link' => $byl_link
-							];
-						}
-					}
-				}
-			}
-		}
-		if ( empty( $nprdata['bylines'] ) ) {
-			$nprdata['bylines'][] = [
-				'name' => 'NPR Staff',
-				'link' => ''
-			];
-		}
-
-		$nprdata['title'] = $story->title;
-		if ( !empty( $story->teaser ) ) {
-			$nprdata['excerpt'] = $story->teaser;
-		}
-
-		$slug = [];
-		if ( !empty( $story->collections ) ) {
-			foreach ( $story->collections as $collect ) {
-				if ( in_array( 'topic', $collect->rels ) || in_array( 'program', $collect->rels ) ) {
-					$coll_temp = $npr->get_document( $collect->href );
-					if ( !empty( $coll_temp ) ) {
-						$nprdata['keywords'][] = $coll_temp->title;
-						if ( !empty( $coll_temp->webPages ) ) {
-							foreach ( $coll_temp->webPages as $coll_web ) {
-								if ( in_array( 'canonical', $coll_web->rels ) ) {
-									$nprdata['keywords_html'][] = '<a href="' . $coll_web->href . '">' . $coll_temp->title . '</a>';
+	if ( !empty( $story->bylines ) ) {
+		foreach ( $story->bylines as $byline ) {
+			$byl_id = $npr->extract_asset_id( $byline->href );
+			$byl_current = $story->assets->{$byl_id};
+			$byl_profile = $npr->extract_asset_profile( $byl_current );
+			if ( $byl_profile === 'reference-byline' ) {
+				foreach ( $byl_current->bylineDocuments as $byl_doc ) {
+					$byl_data = $npr->get_document( $byl_doc->href );
+					if ( !is_wp_error( $byl_data ) ) {
+						$byl_link = '';
+						if ( !empty( $byl_data->webPages ) ) {
+							foreach ( $byl_data->webPages as $byl_web ) {
+								if ( !empty( $byl_web->rels ) && in_array( 'canonical', $byl_web->rels ) ) {
+									$byl_link = $byl_web->href;
 								}
 							}
 						}
-						if ( in_array( 'slug', $collect->rels ) ) {
-							$slug[] = $coll_temp->title;
-						}
-					}
-				}
-			}
-		}
-		if ( !empty( $story->brandings ) ) {
-			foreach ( $story->brandings as $brand ) {
-				$brand_get = wp_remote_get( $brand->href );
-				if ( !is_wp_error( $brand_get ) && $brand_get['response']['code'] == 200 ) {
-					$brand_json = json_decode( $brand_get['body'] );
-					$slug[] = $brand_json->brand->displayName;
-				}
-			}
-		}
-		$nprdata['slug'] = implode( " | ", $slug );
-
-		if ( !empty( $story->relatedItems ) ) {
-			foreach ( $story->relatedItems as $related ) {
-				$relate_get = wp_remote_get( $related->href );
-				if ( !is_wp_error( $relate_get ) && $relate_get['response']['code'] == 200 ) {
-					$relate_json = json_decode( $relate_get['body'] );
-					$relate_link = '';
-					if ( !empty( $relate_json->webPages ) ) {
-						foreach ( $relate_json->webPages as $rel_web ) {
-							if ( in_array( 'canonical', $rel_web->rels ) ) {
-								$relate_link = $rel_web->href;
-							}
-						}
-					}
-					if ( !empty( $relate_link ) ) {
-						$nprdata['related'][] = [
-							'text' => $relate_json->title,
-							'link' => $relate_link
+						$nprdata['bylines'][] = [
+							'name' => $byl_data->title,
+							'link' => $byl_link
 						];
 					}
 				}
 			}
 		}
+	}
+	if ( empty( $nprdata['bylines'] ) ) {
+		$nprdata['bylines'][] = [
+			'name' => 'NPR Staff',
+			'link' => ''
+		];
+	}
 
-		if ( !empty( $story->images ) ) {
-			foreach ( $story->images as $image ) {
-				if ( !empty( $image->rels ) && in_array( 'primary', $image->rels ) ) {
-					$image_id = $npr->extract_asset_id( $image->href );
-					$image_asset = $story->assets->{$image_id};
-					if ( !empty( $image_asset->enclosures ) ) {
-						foreach ( $image_asset->enclosures as $enclose ) {
-							if ( in_array( 'primary', $enclose->rels ) ) {
-								$nprdata['image']['src'] = $enclose->href;
-								$nprdata['image']['width'] = $enclose->width;
-								$nprdata['image']['height'] = $enclose->height;
-								$nprdata['image']['mime-type'] = $enclose->type;
+	$nprdata['title'] = $story->title;
+	if ( !empty( $story->teaser ) ) {
+		$nprdata['excerpt'] = trim( preg_replace( '/<br ?\/?>/', '', $story->teaser ) );
+	}
+
+	$slug = [];
+	if ( !empty( $story->collections ) ) {
+		foreach ( $story->collections as $collect ) {
+			if ( !empty( $collect->rels ) && ( in_array( 'topic', $collect->rels ) || in_array( 'program', $collect->rels ) ) ) {
+				$coll_temp = $npr->get_document( $collect->href );
+				if ( !is_wp_error( $coll_temp ) ) {
+					$nprdata['keywords'][] = $coll_temp->title;
+					if ( !empty( $coll_temp->webPages ) ) {
+						foreach ( $coll_temp->webPages as $coll_web ) {
+							if ( in_array( 'canonical', $coll_web->rels ) ) {
+								$nprdata['keywords_html'][] = '<a href="' . $coll_web->href . '">' . $coll_temp->title . '</a>';
 							}
 						}
 					}
-				}
-			}
-		}
-	} elseif ( function_exists( 'nprstory_activate' ) ) {
-		$npr = new NPRAPIWordpress();
-		$npr->request([
-			'id' => $npr_id,
-			'fields' => 'all',
-			'profileTypeId' => '1,15'
-		]);
-		$npr->parse();
-		if ( !empty( $npr->stories[0] ) ) {
-			$story = $npr->stories[0];
-		} else {
-			global $wp_query;
-			$wp_query->set_404();
-			status_header( 404 );
-			get_template_part( 404 );
-			exit();
-		}
-
-		$use_npr_layout = !empty( get_option( 'dp_npr_query_use_layout' ) );
-
-		$npr_layout = $npr->get_body_with_layout( $story, $use_npr_layout );
-		if ( !empty( $npr_layout['body'] ) ) {
-			$nprdata['body'] = $npr_layout['body'];
-		}
-
-		// add the transcript
-		$nprdata['body'] .= $npr->get_transcript_body( $story );
-
-		// Use oEmbed to flesh out external embeds
-		preg_match_all( '/<div class\="wp\-block\-embed__[ \-a-z0-9]+">\s+(.+)\s+<\/div>/', $nprdata['body'], $match );
-		if ( !empty( $match[1] ) ) {
-			foreach ( $match[1] as $k => $v ) {
-				$embed = wp_oembed_get( $v );
-				if ( str_contains( $embed, '<iframe ' ) ) {
-					$embed = '<p>' . $embed . '</p>';
-				}
-				$nprdata['body'] = str_replace( $v, $embed, $nprdata['body'] );
-			}
-		}
-
-
-		$story_date = new DateTime( $story->storyDate->value );
-		$nprdata[ 'date' ] = $story_date->format( 'F j, Y, g:i A' );
-		$nprdata[ 'permalink' ] = WP_HOME . '/npr/' . $story_date->format( 'Y/m/d/' ) . $npr_id . '/' . sanitize_title( $story->title->value ) . '/';
-		$nprdata[ 'canonical' ] = $story->link[ 'html' ]->value;
-
-		if ( !empty( $story->byline ) ) {
-			if ( is_array( $story->byline ) ) {
-				foreach( $story->byline as $single ) {
-					$nprdata['bylines'][] = hpm_npr_byline( $single );
-				}
-			} else {
-				$nprdata['bylines'][] = hpm_npr_byline( $story->byline );
-			}
-		} else {
-			$nprdata['bylines'][] = [
-				'name' => 'NPR Staff',
-				'link' => ''
-			];
-		}
-
-		$nprdata['title'] = $story->title->value;
-		if ( !empty( $story->teaser->value ) ) {
-			$nprdata['excerpt'] = $story->teaser->value;
-		} elseif ( !empty( $story->miniTeaser->value ) ) {
-			$nprdata['excerpt'] = $story->miniTeaser->value;
-		}
-
-		$slug = [];
-		if ( !empty( $story->slug->value ) ) {
-			$slug[] = $story->slug->value;
-		}
-		if ( !empty( $story->organization ) ) {
-			if ( is_array( $story->organization ) ) {
-				foreach ( $story->organization as $org ) {
-					$slug[] = $org->name->value;
-				}
-			} else {
-				$slug[] = $story->organization->name->value;
-			}
-		}
-		$nprdata['slug'] = implode( " | ", $slug );
-
-		if ( !empty( $story->relatedLink ) ) {
-			if ( is_array( $story->relatedLink ) ) {
-				foreach( $story->relatedLink as $link ) {
-					$nprdata['related'][] = [
-						'text' => $link->caption->value,
-						'link' => hpm_link_extract( $link->link )
-					];
-				}
-			} else {
-				$nprdata['related'][] = [
-					'text' => $story->relatedLink->caption->value,
-					'link' => hpm_link_extract( $story->relatedLink->link )
-				];
-			}
-		}
-
-		if ( isset( $story->parent ) ) {
-			foreach ( (array)$story->parent as $parent ) {
-				if ( !empty( $parent->type ) ) {
-					if ( $parent->type == 'topic' || $parent->type == 'program' ) {
-						$nprdata[ 'keywords' ][] = $parent->title->value;
-						$nprdata[ 'keywords_html' ][] = '<a href="' . hpm_link_extract( $parent->link ) . '">' . $parent->title->value . '</a>';
+					if ( in_array( 'slug', $collect->rels ) ) {
+						$slug[] = $coll_temp->title;
 					}
 				}
 			}
 		}
+	}
+	if ( !empty( $story->brandings ) ) {
+		foreach ( $story->brandings as $brand ) {
+			$brand_get = wp_remote_get( $brand->href );
+			if ( !is_wp_error( $brand_get ) && $brand_get['response']['code'] == 200 ) {
+				$brand_json = json_decode( $brand_get['body'] );
+				$slug[] = $brand_json->brand->displayName;
+			}
+		}
+	}
+	$nprdata['slug'] = implode( " | ", $slug );
 
-		if ( !empty( $story->image ) ) {
-			foreach ( (array)$story->image as $image ) {
-				if ( $image->type == 'primary' ) {
-					if ( !empty( $image->crop ) ) {
-						foreach ( $image->crop as $crop ) {
-							if ( !empty( $crop->primary ) ) {
-								$nprdata['image']['src'] = $crop->src;
-								$nprdata['image']['width'] = $crop->width;
-								$nprdata['image']['height'] = $crop->height;
-								$parse_url = parse_url( $crop->src );
-								$ext = wp_check_filetype( $parse_url['path'] );
-								$nprdata['image']['mime-type'] = $ext['type'];
+	if ( !empty( $story->relatedItems ) ) {
+		foreach ( $story->relatedItems as $related ) {
+			$relate_get = wp_remote_get( $related->href );
+			if ( !is_wp_error( $relate_get ) && $relate_get['response']['code'] == 200 ) {
+				$relate_json = json_decode( $relate_get['body'] );
+				$relate_link = '';
+				if ( !empty( $relate_json->webPages ) ) {
+					foreach ( $relate_json->webPages as $rel_web ) {
+						if ( in_array( 'canonical', $rel_web->rels ) ) {
+							$relate_link = $rel_web->href;
+						}
+					}
+				}
+				if ( !empty( $relate_link ) ) {
+					$nprdata['related'][] = [
+						'text' => $relate_json->title,
+						'link' => $relate_link
+					];
+				}
+			}
+		}
+	}
+
+	if ( !empty( $story->images ) ) {
+		foreach ( $story->images as $image ) {
+			if ( !empty( $image->rels ) && in_array( 'primary', $image->rels ) ) {
+				$image_id = $npr->extract_asset_id( $image->href );
+				$image_asset = $story->assets->{$image_id};
+				if ( !empty( $image_asset->enclosures ) ) {
+					foreach ( $image_asset->enclosures as $enclose ) {
+						if ( in_array( 'primary', $enclose->rels ) ) {
+							$npr_mime_type = 'image/jpeg';
+							if ( !empty( $enclose->type ) ) {
+								$npr_mime_type = $enclose->type;
+							} else {
+								$npr_image_type = strtolower( pathinfo( parse_url( $enclose->href, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
+								if ( $npr_image_type === 'png' ) {
+									$npr_mime_type = 'image/png';
+								} elseif ( $npr_image_type === 'webp' ) {
+									$npr_mime_type = 'image/webp';
+								}
 							}
+							$nprdata['image']['src'] = $enclose->href;
+							$nprdata['image']['width'] = ( !empty( $enclose->width ) ? $enclose->width : 1200 );
+							$nprdata['image']['height'] = ( !empty( $enclose->height ) ? $enclose->height : 630 );
+							$nprdata['image']['mime-type'] = $npr_mime_type;
 						}
 					}
 				}
 			}
 		}
 	}
+
 
 	set_transient( 'hpm_nprdata_' . $npr_id, $nprdata, 3600 );
 	return $nprdata;
@@ -1424,6 +1257,10 @@ function hpm_svg_output( $icon ): string {
 		$output = '<path d="M320 64c0-12.6-7.4-24-18.9-29.2s-25-3.1-34.4 5.3L131.8 160H64c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64h67.8L266.7 471.9c9.4 8.4 22.9 10.4 34.4 5.3S320 460.6 320 448V64z"/>';
 	} elseif ( $icon == 'mastodon' ) {
 		$output = '<path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/>';
+	} elseif ( $icon == 'threads' ) {
+		$output = '<path d="M331.5 235.7c2.2 .9 4.2 1.9 6.3 2.8c29.2 14.1 50.6 35.2 61.8 61.4c15.7 36.5 17.2 95.8-30.3 143.2c-36.2 36.2-80.3 52.5-142.6 53h-.3c-70.2-.5-124.1-24.1-160.4-70.2c-32.3-41-48.9-98.1-49.5-169.6V256v-.2C17 184.3 33.6 127.2 65.9 86.2C102.2 40.1 156.2 16.5 226.4 16h.3c70.3 .5 124.9 24 162.3 69.9c18.4 22.7 32 50 40.6 81.7l-40.4 10.8c-7.1-25.8-17.8-47.8-32.2-65.4c-29.2-35.8-73-54.2-130.5-54.6c-57 .5-100.1 18.8-128.2 54.4C72.1 146.1 58.5 194.3 58 256c.5 61.7 14.1 109.9 40.3 143.3c28 35.6 71.2 53.9 128.2 54.4c51.4-.4 85.4-12.6 113.7-40.9c32.3-32.2 31.7-71.8 21.4-95.9c-6.1-14.2-17.1-26-31.9-34.9c-3.7 26.9-11.8 48.3-24.7 64.8c-17.1 21.8-41.4 33.6-72.7 35.3c-23.6 1.3-46.3-4.4-63.9-16c-20.8-13.8-33-34.8-34.3-59.3c-2.5-48.3 35.7-83 95.2-86.4c21.1-1.2 40.9-.3 59.2 2.8c-2.4-14.8-7.3-26.6-14.6-35.2c-10-11.7-25.6-17.7-46.2-17.8H227c-16.6 0-39 4.6-53.3 26.3l-34.4-23.6c19.2-29.1 50.3-45.1 87.8-45.1h.8c62.6 .4 99.9 39.5 103.7 107.7l-.2 .2zm-156 68.8c1.3 25.1 28.4 36.8 54.6 35.3c25.6-1.4 54.6-11.4 59.5-73.2c-13.2-2.9-27.8-4.4-43.4-4.4c-4.8 0-9.6 .1-14.4 .4c-42.9 2.4-57.2 23.2-56.2 41.8l-.1 .1z"/>';
+	} elseif ( $icon == 'bluesky' ) {
+		$output = '<path d="M407.8 294.7c-3.3-.4-6.7-.8-10-1.3c3.4 .4 6.7 .9 10 1.3zM288 227.1C261.9 176.4 190.9 81.9 124.9 35.3C61.6-9.4 37.5-1.7 21.6 5.5C3.3 13.8 0 41.9 0 58.4S9.1 194 15 213.9c19.5 65.7 89.1 87.9 153.2 80.7c3.3-.5 6.6-.9 10-1.4c-3.3 .5-6.6 1-10 1.4C74.3 308.6-9.1 342.8 100.3 464.5C220.6 589.1 265.1 437.8 288 361.1c22.9 76.7 49.2 222.5 185.6 103.4c102.4-103.4 28.1-156-65.8-169.9c-3.3-.4-6.7-.8-10-1.3c3.4 .4 6.7 .9 10 1.3c64.1 7.1 133.6-15.1 153.2-80.7C566.9 194 576 75 576 58.4s-3.3-44.7-21.6-52.9c-15.8-7.1-40-14.9-103.2 29.8C385.1 81.9 314.1 176.4 288 227.1z"/>';
 	}
 	if ( !empty( $output ) ) {
 		$output = '<svg role="img" ' . ( $icon == 'play' ? 'id="play-button"' : '' ) . ' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">' . $output . '</svg>';
@@ -1460,8 +1297,11 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 
 	$user_obj = get_userdata( $user_id );
 	$search_author = $coauthors_plus->search_authors( $user_obj->data->user_login, [] );
+	if ( empty( $search_author ) ) {
+		$search_author = $coauthors_plus->search_authors( $user_obj->data->user_nicename, [] );
+	}
 	foreach ( $search_author as $a ) {
-		if ( $a->linked_account == $user_obj->data->user_login ) {
+		if ( $a->linked_account === $user_obj->data->user_login ) {
 			$author = $a;
 		}
 	}
@@ -1501,13 +1341,13 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 		$coauth = [];
 		foreach ( $v as $co ) {
 			if ( $co->type == 'guest-author' ) {
-				if ( $co->linked_account == $user_obj->data->user_login ) {
+				if ( $co->linked_account === $user_obj->data->user_login ) {
 					$coauth[] = $author->user_login;
 				} else {
 					$coauth[] = $co->user_login;
 				}
 			} elseif ( $co->type == 'wpuser' ) {
-				if ( $co->data->user_login == $user_obj->data->user_login ) {
+				if ( $co->data->user_login === $user_obj->data->user_login ) {
 					$coauth[] = $author->user_login;
 				} else {
 					$coauth[] = $co->user_login;
@@ -1516,7 +1356,7 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 		}
 		$output[ $k ] = $coauth;
 	}
-	update_option( 'hpm_user_backup_'.$user_id, $output, false );
+	update_option( 'hpm_user_backup_' . $user_id, $output, false );
 	update_post_meta( $author->ID, 'cap-linked_account', '' );
 	Red_Item::create([
 		"url" => "/articles/author/" . $user_obj->data->user_login,

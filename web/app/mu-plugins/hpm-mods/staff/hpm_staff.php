@@ -128,7 +128,7 @@ function hpm_staff_meta_box( $object, $box ): void {
 
 	$hpm_staff_meta = get_post_meta( $object->ID, 'hpm_staff_meta', true );
 	if ( empty( $hpm_staff_meta ) ) {
-		$hpm_staff_meta = [ 'pronouns' => '', 'title' => '', 'email' => '', 'twitter' => '', 'facebook' => '', 'linkedin' => '', 'phone' => '' ];
+		$hpm_staff_meta = [ 'pronouns' => '', 'title' => '', 'email' => '', 'twitter' => '', 'facebook' => '', 'linkedin' => '', 'phone' => '', 'fediverse' => '', 'bluesky' => '' ];
 	}
 
 	$hpm_staff_alpha = get_post_meta( $object->ID, 'hpm_staff_alpha', true );
@@ -149,6 +149,8 @@ function hpm_staff_meta_box( $object, $box ): void {
 		<li><label for="hpm-staff-fb"><?php _e( "Facebook: ", 'example' ); ?></label> <input type="text" id="hpm-staff-fb" name="hpm-staff-fb" value="<?PHP echo ( !empty( $hpm_staff_meta['facebook'] ) ? $hpm_staff_meta['facebook'] : '' ); ?>" placeholder="https://facebook.com/first.last" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-twitter"><?php _e( "Twitter: ", 'example' ); ?></label> <input type="text" id="hpm-staff-twitter" name="hpm-staff-twitter" value="<?PHP echo ( !empty( $hpm_staff_meta['twitter'] ) ? $hpm_staff_meta['twitter'] : '' ); ?>" placeholder="https://twitter.com/houpubmedia" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-linkedin"><?php _e( "LinkedIn: ", 'example' ); ?></label> <input type="text" id="hpm-staff-linkedin" name="hpm-staff-linkedin" value="<?PHP echo ( !empty( $hpm_staff_meta['linkedin'] ) ? $hpm_staff_meta['linkedin'] : '' ); ?>" placeholder="https://linkedin.com/in/example" style="width: 60%;" /></li>
+		<li><label for="hpm-staff-fediverse"><?php _e( "Fediverse: ", 'example' ); ?></label> <input type="text" id="hpm-staff-fediverse" name="hpm-staff-fediverse" value="<?PHP echo ( !empty( $hpm_staff_meta['fediverse'] ) ? $hpm_staff_meta['fediverse'] : '' ); ?>" placeholder="Mastodon, Threads, ActivityPub, etc." style="width: 60%;" /></li>
+		<li><label for="hpm-staff-bluesky"><?php _e( "Bluesky: ", 'example' ); ?></label> <input type="text" id="hpm-staff-bluesky" name="hpm-staff-bluesky" value="<?PHP echo ( !empty( $hpm_staff_meta['bluesky'] ) ? $hpm_staff_meta['bluesky'] : '' ); ?>" placeholder="Bluesky, ATProto, etc." style="width: 60%;" /></li>
 		<li><label for="hpm-staff-phone"><?php _e( "Phone: ", 'example' ); ?></label> <input type="text" id="hpm-staff-phone" name="hpm-staff-phone" value="<?PHP echo ( !empty( $hpm_staff_meta['phone'] ) ? $hpm_staff_meta['phone'] : '' ); ?>" placeholder="(713) 555-5555" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-author"><?php _e( "Author ID:", 'example' ); ?></label> <?php
 			wp_dropdown_users([
@@ -186,7 +188,9 @@ function hpm_staff_save_meta( $post_id, $post ) {
 			'facebook'	=> ( isset( $_POST['hpm-staff-fb'] ) ? sanitize_text_field( $_POST['hpm-staff-fb'] ) : '' ),
 			'twitter'	=> ( isset( $_POST['hpm-staff-twitter'] ) ? sanitize_text_field( $_POST['hpm-staff-twitter'] ) : '' ),
 			'linkedin'	=> ( isset( $_POST['hpm-staff-linkedin'] ) ? sanitize_text_field( $_POST['hpm-staff-linkedin'] ) : '' ),
-			'phone'	=> ( isset( $_POST['hpm-staff-phone'] ) ? sanitize_text_field( $_POST['hpm-staff-phone'] ) : '')
+			'phone'	=> ( isset( $_POST['hpm-staff-phone'] ) ? sanitize_text_field( $_POST['hpm-staff-phone'] ) : ''),
+			'fediverse'	=> ( isset( $_POST['hpm-staff-fediverse'] ) ? sanitize_text_field( $_POST['hpm-staff-fediverse'] ) : ''),
+			'bluesky'	=> ( isset( $_POST['hpm-staff-bluesky'] ) ? sanitize_text_field( $_POST['hpm-staff-bluesky'] ) : '')
 		];
 		$hpm_first = ( isset( $_POST['hpm-staff-name-first'] ) ? sanitize_text_field( $_POST['hpm-staff-name-first'] ) : '' );
 		$hpm_last = ( isset( $_POST['hpm-staff-name-last'] ) ? sanitize_text_field( $_POST['hpm-staff-name-last'] ) : '' );

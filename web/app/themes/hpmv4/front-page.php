@@ -75,21 +75,18 @@ $tras = null; ?>
 			display: flex;
 			justify-content: center;
 		}
-        .card
-        {
+        .card {
             border-radius: 0px;
             border-color: #237bbd;
         }
-        .card-header
-        {
+        .card-header {
             background-color: #237bbd;
             color:#fff;
             font-weight: bold;
             border-radius: 0px;
             min-height: 56px;
         }
-        .card-header:first-child
-        {
+        .card-header:first-child {
             border-radius: 0px;
         }
         .card-title {
@@ -97,11 +94,9 @@ $tras = null; ?>
             font-weight: bold;
             color: #237bbd;
         }
-        .card-body
-        {
+        .card-body {
             padding-top: 5px;
         }
-
 		@media screen and (min-width: 34rem) {
 			#station-schedules {
 				display: grid;
@@ -264,7 +259,7 @@ $tras = null; ?>
 					<h2 class="title">
 						<strong>News from <span>NPR</span></strong>
 					</h2>
-					<?php  echo hpm_nprapi_output(); ?>
+					<?php echo hpm_nprapi_output( 1002 ); ?>
 				</div>
 				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
 					<h2 class="title title-full">
@@ -292,7 +287,6 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-
         <?php get_template_part("content", "interactives"); ?>
 	</div>
 <?php get_footer(); ?>

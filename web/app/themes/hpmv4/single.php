@@ -115,7 +115,7 @@ if ( is_preview() ) { ?>
 		} elseif ( $cats->term_id == 12 ) { ?>
 				<div class="sidebar-ad col-sm-6 col-md-12">
 					<h4>Support Comes From</h4>
-					<p><a href="https://www.texasmutual.com/employers/pr/business-is-better-texas-is-better?utm_source=KUHT_K UHF_BAUER&utm_medium=digital&utm_campaign=Corporate+Citizenship&utm_id=Corporate+Citizen ship"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXMC-3973-BIB-Corp-Citizenship_300x250_static.jpg.webp" alt="Texas Mutual: We're in the business of helping Texas businesses thrive" /></a></p>
+					<p><a href="https://www.texasmutual.com/employers/rewards?utm_source=KUHF&utm_medium=digital&utm_campaign=Financial+Benefits&utm_id=Financial+Benefits"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXME-BIB-Financial-Benefits_NPR-PBS.gif.webp" alt="Texas Mutual: We're in the business of helping Texas businesses thrive" /></a></p>
 				</div>
 <?php
 		}

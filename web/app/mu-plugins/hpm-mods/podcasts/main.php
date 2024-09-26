@@ -298,6 +298,7 @@ class HPM_Podcasts {
 					'limit'        => 0,
 					'itunes'       => '',
 					'youtube'      => '',
+					'npr'          => '',
 					'spotify'      => '',
 					'pcast'        => '',
 					'overcast'     => '',
@@ -315,6 +316,7 @@ class HPM_Podcasts {
 				'page'         => '',
 				'limit'        => 0,
 				'itunes'       => '',
+				'npr'          => '',
 				'youtube'      => '',
 				'spotify'      => '',
 				'pcast'        => '',
@@ -369,6 +371,7 @@ class HPM_Podcasts {
 			$hpm_podcast_link = [
 				'page' => ( !empty( $_POST['hpm-podcast-link'] ) ? sanitize_text_field( $_POST['hpm-podcast-link'] ) : '' ),
 				'itunes' => ( !empty( $_POST['hpm-podcast-link-itunes'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-itunes'] ) : '' ),
+				'npr' => ( !empty( $_POST['hpm-podcast-link-npr'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-npr'] ) : '' ),
 				'youtube' => ( !empty( $_POST['hpm-podcast-link-youtube'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-youtube'] ) : '' ),
 				'spotify' => ( !empty( $_POST['hpm-podcast-link-spotify'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-spotify'] ) : '' ),
 				'pcast' => ( !empty( $_POST['hpm-podcast-link-pcast'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pcast'] ) : '' ),
@@ -715,25 +718,9 @@ class HPM_Podcasts {
 	 */
 	static public function generate( WP_REST_Request $request = null ): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		global $post;
+		require HPM_PODCAST_PLUGIN_DIR . 'inc' . DIRECTORY_SEPARATOR . 'marco_s3.php';
+		$s3 = new S3( AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_S3_BUCKET_NAME, AWS_REGION, '' );
 		$pods = get_option( 'hpm_podcast_settings' );
-		$ds = DIRECTORY_SEPARATOR;
-		$protocol = 'https://';
-		$json = [
-			'version' => 'https://jsonfeed.org/version/1',
-			'title' => '',
-			'home_page_url' => '',
-			'feed_url' => '',
-			'description' => '',
-			'icon' => '',
-			'favicon' => '',
-			'categories' => [],
-			'keywords' => [],
-			'author' => [
-				'name' => '',
-				'email' => ''
-			],
-			'items' => []
-		];
 
 		$podcasts = new WP_Query([
 			'post_type' => 'podcasts',
@@ -746,7 +733,8 @@ class HPM_Podcasts {
 			]]
 		]);
 
-		$xsl = str_replace( 'http://', $protocol, get_stylesheet_directory_uri() . $ds . 'podcast.xsl' );
+		$xsl = 'https://cdn.houstonpublicmedia.org/podcasts/podcast.xsl';
+		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart' ];
 
 		if ( !empty( $pods['recurrence'] ) ) {
 			if ( $pods['recurrence'] == 'hpm_5min' ) {
@@ -833,7 +821,6 @@ class HPM_Podcasts {
 					}
 				}
 				$main_image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-				$favicon = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumb' );
 				$categories = [];
 				foreach ( $podlink['categories'] as $pos => $cats ) {
 					$categories[$pos] = explode( '||', $cats );
@@ -843,22 +830,6 @@ class HPM_Podcasts {
 				foreach ( $pod_tags as $t ) {
 					$pod_tag_array[] = $t->name;
 				}
-
-				$json['title'] = get_the_title();
-				$json['home_page_url'] = $podlink['page'];
-				$json['feed_url'] = get_the_permalink().'feed/json';
-				$json['description'] = get_the_content();
-				$json['icon'] = $main_image[0];
-				$json['favicon'] = $favicon[0];
-				$json['author']['name'] = $pods['owner']['name'];
-				$json['author']['email'] = $pods['owner']['email'];
-				$json['keywords'] = $pod_tag_array;
-				foreach ( $categories as $cats ) {
-					foreach ( $cats as $ca ) {
-						$json['categories'][] = $ca;
-					}
-				}
-				$json['items'] = [];
 
 				ob_start();
 				echo "<?xml version=\"1.0\" encoding=\"" . get_option( 'blog_charset' ) . "\"?>\n<?xml-stylesheet type=\"application/xml\" media=\"screen\" href=\"" . $xsl . "\"?>\n";
@@ -939,7 +910,7 @@ class HPM_Podcasts {
 									$pod_desc['season'] = $current_season;
 									$item_title = get_the_title( $podlink['aggregate_feed'][ $k ] ) . ' | ' . $item_title;
 								}
-								$media_file = str_replace( 'http://', $protocol, $a_meta['url'] ) . '?{{REPLACE}}';
+								$media_file = $a_meta['url'] . '?{{REPLACE}}';
 								if ( !empty( $podlink['aggregate_feed'] ) ) {
 									$media_file .= '{{AGGREGATE_FEED}}';
 								}
@@ -950,27 +921,6 @@ class HPM_Podcasts {
 								}
 								$content = str_replace( [ "\n", "\r", '&nbsp;' ] , [ '', '', '' ], $content );
 								$content = preg_replace( [ '/<p>(\s+)?<\/p>/', '/<details>.*<\/details>/' ], [ '', '' ], $content );
-								$json['items'][] = [
-									'id' => $epid,
-									'title' => $item_title,
-									'permalink' => get_permalink(),
-									'content_html' => $content,
-									'content_text' => strip_shortcodes( wp_strip_all_tags( get_the_content() ) ),
-									'excerpt' => get_the_excerpt(),
-									'date_published' => get_the_date( 'c', '' ),
-									'date_modified' => get_the_modified_date( 'c', '' ),
-									'author' => coauthors( '; ', '; ', '', '', false ),
-									'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] : '' ),
-									'attachments' => [
-										'url' => $media_file,
-										'mime_type' => $a_meta['mime'],
-										'filesize' => $a_meta['filesize'],
-										'duration_in_seconds' => $a_meta['length']
-									],
-									'season' => ( !empty( $pod_desc['season'] ) ? $pod_desc['season'] : '' ),
-									'episode' => ( !empty( $pod_desc['episode'] ) ? $pod_desc['episode'] : '' ),
-									'episodeType' => ( !empty( $pod_desc['episodeType'] ) ? $pod_desc['episodeType'] : '' )
-								];
 								if ( function_exists( 'coauthors' ) ) {
 									$ep_authors = str_replace( '&', 'and', coauthors( ', ', ', ', '', '', false ) );
 								} else {
@@ -1009,8 +959,33 @@ class HPM_Podcasts {
 </rss><?php
 				$getContent = ob_get_contents();
 				ob_end_clean();
-				update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
-				update_option( 'hpm_podcast-json-' . $podcast_title, json_encode( $json ), false );
+				//update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
+				if ( WP_ENV === 'production' ) {
+					try {
+						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $getContent ) );
+					} catch ( Exception $e ) {
+						$error = print_r( $e, true );
+						error_log( 'Error uploading podcast flat file to S3: ' . $error );
+					}
+					foreach ( $sources as $ps ) {
+						$replace = [ 'srcid=' . $ps ];
+						if ( !empty( $podlink[ 'aggregate_feed' ] ) ) {
+							$find = '?{{REPLACE}}{{AGGREGATE_FEED}}';
+							$replace[] = 'srctype=aggregate';
+						} else {
+							$find = '?{{REPLACE}}';
+						}
+						$replace_str_xml = implode( '&amp;', $replace );
+
+						$content_xml = str_replace( $find, '?' . $replace_str_xml, $getContent );
+						try {
+							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
+						} catch ( Exception $e ) {
+							$error = print_r( $e, true );
+							error_log( 'Error uploading podcast flat file to S3: ' . $error );
+						}
+					}
+				}
 			}
 			$t = time();
 			$offset = get_option( 'gmt_offset' ) * 3600;
@@ -1154,35 +1129,38 @@ class HPM_Podcasts {
 		if ( !empty( $pod_id ) && $template !== 'single-shows-podcast.php' ) {
 			$pod_link = get_post_meta( $pod_id, 'hpm_pod_link', true );
 			if ( !empty( $pod_link['itunes'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['itunes'] . '" rel="noopener" target="_blank" title="Subscribe on Apple Podcasts"><img src="' . $badges . 'apple.png" alt="Subscribe on Apple Podcasts"></a></li>';
+				$temp .= '<li><a href="' . $pod_link['itunes'] . '" rel="noopener" target="_blank" title="Subscribe on Apple Podcasts"><img src="' . $badges . 'apple.png.webp" alt="Subscribe on Apple Podcasts"></a></li>';
 			}
 			if ( !empty( $pod_link['spotify'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['spotify'] . '" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="' . $badges . 'spotify.png" alt="Subscribe on Spotify"></a></li>';
+				$temp .= '<li><a href="' . $pod_link['spotify'] . '" rel="noopener" target="_blank" title="Subscribe on Spotify"><img src="' . $badges . 'spotify.png.webp" alt="Subscribe on Spotify"></a></li>';
+			}
+			if ( !empty( $pod_link['npr'] ) ) {
+				$temp .= '<li><a href="' . $pod_link['npr'] . '" rel="noopener" target="_blank" title="Subscribe in the NPR app"><img src="' . $badges . 'npr.png.webp" alt="Subscribe in the NPR app"></a></li>';
 			}
 			if ( !empty( $pod_link['youtube'] ) ) {
-				$temp .= '<li><a href="' . $pod_link['youtube'] . '" rel="noopener" target="_blank" title="Subscribe on YouTube"><img src="' . $badges . 'youtube.png" alt="Subscribe on YouTube"></a></li>';
+				$temp .= '<li><a href="' . $pod_link['youtube'] . '" rel="noopener" target="_blank" title="Subscribe on YouTube"><img src="' . $badges . 'youtube.png.webp" alt="Subscribe on YouTube"></a></li>';
 			}
 			if ( $full_list ) {
 				if ( !empty( $pod_link['tunein'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png" alt="Subscribe on TuneIn"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['tunein'] . '" rel="noopener" target="_blank" title="Subscribe on TuneIn"><img src="' . $badges . 'tunein.png.webp" alt="Subscribe on TuneIn"></a></li>';
 				}
 				if ( !empty( $pod_link['iheart'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['iheart'] . '" rel="noopener" target="_blank" title="Subscribe on iHeart"><img src="' . $badges . 'iheart_radio.png" alt="Subscribe on iHeart"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['iheart'] . '" rel="noopener" target="_blank" title="Subscribe on iHeart"><img src="' . $badges . 'iheart_radio.png.webp" alt="Subscribe on iHeart"></a></li>';
 				}
 				if ( !empty( $pod_link['pandora'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['pandora'] . '" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="' . $badges . 'pandora.png" alt="Subscribe on Pandora"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['pandora'] . '" rel="noopener" target="_blank" title="Subscribe on Pandora"><img src="' . $badges . 'pandora.png.webp" alt="Subscribe on Pandora"></a></li>';
 				}
 				if ( !empty( $pod_link['pcast'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['pcast'] . '" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="' . $badges . 'pocketcasts.png" alt="Subscribe on Pocket Casts"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['pcast'] . '" rel="noopener" target="_blank" title="Subscribe on Pocket Casts"><img src="' . $badges . 'pocketcasts.png.webp" alt="Subscribe on Pocket Casts"></a></li>';
 				}
 				if ( !empty( $pod_link['overcast'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['overcast'] . '" rel="noopener" target="_blank" title="Subscribe on Overcast"><img src="' . $badges . 'overcast.png" alt="Subscribe on Overcast"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['overcast'] . '" rel="noopener" target="_blank" title="Subscribe on Overcast"><img src="' . $badges . 'overcast.png.webp" alt="Subscribe on Overcast"></a></li>';
 				}
 				if ( !empty( $pod_link['amazon'] ) ) {
-					$temp .= '<li><a href="' . $pod_link['amazon'] . '" rel="noopener" target="_blank" title="Subscribe on Amazon Music"><img src="' . $badges . 'amazon.png" alt="Subscribe on Amazon Music"></a></li>';
+					$temp .= '<li><a href="' . $pod_link['amazon'] . '" rel="noopener" target="_blank" title="Subscribe on Amazon Music"><img src="' . $badges . 'amazon.png.webp" alt="Subscribe on Amazon Music"></a></li>';
 				}
 			}
-			$temp .= '<li><a href="' . ( !empty( $pod_link['rss-override'] ) ? $pod_link['rss-override'] : get_permalink( $pod_id ) ).'" target="_blank" title="Subscribe via RSS"><img src="' . $badges . 'rss.png" alt="Subscribe via RSS"></a></li>';
+			$temp .= '<li><a href="' . ( !empty( $pod_link['rss-override'] ) ? $pod_link['rss-override'] : get_permalink( $pod_id ) ).'" target="_blank" title="Subscribe via RSS"><img src="' . $badges . 'rss.png.webp" alt="Subscribe via RSS"></a></li>';
 		}
 		if ( !empty( $show_id ) ) {
 			$social = get_post_meta( $show_id, 'hpm_show_social', true );
@@ -1326,7 +1304,7 @@ class HPM_Podcasts {
 	public function list( WP_REST_Request $request = null ): WP_Error|WP_REST_Response {
 		$list = get_transient( 'hpm_podcasts_list' );
 		if ( !empty( $list ) ) {
-			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Podcast feed list', 'hpm-podcasts' ), 'data' => [ 'list' => $list, 'status' =>	200 ] ] );
+			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Podcast feed list', 'hpm-podcasts' ), 'data' => [ 'list' => $list, 'status' => 200 ] ] );
 		}
 		$protocol = 'https://';
 		$_SERVER['HTTPS'] = 'on';
@@ -1411,20 +1389,198 @@ class HPM_Podcasts {
 	 *
 	 * @param WP_REST_Request $request This function accepts a rest request to process data.
 	 *
-	 * @return mixed
+	 * @return WP_HTTP_Response|WP_REST_Response|WP_Error
 	 */
-	public function json_feed( WP_REST_Request $request ): mixed {
+	public function json_feed( WP_REST_Request $request ): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		if ( empty( $request['feed'] ) ) {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feed specified. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
-
-		$output = get_option( 'hpm_podcast-json-'.$request['feed'] );
-		if ( !$output ) {
-			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feed specified. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
+		$json = get_transient( 'hpm_podcasts_' . sanitize_key( $request['feed'] ) );
+		if ( !empty( $json ) ) {
+			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'JSON-formatted feed for ' . $json['title'], 'hpm-podcasts' ), 'data' => [ 'feed' => $json, 'status' => 200 ] ] );
 		}
 
-		$oj = json_decode( $output, true );
-		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'JSON-formatted feed for ' . $oj['title'], 'hpm-podcasts' ), 'data' => [ 'feed' => $oj, 'status' => 200 ] ] );
+		global $post;
+		$pods = get_option( 'hpm_podcast_settings' );
+		$json = [
+			'version' => 'https://jsonfeed.org/version/1',
+			'title' => '',
+			'home_page_url' => '',
+			'feed_url' => '',
+			'description' => '',
+			'icon' => '',
+			'favicon' => '',
+			'categories' => [],
+			'keywords' => [],
+			'author' => [
+				'name' => '',
+				'email' => ''
+			],
+			'items' => []
+		];
+
+		$podcasts = new WP_Query([
+			'post_type' => 'podcasts',
+			'post_status' => 'publish',
+			'posts_per_page' => 1,
+			'name' => sanitize_key( $request['feed'] )
+		]);
+		if ( $podcasts->have_posts() ) {
+			while ( $podcasts->have_posts() ) {
+				$podcasts->the_post();
+				$pod_id = get_the_ID();
+				$catslug = get_post_meta( $pod_id, 'hpm_pod_cat', true );
+				$podlink = get_post_meta( $pod_id, 'hpm_pod_link', true );
+				$current_post = $post;
+				$perpage = -1;
+				if ( !empty( $podlink['limit'] ) && $podlink['limit'] != 0 && is_numeric( $podlink['limit'] ) ) {
+					$perpage = $podlink['limit'];
+				}
+				$all_pods = [];
+				if ( !empty( $podlink['aggregate_feed'] ) ) {
+					$aggregate = new WP_Query([
+						'post_type' => 'podcasts',
+						'post_status' => 'publish',
+						'posts_per_page' => count( $podlink['aggregate_feed'] ),
+						'post__in'  => $podlink['aggregate_feed'],
+						'orderby' => 'post__in',
+						'meta_query' => [[
+							'key' => 'hpm_pod_prod',
+							'compare' => '=',
+							'value' => 'internal'
+						]]
+					]);
+					foreach ( $aggregate->posts as $agg_post ) {
+						$ag_id = $agg_post->ID;
+						$ag_catslug = get_post_meta( $ag_id, 'hpm_pod_cat', true );
+						$ag_podlink = get_post_meta( $ag_id, 'hpm_pod_link', true );
+						$ag_perpage = -1;
+						if ( !empty( $ag_podlink['limit'] ) && $ag_podlink['limit'] != 0 && is_numeric( $ag_podlink['limit'] ) ) {
+							$ag_perpage = $ag_podlink['limit'];
+						}
+						$all_pods[] = new WP_Query([
+							'post_type' => 'post',
+							'post_status' => 'publish',
+							'cat' => $ag_catslug,
+							'posts_per_page' => $ag_perpage,
+							'meta_query' => [[
+								'key' => 'hpm_podcast_enclosure',
+								'compare' => 'EXISTS'
+							]]
+						]);
+					}
+					$current_season = count( $podlink['aggregate_feed'] );
+				} else {
+					$all_pods[] = new WP_Query([
+						'post_type' => 'post',
+						'post_status' => 'publish',
+						'cat' => $catslug,
+						'posts_per_page' => $perpage,
+						'meta_query' => [[
+							'key' => 'hpm_podcast_enclosure',
+							'compare' => 'EXISTS'
+						]]
+					]);
+				}
+
+				$main_image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+				$favicon = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumb' );
+				$categories = [];
+				foreach ( $podlink['categories'] as $pos => $cats ) {
+					$categories[$pos] = explode( '||', $cats );
+				}
+				$pod_tags = wp_get_post_tags( $pod_id );
+				$pod_tag_array = [];
+				foreach ( $pod_tags as $t ) {
+					$pod_tag_array[] = $t->name;
+				}
+
+				$json['title'] = get_the_title();
+				$json['home_page_url'] = $podlink['page'];
+				$json['feed_url'] = get_the_permalink().'feed/json';
+				$json['description'] = get_the_content();
+				$json['icon'] = $main_image[0];
+				$json['favicon'] = $favicon[0];
+				$json['author']['name'] = $pods['owner']['name'];
+				$json['author']['email'] = $pods['owner']['email'];
+				$json['keywords'] = $pod_tag_array;
+				foreach ( $categories as $cats ) {
+					foreach ( $cats as $ca ) {
+						$json['categories'][] = $ca;
+					}
+				}
+				$json['items'] = [];
+				foreach ( $all_pods as $k => $podeps ) {
+					if ( $podeps->have_posts() ) {
+						while ( $podeps->have_posts() ) {
+							$podeps->the_post();
+							$epid = get_the_ID();
+							$a_meta = get_post_meta( $epid, 'hpm_podcast_enclosure', true );
+							if ( empty( $a_meta ) ) {
+								continue 2;
+							}
+							$pod_image = wp_get_attachment_image_src( get_post_thumbnail_id( $epid ), 'full' );
+							$tags = wp_get_post_tags( $epid );
+							$tag_array = [];
+							foreach ( $tags as $t ) {
+								$tag_array[] = $t->name;
+							}
+							$pod_desc = get_post_meta( $epid, 'hpm_podcast_ep_meta', true );
+							if ( !empty( $pod_desc['title'] ) ) {
+								$item_title = $pod_desc['title'];
+							} else {
+								$item_title = get_the_title();
+							}
+							if ( !empty( $podlink['aggregate_feed'] ) ) {
+								$pod_desc['season'] = $current_season;
+								$item_title = get_the_title( $podlink['aggregate_feed'][ $k ] ) . ' | ' . $item_title;
+							}
+							$media_file = $a_meta['url'];
+							if ( !empty( $podlink['aggregate_feed'] ) ) {
+								$media_file .= '?srctype=aggregate';
+							}
+							if ( !empty( $pod_desc['description'] ) ) {
+								$content = $pod_desc['description'];
+							} else {
+								$content = strip_shortcodes( get_the_content() );
+							}
+							$content = str_replace( [ "\n", "\r", '&nbsp;' ] , [ '', '', '' ], $content );
+							$content = preg_replace( [ '/<p>(\s+)?<\/p>/', '/<details>.*<\/details>/' ], [ '', '' ], $content );
+							$json['items'][] = [
+								'id' => $epid,
+								'title' => $item_title,
+								'permalink' => get_permalink(),
+								'content_html' => $content,
+								'content_text' => strip_shortcodes( wp_strip_all_tags( $content ) ),
+								'excerpt' => get_the_excerpt(),
+								'date_published' => get_the_date( 'c', '' ),
+								'date_modified' => get_the_modified_date( 'c', '' ),
+								'author' => coauthors( '; ', '; ', '', '', false ),
+								'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] : '' ),
+								'attachments' => [
+									'url' => $media_file,
+									'mime_type' => $a_meta['mime'],
+									'filesize' => $a_meta['filesize'],
+									'duration_in_seconds' => $a_meta['length']
+								],
+								'season' => ( !empty( $pod_desc['season'] ) ? $pod_desc['season'] : '' ),
+								'episode' => ( !empty( $pod_desc['episode'] ) ? $pod_desc['episode'] : '' ),
+								'episodeType' => ( !empty( $pod_desc['episodeType'] ) ? $pod_desc['episodeType'] : '' )
+							];
+						}
+					}
+					if ( !empty( $podlink['aggregate_feed'] ) ) {
+						$current_season--;
+					}
+				}
+				wp_reset_query();
+				$post = $current_post;
+			}
+		} else {
+			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feed specified. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
+		}
+		set_transient( 'hpm_podcasts_' . $request['feed'], $json, 3600 );
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'JSON-formatted feed for ' . $json['title'], 'hpm-podcasts' ), 'data' => [ 'feed' => $json, 'status' => 200 ] ] );
 	}
 }
 new HPM_Podcasts();
