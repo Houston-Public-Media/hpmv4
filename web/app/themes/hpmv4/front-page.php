@@ -178,13 +178,14 @@ $tras = null; ?>
 		</section>
 
         <section class="section ads-full text-center">
-            <div class="page-banner" style="display: inline-block;"><a href="/general-election-2024/" title="Election 2024"><picture> <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" media="(max-width: 34em)" /></picture>
-                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" media="(max-width: 34em)" /></picture>
-                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" media="(max-width: 52.5em)" /></picture>
-                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" media="(max-width: 52.5em)" /></picture>
-                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" /></picture>
-                <picture><source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" /></picture>
-                <picture><img src="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" alt="Election 2024" /></picture></a></div>
+            <div class="page-banner" style="display: inline-block;"><a href="/2024-election/" title="Election 2024">
+                <picture>
+                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" media="(max-width: 34em)">
+                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp" media="(max-width: 52.5em)">
+                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp">
+                    <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" alt="Election 2024">
+                    </picture>
+                </a></div>
         </section>
 
 		<section class="section news-list">
@@ -264,7 +265,7 @@ $tras = null; ?>
 					<h2 class="title">
 						<strong>News from <span>NPR</span></strong>
 					</h2>
-					<?php  echo hpm_nprapi_output(); ?>
+					<?php  //echo hpm_nprapi_output(); ?>
 				</div>
 				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
 					<h2 class="title title-full">
