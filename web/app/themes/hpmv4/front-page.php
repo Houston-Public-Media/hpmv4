@@ -175,7 +175,7 @@ $tras = null; ?>
         <section class="section ads-full text-center">
 
 
-            <div class="page-banner">
+            <div class="page-banner" style="display: inline-block;">
                 <a href="/2024-election" title="2024 Election">
                     <picture>
                     <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-mobile.png.webp" type="image/webp" media="(max-width: 34em)">
