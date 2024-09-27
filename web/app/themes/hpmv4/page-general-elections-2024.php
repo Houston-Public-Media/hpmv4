@@ -171,7 +171,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-4">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-ballot-2024-harris-county-texas-sample-ballot">What's on my Ballot?</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-ballot-2024-election-harris-county-texas">What's on my Ballot?</a>
                                     </div>
                                 </div>
                             </div>
@@ -182,13 +182,6 @@ if ( $cat->have_posts() ) {
                                     </div>
                                 </div>
                             </div>
-                           <!-- <div class="col-sm-3">
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/03/05/479760/election-results-texas-harris-county-primary-super-tuesday-2024/">2024 Primary Election Results</a>
-                                    </div>
-                                </div>
-                            </div>-->
                         </div>
                         <div class="row elections-main">
                             <div class="col-sm-12">
