@@ -97,6 +97,10 @@ $tras = null; ?>
         .card-body {
             padding-top: 5px;
         }
+		.page-banner {
+			display: grid;
+			justify-content: center;
+		}
 		@media screen and (min-width: 34rem) {
 			#station-schedules {
 				display: grid;
@@ -171,10 +175,9 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-
         <section class="section ads-full text-center">
-            <div class="page-banner" style="display: inline-block;">
-                <a href="/2024election" title="2024 Election">
+            <div class="page-banner">
+                <a href="/2024-election" title="2024 Election">
                     <picture>
                     <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-mobile.png.webp" type="image/webp" media="(max-width: 34em)">
                     <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-tablet.png.webp" type="image/webp" media="(max-width: 52.5em)">
@@ -184,7 +187,6 @@ $tras = null; ?>
                 </a>
             </div>
         </section>
-
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">

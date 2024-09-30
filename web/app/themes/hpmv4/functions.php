@@ -44,8 +44,8 @@ function hpm_scripts(): void {
 	wp_enqueue_script( 'bootstrap-js', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/js/bootstrap.min.js', [ 'jquery' ], '5.3.2', true);
 	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], $versions['css'] );
 	wp_enqueue_style( 'bootstrap-css', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/css/bootstrap.min.css', false, '5.3.2' );
-	wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [ 'bootstrap-css' ], '6' );
-	wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], '6', true );
+	wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [ 'bootstrap-css' ], $versions['css'] );
+	wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], $versions['js'], true );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_style( 'gutenberg-pdfjs' );

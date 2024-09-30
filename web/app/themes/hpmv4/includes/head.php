@@ -52,22 +52,25 @@ function hpm_site_header(): void { ?>
 						</div>
 						<div class="d-flex social-icon-wrap">
 							<div class="social-icon facebook">
-								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text" >Facebook</span></a>
+								<a href="https://www.facebook.com/houstonpublicmedia" rel="noopener" target="_blank" title="Facebook"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text">Facebook</span></a>
 							</div>
 							<div class="social-icon twitter">
-								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text" >Twitter</span></a>
+								<a href="https://twitter.com/houstonpubmedia" rel="noopener" target="_blank" title="Twitter/X"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text">Twitter/X</span></a>
 							</div>
 							<div class="social-icon instagram">
-								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?><span class="screen-reader-text" >Instagram</span></a>
+								<a href="https://instagram.com/houstonpubmedia" rel="noopener" target="_blank" title="Instagram"><?php echo hpm_svg_output( 'instagram' ); ?><span class="screen-reader-text">Instagram</span></a>
 							</div>
-							<div class="social-icon youtube">
-								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'youtube' ); ?><span class="screen-reader-text" >YouTube</span></a>
+							<?php /* ?><div class="social-icon youtube">
+								<a href="https://www.youtube.com/user/houstonpublicmedia" rel="noopener" target="_blank" title="YouTube"><?php echo hpm_svg_output( 'youtube' ); ?><span class="screen-reader-text" >YouTube</span></a>
+							</div><?php */ ?>
+							<div class="social-icon threads">
+								<a href="https://www.threads.net/@houstonpubmedia" rel="noopener" target="_blank" title="Threads"><?php echo hpm_svg_output( 'threads' ); ?><span class="screen-reader-text">Threads</span></a>
 							</div>
 							<div class="social-icon linkedin">
-								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text" >Linkedin</span></a>
+								<a href="https://linkedin.com/company/houstonpublicmedia" rel="noopener" target="_blank" title="LinkedIn"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text">Linkedin</span></a>
 							</div>
 							<div class="social-icon mastodon">
-								<a href="https://mastodon.social/@houstonpublicmedia" rel="noopener" target="_blank"><?php echo hpm_svg_output( 'mastodon' ); ?><span class="screen-reader-text" >Mastodon</span></a>
+								<a href="https://mastodon.social/@houstonpublicmedia" rel="noopener" target="_blank" title="Mastodon"><?php echo hpm_svg_output( 'mastodon' ); ?><span class="screen-reader-text">Mastodon</span></a>
 							</div>
 
 						</div>
