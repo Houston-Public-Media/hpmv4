@@ -173,10 +173,8 @@ $tras = null; ?>
 		</section>
 
         <section class="section ads-full text-center">
-
-
             <div class="page-banner" style="display: inline-block;">
-                <a href="/2024-election" title="2024 Election">
+                <a href="/2024election" title="2024 Election">
                     <picture>
                     <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-mobile.png.webp" type="image/webp" media="(max-width: 34em)">
                     <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-tablet.png.webp" type="image/webp" media="(max-width: 52.5em)">
@@ -185,8 +183,6 @@ $tras = null; ?>
                     </picture>
                 </a>
             </div>
-
-
         </section>
 
 		<section class="section news-list">
