@@ -861,6 +861,15 @@ svg:not(:root) {
 #hm-top.townsquare p a {
 	color: var(--main-red);
 }
+#hm-top.election {
+	background: #e7e7e8;
+}
+#hm-top.election p {
+	color: rgb(47, 47, 47);
+}
+#hm-top.election p a {
+	color: var(--main-red);
+}
 #hm-top p {
 	padding: 0.5rem;
 	font-size: 1.125rem;
