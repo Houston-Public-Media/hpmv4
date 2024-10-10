@@ -244,6 +244,10 @@ $tras = null; ?>
 							<div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
 						</div>
 						<div class="station-now-play">
+							<h5><a href="/tv8">TV 8.6 (World)</a></h5>
+							<div class="hpm-nowplay" data-station="tv86" data-upnext="false"><?php echo hpm_now_playing( 'tv8.6' ); ?></div>
+						</div>
+						<div class="station-now-play">
 							<h5><a href="/news887">News 88.7</a></h5>
 							<div class="hpm-nowplay" data-station="news" data-upnext="false"><?php echo hpm_now_playing( 'news887' ); ?></div>
 						</div>

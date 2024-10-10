@@ -1474,11 +1474,11 @@ add_action( 'wp_head', function() {
 }, 200 );
 
 
-function hpm_now_playing ( $station ) {
+function hpm_now_playing( $station ) {
 	return get_option( 'hpm_' . $station . '_nowplay' );
 }
 
-function hpm_now_playing_update (): void {
+function hpm_now_playing_update(): void {
 	$stations = [
 		'news887' => 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json',
 		'classical' => 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
@@ -1486,7 +1486,8 @@ function hpm_now_playing_update (): void {
 		'tv8.1' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
 		'tv8.2' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
 		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json'
+		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
+		'tv8.6' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json'
 	];
 	foreach ( $stations as $k => $v ) {
 		$output = '<h3>';
