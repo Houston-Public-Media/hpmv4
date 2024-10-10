@@ -43,5 +43,3 @@ $data = $view->get_my_tickets_link_data( $event_id, get_current_user_id() );
 if ( empty( $data['total_count'] ) ) {
 	return;
 }
-
-?>
