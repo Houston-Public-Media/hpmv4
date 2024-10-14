@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-4);
+      }
+
+      .cls-5 {
+        fill: url(#linear-gradient-5);
+      }
+
+      .cls-6 {
+        fill: url(#linear-gradient-6);
+      }
+
+      .cls-7 {
+        fill: url(#linear-gradient-7);
+      }
+
+      .cls-8 {
+        fill: url(#linear-gradient-8);
+      }
+
+      .cls-9 {
+        fill: url(#linear-gradient-9);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="58.122" y1="33.864" x2="53.578" y2="32.326" gradientUnits="userSpaceOnUse">
+      <stop offset="0.002" stop-color="#52707f"/>
+      <stop offset="1" stop-color="#97abb7"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="58.25" y1="44.977" x2="58.25" y2="24.615" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="6.249" y1="33.722" x2="9.89" y2="32.461" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="5.75" y1="44.977" x2="5.75" y2="24.615" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-5" x1="20.974" y1="35.542" x2="25.943" y2="33.831" gradientUnits="userSpaceOnUse">
+      <stop offset="0.002" stop-color="#0f6eb2"/>
+      <stop offset="1" stop-color="#005487"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-6" x1="34.002" y1="33.426" x2="45.839" y2="28.865" xlink:href="#linear-gradient-5"/>
+    <linearGradient id="linear-gradient-7" x1="24.141" y1="23.909" x2="37.715" y2="44.868" xlink:href="#linear-gradient-5"/>
+    <linearGradient id="linear-gradient-8" x1="8.365" y1="17.854" x2="23.685" y2="45.234" xlink:href="#linear-gradient-5"/>
+    <linearGradient id="linear-gradient-9" x1="33.956" y1="36.713" x2="60.62" y2="27.156" xlink:href="#linear-gradient"/>
+  </defs>
+  <title>icon</title>
+  <g id="Stacked_Lighting" data-name="Stacked Lighting">
+    <g>
+      <polygon class="cls-1" points="60 24 55 24 54 27 60 45 63.5 34.5 60 24"/>
+      <polygon class="cls-2" points="63.5 34.5 60 24 53 45 60 45 63.5 34.5"/>
+    </g>
+    <g>
+      <polygon class="cls-3" points="9 24 4 24 0.5 34.5 4 45 10 27 9 24"/>
+      <polygon class="cls-4" points="0.5 34.5 4 24 11 45 4 45 0.5 34.5"/>
+    </g>
+    <g>
+      <polygon class="cls-5" points="31 24 24 24 17 45 24 45 31 24"/>
+      <polygon class="cls-6" points="47 18 40 18 31 45 38 45 47 18"/>
+      <polygon class="cls-7" points="24 24 31 24 38 45 31 45 24 24"/>
+      <polygon class="cls-8" points="8 18 15 18 24 45 17 45 8 18"/>
+    </g>
+    <polygon class="cls-9" points="39 51 45 51 58 12 52 12 39 51"/>
+  </g>
+</svg>
