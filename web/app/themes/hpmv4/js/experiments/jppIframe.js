@@ -305,7 +305,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 		tagCss.media = 'all';
 		tagCss.id = 'hpm-persistent';
 		firstScriptTag.parentNode.insertBefore(tagCss, firstScriptTag);
-		document.querySelector('#jpp-player-persist').classList.remove('hidden');
+		document.querySelector('#jpp-player-persist').classList.remove('hidden', 'visually-hidden');
 		if (!jpp.inIframe()) {
 			jpp.parentFrame();
 		} else {

@@ -344,7 +344,7 @@ function hpm_persistent_player_foot(): void {
 			$prefStream = $_COOKIE['prefStream'];
 		}
 		?>
-		<div id="jpp-player-persist" class="hidden">
+		<div id="jpp-player-persist" class="hidden visually-hidden">
 			<div id="jpp-main">
 				<div id="jpp-player-wrap" class="jpp-button-wrap">
 					<button id="jpp-player-play"><?php echo hpm_svg_output( 'play' ); ?></button>
