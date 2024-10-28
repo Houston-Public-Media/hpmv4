@@ -31,13 +31,11 @@ if ( empty( $tickets ) || count( $tickets ) === 1 ) {
 ?>
 <tr>
 	<td class="tec-tickets__email-table-content-tickets-total">
-		<?php
-		echo sprintf(
-			// Translators: %1$s: Number of total Tickets. %2$s: Tickets label, in plural.
-			esc_html__( '%1$s %2$s Requested', 'event-tickets' ),
-			count( $tickets ),
-			"Slots"
-		);
-		?>
+		<ul>
+			<li>Requested Date: <strong><?php echo $tickets[0]['ticket']; ?></strong></li>
+			<li>Slots Requested: <strong><?php echo count( $tickets ); ?></strong></li>
+			<li>Name: <strong><?php echo $tickets[0]['holder_name']; ?></strong></li>
+			<li>Email: <strong><a href="mailto:<?php echo $tickets[0]['holder_email']; ?>"><?php echo $tickets[0]['holder_email']; ?></a></strong></li>
+		</ul>
 	</td>
 </tr>
