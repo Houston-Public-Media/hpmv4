@@ -281,7 +281,7 @@ function hpm_convert_id_to_term_in_query( $query ): void {
 	global $pagenow;
 	$taxonomy  = 'staff_category';
 	$q_vars    = &$query->query_vars;
-	if ( $pagenow == 'edit.php' && isset( $q_vars['post_type'] ) && $q_vars['post_type'] == 'staff' && isset( $q_vars[ $taxonomy ] ) && is_numeric( $q_vars[ $taxonomy ] ) && $q_vars[ $taxonomy ] !== 0 ) {
+	if ( $pagenow == 'edit.php' && isset( $q_vars['post_type'] ) && $q_vars['post_type'] == 'staff' && !empty( $q_vars[ $taxonomy ] ) ) {
 		$term = get_term_by('id', $q_vars[ $taxonomy ], $taxonomy );
 		$q_vars[ $taxonomy ] = $term->slug;
 	}

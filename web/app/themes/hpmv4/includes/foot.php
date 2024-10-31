@@ -118,7 +118,7 @@ function hpm_houston_matters_check(): array {
 	$date = date( 'Y-m-d', $t );
 	$hm_airtimes = [
 		9 => false,
-		15 => false
+		12 => false
 	];
 	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=" . $date . "&format=json" ) );
 	if ( is_wp_error( $remote ) ) {
@@ -131,6 +131,8 @@ function hpm_houston_matters_check(): array {
 				if ( $j['start_time'] == '09:00' ) {
 					$hm_airtimes[9] = true;
 				}
+			} elseif ( $j['program']['name'] == 'Houston Election 2024' ) {
+				$hm_airtimes[12] = true;
 			}
 		}
 	}
@@ -342,7 +344,7 @@ function hpm_persistent_player_foot(): void {
 			$prefStream = $_COOKIE['prefStream'];
 		}
 		?>
-		<div id="jpp-player-persist" class="hidden">
+		<div id="jpp-player-persist" class="hidden visually-hidden">
 			<div id="jpp-main">
 				<div id="jpp-player-wrap" class="jpp-button-wrap">
 					<button id="jpp-player-play"><?php echo hpm_svg_output( 'play' ); ?></button>

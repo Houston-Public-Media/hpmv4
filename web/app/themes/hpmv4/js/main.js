@@ -284,6 +284,13 @@ hpm.stationIds = {
 		'refresh': false,
 		'next': false,
 		'obj': {}
+	},
+	'tv86': {
+		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json',
+		'nowPlaying': {},
+		'refresh': false,
+		'next': false,
+		'obj': {}
 	}
 };
 hpm.npSearch = () => {

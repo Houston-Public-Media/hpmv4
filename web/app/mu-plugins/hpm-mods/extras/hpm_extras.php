@@ -1474,11 +1474,11 @@ add_action( 'wp_head', function() {
 }, 200 );
 
 
-function hpm_now_playing ( $station ) {
+function hpm_now_playing( $station ) {
 	return get_option( 'hpm_' . $station . '_nowplay' );
 }
 
-function hpm_now_playing_update (): void {
+function hpm_now_playing_update(): void {
 	$stations = [
 		'news887' => 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json',
 		'classical' => 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
@@ -1486,7 +1486,8 @@ function hpm_now_playing_update (): void {
 		'tv8.1' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
 		'tv8.2' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
 		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json'
+		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
+		'tv8.6' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json'
 	];
 	foreach ( $stations as $k => $v ) {
 		$output = '<h3>';
@@ -1527,13 +1528,10 @@ function hpm_weather(): string {
 		return $output;
 	}
 	$remote = wp_remote_get( esc_url_raw( "https://api.openweathermap.org/data/2.5/weather?lat=29.7265396&lon=-95.3415406&units=imperial&appid=" . HPM_OPEN_WEATHER ) );
-	if ( is_wp_error( $remote ) ) {
-		return $output;
-	} else {
+	if ( !is_wp_error( $remote ) ) {
 		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
-		$output .= '<h3 style="color: white; font-size: 14px;">'.date("F d, Y").'<h3>' .
-			'<p style="color: white; font-size: 30px;"><img src="https://openweathermap.org/img/wn/' . $weather->weather[0]->icon . '@2x.png" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
+		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y" ) . '<h3>' . '<p style="color: white; font-size: 30px;"><img src="https://openweathermap.org/img/wn/' . $weather->weather[0]->icon . '@2x.png" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
 		set_transient( 'hpm_weather', $output, 180 );
-		return $output;
 	}
+	return $output;
 }

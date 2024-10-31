@@ -1465,3 +1465,10 @@ if ( function_exists( 'npr_cds_activate' ) && WP_ENV === 'development' ) {
 
 	add_action( 'npr_pre_update_post', 'hpm_npr_pre_update_post', 10, 4 );
 }
+
+add_filter( 'tec_tickets_emails_dispatcher_headers', 'hpm_tec_tickets_rsvp_email_filter', 15 );
+
+function hpm_tec_tickets_rsvp_email_filter( $headers ) {
+	$headers['CC'] = 'statum@houstonpublicmedia.org,chill@houstonpublicmedia.org';
+	return $headers;
+}
