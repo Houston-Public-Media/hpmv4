@@ -1292,116 +1292,6 @@ function hpm_new_user_guest_author( $user_id ): void {
 }
 add_action( 'user_register', 'hpm_new_user_guest_author', 20, 1 );
 
-function hpm_save_bylines_before_delete( $user_id ): void {
-	global $coauthors_plus, $wpdb;
-
-	$user_obj = get_userdata( $user_id );
-	$search_author = $coauthors_plus->search_authors( $user_obj->data->user_login, [] );
-	if ( empty( $search_author ) ) {
-		$search_author = $coauthors_plus->search_authors( $user_obj->data->user_nicename, [] );
-	}
-	foreach ( $search_author as $a ) {
-		if ( $a->linked_account === $user_obj->data->user_login ) {
-			$author = $a;
-		}
-	}
-
-	$author_posts = new WP_Query([
-		'post_type' => 'post',
-		'post_status' => 'publish',
-		'posts_per_page' => -1,
-		'author' => $user_id
-	]);
-	if ( !$author_posts->have_posts() ) {
-		$author_posts = new WP_Query([
-			'post_type' => 'post',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-			'author_name' => $user_obj->data->user_nicename
-		]);
-	}
-	if ( !$author_posts->have_posts() ) {
-		$author_posts = new WP_Query([
-			'post_type' => 'post',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-			'author_name' => $author->user_login
-		]);
-	}
-
-	$temp = $output = [];
-	while ( $author_posts->have_posts() ) {
-		$author_posts->the_post();
-		$id = get_the_ID();
-		$coauthors = get_coauthors( $id );
-		$temp[ $id ] = $coauthors;
-	}
-
-	$author_ids = $wpdb->get_results( "SELECT * FROM wp_posts WHERE post_author = " . $user_id . " AND post_status = 'publish' AND post_type = 'post'" );
-	foreach ( $author_ids as $aid ) {
-		$id = $aid->ID;
-		if ( empty( $temp[ $id ] ) ) {
-			$temp[ $id ] = get_coauthors( $id );
-		}
-	}
-
-	foreach ( $temp as $k => $v ) {
-		$coauth = [];
-		foreach ( $v as $co ) {
-			if ( $co->type == 'guest-author' ) {
-				if ( $co->linked_account === $user_obj->data->user_login ) {
-					$coauth[] = $author->user_login;
-				} else {
-					$coauth[] = $co->user_login;
-				}
-			} elseif ( $co->type == 'wpuser' ) {
-				if ( $co->data->user_login === $user_obj->data->user_login ) {
-					$coauth[] = $author->user_login;
-				} else {
-					$coauth[] = $co->user_login;
-				}
-			}
-		}
-		$output[ $k ] = $coauth;
-	}
-	update_option( 'hpm_user_backup_' . $user_id, $output, false );
-	update_post_meta( $author->ID, 'cap-linked_account', '' );
-	Red_Item::create([
-		"url" => "/articles/author/" . $user_obj->data->user_login,
-		"match_data" => [
-			"source" => [
-				"flag_query" => "exact",
-				"flag_case" => true,
-				"flag_trailing" => true,
-				"flag_regex" => false
-			],
-			"options" => [
-				"log_exclude" => false
-			]
-		],
-		"action_code" => "301",
-		"action_type" => "url",
-		"action_data" => [
-			"url" => "/articles/author/" . $author->user_login
-		],
-		"match_type" => "url",
-		"group_id" => 1,
-		"status" => "enabled",
-		"regex" => false
-	]);
-}
-//add_action( 'delete_user', 'hpm_save_bylines_before_delete', 1, 1 );
-
-function hpm_reassign_bylines_after_delete( $user_id ): void {
-	global $coauthors_plus;
-	$temp = get_option( 'hpm_user_backup_' . $user_id );
-	foreach ( $temp as $k => $v ) {
-		wp_set_post_terms( $k, $v, $coauthors_plus->coauthor_taxonomy );
-	}
-	delete_option( 'hpm_user_backup_' . $user_id );
-}
-//add_action( 'deleted_user', 'hpm_reassign_bylines_after_delete', 999, 1 );
-
 function hpm_deletion_prep_execute(): string {
 	global $coauthors_plus, $wpdb;
 	if ( !empty( $_GET ) && !empty( $_GET['action'] ) && !empty( $_GET['user'] ) && !empty( $_GET['_wpnonce'] ) ) {
@@ -1516,7 +1406,11 @@ function hpm_deletion_prep_execute(): string {
 }
 
 function hpm_user_deletion_prep_action( $actions, $user ) {
-	$actions['deleteprep'] = "<a class='hpmdeleteprep' href='" . add_query_arg( '_wpnonce', wp_create_nonce( 'hpmdeleteprep' ), admin_url( "users.php?action=hpmdeleteprep&user=$user->ID") ) . "'>Prep for Deletion</a>";
+	$post_count = count_user_posts( $user->ID );
+	if ( $post_count > 0 ) {
+		$actions['deleteprep'] = "<a class='hpmdeleteprep' href='" . add_query_arg( '_wpnonce', wp_create_nonce( 'hpmdeleteprep' ), admin_url( "users.php?action=hpmdeleteprep&user=$user->ID" ) ) . "' style='color: #b32d2e;'>Prep for Deletion</a>";
+		unset( $actions['delete'] );
+	}
 	return $actions;
 }
 add_filter( 'user_row_actions', 'hpm_user_deletion_prep_action', 10, 2 );
