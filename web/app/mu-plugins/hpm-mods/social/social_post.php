@@ -220,7 +220,7 @@
 							if ( !empty( $bsky_auth->accessJwt ) ) {
 								$bsky_options['headers']['Authorization'] = "Bearer " . $bsky_auth->accessJwt;
 								$thumb_id = get_post_thumbnail_id( $post_id );
-								if ( $thumb_id !== false ) {
+								if ( is_int( $thumb_id ) && $thumb_id > 0 ) {
 									$thumb = wp_get_attachment_image_url( $thumb_id, 'medium' );
 									$thumb_type = get_post_mime_type( $thumb_id );
 									$image_data = file_get_contents( $thumb );
