@@ -337,26 +337,26 @@
 
 	function hpm_social_threads_token(): array|bool {
 		$token = get_option( 'hpm_social_threads_token' );
-		if ( $token['expiration_date'] <= time() ) {
-			$threads_url = add_query_arg([
-				'access_token' => $token['access_token'],
-				'grant_type' => 'th_refresh_token'
-			],  'https://graph.threads.net/refresh_access_token' );
-			$response = wp_remote_get( $threads_url );
-			if ( !is_wp_error( $response ) ) {
-				if ( $response['response']['code'] === 200 ) {
-					$body = wp_remote_retrieve_body( $response );
-					$decode = json_decode( $body, true );
-					$decode['expiration_date'] = $decode['expires_at'] + time();
-					update_option( 'hpm_social_threads_token', $decode );
-				} else {
-					log_it( 'Error refreshing Threads Token' );
-					return false;
-				}
+		$threads_url = add_query_arg([
+			'access_token' => $token['access_token'],
+			'grant_type' => 'th_refresh_token'
+		],  'https://graph.threads.net/refresh_access_token' );
+		$response = wp_remote_get( $threads_url );
+		if ( !is_wp_error( $response ) ) {
+			if ( $response['response']['code'] === 200 ) {
+				$body = wp_remote_retrieve_body( $response );
+				$decode = json_decode( $body, true );
+				$decode['expiration_date'] = $decode['expires_at'] + time();
+				update_option( 'hpm_social_threads_token', $decode );
 			} else {
-				log_it( $response->get_error_message() );
+				log_it( 'Error refreshing Threads Token' );
+				wp_mail('webmaster@houstonpublicmedia.org', 'Refresh your Threads token', 'You can refresh your access token by going here: https://developers.facebook.com/apps/');
 				return false;
 			}
+		} else {
+			log_it( $response->get_error_message() );
+			wp_mail('webmaster@houstonpublicmedia.org', 'Refresh your Threads token', 'You can refresh your access token by going here: https://developers.facebook.com/apps/');
+			return false;
 		}
 		return $token;
 	}
