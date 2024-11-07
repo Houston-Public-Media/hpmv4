@@ -273,7 +273,7 @@
 					$threads_url = add_query_arg([
 						'access_token' => $token['access_token'],
 						'media_type' => 'text',
-						'text' => $post_body
+						'text' => rawurlencode( $post_body )
 					],  'https://graph.threads.net/v1.0/' . THREADS_USER_ID . '/threads' );
 					$threads_result = wp_remote_post( $threads_url );
 					if ( !is_wp_error( $threads_result ) ) {
@@ -312,7 +312,7 @@
 		if ( !empty( $social_post['facebook']['data'] ) ) {
 			if ( empty( $social_facebook_sent ) && !empty( HPM_FB_ACCESS_TOKEN ) ) {
 				$fb_url = add_query_arg([
-					'message'  => $social_post['facebook']['data'],
+					'message'  => rawurlencode( $social_post['facebook']['data'] ),
 					'link' => get_the_permalink( $post_id ),
 					'access_token' => HPM_FB_ACCESS_TOKEN,
 					'appsecret_proof' => HPM_FB_APPSECRET
