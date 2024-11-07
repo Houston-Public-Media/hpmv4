@@ -1368,6 +1368,7 @@ class HPM_Podcasts {
 				$temp['external_links'] = $podlink;
 				$temp['name'] = get_the_title();
 				$temp['description'] = get_the_content();
+				$temp['id'] = $pod_id;
 				if ( is_array( $last_id ) ) {
 					$a_meta = get_post_meta( $last_id[ 'id' ], 'hpm_podcast_enclosure', true );
 					$temp[ 'latest_episode' ][ 'audio' ] = str_replace( 'http://', $protocol, $a_meta[ 'url' ] );
@@ -1412,6 +1413,7 @@ class HPM_Podcasts {
 			'favicon' => '',
 			'categories' => [],
 			'keywords' => [],
+			'id' => 0,
 			'author' => [
 				'name' => '',
 				'email' => ''
@@ -1504,6 +1506,7 @@ class HPM_Podcasts {
 				$json['author']['name'] = $pods['owner']['name'];
 				$json['author']['email'] = $pods['owner']['email'];
 				$json['keywords'] = $pod_tag_array;
+				$json['id'] = $pod_id;
 				foreach ( $categories as $cats ) {
 					foreach ( $cats as $ca ) {
 						$json['categories'][] = $ca;
