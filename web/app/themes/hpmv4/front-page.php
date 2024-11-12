@@ -175,7 +175,7 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-        <section class="section ads-full text-center">
+        <?php /* ?><section class="section ads-full text-center">
             <div class="page-banner">
                 <a href="/2024election/" title="2024 Election">
                     <picture>
@@ -186,7 +186,7 @@ $tras = null; ?>
                     </picture>
                 </a>
             </div>
-        </section>
+        </section><?php */ ?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">

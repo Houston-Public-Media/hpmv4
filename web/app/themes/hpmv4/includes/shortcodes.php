@@ -332,7 +332,8 @@ function hpm_careers_trans(): string {
 		return $output;
 	}
 
-	$url = "https://careers.uh.edu/jobs/search/uh-postings?block_uid=d7f0c7ec3a0c7c72f6f199f24270d713&block_index=0&page_row_uid=10cf5733801b8d7276b9b8c3a8caae55&page_row_index=1&page_version_uid=0eea45210852ccad0cd720f48deec020&page=1&location_uids=&sort=&search_categories=&search_employment_types=&employment_type_uids%5B%5D=0e6639faef5eb7b7bdba3122e5dea654&search_dropdown_field_2_values=&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece&query=";
+	$url = "https://careers.uh.edu/jobs/search/uh-postings?block_uid=d7f0c7ec3a0c7c72f6f199f24270d713&block_index=0&page_row_uid=10cf5733801b8d7276b9b8c3a8caae55&page_row_index=1&page_version_uid=0eea45210852ccad0cd720f48deec020&page=1&location_uids=&sort=&search_categories=&search_employment_types=&search_dropdown_field_2_values=&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece&query=";
+
 	$options = [
 		'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0'
 	];
