@@ -312,8 +312,8 @@ Template Name: Radio Schedules
 							$progs[$k] = [
 								'name' => $name,
 								'time' => date( 'g:i a', $fullstart ),
-								'link' => $v['program']['program_link'],
-								'desc' => $v['program']['program_desc'],
+								'link' => ( !empty( $v['program']['program_link'] ) ? $v['program']['program_link'] : '' ),
+								'desc' => ( !empty( $v['program']['program_desc'] ) ? $v['program']['program_desc'] : '' ),
 								'playlist' => ( !empty( $v['playlist'] ) ? $v['playlist'] : [] ),
 								'sub' => []
 							];

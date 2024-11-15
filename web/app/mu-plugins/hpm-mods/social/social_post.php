@@ -179,7 +179,7 @@
 				$masto_result = wp_remote_post( $url, $payload );
 				if ( !is_wp_error( $masto_result ) ) {
 					if ( $masto_result['response']['code'] !== 200 ) {
-						log_it( "Mastodon (" . $post_id . "): " . json_decode( wp_remote_retrieve_body( $masto_result ) ) );
+						log_it( "Mastodon (" . $post_id . "): " . print_r( json_decode( wp_remote_retrieve_body( $masto_result ), true ), true ) );
 					} else {
 						update_post_meta( $post_id, 'hpm_social_mastodon_sent', 1 );
 					}
@@ -346,7 +346,6 @@
 			if ( $response['response']['code'] === 200 ) {
 				$body = wp_remote_retrieve_body( $response );
 				$decode = json_decode( $body, true );
-				$decode['expiration_date'] = $decode['expires_at'] + time();
 				update_option( 'hpm_social_threads_token', $decode );
 			} else {
 				log_it( 'Error refreshing Threads Token' );
