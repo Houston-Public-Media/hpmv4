@@ -115,7 +115,7 @@ if ( is_preview() ) { ?>
 		} elseif ( $cats->term_id == 12 ) { ?>
 				<div class="sidebar-ad col-sm-6 col-md-12">
 					<h4>Support Comes From</h4>
-					<p><a href="https://www.texasmutual.com/employers/rewards?utm_source=KUHF&utm_medium=digital&utm_campaign=Financial+Benefits&utm_id=Financial+Benefits"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXME-BIB-Financial-Benefits_NPR-PBS.gif.webp" alt="Texas Mutual: We're in the business of helping Texas businesses thrive" /></a></p>
+					<p><a href="https://www.texasmutual.com/employers/claims?utm_source=HPM&utm_medium=Display&utm_campaign=BIB+Claims&utm_id=BIB+Claims"><img src="https://cdn.houstonpublicmedia.org/assets/images/TXME-BIB-Claims_Banner_300x250-NPR.gif.webp" alt="Texas Mutual: Taking care of businesses by taking care of your employees" /></a></p>
 				</div>
 <?php
 		}
