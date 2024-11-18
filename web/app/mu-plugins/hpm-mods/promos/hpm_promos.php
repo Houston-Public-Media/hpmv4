@@ -38,6 +38,15 @@ class HPM_Promos {
 		}
 
 		add_shortcode( 'hpm_promos', [ $this, 'promo_shortcode' ] );
+		add_action( 'rest_api_init', function() {
+			register_rest_route( 'hpm-promos/v1', '/list', [
+				'methods'  => 'GET',
+				'callback' => [ $this, 'json_list' ],
+				'permission_callback' => function() {
+					return true;
+				}
+			] );
+		} );
 	}
 
 	public function hide_publish_button(): void {
@@ -794,6 +803,49 @@ class HPM_Promos {
 			'position' => 'sidebar'
 		], $atts, 'multilink' ) );
 		return HPM_Promos::generate_static( $position, 'shortcode' );
+	}
+
+	public function json_list(): WP_HTTP_Response|WP_REST_Response {
+		$output = [];
+		$args = [
+			'post_type' => 'promos',
+			'posts_per_page' => -1,
+			'post_status' => 'publish',
+			'order' => 'ASC'
+		];
+		$t = time();
+		$now = getdate( $t );
+		$args['meta_query'] = [[
+			'key'     => 'hpm_promos_end_time',
+			'value'   => $now[0],
+			'compare' => '>=',
+		]];
+		$promos = new WP_Query( $args );
+		if ( $promos->have_posts() ) {
+			while ( $promos->have_posts() ) {
+				$promos->the_post();
+				$meta = get_post_meta( get_the_ID(), 'hpm_promos_meta', true );
+				if ( empty( $meta ) ) {
+					continue;
+				}
+				$temp = [
+					'type' => $meta['type'],
+					'location' => $meta['location'],
+					'content' => ''
+				];
+				$content = do_shortcode( get_the_content(), false );
+				$content_esc = str_replace( "'", "\'", $content );
+				$content_esc = preg_replace( "/\r|\n|\t/", "", $content_esc );
+				if ( $meta['type'] == 'sidebar' || $meta['type'] == 'fullwidth' ) {
+					$temp['content'] = $content_esc;
+				} elseif ( $meta['type'] === 'emergency' || $meta['type'] === 'non-emergency' ) {
+					$content_esc = str_replace( [ '<p>', '</p>' ], [ '', '' ], $content_esc );
+					$temp['content'] = '<div id="emergency" class="' . $meta['type'] . '">'. hpm_svg_output( 'exclamation-circle' ) . " " . $content_esc . '</div>';
+				}
+				$output[] = $temp;
+			}
+		}
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Promos List', 'hpm-promos' ), 'data' => [ 'promos' => $output, 'status' => 200 ] ] );
 	}
 }
 new HPM_Promos();
