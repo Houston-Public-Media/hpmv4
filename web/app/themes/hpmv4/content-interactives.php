@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-sm-4">
                 <div class="card mb-3">
-                    <div class="card-header">
+                    <div class="card-header" style="min-height: 42px !important;">
                         <a style="text-decoration: none; color:#fff;" href="/hurricane-tropical-storm-tracker-texas-houston">Hurricane &amp; Tropical Storm Tracker</a>
                     </div>
                     <div class="row g-0">
@@ -21,7 +21,7 @@
 
         <div class="col-sm-4">
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header" style="min-height: 42px !important;">
                     <a style="text-decoration: none; color:#fff;" href="/texas-houston-power-outage-tracker-map/">Texas Power Outage Tracker Map</a>
                 </div>
                 <div class="row g-0">
@@ -36,7 +36,7 @@
 
         <div class="col-sm-4">
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header" style="min-height: 42px !important;">
                     <a style="text-decoration: none; color:#fff;" href="/houston-weather-temperatures-heat-map/">Heat Tracker Map</a>
                 </div>
                 <div class="row g-0">
