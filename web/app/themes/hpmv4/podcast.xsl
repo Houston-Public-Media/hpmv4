@@ -73,7 +73,7 @@
 							</a>
 						</div>
 						<div class="header-highlight-text">
-							<a href="/tv8">TV 8</a> | <a href="/news887">News 88.7</a> | <a href="/classical">Classical</a> | <a href="/mixtape">Mixtape</a>
+							<a href="https://www.houstonpublicmedia.org/tv8/">TV 8</a> | <a href="https://www.houstonpublicmedia.org/news887/">News 88.7</a> | <a href="https://www.houstonpublicmedia.org/classical/">Classical</a> | <a href="https://www.houstonpublicmedia.org/thevibe/">The Vibe</a>
 						</div>
 					</div>
 					<div class="quick-access">

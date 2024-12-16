@@ -256,8 +256,8 @@ $tras = null; ?>
 							<div class="hpm-nowplay" data-station="classical" data-upnext="false"><?php echo hpm_now_playing( 'classical' ); ?></div>
 						</div>
 						<div class="station-now-play">
-							<h5><a href="/mixtape">Mixtape</a></h5>
-							<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"><?php echo hpm_now_playing( 'mixtape' ); ?></div>
+							<h5><a href="/thevibe/">The Vibe</a></h5>
+							<div class="hpm-nowplay" data-station="thevibe" data-upnext="false"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
 						</div>
 					</div>
 				</div>

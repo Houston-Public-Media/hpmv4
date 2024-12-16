@@ -1482,7 +1482,7 @@ function hpm_now_playing_update(): void {
 	$stations = [
 		'news887' => 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json',
 		'classical' => 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
-		'mixtape' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
+		'thevibe' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/thevibe.json',
 		'tv8.1' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
 		'tv8.2' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
 		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
@@ -1499,7 +1499,7 @@ function hpm_now_playing_update(): void {
 		}
 		if ( str_contains( $k, 'tv' ) ) {
 			$output .= $data['airlist'][0]['version']['series']['series-title'];
-		} elseif ( $k === 'mixtape' ) {
+		} elseif ( $k === 'thevibe' ) {
 			$output .= $data['artist'] . ' - ' . $data['song'];
 		} else {
 			if ( empty( $data['onNow']['song'] ) ) {
