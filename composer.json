@@ -60,7 +60,7 @@
 		"wpackagist-plugin/co-authors-plus": "3.6.3",
 		"wpackagist-plugin/easy-primary-category": "1.1.1",
 		"wpackagist-plugin/ewww-image-optimizer": "*",
-		"wpackagist-plugin/members": "3.2.16",
+		"wpackagist-plugin/members": "3.2.17",
 		"wpackagist-plugin/metronet-tag-manager": "1.5.5",
 		"wpackagist-plugin/npr-content-distribution-service": "*",
 		"wpackagist-plugin/publish-to-apple-news": "2.6.1",
@@ -69,7 +69,7 @@
 		"wpackagist-plugin/redis-cache": "^2.0.17",
 		"wpackagist-plugin/wp-ses": "*",
 		"wpackagist-plugin/www-xml-sitemap-generator-org": "2.0.7",
-		"wpackagist-plugin/event-tickets": "5.13.4",
+		"wpackagist-plugin/event-tickets": "5.18.0",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"noweh/twitter-api-v2-php": "3.4.0"
 	},
