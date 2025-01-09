@@ -1,5 +1,5 @@
 <?php
-	use Noweh\TwitterApi\Client;
+	use Jwcounts\TwitterApi\Client;
 
 	add_action( 'load-post.php', 'hpm_social_post_setup' );
 	add_action( 'load-post-new.php', 'hpm_social_post_setup' );
