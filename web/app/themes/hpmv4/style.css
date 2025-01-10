@@ -193,6 +193,9 @@ html {
 :is(::-webkit-calendar-picker-indicator,::-webkit-clear-button,::-webkit-inner-spin-button,::-webkit-outer-spin-button) {
 	color: var(--main-blue);
 }
+::target-text {
+	background-color: var(--accent-yellow-4);
+}
 small {
 	font-size: 80%;
 }
