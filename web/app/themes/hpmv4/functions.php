@@ -1495,5 +1495,3 @@ function hpm_tec_tickets_rsvp_email_filter( $headers ) {
 	$headers['CC'] = 'statum@houstonpublicmedia.org,chill@houstonpublicmedia.org';
 	return $headers;
 }
-
-add_filter( 'tec_tickets_admin_tickets_screen_options_show_screen', '__return_true' );
