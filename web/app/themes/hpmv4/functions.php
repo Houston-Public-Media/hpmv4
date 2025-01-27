@@ -1495,3 +1495,50 @@ function hpm_tec_tickets_rsvp_email_filter( $headers ) {
 	$headers['CC'] = 'statum@houstonpublicmedia.org,chill@houstonpublicmedia.org';
 	return $headers;
 }
+
+
+/*
+ * Check the name field against spam pattern.
+ *
+ * @link https://wpforms.com/developers/wpforms_process_validate_text/
+ *
+ * @param int     $field_id        Field ID.
+ * @param array   $field_submit    Unsanitized field value submitted for the field.
+ * @param array   $form_data       Form data and settings.
+*/
+
+function hpm_wpf_name_filter( $field_id, $field_submit, $form_data ) {
+	$reject = false;
+	$first = trim( $field_submit['first'] );
+	$last = trim( $field_submit['last'] );
+	if ( $first === $last ) {
+		$reject = true;
+	}
+	preg_match( '/^(.+)([A-Z]{2})$/', $first, $match_first );
+	preg_match( '/^(.+)([A-Z]{2})$/', $last, $match_last );
+
+	if ( !empty( $match_first ) && !empty( $match_last ) ) {
+		if ( $match_first[2] === $match_last[2] ) {
+			$reject = true;
+		}
+	}
+	if( $reject ) {
+		wpforms()->process->errors[ $form_data[ 'id' ] ][ $field_id ] = esc_html__( 'Sorry, we cannot submit your request at this time.', 'wpforms' );
+		return;
+	}
+}
+
+add_action( 'wpforms_process_validate_name', 'hpm_wpf_name_filter', 10, 3 );
+
+//function hpm_wpf_email_filter( $field_id, $field_submit, $form_data ) {
+//	$reject = false;
+//	$email = str_replace( '.', '', trim( $field_submit['email'] ) );
+//
+//
+//	if( $reject ) {
+//		wpforms()->process->errors[ $form_data[ 'id' ] ][ $field_id ] = esc_html__( 'Sorry, we cannot submit your request at this time.', 'wpforms' );
+//		return;
+//	}
+//}
+//
+//add_action( 'wpforms_process_validate_email', 'hpm_wpf_email_filter', 10, 3 );
