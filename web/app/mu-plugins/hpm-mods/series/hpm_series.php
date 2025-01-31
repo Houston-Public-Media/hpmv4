@@ -259,6 +259,7 @@ function hpm_series_save_meta( $post_id, $post ) {
 function hpm_head_banners( $id, $location ): string {
 	$temp = $output = '';
 	$options = get_post_meta( $id, 'hpm_page_options', true );
+	$video_header = get_post_meta( $id, 'hpm_video_header', true );
 
 	$count = 0;
 	if ( !empty( $options ) ) {
@@ -295,12 +296,13 @@ function hpm_head_banners( $id, $location ): string {
 		}
 	} else {
 		if ( $location == 'entry' || $location == 'series' ) {
-            if( $id !== 469451 && $id !== 378369 ) { //Local 450698
-                 $output =
+			if ( $id !== 469451 && $id !== 378369 ) { //Local 450698
+				$output =
 					'<header class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-header">' .
 						'<h1 class="' . ( $location == 'entry' ? 'entry' : 'page' ) . '-title">' . get_the_title( $id ) . '</h1>' .
+						( !empty( $video_header ) ? '<video muted autoplay playsinline loop><source src="' . $video_header . '" type="video/mp4" /></video>' : ''  ) .
 					'</header>';
-            }
+			}
 		}
 	}
 	return $output;
