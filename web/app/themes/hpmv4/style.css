@@ -5152,7 +5152,7 @@ select#hpm-staff-cat {
 	float: right;
 	margin-top: 20px;
 	background-color: #00566c;
-	border-radius: 0px;
+	border-radius: 0;
 	outline: solid 1px #00566c;
 	outline-offset: 3px;
 	color: #fff;
@@ -5169,6 +5169,12 @@ select#hpm-staff-cat {
 .opp > a {
 	gap: 0 1rem;
 }
+.opp > a, .support-ssac .episodes-content a {
+	text-decoration: none !important;
+}
+.support-ssac .episodes-content a h4 {
+	text-decoration: underline !important;
+}
 
 .support-opps .opp img {
 	width: 100px;
@@ -5179,6 +5185,7 @@ select#hpm-staff-cat {
 	font-size: 18px;
 	color: #222054;
 	padding-bottom: 2px;
+	text-decoration: underline;
 }
 .support-opps .opp p {
 	font-size: 16px;
@@ -5826,12 +5833,13 @@ body.single-shows #station-social.station-social {
 	max-width: 48%;
 	width: 100%;
 	background: #f5f5f5;
-	padding: 10px;
+	padding: 1rem;
 }
-.houston-content .content-wrapper { /*max-width: 55%;*/
+.houston-content .content-wrapper {
 	width: 100%;
 	background: #e7f4fa;
-	padding: 10px;
+	padding: 0 1rem;
+	margin-top: 0 !important;
 }
 .houston-content .image-wrapper .image-box {
 	padding-bottom: 22px;
