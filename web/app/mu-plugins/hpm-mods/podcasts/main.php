@@ -962,14 +962,13 @@ class HPM_Podcasts {
 				$getContent = ob_get_contents();
 				ob_end_clean();
 				//update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
-				//if ( WP_ENV === 'production' ) {
-//					try {
-//						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
-//					} catch ( Exception $e ) {
-//						$error = print_r( $e, true );
-//						error_log( 'Error uploading podcast flat file to S3: ' . $error );
-//					}
-					file_put_contents( '/Users/jwcounts/code/output/' . $podcast_title . '.xml', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
+				if ( WP_ENV === 'production' ) {
+					try {
+						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
+					} catch ( Exception $e ) {
+						$error = print_r( $e, true );
+						error_log( 'Error uploading podcast flat file to S3: ' . $error );
+					}
 					foreach ( $sources as $ps ) {
 						$find = $replace = $replace_arr = [];
 						if ( $ps == 'youtube' ) {
@@ -993,15 +992,14 @@ class HPM_Podcasts {
 						}
 
 						$content_xml = str_replace( $find, $replace, $getContent );
-						file_put_contents( '/Users/jwcounts/code/output/' . $podcast_title . '-' . $ps . '.xml', $content_xml );
-//						try {
-//							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
-//						} catch ( Exception $e ) {
-//							$error = print_r( $e, true );
-//							error_log( 'Error uploading podcast flat file to S3: ' . $error );
-//						}
+						try {
+							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
+						} catch ( Exception $e ) {
+							$error = print_r( $e, true );
+							error_log( 'Error uploading podcast flat file to S3: ' . $error );
+						}
 					}
-				//}
+				}
 			}
 			$t = time();
 			$offset = get_option( 'gmt_offset' ) * 3600;
