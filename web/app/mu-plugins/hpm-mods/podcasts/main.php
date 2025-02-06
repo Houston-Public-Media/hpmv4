@@ -734,7 +734,8 @@ class HPM_Podcasts {
 		]);
 
 		$xsl = 'https://cdn.houstonpublicmedia.org/podcasts/podcast.xsl';
-		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart' ];
+		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart', 'youtube' ];
+		$yt_boilerplate = "<p>SUBSCRIBE for more local news and information from Houston Public Media: https://www.youtube.com/@HoustonPublicMedia</p><p>----------</p><p>FOLLOW us:<br />Instagram: https://www.instagram.com/houstonpubmedia<br />Facebook: https://www.facebook.com/houstonpublicmedia<br />X: https://x.com/houstonpubmedia</p><p>----------</p><p>Houston Public Media is a trusted source for local news, information, and original storytelling in Houston, Texas.</p><p>For the latest news and information, visit the Houston Public Media website: https://www.houstonpublicmedia.org/</p><p>Subscribe to the Hello, Houston! newsletter: https://www.houstonpublicmedia.org/hellohouston/</p><p>Houston Public Media is a service of the University of Houston.</p><p>-------------</p><p>We can’t do it without you. Support our award-winning community journalism by donating today: https://www.houstonpublicmedia.org/donate</p>";
 
 		if ( !empty( $pods['recurrence'] ) ) {
 			if ( $pods['recurrence'] == 'hpm_5min' ) {
@@ -921,6 +922,7 @@ class HPM_Podcasts {
 								}
 								$content = str_replace( [ "\n", "\r", '&nbsp;' ] , [ '', '', '' ], $content );
 								$content = preg_replace( [ '/<p>(\s+)?<\/p>/', '/<details>.*<\/details>/' ], [ '', '' ], $content );
+								$content .= "{{YOUTUBE_BOILERPLATE}}";
 								if ( function_exists( 'coauthors' ) ) {
 									$ep_authors = str_replace( '&', 'and', coauthors( ', ', ', ', '', '', false ) );
 								} else {
@@ -960,32 +962,46 @@ class HPM_Podcasts {
 				$getContent = ob_get_contents();
 				ob_end_clean();
 				//update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
-				if ( WP_ENV === 'production' ) {
-					try {
-						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}' ], [ '', '' ], $getContent ) );
-					} catch ( Exception $e ) {
-						$error = print_r( $e, true );
-						error_log( 'Error uploading podcast flat file to S3: ' . $error );
-					}
+				//if ( WP_ENV === 'production' ) {
+//					try {
+//						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
+//					} catch ( Exception $e ) {
+//						$error = print_r( $e, true );
+//						error_log( 'Error uploading podcast flat file to S3: ' . $error );
+//					}
+					file_put_contents( '/Users/jwcounts/code/output/' . $podcast_title . '.xml', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
 					foreach ( $sources as $ps ) {
-						$replace = [ 'srcid=' . $ps ];
-						if ( !empty( $podlink[ 'aggregate_feed' ] ) ) {
-							$find = '?{{REPLACE}}{{AGGREGATE_FEED}}';
-							$replace[] = 'srctype=aggregate';
+						$find = $replace = $replace_arr = [];
+						if ( $ps == 'youtube' ) {
+							$replace_arr[] = 'srcid=noad';
 						} else {
-							$find = '?{{REPLACE}}';
+							$replace_arr[] = 'srcid=' . $ps;
 						}
-						$replace_str_xml = implode( '&amp;', $replace );
+						if ( !empty( $podlink[ 'aggregate_feed' ] ) ) {
+							$find[] = '?{{REPLACE}}{{AGGREGATE_FEED}}';
+							$replace_arr[] = 'srctype=aggregate';
+						} else {
+							$find[] = '?{{REPLACE}}';
+						}
+						$replace[] = '?' . implode( '&amp;', $replace_arr );
 
-						$content_xml = str_replace( $find, '?' . $replace_str_xml, $getContent );
-						try {
-							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
-						} catch ( Exception $e ) {
-							$error = print_r( $e, true );
-							error_log( 'Error uploading podcast flat file to S3: ' . $error );
+						$find[] = '{{YOUTUBE_BOILERPLATE}}';
+						if ( $ps == 'youtube' ) {
+							$replace[] = $yt_boilerplate;
+						} else {
+							$replace[] = '';
 						}
+
+						$content_xml = str_replace( $find, $replace, $getContent );
+						file_put_contents( '/Users/jwcounts/code/output/' . $podcast_title . '-' . $ps . '.xml', $content_xml );
+//						try {
+//							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
+//						} catch ( Exception $e ) {
+//							$error = print_r( $e, true );
+//							error_log( 'Error uploading podcast flat file to S3: ' . $error );
+//						}
 					}
-				}
+				//}
 			}
 			$t = time();
 			$offset = get_option( 'gmt_offset' ) * 3600;
