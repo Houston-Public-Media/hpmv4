@@ -250,8 +250,8 @@ hpm.stationIds = {
 		'next': false,
 		'obj': {}
 	},
-	'mixtape': {
-		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
+	'thevibe': {
+		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/thevibe.json',
 		'nowPlaying': {},
 		'refresh': false,
 		'next': false,
@@ -359,7 +359,7 @@ hpm.npUpdateHtml = (object,station,next) => {
 		} else {
 			output += '<h3>'+data['airlist'][0]['version']['series']['series-title']+'</h3>';
 		}
-	} else if ( station === 'mixtape' ) {
+	} else if ( station === 'thevibe' ) {
 		output += '<h3>'+data.artist+' - '+data.song+'</h3>';
 	} else {
 		if ( typeof data.onNow.song !== 'object') {

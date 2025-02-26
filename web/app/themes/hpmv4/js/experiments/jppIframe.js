@@ -37,20 +37,20 @@ let jpp = {
 				}
 			}
 		},
-		'mixtape': {
+		'thevibe': {
 			'type': 'audio',
-			'title': 'HPM Mixtape',
+			'title': 'The Vibe',
 			'sources': {
 				'aac' : {
-					'src': 'https://stream.houstonpublicmedia.org/mixtape-aac',
+					'src': 'https://stream.houstonpublicmedia.org/thevibe-aac',
 					'type': 'audio/aac'
 				},
 				'mp3': {
-					'src': 'https://stream.houstonpublicmedia.org/mixtape-mp3',
+					'src': 'https://stream.houstonpublicmedia.org/thevibe-mp3',
 					'type': 'audio/mpeg'
 				},
 				'hls': {
-					'src': 'https://hls.houstonpublicmedia.org/mixtape/playlist.m3u8',
+					'src': 'https://hls.houstonpublicmedia.org/thevibe/playlist.m3u8',
 					'type': 'application/vnd.apple.mpegurl'
 				}
 			}
@@ -95,8 +95,8 @@ jpp.loadPlayer = () => {
 	hpm.stationIds.news.obj = 'jpp';
 	hpm.stationIds.classical.refresh = true;
 	hpm.stationIds.classical.obj = 'jpp';
-	hpm.stationIds.mixtape.refresh = true;
-	hpm.stationIds.mixtape.obj = 'jpp';
+	hpm.stationIds.thevibe.refresh = true;
+	hpm.stationIds.thevibe.obj = 'jpp';
 	for (let st in hpm.stationIds) {
 		if ( hpm.stationIds[st].refresh ) {
 			fetch(hpm.stationIds[st].feed)

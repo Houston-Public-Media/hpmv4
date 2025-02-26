@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <!--<div class="col-sm-3">
+        <?php /* ?><div class="col-sm-3">
             <div class="card mb-3">
                 <div class="card-header">
                     <a style="text-decoration: none; color:#fff;" href="/electoral-college-interactive-map-2024-election">Electoral College Map: 2024 Election</a>
@@ -62,7 +62,7 @@
 
                 </div>
             </div>
-        </div>-->
+        </div><?php */ ?>
     </div>
 </section>
 

@@ -1482,7 +1482,7 @@ function hpm_now_playing_update(): void {
 	$stations = [
 		'news887' => 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json',
 		'classical' => 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
-		'mixtape' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/mixtape.json',
+		'thevibe' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/thevibe.json',
 		'tv8.1' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
 		'tv8.2' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
 		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
@@ -1499,7 +1499,7 @@ function hpm_now_playing_update(): void {
 		}
 		if ( str_contains( $k, 'tv' ) ) {
 			$output .= $data['airlist'][0]['version']['series']['series-title'];
-		} elseif ( $k === 'mixtape' ) {
+		} elseif ( $k === 'thevibe' ) {
 			$output .= $data['artist'] . ' - ' . $data['song'];
 		} else {
 			if ( empty( $data['onNow']['song'] ) ) {
@@ -1527,10 +1527,13 @@ function hpm_weather(): string {
 	if ( !empty( $output ) ) {
 		return $output;
 	}
+	$c = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$c = $c + $offset;
 	$remote = wp_remote_get( esc_url_raw( "https://api.openweathermap.org/data/2.5/weather?lat=29.7265396&lon=-95.3415406&units=imperial&appid=" . HPM_OPEN_WEATHER ) );
 	if ( !is_wp_error( $remote ) ) {
 		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
-		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y" ) . '<h3>' . '<p style="color: white; font-size: 30px;"><img src="https://openweathermap.org/img/wn/' . $weather->weather[0]->icon . '@2x.png" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
+		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y", $c ) . '<h3>' . '<p style="color: white; font-size: 30px;"><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
 		set_transient( 'hpm_weather', $output, 180 );
 	}
 	return $output;

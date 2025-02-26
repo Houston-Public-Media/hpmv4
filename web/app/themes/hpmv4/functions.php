@@ -1292,8 +1292,17 @@ function hpm_new_user_guest_author( $user_id ): void {
 }
 add_action( 'user_register', 'hpm_new_user_guest_author', 20, 1 );
 
-function hpm_save_bylines_before_delete( $user_id ): void {
-	global $coauthors_plus;
+function hpm_deletion_prep_execute(): string {
+	global $coauthors_plus, $wpdb;
+	if ( !empty( $_GET ) && !empty( $_GET['action'] ) && !empty( $_GET['user'] ) && !empty( $_GET['_wpnonce'] ) ) {
+		if ( $_GET['action'] === 'hpmdeleteprep' && wp_verify_nonce( $_GET['_wpnonce'], 'hpmdeleteprep' ) ) {
+			$user_id = $_GET['user'];
+		} else {
+			return '';
+		}
+	} else {
+		return '';
+	}
 
 	$user_obj = get_userdata( $user_id );
 	$search_author = $coauthors_plus->search_authors( $user_obj->data->user_login, [] );
@@ -1337,6 +1346,14 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 		$temp[ $id ] = $coauthors;
 	}
 
+	$author_ids = $wpdb->get_results( "SELECT * FROM wp_posts WHERE post_author = " . $user_id . " AND post_status = 'publish' AND post_type = 'post'" );
+	foreach ( $author_ids as $aid ) {
+		$id = $aid->ID;
+		if ( empty( $temp[ $id ] ) ) {
+			$temp[ $id ] = get_coauthors( $id );
+		}
+	}
+
 	foreach ( $temp as $k => $v ) {
 		$coauth = [];
 		foreach ( $v as $co ) {
@@ -1356,7 +1373,6 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 		}
 		$output[ $k ] = $coauth;
 	}
-	update_option( 'hpm_user_backup_' . $user_id, $output, false );
 	update_post_meta( $author->ID, 'cap-linked_account', '' );
 	Red_Item::create([
 		"url" => "/articles/author/" . $user_obj->data->user_login,
@@ -1381,18 +1397,25 @@ function hpm_save_bylines_before_delete( $user_id ): void {
 		"status" => "enabled",
 		"regex" => false
 	]);
-}
-add_action( 'delete_user', 'hpm_save_bylines_before_delete', 1, 1 );
-
-function hpm_reassign_bylines_after_delete( $user_id ): void {
-	global $coauthors_plus;
-	$temp = get_option( 'hpm_user_backup_' . $user_id );
-	foreach ( $temp as $k => $v ) {
+	foreach ( $output as $k => $v ) {
 		wp_set_post_terms( $k, $v, $coauthors_plus->coauthor_taxonomy );
 	}
-	delete_option( 'hpm_user_backup_' . $user_id );
+	$wpdb->update( $wpdb->posts, [ 'post_author' => 89 ], [ 'post_author' => $user_id ] );
+	echo '<div class="updated"><p>' . esc_html__( 'All bylines and owned articles have been reassigned. The user is now ready for deletion.', 'hpmv4' ) .'</p></div>';
+	return '';
 }
-add_action( 'deleted_user', 'hpm_reassign_bylines_after_delete', 999, 1 );
+
+function hpm_user_deletion_prep_action( $actions, $user ) {
+	$post_count = count_user_posts( $user->ID );
+	if ( $post_count > 0 ) {
+		$actions['deleteprep'] = "<a class='hpmdeleteprep' href='" . add_query_arg( '_wpnonce', wp_create_nonce( 'hpmdeleteprep' ), admin_url( "users.php?action=hpmdeleteprep&user=$user->ID" ) ) . "' style='color: #b32d2e;'>Prep for Deletion</a>";
+		unset( $actions['delete'] );
+	}
+	return $actions;
+}
+add_filter( 'user_row_actions', 'hpm_user_deletion_prep_action', 10, 2 );
+
+add_action( 'load-users.php', 'hpm_deletion_prep_execute' );
 
 function hpm_uh_moment_blurb( $content ) {
 	global $post;
@@ -1472,3 +1495,50 @@ function hpm_tec_tickets_rsvp_email_filter( $headers ) {
 	$headers['CC'] = 'statum@houstonpublicmedia.org,chill@houstonpublicmedia.org';
 	return $headers;
 }
+
+
+/*
+ * Check the name field against spam pattern.
+ *
+ * @link https://wpforms.com/developers/wpforms_process_validate_text/
+ *
+ * @param int     $field_id        Field ID.
+ * @param array   $field_submit    Unsanitized field value submitted for the field.
+ * @param array   $form_data       Form data and settings.
+*/
+
+function hpm_wpf_name_filter( $field_id, $field_submit, $form_data ) {
+	$reject = false;
+	$first = trim( $field_submit['first'] );
+	$last = trim( $field_submit['last'] );
+	if ( $first === $last ) {
+		$reject = true;
+	}
+	preg_match( '/^(.+)([A-Z]{2})$/', $first, $match_first );
+	preg_match( '/^(.+)([A-Z]{2})$/', $last, $match_last );
+
+	if ( !empty( $match_first ) && !empty( $match_last ) ) {
+		if ( $match_first[2] === $match_last[2] ) {
+			$reject = true;
+		}
+	}
+	if( $reject ) {
+		wpforms()->process->errors[ $form_data[ 'id' ] ][ $field_id ] = esc_html__( 'Sorry, we cannot submit your request at this time.', 'wpforms' );
+		return;
+	}
+}
+
+add_action( 'wpforms_process_validate_name', 'hpm_wpf_name_filter', 10, 3 );
+
+//function hpm_wpf_email_filter( $field_id, $field_submit, $form_data ) {
+//	$reject = false;
+//	$email = str_replace( '.', '', trim( $field_submit['email'] ) );
+//
+//
+//	if( $reject ) {
+//		wpforms()->process->errors[ $form_data[ 'id' ] ][ $field_id ] = esc_html__( 'Sorry, we cannot submit your request at this time.', 'wpforms' );
+//		return;
+//	}
+//}
+//
+//add_action( 'wpforms_process_validate_email', 'hpm_wpf_email_filter', 10, 3 );

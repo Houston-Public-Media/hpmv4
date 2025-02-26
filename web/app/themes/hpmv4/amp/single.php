@@ -39,10 +39,10 @@
 						<div id="top-schedule">
 							<div class="top-schedule-label"><button aria-label="View Schedules" type="button" aria-expanded="false" aria-controls="top-schedule-link-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M68.6,199.1h373.8c5.8,0,10.6,4.8,10.6,10.6v229.2c0,23.4-19,42.3-42.3,42.3H100.3c-23.4,0-42.3-19-42.3-42.3 V209.7C58,203.8,62.8,199.1,68.6,199.1z M453,160.3v-31.7c0-23.4-19-42.3-42.3-42.3h-42.3V40.4c0-5.8-4.8-10.6-10.6-10.6h-35.3 c-5.8,0-10.6,4.8-10.6,10.6v45.8H199.1V40.4c0-5.8-4.8-10.6-10.6-10.6h-35.3c-5.8,0-10.6,4.8-10.6,10.6v45.8h-42.3 c-23.4,0-42.3,19-42.3,42.3v31.7c0,5.8,4.8,10.6,10.6,10.6h373.8C448.2,170.9,453,166.1,453,160.3z"></path></svg>Schedules</button></div>
 							<div class="top-schedule-link-wrap" id="top-schedule-link-wrap">
-								<div class="top-schedule-links"><a href="/tv8">TV 8</a></div>
-								<div class="top-schedule-links"><a href="/news887">News 88.7</a></div>
-								<div class="top-schedule-links"><a href="/classical">Classical</a></div>
-								<div class="top-schedule-links"><a href="/mixtape">Mixtape</a></div>
+								<div class="top-schedule-links"><a href="/tv8/">TV 8</a></div>
+								<div class="top-schedule-links"><a href="/news887/">News 88.7</a></div>
+								<div class="top-schedule-links"><a href="/classical/">Classical</a></div>
+								<div class="top-schedule-links"><a href="/thevibe/">The Vibe</a></div>
 							</div>
 						</div>
 						<div id="top-listen"><button aria-label="Listen Live" data-href="/listen-live" data-dialog="480:855"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256,340.5c46.7,0,84.5-37.9,84.5-84.5V115.1c0-46.7-37.9-84.5-84.5-84.5s-84.5,37.9-84.5,84.5V256 C171.5,302.7,209.3,340.5,256,340.5z M396.9,199.6h-14.1c-7.8,0-14.1,6.3-14.1,14.1V256c0,65.9-56.8,118.7-124,112.2 c-58.6-5.7-101.5-58.4-101.5-117.2v-37.3c0-7.8-6.3-14.1-14.1-14.1h-14.1c-7.8,0-14.1,6.3-14.1,14.1v35.4 c0,78.9,56.3,149.3,133.9,160v30.1h-49.3c-7.8,0-14.1,6.3-14.1,14.1v14.1c0,7.8,6.3,14.1,14.1,14.1h140.9c7.8,0,14.1-6.3,14.1-14.1 v-14.1c0-7.8-6.3-14.1-14.1-14.1h-49.3v-29.7C352.6,399.1,411,334.3,411,256v-42.3C411,205.9,404.7,199.6,396.9,199.6z"></path></svg>Listen</button></div>

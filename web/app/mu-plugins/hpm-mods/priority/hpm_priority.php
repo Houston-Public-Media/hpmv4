@@ -30,11 +30,19 @@ add_action( 'rest_api_init', function() {
 } );
 
 function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
+	$t = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+	$now = getdate( $t );
 	$hpm_priority = get_option( 'hpm_priority' );
 	if ( empty( $hpm_priority['inDepthnumber'] ) ) {
 		$hpm_priority['inDepthnumber'] = 2;
 	}
-	$output = [];
+	$output = [
+		'articles' => [],
+		'breaking' => '',
+		'talkshow' => ''
+	];
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
 		if ( empty( $hpm_priority['homepage'][ $indepth_slot ] ) ) {
@@ -69,12 +77,25 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 					'picture' => get_the_post_thumbnail_url( $stp->ID, 'medium' ),
 					'permalink' => get_the_permalink( $stp->ID ),
 				];
-				$output[] = $arr;
+				$output['articles'][] = $arr;
 			}
 		}
 	}
+	$hpm_breakingnews = get_option( 'hpm_breakingnews' );
+	if ( !empty( $hpm_breakingnews['homepage'] ) ) {
+		$ptime = get_the_time('U', $hpm_breakingnews['homepage'][0] ) + ( (int)$hpm_breakingnews['expirationdate'][0] * 3600 );
+		if ( $now[0] < $ptime && !empty( $hpm_breakingnews['type'] ) ) {
+			$newsclasstype = ( $hpm_breakingnews['type'] == "Breaking News" ? "breakingnews" : "developingstory" );
+			$newclassheading = ( $hpm_breakingnews['type'] == "Breaking News" ? '<span class="breakingnews-header" style="background-color: #ee1812;"><strong>Breaking News</strong></span>' : '<span class="developingstory-header"><strong>Developing Story</strong></span>' );
+			$output['breaking'] = '<div id="hm-top" class="' . $newsclasstype . '"><p>' . $newclassheading . ' <a href="' . get_the_permalink( $hpm_breakingnews['homepage'][0] ) . '">' . get_the_title( $hpm_breakingnews['homepage'][0] ) . '</a></p></div>';
+		}
+	}
+	$hm_air = hpm_houston_matters_check();
+	if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
+		$output['talkshow'] = '<div id="hm-top"><p><span><strong>Houston Matters</strong> is on the air now! Join the conversation:</span> Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a></p></div>';
+	}
 	if ( $output ) {
-		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Priority Homepage Story List', 'hpm-priority' ), 'data' => [ 'articles' => $output, 'status' => 200 ] ] );
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Priority Homepage Story List', 'hpm-priority' ), 'data' => [ 'articles' => $output['articles'], 'breaking' => $output['breaking'], 'talkshow' => $output['talkshow'], 'status' => 200 ] ] );
 	} else {
 		return new WP_Error( 'rest_api_sad', esc_html__( 'There has been an error, please try again later.', 'hpm-priority' ), [ 'status' => 500 ] );
 	}

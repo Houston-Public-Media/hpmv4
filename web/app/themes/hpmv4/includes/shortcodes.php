@@ -332,21 +332,12 @@ function hpm_careers_trans(): string {
 		return $output;
 	}
 
-	$url = 'https://uhs.taleo.net/careersection/rest/jobboard/searchjobs?lang=en&portal=8100120292';
-	$options =[
-		'body' => '{"multilineEnabled":false,"sortingSelection":{"sortBySelectionParam":"3","ascendingSortingOrder":"false"},"fieldData":{"fields":{"KEYWORD":""},"valid":true},"filterSelectionParam":{"searchFilterSelections":[{"id":"POSTING_DATE","selectedValues":[]},{"id":"ORGANIZATION","selectedValues":["14400120292","166300023214"]},{"id":"JOB_TYPE","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_SCHEDULE","selectedValues":[]}]},"advancedSearchFiltersSelectionParam":{"searchFilterSelections":[{"id":"ORGANIZATION","selectedValues":[]},{"id":"LOCATION","selectedValues":[]},{"id":"JOB_FIELD","selectedValues":[]},{"id":"JOB_NUMBER","selectedValues":[]},{"id":"URGENT_JOB","selectedValues":[]},{"id":"EMPLOYEE_STATUS","selectedValues":[]},{"id":"STUDY_LEVEL","selectedValues":[]},{"id":"JOB_SHIFT","selectedValues":[]}]},"pageNo":1}',
-		'headers' => [
-			'Referer' => 'https://uhs.taleo.net/careersection/ex1_uhs/jobsearch.ftl?f=ORGANIZATION(14400120292)',
-			'Origin' => 'https://uhs.taleo.net',
-			'X-Requested-With' => 'XMLHttpRequest',
-			'tz' => 'GMT-06:00',
-			'tzname' => 'America/Chicago',
-			'Pragma' => 'no-cache',
-			'Content-Type' => 'application/json',
-			'Cookie' => 'locale=en'
-		]
+	$url = "https://careers.uh.edu/jobs/search/uh-postings?page=1&dropdown_field_2_uids%5B%5D=f2d13182c939a778b2fd045147bbbe2b&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece";
+
+	$options = [
+		'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0'
 	];
-	$result = wp_remote_post( $url, $options );
+	$result = wp_remote_get( $url, $options );
 	if ( is_wp_error( $result ) ) {
 		return $output;
 	}
@@ -358,26 +349,31 @@ function hpm_careers_trans(): string {
 	if ( empty( $body ) ) {
 		return $output;
 	}
-
-	$json = json_decode( $body, true );
 	$desc = json_decode( file_get_contents( 'https://hpmwebv2.s3-us-west-2.amazonaws.com/assets/taleo.json' ), true );
-	if ( empty( $json['requisitionList'] ) ) {
+	$js_xml = new DOMDocument();
+	libxml_use_internal_errors(true);
+	$js_xml->loadHTML( $body );
+	$js_xpath = new DOMXPath( $js_xml );
+	$job_results = $js_xpath->query('//h3[@class="card-title job-search-results-card-title"]');
+	if ( $job_results->length === 0 ) {
 		set_transient( 'hpm_careers', $output, 900 );
 		return $output;
 	}
 	$output .= '<svg hidden xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><use href="#hpm-job-link"></use><symbol id="hpm-job-link"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></symbol></svg>';
-	foreach ( $json['requisitionList'] as $j ) {
-		if ( !in_array( $j['contestNo'], $desc['exclude'] ) ) {
-			if ( !empty( $desc[ $j['contestNo'] ]['title'] ) ) {
-				$title = $desc[ $j['contestNo'] ]['title'];
-			} else {
-				$title = trim( $j['column'][0] );
+	foreach ( $job_results as $jr ) {
+		$hrefs = $jr->getElementsByTagName( "a" );
+		foreach ( $hrefs as $href ) {
+			$anchor = $href->getAttribute( 'href' );
+			$parse = pathinfo( parse_url( $anchor, PHP_URL_PATH ) );
+			$title = trim( $href->nodeValue );
+			if ( !empty( $desc[ $parse['basename'] ]['title'] ) ) {
+				$title = $desc[ $parse['basename'] ]['title'];
 			}
-			$output .= '<details id="' . $j['contestNo'] . '"><summary>' . $title . '</strong></summary><div class="job-link" title="Click for a direct link to this job posting" data-job="#' . $j['contestNo'] . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><use href="#hpm-job-link"></use></svg></div>';
-			if ( !empty( $desc[ $j['contestNo'] ]['description'] ) ) {
-				$output .= $desc[ $j['contestNo'] ]['description'];
+			$output .= '<details id="' . $parse['basename'] . '"><summary>' . $title . '</strong></summary><div class="job-link" title="Click for a direct link to this job posting" data-job="#' . $parse['basename'] . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><use href="#hpm-job-link"></use></svg></div>';
+			if ( !empty( $desc[ $parse['basename'] ]['description'] ) ) {
+				$output .= $desc[ $parse['basename'] ]['description'];
 			}
-			$output .= '<p><a href="https://uhs.taleo.net/careersection/ex1_uhs/jobdetail.ftl?job=' . $j['contestNo'] . '&tz=GMT-06%3A00&tzname=America%2FChicago">Click here to apply</a></p></details>';
+			$output .= '<p><a href="' . $anchor . '">Click here to apply</a></p></details>';
 		}
 	}
 	set_transient( 'hpm_careers', $output, 900 );
@@ -826,3 +822,26 @@ function hpm_donation_events_shortcode(): string {
 	return $output;
 }
 add_shortcode( 'hpm_donation_events', 'hpm_donation_events_shortcode' );
+
+
+function hpm_staff_shortcode( $atts ): string {
+	extract( shortcode_atts( [
+		'name' => ''
+	], $atts, 'multilink' ) );
+	if ( empty( $name ) ) {
+		return '';
+	}
+	$args = [
+		'post_type' => 'staff',
+		'post_status' => 'publish',
+		'posts_per_page' => 1,
+		'name'  => $name
+	];
+	$el = new WP_Query( $args );
+	while ( $el->have_posts() ) {
+		$el->the_post();
+		get_template_part( 'content', 'staff' );
+	}
+	return '';
+}
+add_shortcode( 'hpm_staff', 'hpm_staff_shortcode' );

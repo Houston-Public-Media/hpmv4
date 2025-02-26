@@ -64,6 +64,15 @@ get_header(); ?>
 					the_archive_description( '<div class="taxonomy-description">', '</div>' );
 				?>
 			</header>
+<?php
+	if ( is_category() && $cat->term_id === 13766 ) {
+		// Full Menu Sponsor ?>
+		<aside class="column-right">
+			<div class="hpm-promo-wrap"><div id="full-menu-sponsor" class="top-banner"><h4>The Full Menu is sponsored by</h4><a href="https://www.centralmarket.com/?utm_medium=display&utm_source=npr&utm_campaign=fullmenu&utm_content=npr_banner"><img src="https://cdn.houstonpublicmedia.org/assets/images/CM-Logo-300x25016.jpg.webp" alt="Support for the Full Menu comes from Central Market"></a></div></div>
+		</aside>
+<?php
+	}
+?>
 			<section id="search-results">
 			<?php
 			while ( have_posts() ) {

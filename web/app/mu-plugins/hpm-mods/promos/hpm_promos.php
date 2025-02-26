@@ -38,6 +38,15 @@ class HPM_Promos {
 		}
 
 		add_shortcode( 'hpm_promos', [ $this, 'promo_shortcode' ] );
+		add_action( 'rest_api_init', function() {
+			register_rest_route( 'hpm-promos/v1', '/list', [
+				'methods'  => 'GET',
+				'callback' => [ $this, 'json_list' ],
+				'permission_callback' => function() {
+					return true;
+				}
+			] );
+		} );
 	}
 
 	public function hide_publish_button(): void {

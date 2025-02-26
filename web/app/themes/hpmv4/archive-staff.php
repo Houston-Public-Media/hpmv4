@@ -27,45 +27,6 @@ get_header(); ?>
 			margin: 0 !important;
 			float: none !important;
 		}
-		article.staff {
-			display: flex;
-			align-items: center;
-			flex-flow: row nowrap;
-			position: relative;
-		}
-		article.staff .card-content {
-			min-width: 69%;
-			flex: 1;
-			margin-bottom: 1.75rem;
-		}
-		article.staff .post-thumbnail img {
-			aspect-ratio: initial;
-			height: auto;
-			padding-right: 1rem;
-		}
-		article.staff .service-icon {
-			--unit: 2rem;
-		}
-		article.staff .icon-wrap {
-			margin: 0;
-			position: absolute;
-			bottom: 0.5rem;
-			right: 0.5rem;
-			display: flex;
-			gap: 0.5rem;
-		}
-		article.staff .entry-summary p {
-			font-size: 1rem;
-		}
-		article.staff h2 {
-			font-size: 1.25rem;
-		}
-		article.staff .entry-header {
-			padding: 0;
-		}
-		article.staff .post-thumbnail :is(img,picture) {
-			aspect-ratio: 4/5;
-		}
 		@media screen and (min-width: 34rem) {
 			.staff-grid {
 				display: grid;

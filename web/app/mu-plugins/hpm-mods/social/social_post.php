@@ -1,5 +1,5 @@
 <?php
-	use Noweh\TwitterApi\Client;
+	use Jwcounts\TwitterApi\Client;
 
 	add_action( 'load-post.php', 'hpm_social_post_setup' );
 	add_action( 'load-post-new.php', 'hpm_social_post_setup' );
@@ -179,7 +179,7 @@
 				$masto_result = wp_remote_post( $url, $payload );
 				if ( !is_wp_error( $masto_result ) ) {
 					if ( $masto_result['response']['code'] !== 200 ) {
-						log_it( "Mastodon (" . $post_id . "): " . json_decode( wp_remote_retrieve_body( $masto_result ) ) );
+						log_it( "Mastodon (" . $post_id . "): " . print_r( json_decode( wp_remote_retrieve_body( $masto_result ), true ), true ) );
 					} else {
 						update_post_meta( $post_id, 'hpm_social_mastodon_sent', 1 );
 					}
@@ -220,7 +220,7 @@
 							if ( !empty( $bsky_auth->accessJwt ) ) {
 								$bsky_options['headers']['Authorization'] = "Bearer " . $bsky_auth->accessJwt;
 								$thumb_id = get_post_thumbnail_id( $post_id );
-								if ( $thumb_id !== false ) {
+								if ( is_int( $thumb_id ) && $thumb_id > 0 ) {
 									$thumb = wp_get_attachment_image_url( $thumb_id, 'medium' );
 									$thumb_type = get_post_mime_type( $thumb_id );
 									$image_data = file_get_contents( $thumb );
@@ -273,7 +273,7 @@
 					$threads_url = add_query_arg([
 						'access_token' => $token['access_token'],
 						'media_type' => 'text',
-						'text' => $post_body
+						'text' => rawurlencode( $post_body )
 					],  'https://graph.threads.net/v1.0/' . THREADS_USER_ID . '/threads' );
 					$threads_result = wp_remote_post( $threads_url );
 					if ( !is_wp_error( $threads_result ) ) {
@@ -312,7 +312,7 @@
 		if ( !empty( $social_post['facebook']['data'] ) ) {
 			if ( empty( $social_facebook_sent ) && !empty( HPM_FB_ACCESS_TOKEN ) ) {
 				$fb_url = add_query_arg([
-					'message'  => $social_post['facebook']['data'],
+					'message'  => rawurlencode( $social_post['facebook']['data'] ),
 					'link' => get_the_permalink( $post_id ),
 					'access_token' => HPM_FB_ACCESS_TOKEN,
 					'appsecret_proof' => HPM_FB_APPSECRET
@@ -337,26 +337,25 @@
 
 	function hpm_social_threads_token(): array|bool {
 		$token = get_option( 'hpm_social_threads_token' );
-		if ( $token['expiration_date'] <= time() ) {
-			$threads_url = add_query_arg([
-				'access_token' => $token['access_token'],
-				'grant_type' => 'th_refresh_token'
-			],  'https://graph.threads.net/refresh_access_token' );
-			$response = wp_remote_get( $threads_url );
-			if ( !is_wp_error( $response ) ) {
-				if ( $response['response']['code'] === 200 ) {
-					$body = wp_remote_retrieve_body( $response );
-					$decode = json_decode( $body, true );
-					$decode['expiration_date'] = $decode['expires_at'] + time();
-					update_option( 'hpm_social_threads_token', $decode );
-				} else {
-					log_it( 'Error refreshing Threads Token' );
-					return false;
-				}
+		$threads_url = add_query_arg([
+			'access_token' => $token['access_token'],
+			'grant_type' => 'th_refresh_token'
+		],  'https://graph.threads.net/refresh_access_token' );
+		$response = wp_remote_get( $threads_url );
+		if ( !is_wp_error( $response ) ) {
+			if ( $response['response']['code'] === 200 ) {
+				$body = wp_remote_retrieve_body( $response );
+				$decode = json_decode( $body, true );
+				update_option( 'hpm_social_threads_token', $decode );
 			} else {
-				log_it( $response->get_error_message() );
+				log_it( 'Error refreshing Threads Token' );
+				wp_mail('webmaster@houstonpublicmedia.org', 'Refresh your Threads token', 'You can refresh your access token by going here: https://developers.facebook.com/apps/');
 				return false;
 			}
+		} else {
+			log_it( $response->get_error_message() );
+			wp_mail('webmaster@houstonpublicmedia.org', 'Refresh your Threads token', 'You can refresh your access token by going here: https://developers.facebook.com/apps/');
+			return false;
 		}
 		return $token;
 	}

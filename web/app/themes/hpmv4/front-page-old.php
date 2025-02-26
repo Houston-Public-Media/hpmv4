@@ -75,32 +75,84 @@ $tras = null; ?>
 			display: flex;
 			justify-content: center;
 		}
-        .card {
-            border-radius: 0px;
-            border-color: #237bbd;
-        }
-        .card-header {
-            background-color: #237bbd;
-            color:#fff;
-            font-weight: bold;
-            border-radius: 0px;
-            min-height: 56px;
-        }
-        .card-header:first-child {
-            border-radius: 0px;
-        }
-        .card-title {
-            font-size: 13px;
-            font-weight: bold;
-            color: #237bbd;
-        }
-        .card-body {
-            padding-top: 5px;
-        }
+		.card {
+			border-radius: 0px;
+			border-color: #237bbd;
+		}
+		.card-header {
+			background-color: #237bbd;
+			color:#fff;
+			font-weight: bold;
+			border-radius: 0px;
+			min-height: 56px;
+		}
+		.card-header:first-child {
+			border-radius: 0px;
+		}
+		.card-title {
+			font-size: 13px;
+			font-weight: bold;
+			color: #237bbd;
+		}
+		.card-body {
+			padding-top: 5px;
+		}
 		.page-banner {
 			display: grid;
 			justify-content: center;
 		}
+/* Election specific style starts here*/
+		.row-height {
+			height: 44.5px;
+			text-align: center;
+			padding-top: 5px;
+			background-color: #237bbd;
+			color: #ffffff !important;
+		}
+		.row-height h2
+		{
+			color: #ffffff;
+			font-size: 24px;
+		}
+		.cat-title {
+			text-transform: uppercase;
+			font-weight: bold;
+			color: #237bbd;
+			font-size: 14px;
+			line-height: 30px;
+		}
+		.breaking-news a :is(picture,img)
+		{
+			aspect-ratio: 3 / 2;
+			object-fit: cover;
+		}
+		.rowpadding :is(picture,img)
+		{
+			aspect-ratio: 3 / 2;
+			object-fit: cover;
+		}
+		.electionlinktopnews {
+			background-color:white;
+			width:95%;
+			height:95%;
+			margin: 0 auto;
+		}
+		.electionnews-img > img {
+			height:50px;
+			width:50px;
+			float:left;
+			padding:5px;
+		}
+		.electionlinktopnews ul{
+			list-style: none;
+		}
+		:is(.electionlinktopnews) li a {
+			color: var(--base);
+			text-decoration: none;
+			font-weight: bold;
+		}
+		/* Election specific style ends here*/
+
 		@media screen and (min-width: 34rem) {
 			#station-schedules {
 				display: grid;
@@ -123,28 +175,108 @@ $tras = null; ?>
 				border-right: 0;
 			}
 		}
+		section#breaking-news {
+			padding: 1rem;
+			display: grid;
+			gap: 1rem;
+			.bn-hero {
+				display: grid;
+				align-items: center;
+				picture, img {
+					aspect-ratio: 3 / 2;
+					object-fit: cover;
+				}
+			}
+			h1.mainnews-title {
+				font-size: 2rem;
+				padding-bottom: 0.5rem;
+				a {
+					text-decoration: none;
+				}
+			}
+			.electionnews-links {
+				display: grid;
+				gap: 0;
+				padding: 0;
+				> .electionnews-link-single + .electionnews-link-single {
+					border-top: 1px solid #808080;
+				}
+				.electionnews-link-single {
+					padding: 1rem 0;
+					display: grid;
+					align-items: center;
+					a {
+						display: grid;
+						grid-template-columns: 2fr 1fr;
+						font-size: 1rem;
+						font-weight: normal;
+						align-items: center;
+						gap: 0 0.5rem;
+						text-decoration: none;
+						color: var(--base);
+						picture, img {
+							aspect-ratio: 3 / 2;
+							object-fit: cover;
+							grid-column: 2;
+							grid-row: 1 / span 2;
+						}
+					}
+				}
+			}
+			@media (width >= 52.5em) {
+				grid-template-columns: 2fr 1fr;
+				gap: 1rem;
+				.bn-hero {
+					border-right: 1px solid #808080;
+					padding-right: 1rem;
+				}
+			}
+		}
+		section#short-news {
+			padding: 1rem 1rem 2rem;
+			display: grid;
+			gap: 1.5rem;
+			border-top: 2px solid #808080;
+			.horizontalnews {
+				a {
+					display: grid;
+					gap: 1rem;
+					grid-template-columns: 1fr 2fr;
+					align-items: center;
+					text-decoration: none;
+					font-size: 1rem;
+					picture, img {
+						aspect-ratio: 3 / 2;
+						object-fit: cover;
+					}
+				}
+			}
+			@media (width >= 52.5em) {
+				grid-template-columns: 1fr 1fr 1fr;
+			}
+		}
+		section#npr-embed {
+			padding: 1rem;
+			position: relative;
+			margin-bottom: 1rem;
+			&::after {
+				content: "";
+				display: block;
+				width: 66%;
+				position: absolute;
+				bottom: 0;
+				height: 1px;
+				background-color: #808080;
+				margin: 0 17%;
+			}
+		}
 	</style>
 	<div id="primary" class="content-area home-page">
-		<section class="section breaking-news container-fluid" style="padding-bottom: 0px !important;">
-			<div class="row">
-				<?php echo hpm_showTopthreeArticles( $articles ); ?>
-			</div>
+		<section id="npr-embed">
+			<div data-pym-loader data-child-src="https://apps.npr.org/2024-election-results/bop.html?embedded=true&stateName=Texas&stateAbbrev=TX&section=key-races&showHeader=true&races=senate%2Chouse%2Cpresident&options=national&race=45870" id="responsive-embed-bop">Loading...</div>
+			<script src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"></script>
 		</section>
-		<section class="section short-news" style="padding-top: 0px !important;">
-			<ul class="list-none d-flex">
-				<?php
-				foreach ( $articles as $ka => $va ) {
-					$post = $va;
-					if ( $ka >= 3 && $ka < 8 ) {
-						get_template_part("content", "topnewsrail");
-					}
-					if ( $ka == 8 ) {
-						$indepthArtcle = $post;
-					}
-				} ?>
-			</ul>
-		</section>
-		<!-- /.short-news -->
+
 		<section class="section ads-full">
 			<?php
 			if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
@@ -157,6 +289,44 @@ $tras = null; ?>
 				<?php
 			} ?>
 		</section>
+		<section id="breaking-news">
+<?php
+			foreach ( $articles as $ka => $va ) {
+				$post = $va;
+				$post_title = get_the_title( $post );
+				if ( is_front_page() ) {
+					$alt_headline = get_post_meta( $post->ID, 'hpm_alt_headline', true );
+					if ( !empty( $alt_headline ) ) {
+						$post_title = $alt_headline;
+					}
+				}
+				$summary = strip_tags( get_the_excerpt( $post ) );
+				if ( $ka == 0 ) {
+					echo ' <div class="bn-hero"><div class="image-wrapper"><h1 class="mainnews-title"><strong><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . $post_title . '</a></strong></h1><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, $post->ID ) . ' </a></div></div><div class="electionnews-links">';
+				} elseif ( $ka > 0 && $ka < 5 ) {
+					echo '<div class="electionnews-link-single"><a href="' . get_the_permalink( $post ) . '"><span class="cat-title">' . hpm_top_cat( $post->ID ) . '</span><span>' . get_the_title( $post ) . '</span>' . get_the_post_thumbnail( $post,"thumbnail", $post->ID ) . ' </a></div>';
+				} elseif ( $ka === 5 ) {
+					echo '</div>';
+				}
+			} ?>
+		</section>
+		<section id="short-news">
+			<?php
+				foreach ( $articles as $ka => $va ) {
+					$post = $va;
+					if ( $ka >= 5 && $ka < 8 ) { ?>
+			<div class="horizontalnews">
+				<a href="<?php the_permalink();?>"><?php echo get_the_post_thumbnail(); ?><p><?php the_title(); ?></p></a>
+			</div>
+<?php
+					}
+					if ( $ka == 8 ) {
+						$indepthArtcle = $post;
+					}
+				} ?>
+		</section>
+		<!-- Option One Ends here -->
+
 		<section class="section">
 			<div class="row">
 				<?php get_template_part("content", "indepth"); ?>
@@ -175,18 +345,18 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-        <section class="section ads-full text-center">
-            <div class="page-banner">
-                <a href="/2024election/" title="2024 Election">
-                    <picture>
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-mobile.png.webp" type="image/webp" media="(max-width: 34em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-tablet.png.webp" type="image/webp" media="(max-width: 52.5em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp">
-                    <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" alt="2024 Election">
-                    </picture>
-                </a>
-            </div>
-        </section>
+		<section class="section ads-full text-center">
+			<div class="page-banner">
+				<a href="/2024election" title="2024 Election">
+					<picture>
+						<source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-mobile.png.webp" type="image/webp" media="(max-width: 34em)">
+						<source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-tablet.png.webp" type="image/webp" media="(max-width: 52.5em)">
+						<source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp">
+						<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" alt="2024 Election">
+					</picture>
+				</a>
+			</div>
+		</section>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
@@ -244,10 +414,6 @@ $tras = null; ?>
 							<div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
 						</div>
 						<div class="station-now-play">
-							<h5><a href="/tv8">TV 8.6 (World)</a></h5>
-							<div class="hpm-nowplay" data-station="tv86" data-upnext="false"><?php echo hpm_now_playing( 'tv8.6' ); ?></div>
-						</div>
-						<div class="station-now-play">
 							<h5><a href="/news887">News 88.7</a></h5>
 							<div class="hpm-nowplay" data-station="news" data-upnext="false"><?php echo hpm_now_playing( 'news887' ); ?></div>
 						</div>
@@ -256,8 +422,8 @@ $tras = null; ?>
 							<div class="hpm-nowplay" data-station="classical" data-upnext="false"><?php echo hpm_now_playing( 'classical' ); ?></div>
 						</div>
 						<div class="station-now-play">
-							<h5><a href="/mixtape">Mixtape</a></h5>
-							<div class="hpm-nowplay" data-station="mixtape" data-upnext="false"><?php echo hpm_now_playing( 'mixtape' ); ?></div>
+							<h5><a href="/thevibe/">The Vibe</a></h5>
+							<div class="hpm-nowplay" data-station="thevibe" data-upnext="false"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
 						</div>
 					</div>
 				</div>
@@ -296,6 +462,6 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-        <?php get_template_part("content", "interactives"); ?>
+		<?php get_template_part("content", "interactives"); ?>
 	</div>
 <?php get_footer(); ?>

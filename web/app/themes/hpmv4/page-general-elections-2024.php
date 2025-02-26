@@ -203,15 +203,15 @@ if ( $cat->have_posts() ) {
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <!--<div class="btncountdown">
-                            <?php /*echo CalculateElectionCountdowndays();*/?>
+                        <?php /* ?><div class="btncountdown">
+                            <?php echo CalculateElectionCountdowndays();?>
                             <div class="flex-row">
                                 <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Days</div>
                                 <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Hrs</div>
                                 <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Mins</div>
                             </div>
                             <span style="font-size:22px;font-family: 'Open Sans', Arial, Helvetica, sans-serif;">to Election Day!</span>
-                        </div>-->
+                        </div><?php */ ?>
                         <script async src="https://modules.wearehearken.com/america-amplified-elections/embed/11328.js"></script>
                     </div>
                 </div>
