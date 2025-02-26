@@ -828,8 +828,9 @@ function hpm_staff_shortcode( $atts ): string {
 	extract( shortcode_atts( [
 		'name' => ''
 	], $atts, 'multilink' ) );
+	$output = '';
 	if ( empty( $name ) ) {
-		return '';
+		return $output;
 	}
 	$args = [
 		'post_type' => 'staff',
@@ -839,9 +840,12 @@ function hpm_staff_shortcode( $atts ): string {
 	];
 	$el = new WP_Query( $args );
 	while ( $el->have_posts() ) {
+		ob_start();
 		$el->the_post();
 		get_template_part( 'content', 'staff' );
+		$output = ob_get_contents();
+		ob_end_clean();
 	}
-	return '';
+	return $output;
 }
 add_shortcode( 'hpm_staff', 'hpm_staff_shortcode' );
