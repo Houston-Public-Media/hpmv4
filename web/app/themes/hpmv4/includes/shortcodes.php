@@ -822,3 +822,26 @@ function hpm_donation_events_shortcode(): string {
 	return $output;
 }
 add_shortcode( 'hpm_donation_events', 'hpm_donation_events_shortcode' );
+
+
+function hpm_staff_shortcode( $atts ): string {
+	extract( shortcode_atts( [
+		'name' => ''
+	], $atts, 'multilink' ) );
+	if ( empty( $name ) ) {
+		return '';
+	}
+	$args = [
+		'post_type' => 'staff',
+		'post_status' => 'publish',
+		'posts_per_page' => 1,
+		'name'  => $name
+	];
+	$el = new WP_Query( $args );
+	while ( $el->have_posts() ) {
+		$el->the_post();
+		get_template_part( 'content', 'staff' );
+	}
+	return '';
+}
+add_shortcode( 'hpm_staff', 'hpm_staff_shortcode' );
