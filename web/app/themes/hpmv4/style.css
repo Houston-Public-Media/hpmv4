@@ -3163,7 +3163,7 @@ article.staff {
 			padding-right: 1rem;
 		}
 		:is(img,picture) {
-			aspect-ratio: 4/5;
+			aspect-ratio: 4/5 !important;
 		}
 	}
 	.service-icon {
