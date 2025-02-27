@@ -43,6 +43,9 @@ get_header(); ?>
 		.show-content > * + * {
 			margin-top: 1rem;
 		}
+        article{
+            padding: 0.5em !important;
+        }
         article.staff
         {
             background-color: #363636;
