@@ -62,6 +62,10 @@ get_header(); ?>
         {
             color:#fff !important;
         }
+        .station-social .badges-box
+        {
+            background-color: #363636;
+        }
 		@media screen and (min-width: 34em) {
 			body.single-shows #station-social {
 				display: grid;
@@ -106,7 +110,7 @@ global $post;
         $term = reset( $terms );
         $ta = 0;
         $latest_ep_args = [
-            'cat' => 62609,
+            'cat' => 13761,
             'orderby' => 'date',
             'order'   => 'DESC',
             'posts_per_page' => 3,
@@ -122,7 +126,12 @@ global $post;
 				<div class="about-houston-block">
                     <?php echo do_shortcode( $post->post_content ); ?>
 				</div>
-
+                <div id="station-social" class="station-social">
+                    <div class="badges-box">
+                        <span class="badge-title">SUBSCRIBE, STREAM &amp; FOLLOW US ON</span>
+                        <?php echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
+                    </div>
+                </div>
 				<div class="episodes-block" style="padding-top: 15px;">
 					<h2 class="title blue-bar"> <strong><span>MORE Stories</span></strong> </h2>
                     <div class="row">
