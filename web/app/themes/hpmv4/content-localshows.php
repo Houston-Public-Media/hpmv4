@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-sm-4" style="padding-left: 5px; padding-right: 5px;">
                     <div class="image">
-                        <a href="/shows/hello-houston/"><img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2017/07/09164012/HMCC_podcast-tile.png.webp" alt="Hello Houston with Ernie Manouse" /></a>
+                        <a href="/shows/hello-houston/"><img src="https://cdn.houstonpublicmedia.org/assets/images/HH_LOGO_Red_Primary.png.webp" alt="Hello Houston with Ernie Manouse" /></a>
                     </div>
                 </div>
                 <div class="col-sm-8" style="padding-left: 5px; padding-right: 5px;">
