@@ -4591,16 +4591,16 @@ section.breaking-news .row {
 	left: 0;
 	width: 100%;
 	height: 1px;
-	background-color: #363636;
+	background-color: #e6e6e6;
 }
 .title-style4::after {
 	width: 32px;
 	height: 4px;
 	top: 1px;
-	background-color: #363636;
+	background-color: #c7202f;
 }
 .title-style4 span {
-	color: #454545;
+	color: #c7202f;
 }
 
 
