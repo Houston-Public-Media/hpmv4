@@ -48,7 +48,6 @@ get_header(); ?>
         }
         article.staff
         {
-            width: 95%;
             background-color: #363636;
             border-bottom: none;
             color:#fff;
