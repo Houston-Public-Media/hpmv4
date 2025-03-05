@@ -1294,6 +1294,12 @@ add_action( 'user_register', 'hpm_new_user_guest_author', 20, 1 );
 
 function hpm_deletion_prep_execute(): string {
 	global $coauthors_plus, $wpdb;
+	$transient = get_transient( 'hpm_delete_user_prep' );
+	if ( $transient == 'complete' ) {
+		echo '<div class="notice notice-success"><p>' . esc_html__( 'All bylines and owned articles have been reassigned. The user is now ready for deletion.', 'hpmv4' ) .'</p></div>';
+		delete_transient( 'hpm_delete_user_prep' );
+		return '';
+	}
 	if ( !empty( $_GET ) && !empty( $_GET['action'] ) && !empty( $_GET['user'] ) && !empty( $_GET['_wpnonce'] ) ) {
 		if ( $_GET['action'] === 'hpmdeleteprep' && wp_verify_nonce( $_GET['_wpnonce'], 'hpmdeleteprep' ) ) {
 			$user_id = $_GET['user'];
@@ -1401,7 +1407,8 @@ function hpm_deletion_prep_execute(): string {
 		wp_set_post_terms( $k, $v, $coauthors_plus->coauthor_taxonomy );
 	}
 	$wpdb->update( $wpdb->posts, [ 'post_author' => 89 ], [ 'post_author' => $user_id ] );
-	echo '<div class="updated"><p>' . esc_html__( 'All bylines and owned articles have been reassigned. The user is now ready for deletion.', 'hpmv4' ) .'</p></div>';
+	set_transient('hpm_delete_user_prep', 'complete', 60 );
+	wp_redirect( 'users.php' );
 	return '';
 }
 
