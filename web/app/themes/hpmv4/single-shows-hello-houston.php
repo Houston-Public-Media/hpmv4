@@ -51,7 +51,13 @@ get_header(); ?>
             background-color: #363636;
             border-bottom: none;
             color:#fff;
-            margin: 10px;
+            /*margin: 10px;*/
+            margin-bottom: 10px;
+        }
+        #search-results article {
+            background-color: #363636!important;
+            border: none;
+            align-items: flex-start !important;
         }
         article.staff h2, article.staff h2 a
         {
@@ -64,7 +70,7 @@ get_header(); ?>
         }
         .station-social .badges-box
         {
-            background-color: #363636;
+            background-color: #c8102e; /*#c8102e  #7787f7*/
         }
 		@media screen and (min-width: 34em) {
 			body.single-shows #station-social {
@@ -80,16 +86,16 @@ get_header(); ?>
 			}
 		}
 		@media screen and (min-width: 52.5em) {
-			body.single-shows #station-social {
-				grid-template-columns: 2fr 3fr;
-			}
-			body.single-shows #station-social.station-no-social {
-				grid-template-columns: 1fr !important;
-			}
+            .staff-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
 		}
 		[data-theme="dark"] body.single-shows #station-social h3 {
 			color: var(--accent-red-4);
 		}
+
+
+
 	</style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
