@@ -2617,7 +2617,7 @@ article {
 	padding: 1em;
 }
 article .entry-header {
-	padding: 1em 0;
+	padding: 0 0 1rem 0;
 	width: 100%;
 }
 article:not(.type-staff) :is(.entry-header,.entry-content,.card-content):not(.article-player-wrap) > * + * {
@@ -2638,7 +2638,7 @@ article .entry-header h3 {
 	display: inline-block;
 	text-transform: uppercase;
 	font-weight: 700;
-	padding-top:10px;
+	/*padding-top:10px;*/
 }
 article .entry-header h1 {
 	font-family: var(--hpm-font-condensed);
@@ -2802,15 +2802,13 @@ body:is(.single):not(.single-staff,.author) #main {
 	display: flex;
 	padding-top: 10px;
 }
-.single #main article.post {
-	order: 1;
+.single #main aside #author-wrap {
+	order: -2;
 }
-.single #main aside {
-	order: 3;
-	padding: 1em;
-}
-.single #main #author-wrap {
-	order: 2;
+@media (width >= 52.5em) {
+	.single #main aside #author-wrap {
+		order: initial;
+	}
 }
 .job-listings h2 {
 	margin-bottom: 0;
