@@ -59,6 +59,9 @@ get_header(); ?>
             border: none;
             align-items: flex-start !important;
         }
+         #search-results > h2 {
+            margin: 1rem 0;
+        }
         article.staff h2, article.staff h2 a
         {
             color:#fff !important;
@@ -70,7 +73,7 @@ get_header(); ?>
         }
         .station-social .badges-box
         {
-            background-color: #c8102e; /*#c8102e  #7787f7*/
+            background-color: #c8102e; /*#7787f7  #7787f7 c8102e*/
         }
 		@media screen and (min-width: 34em) {
 			body.single-shows #station-social {
@@ -116,7 +119,7 @@ global $post;
         $term = reset( $terms );
         $ta = 0;
         $latest_ep_args = [
-            'cat' => 13761,
+            'cat' => 64721,
             'orderby' => 'date',
             'order'   => 'DESC',
             'posts_per_page' => 3,
@@ -140,6 +143,24 @@ global $post;
                 </div>
 				<div class="episodes-block" style="padding-top: 15px;">
 					<h2 class="title blue-bar"> <strong><span>MORE Stories</span></strong> </h2>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="sidebar-ad">
+                                <h4>Support Comes From</h4>
+                                <div id="div-gpt-ad-1394579228932-1">
+                                    <script type='text/javascript'>
+                                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="row">
                         <?php
                         global $ka;
