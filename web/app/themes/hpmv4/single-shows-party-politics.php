@@ -111,7 +111,9 @@ get_header(); ?>
 				} elseif ( !empty( $tubes['snippet']['thumbnails']['standard']['url'] ) ) {
 					$ytimage = $tubes['snippet']['thumbnails']['standard']['url'];
 				}
-				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) { ?>
+				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) {
+					$yt_desc = explode( "----------", $tubes['snippet']['description'] );
+					$yt_desc_trim = str_replace( [ "\n", "SUBSCRIBE for more local news and information from Houston Public Media:<br />https://www.youtube.com/@HoustonPublicMedia" ], [ "<br />", "" ], $yt_desc[0] );?>
 							<div class="episodes-content" id="youtube-main">
 								<div class="image-wrapper">
 									<div id="youtube-player" style="background-image: url( '<?php echo $ytimage; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
@@ -121,7 +123,7 @@ get_header(); ?>
 								<div class="content-wrapper">
 									<span class="date"><?php echo date( 'F j, Y', $pubtime); ?></span>
 									<h2 class="content-title"><?php echo $yt_title; ?></h2>
-									<div class="desc-wrap"> <p class="desc"><?php echo str_replace( "\n", "<br />", $tubes['snippet']['description'] ); ?></p><button type="button" class="yt-readmore">Read More...</button></div>
+									<div class="desc-wrap"> <p class="desc"><?php echo $yt_desc_trim; ?></p><button type="button" class="yt-readmore">Read More...</button></div>
 									<dialog id="yt-dialog">
 										<div class="yt-dialog-content">
 											<h3></h3>
