@@ -855,14 +855,14 @@ svg:not(:root) {
 #hm-top {
 	background: rgb(35, 74, 147);
 }
-#hm-top.townsquare {
-	background: rgb(248, 207, 75);
+#hm-top.hello-houston {
+	background: #ff7e27;
 }
-#hm-top.townsquare p {
-	color: rgb(47, 47, 47);
+#hm-top.hello-houston p {
+	color: rgb(0, 0, 0);
 }
-#hm-top.townsquare p a {
-	color: var(--main-red);
+#hm-top.hello-houston p a {
+	color: #fff;
 }
 #hm-top.election {
 	background: #e7e7e8;
