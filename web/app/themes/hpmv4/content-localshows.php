@@ -13,7 +13,7 @@ $HHArticles = hpm_showLatestArticlesbyShowID(64721);
                 <strong>HOUSTON <span>MATTERS</span></strong>
             </h3>
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                     <div class="image">
                         <a href="/shows/houston-matters/"><img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2017/07/09164012/HMCC_podcast-tile.png.webp" alt="Houston Matters with Craig Cohen" /></a>
                     </div>
