@@ -541,7 +541,7 @@ class HPM_Podcasts {
 				'feeds' => false,
 				'pages' => true
 			],
-			'supports' => [ 'title', 'editor', 'thumbnail' ],
+			'supports' => [ 'title', 'editor', 'thumbnail', 'excerpt' ],
 			'taxonomies' => [ 'post_tag' ],
 			'capability_type' => [ 'hpm_show','hpm_shows' ],
 			'map_meta_cap' => true,

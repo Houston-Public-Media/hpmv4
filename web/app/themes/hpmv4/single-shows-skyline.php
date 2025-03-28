@@ -235,13 +235,15 @@ get_header(); ?>
 <?php
 			// PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB
 			$json = hpm_youtube_playlist( 'PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB', 50 );
-			$r = rand( 0, count( $json ) - 1 ); ?>
+			$r = rand( 0, count( $json ) - 1 );
+			$yt_desc = explode( "----------", $json[$r]['snippet']['description'] );
+			$yt_desc_trim = str_replace( [ "\n", "SUBSCRIBE for more local news and information from Houston Public Media:<br />https://www.youtube.com/@HoustonPublicMedia" ], [ "<br />", "" ], $yt_desc[0] ); ?>
 						<div id="youtube-main">
 							<div id="youtube-player" style="background-image: url( '<?php echo $json[$r]['snippet']['thumbnails']['high']['url']; ?>' );" data-ytid="<?php echo $json[$r]['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $json[$r]['snippet']['title'], ENT_COMPAT ); ?>">
 								<?php echo hpm_svg_output( 'play' ); ?>
 							</div>
 							<h2><?php echo $json[$r]['snippet']['title']; ?></h2>
-							<p class="desc"><?php echo $json[$r]['snippet']['description']; ?></p>
+							<p class="desc"><?php echo $yt_desc_trim; ?></p>
 						</div>
 						<div id="youtube-upcoming">
 <?php
