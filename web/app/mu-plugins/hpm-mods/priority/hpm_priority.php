@@ -76,7 +76,8 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 					'excerpt' => $stp->post_excerpt,
 					'picture' => get_the_post_thumbnail_url( $stp->ID, 'medium' ),
 					'permalink' => get_the_permalink( $stp->ID ),
-					'publish_date' => get_the_date( 'c', $stp->ID )
+					'date' => mysql_to_rfc3339( $stp->post_date ),
+					'date_gmt' => mysql_to_rfc3339( $stp->post_date_gmt )
 				];
 				$output['articles'][] = $arr;
 			}
