@@ -143,25 +143,7 @@ global $post;
                 </div>
 				<div class="episodes-block" style="padding-top: 15px;">
 					<h2 class="title blue-bar"> <strong><span>MORE Stories</span></strong> </h2>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-4">
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                        </div>
-
-                        <div class="col-sm-6 col-md-4">
-                            <div class="sidebar-ad">
-                                <h4>Support Comes From</h4>
-                                <div id="div-gpt-ad-1394579228932-1">
-                                    <script type='text/javascript'>
-                                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
+                                       <div class="row">
                         <?php
                         global $ka;
                         $ka = 0;
