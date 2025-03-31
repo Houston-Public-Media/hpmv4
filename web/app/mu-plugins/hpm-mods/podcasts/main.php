@@ -1570,8 +1570,8 @@ class HPM_Podcasts {
 								'content_html' => $content,
 								'content_text' => strip_shortcodes( wp_strip_all_tags( $content ) ),
 								'excerpt' => get_the_excerpt(),
-								'date_published' => get_the_date( 'c', '' ),
-								'date_modified' => get_the_modified_date( 'c', '' ),
+								'date' => mysql_to_rfc3339( $podeps->post->post_date ),
+								'date_gmt' => mysql_to_rfc3339( $podeps->post->post_date_gmt ),
 								'author' => coauthors( '; ', '; ', '', '', false ),
 								'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] : '' ),
 								'attachments' => [
