@@ -351,6 +351,27 @@ function hpm_staff_echo( $query ): void {
 			$el->the_post();
 			get_template_part( 'content', 'staff' );
 		}
+		echo '</div><h2>Executive Team Support Staff</h2><div class="staff-grid">';
+		$args['tax_query'] = [
+			'relation' => 'AND',
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'executive-team-support-staff' ]
+			],
+			[
+				'taxonomy' => 'staff_category',
+				'field' => 'slug',
+				'terms' => [ 'executive-team' ],
+				'operator' => 'NOT IN'
+			]
+		];
+		$dh = new WP_Query( $args );
+		while ( $dh->have_posts() ) {
+			$dh->the_post();
+			get_template_part( 'content', 'staff' );
+		}
+
 		echo '</div><h2>Department Leaders</h2><div class="staff-grid">';
 
 		$args['tax_query'] = [
@@ -358,12 +379,12 @@ function hpm_staff_echo( $query ): void {
 			[
 				'taxonomy' => 'staff_category',
 				'field' => 'slug',
-				'terms' => [ 'department-leaders' ]
+				'terms' => [ 'hosts' ]
 			],
 			[
 				'taxonomy' => 'staff_category',
 				'field' => 'slug',
-				'terms' => [ 'executive-team' ],
+				'terms' => [ 'executive-team', 'executive-team-support-staff' ],
 				'operator' => 'NOT IN'
 			]
 		];
@@ -383,7 +404,7 @@ function hpm_staff_echo( $query ): void {
 			[
 				'taxonomy' => 'staff_category',
 				'field' => 'slug',
-				'terms' => [ 'executive-team', 'department-leaders' ],
+				'terms' => [ 'executive-team', 'department-leaders', 'executive-team-support-staff' ],
 				'operator' => 'NOT IN'
 			]
 		];
