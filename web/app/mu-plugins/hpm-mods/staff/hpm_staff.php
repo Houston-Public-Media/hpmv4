@@ -309,7 +309,7 @@ function staff_meta_query( $query ): void {
 			$query->set( 'tax_query', [[
 				'taxonomy' => 'staff_category',
 				'field' => 'slug',
-				'terms' => [ 'hosts', 'executive-team', 'department-leaders', 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations', 'digital-operations' ],
+				'terms' => [ 'hosts', 'executive-team', 'department-leaders', 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations', 'digital-operations', 'executive-team-support-staff' ],
 				'operator' => 'NOT IN'
 			]] );
 		}
@@ -329,7 +329,7 @@ add_filter( 'taxonomy_template', 'hpm_staff_tax_template' );
 function hpm_staff_echo( $query ): void {
 	$main_query = $query;
 	$cat = $main_query->get( 'staff_category' );
-	$exempt = [ 'hosts', 'executive-team', 'department-leaders', 'executive-team-support-staff', 'daily-and-weekly-radio-shows', 'news-team', 'radio-operations', 'digital-operations' ];
+	$exempt = [ 'hosts', 'executive-team', 'department-leaders' ];
 	if ( empty( $cat ) ) {
 		echo '<h2>Executive Team</h2><div class="staff-grid">';
 		$args = [
