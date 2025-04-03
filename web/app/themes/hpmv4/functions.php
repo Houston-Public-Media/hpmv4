@@ -792,7 +792,7 @@ function hpm_showLatestArticlesbyShowID( $catID ): array {
 	$articles = [];
 	if ( !empty( $catID ) ) {
 		$showposts_args = [
-			'posts_per_page' => 2,
+			'posts_per_page' => 4,
 			'cat' => $catID,
 			'ignore_sticky_posts' => 1,
 			'post_status' => 'publish'
