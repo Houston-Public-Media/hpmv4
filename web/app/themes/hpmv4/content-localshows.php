@@ -52,7 +52,6 @@ $HHArticles = hpm_showLatestArticlesbyShowID(64721);
                             </li>
                             <?php
                         } ?>
-
                     </ul>
                 </div>
             </div>

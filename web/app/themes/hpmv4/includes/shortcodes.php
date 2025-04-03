@@ -332,7 +332,7 @@ function hpm_careers_trans(): string {
 		return $output;
 	}
 
-	$url = "https://careers.uh.edu/jobs/search/uh-postings?page=1&dropdown_field_2_uids%5B%5D=f2d13182c939a778b2fd045147bbbe2b&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece";
+	$url = "https://careers.uh.edu/jobs/search/uh-postings?page=1&dropdown_field_2_uids%5B%5D=f2d13182c939a778b2fd045147bbbe2b&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece&dropdown_field_2_uids%5B%5D=20264fadd8ae3803c97c7de243171417";
 
 	$options = [
 		'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0'

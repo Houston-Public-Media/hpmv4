@@ -118,6 +118,7 @@ function hpm_houston_matters_check(): array {
 	$date = date( 'Y-m-d', $t );
 	$hm_airtimes = [
 		9 => false,
+		11 => false,
 		12 => false
 	];
 	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=" . $date . "&format=json" ) );
@@ -131,8 +132,11 @@ function hpm_houston_matters_check(): array {
 				if ( $j['start_time'] == '09:00' ) {
 					$hm_airtimes[9] = true;
 				}
-			} elseif ( $j['program']['name'] == 'Houston Election 2024' ) {
-				$hm_airtimes[12] = true;
+			} elseif ( $j['program']['name'] == 'Hello Houston' ) {
+				if ( $j['start_time'] == '11:00' ) {
+					$hm_airtimes[11] = true;
+					$hm_airtimes[12] = true;
+				}
 			}
 		}
 	}

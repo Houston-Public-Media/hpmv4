@@ -629,18 +629,18 @@ function hpm_https_check(): void {
 						dialogContent.innerHTML = '<h2>Image Alt Text Needed</h2><p>This post contains images with <strong>empty alt text tags</strong>. Alt text (or alternative text) is what displays in the event an image doesn\'t load, or is read by a screen reader, and <strong>typically describes the content of the image</strong>. Leaving these blank can <strong>cause problems for both accessibility and search engine optimization</strong>.</p><h3>Steps to Fix</h3><p>In the Visual editor mode, click on the image and click the pencil icon:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-edit.png.webp" alt="Clicking on an image in the editor reveals alignment tools as well as an edit button" /></a></p><p>In the popup, fill in the box at the top marked "Alternative Text":<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-visual-image-data.png.webp" alt="In the modal popup, fill in the top box marked Alternative Text" /></a></p><p>In the Text mode, look for the alt attribute in any <code>&lt;img&gt;</code> tags and enter your text there:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-html.png.webp" alt="Look for any occurrences of alt that do not have any text in between the quotes" /></a></p><p>You can also enter the alt text in the Media Library popup when uploading the image:<br /><a href="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" target="_blank"><img src="https://cdn.houstonpublicmedia.org/assets/images/wp-alt-text-media-library.png.webp" alt="The Media Library also contains a field for alt text" /></a></p>';
 						dialog.showModal();
 						return false;
-					} else if ( postTitle.value.length > 100 || altTitle.value.length > 100 || seoTitle.value.length > 100 ) {
+					} else if ( postTitle.value.length > 110 || altTitle.value.length > 110 || seoTitle.value.length > 110 ) {
 						e.preventDefault();
-						let tooLongOutput = '<h2>One (or more) of your headlines is too long</h2><p>See below. Please rewrite it to be 100 characters or less.</p><ul class="ul-disc">';
-						if ( postTitle.value.length > 100 ) {
+						let tooLongOutput = '<h2>One (or more) of your headlines is too long</h2><p>See below. Please rewrite it to be 100 characters or fewer.</p><ul class="ul-disc">';
+						if ( postTitle.value.length > 110 ) {
 							tooLongOutput += '<li>Main Headline <strong>(' + postTitle.value.length + ' characters)</strong></li>';
 							postTitle.classList.add('hpm-editor-error');
 						}
-						if ( altTitle.value.length > 100 ) {
+						if ( altTitle.value.length > 110 ) {
 							tooLongOutput += '<li>Alternate/Homepage Headline <strong>(' + altTitle.value.length + ' characters)</strong></li>';
 							altTitle.classList.add('hpm-editor-error');
 						}
-						if ( seoTitle.value.length > 100 ) {
+						if ( seoTitle.value.length > 110 ) {
 							tooLongOutput += '<li>SEO Headline <strong>(' + seoTitle.value.length + ' characters)</strong></li>';
 							seoTitle.classList.add('hpm-editor-error');
 						}
