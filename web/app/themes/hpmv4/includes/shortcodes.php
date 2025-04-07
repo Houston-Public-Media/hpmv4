@@ -335,14 +335,14 @@ function hpm_careers_trans(): string {
 	$url = "https://careers.uh.edu/jobs/search/uh-postings?page=1&dropdown_field_2_uids%5B%5D=f2d13182c939a778b2fd045147bbbe2b&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece&dropdown_field_2_uids%5B%5D=20264fadd8ae3803c97c7de243171417";
 
 	$options = [
-		'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0'
+		'user-agent' => 'Houston Public Media Job Scraper/1.0'
 	];
 	$result = wp_remote_get( $url, $options );
 	if ( is_wp_error( $result ) ) {
 		return $output;
 	}
 
-	if ( $result['response']['code'] !== 200 ) {
+	if ( $result['response']['code'] > 210 ) {
 		return $output;
 	}
 	$body = wp_remote_retrieve_body( $result );
@@ -366,6 +366,9 @@ function hpm_careers_trans(): string {
 			$anchor = $href->getAttribute( 'href' );
 			$parse = pathinfo( parse_url( $anchor, PHP_URL_PATH ) );
 			$title = trim( $href->nodeValue );
+			if ( in_array( $parse['basename'], $desc['exclude'] ) ) {
+				continue 2;
+			}
 			if ( !empty( $desc[ $parse['basename'] ]['title'] ) ) {
 				$title = $desc[ $parse['basename'] ]['title'];
 			}
