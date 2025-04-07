@@ -3323,10 +3323,12 @@ article.staff {
 	:is(#search-results,.post-archive) article.card .post-thumbnail {
 		width: 33%;
 		flex: 1;
+		align-self: center;
 	}
 	:is(#search-results,.post-archive) article.card .card-content {
 		flex: 2;
 		min-width: 60%;
+		align-self: center;
 	}
 }
 @media screen and (min-width: 52.5em) {
