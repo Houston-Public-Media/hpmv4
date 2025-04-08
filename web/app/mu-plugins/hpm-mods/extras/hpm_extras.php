@@ -732,6 +732,27 @@ function custom_get_coauthors( $object, $field_name, $request ): array {
 	return $authors;
 }
 
+add_action( 'rest_api_init', 'custom_register_featured_media' );
+function custom_register_featured_media(): void {
+	register_rest_field( 'post',
+		'featured_media_url',
+		[
+			'get_callback' => 'custom_get_featured_media',
+			'update_callback' => null,
+			'schema' => null,
+		]
+	);
+}
+
+function custom_get_featured_media( $object, $field_name, $request ): string {
+	$media = get_the_post_thumbnail_url( $object['id'], 'medium' );
+	if ( $media === false ) {
+		return '';
+	} else {
+		return $media . '.webp';
+	}
+}
+
 function hpm_segments( $name, $date ) {
 	$shows = [
 		'Morning Edition' => [
