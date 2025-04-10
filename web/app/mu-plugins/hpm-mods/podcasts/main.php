@@ -560,7 +560,7 @@ class HPM_Podcasts {
 	}
 
 	public static function list_inactive( $type ): void {
-		echo '<h2>Inactive</h2>';
+		echo '<h2 style="margin-top: 5rem; font-size: 1.75rem;">Completed/Inactive</h2>';
 		$items = new WP_Query([
 			'post_type' => $type,
 			'post_status' => 'publish',
