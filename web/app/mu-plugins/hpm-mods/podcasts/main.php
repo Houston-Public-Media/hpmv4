@@ -845,6 +845,7 @@ class HPM_Podcasts {
 		<copyright>&#x2117; &amp; &#xA9; <?PHP echo date('Y'); ?> Houston Public Media</copyright>
 		<ttl><?php echo $frequency; ?></ttl>
 		<pubDate><?php echo date('r'); ?></pubDate>
+		<generator>Houston Public Media Podcast Feed Generator</generator>
 		<itunes:summary><![CDATA[<?php the_content_feed(); ?>]]></itunes:summary>
 		<itunes:owner>
 			<itunes:name><![CDATA[<?php echo $pods['owner']['name']; ?>]]></itunes:name>

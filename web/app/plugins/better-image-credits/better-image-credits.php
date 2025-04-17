@@ -38,7 +38,7 @@ function bic_get_option( $option, $default ) {
 
 define( 'IMAGE_CREDITS_TEMPLATE', bic_get_option( 'template', '<a href="[link]" target="_blank">[source]</a>' ) );
 define( 'IMAGE_CREDITS_SEP', bic_get_option( 'sep', ',&#32;' ) );
-define( 'IMAGE_CREDITS_BEFORE', bic_get_option( 'before', '<p class="image-credits">' . __( 'Image Credits', 'better-image-credits' ) . ':&#32;' ) );
+define( 'IMAGE_CREDITS_BEFORE', bic_get_option( 'before', '<p class="image-credits">Image Credits:&#32;' ) );
 define( 'IMAGE_CREDITS_AFTER', bic_get_option( 'after', '.</p>' ) );
 define( 'IMAGE_CREDITS_OVERLAY_COLOR', bic_get_option( 'overlay_color', '' ) );
 
