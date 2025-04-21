@@ -1358,17 +1358,17 @@ class HPM_Podcasts {
 				$image_medium = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' );
 				$image_thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id() );
 				$temp['image']['full'] = [
-					'url' => $image_full[0],
+					'url' => $image_full[0] . '.webp',
 					'width' => $image_full[1],
 					'height' => $image_full[2]
 				];
 				$temp['image']['medium'] = [
-					'url' => $image_medium[0],
+					'url' => $image_medium[0] . '.webp',
 					'width' => $image_medium[1],
 					'height' => $image_medium[2]
 				];
 				$temp['image']['thumbnail'] = [
-					'url' => $image_thumbnail[0],
+					'url' => $image_thumbnail[0] . '.webp',
 					'width' => $image_thumbnail[1],
 					'height' => $image_thumbnail[2]
 				];
@@ -1411,7 +1411,8 @@ class HPM_Podcasts {
 		if ( empty( $request['feed'] ) ) {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feed specified. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
-		$json = get_transient( 'hpm_podcasts_' . sanitize_key( $request['feed'] ) );
+		//$json = get_transient( 'hpm_podcasts_' . sanitize_key( $request['feed'] ) );'
+		$json = '';
 		if ( !empty( $json ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'JSON-formatted feed for ' . $json['title'], 'hpm-podcasts' ), 'data' => [ 'feed' => $json, 'status' => 200 ] ] );
 		}
@@ -1516,8 +1517,8 @@ class HPM_Podcasts {
 				$json['home_page_url'] = $podlink['page'];
 				$json['feed_url'] = get_the_permalink().'feed/json';
 				$json['description'] = get_the_content();
-				$json['icon'] = $main_image[0];
-				$json['favicon'] = $favicon[0];
+				$json['icon'] = $main_image[0] . '.webp';
+				$json['favicon'] = $favicon[0] . '.webp';
 				$json['author']['name'] = $pods['owner']['name'];
 				$json['author']['email'] = $pods['owner']['email'];
 				$json['keywords'] = $pod_tag_array;
@@ -1574,7 +1575,7 @@ class HPM_Podcasts {
 								'date' => mysql_to_rfc3339( $podeps->post->post_date ),
 								'date_gmt' => mysql_to_rfc3339( $podeps->post->post_date_gmt ),
 								'author' => coauthors( '; ', '; ', '', '', false ),
-								'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] : '' ),
+								'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] . '.webp' : '' ),
 								'attachments' => [
 									'url' => $media_file,
 									'mime_type' => $a_meta['mime'],
