@@ -1358,17 +1358,17 @@ class HPM_Podcasts {
 				$image_medium = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium' );
 				$image_thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id() );
 				$temp['image']['full'] = [
-					'url' => $image_full[0],
+					'url' => $image_full[0] . '.webp',
 					'width' => $image_full[1],
 					'height' => $image_full[2]
 				];
 				$temp['image']['medium'] = [
-					'url' => $image_medium[0],
+					'url' => $image_medium[0] . '.webp',
 					'width' => $image_medium[1],
 					'height' => $image_medium[2]
 				];
 				$temp['image']['thumbnail'] = [
-					'url' => $image_thumbnail[0],
+					'url' => $image_thumbnail[0] . '.webp',
 					'width' => $image_thumbnail[1],
 					'height' => $image_thumbnail[2]
 				];

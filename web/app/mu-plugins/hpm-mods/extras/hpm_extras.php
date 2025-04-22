@@ -712,6 +712,10 @@ function custom_get_coauthors( $object, $field_name, $request ): array {
 	$coauthors = get_coauthors( $object['id'] );
 	$authors = [];
 	foreach ( $coauthors as $coa ) {
+		$author_meta = [
+			'biography' => '',
+			'metadata' => []
+		];
 		$guest = true;
 		if ( is_a( $coa, 'wp_user' ) ) {
 			$guest = false;
@@ -720,13 +724,29 @@ function custom_get_coauthors( $object, $field_name, $request ): array {
 				$authid = get_user_by( 'login', $coa->linked_account );
 				if ( is_a( $authid, 'wp_user' ) ) {
 					$guest = false;
+					$staff = new WP_Query([
+						'post_type' => 'staff',
+						'post_status' => 'publish',
+						'posts_per_page' => 1,
+						'meta_query' => [[
+							'key' => 'hpm_staff_authid',
+							'compare' => '=',
+							'value' => $authid->ID
+						]]
+					]);
+					if ( $staff->have_posts() ) {
+						$staff->the_post();
+						$author_meta['biography'] = do_shortcode( get_the_content() );
+						$author_meta['metadata'] = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
+					}
 				}
 			}
 		}
 		$authors[] = [
 			'display_name' => $coa->display_name,
 			'user_nicename' => $coa->user_nicename,
-			'guest_author' => $guest
+			'guest_author' => $guest,
+			'extra' => $author_meta
 		];
 	}
 	return $authors;
