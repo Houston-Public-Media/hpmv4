@@ -1411,8 +1411,7 @@ class HPM_Podcasts {
 		if ( empty( $request['feed'] ) ) {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feed specified. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
-		//$json = get_transient( 'hpm_podcasts_' . sanitize_key( $request['feed'] ) );'
-		$json = '';
+		$json = get_transient( 'hpm_podcasts_' . sanitize_key( $request['feed'] ) );
 		if ( !empty( $json ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'JSON-formatted feed for ' . $json['title'], 'hpm-podcasts' ), 'data' => [ 'feed' => $json, 'status' => 200 ] ] );
 		}
