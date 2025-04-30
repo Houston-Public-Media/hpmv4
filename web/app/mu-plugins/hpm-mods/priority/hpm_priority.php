@@ -94,9 +94,9 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	}
 	$hm_air = hpm_houston_matters_check();
 	if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow'] = '<div id="hm-top"><p><span><a href="https://www.houstonpublicmedia.org/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="https://www.houstonpublicmedia.org/listen-live/">Listen Live</a></p></div>';
+		$output['talkshow'] = 'houston-matters';
 	} elseif ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 11 || $now['hours'] == 12 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow'] = '<div id="hm-top" class="hello-houston"><p><span><a href="https://www.houstonpublicmedia.org/shows/hello-houston/"><strong>Hello Houston</strong> is on the air now!</a> Join the conversation:</span> Call <a href="tel://+17134408870">713.440.8870</a> | <a href="https://www.houstonpublicmedia.org/listen-live/#news">Listen Live</a> | <a href="https://www.youtube.com/@HoustonPublicMedia/streams">Watch Live</a></p></div>';
+		$output['talkshow'] = 'hello-houston';
 	}
 
 	if ( $output ) {

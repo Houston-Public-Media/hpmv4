@@ -1516,8 +1516,8 @@ class HPM_Podcasts {
 				$json['home_page_url'] = $podlink['page'];
 				$json['feed_url'] = get_the_permalink().'feed/json';
 				$json['description'] = get_the_content();
-				$json['icon'] = $main_image[0];
-				$json['favicon'] = $favicon[0];
+				$json['icon'] = $main_image[0] . '.webp';
+				$json['favicon'] = $favicon[0] . '.webp';
 				$json['author']['name'] = $pods['owner']['name'];
 				$json['author']['email'] = $pods['owner']['email'];
 				$json['keywords'] = $pod_tag_array;
@@ -1574,7 +1574,7 @@ class HPM_Podcasts {
 								'date' => mysql_to_rfc3339( $podeps->post->post_date ),
 								'date_gmt' => mysql_to_rfc3339( $podeps->post->post_date_gmt ),
 								'author' => coauthors( '; ', '; ', '', '', false ),
-								'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] : '' ),
+								'thumbnail' => ( is_array( $pod_image ) ? $pod_image[0] . '.webp' : '' ),
 								'attachments' => [
 									'url' => $media_file,
 									'mime_type' => $a_meta['mime'],

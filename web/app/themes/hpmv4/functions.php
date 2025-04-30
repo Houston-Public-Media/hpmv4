@@ -1499,7 +1499,7 @@ if ( function_exists( 'npr_cds_activate' ) && WP_ENV === 'development' ) {
 add_filter( 'tec_tickets_emails_dispatcher_headers', 'hpm_tec_tickets_rsvp_email_filter', 15 );
 
 function hpm_tec_tickets_rsvp_email_filter( $headers ) {
-	$headers['CC'] = 'statum@houstonpublicmedia.org,chill@houstonpublicmedia.org';
+	$headers['CC'] = 'brooksbrown@houstonpublicmedia.org,chill@houstonpublicmedia.org';
 	return $headers;
 }
 
