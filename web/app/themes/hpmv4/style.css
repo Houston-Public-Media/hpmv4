@@ -6065,15 +6065,10 @@ body.sticky-nav {
 	.header-weather {
 		display: none;
 	}
-
-	/*body.sticky-nav .site-header .nav-buttons {*/
-	/*	top: -52px;*/
-	/*}*/
 	body.sticky-nav header#masthead .quick-access {
 		right: 10px;
 		top: 12px;
 	}
-
 	.news-listing {
 		padding: 0;
 	}
@@ -6090,7 +6085,6 @@ body.sticky-nav {
 }
 
 @media (max-width: 840px) {
-
 	.quick-access ul {
 		display: none;
 	}
