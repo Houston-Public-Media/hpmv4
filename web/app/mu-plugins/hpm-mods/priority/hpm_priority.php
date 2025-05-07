@@ -74,13 +74,13 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 				$primary = [
 					'name' => '',
 					'slug' => '',
-					'id' => ''
+					'id' => 0
 				];
 				if ( $primary_cat_id ) {
 					$primary_cat = get_category( $primary_cat_id );
 					$primary['name'] = $primary_cat->name;
 					$primary['slug'] = $primary_cat->slug;
-					$primary['id'] = $primary_cat->term_id;
+					$primary['id'] = (int)$primary_cat->term_id;
 				}
 				$arr = [
 					'id' => $stp->ID,
