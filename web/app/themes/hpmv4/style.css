@@ -5453,6 +5453,9 @@ article .entry-header .byline-date a {
 .gs-chart-head {
 	height: 16rem;
 	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: end;
 }
 
 .gs-chart-head:first-child {
@@ -5479,14 +5482,11 @@ article .entry-header .byline-date a {
 }
 
 .gs-chart-head h3 {
-	transform: rotate(-90deg);
+	transform: rotate(180deg);
 	word-break: break-word;
-	width: 15rem;
+	writing-mode: vertical-rl;
 	margin: 0 !important;
 	padding: 0 !important;
-	position: absolute;
-	left: -5rem;
-	bottom: 7.25rem;
 	font-size: 1rem;
 	font-weight: 700;
 }

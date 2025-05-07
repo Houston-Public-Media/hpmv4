@@ -70,6 +70,18 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		$sticky_query = new WP_Query( $sticky_args );
 		if ( $sticky_query->have_posts() ) {
 			foreach ( $sticky_query->posts as $stp ) {
+				$primary_cat_id = get_post_meta($stp->ID, 'epc_primary_category', true);
+				$primary = [
+					'name' => '',
+					'slug' => '',
+					'id' => 0
+				];
+				if ( $primary_cat_id ) {
+					$primary_cat = get_category( $primary_cat_id );
+					$primary['name'] = $primary_cat->name;
+					$primary['slug'] = $primary_cat->slug;
+					$primary['id'] = (int)$primary_cat->term_id;
+				}
 				$arr = [
 					'id' => $stp->ID,
 					'title' => $stp->post_title,
@@ -77,7 +89,8 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 					'picture' => get_the_post_thumbnail_url( $stp->ID, 'medium' ),
 					'permalink' => get_the_permalink( $stp->ID ),
 					'date' => mysql_to_rfc3339( $stp->post_date ),
-					'date_gmt' => mysql_to_rfc3339( $stp->post_date_gmt )
+					'date_gmt' => mysql_to_rfc3339( $stp->post_date_gmt ),
+					'primary_category' => $primary
 				];
 				$output['articles'][] = $arr;
 			}
