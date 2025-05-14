@@ -99,11 +99,18 @@ get_header(); ?>
 							<h2 class="title red-bar"> <strong><span>the latest</span></strong> </h2>
 <?php
 	if ( !empty( $show['ytp'] ) ) {
-		$json = hpm_youtube_playlist( $show['ytp'], 1 );
+		$json = hpm_youtube_playlist( $show['ytp'] );
 		if ( !empty( $json ) ) {
-			$c = 0;
-			foreach ( $json as $tubes ) {
+			$public = [];
+			foreach ( $json as $k => $v ) {
+				if ( !str_contains( strtolower( $v['snippet']['title'] ), 'private video' ) ) {
+					$public[] = $k;
+				}
+			}
+			if ( !empty( $public ) ) {
+				$tubes = $json[ $public[0] ];
 				$yt_title = str_replace( $show_title . ' | ', '', $tubes['snippet']['title'] );
+
 				$pubtime = strtotime( $tubes['snippet']['publishedAt'] );
 				$ytimage = $tubes['snippet']['thumbnails']['default']['url'];
 				if ( !empty( $tubes['snippet']['thumbnails']['high']['url'] ) ) {
@@ -111,9 +118,8 @@ get_header(); ?>
 				} elseif ( !empty( $tubes['snippet']['thumbnails']['standard']['url'] ) ) {
 					$ytimage = $tubes['snippet']['thumbnails']['standard']['url'];
 				}
-				if ( $c == 0 && !str_contains( $yt_title, 'Private Video' ) ) {
-					$yt_desc = explode( "----------", $tubes['snippet']['description'] );
-					$yt_desc_trim = str_replace( [ "\n", "SUBSCRIBE for more local news and information from Houston Public Media:<br />https://www.youtube.com/@HoustonPublicMedia" ], [ "<br />", "" ], $yt_desc[0] );?>
+				$yt_desc = explode( "----------", $tubes['snippet']['description'] );
+				$yt_desc_trim = str_replace( [ "\n", "SUBSCRIBE for more local news and information from Houston Public Media:<br />https://www.youtube.com/@HoustonPublicMedia" ], [ "<br />", "" ], $yt_desc[0] );?>
 							<div class="episodes-content" id="youtube-main">
 								<div class="image-wrapper">
 									<div id="youtube-player" style="background-image: url( '<?php echo $ytimage; ?>' );" data-ytid="<?php echo $tubes['snippet']['resourceId']['videoId']; ?>" data-yttitle="<?php echo htmlentities( $yt_title, ENT_COMPAT ); ?>">
@@ -154,7 +160,6 @@ get_header(); ?>
 								</div>
 							</div>
 <?php
-				}
 			}
 		}
 	} ?>
