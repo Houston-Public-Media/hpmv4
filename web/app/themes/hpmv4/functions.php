@@ -151,6 +151,19 @@ function hpm_custom_pagination( $pages = '', $range = 4, $pageLink = "" ): strin
 	return $output;
 }
 
+add_action( 'restrict_manage_posts', 'hpm_filterposts_by_the_authors' );
+
+function hpm_filterposts_by_the_authors( $post_type ) {
+	$params = [
+		'name' => 'author',
+		'role__in' => [ 'author', 'editor', 'administrator' ],
+		'show_option_all' => 'Filter by author'
+	];
+	if ( isset( $_GET['user'] ) ) {
+		$params['selected'] = $_GET['user'];
+	}
+	wp_dropdown_users( $params );
+}
 
 // Modification to the normal Menu Walker to add <div> elements in certain locations and remove links with '#' hrefs
 class HPM_Menu_Walker extends Walker_Nav_Menu {
