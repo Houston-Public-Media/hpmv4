@@ -154,14 +154,15 @@ function hpm_custom_pagination( $pages = '', $range = 4, $pageLink = "" ): strin
 add_action( 'restrict_manage_posts', 'hpm_filterposts_by_the_authors' );
 
 function hpm_filterposts_by_the_authors( $post_type ) {
-    $params = array(
-        'name' => 'author',
-        'role__in' => array('author','editor','administrator')
-    );
-    if ( isset($_GET['user']) ) {
-        $params['selected'] = $_GET['user'];
-    }
-    wp_dropdown_users( $params );
+	$params = [
+		'name' => 'author',
+		'role__in' => [ 'author', 'editor', 'administrator' ],
+		'show_option_all' => 'Filter by author'
+	];
+	if ( isset( $_GET['user'] ) ) {
+		$params['selected'] = $_GET['user'];
+	}
+	wp_dropdown_users( $params );
 }
 
 
