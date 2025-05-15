@@ -1575,6 +1575,12 @@ function hpm_weather(): string {
 	if ( !is_wp_error( $remote ) ) {
 		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
 		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y", $c ) . '<h3>' . '<p style="color: white; font-size: 30px;"><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
+		$api_output = [
+			'icon' => 'https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp',
+			'description' =>  $weather->weather[0]->description,
+			'temperature' =>  (string)round( $weather->main->temp ) . ' &deg;F',
+		];
+		set_transient( 'hpm_weather_api', $api_output, 180 );
 		set_transient( 'hpm_weather', $output, 180 );
 	}
 	return $output;

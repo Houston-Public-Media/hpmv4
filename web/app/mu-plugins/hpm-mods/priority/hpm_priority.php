@@ -112,8 +112,14 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		$output['talkshow'] = 'hello-houston';
 	}
 
+	$weather = get_transient( 'hpm_weather_api' );
+	if ( empty( $weather ) ) {
+		hpm_weather();
+		$weather = get_transient( 'hpm_weather_api' );
+	}
+
 	if ( $output ) {
-		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Priority Homepage Story List', 'hpm-priority' ), 'data' => [ 'articles' => $output['articles'], 'breaking' => $output['breaking'], 'talkshow' => $output['talkshow'], 'status' => 200 ] ] );
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Priority Homepage Story List', 'hpm-priority' ), 'data' => [ 'articles' => $output['articles'], 'breaking' => $output['breaking'], 'talkshow' => $output['talkshow'], 'weather' => $weather, 'status' => 200 ] ] );
 	} else {
 		return new WP_Error( 'rest_api_sad', esc_html__( 'There has been an error, please try again later.', 'hpm-priority' ), [ 'status' => 500 ] );
 	}
