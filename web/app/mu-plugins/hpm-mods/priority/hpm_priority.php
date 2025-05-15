@@ -191,14 +191,14 @@ function hpm_priority_settings_page(): void {
 										foreach ( $priority['homepage'] as $kp => $vp ) {
 											$position = $kp + 1;
 											if ( $kp == $inDepthSlotNumber ) { ?>
-											<tr valign="top" style="border: 0.25rem solid #00566c;">
+											<tr style="border: 0.25rem solid #00566c;">
 												<th scope="row">Position <?PHP echo $position; ?><br /><strong>inDepth Position</strong></th>
 											<?php } else { ?>
-											<tr valign="top">
+											<tr>
 												<th scope="row">Position <?PHP echo $position; ?></th>
 											<?php } ?>
 												<td>
-													<label class="screen-reader-text"><?php _e( "Current Article in Homepage Position ".$position.":", 'hpmv4' ); ?></label>
+													<label class="screen-reader-text" for="hpm_priority-homepage-<?php echo $kp; ?>"><?php _e( "Current Article in Homepage Position ".$position.":", 'hpmv4' ); ?></label>
 													<select id="hpm_priority-homepage-<?php echo $kp; ?>" class="hpm-priority-select homepage-select">
 														<option value=""></option>
 <?php
@@ -208,15 +208,15 @@ function hpm_priority_settings_page(): void {
 														} ?>
 													</select>
 												</td>
-												<td><label for="hpm_priority[homepage][<?php echo $kp; ?>]" class="screen-reader-text"><?php _e('Change To?', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
+												<td><label for="homepage-<?php echo $kp; ?>" class="screen-reader-text"><?php _e('Change To?', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[homepage][<?php echo $kp; ?>]" id="homepage-<?php echo $kp; ?>" class="homepage-select-input" value="<?php echo $vp; ?>" style="max-width: 100%;" /></td>
 												<td><button class="hpm-clear button button-primary" data-position="<?php echo $kp; ?>">Reset</button></td>
 											</tr>
 <?php
 										} ?>
 										</tbody>
 									</table>
-									<p><label for="hpm_priority[number]"><?php _e('Number of slots: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[number]" id="homepage-number" class="homepage-select-input" value="<?php echo ( !empty( $priority['number'] ) ? $priority['number'] : count( $priority['homepage'] ) ); ?>" style="width: 150px;" /></p>
-                                    <p><label for="hpm_priority[inDepthnumber]"><?php _e('inDepth Slot Number: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[inDepthnumber]" id="inDepthnumber" class="homepage-select-input" value="<?php echo ( !empty( $priority['inDepthnumber'] ) ? $priority['inDepthnumber'] : '' ); ?>" style="width: 150px;" /></p>
+									<p><label for="homepage-number"><?php _e('Number of slots: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[number]" id="homepage-number" class="homepage-select-input" value="<?php echo ( !empty( $priority['number'] ) ? $priority['number'] : count( $priority['homepage'] ) ); ?>" style="width: 150px;" /></p>
+                                    <p><label for="inDepthnumber"><?php _e('inDepth Slot Number: ', 'hpmv4' ); ?></label><input type="number" name="hpm_priority[inDepthnumber]" id="inDepthnumber" class="homepage-select-input" value="<?php echo ( !empty( $priority['inDepthnumber'] ) ? $priority['inDepthnumber'] : '' ); ?>" style="width: 150px;" /></p>
 									<?php /* ?><p><label for="hpm_priority[breaking]"><?php _e('Breaking News Top: ', 'hpmv4' ); ?></label><label class="screen-reader-text"><?php _e( "Breaking News Top:", 'hpmv4' ); ?></label>
 										<select id="hpm_priority-breaking" name="hpm_priority[breaking]" class="hpm-priority-select breaking-select">
 											<option value=""></option>
