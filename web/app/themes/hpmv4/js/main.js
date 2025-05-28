@@ -218,6 +218,24 @@ hpm.localBanners = () => {
 	}
 }
 
+// hpm.donateAB = () => {
+// 	let donateButton = document.querySelector('#top-listen > .btn-donate');
+// 	if (donateButton !== null) {
+// 		let rand = Math.floor(Math.random() * 20);
+// 		var option = "";
+// 		if ( rand > 9 ) {
+// 			donateButton.href = "https://donate.houstonpublicmedia.org/form-name-1?utm_source=donate-button-option-a&utm_content=donate-button-option-a&utm_campaign=website-donate-button-ab&utm_medium=donate-button";
+// 			option = "a";
+// 		} else {
+// 			donateButton.href = "https://donate.houstonpublicmedia.org/form-name-2?utm_source=donate-button-option-b&utm_content=donate-button-option-b&utm_campaign=website-donate-button-ab&utm_medium=donate-button";
+// 			option = "b";
+// 		}
+// 		donateButton.addEventListener('click', () => {
+// 			gtag('event', 'donate_button_test', {'event_label': 'donate_test_' + option,'event_category': 'click'});
+// 		});
+// 	}
+// }
+
 hpm.audioPlayers = () => {
 	let jsPlay = document.querySelectorAll('.js-player');
 	if (jsPlay !== null) {
@@ -421,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
+	hpm.donateAB();
 	let navWrap = document.querySelector('.navigation-wrap');
 	if ( navWrap !== null ) {
 		let headerHeight = navWrap.getBoundingClientRect().height;
