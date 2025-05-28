@@ -65,26 +65,38 @@ function hpm_google_tracker(): void {
 			echo "\t\t\t\tgoogletag.pubads().setTargeting('tag', '" . $wp_query->query_vars['tag'] . "');\n";
 		}
 	} elseif ( is_single() ) {
-		$classes = get_post_class( '', $wp_query->queried_object_id );
-		$category = $tag = [];
-		foreach ( $classes as $class ) {
-			if ( str_contains( $class, 'category-' ) ) {
-				$category[] = str_replace( 'category-', '', $class );
-			} elseif ( str_contains( $class, 'tag-' ) ) {
-				$tag[] = str_replace( 'tag-', '', $class );
+		if ( get_post_type() == 'shows' ) {
+			$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
+			if ( !empty( $cat_no ) ) {
+				$category = get_term( $cat_no );
+				if ( !empty( $category ) ) {
+					echo "\t\t\t\tgoogletag.pubads().setTargeting('category', '" . $category->slug . "');\n";
+				}
+			}
+		} else {
+			$classes = get_post_class( '', $wp_query->queried_object_id );
+			$category = $tag = [];
+			foreach ( $classes as $class ) {
+				if ( str_contains( $class, 'category-' ) ) {
+					$category[] = str_replace( 'category-', '', $class );
+				} elseif ( str_contains( $class, 'tag-' ) ) {
+					$tag[] = str_replace( 'tag-', '', $class );
+				}
+			}
+			if ( !empty( $category ) || !empty( $tag ) ) {
+				echo "\t\t\t\tgoogletag.pubads()";
+				if ( !empty( $category ) ) {
+					echo ".setTargeting('category', ['" . implode( "','", $category ) . "'])";
+				}
+				if ( !empty( $tag ) ) {
+					echo ".setTargeting('tag', ['" . implode( "','", $tag ) . "'])";
+				}
+				echo ";\n";
 			}
 		}
-		if ( !empty( $category ) || !empty( $tag ) ) {
-			echo "\t\t\t\tgoogletag.pubads()";
-			if ( !empty( $category ) ) {
-				echo ".setTargeting('category', ['" . implode( "','", $category ) . "'])";
-			}
-			if ( !empty( $tag ) ) {
-				echo ".setTargeting('tag', ['" . implode( "','", $tag ) . "'])";
-			}
-			echo ";\n";
-		}
-	} ?>
+	} elseif ( get_post_type() == 'show' ) {
+		echo "\t\t\t\tgoogletag.pubads().setTargeting('category', '" . $wp_query->query_vars['category_name'] . "');\n";
+	}?>
 				googletag.enableServices();
 			});
 		</script>
