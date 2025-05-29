@@ -137,6 +137,7 @@ global $post;
 				</div>
 				<div id="station-social" class="station-social">
 					<div class="badges-box">
+                        <p class="badge-title"><strong>Call us on <a href="tel://+17134408870">713.440.8870</a> or Email Us on </strong><a style="color: #fff;" href="mailto:talk@hellohouston.org">talk@hellohouston.org</a></p>
 						<span class="badge-title">SUBSCRIBE, STREAM &amp; FOLLOW US ON</span>
 						<?php echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
 					</div>
