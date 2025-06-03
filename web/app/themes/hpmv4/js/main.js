@@ -439,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
+	// hpm.donateAB();
 	let navWrap = document.querySelector('.navigation-wrap');
 	if ( navWrap !== null ) {
 		let headerHeight = navWrap.getBoundingClientRect().height;
