@@ -40,7 +40,11 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	}
 	$output = [
 		'articles' => [],
-		'breaking' => '',
+		'breaking' => [
+			'id' => 0,
+			'title' => '',
+			'type' => ''
+		],
 		'talkshow' => ''
 	];
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
@@ -100,9 +104,9 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	if ( !empty( $hpm_breakingnews['homepage'] ) ) {
 		$ptime = get_the_time('U', $hpm_breakingnews['homepage'][0] ) + ( (int)$hpm_breakingnews['expirationdate'][0] * 3600 );
 		if ( $now[0] < $ptime && !empty( $hpm_breakingnews['type'] ) ) {
-			$newsclasstype = ( $hpm_breakingnews['type'] == "Breaking News" ? "breakingnews" : "developingstory" );
-			$newclassheading = ( $hpm_breakingnews['type'] == "Breaking News" ? '<span class="breakingnews-header" style="background-color: #ee1812;"><strong>Breaking News</strong></span>' : '<span class="developingstory-header"><strong>Developing Story</strong></span>' );
-			$output['breaking'] = '<div id="hm-top" class="' . $newsclasstype . '"><p>' . $newclassheading . ' <a href="' . get_the_permalink( $hpm_breakingnews['homepage'][0] ) . '">' . get_the_title( $hpm_breakingnews['homepage'][0] ) . '</a></p></div>';
+			$output['breaking']['id'] = (int)$hpm_breakingnews['homepage'][0];
+			$output['breaking']['title'] = get_the_title( $hpm_breakingnews['homepage'][0] );
+			$output['breaking']['type'] = ( $hpm_breakingnews['type'] == "Breaking News" ? "breakingnews" : "developingstory" );
 		}
 	}
 	$hm_air = hpm_houston_matters_check();
