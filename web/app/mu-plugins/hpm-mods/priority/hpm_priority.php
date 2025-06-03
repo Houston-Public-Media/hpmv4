@@ -43,7 +43,8 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		'breaking' => [
 			'id' => 0,
 			'title' => '',
-			'type' => ''
+			'type' => '',
+			'link' => ''
 		],
 		'talkshow' => ''
 	];
@@ -107,6 +108,7 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			$output['breaking']['id'] = (int)$hpm_breakingnews['homepage'][0];
 			$output['breaking']['title'] = get_the_title( $hpm_breakingnews['homepage'][0] );
 			$output['breaking']['type'] = ( $hpm_breakingnews['type'] == "Breaking News" ? "breakingnews" : "developingstory" );
+			$output['breaking']['link'] = get_the_permalink( $hpm_breakingnews['homepage'][0] );
 		}
 	}
 	$hm_air = hpm_houston_matters_check();
