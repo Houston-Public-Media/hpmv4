@@ -1639,7 +1639,7 @@ svg.hpm-logo .hpm-logo-service {
 #masthead #top-donate > a {
 	height: 5rem;
 	width: 5rem;
-	background-color: #237bbd;
+	background-color: var(--main-red);
 	text-align: center;
 	color: #fff;
 	padding: 0.5rem 1rem;
@@ -1734,7 +1734,7 @@ svg.hpm-logo .hpm-logo-service {
 #masthead #top-search svg {
 	overflow: visible;
 	width: 2rem;
-	fill: var(--accent-black-2);
+	fill: white;
 }
 #masthead #top-search .search-field {
 	border: 0;
@@ -2209,16 +2209,13 @@ body.nav-active-menu #top-mobile-close {
 		font-weight: 700;
 		position: static;
 	}
-	body:not(.page-template-page-listen) #masthead :is(#top-listen,#top-watch) button {
-		padding: 0.25rem 0.5rem;
-		color: var(--accent-light-blue-1);
-		background-color: transparent;
-		border: 1px solid var(--accent-light-blue-1);
-		font-size: 1.25rem;
-	}
-	body:not(.page-template-page-listen) #masthead :is(#top-listen,#top-watch) button svg {
-		fill: var(--accent-light-blue-1);
-	}
+	/*body:not(.page-template-page-listen) #masthead :is(#top-listen,#top-watch) button {*/
+	/*	padding: 0.25rem 0.5rem;*/
+	/*	color: var(--accent-light-blue-1);*/
+	/*	background-color: transparent;*/
+	/*	border: 1px solid var(--accent-light-blue-1);*/
+	/*	font-size: 1.25rem;*/
+	/*}*/
 }
 @media screen and (min-width: 64.25em) {
 	body:not(.page-template-page-listen) #masthead #top-schedule div.top-schedule-label {
@@ -4235,19 +4232,23 @@ section {
 }
 .nav-buttons a,
 .nav-buttons button {
-	font-size: 1rem !important;
-	padding: 12px !important;
-	color: white !important;
-	background-color: #3987c3 !important;
-	margin: 0 7px;
+	font-size: 1rem;
+	padding: 0.75rem;
+	color: white;
+	background-color: #3987c3;
+	margin: 0 0.25rem;
 	display: flex;
-	border: none !important;
-}
-.nav-buttons img {
-	margin-right: 5px;
-}
-.nav-buttons .btn-donate {
-	background-color: #13afbb !important;
+	border: none;
+	font-weight: 500;
+	svg {
+		margin-right: 0.25rem;
+		width: 1.25rem;
+		fill: white;
+	}
+	&.btn-donate {
+		background-color: var(--main-red);
+		text-decoration: none;
+	}
 }
 
 /* Home page */

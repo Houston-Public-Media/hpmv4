@@ -41,13 +41,13 @@ function hpm_site_header(): void { ?>
 					<div class="d-flex nav-right">
 						<div class="nav-buttons" id="top-listen">
 							<button aria-label="Listen Live" data-href="/listen-live" type="button" data-dialog="480:855">
-								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-listen.png" alt="Listen Live"> Listen
+								<?php echo hpm_svg_output( 'microphone' ); ?> Listen
 							</button>
 							<button aria-label="Watch Live" data-href="/watch-live" type="button" data-dialog="820:850">
-								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-watch.png" alt="Watch Live"> Watch
+								<?php echo hpm_svg_output( 'tv' ); ?> Watch
 							</button>
 							<a href="/donate" class="btn-donate" >
-								<img src="https://cdn.houstonpublicmedia.org/assets/images/icon-donate.png" alt="Donate Now"> Donate
+								<?php echo hpm_svg_output( 'heart' ); ?> Donate
 							</a>
 						</div>
 						<div class="d-flex social-icon-wrap">
