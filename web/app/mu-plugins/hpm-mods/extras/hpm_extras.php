@@ -714,6 +714,7 @@ function custom_get_coauthors( $object, $field_name, $request ): array {
 	foreach ( $coauthors as $coa ) {
 		$author_meta = [
 			'biography' => '',
+			'image' => '',
 			'metadata' => []
 		];
 		$guest = true;
@@ -738,6 +739,12 @@ function custom_get_coauthors( $object, $field_name, $request ): array {
 						$staff->the_post();
 						$author_meta['biography'] = do_shortcode( get_the_content() );
 						$author_meta['metadata'] = get_post_meta( get_the_ID(), 'hpm_staff_meta', true );
+						if ( has_post_thumbnail( get_the_ID() ) ) {
+							$attach = wp_get_attachment_url( get_post_thumbnail_id( get_the_ID() ) );
+							if ( $attach !== false ) {
+								$author_meta['image'] = $attach;
+							}
+						}
 					}
 				}
 			}
