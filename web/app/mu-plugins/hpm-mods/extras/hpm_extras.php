@@ -527,6 +527,77 @@ function hpm_nprapi_output( $api_id = 1001, $num = 4 ): mixed {
 	return $output;
 }
 
+/*NPR News Function Testing starts here*/
+
+function hpmnpr_nprapi_output( $api_id = 1001, $num = 50, $per_page = 10 ): mixed {
+    $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+    $npr = get_transient( 'hpmnpr_nprapi_' . $api_id );
+    if ( !empty( $npr ) ) {
+        return $npr;
+    }
+    $npr = new NPR_CDS_WP();
+    $npr->request([
+        'collectionIds' => $api_id,
+        'profileIds' => [ 'story', 'publishable', 'renderable', 'buildout' ],
+        'limit' => $num,
+        'sort' => 'publishDateTime:desc',
+        'ownerHrefs' => 'https://organization.api.npr.org/v4/services/s1'
+    ]);
+    $npr->parse();
+    $nprStories = $npr->stories;
+    $total_items = count( $nprStories );
+    $total_pages = ceil( $total_items / $per_page );
+    $offset = ( $paged - 1 ) * $per_page;
+    $paged_stories = array_slice( $nprStories, $offset, $per_page );
+    $output = '<section id="search-results">';
+
+    if ( !empty( $paged_stories ) ) {
+        $npr = new NPR_CDS_WP(); // Needed for helper methods
+        foreach ( $paged_stories as $story ) {
+            $image_url = '';
+            $npr_date = strtotime( $story->publishDateTime );
+
+            if ( !empty( $story->images[0] ) ) {
+                $image_id = $npr->extract_asset_id( $story->images[0]->href );
+                $image_asset = $story->assets->{$image_id};
+                foreach ( $image_asset->enclosures as $enclosure ) {
+                    if ( in_array( 'primary', $enclosure->rels ) ) {
+                        $image_url = $npr->get_image_url( $enclosure );
+                    }
+                }
+            }
+            $output .='<article>' .
+                ( !empty( $image_url['url'] ) ? '<img class="post-thumbnail" src="' . $image_url['url'] . '" alt="' .
+                    ( !empty( $story->teaser ) ? strip_tags( $story->teaser ) : $story->title ) .
+                    '" loading="lazy" />' : '' ) . '<div class="card-content"><header class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span></a></h2></header><div class="entry-summary"><p>' . $story->teaser . '</p></div></div></article>';
+
+        }
+    } else {
+        $output .= '<li>No stories available.</li>';
+    }
+    if ( $total_pages > 1 ) {
+        $pagination = paginate_links([
+            'base'      => get_pagenum_link(1) . '%_%',
+            'format'    => 'page/%#%/',
+            'current'   => $paged,
+            'total'     => $total_pages,
+            'prev_text' => '« Prev',
+            'next_text' => 'Next »',
+            'type'      => 'list',
+        ]);
+
+        if ( $pagination ) {
+            $output .= '<div><div class="wp-pagenavi">' . $pagination . '</div></div>';
+        }
+        $output .= '</section>';
+    }
+    return $output;
+}
+
+/*NPR News Function testing starts here*/
+
+
+
 /**
  * Hide the Comments menu in Admin because we don't use it
  */
