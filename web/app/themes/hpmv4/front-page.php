@@ -268,7 +268,8 @@ $tras = null; ?>
 					<h2 class="title">
 						<strong>News from <span>NPR</span></strong>
 					</h2>
-					<?php echo hpm_nprapi_output( 1002 ); ?>
+					<?php echo hpm_nprapi_output( 1002, 4 ); ?>
+                    <div style="text-align: right;"><a href="/npr-news" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all NPR stories</a></div>
 				</div>
 				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
 					<h2 class="title title-full">
