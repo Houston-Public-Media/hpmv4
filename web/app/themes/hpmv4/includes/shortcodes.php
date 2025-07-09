@@ -852,3 +852,44 @@ function hpm_staff_shortcode( $atts ): string {
 	return $output;
 }
 add_shortcode( 'hpm_staff', 'hpm_staff_shortcode' );
+
+function hpm_liveblog_embed_shortcode( $atts ): string {
+	extract( shortcode_atts( [
+		'rss' => ''
+	], $atts, 'multilink' ) );
+	if ( empty( $rss ) ) {
+		return '';
+	}
+	$out = get_transient( 'hpm_liveblog_embed_' . $rss );
+	if ( !empty( $out ) ) {
+		//return $out;
+	}
+	$remote = wp_remote_get( $rss );
+	if ( is_wp_error( $remote ) ) {
+		return '';
+	}
+	$feed = wp_remote_retrieve_body( $remote );
+	$dom = simplexml_load_string( $feed );
+	$out = '<h2><a href="' . $dom->channel->link . '">' . $dom->channel->title . '</a></h2><p>' . $dom->channel->description . '</p><div id="search-results" style="width: 100% !important;">';
+	foreach ( $dom->channel->item as $item ) {
+		$out .= '<article class="card post">';
+		$attrs = $item->enclosure->attributes();
+		if ( !empty( $attrs['url'] ) ) {
+			$out .= '<a class="post-thumbnail" href="' . $item->link . '"><img src="' . $attrs['url'] . '" alt="' . $item->title .'"></a>';
+		}
+		$time = strtotime( $item->pubDate );
+		$out .= '<div class="card-content">' .
+					'<header class="entry-header">' .
+						'<h2 class="entry-title"><a href="' . $item->link . '" rel="bookmark">' . $item->title . '</a></h2>' .
+					'</header>' .
+					'<div class="entry-summary">' .
+						'<p><span class="posted-on"><span class="screen-reader-text">Posted on </span><time class="entry-date published updated" datetime="' . date( 'c', $time ) . '">' . date( 'F j, Y, h:i A', $time ) .'</time></span> &middot; ' . $item->description . '</p>' .
+					'</div>'.
+				'</div>'.
+			'</article>';
+	}
+	$out .= "</div>";
+	set_transient( 'hpm_liveblog_embed_' . $rss, $out, 300 );
+	return $out;
+}
+add_shortcode( 'hpm_liveblog_embed', 'hpm_liveblog_embed_shortcode' );

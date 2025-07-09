@@ -58,6 +58,25 @@ get_header(); ?>
     .page-numbers ul li{
         list-style: none;
     }
+    @media (max-width: 768px) {
+        #search-results article {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .post-thumbnail {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+        .card-content {
+            width: 100%;
+            padding-left: 0;
+        }
+        .entry-header,
+        .entry-summary {
+            padding-left: 0;
+        }
+    }
 
 </style>
 	<div id="primary" class="content-area">
