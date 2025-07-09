@@ -863,9 +863,9 @@ function hpm_liveblog_embed_shortcode( $atts ): string {
 	}
 	$out = get_transient( 'hpm_liveblog_embed_' . $link );
 	if ( !empty( $out ) ) {
-		// return $out;
+		return $out;
 	}
-	$remote = wp_remote_get( $link, [ 'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' ] );
+	$remote = wp_remote_get( $link, [ 'user-agent' => 'Houston Public Media Live Blog Agent/1.0' ] );
 	if ( is_wp_error( $remote ) ) {
 		return '';
 	}
