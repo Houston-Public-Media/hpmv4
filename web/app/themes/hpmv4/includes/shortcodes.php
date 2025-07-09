@@ -870,6 +870,7 @@ function hpm_liveblog_embed_shortcode( $atts ): string {
 	}
 	$feed = wp_remote_retrieve_body( $remote );
 	$dom = simplexml_load_string( $feed );
+	$offset = get_option( 'gmt_offset' ) * 3600;
 	$out = '<h2><a href="' . $dom->channel->link . '">' . $dom->channel->title . '</a></h2><p>' . $dom->channel->description . '</p><div id="search-results" style="width: 100% !important;">';
 	foreach ( $dom->channel->item as $item ) {
 		$out .= '<article class="card post">';
@@ -877,13 +878,13 @@ function hpm_liveblog_embed_shortcode( $atts ): string {
 		if ( !empty( $attrs['url'] ) ) {
 			$out .= '<a class="post-thumbnail" href="' . $item->link . '"><img src="' . $attrs['url'] . '" alt="' . $item->title .'"></a>';
 		}
-		$time = strtotime( $item->pubDate );
+		$time = strtotime( $item->pubDate ) + $offset;
 		$out .= '<div class="card-content">' .
 					'<header class="entry-header">' .
 						'<h2 class="entry-title"><a href="' . $item->link . '" rel="bookmark">' . $item->title . '</a></h2>' .
 					'</header>' .
 					'<div class="entry-summary">' .
-						'<p><span class="posted-on"><span class="screen-reader-text">Posted on </span><time class="entry-date published updated" datetime="' . date( 'c', $time ) . '">' . date( 'F j, Y, h:i A', $time ) .'</time></span> &middot; ' . $item->description . '</p>' .
+						'<p><span class="posted-on"><span class="screen-reader-text">Posted on </span><time class="entry-date published updated" datetime="' . date( 'c', $time ) . '">' . date( 'F j, Y, g:i A', $time ) .'</time></span> &middot; ' . $item->description . '</p>' .
 					'</div>'.
 				'</div>'.
 			'</article>';
