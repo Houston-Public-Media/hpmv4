@@ -1550,6 +1550,13 @@ function hpm_wpf_name_filter( $field_id, $field_submit, $form_data ) {
 
 add_action( 'wpforms_process_validate_name', 'hpm_wpf_name_filter', 10, 3 );
 
+if ( WP_ENV === 'development' ) {
+	add_filter( 'get_user_option_admin_color', 'hpm_force_color_scheme' );
+	function hpm_force_color_scheme( $admin_color_scheme ) {
+		return 'light';
+	}
+}
+
 //function hpm_wpf_email_filter( $field_id, $field_submit, $form_data ) {
 //	$reject = false;
 //	$email = str_replace( '.', '', trim( $field_submit['email'] ) );
