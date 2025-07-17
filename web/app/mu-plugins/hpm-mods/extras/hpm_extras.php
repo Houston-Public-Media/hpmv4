@@ -851,6 +851,35 @@ function custom_get_featured_media( $object, $field_name, $request ): string {
 	}
 }
 
+add_action( 'rest_api_init', 'custom_register_primary_category' );
+function custom_register_primary_category(): void {
+	register_rest_field( 'post',
+		'primary_category',
+		[
+			'get_callback' => 'custom_get_primary_category',
+			'update_callback' => null,
+			'schema' => null,
+		]
+	);
+}
+
+function custom_get_primary_category( $object, $field_name, $request ) {
+	$epc = get_post_meta( $object['id'], 'epc_primary_category', true );
+	if ( $epc != false ) {
+		$cat = get_category( $epc );
+		if ( !empty( $cat ) ) {
+			return [
+				'name' => $cat->name,
+				'slug' => $cat->slug,
+				'id' => $cat->term_id,
+				'taxonomy' => $cat->taxonomy,
+				'parent' => $cat->parent
+			];
+		}
+	}
+	return [];
+}
+
 function hpm_segments( $name, $date ) {
 	$shows = [
 		'Morning Edition' => [
