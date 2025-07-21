@@ -720,6 +720,9 @@ svg:not(:root) {
 	width: 3rem;
 	margin-top: 0 !important;
 }
+.podcast-badges li img {
+	border-radius: 10px;
+}
 .podcast-badges .service-icon {
 	--unit: 3rem;
 }
