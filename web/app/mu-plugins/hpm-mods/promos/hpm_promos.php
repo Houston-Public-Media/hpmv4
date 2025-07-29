@@ -517,7 +517,7 @@ class HPM_Promos {
 						continue;
 					}
 					if ( $lightbox == 0 ) {
-						$output .= "var visited = getCookie('visited');";
+						$output .= "var visited = hpmGetCookie('visited');";
 						if ( preg_match( '/\[\[(link|image|text)\]\]/', $content_esc ) ) {
 							$content_esc = str_replace(
 								[ "[[link]]", "[[image]]", "[[text]]" ],
