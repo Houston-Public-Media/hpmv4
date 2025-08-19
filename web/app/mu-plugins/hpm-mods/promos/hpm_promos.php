@@ -270,7 +270,7 @@ class HPM_Promos {
 				}
 			}
 
-			$offset = get_option('gmt_offset')*3600;
+			$offset = get_option( 'gmt_offset' ) * 3600;
 			$endtime = mktime( $hpend['hour'], $hpend['min'], 0, $hpend['mon'], $hpend['day'], $hpend['year'] ) - $offset;
 			update_post_meta( $post_id, 'hpm_promos_end_time', $endtime );
 
@@ -320,7 +320,7 @@ class HPM_Promos {
 		}
 		if ( $post->post_type == 'promos' ) {
 			$endtime = get_post_meta( $post->ID, 'hpm_promos_end_time', true );
-			$offset = get_option('gmt_offset')*3600;
+			$offset = get_option( 'gmt_offset' ) * 3600;
 			if ( empty( $endtime ) ) {
 				$t = time() + $offset + ( 24 * HOUR_IN_SECONDS );
 			} else {
@@ -542,7 +542,7 @@ class HPM_Promos {
 						}
 						$output .= "var lightBox = '" . $content_esc . "';" .
 						"if (visited === null) {" .
-							"setCookie('visited','true',4);" .
+							"setCookie('visited','true',2);" .
 							"document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);" .
 							"var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');" .
 							"var campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');" .
