@@ -91,7 +91,7 @@ get_header(); ?>
 					<div class="col-sm-4">
 						<div class="sidebar-ad">
 <?php if ( $show_id === 503298 ) { ?>
-							<div><a href="https://uh.edu/uh-energy-innovation/"><img src="https://cdn.houstonpublicmedia.org/assets/images/UH-Secondary-Extensions-Energy-Transition-Institute-rgb_vertical_.png.webp" alt="University of Houston Energy Transition Institute" /></a></div>
+							<div><a href="https://uh.edu/energy/eti/"><img src="https://cdn.houstonpublicmedia.org/assets/images/UH-Secondary-Extensions-Energy-Transition-Institute-rgb_vertical_.png.webp" alt="University of Houston Energy Transition Institute" /></a></div>
 <?php } else { ?>
 							<h4>Support Comes From</h4>
 							<div id="div-gpt-ad-1394579228932-1">
