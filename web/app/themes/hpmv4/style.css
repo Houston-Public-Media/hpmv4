@@ -2505,6 +2505,9 @@ footer#colophon ul li a {
 		grid-column: 1/span 2;
 	}
 }
+.watch-tv .hpm-promo-wrap > .full-width {
+	grid-column: 1/span 2;
+}
 aside .hpm-promo-wrap {
 	display: none;
 }
@@ -2521,6 +2524,9 @@ aside .hpm-promo-wrap {
 	}
 	aside .hpm-promo-wrap > .column-two {
 		grid-row: 2;
+	}
+	.watch-tv .hpm-promo-wrap > .full-width {
+		grid-column: 1;
 	}
 }
 
