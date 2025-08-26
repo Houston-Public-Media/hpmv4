@@ -954,30 +954,32 @@ function hpm_segments( $name, $date ) {
 			$transient = get_transient( $trans );
 			if ( !empty( $transient ) ) {
 				return $transient;
-			} else {
-				$api_key = get_option( 'ds_npr_api_key' );
-				$url = "https://api.npr.org/query?id={$shows[$name]['id']}&fields=title&output=JSON&numResults=20&date={$date}&apiKey={$api_key}";
-				$remote = wp_remote_get( esc_url_raw( $url ) );
-				if ( is_wp_error( $remote ) ) {
-					return $output;
-				} else {
-					$api = wp_remote_retrieve_body( $remote );
-					$json = json_decode( $api, TRUE );
-					if ( !empty( $json['list']['story'] ) ) {
-						$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
-						foreach ( $json['list']['story'] as $j ) {
-							foreach ( $j['link'] as $jl ) {
-								if ( $jl['type'] == 'html' ) {
-									$link = $jl['$text'];
-								}
-							}
-							$output .= '<li><a href="' . $link . '" target="_blank">' . $j['title']['$text'] . '</a></li>';
-						}
-						$output .= "</ul></details>";
+			}
+			$npr = new NPR_CDS_WP();
+			$npr->request([
+				'collectionIds' => $shows[ $name ]['id'],
+				'profileIds' => 'story,renderable,buildout',
+				'limit' => 30,
+				'sort' => 'publishDateTime:desc',
+				'publishDateTime' => $date
+			]);
+			$npr->parse();
+			if ( empty( $npr->stories[0] ) ) {
+				return $output;
+			}
+
+			$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
+			foreach ( $npr->stories as $j ) {
+				$link = '#';
+				foreach ( $j->webPages as $jl ) {
+					if ( !empty( $jl->rels ) && in_array( 'canonical', $jl->rels ) ) {
+						$link = $jl->href;
 					}
 				}
-				set_transient( $trans, $output, HOUR_IN_SECONDS );
+				$output .= '<li><a href="' . $link . '" target="_blank">' . $j->title . '</a></li>';
 			}
+			$output .= "</ul></details>";
+			set_transient( $trans, $output, HOUR_IN_SECONDS );
 		} elseif ( $shows[ $name ]['source'] == 'regex' ) {
 			if ( $name == 'BBC World Service' ) {
 				$offset = str_replace( '-', '', get_option( 'gmt_offset' ) );

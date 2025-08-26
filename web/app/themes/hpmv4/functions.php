@@ -797,8 +797,8 @@ function hpm_homepage_modules( $catId ): array {
 			}
 		}
 	}
-	return $articles;
 	wp_reset_query();
+	return $articles;
 }
 
 function hpm_showLatestArticlesbyShowID( $catID ): array {
