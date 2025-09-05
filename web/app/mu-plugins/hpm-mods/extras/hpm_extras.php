@@ -1683,7 +1683,11 @@ function hpm_weather(): string {
 	$remote = wp_remote_get( esc_url_raw( "https://api.openweathermap.org/data/2.5/weather?lat=29.7265396&lon=-95.3415406&units=imperial&appid=" . HPM_OPEN_WEATHER ) );
 	if ( !is_wp_error( $remote ) ) {
 		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
-		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y", $c ) . '<h3>' . '<p style="color: white; font-size: 30px;"><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
+		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y", $c ) . '</h3>' .
+			'<div style="display: grid; grid-template-columns: 2rem 1fr; align-items: center; gap: 0.5rem; padding-top: 0.25rem;">' .
+				'<div><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon .'.png.webp" alt="' . $weather->weather[0]->description . '"></div>' .
+				'<div style="color: white; font-size: 30px;">' . round( $weather->main->temp ) . ' &deg;F</div>' .
+			'</div>';
 		$api_output = [
 			'icon' => 'https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp',
 			'description' =>  $weather->weather[0]->description,
@@ -1693,4 +1697,49 @@ function hpm_weather(): string {
 		set_transient( 'hpm_weather', $output, 180 );
 	}
 	return $output;
+}
+
+function hpm_ytlive_update(): void {
+	$temp = [
+		'houston-matters' => [],
+		'hello-houston' => []
+	];
+	$option = get_option( 'hpm_ytlive_talkshows' );
+	if ( empty( $option ) ) {
+		$option = $temp;
+	}
+	$t = getdate();
+	$today = mktime( 0, 0, 0, $t['mon'], $t['mday'], $t['year'] );
+	$tomorrow = $today + 86400;
+	$remote = wp_remote_get( esc_url_raw( "https://cdn.houstonpublicmedia.org/assets/ytlive.json" ) );
+	if ( is_wp_error( $remote ) ) {
+		return;
+	} else {
+		$json = json_decode( wp_remote_retrieve_body( $remote ), true );
+		foreach( $json as $item ) {
+			$date = strtotime( $item['start'] );
+			if ( str_contains( $item['title'], 'Houston Matters' ) ) {
+				$temp['houston-matters'][$date] = $item;
+			} elseif ( str_contains( $item['title'], 'Hello Houston' ) ) {
+				$temp['hello-houston'][$date] = $item;
+			}
+		}
+	}
+
+	ksort( $temp['houston-matters'] );
+	ksort( $temp['hello-houston'] );
+	foreach( $temp as $show => $event ) {
+		foreach ( $event as $date => $meta ) {
+			if ( $date >= $today && $date <= $tomorrow ) {
+				$option[ $show ] = $meta;
+			}
+		}
+	}
+	update_option( 'hpm_ytlive_talkshows', $option );
+}
+
+add_action( 'hpm_ytlive', 'hpm_ytlive_update' );
+$timestamp = wp_next_scheduled( 'hpm_ytlive' );
+if ( empty( $timestamp ) ) {
+	wp_schedule_event( time(), 'hpm_15min', 'hpm_ytlive' );
 }
