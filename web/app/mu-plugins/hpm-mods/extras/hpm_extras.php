@@ -131,6 +131,14 @@ function hpm_cron_updates( $schedules ) {
 		'interval' => 120,
 		'display' => __( 'Every Other Minute' )
 	];
+	$schedules['hpm_15min'] = [
+			'interval' => 900,
+			'display' => __( 'Every 15 Minutes' )
+	];
+	$schedules['hpm_30min'] = [
+			'interval' => 1800,
+			'display' => __( 'Every 30 Minutes' )
+	];
 	$schedules['hpm_2hours'] = [
 		'interval' => 7200,
 		'display' => __( 'Every Two Hours' )
@@ -1686,7 +1694,7 @@ function hpm_weather(): string {
 		$output .= '<h3 style="color: white; font-size: 0.875rem;">' . date( "F d, Y", $c ) . '</h3>' .
 			'<div style="display: grid; grid-template-columns: 2rem 1fr; align-items: center; gap: 0.5rem; padding-top: 0.25rem;">' .
 				'<div><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon .'.png.webp" alt="' . $weather->weather[0]->description . '"></div>' .
-				'<div style="color: white; font-size: 1.875rem;">' . round( $weather->main->temp ) . ' &deg;F</div>' .
+				'<div style="font-size: 1.875rem;">' . round( $weather->main->temp ) . ' &deg;F</div>' .
 			'</div>';
 		$api_output = [
 			'icon' => 'https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp',
