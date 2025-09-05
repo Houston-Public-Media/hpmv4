@@ -1683,10 +1683,10 @@ function hpm_weather(): string {
 	$remote = wp_remote_get( esc_url_raw( "https://api.openweathermap.org/data/2.5/weather?lat=29.7265396&lon=-95.3415406&units=imperial&appid=" . HPM_OPEN_WEATHER ) );
 	if ( !is_wp_error( $remote ) ) {
 		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
-		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y", $c ) . '</h3>' .
+		$output .= '<h3 style="color: white; font-size: 0.875rem;">' . date( "F d, Y", $c ) . '</h3>' .
 			'<div style="display: grid; grid-template-columns: 2rem 1fr; align-items: center; gap: 0.5rem; padding-top: 0.25rem;">' .
 				'<div><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon .'.png.webp" alt="' . $weather->weather[0]->description . '"></div>' .
-				'<div style="color: white; font-size: 30px;">' . round( $weather->main->temp ) . ' &deg;F</div>' .
+				'<div style="color: white; font-size: 1.875rem;">' . round( $weather->main->temp ) . ' &deg;F</div>' .
 			'</div>';
 		$api_output = [
 			'icon' => 'https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp',
