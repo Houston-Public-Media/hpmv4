@@ -128,9 +128,9 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	}
 	$hm_air = hpm_houston_matters_check();
 	if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow']['houston-matters']['live'] = true;
+		$output['talkshow']['houstonmatters']['live'] = true;
 	} elseif ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 11 || $now['hours'] == 12 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow']['hello-houston']['live'] = true;
+		$output['talkshow']['hellohouston']['live'] = true;
 	}
 
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
