@@ -46,7 +46,22 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			'type' => '',
 			'link' => ''
 		],
-		'talkshow' => ''
+		'talkshow' => [
+			'houston-matters' => [
+				'live' => false,
+				'stream-id' => '',
+				'stream-title' => '',
+				'stream-embed' => '',
+				'stream-description' => ''
+			],
+			'hello-houston' => [
+				'live' => false,
+				'stream-id' => '',
+				'stream-title' => '',
+				'stream-embed' => '',
+				'stream-description' => ''
+			]
+		]
 	];
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
@@ -113,9 +128,17 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	}
 	$hm_air = hpm_houston_matters_check();
 	if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow'] = 'houston-matters';
+		$output['talkshow']['houston-matters']['live'] = true;
 	} elseif ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 11 || $now['hours'] == 12 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow'] = 'hello-houston';
+		$output['talkshow']['hello-houston']['live'] = true;
+	}
+
+	$ytlive = get_option( 'hpm_ytlive_talkshows' );
+	foreach( $ytlive as $show => $meta ) {
+		$output['talkshow'][ $show ]['stream-id'] = $meta['id'];
+		$output['talkshow'][ $show ]['stream-title'] = $meta['title'];
+		$output['talkshow'][ $show ]['stream-embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+		$output['talkshow'][ $show ]['stream-description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
 	}
 
 	$weather = get_transient( 'hpm_weather_api' );
