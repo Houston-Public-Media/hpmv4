@@ -47,19 +47,19 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			'link' => ''
 		],
 		'talkshow' => [
-			'houston-matters' => [
+			'houstonmatters' => [
 				'live' => false,
-				'stream-id' => '',
-				'stream-title' => '',
-				'stream-embed' => '',
-				'stream-description' => ''
+				'id' => '',
+				'title' => '',
+				'embed' => '',
+				'description' => ''
 			],
-			'hello-houston' => [
+			'hellohouston' => [
 				'live' => false,
-				'stream-id' => '',
-				'stream-title' => '',
-				'stream-embed' => '',
-				'stream-description' => ''
+				'id' => '',
+				'title' => '',
+				'embed' => '',
+				'description' => ''
 			]
 		]
 	];
@@ -135,10 +135,11 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	foreach( $ytlive as $show => $meta ) {
-		$output['talkshow'][ $show ]['stream-id'] = $meta['id'];
-		$output['talkshow'][ $show ]['stream-title'] = $meta['title'];
-		$output['talkshow'][ $show ]['stream-embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
-		$output['talkshow'][ $show ]['stream-description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
+		$show = str_replace( '-', '', $show );
+		$output['talkshow'][ $show ]['id'] = $meta['id'];
+		$output['talkshow'][ $show ]['title'] = $meta['title'];
+		$output['talkshow'][ $show ]['embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+		$output['talkshow'][ $show ]['description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
 	}
 
 	$weather = get_transient( 'hpm_weather_api' );
