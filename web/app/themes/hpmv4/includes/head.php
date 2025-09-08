@@ -465,7 +465,7 @@ function hpm_talkshows(): string {
 	}
 	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && !empty( $wp_query->post ) && $wp_query->post->post_type !== 'embeds' ) {
 		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-			$output .= '<div id="hm-top"><p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a> | Call or Text: <a href="tel://+17134408870">713.440.8870</a></p></div>';
+			$output .= '<div id="hm-top"><p><span><a href="/listen-live/"><strong>Houston Matters</strong> is on the air now!</a> Join the conversation:</span> Email <a href="mailto:talk@houstonmatters.org">talk@houstonmatters.org</a> | <a href="/listen-live/">Listen Live</a> | Call or Text: <a href="tel://+17134408870">713.440.8870</a> | <a href="https://www.youtube.com/@HoustonPublicMedia/streams">Watch Live</a></p></div>';
 		} elseif ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 11 || $now['hours'] == 12 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
 			$output .= '<div id="hm-top" class="hello-houston"><p><span><a href="/shows/hello-houston/"><strong>Hello Houston</strong> is on the air now!</a> Join the conversation:</span> Call or Text: <a href="tel://+17134408870">713.440.8870</a> | <a href="/listen-live/#news">Listen Live</a> | <a href="https://www.youtube.com/@HoustonPublicMedia/streams">Watch Live</a></p></div>';
 		}
