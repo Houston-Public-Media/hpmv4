@@ -30,7 +30,6 @@ class HPM_Podcasts {
 
 		$this->process_upload = new HPM_Media_Upload();
 
-		add_filter( 'cron_schedules', [ $this, 'cron' ], 10, 2 );
 		add_action( 'hpm_podcast_update_refresh', [ $this, 'generate' ] );
 		add_filter( 'pre_update_option_hpm_podcast_settings', [ $this, 'options_clean' ], 10, 2 );
 
@@ -131,25 +130,6 @@ class HPM_Podcasts {
 		if ( !wp_next_scheduled( 'hpm_podcast_update_refresh' ) ) {
 			wp_schedule_event( time(), $this->options['recurrence'], 'hpm_podcast_update_refresh' );
 		}
-	}
-
-	/**
-	 * Add in new cron schedule options
-	 *
-	 * @param $schedules
-	 *
-	 * @return mixed
-	 */
-	public function cron( $schedules ): mixed {
-		$schedules['hpm_15min'] = [
-			'interval' => 900,
-			'display' => __( 'Every 15 Minutes' )
-		];
-		$schedules['hpm_30min'] = [
-			'interval' => 1800,
-			'display' => __( 'Every 30 Minutes' )
-		];
-		return $schedules;
 	}
 
 	public function options_clean( $new_value, $old_value ): array {

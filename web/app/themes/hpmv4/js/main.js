@@ -1,4 +1,4 @@
-let getCookie = (cname) => {
+let hpmGetCookie = (cname) => {
 	let name = cname + "=";
 	let decodedCookie = decodeURIComponent(document.cookie);
 	let ca = decodedCookie.split(';');
@@ -14,14 +14,14 @@ let getCookie = (cname) => {
 	return null;
 }
 let timeOuts = [];
-let setCookie = (cname, cvalue, exhours) => {
+let hpmSetCookie = (cname, cvalue, exhours) => {
 	let d = new Date();
 	d.setTime(d.getTime() + (exhours*60*60*1000));
 	let expires = 'expires=' + d.toUTCString();
 	document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/;SameSite=lax;Secure;';
 };
 
-if ( getCookie('inapp') !== null ) {
+if ( hpmGetCookie('inapp') !== null ) {
 	let css = document.createElement('style');
 	css.appendChild(document.createTextNode('#foot-banner, #top-donate, #masthead nav#site-navigation .nav-top.nav-donate, .top-banner { display: none; }'));
 	document.getElementsByTagName("head")[0].appendChild(css);

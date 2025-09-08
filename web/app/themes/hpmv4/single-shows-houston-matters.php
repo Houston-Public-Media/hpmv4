@@ -103,12 +103,21 @@ get_header(); ?>
 		'post_status' => 'publish',
 		'post_type' => 'post'
 	];
+	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	$tposts = new WP_Query( $topcat_args ); ?>
 			<div class="houston-matters-page">
 				<div class="about-houston-block">
 					<div class="houston-content d-flex">
 <?php
-	if( $tposts->have_posts() ) {
+	if ( !empty( $ytlive['houston-matters'] ) ) {
+		$desc = explode( "</p>", $ytlive['houston-matters']['description'] ); ?>
+						<div class="image-wrapper">
+							<h2 class="title no-bar uppercase"> <strong><span>the latest</span></strong></h2>
+							<p class="iframe-embed"><iframe id="<?php echo $ytlive['houston-matters']['id']; ?>" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $ytlive['houston-matters']['id']; ?>?enablejsapi=1" title="<?php echo $ytlive['houston-matters']['title']; ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
+							<h2 class="date-title"> <strong><a href="<?php echo "https://www.youtube.com/watch?v=" . $ytlive['houston-matters']['id']; ?>"><?php echo $ytlive['houston-matters']['title']; ?></a></strong></h2>
+							<p><?php echo $desc[0]; ?></p>
+						</div><?php
+	} elseif ( $tposts->have_posts() ) {
 		while ( $tposts->have_posts() ) {
 			$tposts->the_post(); ?>
 						<div class="image-wrapper">
@@ -120,7 +129,6 @@ get_header(); ?>
                             <p><?php echo get_the_excerpt( get_the_ID() );  ?></p>
 						</div>
 <?php
-			$topcat_args['posts_per_page'] = 16;
 			$topcat_args['post__not_in'][] = get_the_ID();
 		}
 	} ?>
@@ -133,6 +141,7 @@ get_header(); ?>
 								<h3 class="content-title">Latest EPISODES</h3>
 								<ul class="episode-list">
 <?php
+	$topcat_args['posts_per_page'] = 16;
 	$cat4 = new WP_Query( $latest_ep_args );
 	if ( $cat4->have_posts() ) {
 		while ( $cat4->have_posts() ) {

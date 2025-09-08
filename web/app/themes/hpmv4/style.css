@@ -720,6 +720,9 @@ svg:not(:root) {
 	width: 3rem;
 	margin-top: 0 !important;
 }
+.podcast-badges li img {
+	border-radius: 10px;
+}
 .podcast-badges .service-icon {
 	--unit: 3rem;
 }
@@ -851,7 +854,7 @@ svg:not(:root) {
 
 /* Houston Matters and Town Square */
 #hm-top {
-	background: rgb(35, 74, 147);
+	background: #05095E;
 }
 #hm-top.hello-houston {
 	background: #ff7e27;
@@ -886,7 +889,7 @@ svg:not(:root) {
 }
 #hm-top p a {
 	text-decoration: underline;
-	color: rgb(232, 141, 61);
+	color: #7FFBAD;
 	font-weight: 700;
 }
 
@@ -2502,6 +2505,9 @@ footer#colophon ul li a {
 		grid-column: 1/span 2;
 	}
 }
+.watch-tv .hpm-promo-wrap > .full-width {
+	grid-column: 1/span 2;
+}
 aside .hpm-promo-wrap {
 	display: none;
 }
@@ -2518,6 +2524,9 @@ aside .hpm-promo-wrap {
 	}
 	aside .hpm-promo-wrap > .column-two {
 		grid-row: 2;
+	}
+	.watch-tv .hpm-promo-wrap > .full-width {
+		grid-column: 1;
 	}
 }
 
@@ -4572,10 +4581,10 @@ section.breaking-news .row {
 	width: 32px;
 	height: 4px;
 	top: 1px;
-	background-color: #f6891f;
+	background-color: #3A6F85;
 }
 .title-style2 span {
-	color: #f6891f;
+	color: #3A6F85;
 }
 
 /*Hello Houston Title*/
@@ -5900,14 +5909,18 @@ body.single-shows #station-social.station-social {
 	border-bottom: 2px solid var(--main-red);
 }
 .about-houston-block ul.episode-list {
-	padding: 10px 0 0;
+	padding: 0.5rem 0 0;
 	list-style: none;
+	margin: 0;
 }
 .about-houston-block ul.episode-list li a.list-link {
 	display: flex;
 	align-items: center;
-	padding: 15px;
-	border-bottom: 1px solid #c5c5c5;
+	padding: 1rem 1rem 0 1rem;
+}
+.about-houston-block ul.episode-list li + li {
+	border-top: 1px solid #c5c5c5;
+	margin-top: 1rem;
 }
 .houston-content {
 	display: flex;
@@ -5921,7 +5934,7 @@ body.single-shows #station-social.station-social {
 .houston-content .content-wrapper {
 	width: 100%;
 	background: #e7f4fa;
-	padding: 0 1rem;
+	padding: 1rem;
 	margin-top: 0 !important;
 }
 .houston-content .image-wrapper .image-box {

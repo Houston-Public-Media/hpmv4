@@ -131,6 +131,14 @@ function hpm_cron_updates( $schedules ) {
 		'interval' => 120,
 		'display' => __( 'Every Other Minute' )
 	];
+	$schedules['hpm_15min'] = [
+			'interval' => 900,
+			'display' => __( 'Every 15 Minutes' )
+	];
+	$schedules['hpm_30min'] = [
+			'interval' => 1800,
+			'display' => __( 'Every 30 Minutes' )
+	];
 	$schedules['hpm_2hours'] = [
 		'interval' => 7200,
 		'display' => __( 'Every Two Hours' )
@@ -851,6 +859,35 @@ function custom_get_featured_media( $object, $field_name, $request ): string {
 	}
 }
 
+add_action( 'rest_api_init', 'custom_register_primary_category' );
+function custom_register_primary_category(): void {
+	register_rest_field( 'post',
+		'primary_category',
+		[
+			'get_callback' => 'custom_get_primary_category',
+			'update_callback' => null,
+			'schema' => null,
+		]
+	);
+}
+
+function custom_get_primary_category( $object, $field_name, $request ) {
+	$epc = get_post_meta( $object['id'], 'epc_primary_category', true );
+	if ( $epc != false ) {
+		$cat = get_category( $epc );
+		if ( !empty( $cat ) ) {
+			return [
+				'name' => $cat->name,
+				'slug' => $cat->slug,
+				'id' => $cat->term_id,
+				'taxonomy' => $cat->taxonomy,
+				'parent' => $cat->parent
+			];
+		}
+	}
+	return [];
+}
+
 function hpm_segments( $name, $date ) {
 	$shows = [
 		'Morning Edition' => [
@@ -925,30 +962,32 @@ function hpm_segments( $name, $date ) {
 			$transient = get_transient( $trans );
 			if ( !empty( $transient ) ) {
 				return $transient;
-			} else {
-				$api_key = get_option( 'ds_npr_api_key' );
-				$url = "https://api.npr.org/query?id={$shows[$name]['id']}&fields=title&output=JSON&numResults=20&date={$date}&apiKey={$api_key}";
-				$remote = wp_remote_get( esc_url_raw( $url ) );
-				if ( is_wp_error( $remote ) ) {
-					return $output;
-				} else {
-					$api = wp_remote_retrieve_body( $remote );
-					$json = json_decode( $api, TRUE );
-					if ( !empty( $json['list']['story'] ) ) {
-						$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
-						foreach ( $json['list']['story'] as $j ) {
-							foreach ( $j['link'] as $jl ) {
-								if ( $jl['type'] == 'html' ) {
-									$link = $jl['$text'];
-								}
-							}
-							$output .= '<li><a href="' . $link . '" target="_blank">' . $j['title']['$text'] . '</a></li>';
-						}
-						$output .= "</ul></details>";
+			}
+			$npr = new NPR_CDS_WP();
+			$npr->request([
+				'collectionIds' => $shows[ $name ]['id'],
+				'profileIds' => 'story,renderable,buildout',
+				'limit' => 30,
+				'sort' => 'publishDateTime:desc',
+				'publishDateTime' => $date
+			]);
+			$npr->parse();
+			if ( empty( $npr->stories[0] ) ) {
+				return $output;
+			}
+
+			$output .= "<details class=\"progsegment\"><summary>Segments for {$date}</summary><ul>";
+			foreach ( $npr->stories as $j ) {
+				$link = '#';
+				foreach ( $j->webPages as $jl ) {
+					if ( !empty( $jl->rels ) && in_array( 'canonical', $jl->rels ) ) {
+						$link = $jl->href;
 					}
 				}
-				set_transient( $trans, $output, HOUR_IN_SECONDS );
+				$output .= '<li><a href="' . $link . '" target="_blank">' . $j->title . '</a></li>';
 			}
+			$output .= "</ul></details>";
+			set_transient( $trans, $output, HOUR_IN_SECONDS );
 		} elseif ( $shows[ $name ]['source'] == 'regex' ) {
 			if ( $name == 'BBC World Service' ) {
 				$offset = str_replace( '-', '', get_option( 'gmt_offset' ) );
@@ -1652,7 +1691,11 @@ function hpm_weather(): string {
 	$remote = wp_remote_get( esc_url_raw( "https://api.openweathermap.org/data/2.5/weather?lat=29.7265396&lon=-95.3415406&units=imperial&appid=" . HPM_OPEN_WEATHER ) );
 	if ( !is_wp_error( $remote ) ) {
 		$weather = json_decode( wp_remote_retrieve_body( $remote ) );
-		$output .= '<h3 style="color: white; font-size: 14px;">' . date( "F d, Y", $c ) . '<h3>' . '<p style="color: white; font-size: 30px;"><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp" alt="' . $weather->weather[0]->description . '" style="max-height: 42px; float: left;" /> ' . round( $weather->main->temp ) . ' &deg;F</p>';
+		$output .= '<h3 style="color: white; font-size: 0.875rem;">' . date( "F d, Y", $c ) . '</h3>' .
+			'<div style="display: grid; grid-template-columns: 2rem 1fr; align-items: center; gap: 0.5rem; padding-top: 0.25rem;">' .
+				'<div><img src="https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon .'.png.webp" alt="' . $weather->weather[0]->description . '"></div>' .
+				'<div style="font-size: 1.875rem;">' . round( $weather->main->temp ) . ' &deg;F</div>' .
+			'</div>';
 		$api_output = [
 			'icon' => 'https://cdn.houstonpublicmedia.org/assets/images/weather/' . $weather->weather[0]->icon . '.png.webp',
 			'description' =>  $weather->weather[0]->description,
@@ -1662,4 +1705,49 @@ function hpm_weather(): string {
 		set_transient( 'hpm_weather', $output, 180 );
 	}
 	return $output;
+}
+
+function hpm_ytlive_update(): void {
+	$temp = [
+		'houston-matters' => [],
+		'hello-houston' => []
+	];
+	$option = get_option( 'hpm_ytlive_talkshows' );
+	if ( empty( $option ) ) {
+		$option = $temp;
+	}
+	$t = getdate();
+	$today = mktime( 0, 0, 0, $t['mon'], $t['mday'], $t['year'] );
+	$tomorrow = $today + 86400;
+	$remote = wp_remote_get( esc_url_raw( "https://cdn.houstonpublicmedia.org/assets/ytlive.json" ) );
+	if ( is_wp_error( $remote ) ) {
+		return;
+	} else {
+		$json = json_decode( wp_remote_retrieve_body( $remote ), true );
+		foreach( $json as $item ) {
+			$date = strtotime( $item['start'] );
+			if ( str_contains( $item['title'], 'Houston Matters' ) ) {
+				$temp['houston-matters'][$date] = $item;
+			} elseif ( str_contains( $item['title'], 'Hello Houston' ) ) {
+				$temp['hello-houston'][$date] = $item;
+			}
+		}
+	}
+
+	ksort( $temp['houston-matters'] );
+	ksort( $temp['hello-houston'] );
+	foreach( $temp as $show => $event ) {
+		foreach ( $event as $date => $meta ) {
+			if ( $date >= $today && $date <= $tomorrow ) {
+				$option[ $show ] = $meta;
+			}
+		}
+	}
+	update_option( 'hpm_ytlive_talkshows', $option );
+}
+
+add_action( 'hpm_ytlive', 'hpm_ytlive_update' );
+$timestamp = wp_next_scheduled( 'hpm_ytlive' );
+if ( empty( $timestamp ) ) {
+	wp_schedule_event( time(), 'hpm_15min', 'hpm_ytlive' );
 }

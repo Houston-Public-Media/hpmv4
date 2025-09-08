@@ -797,8 +797,8 @@ function hpm_homepage_modules( $catId ): array {
 			}
 		}
 	}
-	return $articles;
 	wp_reset_query();
+	return $articles;
 }
 
 function hpm_showLatestArticlesbyShowID( $catID ): array {
@@ -1472,41 +1472,13 @@ function hpm_thumbnail_alt_text_check( $html ) {
 add_filter( 'post_thumbnail_html', 'hpm_thumbnail_alt_text_check', 15 );
 
 if ( function_exists( 'npr_cds_activate' ) && WP_ENV === 'development' ) {
-	function hpm_npr_cds_diff ( $query, $publish, $qnum, $that ) {
-		if ( $qnum == 1 ) {
-			$exists = new WP_Query( $query );
-			if ( $exists->have_posts() ) {
-				error_log( 'NPR Story ' . $query[ 'meta_value' ] . ' exists as a ' . $query[ 'post_type' ] . ' in the database' );
-			}
-			$query[ 'post_type' ] = 'post';
-			$query[ 'post_status' ] = 'publish';
-			$exists1 = new WP_Query( $query );
-			if ( $exists1->have_posts() ) {
-				error_log( 'NPR Story ' . $query[ 'meta_value' ] . ' exists as a ' . $query[ 'post_type' ] . ' in the database' );
-			}
+	function hpm_npr_cds_push_post_type ( $option, $post ) {
+		if ( !empty( $post->post_type ) && $post->post_type == 'event' ) {
+			$option = 'event';
 		}
-		return $query;
+		return $option;
 	}
-
-	add_action( 'npr_story_exists_args', 'hpm_npr_cds_diff', 10, 4 );
-
-	function hpm_npr_pre_insert_post ( $args, $post_id, $story, $created, $qnum ) {
-		if ( $qnum == 1 ) {
-			$args[ 'post_type' ] = 'post';
-		}
-		return $args;
-	}
-
-	add_action( 'npr_pre_insert_post', 'hpm_npr_pre_insert_post', 10, 5 );
-
-	function hpm_npr_pre_update_post ( $args, $post_id, $story, $qnum ) {
-		if ( $qnum == 1 ) {
-			$args[ 'post_type' ] = 'post';
-		}
-		return $args;
-	}
-
-	add_action( 'npr_pre_update_post', 'hpm_npr_pre_update_post', 10, 4 );
+	add_action( 'npr_cds_push_post_type_filter', 'hpm_npr_cds_push_post_type', 10, 2 );
 }
 
 add_filter( 'tec_tickets_emails_dispatcher_headers', 'hpm_tec_tickets_rsvp_email_filter', 15 );
@@ -1549,6 +1521,13 @@ function hpm_wpf_name_filter( $field_id, $field_submit, $form_data ) {
 }
 
 add_action( 'wpforms_process_validate_name', 'hpm_wpf_name_filter', 10, 3 );
+
+if ( WP_ENV === 'development' ) {
+	add_filter( 'get_user_option_admin_color', 'hpm_force_color_scheme' );
+	function hpm_force_color_scheme( $admin_color_scheme ) {
+		return 'light';
+	}
+}
 
 //function hpm_wpf_email_filter( $field_id, $field_submit, $form_data ) {
 //	$reject = false;

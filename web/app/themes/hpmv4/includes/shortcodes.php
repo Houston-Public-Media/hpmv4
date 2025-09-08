@@ -852,3 +852,73 @@ function hpm_staff_shortcode( $atts ): string {
 	return $output;
 }
 add_shortcode( 'hpm_staff', 'hpm_staff_shortcode' );
+
+function hpm_liveblog_embed_shortcode( $atts ): string {
+	extract( shortcode_atts( [
+		'link' => '',
+		'type' => ''
+	], $atts, 'multilink' ) );
+	if ( empty( $link ) && empty( $type ) ) {
+		return '';
+	}
+	$out = get_transient( 'hpm_liveblog_embed_' . $link );
+	if ( !empty( $out ) ) {
+		return $out;
+	}
+	$remote = wp_remote_get( $link, [ 'user-agent' => 'Houston Public Media Live Blog Agent/1.0' ] );
+	if ( is_wp_error( $remote ) ) {
+		return '';
+	}
+	$feed = wp_remote_retrieve_body( $remote );
+	if ( $type == 'rss' ) {
+		$dom = simplexml_load_string( $feed );
+		$offset = get_option( 'gmt_offset' ) * 3600;
+		$out = '<h2><a href="' . $dom->channel->link . '">' . $dom->channel->title . '</a></h2><p>' . $dom->channel->description . '</p><div id="search-results" style="width: 100% !important;">';
+		foreach ( $dom->channel->item as $item ) {
+			$out .= '<article class="card post">';
+			$attrs = $item->enclosure->attributes();
+			if ( !empty( $attrs['url'] ) ) {
+				$out .= '<a class="post-thumbnail" href="' . $item->link . '"><img src="' . $attrs['url'] . '" alt="' . $item->title .'"></a>';
+			}
+			$time = strtotime( $item->pubDate ) + $offset;
+			$out .= '<div class="card-content">' .
+						'<header class="entry-header">' .
+							'<h2 class="entry-title"><a href="' . $item->link . '" rel="bookmark">' . $item->title . '</a></h2>' .
+						'</header>' .
+						'<div class="entry-summary">' .
+							'<p><span class="posted-on"><span class="screen-reader-text">Posted on </span><time class="entry-date published updated" datetime="' . date( 'c', $time ) . '">' . date( 'F j, Y, g:i A', $time ) .'</time></span> &middot; ' . $item->description . '</p>' .
+						'</div>'.
+					'</div>'.
+				'</article>';
+		}
+		$out .= "</div>";
+	} elseif ( $type == 'api' ) {
+		$out = '<style>.Figure-credit-container {text-align: right;font-style: italic;font-size: 85%;padding:0 0.5rem;}.Figure-credit-container * {display: inline;text-align: right;}figure {background-color:#e9e9e9;}</style><div id="search-results" style="width: 100% !important;">';
+		$feed = preg_replace( "/[\r\n]/", "", $feed );
+		$feed = preg_replace( "/\s{2,50}/", "", $feed );
+		$items = explode( "<ps-liveblog-post ", $feed );
+		foreach ( $items as $item ) {
+			preg_match( '/<h2 data\-post\-headline>(.+)<\/h2>/', $item, $title );
+			preg_match( '/<span class\="LiveBlogPost\-dateAndTime\-postedTime\-value formatValue">(.+)<\/span><\/div>/', $item, $timestamp );
+			preg_match( '/<div class="LiveBlogPost-body rich-text-body" >(.+)<\/div><\/ps\-liveblog\-post>/', $item, $body );
+			if ( !empty( $title[1] ) && !empty( $body[1] ) && !empty( $timestamp[1] ) ) {
+				$body_string = str_replace( [ '"height', "<ahref" ], [ '" height', "<a href" ], $body[1] );
+				$out .= '<article class="card post">' .
+					'<div class="card-content">' .
+						'<header class="entry-header">' .
+							'<h2 class="entry-title">' . $title[1] . '</a></h2>' .
+						'</header>' .
+						'<div class="entry-summary">' .
+							'<p><em>' . $timestamp[1] . '</em></p>' .
+							$body_string .
+						'</div>'.
+					'</div>'.
+				'</article>';
+			}
+		}
+		$out .= "</div>";
+	}
+	set_transient( 'hpm_liveblog_embed_' . $link, $out, 300 );
+	return $out;
+}
+add_shortcode( 'hpm_liveblog_embed', 'hpm_liveblog_embed_shortcode' );

@@ -235,7 +235,7 @@ get_header(); ?>
 <?php
 			// PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB
 			$json = hpm_youtube_playlist( 'PL1bastN9fY1iS4PbKjIgEE6dPebMeuJzB', 50 );
-			$r = rand( 0, count( $json ) - 1 );
+			$r = 0;
 			$yt_desc = explode( "----------", $json[$r]['snippet']['description'] );
 			$yt_desc_trim = str_replace( [ "\n", "SUBSCRIBE for more local news and information from Houston Public Media:<br />https://www.youtube.com/@HoustonPublicMedia" ], [ "<br />", "" ], $yt_desc[0] ); ?>
 						<div id="youtube-main">

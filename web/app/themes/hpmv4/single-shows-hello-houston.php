@@ -128,11 +128,32 @@ global $post;
 			'post_type' => 'post'
 		];
 		$latest_ep_args['posts_per_page'] = 16;
+		$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	}
 
 	?>
 			<div class="houston-matters-page">
 				<div class="about-houston-block">
+					<div id="hello-houston-top">
+<?php
+						if ( !empty( $ytlive['hello-houston'] ) ) {
+							$desc = explode( "</p>", $ytlive['hello-houston']['description'] ); ?>
+							<div class="image-wrapper">
+								<h2 class="title no-bar uppercase"> <strong><span style="color: #7787f7">The Latest</span></strong></h2>
+								<p class="iframe-embed"><iframe id="<?php echo $ytlive['hello-houston']['id']; ?>" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $ytlive['hello-houston']['id']; ?>?enablejsapi=1" title="<?php echo $ytlive['hello-houston']['title']; ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
+								<h2 class="date-title"> <strong><a href="<?php echo "https://www.youtube.com/watch?v=" . $ytlive['hello-houston']['id']; ?>"><?php echo $ytlive['hello-houston']['title']; ?></a></strong></h2>
+								<p><?php echo strip_tags( $desc[0] ); ?></p>
+							</div>
+<?php
+						}
+						?>
+						<div id="hello-banner">
+							<h2>Welcome to Hello Houston!</h2>
+							<p>Hello Houston is your connection to the heart of the Bayou City. Every weekday from 11am-1pm on Houston Public Media News 88.7, we dive deep into the stories that matter to Houstonians &mdash; from breaking local news to cultural happenings, community voices, and the everyday joys and challenges of life in our vibrant city.</p>
+							<p>Our mission is to keep you informed, engaged, and entertained wherever you get your content. And we're not just on the radio, we're in your podcast feed, on YouTube, and on your social media platforms!</p>
+							<h3>Houston is always talking&mdash;let's talk together!</h3>
+						</div>
+					</div>
 					<?php echo do_shortcode( $post->post_content ); ?>
 				</div>
 				<div id="station-social" class="station-social">
