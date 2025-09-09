@@ -76,18 +76,18 @@ $tras = null; ?>
 			justify-content: center;
 		}
         .card {
-            border-radius: 0px;
+            border-radius: 0;
             border-color: #237bbd;
         }
         .card-header {
             background-color: #237bbd;
             color:#fff;
             font-weight: bold;
-            border-radius: 0px;
+            border-radius: 0;
             min-height: 56px;
         }
         .card-header:first-child {
-            border-radius: 0px;
+            border-radius: 0;
         }
         .card-title {
             font-size: 13px;
@@ -159,7 +159,39 @@ $tras = null; ?>
 		</section>
 		<section class="section">
 			<div class="row">
-				<?php get_template_part("content", "indepth"); ?>
+<?php
+	$t = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+	$now = getdate( $t );
+	$hm_air = hpm_houston_matters_check();
+	$ytlive = get_option( 'hpm_ytlive_talkshows' );
+	$talkshow = '';
+	if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
+		if ( $now['hours'] == 9 ) {
+			$talkshow = 'houston-matters';
+		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
+			$talkshow = 'hello-houston';
+		}
+	}
+
+	if ( !empty( $talkshow ) ) { ?>
+				<div class="col-12 col-lg-9">
+					<div class="news-slider <?php echo $talkshow;?>">
+						<div class="news-slide-item">
+							<p class="iframe-embed"><iframe id="<?php echo $ytlive[ $talkshow ]['id']; ?>" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $ytlive[ $talkshow ]['id']; ?>?enablejsapi=1" title="<?php echo $ytlive[ $talkshow ]['title']; ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
+						</div>
+						<div class="news-slide-item">
+							<h4 class="text-light-gray"><?php echo ucwords( str_replace( '-', ' ', $talkshow ) ); ?></h4>
+							<h2><a href="https://www.youtube.com/watch?v=<?php echo $ytlive[ $talkshow ]['id']; ?>" rel="bookmark"><?php echo $ytlive[ $talkshow ]['title']; ?></a></h2>
+							<p><?php echo strip_tags( explode( '</p>', $ytlive[ $talkshow ]['description'] )[0] ); ?></p>
+						</div>
+					</div>
+				</div><?php
+	} else {
+		get_template_part("content", "indepth");
+	}
+?>
 				<aside class="col-lg-3">
 					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 				</aside>

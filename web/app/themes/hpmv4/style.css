@@ -856,14 +856,26 @@ svg:not(:root) {
 #hm-top {
 	background: #05095E;
 }
-#hm-top.hello-houston {
-	background: #ff7e27;
+#hm-top.houston-matters,
+.news-slider.houston-matters {
+	background: #7FFBAD;
+	h2 > a, p, p a, h4 {
+		color: black;
+	}
 }
-#hm-top.hello-houston p {
-	color: rgb(0, 0, 0);
-}
-#hm-top.hello-houston p a {
-	color: #fff;
+#hm-top.hello-houston,
+.news-slider.hello-houston {
+	background-color: #7787f7;
+	background-image: url(https://cdn.houstonpublicmedia.org/assets/images/Hello-Houston_Dot-Pattern-v3.png.webp);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	h2 > a, p a {
+		color: white;
+	}
+	p, h4 {
+		color: black;
+	}
 }
 #hm-top.election {
 	background: #e7e7e8;
@@ -4396,6 +4408,17 @@ section.breaking-news .row {
 .news-slider {
 	background-color: #e7e7e8;
 	padding: 1.5rem;
+	&.houston-matters, &.hello-houston {
+		display: grid;
+		align-items: center;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		@media (min-width: 640px) {
+			.news-slide-item:nth-child(2) {
+				order: -1;
+			}
+		}
+	}
 }
 .news-slider > .row > div:nth-child(2) {
 	display: flex;
