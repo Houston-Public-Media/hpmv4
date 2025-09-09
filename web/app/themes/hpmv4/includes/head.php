@@ -453,6 +453,10 @@ function hpm_talkshows(): string {
 	wp_reset_query();
 	global $wp_query;
 	$t = time();
+	if ( !empty( $_GET['testtime'] ) ) {
+		$tt = explode( '-', $_GET['testtime'] );
+		$t = mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] );
+	}
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 	$now = getdate( $t );
