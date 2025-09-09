@@ -161,20 +161,23 @@ $tras = null; ?>
 			<div class="row">
 <?php
 	$t = time();
-	if ( !empty( $_GET['testtime'] ) ) {
-		$tt = explode( '-', $_GET['testtime'] );
-		$t = mktime( $tt[0], $tt[1], 0, $tt[2], $tt[3], $tt[4] );
-	}
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
+	if ( !empty( $_GET['streamtest'] ) ) {
+		$streamtest = esc_html( $_GET['streamtest'] );
+	}
 	$now = getdate( $t );
 	$hm_air = hpm_houston_matters_check();
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	$talkshow = '';
-	if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		if ( $now['hours'] == 9 ) {
+	if (
+			$now['wday'] > 0 &&
+			$now['wday'] < 6 &&
+			( ( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) || !empty( $streamtest ) )
+	) {
+		if ( $now['hours'] == 9 || $streamtest == 'houston-matters' ) {
 			$talkshow = 'houston-matters';
-		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
+		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 || $streamtest == 'hello-houston' ) {
 			$talkshow = 'hello-houston';
 		}
 	}
