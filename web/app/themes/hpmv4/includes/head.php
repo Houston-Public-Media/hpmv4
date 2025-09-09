@@ -457,17 +457,15 @@ function hpm_talkshows(): string {
 	$t = $t + $offset;
 	$now = getdate( $t );
 	$output = '';
-	$anc = get_post_ancestors( get_the_ID() );
-	$bans = [ 135762, 290722, 303436, 303018, 315974 ];
 	$hm_air = hpm_houston_matters_check();
-	if ( empty( $wp_query->post ) ) {
-		return '';
+	if ( empty( $wp_query->post ) || $wp_query->post->post_type == 'embeds' ) {
+		return $output;
 	}
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
-	if ( !in_array( 135762, $anc ) && !in_array( get_the_ID(), $bans ) && !empty( $wp_query->post ) && $wp_query->post->post_type !== 'embeds' ) {
-		if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-			$output .= '<div id="hm-top"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '"><strong>Houston Matters</strong> is live!</a> Join the conversation:</span> <a href="mailto:talk@houstonmatters.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
-		} elseif ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 11 || $now['hours'] == 12 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
+	if ( $now['wday'] > 0 && $now['wday'] < 6 && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
+		if ( $now['hours'] == 9 ) {
+			$output .= '<div id="hm-top" class="houston-matters"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '"><strong>Houston Matters</strong> is live!</a> Join the conversation:</span> <a href="mailto:talk@houstonmatters.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
+		} else {
 			$output .= '<div id="hm-top" class="hello-houston"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['hello-houston']['id'] . '"><strong>Hello Houston</strong> is live!</a> Join the conversation:</span> <a href="mailto:hello@hellohouston.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['hello-houston']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
 		}
 	}
