@@ -189,10 +189,11 @@ $tras = null; ?>
 							<p class="iframe-embed"><iframe id="<?php echo $ytlive[ $talkshow ]['id']; ?>" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $ytlive[ $talkshow ]['id']; ?>?enablejsapi=1" title="<?php echo $ytlive[ $talkshow ]['title']; ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
 						</div>
 						<div class="news-slide-item">
-							<h4 class="text-light-gray"><?php echo ucwords( str_replace( '-', ' ', $talkshow ) ); ?></h4>
+							<h4>WATCH LIVE</h4>
 							<h2><a href="https://www.youtube.com/watch?v=<?php echo $ytlive[ $talkshow ]['id']; ?>" rel="bookmark"><?php echo $ytlive[ $talkshow ]['title']; ?></a></h2>
 							<p><?php echo strip_tags( explode( '</p>', $ytlive[ $talkshow ]['description'] )[0] ); ?></p>
 						</div>
+						<img src="https://cdn.houstonpublicmedia.org/assets/images/icons/<?php echo $talkshow; ?>-logo.webp" alt="<?php echo ucwords( str_replace( '-', ' ', $talkshow ) ); ?>" width="256" height="218" class="talkshow-logo" />
 					</div>
 				</div><?php
 	} else {
