@@ -52,14 +52,16 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 				'id' => '',
 				'title' => '',
 				'embed' => '',
-				'description' => ''
+				'description' => '',
+				'showname' => 'Houston Matters'
 			],
 			'hellohouston' => [
 				'live' => false,
 				'id' => '',
 				'title' => '',
 				'embed' => '',
-				'description' => ''
+				'description' => '',
+				'showname' => 'Hello Houston'
 			]
 		]
 	];

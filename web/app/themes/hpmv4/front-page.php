@@ -101,6 +101,9 @@ $tras = null; ?>
 			display: grid;
 			justify-content: center;
 		}
+		#hm-top.hello-houston, #hm-top.houston-matters {
+			display: none;
+		}
 		@media screen and (min-width: 34rem) {
 			#station-schedules {
 				display: grid;
@@ -127,18 +130,46 @@ $tras = null; ?>
 	<div id="primary" class="content-area home-page">
 		<section class="section breaking-news container-fluid" style="padding-bottom: 0px !important;">
 			<div class="row">
-				<?php echo hpm_showTopthreeArticles( $articles ); ?>
+<?php
+	$t = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+	$streamtest = '';
+	if ( !empty( $_GET['streamtest'] ) ) {
+		$streamtest = esc_html( $_GET['streamtest'] );
+	}
+	$now = getdate( $t );
+	$hm_air = hpm_houston_matters_check();
+	$talkshow = '';
+	$priority_start = 3;
+	$priority_end = 8;
+	if (
+		$now['wday'] > 0 &&
+		$now['wday'] < 6 &&
+		( ( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) || !empty( $streamtest ) )
+	) {
+		if ( $now['hours'] == 9 || $streamtest == 'houston-matters' ) {
+			$talkshow = 'houston-matters';
+			$priority_start = 1;
+			$priority_end = 6;
+		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 || $streamtest == 'hello-houston' ) {
+			$talkshow = 'hello-houston';
+			$priority_start = 1;
+			$priority_end = 6;
+		}
+	}
+					echo hpm_showTopthreeArticles( $articles, $talkshow ); ?>
 			</div>
 		</section>
 		<section class="section short-news" style="padding-top: 0px !important;">
 			<ul class="list-none d-flex">
-				<?php
+			<?php
 				foreach ( $articles as $ka => $va ) {
 					$post = $va;
-					if ( $ka >= 3 && $ka < 8 ) {
+					if ( $ka >= $priority_start && $ka < $priority_end ) {
 						get_template_part("content", "topnewsrail");
 					}
-					if ( $ka == 8 ) {
+					if ( $ka == $priority_end ) {
 						$indepthArtcle = $post;
 					}
 				} ?>
@@ -159,48 +190,8 @@ $tras = null; ?>
 		</section>
 		<section class="section">
 			<div class="row">
-<?php
-	$t = time();
-	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset;
-	if ( !empty( $_GET['streamtest'] ) ) {
-		$streamtest = esc_html( $_GET['streamtest'] );
-	}
-	$now = getdate( $t );
-	$hm_air = hpm_houston_matters_check();
-	$ytlive = get_option( 'hpm_ytlive_talkshows' );
-	$talkshow = '';
-	if (
-			$now['wday'] > 0 &&
-			$now['wday'] < 6 &&
-			( ( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) || !empty( $streamtest ) )
-	) {
-		if ( $now['hours'] == 9 || $streamtest == 'houston-matters' ) {
-			$talkshow = 'houston-matters';
-		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 || $streamtest == 'hello-houston' ) {
-			$talkshow = 'hello-houston';
-		}
-	}
-
-	if ( !empty( $talkshow ) ) { ?>
-				<div class="col-12 col-lg-9">
-					<div class="news-slider <?php echo $talkshow;?>">
-						<div class="news-slide-item">
-							<p class="iframe-embed"><iframe id="<?php echo $ytlive[ $talkshow ]['id']; ?>" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $ytlive[ $talkshow ]['id']; ?>?enablejsapi=1" title="<?php echo $ytlive[ $talkshow ]['title']; ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
-						</div>
-						<div class="news-slide-item">
-							<h4>WATCH LIVE</h4>
-							<h2><a href="https://www.youtube.com/watch?v=<?php echo $ytlive[ $talkshow ]['id']; ?>" rel="bookmark"><?php echo $ytlive[ $talkshow ]['title']; ?></a></h2>
-							<p><?php echo strip_tags( explode( '</p>', $ytlive[ $talkshow ]['description'] )[0] ); ?></p>
-						</div>
-						<img src="https://cdn.houstonpublicmedia.org/assets/images/icons/<?php echo $talkshow; ?>-logo.webp" alt="<?php echo ucwords( str_replace( '-', ' ', $talkshow ) ); ?>" width="256" height="218" class="talkshow-logo" />
-					</div>
-				</div><?php
-	} else {
-		get_template_part("content", "indepth");
-	}
-?>
-				<aside class="col-lg-3">
+				<?php get_template_part("content", "indepth"); ?>
+				<aside class="col-lg-3 indepth-sidebar">
 					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 				</aside>
 				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">

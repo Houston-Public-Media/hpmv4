@@ -850,8 +850,10 @@ function altered_post_time_ago_function() {
 }
 add_filter( 'the_time', 'altered_post_time_ago_function' );
 
-function hpm_showTopthreeArticles( $articles ): string {
+function hpm_showTopthreeArticles( $articles, $talkshow = '' ): string {
 	$result = "";
+	$talkshow_display = false;
+
 	if ( count( $articles ) > 0 ) {
 		foreach ( $articles as $ka => $va ) {
 			$post = $va;
@@ -869,12 +871,55 @@ function hpm_showTopthreeArticles( $articles ): string {
 				} else {
 					$breakingNewsButton = '';
 				}
-				$result .= '<div class="col-lg-8 col-sm-12 breaking-news-first"><div class="row news-main"> <div class="col-sm-5">' . $breakingNewsButton . '<h1><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . $post_title . '</a></h1><p style="font-size: 0.875rem;">' . $summary . '</p></div><div class="col-sm-7"><div class="box-img breaking-news-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, $post->ID ) . ' </a></div> </div></div></div><div class="col-lg-4 col-sm-12"><ul class="news-listing row">';
+				$result .= '<div class="col-lg-8 col-sm-12 breaking-news-first">'.
+						'<div class="row news-main">'.
+							'<div class="col-sm-5">' .
+								$breakingNewsButton . '<h1><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . $post_title . '</a></h1>'.
+								'<p style="font-size: 0.875rem;">' . $summary . '</p>'.
+							'</div>'.
+							'<div class="col-sm-7">'.
+								'<div class="box-img breaking-news-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, $post->ID ) . ' </a></div>'.
+							'</div>'.
+						'</div>'.
+					'</div>'.
+					'<div class="col-lg-4 col-sm-12">';
 			} elseif ( $ka == 1 || $ka == 2 ) {
-				$result .= '<li class="col-lg-12 col-sm-6"><div class="d-flex flex-row-reverse"><div class="col-5"><div class="box-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, get_the_ID() ) . '</a></div></div>
-									<div class="col-7"><h4 class="text-light-gray" style="color:#237bbd;"><a href="' . get_the_permalink( $post ) . '">' . hpm_top_cat( $post->ID ) . '</a></h4><p><a href="' . get_the_permalink( $post ) . '">' . get_the_title( $post ) . '</a></p></div></div> </li>';
-			} elseif ( $ka > 3 ) {
-					$result .= '</ul>';
+				if ( !empty( $talkshow ) && !$talkshow_display ) {
+					if ( $talkshow == 'houston-matters' ) {
+						$talk_email = 'talk@houstonmatters.org';
+					} else {
+						$talk_email = 'hello@hellohouston.org';
+					}
+					$ytlive = get_option( 'hpm_ytlive_talkshows' );
+					$result .= '<div class="news-slider ' . $talkshow .'">'.
+						'<div class="news-slide-item">'.
+							'<h4>WATCH LIVE</h4>'.
+							'<h2><a href="https://www.youtube.com/watch?v=' . $ytlive[ $talkshow ]['id'] .'" rel="bookmark">'. ucwords( str_replace( '-', ' ', $talkshow ) ) .'</a></h2>'.
+							'<p class="iframe-embed"><iframe id="' . $ytlive[ $talkshow ]['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $ytlive[ $talkshow ]['id'] . '?enablejsapi=1" title="' . $ytlive[ $talkshow ]['title'] .'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>' .
+							'<p style="text-align: center;"><a href="mailto:' . $talk_email . '">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive[ $talkshow ]['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p>' .
+						'</div>' .
+						'<img src="https://cdn.houstonpublicmedia.org/assets/images/icons/' . $talkshow .'-logo.webp" alt="' . ucwords( str_replace( '-', ' ', $talkshow ) ) . '" width="256" height="218" class="talkshow-logo" />' .
+					'</div>';
+					$talkshow_display = true;
+				} elseif ( !$talkshow_display ) {
+					if ( $ka == 1 ) {
+						$result .= '<ul class="news-listing row">';
+					}
+					$result .= '<li class="col-lg-12 col-sm-6">'.
+							'<div class="d-flex flex-row-reverse">'.
+								'<div class="col-5">'.
+									'<div class="box-img"><a href="' . get_the_permalink( $post ) . '" rel="bookmark">' . get_the_post_thumbnail( $post, get_the_ID() ) . '</a></div>'.
+								'</div>'.
+								'<div class="col-7">'.
+									'<h4 class="text-light-gray" style="color:#237bbd;"><a href="' . get_the_permalink( $post ) . '">' . hpm_top_cat( $post->ID ) . '</a></h4>'.
+									'<p><a href="' . get_the_permalink( $post ) . '">' . get_the_title( $post ) . '</a></p>'.
+								'</div>'.
+							'</div>'.
+						'</li>';
+					if ( $ka == 2 ) {
+						$result .= '</ul></div>';
+					}
+				}
 			}
 		}
 	}

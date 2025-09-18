@@ -863,6 +863,7 @@ svg:not(:root) {
 	overflow: hidden;
 	h2 > a, p, p a {
 		color: black;
+		font-weight: bolder;
 		z-index: 2;
 	}
 	h4 {
@@ -884,6 +885,7 @@ svg:not(:root) {
 	overflow: hidden;
 	p a {
 		color: white;
+		font-weight: bolder;
 		z-index: 2;
 	}
 	h2 > a, p {
@@ -2562,6 +2564,8 @@ aside .hpm-promo-wrap {
 	aside .hpm-promo-wrap {
 		display: grid;
 		grid-template-columns: 1fr;
+		height: 100%;
+		align-items: center;
 	}
 	aside .hpm-promo-wrap > .column-one {
 		grid-row: 1;
@@ -3397,6 +3401,9 @@ article.staff {
 		margin: 0;
 		float: right;
 		padding: 0 1rem 1rem 1rem;
+		&.indepth-sidebar {
+			padding: 0 1rem;
+		}
 	}
 	#float-wrap {
 		overflow: hidden;
@@ -4444,12 +4451,7 @@ section.breaking-news .row {
 		display: grid;
 		align-items: center;
 		gap: 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		@media (min-width: 640px) {
-			.news-slide-item:nth-child(2) {
-				order: -1;
-			}
-		}
+		height: 100%;
 	}
 }
 .news-slider > .row > div:nth-child(2) {

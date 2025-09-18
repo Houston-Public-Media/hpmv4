@@ -469,7 +469,8 @@ function hpm_talkshows(): string {
 	if (
 		$now['wday'] > 0 &&
 		$now['wday'] < 6 &&
-		( ( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) || !empty( $streamtest ) )
+		( ( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) ||
+		!empty( $streamtest ) )
 	) {
 		if ( $now['hours'] == 9 || $streamtest == 'houston-matters' ) {
 			$output .= '<div id="hm-top" class="houston-matters"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '"><strong>Houston Matters</strong> is live!</a> Join the conversation:</span> <a href="mailto:talk@houstonmatters.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
