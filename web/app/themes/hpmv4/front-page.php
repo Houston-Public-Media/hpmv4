@@ -101,9 +101,6 @@ $tras = null; ?>
 			display: grid;
 			justify-content: center;
 		}
-		#hm-top.hello-houston, #hm-top.houston-matters {
-			display: none;
-		}
 		@media screen and (min-width: 34rem) {
 			#station-schedules {
 				display: grid;
@@ -115,6 +112,9 @@ $tras = null; ?>
 			}
 			#station-schedules .station-now-play:nth-child(even) {
 				border-right: 1px solid #808080;
+			}
+			#hm-top.hello-houston, #hm-top.houston-matters {
+				display: none;
 			}
 		}
 		@media screen and (min-width: 52.5rem) {
