@@ -134,10 +134,6 @@ $tras = null; ?>
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
-	$streamtest = '';
-	if ( !empty( $_GET['streamtest'] ) ) {
-		$streamtest = esc_html( $_GET['streamtest'] );
-	}
 	$now = getdate( $t );
 	$hm_air = hpm_houston_matters_check();
 	$talkshow = '';
@@ -146,17 +142,28 @@ $tras = null; ?>
 	if (
 		$now['wday'] > 0 &&
 		$now['wday'] < 6 &&
-		( ( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) || !empty( $streamtest ) )
+		( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] )
 	) {
-		if ( $now['hours'] == 9 || $streamtest == 'houston-matters' ) {
+		if ( $now['hours'] == 9 ) {
 			$talkshow = 'houston-matters';
-			$priority_start = 1;
-			$priority_end = 6;
-		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 || $streamtest == 'hello-houston' ) {
+		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
 			$talkshow = 'hello-houston';
-			$priority_start = 1;
-			$priority_end = 6;
 		}
+	}
+	$streamtest = '';
+	if ( !empty( $_GET['streamtest'] ) ) {
+		$streamtest = esc_html( $_GET['streamtest'] );
+	}
+	if ( !empty( $streamtest ) ) {
+		if ( $streamtest == 'houston-matters' ) {
+			$talkshow = 'houston-matters';
+		} elseif ( $streamtest == 'hello-houston' ) {
+			$talkshow = 'hello-houston';
+		}
+	}
+	if ( !empty( $talkshow ) ) {
+		$priority_start = 1;
+		$priority_end = 6;
 	}
 					echo hpm_showTopthreeArticles( $articles, $talkshow ); ?>
 			</div>
