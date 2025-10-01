@@ -115,6 +115,7 @@ if ( is_preview() ) { ?>
 		} elseif ( $cats->term_id == 12 ) { ?>
 				<div class="sidebar-ad col-sm-6 col-md-12">
 					<!-- /9147267/HPM_Bauer_Business_Focus -->
+					<h4>Bauer Business Focus Sponsor</h4>
 					<div id='div-gpt-ad-1759329378296-0' style='min-width: 300px; min-height: 250px;'>
 						<script>
 							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1759329378296-0'); });
