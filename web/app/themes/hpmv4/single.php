@@ -114,8 +114,12 @@ if ( is_preview() ) { ?>
 			}
 		} elseif ( $cats->term_id == 12 ) { ?>
 				<div class="sidebar-ad col-sm-6 col-md-12">
-					<h4>Support Comes From</h4>
-					<p><a href="https://www.texasmutual.com/employers/claims?utm_source=HPM&utm_medium=Display&utm_campaign=BIB+Claims&utm_id=BIB+Claims"><img src="https://cdn.houstonpublicmedia.org/assets/images/texas-mutual-tcot-may-2025.jpg.webp" alt="Texas Mutual: Texans count on Texans" /></a></p>
+					<!-- /9147267/HPM_Bauer_Business_Focus -->
+					<div id='div-gpt-ad-1759329378296-0' style='min-width: 300px; min-height: 250px;'>
+						<script>
+							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1759329378296-0'); });
+						</script>
+					</div>
 				</div>
 <?php
 		}

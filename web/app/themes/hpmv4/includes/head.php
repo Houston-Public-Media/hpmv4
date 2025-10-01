@@ -462,10 +462,14 @@ function hpm_talkshows(): string {
 		return $output;
 	}
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
-	if ( $now['wday'] > 0 && $now['wday'] < 6 && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
+	if (
+		$now['wday'] > 0 &&
+		$now['wday'] < 6 &&
+		( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] )
+	) {
 		if ( $now['hours'] == 9 ) {
 			$output .= '<div id="hm-top" class="houston-matters"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '"><strong>Houston Matters</strong> is live!</a> Join the conversation:</span> <a href="mailto:talk@houstonmatters.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
-		} else {
+		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
 			$output .= '<div id="hm-top" class="hello-houston"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['hello-houston']['id'] . '"><strong>Hello Houston</strong> is live!</a> Join the conversation:</span> <a href="mailto:hello@hellohouston.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['hello-houston']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
 		}
 	}

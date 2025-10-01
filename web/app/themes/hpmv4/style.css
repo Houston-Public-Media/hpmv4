@@ -859,8 +859,19 @@ svg:not(:root) {
 #hm-top.houston-matters,
 .news-slider.houston-matters {
 	background: #7FFBAD;
-	h2 > a, p, p a, h4 {
+	position: relative;
+	overflow: hidden;
+	h2 > a, p, p a {
 		color: black;
+		font-weight: bolder;
+		z-index: 2;
+	}
+	h4 {
+		color: white;
+		padding: 0.25rem;
+		background-color: #05095E;
+		display: inline-block;
+		z-index: 2;
 	}
 }
 #hm-top.hello-houston,
@@ -870,12 +881,35 @@ svg:not(:root) {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	h2 > a, p a {
+	position: relative;
+	overflow: hidden;
+	p a {
 		color: white;
+		font-weight: bolder;
+		z-index: 2;
 	}
-	p, h4 {
+	h2 > a, p {
 		color: black;
+		z-index: 2;
 	}
+	h4 {
+		color: white;
+		padding: 0.25rem;
+		background-color: #c8102e;
+		display: inline-block;
+		z-index: 2;
+	}
+}
+.news-slider .talkshow-logo {
+	position: absolute;
+	top: -1rem;
+	right: -1rem;
+	width: 30%;
+	opacity: 0.33;
+	z-index: 0;
+}
+.news-slide-item > * + * {
+	margin-top: 0.5rem;
 }
 #hm-top.election {
 	background: #e7e7e8;
@@ -2530,6 +2564,8 @@ aside .hpm-promo-wrap {
 	aside .hpm-promo-wrap {
 		display: grid;
 		grid-template-columns: 1fr;
+		height: 100%;
+		align-items: center;
 	}
 	aside .hpm-promo-wrap > .column-one {
 		grid-row: 1;
@@ -3365,6 +3401,9 @@ article.staff {
 		margin: 0;
 		float: right;
 		padding: 0 1rem 1rem 1rem;
+		&.indepth-sidebar {
+			padding: 0 1rem;
+		}
 	}
 	#float-wrap {
 		overflow: hidden;
@@ -4412,12 +4451,7 @@ section.breaking-news .row {
 		display: grid;
 		align-items: center;
 		gap: 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		@media (min-width: 640px) {
-			.news-slide-item:nth-child(2) {
-				order: -1;
-			}
-		}
+		height: 100%;
 	}
 }
 .news-slider > .row > div:nth-child(2) {
