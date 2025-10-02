@@ -131,40 +131,42 @@ $tras = null; ?>
 		<section class="section breaking-news container-fluid" style="padding-bottom: 0 !important;">
 			<div class="row">
 <?php
-//	$t = time();
-//	$offset = get_option( 'gmt_offset' ) * 3600;
-//	$t = $t + $offset;
-//	$now = getdate( $t );
-//	$hm_air = hpm_houston_matters_check();
+	$t = time();
+	$offset = get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+	$now = getdate( $t );
+	$hm_air = hpm_houston_matters_check();
 	$talkshow = '';
 	$priority_start = 3;
 	$priority_end = 8;
-//	if (
-//		$now['wday'] > 0 &&
-//		$now['wday'] < 6 &&
-//		( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] )
-//	) {
-//		if ( $now['hours'] == 9 ) {
-//			$talkshow = 'houston-matters';
-//		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
-//			$talkshow = 'hello-houston';
-//		}
-//	}
-//	$streamtest = '';
-//	if ( !empty( $_GET['streamtest'] ) ) {
-//		$streamtest = esc_html( $_GET['streamtest'] );
-//	}
-//	if ( !empty( $streamtest ) ) {
-//		if ( $streamtest == 'houston-matters' ) {
-//			$talkshow = 'houston-matters';
-//		} elseif ( $streamtest == 'hello-houston' ) {
-//			$talkshow = 'hello-houston';
-//		}
-//	}
-//	if ( !empty( $talkshow ) ) {
-//		$priority_start = 1;
-//		$priority_end = 6;
-//	}
+	if (
+		$now['wday'] > 0 &&
+		$now['wday'] < 6 &&
+		( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] )
+	) {
+		if ( $now['hours'] == 9 ) {
+			$talkshow = 'houston-matters';
+		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
+			$talkshow = 'hello-houston';
+		}
+	}
+	if ( WP_ENV !== 'production' ) {
+		$streamtest = '';
+		if ( !empty( $_GET['streamtest'] ) ) {
+			$streamtest = esc_html( $_GET['streamtest'] );
+		}
+		if ( !empty( $streamtest ) ) {
+			if ( $streamtest == 'houston-matters' ) {
+				$talkshow = 'houston-matters';
+			} elseif ( $streamtest == 'hello-houston' ) {
+				$talkshow = 'hello-houston';
+			}
+		}
+	}
+	if ( !empty( $talkshow ) ) {
+		$priority_start = 1;
+		$priority_end = 6;
+	}
 	echo hpm_showTopthreeArticles( $articles, $talkshow ); ?>
 			</div>
 		</section>

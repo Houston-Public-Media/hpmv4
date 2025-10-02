@@ -892,11 +892,11 @@ function hpm_showTopthreeArticles( $articles, $talkshow = '' ): string {
 					}
 					$ytlive = get_option( 'hpm_ytlive_talkshows' );
 					$result .= '<div class="news-slider ' . $talkshow .'">'.
-						'<div class="news-slide-item">'.
+						'<div class="news-slide-item nav-listen-live">'.
 							'<h4>WATCH LIVE</h4>'.
 							'<h2><a href="https://www.youtube.com/watch?v=' . $ytlive[ $talkshow ]['id'] .'" rel="bookmark">'. ucwords( str_replace( '-', ' ', $talkshow ) ) .'</a></h2>'.
 							'<p class="iframe-embed"><iframe id="' . $ytlive[ $talkshow ]['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $ytlive[ $talkshow ]['id'] . '?enablejsapi=1" title="' . $ytlive[ $talkshow ]['title'] .'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>' .
-							'<p style="text-align: center;"><a href="mailto:' . $talk_email . '">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive[ $talkshow ]['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p>' .
+							'<p style="text-align: center;"><a href="mailto:' . $talk_email . '">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive[ $talkshow ]['id'] . '">Watch</a> | <a href="/listen-live/" data-href="/listen-live" data-dialog="480:855">Listen</a></p>' .
 						'</div>' .
 						'<img src="https://cdn.houstonpublicmedia.org/assets/images/icons/' . $talkshow .'-logo.webp" alt="' . ucwords( str_replace( '-', ' ', $talkshow ) ) . '" width="256" height="218" class="talkshow-logo" />' .
 					'</div>';
