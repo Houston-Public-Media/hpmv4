@@ -113,9 +113,9 @@ $tras = null; ?>
 			#station-schedules .station-now-play:nth-child(even) {
 				border-right: 1px solid #808080;
 			}
-			/*#hm-top.hello-houston, #hm-top.houston-matters {*/
-			/*	display: none;*/
-			/*}*/
+			#hm-top.hello-houston, #hm-top.houston-matters {
+				display: none;
+			}
 		}
 		@media screen and (min-width: 52.5rem) {
 			#station-schedules {
