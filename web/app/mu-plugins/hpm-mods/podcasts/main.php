@@ -42,7 +42,7 @@ class HPM_Podcasts {
 
 		// Register page templates
 		remove_all_actions( 'do_feed_rss2' );
-		add_action( 'do_feed_rss2', [ $this, 'feed_template' ], 10, 1 );
+		add_action( 'do_feed_rss2', [ $this, 'feed_template' ] );
 
 		// Create menu in Admin Dashboard
 		add_action( 'admin_menu', [ $this, 'create_menu' ] );
@@ -51,7 +51,7 @@ class HPM_Podcasts {
 		add_action( 'pre_get_posts', [ $this, 'meta_query' ] );
 
 		// Add filter for the_content to display podcast tune-in/promo
-		add_filter( 'the_content', [ $this, 'article_footer' ], 10 );
+		add_filter( 'the_content', [ $this, 'article_footer' ] );
 		add_filter( 'get_the_excerpt', [ $this, 'remove_foot_filter' ], 9 );
 		add_filter( 'get_the_excerpt', [ $this, 'add_foot_filter' ], 11 );
 		add_action( 'wp_head', [ $this, 'add_feed_head' ], 100 );
@@ -623,9 +623,9 @@ class HPM_Podcasts {
 	 *
 	 * @param WP_REST_Request $request This function accepts a rest request to process data.
 	 *
-	 * @return mixed
+	 * @return WP_HTTP_Response|WP_REST_Response|WP_Error
 	 */
-	public function upload( WP_REST_Request $request ): mixed {
+	public function upload( WP_REST_Request $request ): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		if ( empty( $request['feed'] ) ) {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'Unable to upload media. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		} elseif ( empty( $request['id'] ) ) {
@@ -1033,7 +1033,7 @@ class HPM_Podcasts {
 			$metadata['mime_type'] = $data['mime_type'];
 		}
 		if ( !empty( $data['playtime_seconds'] ) ) {
-			$metadata['length'] = (int) round( $data['playtime_seconds'] );
+			$metadata['length'] = (int) round( $data['playtime_seconds'], 0, PHP_ROUND_HALF_DOWN );
 		}
 		if ( !empty( $data['playtime_string'] ) ) {
 			$metadata['length_formatted'] = $data['playtime_string'];
