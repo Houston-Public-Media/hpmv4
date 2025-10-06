@@ -1303,7 +1303,7 @@ class HPM_Podcasts {
 		}
 		$protocol = 'https://';
 		$_SERVER['HTTPS'] = 'on';
-		$list = [];
+		$actives = $inactives = [];
 
 		$podcasts = new WP_Query([
 			'post_type' => 'podcasts',
@@ -1315,6 +1315,7 @@ class HPM_Podcasts {
 				'value' => 'internal'
 			]]
 		]);
+
 		if ( $podcasts->have_posts() ) {
 			global $post;
 			while ( $podcasts->have_posts() ) {
@@ -1330,6 +1331,7 @@ class HPM_Podcasts {
 						'link' => ''
 					]
 				];
+				$inactive = false;
 				$podcasts->the_post();
 				$pod_id = get_the_ID();
 				$podlink = get_post_meta( $pod_id, 'hpm_pod_link', true );
@@ -1371,11 +1373,23 @@ class HPM_Podcasts {
 					$temp[ 'latest_episode' ][ 'link' ] = get_the_permalink( $last_id[ 'id' ] );
 				}
 				$temp['feed_json'] = WP_HOME . '/wp-json/hpm-podcast/v1/list/' . $post->post_name;
-				$list[] = $temp;
+				$tags = wp_get_post_tags( $post->ID );
+				foreach ( $tags as $tag ) {
+					if ( $tag->term_id == 48498 ) {
+						$inactive = true;
+					}
+				}
+				if ( $inactive ) {
+					$inactives[ $temp['slug'] ] = $temp;
+				} else {
+					$actives[] = $temp;
+				}
 			}
 		} else {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feeds have been defined. Please create one and try again.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
+		ksort( $inactives );
+		$list = array_merge( $actives, array_values( $inactives ) );
 		set_transient( 'hpm_podcasts_list', $list, 3600 );
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Podcast feed list', 'hpm-podcasts' ), 'data' => [ 'list' => $list, 'status' => 200 ] ] );
 	}
