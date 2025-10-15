@@ -1727,9 +1727,9 @@ function hpm_ytlive_update(): void {
 		foreach( $json as $item ) {
 			$date = strtotime( $item['start'] );
 			if ( str_contains( $item['title'], 'Houston Matters' ) ) {
-				$temp['houston-matters'][$date] = $item;
+				$temp['houston-matters'][ $date ] = $item;
 			} elseif ( str_contains( $item['title'], 'Hello Houston' ) ) {
-				$temp['hello-houston'][$date] = $item;
+				$temp['hello-houston'][ $date ] = $item;
 			}
 		}
 	}
@@ -1738,7 +1738,8 @@ function hpm_ytlive_update(): void {
 	ksort( $temp['hello-houston'] );
 	foreach( $temp as $show => $event ) {
 		foreach ( $event as $date => $meta ) {
-			if ( $date >= $today && $date <= $tomorrow ) {
+			$prev = $option[ $show ]['start'];
+			if ( $date >= $today && $date <= $tomorrow && $date > $prev ) {
 				$option[ $show ] = $meta;
 			}
 		}
