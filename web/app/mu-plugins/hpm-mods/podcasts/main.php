@@ -844,6 +844,7 @@ class HPM_Podcasts {
 		<podcast:guid><?php echo HPM_Podcasts::get_uuidv5( get_the_permalink() ); ?></podcast:guid>
 		<podcast:locked>yes</podcast:locked>
 		<podcast:funding url="https://www.houstonpublicmedia.org/donate">Support</podcast:funding>
+		<itunes:block>No</itunes:block>
 <?php echo ( in_array( 'inactive', $pod_tag_array ) ? "\t\t<itunes:complete>yes</itunes:complete>\n" : '' ); ?>
 		<itunes:explicit><?php echo ( in_array( 'explicit', $pod_tag_array ) ? 'yes' : 'no' ); ?></itunes:explicit>
 		<itunes:type><?php echo $podlink['type']; ?></itunes:type>
@@ -926,6 +927,7 @@ class HPM_Podcasts {
 			<itunes:author><?php echo $ep_authors; ?></itunes:author>
 			<itunes:keywords><![CDATA[<?php echo implode( ',', $tag_array ); ?>]]></itunes:keywords>
 			<itunes:summary><![CDATA[<?php echo $content; ?>]]></itunes:summary>
+			<itunes:block>No</itunes:block>
 <?php echo ( !empty( $pod_image ) ? "\t\t\t<itunes:image href=\"" . $pod_image[0] . "\"/>\n" : '' ); ?>
 			<itunes:explicit><?php echo ( in_array( 'explicit', $tag_array ) ? 'yes' : 'no' ); ?></itunes:explicit>
 			<enclosure url="<?PHP echo $media_file; ?>" length="<?PHP echo $a_meta['filesize']; ?>" type="<?php echo $a_meta['mime']; ?>"></enclosure>
