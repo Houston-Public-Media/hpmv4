@@ -286,6 +286,7 @@ class HPM_Podcasts {
 					'tunein'       => '',
 					'pandora'      => '',
 					'iheart'       => '',
+					'podping'      => '',
 					'categories'   => [ 'first' => '', 'second' => '', 'third' => '' ],
 					'type'         => 'episodic',
 					'rss-override' => ''
@@ -305,6 +306,7 @@ class HPM_Podcasts {
 				'tunein'       => '',
 				'pandora'      => '',
 				'iheart'       => '',
+				'podping'      => '',
 				'categories'   => [ 'first' => '', 'second' => '', 'third' => '' ],
 				'type'         => 'episodic',
 				'rss-override' => ''
@@ -317,6 +319,9 @@ class HPM_Podcasts {
 			}
 		} else {
 			$hpm_podcast_prod = 'internal';
+		}
+		if ( empty( $hpm_podcast_link['podping'] ) ) {
+			$hpm_podcast_link['podping'] = '';
 		}
 		include __DIR__ . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'podcast-feed-meta.php';
 	}
@@ -360,6 +365,7 @@ class HPM_Podcasts {
 				'tunein' => ( !empty( $_POST['hpm-podcast-link-tunein'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-tunein'] ) : '' ),
 				'pandora' => ( !empty( $_POST['hpm-podcast-link-pandora'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pandora'] ) : '' ),
 				'iheart' => ( !empty( $_POST['hpm-podcast-link-iheart'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-iheart'] ) : '' ),
+				'podping' => ( !empty( $_POST['hpm-podcast-link-podping'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-podping'] ) : '' ),
 				'limit' => ( !empty( $_POST['hpm-podcast-limit'] ) ? sanitize_text_field( $_POST['hpm-podcast-limit'] ) : 0 ),
 				'categories' => [
 					'first' => ( !empty( $_POST['hpm-podcast-icat-first'] ) ? $_POST['hpm-podcast-icat-first'] : '' ),
@@ -701,7 +707,7 @@ class HPM_Podcasts {
 		require HPM_PODCAST_PLUGIN_DIR . 'inc' . DIRECTORY_SEPARATOR . 'marco_s3.php';
 		$s3 = new S3( AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_S3_BUCKET_NAME, AWS_REGION, '' );
 		$pods = get_option( 'hpm_podcast_settings' );
-
+		$cdn = 'https://cdn.houstonpublicmedia.org/podcasts/';
 		$podcasts = new WP_Query([
 			'post_type' => 'podcasts',
 			'post_status' => 'publish',
@@ -713,7 +719,7 @@ class HPM_Podcasts {
 			]]
 		]);
 
-		$xsl = 'https://cdn.houstonpublicmedia.org/podcasts/podcast.xsl';
+		$xsl = $cdn . 'podcast.xsl';
 		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart', 'youtube' ];
 		$yt_boilerplate = "<p>SUBSCRIBE for more local news and information from Houston Public Media: https://www.youtube.com/@HoustonPublicMedia<br />----------<br />FOLLOW us:<br />Instagram: https://www.instagram.com/houstonpubmedia<br />Facebook: https://www.facebook.com/houstonpublicmedia<br />X: https://x.com/houstonpubmedia<br />----------<br />Houston Public Media is a trusted source for local news, information, and original storytelling in Houston, Texas.<br /><br />For the latest news and information, visit the Houston Public Media website: https://www.houstonpublicmedia.org/<br /><br />Subscribe to the Hello, Houston! newsletter: https://www.houstonpublicmedia.org/hellohouston/<br /><br />Houston Public Media is a service of the University of Houston.<br />-------------<br />We can’t do it without you. Support our award-winning community journalism by donating today: https://www.houstonpublicmedia.org/donate</p>";
 
@@ -820,6 +826,7 @@ class HPM_Podcasts {
 		<title><?php the_title_rss(); ?></title>
 		<atom:link href="<?php echo get_the_permalink(); ?>" rel="self" type="application/rss+xml" />
 		<link><?php echo $podlink['page']; ?></link>
+		<link rel="hub" href="https://pubsubhubbub.appspot.com/" />
 		<description><![CDATA[<?php the_content_feed(); ?>]]></description>
 		<language><?php bloginfo_rss( 'language' ); ?></language>
 		<copyright>&#x2117; &amp; &#xA9; <?PHP echo date('Y'); ?> Houston Public Media</copyright>
@@ -942,10 +949,15 @@ class HPM_Podcasts {
 </rss><?php
 				$getContent = ob_get_contents();
 				ob_end_clean();
-				//update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
 				if ( WP_ENV === 'production' ) {
+					$feed_updates = [];
 					try {
 						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
+						$feed_updates[] = $cdn . $podcast_title . '.xml';
+						wp_remote_get( esc_url_raw( 'https://overcast.fm/ping?urlprefix=' . $cdn . $podcast_title ) );
+						if ( !empty( $podlink['podping'] ) ) {
+							wp_remote_get( esc_url_raw( 'https://api.podcastindex.org/api/1.0/hub/pubnotify?id=' . $podlink['podping'] ) );
+						}
 					} catch ( Exception $e ) {
 						$error = print_r( $e, true );
 						error_log( 'Error uploading podcast flat file to S3: ' . $error );
@@ -975,10 +987,14 @@ class HPM_Podcasts {
 						$content_xml = str_replace( $find, $replace, $getContent );
 						try {
 							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
+							$feed_updates[] = $cdn . $podcast_title . '-' . $ps . '.xml';
 						} catch ( Exception $e ) {
 							$error = print_r( $e, true );
 							error_log( 'Error uploading podcast flat file to S3: ' . $error );
 						}
+					}
+					if ( !empty( $feed_updates ) ) {
+						HPM_Podcasts::websub_update( $feed_updates );
 					}
 				}
 			}
@@ -991,6 +1007,20 @@ class HPM_Podcasts {
 		} else {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feeds have been defined. Please create one and try again.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
+	}
+
+	public static function websub_update( array $feed_url ): void {
+		$data = 'hub.mode=publish';
+		foreach ( $feed_url as $feed ) {
+			$data .= '&hub.url=' . rawurlencode( $feed );
+		}
+
+		wp_remote_post( 'https://pubsubhubbub.appspot.com/', [
+			'headers' => [
+				'content-type' => 'application/x-www-form-urlencoded'
+			],
+			'body' => $data
+		] );
 	}
 
 	/**
