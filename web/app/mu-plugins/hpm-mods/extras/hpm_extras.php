@@ -1738,7 +1738,7 @@ function hpm_ytlive_update(): void {
 	ksort( $temp['hello-houston'] );
 	foreach( $temp as $show => $event ) {
 		foreach ( $event as $date => $meta ) {
-			$prev = $option[ $show ]['start'];
+			$prev = strtotime( $option[ $show ]['start'] );
 			if ( $date >= $today && $date <= $tomorrow && $date > $prev ) {
 				$option[ $show ] = $meta;
 			}
