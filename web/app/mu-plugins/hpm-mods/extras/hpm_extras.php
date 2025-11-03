@@ -602,9 +602,7 @@ function hpmnpr_nprapi_output( $api_id = 1001, $num = 50, $per_page = 10 ): mixe
     return $output;
 }
 
-/*NPR News Function testing starts here*/
-
-
+/* NPR News Function testing starts here */
 
 /**
  * Hide the Comments menu in Admin because we don't use it
@@ -1631,7 +1629,6 @@ add_action( 'wp_head', function() {
 	}
 }, 200 );
 
-
 function hpm_now_playing( $station ) {
 	return get_option( 'hpm_' . $station . '_nowplay' );
 }
@@ -1705,50 +1702,4 @@ function hpm_weather(): string {
 		set_transient( 'hpm_weather', $output, 180 );
 	}
 	return $output;
-}
-
-function hpm_ytlive_update(): void {
-	$temp = [
-		'houston-matters' => [],
-		'hello-houston' => []
-	];
-	$option = get_option( 'hpm_ytlive_talkshows' );
-	if ( empty( $option ) ) {
-		$option = $temp;
-	}
-	$t = getdate();
-	$today = mktime( 0, 0, 0, $t['mon'], $t['mday'], $t['year'] );
-	$tomorrow = $today + 86400;
-	$remote = wp_remote_get( esc_url_raw( "https://cdn.houstonpublicmedia.org/assets/ytlive.json" ) );
-	if ( is_wp_error( $remote ) ) {
-		return;
-	} else {
-		$json = json_decode( wp_remote_retrieve_body( $remote ), true );
-		foreach( $json as $item ) {
-			$date = strtotime( $item['start'] );
-			if ( str_contains( $item['title'], 'Houston Matters' ) ) {
-				$temp['houston-matters'][ $date ] = $item;
-			} elseif ( str_contains( $item['title'], 'Hello Houston' ) ) {
-				$temp['hello-houston'][ $date ] = $item;
-			}
-		}
-	}
-
-	ksort( $temp['houston-matters'] );
-	ksort( $temp['hello-houston'] );
-	foreach( $temp as $show => $event ) {
-		foreach ( $event as $date => $meta ) {
-			$prev = strtotime( $option[ $show ]['start'] );
-			if ( $date >= $today && $date <= $tomorrow && $date > $prev ) {
-				$option[ $show ] = $meta;
-			}
-		}
-	}
-	update_option( 'hpm_ytlive_talkshows', $option );
-}
-
-add_action( 'hpm_ytlive', 'hpm_ytlive_update' );
-$timestamp = wp_next_scheduled( 'hpm_ytlive' );
-if ( empty( $timestamp ) ) {
-	wp_schedule_event( time(), 'hpm_15min', 'hpm_ytlive' );
 }

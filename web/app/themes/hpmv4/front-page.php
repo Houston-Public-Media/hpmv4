@@ -113,7 +113,7 @@ $tras = null; ?>
 			#station-schedules .station-now-play:nth-child(even) {
 				border-right: 1px solid #808080;
 			}
-			#hm-top.hello-houston, #hm-top.houston-matters {
+			#hm-top.livestream-show {
 				display: none;
 			}
 		}
@@ -128,26 +128,25 @@ $tras = null; ?>
 		}
 	</style>
 	<div id="primary" class="content-area home-page">
-		<section class="section breaking-news container-fluid" style="padding-bottom: 0 !important;">
-			<div class="row">
 <?php
 	$t = time();
 	$offset = get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 	$now = getdate( $t );
-	$hm_air = hpm_houston_matters_check();
+	$hm_air = HPM_Liveshows::liveshow_check();
+	$temp = HPM_Liveshows::get_all();
 	$talkshow = '';
 	$priority_start = 3;
 	$priority_end = 8;
-	if (
-		$now['wday'] > 0 &&
-		$now['wday'] < 6 &&
-		( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] )
-	) {
-		if ( $now['hours'] == 9 ) {
-			$talkshow = 'houston-matters';
-		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
-			$talkshow = 'hello-houston';
+	if ( !empty( $hm_air[ $now['hours'] ] ) ) {
+		foreach ( $temp as $k => $v ) {
+			if ( $v['recurring'] == 1 &&
+					in_array( $now['wday'], $v['recurring_pattern'] ) &&
+					$v['start_hour'] <= $now['hours'] &&
+					$v['end_hour'] > $now['hours']
+			) {
+				$talkshow = $k;
+			}
 		}
 	}
 	if ( WP_ENV !== 'production' ) {
@@ -156,18 +155,16 @@ $tras = null; ?>
 			$streamtest = esc_html( $_GET['streamtest'] );
 		}
 		if ( !empty( $streamtest ) ) {
-			if ( $streamtest == 'houston-matters' ) {
-				$talkshow = 'houston-matters';
-			} elseif ( $streamtest == 'hello-houston' ) {
-				$talkshow = 'hello-houston';
-			}
+			$talkshow = $streamtest;
 		}
 	}
 	if ( !empty( $talkshow ) ) {
 		$priority_start = 1;
 		$priority_end = 6;
-	}
-	echo hpm_showTopthreeArticles( $articles, $talkshow ); ?>
+	} ?>
+		<section class="section breaking-news container-fluid" style="padding-bottom: 0 !important;">
+			<div class="row">
+				<?php echo HPM_Liveshows::show_top_articles( $articles, $talkshow ); ?>
 			</div>
 		</section>
 		<section class="section short-news" style="padding-top: 0 !important;">
@@ -175,8 +172,12 @@ $tras = null; ?>
 			<?php
 				foreach ( $articles as $ka => $va ) {
 					$post = $va;
-					if ( $ka >= $priority_start && $ka < $priority_end ) {
-						get_template_part("content", "topnewsrail");
+					if ( $ka >= $priority_start && $ka < $priority_end ) { ?>
+						<li>
+							<h4 class="text-light-gray text-center" style="color:#237bbd;"><?php echo hpm_top_cat( $va->ID ); ?></h4>
+							<h3><a href="<?php echo get_the_permalink( $va->ID );?>"><?php echo get_the_title( $va->ID ); ?></a></h3>
+						</li>
+						<?php
 					}
 					if ( $ka == $priority_end ) {
 						$indepthArtcle = $post;

@@ -854,7 +854,7 @@ svg:not(:root) {
 
 /* Houston Matters and Town Square */
 #hm-top {
-	background: #05095E;
+	background: #237bbd;
 }
 #hm-top.houston-matters,
 .news-slider.houston-matters {
@@ -911,13 +911,16 @@ svg:not(:root) {
 .news-slide-item > * + * {
 	margin-top: 0.5rem;
 }
-#hm-top.election {
+#hm-top.election,
+#hm-top.special-election-coverage {
 	background: #e7e7e8;
 }
-#hm-top.election p {
+#hm-top.election p,
+#hm-top.special-election-coverage p {
 	color: rgb(47, 47, 47);
 }
-#hm-top.election p a {
+#hm-top.election p a,
+#hm-top.special-election-coverage p a {
 	color: var(--main-red);
 }
 #hm-top p {

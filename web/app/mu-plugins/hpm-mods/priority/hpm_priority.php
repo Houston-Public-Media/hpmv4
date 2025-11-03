@@ -46,24 +46,7 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			'type' => '',
 			'link' => ''
 		],
-		'talkshow' => [
-			'houstonmatters' => [
-				'live' => false,
-				'id' => '',
-				'title' => '',
-				'embed' => '',
-				'description' => '',
-				'showname' => 'Houston Matters'
-			],
-			'hellohouston' => [
-				'live' => false,
-				'id' => '',
-				'title' => '',
-				'embed' => '',
-				'description' => '',
-				'showname' => 'Hello Houston'
-			]
-		]
+		'talkshow' => []
 	];
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
@@ -128,20 +111,36 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			$output['breaking']['link'] = get_the_permalink( $hpm_breakingnews['homepage'][0] );
 		}
 	}
-	$hm_air = hpm_houston_matters_check();
-	if ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 9 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow']['houstonmatters']['live'] = true;
-	} elseif ( ( $now['wday'] > 0 && $now['wday'] < 6 ) && ( $now['hours'] == 11 || $now['hours'] == 12 ) && !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] ) {
-		$output['talkshow']['hellohouston']['live'] = true;
+	$hm_air = HPM_Liveshows::liveshow_check();
+	$temp = HPM_Liveshows::get_all();
+	foreach ( $temp as $k => $v ) {
+		$apislug = str_replace( '-', '', $k );
+		$output['talkshow'][ $apislug ] = [
+				'live' => false,
+				'id' => '',
+				'title' => '',
+				'embed' => '',
+				'description' => '',
+				'showname' => $v['title']
+		];
+		if ( $v['recurring'] == 1 &&
+				in_array( $now['wday'], $v['recurring_pattern'] ) &&
+				$v['start_hour'] <= $now['hours'] &&
+				$v['end_hour'] > $now['hours']
+		) {
+			$output['talkshow'][ $apislug ]['live'] = true;
+		}
 	}
 
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	foreach( $ytlive as $show => $meta ) {
 		$show = str_replace( '-', '', $show );
-		$output['talkshow'][ $show ]['id'] = $meta['id'];
-		$output['talkshow'][ $show ]['title'] = $meta['title'];
-		$output['talkshow'][ $show ]['embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
-		$output['talkshow'][ $show ]['description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
+		if ( !empty( $output['talkshow'][ $show ] ) ) {
+			$output['talkshow'][ $show ]['id'] = $meta['id'];
+			$output['talkshow'][ $show ]['title'] = $meta['title'];
+			$output['talkshow'][ $show ]['embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+			$output['talkshow'][ $show ]['description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
+		}
 	}
 
 	$weather = get_transient( 'hpm_weather_api' );
