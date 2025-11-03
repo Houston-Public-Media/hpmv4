@@ -256,7 +256,7 @@
 </ul>
 <p>&nbsp;</p>
 <h3><?php _e( "External Services", 'hpm-podcasts' ); ?></h3>
-<p><label for="hpm-podcast-link-itunes"><?php _e( "iTunes:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-itunes" name="hpm-podcast-link-itunes" value="<?php echo $hpm_podcast_link['itunes']; ?>" placeholder="https://itunes.apple.com/us/podcast/law-blog-with-bob-loblaw/id123456789?mt=2" style="width: 60%;" /></p>
+<p><label for="hpm-podcast-link-itunes"><?php _e( "Apple Podcasts:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-itunes" name="hpm-podcast-link-itunes" value="<?php echo $hpm_podcast_link['itunes']; ?>" placeholder="https://podcasts.apple.com/us/podcast/law-blog-with-bob-loblaw/id123456789?mt=2" style="width: 60%;" /></p>
 <p><label for="hpm-podcast-link-npr"><?php _e( "NPR:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-npr" name="hpm-podcast-link-npr" value="<?php echo !empty( $hpm_podcast_link['npr'] ) ? $hpm_podcast_link['npr'] : ''; ?>" placeholder="https://app.npr.org/aggregation/PODCASTID" style="width: 60%;" /></p>
 <p><label for="hpm-podcast-link-youtube"><?php _e( "YouTube:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-youtube" name="hpm-podcast-link-youtube" value="<?php echo !empty( $hpm_podcast_link['youtube'] ) ? $hpm_podcast_link['youtube'] : ''; ?>" placeholder="https://youtube.com/blahblahblah" style="width: 60%;" /></p>
 <p><label for="hpm-podcast-link-spotify"><?php _e( "Spotify:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-spotify" name="hpm-podcast-link-spotify" value="<?php echo $hpm_podcast_link['spotify']; ?>" placeholder="https://spotify.com/blah" style="width: 60%;" /></p>
@@ -266,16 +266,17 @@
 <p><label for="hpm-podcast-link-pcast"><?php _e( "Pocket Casts:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-pcast" name="hpm-podcast-link-pcast" value="<?php echo $hpm_podcast_link['pcast']; ?>" placeholder="https://pca.st/blah" style="width: 60%;" /></p>
 <p><label for="hpm-podcast-link-overcast"><?php _e( "Overcast:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-overcast" name="hpm-podcast-link-overcast" value="<?php echo $hpm_podcast_link['overcast']; ?>" placeholder="https://overcast.fm/itunes12345657" style="width: 60%;" /></p>
 <p><label for="hpm-podcast-link-amazon"><?php _e( "Amazon Music:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-amazon" name="hpm-podcast-link-amazon" value="<?php echo $hpm_podcast_link['amazon']; ?>" placeholder="https://music.amazon.com/podcasts/abcde" style="width: 60%;" /></p>
+<p><label for="hpm-podcast-link-podping"><?php _e( "Podping ID:", 'hpm-podcasts' ); ?></label> <input type="text" id="hpm-podcast-link-podping" name="hpm-podcast-link-podping" value="<?php echo $hpm_podcast_link['podping']; ?>" placeholder="123456789" style="width: 60%;" /></p>
 <script>
 	jQuery(document).ready(function($){
 		let excerpt = $('#postexcerpt');
 		let imageDiv = $('#postimagediv');
-		excerpt.find("button .screen-reader-text").text("Toggle panel: iTunes Subtitle");
-		excerpt.find("h2 span").text("iTunes Subtitle");
+		excerpt.find("button .screen-reader-text").text("Toggle panel: Apple Podcasts Subtitle");
+		excerpt.find("h2 span").text("Apple Podcasts Subtitle");
 		excerpt.find(".inside p").remove();
 		imageDiv.find("button .screen-reader-text").text("Toggle panel: Podcast Logo");
 		imageDiv.find("h2 span").text("Podcast Logo");
-		imageDiv.find(".inside").prepend('<p class="hide-in-no-js howto">Minimum logo resolution for iTunes etc. is 1400px x 1400px.  Maximum is 3000px x 3000px.</p>');
+		imageDiv.find(".inside").prepend('<p class="hide-in-no-js howto">Minimum logo resolution for Apple Podcasts etc. is 1400px x 1400px.  Maximum is 3000px x 3000px.</p>');
 		$("#postdivrich").prepend('<h1>Podcast Description</h1>');
 		let podcastControls = document.querySelectorAll('.hpm-podcast-aggregate,.hpm-podcast-external,.hpm-podcast-internal');
 		let podType = document.querySelector('#hpm-podcast-prod');
