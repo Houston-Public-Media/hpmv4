@@ -38,7 +38,10 @@ class HPM_Liveshows {
 		if ( empty( $option ) ) {
 			$option = $temp;
 		}
-		$t = getdate();
+		$now = time();
+		$offset = get_option( 'gmt_offset' ) * 3600;
+		$now += $offset;
+		$t = getdate( $now );
 		$today = mktime( 0, 0, 0, $t['mon'], $t['mday'], $t['year'] );
 		$tomorrow = $today + 86400;
 		$remote = wp_remote_get( esc_url_raw( "https://cdn.houstonpublicmedia.org/assets/ytlive.json" ) );
@@ -47,10 +50,10 @@ class HPM_Liveshows {
 		} else {
 			$json = json_decode( wp_remote_retrieve_body( $remote ), true );
 			foreach( $json as $item ) {
-				$date = strtotime( $item['start'] );
+				$date = strtotime( $item['start'] ) + $offset;
 				foreach ( $names as $name_slug => $name ) {
 					if ( str_contains( $item['title'], $name['title'] ) ) {
-						$temp[ $name_slug ][ $date ] = $item['title'];
+						$temp[ $name_slug ][ $date ] = $item;
 					}
 				}
 			}
@@ -60,10 +63,17 @@ class HPM_Liveshows {
 		}
 		foreach( $temp as $show => $event ) {
 			foreach ( $event as $date => $meta ) {
-				$prev = strtotime( $option[ $show ]['start'] );
-				if ( $date >= $today && $date <= $tomorrow && $date > $prev ) {
-					$option[ $show ] = $meta;
+				if ( !empty( $option[ $show ]['start'] ) ) {
+					$prev = strtotime( $option[ $show ]['start'] );
+					if ( $date >= $today && $date <= $tomorrow && $date > $prev ) {
+						$option[ $show ] = $meta;
+					}
+				} else {
+					if ( $date >= $today && $date <= $tomorrow ) {
+						$option[ $show ] = $meta;
+					}
 				}
+
 			}
 		}
 		update_option( 'hpm_ytlive_talkshows', $option );
