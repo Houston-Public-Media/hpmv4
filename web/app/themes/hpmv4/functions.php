@@ -165,25 +165,6 @@ function hpm_filterposts_by_the_authors( $post_type ) {
 	wp_dropdown_users( $params );
 }
 
-//function add_newsletter_bug_in_content( $content ) {
-//    if ( get_post_type() !== 'post' || !is_singular( 'post' ) || is_page_template( 'single-full-width.php' ) ) {
-//        return $content;
-//    }
-//    $target_categories = array( 'hellohouston-bug' );
-//    $has_target_category = false;
-//    foreach ( $target_categories as $cat_slug ) {
-//        if ( has_category( $cat_slug ) ) {
-//            $has_target_category = true;
-//            break;
-//        }
-//    }
-//    if ( $has_target_category ) {
-//        $newsletter_bug_shortcode = '[hpm_newsletter]';
-//        $content = preg_replace( '/(<p[^>]*>)/', $newsletter_bug_shortcode . '$1', $content, 1 );
-//    }
-//    return $content;
-//}
-
 function add_newsletter_promo_in_content( $content ) {
     // Only run on single posts, and not if a specific template is used
     if ( !is_singular('post') || is_page_template('single-full-width.php') ) {
@@ -220,7 +201,6 @@ function add_newsletter_promo_in_content( $content ) {
 }
 
 add_filter( 'the_content', 'add_newsletter_promo_in_content' );
-
 
 // Modification to the normal Menu Walker to add <div> elements in certain locations and remove links with '#' hrefs
 class HPM_Menu_Walker extends Walker_Nav_Menu {
