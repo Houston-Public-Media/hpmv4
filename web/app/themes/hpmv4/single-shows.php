@@ -92,6 +92,14 @@ get_header(); ?>
 						<div class="sidebar-ad">
 <?php if ( $show_id === 503298 ) { ?>
 							<div><a href="https://uh.edu/energy/eti/"><img src="https://cdn.houstonpublicmedia.org/assets/images/UH-Secondary-Extensions-Energy-Transition-Institute-rgb_vertical_.png.webp" alt="University of Houston Energy Transition Institute" /></a></div>
+<?php } elseif ( $show_id === 61330 ) { ?>
+							<!-- /9147267/HPM_Bauer_Business_Focus -->
+							<h4>Bauer Business Focus Sponsor</h4>
+							<div id='div-gpt-ad-1759329378296-0' style='min-width: 300px; min-height: 250px;'>
+								<script>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1759329378296-0'); });
+								</script>
+							</div>
 <?php } else { ?>
 							<h4>Support Comes From</h4>
 							<div id="div-gpt-ad-1394579228932-1">

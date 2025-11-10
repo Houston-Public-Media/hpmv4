@@ -403,7 +403,7 @@ function hpm_body_open(): void {
 	if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
 		<?php echo HPM_Promos::generate_static( 'emergency' ); ?>
 		<?php hpm_site_header(); ?>
-		<?php echo hpm_breaking_banner(); echo hpm_talkshows(); ?>
+		<?php echo hpm_breaking_banner(); echo HPM_Liveshows::display_banner(); ?>
 <?php
 	} elseif ( is_page_template( 'page-listen.php' ) ) { ?>
 		<?php echo HPM_Promos::generate_static( 'emergency' ); ?>
@@ -448,33 +448,6 @@ function hpm_body_open(): void {
 	echo HPM_Promos::generate_static( 'top' );
 }
 add_action( 'body_open', 'hpm_body_open', 11 );
-
-function hpm_talkshows(): string {
-	wp_reset_query();
-	global $wp_query;
-	$t = time();
-	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset;
-	$now = getdate( $t );
-	$output = '';
-	$hm_air = hpm_houston_matters_check();
-	if ( empty( $wp_query->post ) || $wp_query->post->post_type == 'embeds' ) {
-		return $output;
-	}
-	$ytlive = get_option( 'hpm_ytlive_talkshows' );
-	if (
-		$now['wday'] > 0 &&
-		$now['wday'] < 6 &&
-		( !empty( $hm_air[ $now['hours'] ] ) && $hm_air[ $now['hours'] ] )
-	) {
-		if ( $now['hours'] == 9 ) {
-			$output .= '<div id="hm-top" class="houston-matters"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '"><strong>Houston Matters</strong> is live!</a> Join the conversation:</span> <a href="mailto:talk@houstonmatters.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['houston-matters']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
-		} elseif ( $now['hours'] == 11 || $now['hours'] == 12 ) {
-			$output .= '<div id="hm-top" class="hello-houston"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive['hello-houston']['id'] . '"><strong>Hello Houston</strong> is live!</a> Join the conversation:</span> <a href="mailto:hello@hellohouston.org">Email</a> | <a href="tel://+17134408870">Call/Text</a> | <a href="https://www.youtube.com/watch?v=' . $ytlive['hello-houston']['id'] . '">Watch</a> | <a href="/listen-live/">Listen</a></p></div>';
-		}
-	}
-	return $output;
-}
 
 function hpm_breaking_banner(): string {
 	$t = time();

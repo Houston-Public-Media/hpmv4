@@ -42,7 +42,7 @@ class HPM_Podcasts {
 
 		// Register page templates
 		remove_all_actions( 'do_feed_rss2' );
-		add_action( 'do_feed_rss2', [ $this, 'feed_template' ], 10, 1 );
+		add_action( 'do_feed_rss2', [ $this, 'feed_template' ] );
 
 		// Create menu in Admin Dashboard
 		add_action( 'admin_menu', [ $this, 'create_menu' ] );
@@ -51,7 +51,7 @@ class HPM_Podcasts {
 		add_action( 'pre_get_posts', [ $this, 'meta_query' ] );
 
 		// Add filter for the_content to display podcast tune-in/promo
-		add_filter( 'the_content', [ $this, 'article_footer' ], 10 );
+		add_filter( 'the_content', [ $this, 'article_footer' ] );
 		add_filter( 'get_the_excerpt', [ $this, 'remove_foot_filter' ], 9 );
 		add_filter( 'get_the_excerpt', [ $this, 'add_foot_filter' ], 11 );
 		add_action( 'wp_head', [ $this, 'add_feed_head' ], 100 );
@@ -286,6 +286,7 @@ class HPM_Podcasts {
 					'tunein'       => '',
 					'pandora'      => '',
 					'iheart'       => '',
+					'podping'      => '',
 					'categories'   => [ 'first' => '', 'second' => '', 'third' => '' ],
 					'type'         => 'episodic',
 					'rss-override' => ''
@@ -305,6 +306,7 @@ class HPM_Podcasts {
 				'tunein'       => '',
 				'pandora'      => '',
 				'iheart'       => '',
+				'podping'      => '',
 				'categories'   => [ 'first' => '', 'second' => '', 'third' => '' ],
 				'type'         => 'episodic',
 				'rss-override' => ''
@@ -317,6 +319,9 @@ class HPM_Podcasts {
 			}
 		} else {
 			$hpm_podcast_prod = 'internal';
+		}
+		if ( empty( $hpm_podcast_link['podping'] ) ) {
+			$hpm_podcast_link['podping'] = '';
 		}
 		include __DIR__ . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'podcast-feed-meta.php';
 	}
@@ -360,6 +365,7 @@ class HPM_Podcasts {
 				'tunein' => ( !empty( $_POST['hpm-podcast-link-tunein'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-tunein'] ) : '' ),
 				'pandora' => ( !empty( $_POST['hpm-podcast-link-pandora'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pandora'] ) : '' ),
 				'iheart' => ( !empty( $_POST['hpm-podcast-link-iheart'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-iheart'] ) : '' ),
+				'podping' => ( !empty( $_POST['hpm-podcast-link-podping'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-podping'] ) : '' ),
 				'limit' => ( !empty( $_POST['hpm-podcast-limit'] ) ? sanitize_text_field( $_POST['hpm-podcast-limit'] ) : 0 ),
 				'categories' => [
 					'first' => ( !empty( $_POST['hpm-podcast-icat-first'] ) ? $_POST['hpm-podcast-icat-first'] : '' ),
@@ -623,9 +629,9 @@ class HPM_Podcasts {
 	 *
 	 * @param WP_REST_Request $request This function accepts a rest request to process data.
 	 *
-	 * @return mixed
+	 * @return WP_HTTP_Response|WP_REST_Response|WP_Error
 	 */
-	public function upload( WP_REST_Request $request ): mixed {
+	public function upload( WP_REST_Request $request ): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		if ( empty( $request['feed'] ) ) {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'Unable to upload media. Please choose a podcast feed.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		} elseif ( empty( $request['id'] ) ) {
@@ -701,7 +707,7 @@ class HPM_Podcasts {
 		require HPM_PODCAST_PLUGIN_DIR . 'inc' . DIRECTORY_SEPARATOR . 'marco_s3.php';
 		$s3 = new S3( AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_S3_BUCKET_NAME, AWS_REGION, '' );
 		$pods = get_option( 'hpm_podcast_settings' );
-
+		$cdn = 'https://cdn.houstonpublicmedia.org/podcasts/';
 		$podcasts = new WP_Query([
 			'post_type' => 'podcasts',
 			'post_status' => 'publish',
@@ -713,7 +719,7 @@ class HPM_Podcasts {
 			]]
 		]);
 
-		$xsl = 'https://cdn.houstonpublicmedia.org/podcasts/podcast.xsl';
+		$xsl = $cdn . 'podcast.xsl';
 		$sources = [ 'noad', 'apple-podcasts', 'spotify', 'npr-one', 'simplecast', 'tunein', 'amazon-music', 'iheart', 'youtube' ];
 		$yt_boilerplate = "<p>SUBSCRIBE for more local news and information from Houston Public Media: https://www.youtube.com/@HoustonPublicMedia<br />----------<br />FOLLOW us:<br />Instagram: https://www.instagram.com/houstonpubmedia<br />Facebook: https://www.facebook.com/houstonpublicmedia<br />X: https://x.com/houstonpubmedia<br />----------<br />Houston Public Media is a trusted source for local news, information, and original storytelling in Houston, Texas.<br /><br />For the latest news and information, visit the Houston Public Media website: https://www.houstonpublicmedia.org/<br /><br />Subscribe to the Hello, Houston! newsletter: https://www.houstonpublicmedia.org/hellohouston/<br /><br />Houston Public Media is a service of the University of Houston.<br />-------------<br />We can’t do it without you. Support our award-winning community journalism by donating today: https://www.houstonpublicmedia.org/donate</p>";
 
@@ -820,6 +826,7 @@ class HPM_Podcasts {
 		<title><?php the_title_rss(); ?></title>
 		<atom:link href="<?php echo get_the_permalink(); ?>" rel="self" type="application/rss+xml" />
 		<link><?php echo $podlink['page']; ?></link>
+		<link rel="hub" href="https://pubsubhubbub.appspot.com/" />
 		<description><![CDATA[<?php the_content_feed(); ?>]]></description>
 		<language><?php bloginfo_rss( 'language' ); ?></language>
 		<copyright>&#x2117; &amp; &#xA9; <?PHP echo date('Y'); ?> Houston Public Media</copyright>
@@ -837,6 +844,7 @@ class HPM_Podcasts {
 		<podcast:guid><?php echo HPM_Podcasts::get_uuidv5( get_the_permalink() ); ?></podcast:guid>
 		<podcast:locked>yes</podcast:locked>
 		<podcast:funding url="https://www.houstonpublicmedia.org/donate">Support</podcast:funding>
+		<itunes:block>no</itunes:block>
 <?php echo ( in_array( 'inactive', $pod_tag_array ) ? "\t\t<itunes:complete>yes</itunes:complete>\n" : '' ); ?>
 		<itunes:explicit><?php echo ( in_array( 'explicit', $pod_tag_array ) ? 'yes' : 'no' ); ?></itunes:explicit>
 		<itunes:type><?php echo $podlink['type']; ?></itunes:type>
@@ -919,6 +927,7 @@ class HPM_Podcasts {
 			<itunes:author><?php echo $ep_authors; ?></itunes:author>
 			<itunes:keywords><![CDATA[<?php echo implode( ',', $tag_array ); ?>]]></itunes:keywords>
 			<itunes:summary><![CDATA[<?php echo $content; ?>]]></itunes:summary>
+			<itunes:block>no</itunes:block>
 <?php echo ( !empty( $pod_image ) ? "\t\t\t<itunes:image href=\"" . $pod_image[0] . "\"/>\n" : '' ); ?>
 			<itunes:explicit><?php echo ( in_array( 'explicit', $tag_array ) ? 'yes' : 'no' ); ?></itunes:explicit>
 			<enclosure url="<?PHP echo $media_file; ?>" length="<?PHP echo $a_meta['filesize']; ?>" type="<?php echo $a_meta['mime']; ?>"></enclosure>
@@ -942,10 +951,15 @@ class HPM_Podcasts {
 </rss><?php
 				$getContent = ob_get_contents();
 				ob_end_clean();
-				//update_option( 'hpm_podcast-' . $podcast_title, $getContent, false );
 				if ( WP_ENV === 'production' ) {
+					$feed_updates = [];
 					try {
 						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
+						$feed_updates[] = $cdn . $podcast_title . '.xml';
+						wp_remote_get( esc_url_raw( 'https://overcast.fm/ping?urlprefix=' . $cdn . $podcast_title ) );
+						if ( !empty( $podlink['podping'] ) ) {
+							wp_remote_get( esc_url_raw( 'https://api.podcastindex.org/api/1.0/hub/pubnotify?id=' . $podlink['podping'] ) );
+						}
 					} catch ( Exception $e ) {
 						$error = print_r( $e, true );
 						error_log( 'Error uploading podcast flat file to S3: ' . $error );
@@ -975,10 +989,14 @@ class HPM_Podcasts {
 						$content_xml = str_replace( $find, $replace, $getContent );
 						try {
 							$s3->put( 'podcasts/' . $podcast_title . '-' . $ps . '.xml', 'application/xml', 'public-read', $content_xml );
+							$feed_updates[] = $cdn . $podcast_title . '-' . $ps . '.xml';
 						} catch ( Exception $e ) {
 							$error = print_r( $e, true );
 							error_log( 'Error uploading podcast flat file to S3: ' . $error );
 						}
+					}
+					if ( !empty( $feed_updates ) ) {
+						HPM_Podcasts::websub_update( $feed_updates );
 					}
 				}
 			}
@@ -991,6 +1009,20 @@ class HPM_Podcasts {
 		} else {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feeds have been defined. Please create one and try again.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
+	}
+
+	public static function websub_update( array $feed_url ): void {
+		$data = 'hub.mode=publish';
+		foreach ( $feed_url as $feed ) {
+			$data .= '&hub.url=' . rawurlencode( $feed );
+		}
+
+		wp_remote_post( 'https://pubsubhubbub.appspot.com/', [
+			'headers' => [
+				'content-type' => 'application/x-www-form-urlencoded'
+			],
+			'body' => $data
+		] );
 	}
 
 	/**
@@ -1033,7 +1065,7 @@ class HPM_Podcasts {
 			$metadata['mime_type'] = $data['mime_type'];
 		}
 		if ( !empty( $data['playtime_seconds'] ) ) {
-			$metadata['length'] = (int) round( $data['playtime_seconds'] );
+			$metadata['length'] = (int) round( $data['playtime_seconds'], 0, PHP_ROUND_HALF_DOWN );
 		}
 		if ( !empty( $data['playtime_string'] ) ) {
 			$metadata['length_formatted'] = $data['playtime_string'];
@@ -1303,7 +1335,7 @@ class HPM_Podcasts {
 		}
 		$protocol = 'https://';
 		$_SERVER['HTTPS'] = 'on';
-		$list = [];
+		$actives = $inactives = [];
 
 		$podcasts = new WP_Query([
 			'post_type' => 'podcasts',
@@ -1315,6 +1347,7 @@ class HPM_Podcasts {
 				'value' => 'internal'
 			]]
 		]);
+
 		if ( $podcasts->have_posts() ) {
 			global $post;
 			while ( $podcasts->have_posts() ) {
@@ -1330,6 +1363,7 @@ class HPM_Podcasts {
 						'link' => ''
 					]
 				];
+				$inactive = false;
 				$podcasts->the_post();
 				$pod_id = get_the_ID();
 				$podlink = get_post_meta( $pod_id, 'hpm_pod_link', true );
@@ -1371,11 +1405,23 @@ class HPM_Podcasts {
 					$temp[ 'latest_episode' ][ 'link' ] = get_the_permalink( $last_id[ 'id' ] );
 				}
 				$temp['feed_json'] = WP_HOME . '/wp-json/hpm-podcast/v1/list/' . $post->post_name;
-				$list[] = $temp;
+				$tags = wp_get_post_tags( $post->ID );
+				foreach ( $tags as $tag ) {
+					if ( $tag->term_id == 48498 ) {
+						$inactive = true;
+					}
+				}
+				if ( $inactive ) {
+					$inactives[ $temp['slug'] ] = $temp;
+				} else {
+					$actives[] = $temp;
+				}
 			}
 		} else {
 			return new WP_Error( 'rest_api_sad', esc_html__( 'No podcast feeds have been defined. Please create one and try again.', 'hpm-podcasts' ), [ 'status' => 500 ] );
 		}
+		ksort( $inactives );
+		$list = array_merge( $actives, array_values( $inactives ) );
 		set_transient( 'hpm_podcasts_list', $list, 3600 );
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Podcast feed list', 'hpm-podcasts' ), 'data' => [ 'list' => $list, 'status' => 200 ] ] );
 	}

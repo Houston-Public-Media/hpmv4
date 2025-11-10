@@ -1,7 +1,7 @@
 <?php
 function hpm_google_tracker(): void {
 	global $wp_query;
-?>	<script async="true" src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+?>	<script async="async" src='https://www.googletagservices.com/tag/js/gpt.js'></script>
 		<script>
 			var googletag = googletag || {};
 			googletag.cmd = googletag.cmd || [];
@@ -25,7 +25,7 @@ function hpm_google_tracker(): void {
 					}
 				}
 				googletag.defineSlot('/9147267/HPM_Music_Sidebar', [300, 250], 'div-gpt-ad-1470409396951-0').addService(googletag.pubads());
-
+				googletag.defineSlot('/9147267/HPM_Bauer_Business_Focus', [300, 250], 'div-gpt-ad-1759329378296-0').addService(googletag.pubads());
 <?php
 	if ( is_home() ) { ?>
 				let mobileGdc = document.querySelectorAll('.homepage-mobile-gdc');

@@ -54,7 +54,7 @@
 			];
 		} ?>
 		<p><?php _e( "Compose your social posts below. A link to the current article will be appended automatically.", 'hpm-podcasts' ); ?></p>
-		<p><label for="hpm-social-post-twitter"><strong><?php _e( "Twitter/Mastodon/Bluesky", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( !empty( $twitter_sent ) ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted to: ' . implode( ', ', $twitter_sent ) . '</span>' : '' ); ?><br />
+		<p><label for="hpm-social-post-twitter"><strong><?php _e( "X/Mastodon/Bluesky/Threads", 'hpm-podcasts' ); ?> (<span id="excerpt_counter"></span><?php _e( "/280 character remaining)", 'hpm-podcasts' ); ?></strong></label><?php echo ( !empty( $twitter_sent ) ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This tweet has already been posted to: ' . implode( ', ', $twitter_sent ) . '</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-twitter" name="hpm-social-post-twitter" placeholder="What would you like to tweet/toot/skeet/thread?" style="width: 100%;" rows="2" maxlength="280"><?php echo $social_post['twitter']['data']; ?></textarea></p>
 		<p><label for="hpm-social-post-facebook"><strong><?php _e( "Facebook:", 'hpm-podcasts' ); ?></strong></label><?php echo ( $social_facebook_sent == 1 ? '  <span style="font-weight: bolder; font-style: italic; color: red;">This has already been posted to Facebook</span>' : '' ); ?><br />
 		<textarea id="hpm-social-post-facebook" name="hpm-social-post-facebook" placeholder="What would you like to post to Facebook?" style="width: 100%;" rows="2"><?php echo $social_post['facebook']['data']; ?></textarea></p>
@@ -120,30 +120,30 @@
 			return $post_id;
 		}
 		if ( !empty( $social_post['twitter']['data'] ) ) {
-			$cats = get_the_category( $post_id );
-			$tags = wp_get_post_tags( $post_id );
-			$keywords = [];
-			foreach( $cats as $cat ) {
-				preg_match_all('/([\w\d]+)/', html_entity_decode( $cat->name ), $match );
-				if ( !empty( $match[1] ) ) {
-					for ( $v = 0; $v < count( $match[1] ); $v++ ) {
-						$match[1][$v] = ucwords( $match[1][$v] );
-					}
-					$keywords[] = '#' . implode( '', $match[1] );
-				}
-			}
-			foreach( $tags as $tag ) {
-				preg_match_all('/([\w\d]+)/', html_entity_decode( $tag->name ), $match );
-				if ( !empty( $match[1] ) ) {
-					for ( $v = 0; $v < count( $match[1] ); $v++ ) {
-						$match[1][$v] = ucwords( $match[1][$v] );
-					}
-					$keywords[] = '#' . implode( '', $match[1] );
-				}
-			}
-			$keywords = array_unique( $keywords );
+//			$cats = get_the_category( $post_id );
+//			$tags = wp_get_post_tags( $post_id );
+//			$keywords = [];
+//			foreach( $cats as $cat ) {
+//				preg_match_all('/([\w\d]+)/', html_entity_decode( $cat->name ), $match );
+//				if ( !empty( $match[1] ) ) {
+//					for ( $v = 0; $v < count( $match[1] ); $v++ ) {
+//						$match[1][$v] = ucwords( $match[1][$v] );
+//					}
+//					$keywords[] = '#' . implode( '', $match[1] );
+//				}
+//			}
+//			foreach( $tags as $tag ) {
+//				preg_match_all('/([\w\d]+)/', html_entity_decode( $tag->name ), $match );
+//				if ( !empty( $match[1] ) ) {
+//					for ( $v = 0; $v < count( $match[1] ); $v++ ) {
+//						$match[1][$v] = ucwords( $match[1][$v] );
+//					}
+//					$keywords[] = '#' . implode( '', $match[1] );
+//				}
+//			}
+//			$keywords = array_unique( $keywords );
 			$post_body = $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id );
-			$masto_post_body = $post_body . "\n\n" . implode( ' ', $keywords );
+			//$masto_post_body = $post_body . "\n\n" . implode( ' ', $keywords );
 			if ( empty( $social_twitter_sent ) && !empty( HPM_TW_BEARER_TOKEN ) ) {
 				$account_id = explode( '-', HPM_TW_ACCESS_TOKEN );
 				$settings = [
@@ -165,7 +165,7 @@
 			if ( empty( $social_mastodon_sent ) && !empty( HPM_MASTODON_BEARER ) ) {
 				$payload = [
 					'body' => [
-						'status' => $masto_post_body,
+						'status' => $post_body,
 						'visibility' => 'public',
 						'language' => 'en'
 					],

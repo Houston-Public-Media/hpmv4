@@ -107,43 +107,6 @@ function author_footer( $id ): string {
 	return $output;
 }
 
-function hpm_houston_matters_check(): array {
-	$hm_airtimes = get_transient( 'hpm_hm_airing' );
-	if ( !empty( $hm_airtimes ) ) {
-		return $hm_airtimes;
-	}
-	$t = time();
-	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset;
-	$date = date( 'Y-m-d', $t );
-	$hm_airtimes = [
-		9 => false,
-		11 => false,
-		12 => false
-	];
-	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=" . $date . "&format=json" ) );
-	if ( is_wp_error( $remote ) ) {
-		return $hm_airtimes;
-	} else {
-		$api = wp_remote_retrieve_body( $remote );
-		$json = json_decode( $api, TRUE );
-		foreach ( $json['onToday'] as $j ) {
-			if ( $j['program']['name'] == 'Houston Matters with Craig Cohen' ) {
-				if ( $j['start_time'] == '09:00' ) {
-					$hm_airtimes[9] = true;
-				}
-			} elseif ( $j['program']['name'] == 'Hello Houston' ) {
-				if ( $j['start_time'] == '11:00' ) {
-					$hm_airtimes[11] = true;
-					$hm_airtimes[12] = true;
-				}
-			}
-		}
-	}
-	set_transient( 'hpm_hm_airing', $hm_airtimes, 600 );
-	return $hm_airtimes;
-}
-
 function hpm_chartbeat(): void {
 	global $wp_query;
 	$id = $wp_query->get_queried_object_id();
