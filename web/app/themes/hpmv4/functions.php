@@ -170,16 +170,33 @@ function add_newsletter_promo_in_content( $content ) {
     if ( !is_singular('post') || is_page_template('single-full-width.php') ) {
         return $content;
     }
-    $wired_story_sources = array('Associated Press', 'TPR', 'NPR', 'Texas Tribune', 'KERA', 'KUT');
-    $author_name = get_the_author();
-    $found = false;
-    foreach ( $wired_story_sources as $word ) {
-        if ( stripos( $author_name, $word ) !== false ) {
-            $found = true;
-            break;
+    $coauthors = get_coauthors( get_the_ID() );
+    foreach ( $coauthors as $coa ) {
+        $local = $guest = false;
+        $author = null;
+        if (is_a($coa, 'wp_user')) {
+            $author = new WP_Query(['post_type' => 'staff', 'post_status' => 'publish', 'meta_query' => [['key' => 'hpm_staff_authid', 'compare' => '=', 'value' => $coa->ID]]]);
+        } elseif (!empty($coa->type) && $coa->type == 'guest-author') {
+            if (!empty($coa->linked_account)) {
+                $authid = get_user_by('login', $coa->linked_account);
+                if ($authid !== false) {
+                    $author = new WP_Query(['post_type' => 'staff', 'post_status' => 'publish', 'meta_query' => [['key' => 'hpm_staff_authid', 'compare' => '=', 'value' => $authid->ID]]]);
+                }
+            } else {
+                $guest = true;
+            }
         }
     }
-    if ( ! $found ) {
+//    $wired_story_sources = array('Associated Press', 'TPR', 'NPR', 'Texas Tribune', 'KERA', 'KUT');
+//    $author_name = get_the_author();
+//    $found = false;
+//    foreach ( $wired_story_sources as $word ) {
+//        if ( stripos( $author_name, $word ) !== false ) {
+//            $found = true;
+//            break;
+//        }
+//    }
+    if ( !$guest ) {
         $newsletter_bug_shortcode = do_shortcode('[hpm_newsletter]');
         $paragraphs = explode('</p>', $content);
         if ( count( $paragraphs ) > 4 ) {
