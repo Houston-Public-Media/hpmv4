@@ -165,6 +165,63 @@ function hpm_filterposts_by_the_authors( $post_type ) {
 	wp_dropdown_users( $params );
 }
 
+//function add_newsletter_bug_in_content( $content ) {
+//    if ( get_post_type() !== 'post' || !is_singular( 'post' ) || is_page_template( 'single-full-width.php' ) ) {
+//        return $content;
+//    }
+//    $target_categories = array( 'hellohouston-bug' );
+//    $has_target_category = false;
+//    foreach ( $target_categories as $cat_slug ) {
+//        if ( has_category( $cat_slug ) ) {
+//            $has_target_category = true;
+//            break;
+//        }
+//    }
+//    if ( $has_target_category ) {
+//        $newsletter_bug_shortcode = '[hpm_newsletter]';
+//        $content = preg_replace( '/(<p[^>]*>)/', $newsletter_bug_shortcode . '$1', $content, 1 );
+//    }
+//    return $content;
+//}
+
+function add_newsletter_promo_in_content( $content ) {
+    // Only run on single posts, and not if a specific template is used
+    if ( !is_singular('post') || is_page_template('single-full-width.php') ) {
+        return $content;
+    }
+    $wired_story_sources = array('Associated Press', 'TPR', 'NPR', 'Texas Tribune', 'KERA', 'KUT');
+    $author_name = get_the_author();
+    $found = false;
+    foreach ( $wired_story_sources as $word ) {
+        if ( stripos( $author_name, $word ) !== false ) {
+            $found = true;
+            break;
+        }
+    }
+    if ( ! $found ) {
+        $newsletter_bug_shortcode = do_shortcode('[hpm_newsletter]');
+        $paragraphs = explode('</p>', $content);
+        if ( count( $paragraphs ) > 4 ) {
+            foreach ( $paragraphs as $index => &$paragraph ) {
+                if ( trim( $paragraph ) ) {
+                    $paragraph .= '</p>';
+                }
+                if ( $index === 3 ) {
+                    $paragraph .= $newsletter_bug_shortcode;
+                }
+            }
+            unset( $paragraph );
+            $content = implode( '', $paragraphs );
+        } else {
+            $content .= $newsletter_bug_shortcode;
+        }
+    }
+    return $content;
+}
+
+add_filter( 'the_content', 'add_newsletter_promo_in_content' );
+
+
 // Modification to the normal Menu Walker to add <div> elements in certain locations and remove links with '#' hrefs
 class HPM_Menu_Walker extends Walker_Nav_Menu {
 	function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {

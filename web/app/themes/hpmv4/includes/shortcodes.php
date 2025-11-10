@@ -444,8 +444,8 @@ function hpm_listen_live_button(): string {
 add_shortcode( 'hpm_listenlive_btn', 'hpm_listen_live_button' );
 
 function hpm_newsletter_bug(): string {
-	//return '<div class="in-post-bug newsletter"><a href="/news/today-in-houston-newsletter/" target="_blank">Let the Houston Public Media newsroom help you start your day. Subscribe to <span>Today&nbsp;in&nbsp;Houston</span>.</a></div>';
-	return '';
+    return '<div class="in-post-bug newsletter">Sign up for the <a href="/hellohouston/" target="_blank">Hello, Houston!</a> daily newsletter to get local reports like this delivered directly to your inbox.</a></div>';
+    return '';
 }
 add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
 
