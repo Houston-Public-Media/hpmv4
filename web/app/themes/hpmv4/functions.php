@@ -165,60 +165,6 @@ function hpm_filterposts_by_the_authors( $post_type ) {
 	wp_dropdown_users( $params );
 }
 
-function add_newsletter_promo_in_content( $content ) {
-    // Only run on single posts, and not if a specific template is used
-    if ( !is_singular('post') || is_page_template('single-full-width.php') ) {
-        return $content;
-    }
-    $coauthors = get_coauthors( get_the_ID() );
-    foreach ( $coauthors as $coa ) {
-        $local = $guest = false;
-        $author = null;
-        if (is_a($coa, 'wp_user')) {
-            $author = new WP_Query(['post_type' => 'staff', 'post_status' => 'publish', 'meta_query' => [['key' => 'hpm_staff_authid', 'compare' => '=', 'value' => $coa->ID]]]);
-        } elseif (!empty($coa->type) && $coa->type == 'guest-author') {
-            if (!empty($coa->linked_account)) {
-                $authid = get_user_by('login', $coa->linked_account);
-                if ($authid !== false) {
-                    $author = new WP_Query(['post_type' => 'staff', 'post_status' => 'publish', 'meta_query' => [['key' => 'hpm_staff_authid', 'compare' => '=', 'value' => $authid->ID]]]);
-                }
-            } else {
-                $guest = true;
-            }
-        }
-    }
-//    $wired_story_sources = array('Associated Press', 'TPR', 'NPR', 'Texas Tribune', 'KERA', 'KUT');
-//    $author_name = get_the_author();
-//    $found = false;
-//    foreach ( $wired_story_sources as $word ) {
-//        if ( stripos( $author_name, $word ) !== false ) {
-//            $found = true;
-//            break;
-//        }
-//    }
-    if ( !$guest ) {
-        $newsletter_bug_shortcode = do_shortcode('[hpm_newsletter]');
-        $paragraphs = explode('</p>', $content);
-        if ( count( $paragraphs ) > 4 ) {
-            foreach ( $paragraphs as $index => &$paragraph ) {
-                if ( trim( $paragraph ) ) {
-                    $paragraph .= '</p>';
-                }
-                if ( $index === 3 ) {
-                    $paragraph .= $newsletter_bug_shortcode;
-                }
-            }
-            unset( $paragraph );
-            $content = implode( '', $paragraphs );
-        } else {
-            $content .= $newsletter_bug_shortcode;
-        }
-    }
-    return $content;
-}
-
-add_filter( 'the_content', 'add_newsletter_promo_in_content' );
-
 // Modification to the normal Menu Walker to add <div> elements in certain locations and remove links with '#' hrefs
 class HPM_Menu_Walker extends Walker_Nav_Menu {
 	function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
@@ -634,14 +580,36 @@ function prefix_insert_post_bug( $content ) {
 	if ( is_single() && $post->post_type == 'post' ) {
 		if ( in_category( 'election-2016' ) ) {
 			$bug_code = '<div class="in-post-bug"><a href="/news/politics/election-2016/"><img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/03/21120957/ELECTION_crop.jpg" alt="Houston Public Media\'s Coverage of Election 2016"></a><h3><a href="/news/politics/election-2016/">Houston Public Media\'s Coverage of Election 2016</a></h3></div>';
-			return prefix_insert_after_paragraph( $bug_code, 2, $content );
+			$content = prefix_insert_after_paragraph( $bug_code, 2, $content );
 		} elseif ( in_category( 'texas-legislature' ) ) {
 			$bug_code = '<div class="in-post-bug"><a href="/news/politics/texas-legislature/"><img src="https://cdn.houstonpublicmedia.org/assets/images/TX_Lege_Article_Bug.jpg" alt="Special Coverage Of The 85th Texas Legislative Session"></a><h3><a href="/news/politics/texas-legislature/">Special Coverage Of The 85th Texas Legislative Session</a></h3></div>';
-			return prefix_insert_after_paragraph( $bug_code, 2, $content );
+			$content = prefix_insert_after_paragraph( $bug_code, 2, $content );
 		} elseif ( in_category( 'in-depth' ) ) {
 			if ( !preg_match( '/\[hpm_indepth ?\/?\]/', $content ) ) {
 				$bug_code = '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
-				return prefix_insert_after_paragraph( $bug_code, 5, $content );
+				$content = prefix_insert_after_paragraph( $bug_code, 5, $content );
+			}
+		}
+		$coauthors = get_coauthors( get_the_ID() );
+		$local = $guest = false;
+		foreach ( $coauthors as $coa ) {
+			if ( is_a( $coa, 'wp_user' ) ) {
+				$local = true;
+			} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
+				if ( !empty( $coa->linked_account ) ) {
+					$authid = get_user_by( 'login', $coa->linked_account );
+					if ( $authid !== false ) {
+						$local = true;
+					}
+				} else {
+					$guest = true;
+				}
+			}
+		}
+		if ( !$guest && $local ) {
+			if ( !preg_match( '/\[hpm_newsletter ?\/?\]/', $content ) ) {
+				$bug_code = '<div class="in-post-bug newsletter">Sign up for the <a href="/hellohouston/" target="_blank">Hello, Houston!</a> daily newsletter to get local reports like this delivered directly to your inbox.</a></div>';
+				$content = prefix_insert_after_paragraph( $bug_code, 3, $content );
 			}
 		}
 	}

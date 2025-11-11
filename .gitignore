@@ -13,6 +13,8 @@ web/app/uploads/*
 web/app/cache/*
 auth.json
 web/app/ewww/lazy
+.ddev/*
+package.xml
 
 # WordPress
 web/wp

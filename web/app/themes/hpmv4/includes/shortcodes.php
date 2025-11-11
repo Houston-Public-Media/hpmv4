@@ -384,55 +384,6 @@ function hpm_careers_trans(): string {
 }
 add_shortcode( 'hpm_careers', 'hpm_careers_trans' );
 
-function hpm_townsquare_covid( $atts ): string {
-	global $hpm_constants;
-	if ( empty( $hpm_constants ) ) {
-		$hpm_constants = [];
-	}
-	extract( shortcode_atts( [], $atts, 'multilink' ) );
-	$args = [
-		'posts_per_page' => 1,
-		'ignore_sticky_posts' => 1,
-		'category_name' => 'town-square+coronavirus',
-		'post_type' => 'post',
-		'post_status' => 'publish',
-		'meta_query' => [[
-			'key' => 'hpm_podcast_enclosure',
-			'compare' => 'EXISTS'
-		]]
-	];
-	$art = new WP_Query( $args );
-	$output = '';
-	if ( $art->have_posts() ) {
-		while ( $art->have_posts() ) {
-			$art->the_post();
-			$postClass = get_post_class();
-			$postClass[] = 'town-square-feature';
-			$hpm_constants[] = get_the_ID();
-			$podcast = get_post_meta( get_the_ID(), 'hpm_podcast_enclosure', true );
-			wp_enqueue_script('hpm-plyr');
-			$output .= '<article class="'.implode( ' ', $postClass ).'">' .
-				'<div class="img-wrap">' .
-					'<p><a href="/shows/town-square/" aria-hidden="true"><img src="https://cdn.houstonpublicmedia.org/assets/images/town-square-logo.webp" alt="Town Square with Ernie Manouse logo" /></a></p>' .
-					'<p><a href="/listen-live/">Listen Live</a> at 3pm or<br /><a href="/podcasts/town-square/">Download the Podcast</a></p>' .
-				'</div>' .
-				'<header class="entry-header">' .
-					'<h3><a href="/shows/town-square/">The Latest from Town Square</a></h3>'.
-					'<div class="article-player-wrap">' .
-						'<h2 class="entry-title"><a href="'.get_permalink().'" rel="bookmark">'.get_the_title().'</a></h2>' .
-						'<audio class="js-player" controls preload="metadata">' .
-							'<source src="'.$podcast['url'].'source=plyr-article" type="audio/mpeg" />' .
-						'</audio>' .
-					'</div>' .
-				'</header>' .
-			'</article>';
-		}
-	}
-	wp_reset_query();
-	return $output;
-}
-add_shortcode( 'covid_ts', 'hpm_townsquare_covid' );
-
 function hpm_indepth_bug(): string {
 	return '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
 }
@@ -445,7 +396,6 @@ add_shortcode( 'hpm_listenlive_btn', 'hpm_listen_live_button' );
 
 function hpm_newsletter_bug(): string {
     return '<div class="in-post-bug newsletter">Sign up for the <a href="/hellohouston/" target="_blank">Hello, Houston!</a> daily newsletter to get local reports like this delivered directly to your inbox.</a></div>';
-    return '';
 }
 add_shortcode( 'hpm_newsletter', 'hpm_newsletter_bug' );
 

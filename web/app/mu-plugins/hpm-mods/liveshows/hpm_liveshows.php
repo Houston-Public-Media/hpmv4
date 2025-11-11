@@ -34,11 +34,11 @@ class HPM_Liveshows {
 		foreach ( $names as $k => $v ) {
 			$temp[ $k ] = [];
 		}
-		$option = get_option( 'hpm_ytlive_talkshows' );
-		if ( empty( $option ) ) {
-			$option = $temp;
-		}
-		$t = getdate();
+		$option = $temp;
+		$now = time();
+		$offset = get_option( 'gmt_offset' ) * 3600;
+		$now += $offset;
+		$t = getdate( $now );
 		$today = mktime( 0, 0, 0, $t['mon'], $t['mday'], $t['year'] );
 		$tomorrow = $today + 86400;
 		$remote = wp_remote_get( esc_url_raw( "https://cdn.houstonpublicmedia.org/assets/ytlive.json" ) );
@@ -47,10 +47,10 @@ class HPM_Liveshows {
 		} else {
 			$json = json_decode( wp_remote_retrieve_body( $remote ), true );
 			foreach( $json as $item ) {
-				$date = strtotime( $item['start'] );
+				$date = strtotime( $item['start'] ) + $offset;
 				foreach ( $names as $name_slug => $name ) {
 					if ( str_contains( $item['title'], $name['title'] ) ) {
-						$temp[ $name_slug ][ $date ] = $item['title'];
+						$temp[ $name_slug ][ $date ] = $item;
 					}
 				}
 			}
@@ -60,8 +60,7 @@ class HPM_Liveshows {
 		}
 		foreach( $temp as $show => $event ) {
 			foreach ( $event as $date => $meta ) {
-				$prev = strtotime( $option[ $show ]['start'] );
-				if ( $date >= $today && $date <= $tomorrow && $date > $prev ) {
+				if ( $date >= $today && $date <= $tomorrow ) {
 					$option[ $show ] = $meta;
 				}
 			}
@@ -104,7 +103,9 @@ class HPM_Liveshows {
 				'email' => '',
 				'phone' => '',
 				'recurring' => 1,
-				'recurring_pattern' => []
+				'recurring_pattern' => [],
+				'accent_color' => '',
+				'background_color' => ''
 			];
 		} ?>
 		<p>
@@ -125,6 +126,8 @@ class HPM_Liveshows {
 		</p>
 		<p><label for="hpm-liveshow-email"><?php _e( "Show Email:", 'hpm-liveshow' ); ?></label> <input type="text" id="hpm-liveshow-email" name="hpm-liveshow-email" value="<?php echo $hpm_liveshow['email']; ?>" placeholder="kloggins@danger.zone" style="width: 60%;" /></p>
 		<p><label for="hpm-liveshow-phone"><?php _e( "Show Phone Number:", 'hpm-liveshow' ); ?></label> <input type="text" id="hpm-liveshow-phone" name="hpm-liveshow-phone" value="<?php echo $hpm_liveshow['phone']; ?>" placeholder="(555) 867-5309" style="width: 60%;" /></p>
+		<p><label for="hpm-liveshow-accent-color"><?php _e( "Show Accent Color:", 'hpm-liveshow' ); ?></label> <input type="color" id="hpm-liveshow-accent-color" name="hpm-liveshow-accent-color" value="<?php echo ( !empty( $hpm_liveshow['accent_color'] ) ? $hpm_liveshow['accent_color'] : '#FFFFFF' ); ?>" placeholder="#FF0000" /></p>
+		<p><label for="hpm-liveshow-background-color"><?php _e( "Show Background Color:", 'hpm-liveshow' ); ?></label> <input type="color" id="hpm-liveshow-background-color" name="hpm-liveshow-background-color" value="<?php echo ( !empty( $hpm_liveshow['background_color'] ) ? $hpm_liveshow['background_color'] : '#000000' ); ?>" placeholder="#00FF00" /></p>
 		<p><strong><label for="hpm-liveshow-recurring"><?PHP _e( "Is this an ongoing show?", 'hpm-liveshows' ); ?></label></strong> <select name="hpm-liveshow-recurring" id="hpm-liveshow-recurring">
 				<option value="0"<?PHP selected( $hpm_liveshow['recurring'], 0, TRUE ); ?>><?PHP _e( "No", 'hpm-liveshows' ); ?></option>
 				<option value="1"<?PHP selected( $hpm_liveshow['recurring'], 1, TRUE ); ?>><?PHP _e( "Yes", 'hpm-liveshows' ); ?></option>
@@ -193,6 +196,8 @@ class HPM_Liveshows {
 				'phone' => ( !empty( $_POST['hpm-liveshow-phone'] ) ? sanitize_text_field( $_POST['hpm-liveshow-phone'] ) : '' ),
 				'recurring' => $_POST['hpm-liveshow-recurring'],
 				'recurring_pattern' => ( !empty( $_POST['hpm-liveshow-recur'] ) ? $_POST['hpm-liveshow-recur'] : [] ),
+				'accent_color' => $_POST['hpm-liveshow-accent-color'],
+				'background_color' => $_POST['hpm-liveshow-background-color'],
 			];
 
 			update_post_meta( $post_id, 'hpm_liveshow', $hpm_liveshow );
