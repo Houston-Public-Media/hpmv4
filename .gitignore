@@ -13,6 +13,10 @@ web/app/uploads/*
 web/app/cache/*
 auth.json
 web/app/ewww/lazy
+.ddev/*
+!.ddev/config.yaml
+!.ddev/docker-compose.redis.yaml
+package.xml
 
 # WordPress
 web/wp

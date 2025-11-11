@@ -114,32 +114,37 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	$hm_air = HPM_Liveshows::liveshow_check();
 	$temp = HPM_Liveshows::get_all();
 	foreach ( $temp as $k => $v ) {
-		$apislug = str_replace( '-', '', $k );
-		$output['talkshow'][ $apislug ] = [
-				'live' => false,
-				'id' => '',
-				'title' => '',
-				'embed' => '',
-				'description' => '',
-				'showname' => $v['title']
+		$output['talkshow'][] = [
+			'live' => false,
+			'id' => '',
+			'title' => '',
+			'embed' => '',
+			'description' => '',
+			'showName' => $v['title'],
+			'showSlug' => $k,
+			'email' => $v['email'],
+			'phone' => $v['phone'],
+			'accentColor' => $v['accent_color'],
+			'backgroundColor' => $v['background_color']
 		];
 		if ( $v['recurring'] == 1 &&
 				in_array( $now['wday'], $v['recurring_pattern'] ) &&
 				$v['start_hour'] <= $now['hours'] &&
 				$v['end_hour'] > $now['hours']
 		) {
-			$output['talkshow'][ $apislug ]['live'] = true;
+			$output['talkshow'][ count( $output['talkshow'] ) - 1 ]['live'] = true;
 		}
 	}
 
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	foreach( $ytlive as $show => $meta ) {
-		$show = str_replace( '-', '', $show );
-		if ( !empty( $output['talkshow'][ $show ] ) ) {
-			$output['talkshow'][ $show ]['id'] = $meta['id'];
-			$output['talkshow'][ $show ]['title'] = $meta['title'];
-			$output['talkshow'][ $show ]['embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
-			$output['talkshow'][ $show ]['description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
+		foreach ( $output['talkshow'] as $k => $talk ) {
+			if ( $show == $talk['showSlug'] ) {
+				$output['talkshow'][ $k ]['id'] = $meta['id'];
+				$output['talkshow'][ $k ]['title'] = $meta['title'];
+				$output['talkshow'][ $k ]['embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+				$output['talkshow'][ $k ]['description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
+			}
 		}
 	}
 
