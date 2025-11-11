@@ -580,14 +580,36 @@ function prefix_insert_post_bug( $content ) {
 	if ( is_single() && $post->post_type == 'post' ) {
 		if ( in_category( 'election-2016' ) ) {
 			$bug_code = '<div class="in-post-bug"><a href="/news/politics/election-2016/"><img src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/03/21120957/ELECTION_crop.jpg" alt="Houston Public Media\'s Coverage of Election 2016"></a><h3><a href="/news/politics/election-2016/">Houston Public Media\'s Coverage of Election 2016</a></h3></div>';
-			return prefix_insert_after_paragraph( $bug_code, 2, $content );
+			$content = prefix_insert_after_paragraph( $bug_code, 2, $content );
 		} elseif ( in_category( 'texas-legislature' ) ) {
 			$bug_code = '<div class="in-post-bug"><a href="/news/politics/texas-legislature/"><img src="https://cdn.houstonpublicmedia.org/assets/images/TX_Lege_Article_Bug.jpg" alt="Special Coverage Of The 85th Texas Legislative Session"></a><h3><a href="/news/politics/texas-legislature/">Special Coverage Of The 85th Texas Legislative Session</a></h3></div>';
-			return prefix_insert_after_paragraph( $bug_code, 2, $content );
+			$content = prefix_insert_after_paragraph( $bug_code, 2, $content );
 		} elseif ( in_category( 'in-depth' ) ) {
 			if ( !preg_match( '/\[hpm_indepth ?\/?\]/', $content ) ) {
 				$bug_code = '<div class="in-post-bug in-depth"><a href="/topics/in-depth/">Click here for more inDepth features.</a></div>';
-				return prefix_insert_after_paragraph( $bug_code, 5, $content );
+				$content = prefix_insert_after_paragraph( $bug_code, 5, $content );
+			}
+		}
+		$coauthors = get_coauthors( get_the_ID() );
+		$local = $guest = false;
+		foreach ( $coauthors as $coa ) {
+			if ( is_a( $coa, 'wp_user' ) ) {
+				$local = true;
+			} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
+				if ( !empty( $coa->linked_account ) ) {
+					$authid = get_user_by( 'login', $coa->linked_account );
+					if ( $authid !== false ) {
+						$local = true;
+					}
+				} else {
+					$guest = true;
+				}
+			}
+		}
+		if ( !$guest && $local ) {
+			if ( !preg_match( '/\[hpm_newsletter ?\/?\]/', $content ) ) {
+				$bug_code = '<div class="in-post-bug newsletter">Sign up for the <a href="/hellohouston/" target="_blank">Hello, Houston!</a> daily newsletter to get local reports like this delivered directly to your inbox.</a></div>';
+				$content = prefix_insert_after_paragraph( $bug_code, 3, $content );
 			}
 		}
 	}
