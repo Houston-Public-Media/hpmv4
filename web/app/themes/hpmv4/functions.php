@@ -590,28 +590,28 @@ function prefix_insert_post_bug( $content ) {
 				$content = prefix_insert_after_paragraph( $bug_code, 5, $content );
 			}
 		}
-//		$coauthors = get_coauthors( get_the_ID() );
-//		$local = $guest = false;
-//		foreach ( $coauthors as $coa ) {
-//			if ( is_a( $coa, 'wp_user' ) ) {
-//				$local = true;
-//			} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
-//				if ( !empty( $coa->linked_account ) ) {
-//					$authid = get_user_by( 'login', $coa->linked_account );
-//					if ( $authid !== false ) {
-//						$local = true;
-//					}
-//				} else {
-//					$guest = true;
-//				}
-//			}
-//		}
-//		if ( !$guest && $local ) {
-//			if ( !preg_match( '/\[hpm_newsletter ?\/?\]/', $content ) ) {
-//				$bug_code = '<div class="in-post-bug newsletter">Sign up for the <a href="/hellohouston/" target="_blank">Hello, Houston!</a> daily newsletter to get local reports like this delivered directly to your inbox.</a></div>';
-//				$content = prefix_insert_after_paragraph( $bug_code, 3, $content );
-//			}
-//		}
+		$coauthors = get_coauthors( get_the_ID() );
+		$local = $guest = false;
+		foreach ( $coauthors as $coa ) {
+			if ( is_a( $coa, 'wp_user' ) ) {
+				$local = true;
+			} elseif ( !empty( $coa->type ) && $coa->type == 'guest-author' ) {
+				if ( !empty( $coa->linked_account ) ) {
+					$authid = get_user_by( 'login', $coa->linked_account );
+					if ( $authid !== false ) {
+						$local = true;
+					}
+				} else {
+					$guest = true;
+				}
+			}
+		}
+		if ( !$guest && $local ) {
+			if ( !preg_match( '/\[hpm_newsletter ?\/?\]/', $content ) ) {
+				$bug_code = '<div class="in-post-bug newsletter">Sign up for the <a href="/hellohouston/" target="_blank">Hello, Houston!</a> daily newsletter to get local reports like this delivered directly to your inbox.</a></div>';
+				$content = prefix_insert_after_paragraph( $bug_code, 3, $content );
+			}
+		}
 	}
 	return $content;
 }
