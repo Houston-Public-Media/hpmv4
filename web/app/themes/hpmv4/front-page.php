@@ -235,7 +235,16 @@ $tras = null; ?>
 						<?php get_template_part( "content", "localnews" ); ?>
 					</div>
 				</div>
+
 				<div class="col-sm-12 col-lg-4 news-list-right most-view">
+                    <div style="padding-bottom: 25px;">
+                        <h2 class="title title-full">
+                            <strong>Contact Us</strong>
+                        </h2>
+                        <p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="#" style="color:#237bbd">Tell Houston Public Media</a></p>
+
+                    </div>
+
 					<h2 class="title title-full">
 						<strong>Most <span>Viewed</span></strong>
 					</h2>
