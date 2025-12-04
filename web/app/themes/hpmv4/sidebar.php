@@ -4,8 +4,8 @@
  * @subpackage HPMv4
  * @since HPMv4 4.0
  */
-	echo HPM_Promos::generate_static( 'sidebar' );
-	//if ( !is_single() && get_post_type() !== 'post' ) { ?>
+	global $pagename, $post;
+	echo HPM_Promos::generate_static( 'sidebar' ); ?>
 <section class="sidebar-ad">
 	<h4>Support Comes From</h4>
 <?php
@@ -25,9 +25,17 @@
 <?php
 		} ?>
 </section>
+<section>
+    <div class="row">
+        <div class="col-12 news-list-right most-view">
+            <h2 class="title title-full">
+                <strong>Contact Us</strong>
+            </h2>
+            <p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/newstips">Tell Houston Public Media</a></p>
+        </div>
+    </div>
+</section>
 <?php
-	//}
-	global $post;
 	if ( !empty( $post ) ) {
 		$tags = wp_get_post_tags( $post->ID );
 
@@ -80,8 +88,6 @@
 		</div>
 	</div>
 </section>
-<?php
-	//if ( !is_single() && get_post_type() !== 'post' ) { ?>
 <section class="sidebar-ad col-sm-6 col-md-12">
 	<h4>Support Comes From</h4>
 	<div id="div-gpt-ad-1394579228932-2">
@@ -90,4 +96,3 @@
 		</script>
 	</div>
 </section>
-<?php //} ?>
