@@ -77,6 +77,11 @@ class BetterImageCreditsAdmin {
 					__( 'Credits', 'better-image-credits' ),
 					__( 'Source name', 'better-image-credits' ) );
 
+			$form_fields['credits_provider'] = $this->get_field( $post,
+					'credits_provider', '_wp_attachment_source_provider',
+					__( 'Provider', 'better-image-credits' ),
+					__( 'Provider or agency', 'better-image-credits' ) );
+
 			$form_fields['credits_link'] = $this->get_field( $post,
 					'credits_link', '_wp_attachment_source_url',
 					__( 'Link', 'better-image-credits' ),
@@ -113,6 +118,10 @@ class BetterImageCreditsAdmin {
 			update_post_meta( $post['ID'], '_wp_attachment_source_name', esc_attr( $attachment['credits_source'] ) );
 		}
 
+		if ( isset( $attachment['credits_provider'] ) ) {
+			update_post_meta( $post['ID'], '_wp_attachment_source_provider', esc_attr( $attachment['credits_provider'] ) );
+		}
+
 		if ( isset( $attachment['credits_link'] ) ) {
 			update_post_meta( $post['ID'], '_wp_attachment_source_url', esc_url( $attachment['credits_link'] ) );
 		}
@@ -130,6 +139,7 @@ class BetterImageCreditsAdmin {
 
 	function manage_media_columns( $defaults ) {
 		$defaults['credits'] = __( 'Credits', 'better-image-credits' );
+		$defaults['provider'] = __( 'Provider', 'better-image-credits' );
 		$defaults['license'] = __( 'License', 'better-image-credits' );
 		return $defaults;
 	}
@@ -137,13 +147,14 @@ class BetterImageCreditsAdmin {
 	function manage_media_custom_column( $column, $post_id ) {
 		if ( $column === 'credits' ) {
 			$credit_source = esc_attr( get_post_meta( $post_id, '_wp_attachment_source_name', true ) );
+			$credit_provider = esc_attr( get_post_meta( $post_id, '_wp_attachment_source_provider', true ) );
 			$credit_link = esc_url( get_post_meta( $post_id, '_wp_attachment_source_url', true ) );
-
-			if ( !empty( $credit_source ) ) {
+			$credit = implode( " / ", [ $credit_source, $credit_provider ] );
+			if ( !empty( $credit ) ) {
 				if ( empty($credit_link ) ) {
-					echo $credit_source;
+					echo $credit;
 				} else {
-					echo '<a href="' . $credit_link . '">' . $credit_source . '</a>';
+					echo '<a href="' . $credit_link . '">' . $credit . '</a>';
 				}
 			}
 		}
@@ -203,6 +214,10 @@ class BetterImageCreditsAdmin {
   				<label for="credits_source"><?php _e('Credits', 'better-image-credits'); ?>:</label><br>
   				<input type="text" class="text widefat" placeholder="<?php _e('Source name', 'better-image-credits'); ?>" name="credits_source" value="">
   			</p>
+			<p>
+				<label for="credits_provider"><?php _e('Provider', 'better-image-credits'); ?>:</label><br>
+				<input type="text" class="text widefat" placeholder="<?php _e('Provider or Agency', 'better-image-credits'); ?>" name="credits_provider" value="">
+			</p>
   			<p>
   				<label for="credits_link"><?php _e('Link', 'better-image-credits'); ?>:</label><br>
   				<input type="text" class="text widefat" placeholder="<?php _e('Source URL', 'better-image-credits'); ?>" name="credits_link" value="">
@@ -234,6 +249,7 @@ class BetterImageCreditsAdmin {
 
 			if ( preg_match( '|image/.+|', $mime ) ) {
 				update_post_meta( $id, '_wp_attachment_source_name', esc_attr( $_REQUEST['credits_source'] ) );
+				update_post_meta( $id, '_wp_attachment_source_provider', esc_attr( $_REQUEST['credits_provider'] ) );
 				update_post_meta( $id, '_wp_attachment_source_url', esc_url( $_REQUEST['credits_link'] ) );
 				update_post_meta( $id, '_wp_attachment_license', esc_attr( $_REQUEST['license'] ) );
 				update_post_meta( $id, '_wp_attachment_license_url', esc_url( $_REQUEST['license_link'] ) );
@@ -249,7 +265,7 @@ class BetterImageCreditsAdmin {
 		// Original search string:
 		// AND (((wp_posts.post_title LIKE '%search-string%') OR (wp_posts.post_content LIKE '%search-string%')))
 		$s = get_query_var( 's' );
-		$extra = "{$wpdb->posts}.ID IN (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_wp_attachment_source_name', '_wp_attachment_license') AND meta_value LIKE '%{$s}%')";
+		$extra = "{$wpdb->posts}.ID IN (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_wp_attachment_source_name', '_wp_attachment_source_provider', '_wp_attachment_license') AND meta_value LIKE '%{$s}%')";
 		return str_replace( 'AND ((', 'AND (((' . $extra . ') OR ', $search );;
 	}
 

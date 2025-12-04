@@ -1,31 +1,11 @@
-<style>
-    .card-header {
-        background-color: #237bbd;
-        color: #fff;
-        font-weight: bold;
-        border-radius: 0px;
-        /* min-height: 56px; */
-        text-align: center;
-    }
-    .card {
-        border-radius: 0px;
-        border-color: #237bbd;
-    }
-    .card-header:first-child
-    {
-        border-radius: unset;
-    }
-</style>
-
 <?php
 /**
  * @package WordPress
  * @subpackage HPMv4
  * @since HPMv4 4.0
  */
-	echo HPM_Promos::generate_static( 'sidebar' );
-	//if ( !is_single() && get_post_type() !== 'post' ) { ?>
-
+	global $pagename, $post;
+	echo HPM_Promos::generate_static( 'sidebar' ); ?>
 <section class="sidebar-ad">
 	<h4>Support Comes From</h4>
 <?php
@@ -44,31 +24,18 @@
 	</div>
 <?php
 		} ?>
-
 </section>
-<!--<div class="row justify-content-center">-->
-<!--    <div class="col-auto">-->
-<!--        <div class="card mb-3" style="width: 200px;">-->
-<!--            <div class="card-header" style="background-color: #237bbd;">-->
-<!--                <a style="text-decoration: none; color: #fff;" href="/share-your-voice-with-houston-public-media">Newstips</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 <section>
     <div class="row">
         <div class="col-12 news-list-right most-view">
             <h2 class="title title-full">
                 <strong>Contact Us</strong>
             </h2>
-            <p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="#" style="color:#237bbd">Tell Houston Public Media</a></p>
+            <p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/newstips">Tell Houston Public Media</a></p>
         </div>
     </div>
 </section>
-
 <?php
-	//}
-	global $post;
 	if ( !empty( $post ) ) {
 		$tags = wp_get_post_tags( $post->ID );
 
@@ -86,9 +53,7 @@
 			$my_query = new WP_Query( $args );
 			if ( $my_query->have_posts() ) { ?>
 <section class="highlights col-sm-6 col-md-12">
-
-
-    <div class="row">
+	<div class="row">
 		<div class="col-12 news-list-right most-view">
 			<h2 class="title title-full">
 				<strong>Related</strong>
@@ -123,8 +88,6 @@
 		</div>
 	</div>
 </section>
-<?php
-	//if ( !is_single() && get_post_type() !== 'post' ) { ?>
 <section class="sidebar-ad col-sm-6 col-md-12">
 	<h4>Support Comes From</h4>
 	<div id="div-gpt-ad-1394579228932-2">
@@ -133,4 +96,3 @@
 		</script>
 	</div>
 </section>
-<?php //} ?>

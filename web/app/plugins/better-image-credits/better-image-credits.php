@@ -143,6 +143,10 @@ class BetterImageCreditsPlugin {
 		$att = get_post( $id );
 		$title = ( !empty( $att->post_title ) ? $att->post_title : '' );
 		$source = esc_attr( get_post_meta( $id, '_wp_attachment_source_name', true ) );
+		$provider = esc_attr( get_post_meta( $id, '_wp_attachment_source_provider', true ) );
+		if ( !empty ( $provider ) ) {
+			$source .= ' / ' . $provider;
+		}
 		$link = esc_url( get_post_meta( $id, '_wp_attachment_source_url', true ) );
 		$license = esc_attr( get_post_meta( $id, '_wp_attachment_license', true ) );
 		$license_link = esc_attr( get_post_meta( $id, '_wp_attachment_license_url', true ) );

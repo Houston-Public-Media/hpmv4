@@ -542,7 +542,7 @@ class HPM_Promos {
 						}
 						$output .= "var lightBox = '" . $content_esc . "';" .
 						"if (visited === null) {" .
-							"setCookie('visited','true',2);" .
+							"hpmSetCookie('visited','true',2);" .
 							"document.getElementById('primary').insertAdjacentHTML('afterbegin', lightBox);" .
 							"var campaign = document.querySelectorAll('#campaign-splash, #campaign-close');" .
 							"var campaignData = document.querySelector('#campaign-splash').getAttribute('data-campaign');" .

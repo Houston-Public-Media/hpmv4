@@ -591,8 +591,7 @@ function prefix_insert_post_bug( $content ) {
 			}
 		}
 		$coauthors = get_coauthors( get_the_ID() );
-
-		$local = $guest = false;
+		$local = false;
 		foreach ( $coauthors as $coa ) {
 			if ( is_a( $coa, 'wp_user' ) ) {
 				$local = true;
@@ -602,8 +601,6 @@ function prefix_insert_post_bug( $content ) {
 					if ( $authid !== false ) {
 						$local = true;
 					}
-				} else {
-					$guest = true;
 				}
 			}
 		}
