@@ -2,7 +2,7 @@
 /**
  * Allows for creating a podcast feed from any category, along with templating, caching, and uploading the media files to an external server
  */
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 class HPM_Podcasts {
 
 	/**

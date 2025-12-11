@@ -2,6 +2,7 @@
 /**
  * Required plugins and setup
  */
+if ( ! defined( 'ABSPATH' ) ) exit;
 define( 'HPM_MODS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HPM_MODS_URL', plugin_dir_url( __FILE__ ) );
 
@@ -16,6 +17,7 @@ require( HPM_MODS_DIR . 'staff/hpm_staff.php' );
 require( HPM_MODS_DIR . 'embeds/hpm_embeds.php' );
 require( HPM_MODS_DIR . 'social/social_post.php' );
 require( HPM_MODS_DIR . 'liveshows/hpm_liveshows.php' );
+require( HPM_MODS_DIR . 'scheduler/hpm_scheduler.php' );
 
 register_activation_hook( __FILE__, 'hpm_mods_activate' );
 register_deactivation_hook( __FILE__, 'hpm_mods_deactivate' );

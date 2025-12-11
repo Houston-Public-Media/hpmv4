@@ -23,16 +23,9 @@
 		"issues": "https://github.com/roots/bedrock/issues",
 		"forum": "https://discourse.roots.io/category/bedrock"
 	},
-	"config": {
-		"optimize-autoloader": true,
-		"preferred-install": "dist",
-		"allow-plugins": {
-			"composer/installers": true,
-			"roots/wordpress-core-installer": true
-		}
-	},
 	"repositories": [
 		{
+			"name": "wpackagist",
 			"type": "composer",
 			"url": "https://wpackagist.org",
 			"only": ["wpackagist-plugin/*", "wpackagist-theme/*"]
@@ -53,11 +46,11 @@
 		"oscarotero/env": "^2.1",
 		"roots/bedrock-autoloader": "^1.0",
 		"roots/bedrock-disallow-indexing": "^2.0",
-		"roots/wordpress": "6.8.3",
+		"roots/wordpress": "6.9",
 		"roots/wp-config": "1.0.0",
 		"google/apiclient": "^2.0",
 		"google/analytics-data": "^0.9.4",
-		"wpackagist-plugin/admin-category-filter": "1.6.1",
+		"wpackagist-plugin/admin-category-filter": "1.7.2",
 		"wpackagist-plugin/amp": "2.5.5",
 		"wpackagist-plugin/classic-editor": "1.6.7",
 		"wpackagist-plugin/co-authors-plus": "3.7.0",
@@ -72,13 +65,24 @@
 		"wpackagist-plugin/redis-cache": ">2.0.17",
 		"wpackagist-plugin/wp-ses": "*",
 		"wpackagist-plugin/www-xml-sitemap-generator-org": "2.0.7",
-		"wpackagist-plugin/event-tickets": ">5.18",
 		"deliciousbrains-plugin/wp-offload-media": "*",
-		"jwcounts/twitter-api-v2-php": "*"
+		"jwcounts/twitter-api-v2-php": "*",
+		"ext-zlib": "*",
+		"ext-dom": "*",
+		"ext-curl": "*",
+		"ext-ftp": "*",
+		"ext-simplexml": "*"
 	},
 	"require-dev": {
-		"squizlabs/php_codesniffer": "^3.7.1",
-		"roave/security-advisories": "dev-latest"
+		"laravel/pint": "^1.18"
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"allow-plugins": {
+			"composer/installers": true,
+			"roots/wordpress-core-installer": true
+		}
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -91,8 +95,7 @@
 		"wordpress-install-dir": "web/wp"
 	},
 	"scripts": {
-		"test": [
-			"phpcs"
-		]
+		"lint": "pint --test",
+		"lint:fix": "pint"
 	}
 }

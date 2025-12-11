@@ -1,4 +1,5 @@
 <?php
+	if ( ! defined( 'ABSPATH' ) ) exit;
 	use Jwcounts\TwitterApi\Client;
 
 	add_action( 'load-post.php', 'hpm_social_post_setup' );

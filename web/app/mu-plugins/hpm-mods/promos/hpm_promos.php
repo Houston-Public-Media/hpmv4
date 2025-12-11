@@ -2,7 +2,7 @@
 /**
  * Internal support for promotional banners and lightboxes
  */
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 class HPM_Promos {
 
 	protected array $options;
@@ -179,7 +179,7 @@ class HPM_Promos {
 			'drag_drop_upload' => false
 		]; ?>
 		<h3><?PHP _e( "What type of banner are you creating?", 'hpmv4' ); ?> <span style="font-weight: bolder; font-style: italic; color: red;"><?PHP _e( "REQUIRED", 'hpmv4' ); ?></span></h3>
-		<p><label for="hpm_promo[type]"><?php _e( "Type:", 'hpmv4' ); ?></label>
+		<p><label for="hpm_promo_type"><?php _e( "Type:", 'hpmv4' ); ?></label>
 			<select id="hpm_promo_type" name="hpm_promo[type]">
 				<option value="">Select Type</option>
 				<option value="sidebar" <?PHP selected( $hpm_promo['type'], 'sidebar' ); ?>>Sidebar Banner/Poll</option>
@@ -190,8 +190,8 @@ class HPM_Promos {
 			</select>
 		</p>
 		<h3><?PHP _e( "Where do you want your element to show up?", 'hpmv4' ); ?></h3>
-		<p><label for="hpm_promo[location]"><?php _e( "Location:", 'hpmv4' ); ?></label>
-			<select id="hpm_promo[location]" name="hpm_promo[location]">
+		<p><label for="hpm_promo_location"><?php _e( "Location:", 'hpmv4' ); ?></label>
+			<select id="hpm_promo_location" name="hpm_promo[location]">
 				<option value="any" <?PHP selected( $hpm_promo['location'], 'any' ); ?>>Any Page</option>
 				<option value="homepage" <?PHP selected( $hpm_promo['location'], 'homepage' ); ?>>Homepage Only</option>
 				<option value="no-homepage" <?PHP selected( $hpm_promo['location'], 'no-homepage' ); ?>>Everywhere But the Homepage</option>
@@ -206,23 +206,23 @@ class HPM_Promos {
 			<p><?php _e( "To use the total, or the A/B testing option, simply put these placeholders into your HTML: [[link]], [[image]], [[text]], [[total]]", 'hpmv4' ); ?></p>
 			<p><strong><?php _e( "Version A", 'hpmv4' ); ?></strong></p>
 			<ul style="margin-bottom: 2em;">
-				<li><label for="hpm_promo[options][lightbox][a][link]"><?php _e('Link: ', 'hpmv4' ); ?></label><input type="text" name="hpm_promo[options][lightbox][a][link]" value="<?php echo $hpm_promo['options']['lightbox']['a']['link']; ?>" style="max-width: 100%; width: 800px;" /></li>
+				<li><label for="hpm_promo[options][lightbox][a][link]"><?php _e('Link: ', 'hpmv4' ); ?></label><input type="text" id="hpm_promo[options][lightbox][a][link]" name="hpm_promo[options][lightbox][a][link]" value="<?php echo $hpm_promo['options']['lightbox']['a']['link']; ?>" style="max-width: 100%; width: 800px;" /></li>
 				<li><label for="hpm_promo[options][lightbox][a][text]"><?php _e('Text: ', 'hpmv4' ); ?></label>
 					<?php wp_editor( $hpm_promo['options']['lightbox']['a']['text'], 'hpm_promo[options][lightbox][a][text]', $editor_opts ); ?>
 				</li>
-				<li><label for="hpm_promo[options][lightbox][a][image]"><?php _e('Image: ', 'hpmv4' ); ?></label><input type="text" name="hpm_promo[options][lightbox][a][image]" value="<?php echo $hpm_promo['options']['lightbox']['a']['image']; ?>" style="max-width: 100%; width: 800px;" /></li>
+				<li><label for="hpm_promo[options][lightbox][a][image]"><?php _e('Image: ', 'hpmv4' ); ?></label><input type="text" id="hpm_promo[options][lightbox][a][image]" name="hpm_promo[options][lightbox][a][image]" value="<?php echo $hpm_promo['options']['lightbox']['a']['image']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
 			<p><strong><?php _e( "Version B", 'hpmv4' ); ?></strong></p>
 			<ul style="margin-bottom: 2em;">
-				<li><label for="hpm_promo[options][lightbox][b][link]"><?php _e('Link: ', 'hpmv4' ); ?></label><input type="text" name="hpm_promo[options][lightbox][b][link]" value="<?php echo $hpm_promo['options']['lightbox']['b']['link']; ?>" style="max-width: 100%; width: 800px;" /></li>
+				<li><label for="hpm_promo[options][lightbox][b][link]"><?php _e('Link: ', 'hpmv4' ); ?></label><input type="text" id="hpm_promo[options][lightbox][b][link]" name="hpm_promo[options][lightbox][b][link]" value="<?php echo $hpm_promo['options']['lightbox']['b']['link']; ?>" style="max-width: 100%; width: 800px;" /></li>
 				<li><label for="hpm_promo[options][lightbox][b][text]"><?php _e('Text: ', 'hpmv4' ); ?></label>
 					<?php wp_editor( $hpm_promo['options']['lightbox']['b']['text'], 'hpm_promo[options][lightbox][b][text]', $editor_opts ); ?>
 				</li>
-				<li><label for="hpm_promo[options][lightbox][b][image]"><?php _e('Image: ', 'hpmv4' ); ?></label><input type="text" name="hpm_promo[options][lightbox][b][image]" value="<?php echo $hpm_promo['options']['lightbox']['b']['image']; ?>" style="max-width: 100%; width: 800px;" /></li>
+				<li><label for="hpm_promo[options][lightbox][b][image]"><?php _e('Image: ', 'hpmv4' ); ?></label><input type="text" id="hpm_promo[options][lightbox][b][image]" name="hpm_promo[options][lightbox][b][image]" value="<?php echo $hpm_promo['options']['lightbox']['b']['image']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
 			<p><strong><?php _e( "Pledge Total", 'hpmv4' ); ?></strong></p>
 			<ul style="margin-bottom: 2em;">
-				<li><label for="hpm_promo[options][lightbox][total]"><?php _e('Link to JSON File: ', 'hpmv4' ); ?></label><input type="text" name="hpm_promo[options][lightbox][total]" value="<?php echo $hpm_promo['options']['lightbox']['total']; ?>" style="max-width: 100%; width: 800px;" /></li>
+				<li><label for="hpm_promo[options][lightbox][total]"><?php _e('Link to JSON File: ', 'hpmv4' ); ?></label><input type="text" id="hpm_promo[options][lightbox][total]" name="hpm_promo[options][lightbox][total]" value="<?php echo $hpm_promo['options']['lightbox']['total']; ?>" style="max-width: 100%; width: 800px;" /></li>
 			</ul>
 		</div>
 		<div id="hpm-emergency" class="hpm-promo-types"<?php echo ( $hpm_promo['type'] == 'emergency' ? '' : ' style="display: none;"'); ?>></div>
@@ -422,22 +422,19 @@ class HPM_Promos {
 		return true;
 	}
 
-	public function cleanup(): void {
+	public static function cleanup(): void {
 		$t = time();
-		$offset = get_option('gmt_offset')*3600;
-		$t = $t + $offset;
-		$now = getdate($t);
+		$offset = get_option( 'gmt_offset' ) * 3600;
+		$t = $t + $offset - ( 60 * 60 * 24 * 30 );
+		$now = getdate( $t );
 		$args = [
 			'post_type' => 'promos',
 			'posts_per_page' => -1,
-			'post_status' => 'publish',
-			'meta_query' => [
-				[
-					'key' => 'hpm_promos_end_time',
-					'value' => $now[0],
-					'compare' => '<=',
-				]
-			]
+			'meta_query' => [[
+				'key' => 'hpm_promos_end_time',
+				'value' => $now[0],
+				'compare' => '<=',
+			]]
 		];
 		$promos = new WP_Query( $args );
 		if ( $promos->have_posts() ) {
@@ -777,11 +774,11 @@ class HPM_Promos {
 							<div class="inside">
 								<p><?php _e('These fields will allow you to exempt certain pages and templates from displaying the promo banners. Please provide comma-separated lists of page/post IDs and page/post templates you would like to exempt.', 'hpm-promos' ); ?></p>
 								<table class="form-table">
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_promos_settings[bans][ids]"><?php _e('Exempted Post IDs', 'hpm-promos' ); ?></label></th>
 										<td><textarea id="hpm_promos_settings[bans][ids]" name="hpm_promos_settings[bans][ids]" style="height: 100px; width: 100%;"><?php echo $opts['bans']['ids']; ?></textarea></td>
 									</tr>
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_promos_settings[bans][templates]"><?php _e('Exempted Post Templates', 'hpm-promos' ); ?></label></th>
 										<td><textarea id="hpm_promos_settings[bans][templates]" name="hpm_promos_settings[bans][templates]" style="height: 100px; width: 100%;"><?php echo $opts['bans']['templates']; ?></textarea></td>
 									</tr>

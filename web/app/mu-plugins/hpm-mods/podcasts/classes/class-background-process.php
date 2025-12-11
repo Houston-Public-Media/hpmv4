@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 use JetBrains\PhpStorm\NoReturn;
 
 class HPM_Media_Upload {
