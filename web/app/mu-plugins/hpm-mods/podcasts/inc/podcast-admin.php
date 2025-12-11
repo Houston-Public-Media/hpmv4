@@ -1,6 +1,5 @@
 <?php
 	if ( ! defined( 'ABSPATH' ) ) exit;
-	global $last_refresh, $pods;
 	$podcasts = new WP_Query([
 		'post_type' => 'podcasts',
 		'post_status' => 'publish',

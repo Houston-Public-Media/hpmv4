@@ -1,6 +1,4 @@
-<?php
-	if ( ! defined( 'ABSPATH' ) ) exit;
-	global $object, $hpm_pod_desc; ?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <h3><?PHP _e( "Feed-Specific Title", 'hpm-podcasts' ); ?></h3>
 <p><?PHP _e( "If you want a different title in the podcast feed than the article, enter it here:", 'hpm-podcasts' );
 	?><br />

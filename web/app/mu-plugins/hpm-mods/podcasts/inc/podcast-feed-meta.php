@@ -1,6 +1,4 @@
-<?php
-	if ( ! defined( 'ABSPATH' ) ) exit;
-	global $hpm_podcast_prod, $hpm_podcast_link, $hpm_podcast_cat; ?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <h3><?php _e( "Featured Podcast", 'hpm-podcasts' ); ?></h3>
 <p><strong><?php _e( "Is this podcast being produced internally, featured from an external source, or is it an aggregate feed?", 'hpm-podcasts' ); ?></strong><br />
 	<label for="hpm-podcast-prod"><?php _e( "Production:", 'hpm-podcasts' ); ?></label> <select name="hpm-podcast-prod" id="hpm-podcast-prod">

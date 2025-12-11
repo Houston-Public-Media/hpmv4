@@ -1,6 +1,5 @@
 <?php
 	if ( ! defined( 'ABSPATH' ) ) exit;
-	global $object, $hpm_show_social;
 	if ( empty( $hpm_shows_cat ) ) {
 		$hpm_shows_cat = '';
 		$top_story = "<p><em>Please select a Show category and click 'Save' or 'Update'</em></p>";
