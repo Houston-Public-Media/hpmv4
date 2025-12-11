@@ -2,7 +2,7 @@
 /**
  * Allows for creating a podcast feed from any category, along with templating, caching, and uploading the media files to an external server
  */
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 class HPM_Embeds {
 	public function __construct() {
 		define( 'HPM_EMBEDS_PLUGIN_DIR', plugin_dir_path(__FILE__) );
@@ -78,7 +78,7 @@ class HPM_Embeds {
 		<div><pre><code id="hpm-embed-pym" class="hpm-embed-codes"<?php echo ( $hpm_embed['responsive'] == 0 ? ' style="display: none;"' : '' ); ?>><?php
 			echo htmlentities( "<div id=\"hpm-embed\"></div>\n<script type=\"text/javascript\" src=\"https://pym.nprapps.org/pym.v1.min.js\"></script>\n<script>var pymParent = new pym.Parent('hpm-embed', '" . get_the_permalink( $object->ID ) . "', {});</script>", ENT_QUOTES, 'UTF-8' );
 			?></code><code id="hpm-embed-iframe" class="hpm-embed-codes"<?php echo ( $hpm_embed['responsive'] == 1 ? ' style="display: none;"' : '' ); ?>><?php
-			echo htmlentities( "<p><iframe src=\"" . get_the_permalink( $object->ID ) . "\" width=\"100%\" height=\"500\" frameborder=\"0\" allowfullscreen></iframe></p>", ENT_QUOTES, 'UTF-8' );
+			echo htmlentities( "<p><iframe src=\"" . get_the_permalink( $object->ID ) . "\" width=\"100%\" height=\"500\" allowfullscreen></iframe></p>", ENT_QUOTES, 'UTF-8' );
 			?></code></pre></div>
 		<style>
 			.postbox .inside pre {
@@ -236,7 +236,7 @@ class HPM_Embeds {
 				if ( $embed['responsive'] ) {
 					$code .= '<div id="hpm-embed"></div><script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script><script>var pymParent = new pym.Parent(\'hpm-embed\', \'' . get_the_permalink() . '\', {});</script>';
 				} else {
-					$code .= '<p><iframe src="' . get_the_permalink() . '" width="100%" height="500" frameborder="0" allowfullscreen></iframe>"></iframe></p>';
+					$code .= '<p><iframe src="' . get_the_permalink() . '" width="100%" height="500" allowfullscreen></iframe>"></iframe></p>';
 				}
 				$temp['code'] = $code;
 				$list[] = $temp;

@@ -1,4 +1,6 @@
 <?php
+	if ( ! defined( 'ABSPATH' ) ) exit;
+	global $last_refresh, $pods;
 	$podcasts = new WP_Query([
 		'post_type' => 'podcasts',
 		'post_status' => 'publish',
@@ -22,13 +24,13 @@
 							<div class="inside">
 								<p><?php _e('iTunes and other podcasting directories ask for you to give a name and email address of the "owner" of the podcast, which can be a single person or an organization.', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_podcast_settings[owner][name]"><?php _e('Owner Name', 'hpm-podcasts' ); ?></label></th>
-										<td><input type="text" name="hpm_podcast_settings[owner][name]" value="<?php echo $pods['owner']['name']; ?>" class="regular-text" /></td>
+										<td><input type="text" name="hpm_podcast_settings[owner][name]" id="hpm_podcast_settings[owner][name]" value="<?php echo $pods['owner']['name']; ?>" class="regular-text" /></td>
 									</tr>
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_podcast_settings[owner][email]"><?php _e('Owner Email', 'hpm-podcasts' ); ?></label></th>
-										<td><input type="email" name="hpm_podcast_settings[owner][email]" value="<?php echo $pods['owner']['email']; ?>" class="regular-text" /></td>
+										<td><input type="email" name="hpm_podcast_settings[owner][email]" id="hpm_podcast_settings[owner][email]" value="<?php echo $pods['owner']['email']; ?>" class="regular-text" /></td>
 									</tr>
 								</table>
 							</div>
@@ -38,16 +40,13 @@
 						<div class="postbox">
 							<div class="postbox-header"><h2><?php _e('User Roles', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
-								<p><?php _e('Select all of the user roles that you would like to be able to manage your podcast feeds.  Anyone
-										who can create new posts can create an episode of a podcast, but only the roles selected here can
-										create, alter, or delete podcast feeds.', 'hpm-podcasts' ); ?></p>
+								<p><?php _e('Select all of the user roles that you would like to be able to manage your podcast feeds.  Anyone who can create new posts can create an episode of a podcast, but only the roles selected here can create, alter, or delete podcast feeds.', 'hpm-podcasts' ); ?></p>
 								<p><?php _e('To select more than one, hold down Ctrl (on Windows) or Command (on Mac) and click the roles you want included.', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
-									<tr valign="top">
-										<th scope="row"><label for="hpm_podcast_settings[roles]"><?php _e('Select Your Roles', 'hpm-podcasts' );
-												?></label></th>
+									<tr>
+										<th scope="row"><label for="hpm_podcast_settings[roles][ ]"><?php _e('Select Your Roles', 'hpm-podcasts' ); ?></label></th>
 										<td>
-											<select name="hpm_podcast_settings[roles][ ]" multiple class="regular-text">
+											<select name="hpm_podcast_settings[roles][ ]" id="hpm_podcast_settings[roles][ ]" multiple class="regular-text">
 												<?php foreach ( get_editable_roles() as $role_name => $role_info ) { ?>
 													<option value="<?php echo $role_name; ?>"<?php echo ( in_array( $role_name, $pods['roles'] ) ? " selected" : '' ); ?>><?php echo $role_name; ?></option>
 												<?php } ?>
@@ -64,15 +63,14 @@
 							<div class="inside">
 								<p><?php _e('To save server resources, we use a cron job to generate a flat XML file.  Use the options below to choose how often you want to run that job.', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
-									<tr valign="top">
-										<th scope="row"><label for="hpm_podcast_settings[recurrence]"><?php _e('Select Your Time Period', 'hpm-podcasts' );
-												?></label></th>
+									<tr>
+										<th scope="row"><label for="hpm_podcast_settings[recurrence]"><?php _e('Select Your Time Period', 'hpm-podcasts' ); ?></label></th>
 										<td>
-											<select name="hpm_podcast_settings[recurrence]" class="regular-text">
-												<option value="hourly" <?php selected( $pods['recurrence'], 'hourly', TRUE );
-												?>>Hourly</option>
-												<option value="hpm_30min" <?php selected( $pods['recurrence'], 'hpm_30min', TRUE ); ?>>Every 30 Minutes</option>
-												<option value="hpm_15min" <?php selected( $pods['recurrence'], 'hpm_15min', TRUE ); ?>>Every 15 Minutes</option>
+											<select name="hpm_podcast_settings[recurrence]" id="hpm_podcast_settings[recurrence]" class="regular-text">
+												<option value="hourly" <?php selected( $pods['recurrence'], 'hourly' ); ?>>Hourly</option>
+												<option value="hpm_30min" <?php selected( $pods['recurrence'], 'hpm_30min' ); ?>>Every 30 Minutes</option>
+												<option value="hpm_15min" <?php selected( $pods['recurrence'], 'hpm_15min' ); ?>>Every 15 Minutes</option>
+												<option value="hpm_5min" <?php selected( $pods['recurrence'], 'hpm_5min' ); ?>>Every 5 Minutes</option>
 											</select>
 										</td>
 									</tr>
@@ -84,24 +82,21 @@
 						<div class="postbox">
 							<div class="postbox-header"><h2><?php _e('Upload Options', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
-								<p><?php _e('**NOTE**: Please do not include any leading or trailing slashes in your domains, URLs, folder names, etc. You can include slashes within them (e.g. you might store your files in the "files/podcasts" folder, but the public URL is "http://example.com/podcasts").', 'hpm-podcasts' );
-									?></p>
+								<p><?php _e('**NOTE**: Please do not include any leading or trailing slashes in your domains, URLs, folder names, etc. You can include slashes within them (e.g. you might store your files in the "files/podcasts" folder, but the public URL is "https://example.com/podcasts").', 'hpm-podcasts' ); ?></p>
 								<table class="form-table">
-									<tr valign="top">
-										<th scope="row"><label for="hpm_podcast_settings[upload-flats]"><?php _e('Flat XML File Upload?', 'hpm-podcasts' );
-												?></label></th>
+									<tr>
+										<th scope="row"><label for="hpm_podcast_settings[upload-flats]"><?php _e('Flat XML File Upload?', 'hpm-podcasts' ); ?></label></th>
 										<td>
-											<select name="hpm_podcast_settings[upload-flats]" class="regular-text" id="hpm-flats">
-												<option value="database" <?php selected( $pods['upload-flats'], 'database',	TRUE); ?>>Database</option>
+											<select name="hpm_podcast_settings[upload-flats]" class="regular-text" id="hpm_podcast_settings[upload-flats]">
+												<option value="database" <?php selected( $pods['upload-flats'], 'database' ); ?>>Database</option>
 											</select>
 										</td>
 									</tr>
-									<tr valign="top">
-										<th scope="row"><label for="hpm_podcast_settings[upload-media]"><?php _e('Media File Upload?', 'hpm-podcasts' );
-												?></label></th>
+									<tr>
+										<th scope="row"><label for="hpm_podcast_settings[upload-media]"><?php _e('Media File Upload?', 'hpm-podcasts' ); ?></label></th>
 										<td>
-											<select name="hpm_podcast_settings[upload-media]" class="regular-text" id="hpm-media">
-												<option value="sftp" <?php selected( $pods['upload-media'], 'sftp', TRUE); ?>>FTP</option>
+											<select name="hpm_podcast_settings[upload-media]" class="regular-text" id="hpm_podcast_settings[upload-media]">
+												<option value="sftp" <?php selected( $pods['upload-media'], 'sftp' ); ?>>FTP</option>
 											</select>
 										</td>
 									</tr>
@@ -117,33 +112,30 @@
 									?></p>
 								<pre>define('HPM_SFTP_PASSWORD', 'YOUR_SFTP_PASSWORD');</pre>
 								<table class="form-table">
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_podcast_settings[credentials][sftp][host]"><?php _e('FTP Host', 'hpm-podcasts' ); ?></label></th>
-										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][host]" value="<?php echo $pods['credentials']['sftp']['host']; ?>" class="regular-text" placeholder="URL or IP
-											Address" /></td>
+										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][host]" id="hpm_podcast_settings[credentials][sftp][host]" value="<?php echo $pods['credentials']['sftp']['host']; ?>" class="regular-text" placeholder="URL or IP Address" /></td>
 									</tr>
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_podcast_settings[credentials][sftp][url]"><?php _e('FTP Public URL', 'hpm-podcasts' ); ?></label></th>
-										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][url]" value="<?php echo $pods['credentials']['sftp']['url']; ?>" class="regular-text" placeholder="http://ondemand.example.com" /></td>
+										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][url]" id="hpm_podcast_settings[credentials][sftp][url]" value="<?php echo $pods['credentials']['sftp']['url']; ?>" class="regular-text" placeholder="https://ondemand.example.com" /></td>
 									</tr>
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_podcast_settings[credentials][sftp][username]"><?php _e('FTP Username', 'hpm-podcasts' ); ?></label></th>
-										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][username]" value="<?php echo
-											$pods['credentials']['sftp']['username']; ?>" class="regular-text" placeholder="thisguy"
-											/></td>
+										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][username]" id="hpm_podcast_settings[credentials][sftp][username]" value="<?php echo $pods['credentials']['sftp']['username']; ?>" class="regular-text" placeholder="thisguy" /></td>
 									</tr>
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_podcast_settings[credentials][sftp][password]"><?php _e('FTP Password', 'hpm-podcasts' ); ?></label></th>
-										<td><input name="hpm_podcast_settings[credentials][sftp][password]" <?php
+										<td><input name="hpm_podcast_settings[credentials][sftp][password]" id="hpm_podcast_settings[credentials][sftp][password]" <?php
 											if ( defined( 'HPM_SFTP_PASSWORD' ) ) {
 												echo 'value="Set in wp-config.php" disabled type="text" ';
 											} else {
 												echo 'value ="'.$pods['credentials']['sftp']['password'].'" type="password" ';
 											} ?>class="regular-text" placeholder="P@assw0rd" /></td>
 									</tr>
-									<tr valign="top">
+									<tr>
 										<th scope="row"><label for="hpm_podcast_settings[credentials][sftp][folder]"><?php _e('FTP Folder', 'hpm-podcasts' ); ?></label></th>
-										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][folder]" value="<?php echo $pods['credentials']['sftp']['folder']; ?>" class="regular-text" placeholder="folder" /></td>
+										<td><input type="text" name="hpm_podcast_settings[credentials][sftp][folder]" id="hpm_podcast_settings[credentials][sftp][folder]" value="<?php echo $pods['credentials']['sftp']['folder']; ?>" class="regular-text" placeholder="folder" /></td>
 									</tr>
 								</table>
 							</div>
@@ -153,12 +145,11 @@
 						<div class="postbox">
 							<div class="postbox-header"><h2><?php _e('Feed Refresh', 'hpm-podcasts' ); ?></h2></div>
 							<div class="inside">
-								<p><?php _e("Made some changes to your podcast feeds and don't want to wait for the cron job to fire? Click the button below to force a refresh.", 'hpm-podcasts'	); ?></p>
+								<p><?php _e("Made some changes to your podcast feeds and don't want to wait for the cron job to fire? Click the button below to force a refresh.", 'hpm-podcasts' ); ?></p>
 								<p><em>Feeds last refreshed: <span class="hpm-last-refresh-time"><?php echo $last_refresh; ?></span></em></p>
 								<table class="form-table">
-									<tr valign="top">
-										<th scope="row"><label><?php _e('Force Feed Refresh?', 'hpm-podcasts' );
-												?></label></th>
+									<tr>
+										<th scope="row"><label><?php _e('Force Feed Refresh?', 'hpm-podcasts' ); ?></label></th>
 										<td><a href="#" class="button button-secondary" id="hpm-pods-refresh">Refresh Feeds</a></td>
 									</tr>
 								</table>

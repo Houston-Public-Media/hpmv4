@@ -2,6 +2,7 @@
 /**
  * Series support for pages
  */
+if ( ! defined( 'ABSPATH' ) ) exit;
 add_action( 'load-post.php', 'hpm_series_setup' );
 add_action( 'load-post-new.php', 'hpm_series_setup' );
 function hpm_series_setup(): void {
@@ -254,6 +255,7 @@ function hpm_series_save_meta( $post_id, $post ) {
 		$hpm_page_options['banner']['desktop'] = ( $_POST['hpm-page-banner-desktop-id'] ?? '' );
 		update_post_meta( $post_id, 'hpm_page_options', $hpm_page_options );
 	}
+	return $post_id;
 }
 
 function hpm_head_banners( $id, $location ): string {

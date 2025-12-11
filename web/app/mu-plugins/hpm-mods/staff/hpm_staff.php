@@ -2,6 +2,7 @@
 /**
  * Support for Staff Directory, departments/categories, and staff bios
  */
+if ( ! defined( 'ABSPATH' ) ) exit;
 add_action( 'init', 'create_staff_post' );
 add_action( 'init', 'create_staff_taxonomies' );
 function create_staff_post(): void {
@@ -143,7 +144,7 @@ function hpm_staff_meta_box( $object, $box ): void {
 	<ul>
 		<li><label for="hpm-staff-name-first"><?php _e( "First Name: ", 'example' ); ?></label> <input type="text" id="hpm-staff-name-first" name="hpm-staff-name-first" value="<?PHP echo ( !empty( $hpm_staff_alpha[1] ) ? $hpm_staff_alpha[1] : '' ); ?>" placeholder="Kenny" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-name-last"><?php _e( "Last Name: ", 'example' ); ?></label> <input type="text" id="hpm-staff-name-last" name="hpm-staff-name-last" value="<?PHP echo ( !empty( $hpm_staff_alpha[0] ) ? $hpm_staff_alpha[0] : '' ); ?>" placeholder="Loggins" style="width: 60%;" /></li>
-		<li><label for="hpm-staff-name-last"><?php _e( "Pronouns: ", 'example' ); ?></label> <input type="text" id="hpm-staff-pronouns" name="hpm-staff-pronouns" value="<?PHP echo ( !empty( $hpm_staff_meta['pronouns'] ) ? $hpm_staff_meta['pronouns'] : '' ); ?>" placeholder="He/Him" style="width: 60%;" /></li>
+		<li><label for="hpm-staff-pronouns"><?php _e( "Pronouns: ", 'example' ); ?></label> <input type="text" id="hpm-staff-pronouns" name="hpm-staff-pronouns" value="<?PHP echo ( !empty( $hpm_staff_meta['pronouns'] ) ? $hpm_staff_meta['pronouns'] : '' ); ?>" placeholder="He/Him" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-title"><?php _e( "Job Title: ", 'example' ); ?></label> <input type="text" id="hpm-staff-title" name="hpm-staff-title" value="<?PHP echo ( !empty( $hpm_staff_meta['title'] ) ? $hpm_staff_meta['title'] : '' ); ?>" placeholder="Top Gun" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-email"><?php _e( "Email: ", 'example' ); ?></label> <input type="text" id="hpm-staff-email" name="hpm-staff-email" value="<?PHP echo ( !empty( $hpm_staff_meta['email'] ) ? $hpm_staff_meta['email'] : '' ); ?>" placeholder="highway@thedanger.zone" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-fb"><?php _e( "Facebook: ", 'example' ); ?></label> <input type="text" id="hpm-staff-fb" name="hpm-staff-fb" value="<?PHP echo ( !empty( $hpm_staff_meta['facebook'] ) ? $hpm_staff_meta['facebook'] : '' ); ?>" placeholder="https://facebook.com/first.last" style="width: 60%;" /></li>

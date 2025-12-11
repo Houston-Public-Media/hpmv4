@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 class HPM_Liveshows {
 	public function __construct() {
 		add_action( 'plugins_loaded', [ $this, 'init' ] );
@@ -15,7 +16,7 @@ class HPM_Liveshows {
 		add_action( 'hpm_ytlive', [ $this, 'ytlive_update' ] );
 
 		if ( !wp_next_scheduled( 'hpm_ytlive' ) ) {
-			wp_schedule_event( time(), 'hpm_15min', 'hpm_ytlive' );
+			wp_schedule_event( time(), 'hpm_5min', 'hpm_ytlive' );
 		}
 		// Register WP-REST API endpoints
 		add_action( 'rest_api_init', function() {
@@ -28,7 +29,7 @@ class HPM_Liveshows {
 			]);
 		});
 	}
-	public function ytlive_update(): void {
+	public static function ytlive_update(): void {
 		$temp = [];
 		$names = self::get_all();
 		foreach ( $names as $k => $v ) {

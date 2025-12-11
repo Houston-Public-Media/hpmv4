@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 add_action( 'pre_update_option_hpm_priority', function( $old_value, $value ) {
 	$number = $old_value['number'];
 	if ( $number !== count( $old_value['homepage'] ) ) {

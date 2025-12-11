@@ -23,7 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 class S3
 {
     public static $connect_timeout = 10;
@@ -307,7 +307,6 @@ class S3
         curl_setopt_array(static::$curl_handle, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
-            CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => static::$connect_timeout,
             CURLOPT_TIMEOUT => static::$timeout,
             CURLOPT_FOLLOWLOCATION => 0,

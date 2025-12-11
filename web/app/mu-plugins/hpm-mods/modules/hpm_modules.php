@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 add_action( 'pre_update_option_hpm_modules', function( $old_value, $value ) {
 	$number = $old_value['number'];
 	if ( $number !== count( $old_value['homepage'] ) ) {
@@ -58,31 +59,29 @@ function hpm_modules_settings_page(): void {
 										<tbody>
 										<?php
 										foreach ( $modules['homepage'] as $kp => $vp ) {
-											$position = $kp + 1;?>
-												<tr valign="top">
+											$position = $kp + 1; ?>
+											<tr>
 												<th scope="row">Module <?PHP echo $position; ?></th>
-											<td>
-												<label class="screen-reader-text"><?php _e( "Current Module in Homepage Position ".$position.":", 'hpmv4' ); ?></label>
-												<?php
-													wp_dropdown_categories([
-														'show_option_all'	=> __("Select One"),
-														'taxonomy'			=> 'category',
-														'name'				=> 'hpm_modules[homepage][' . $kp . ']',
-														'orderby'			=> 'name',
-														'selected'			=> $vp,
-														'hierarchical'		=> true,
-														'depth'				=> 3,
-														'show_count'		=> false,
-														'hide_empty'		=> true
-													]);
-												?>
-											</td>
-											</tr>
-											<?php
+												<td>
+													<label class="screen-reader-text"><?php _e( "Current Module in Homepage Position ".$position.":", 'hpmv4' ); ?></label><?php
+														wp_dropdown_categories([
+															'show_option_all'	=> __("Select One"),
+															'taxonomy'			=> 'category',
+															'name'				=> 'hpm_modules[homepage][' . $kp . ']',
+															'orderby'			=> 'name',
+															'selected'			=> $vp,
+															'hierarchical'		=> true,
+															'depth'				=> 3,
+															'show_count'		=> false,
+															'hide_empty'		=> true
+														]);
+													?>
+												</td>
+											</tr><?php
 										} ?>
 										</tbody>
 									</table>
-									<p><label for="hpm_modules[number]"><?php _e('Number of slots: ', 'hpmv4' ); ?></label><input type="text"  required="required" name="hpm_modules[number]" id="homepage-number" class="homepage-select-input" value="<?php echo ( !empty( $modules['number'] ) ? $modules['number'] : count( $modules['homepage'] ) ); ?>" style="width: 150px;" /></p>
+									<p><label for="hpm_modules[number]"><?php _e('Number of slots: ', 'hpmv4' ); ?></label><input type="text" required="required" name="hpm_modules[number]" id="hpm_modules[number]" class="homepage-select-input" value="<?php echo ( !empty( $modules['number'] ) ? $modules['number'] : count( $modules['homepage'] ) ); ?>" style="width: 150px;" /></p>
 									<div style="visibility: hidden; color: red;" id="sloterrMsg">Please enter even numbers only.</div>
 								</div>
 							</div>
@@ -112,15 +111,6 @@ function hpm_modules_settings_page(): void {
 							}
 						});
 					}
-				});
-				$( "#homepage-number" ).keyup(function(){
-					let inputVal = $(this).val();
-					var numeric = inputVal.replace(/[^0-9]+/,"");
-					// Check if input is numeric and even, if not empty field
-					// if (numeric.length != inputVal.length || numeric%2 != 0) {
-						// $(this).val('');
-						// $('#sloterrMsg').css('visibility','visible');
-					// }
 				});
 			});
 		</script>

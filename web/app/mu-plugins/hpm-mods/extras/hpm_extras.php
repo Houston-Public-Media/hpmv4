@@ -1,4 +1,5 @@
 <?PHP
+if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Functions or modifications related to plugins or things that aren't directly theme-related
  */
@@ -131,6 +132,10 @@ function hpm_cron_updates( $schedules ) {
 		'interval' => 120,
 		'display' => __( 'Every Other Minute' )
 	];
+	$schedules['hpm_5min'] = [
+		'interval' => 300,
+		'display' => __( 'Every 5 Minutes' )
+	];
 	$schedules['hpm_15min'] = [
 			'interval' => 900,
 			'display' => __( 'Every 15 Minutes' )
@@ -255,9 +260,9 @@ function hpm_local_cat_check(): bool {
 /*
  * Disallow certain MIME types from being accepted by the media uploader
  */
-function custom_upload_mimes ( $existing_mimes = [] ): array {
+function custom_upload_mimes( $existing_mimes = [] ): array {
 	unset( $existing_mimes['exe'] );
-	unset( $existing_mimes['wav'] );
+	unset( $existing_mimes['wav|x-wav'] );
 	unset( $existing_mimes['ra|ram'] );
 	unset( $existing_mimes['mid|midi'] );
 	unset( $existing_mimes['wma'] );
@@ -265,6 +270,8 @@ function custom_upload_mimes ( $existing_mimes = [] ): array {
 	unset( $existing_mimes['swf'] );
 	unset( $existing_mimes['class'] );
 	unset( $existing_mimes['js'] );
+	unset( $existing_mimes['tar'] );
+	unset( $existing_mimes['rar'] );
 	return $existing_mimes;
 }
 add_filter( 'upload_mimes', 'custom_upload_mimes' );
@@ -1126,7 +1133,8 @@ function hpm_image_preview_page(): void {
 							<h2 style="width: 100%;">Enter the ID number of the post you want to preview</h2>
 							<form action="" method="GET">
 								<input type="hidden" name="page" value="hpm-image-preview" />
-								<input type="number" name="p" value="" />
+								<label for="p" class="screen-reader-text">ID Number:</label>
+								<input type="number" name="p" id="p" value="" />
 								<input type="submit" value="Submit" />
 							</form>
 <?php
@@ -1642,7 +1650,7 @@ function hpm_now_playing_update(): void {
 		'tv8.2' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
 		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
 		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
-		'tv8.6' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json'
+		//'tv8.6' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json'
 	];
 	foreach ( $stations as $k => $v ) {
 		$output = '<h3>';
