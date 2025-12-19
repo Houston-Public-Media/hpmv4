@@ -142,10 +142,10 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	foreach( $ytlive as $show => $meta ) {
 		foreach ( $output['talkshow'] as $k => $talk ) {
 			if ( $show == $talk['showSlug'] ) {
-				$output['talkshow'][ $k ]['id'] = $meta['id'];
-				$output['talkshow'][ $k ]['title'] = $meta['title'];
+				$output['talkshow'][ $k ]['id'] = ( !empty( $meta['id'] ) ? $meta['id'] : '' );
+				$output['talkshow'][ $k ]['title'] = ( !empty( $meta['title'] ) ? $meta['title'] : '' );
 				$output['talkshow'][ $k ]['embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
-				$output['talkshow'][ $k ]['description'] = strip_tags( explode( "</p>", $meta['description'] )[0] );
+				$output['talkshow'][ $k ]['description'] = ( !empty( $meta['description'] ) ? strip_tags( explode( "</p>", $meta['description'] )[0] ) : '' );
 			}
 		}
 	}
