@@ -114,6 +114,7 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	}
 	$hm_air = HPM_Liveshows::liveshow_check();
 	$temp = HPM_Liveshows::get_all();
+	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	foreach ( $temp as $k => $v ) {
 		$output['talkshow'][] = [
 			'live' => false,
@@ -137,14 +138,15 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			$output['talkshow'][ count( $output['talkshow'] ) - 1 ]['live'] = true;
 		}
 	}
-
-	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	foreach( $ytlive as $show => $meta ) {
 		foreach ( $output['talkshow'] as $k => $talk ) {
 			if ( $show == $talk['showSlug'] ) {
+				if ( empty( $meta['id'] ) ) {
+					$output['talkshow'][ $k ]['live'] = false;
+				}
 				$output['talkshow'][ $k ]['id'] = ( !empty( $meta['id'] ) ? $meta['id'] : '' );
 				$output['talkshow'][ $k ]['title'] = ( !empty( $meta['title'] ) ? $meta['title'] : '' );
-				$output['talkshow'][ $k ]['embed'] = '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+				$output['talkshow'][ $k ]['embed'] = ( !empty( $meta['id'] ) ? '<iframe id="' . $meta['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $meta['id'] . '?enablejsapi=1" title="' . $meta['title'] . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' : '' );
 				$output['talkshow'][ $k ]['description'] = ( !empty( $meta['description'] ) ? strip_tags( explode( "</p>", $meta['description'] )[0] ) : '' );
 			}
 		}
