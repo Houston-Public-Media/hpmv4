@@ -431,10 +431,13 @@ class HPM_Scheduler {
 				if ( empty( $meta['type'] ) ) {
 					continue;
 				}
+				if ( $meta['completed'] === '1' ) {
+					continue;
+				}
 				if ( $meta['type'] === 'redirect' ) {
 					if ( !empty( $meta['redirect_data'] ) && !empty( $meta['id'] ) ) {
 						$result = $wpdb->update( 'wp_redirection_items', [ 'action_data' => $meta['redirect_data'] ], [ 'id' => $meta['id'] ] );
-						if ( !$result ) {
+						if ( $result === false ) {
 							$success = '0';
 						}
 					}
