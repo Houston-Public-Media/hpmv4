@@ -460,7 +460,7 @@ class HPM_Scheduler {
 							$options = get_post_meta( $meta['id'], 'hpm_page_options', true );
 							$options['banner'] = $meta['banners'];
 							$result = update_post_meta( $meta['id'], 'hpm_page_options', $options );
-							if ( !$result ) {
+							if ( $result === false ) {
 								$success = '0';
 							}
 						} elseif ( $meta['type'] == 'show' ) {
@@ -475,14 +475,14 @@ class HPM_Scheduler {
 							}
 							$options['banners'] = $meta['banners'];
 							$result = update_post_meta( $meta['id'], 'hpm_show_meta', $options );
-							if ( !$result ) {
+							if ( $result === false ) {
 								$success = '0';
 							}
 						}
 					}
 					if ( !empty( $meta['featured_image'] ) ) {
 						$result = update_post_meta( $meta['id'], '_thumbnail_id', $meta['featured_image'] );
-						if ( !$result ) {
+						if ( $result === false ) {
 							$success = '0';
 						}
 					}
