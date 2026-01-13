@@ -890,7 +890,13 @@ function custom_get_primary_category( $object, $field_name, $request ) {
 			];
 		}
 	}
-	return [];
+	return [
+		'name' => '',
+		'slug' => '',
+		'id' => 0,
+		'taxonomy' => '',
+		'parent' => 0
+	];
 }
 
 function hpm_segments( $name, $date ) {
