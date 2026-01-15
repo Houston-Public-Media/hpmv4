@@ -360,7 +360,7 @@ class HPM_Scheduler {
 				'id' => 0,
 				'redirect_data' => ( !empty( $_POST['hpm-scheduler-redirect-data'] ) ? sanitize_url( $_POST['hpm-scheduler-redirect-data'] ) : '' ),
 				'title' => ( !empty( $_POST['hpm-scheduler-title'] ) ? sanitize_text_field( $_POST['hpm-scheduler-title'] ) : '' ),
-				'content' => ( !empty( $_POST['hpm-scheduler-content'] ) ? balanceTags( strip_shortcodes( $_POST['hpm-scheduler-content'] ), true ) : '' ),
+				'content' => ( !empty( $_POST['hpm-scheduler-content'] ) ? balanceTags( $_POST['hpm-scheduler-content'], true ) : '' ),
 				'featured_image' => ( !empty( $_POST['hpm-scheduler-banner-featured-id'] ) ? $_POST['hpm-scheduler-banner-featured-id'] : 0 ),
 				'banners' => [
 					'mobile' => ( !empty( $_POST['hpm-scheduler-banner-mobile-id'] ) ? $_POST['hpm-scheduler-banner-mobile-id'] : 0 ),
