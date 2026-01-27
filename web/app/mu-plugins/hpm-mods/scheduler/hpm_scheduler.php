@@ -360,7 +360,7 @@ class HPM_Scheduler {
 				'id' => 0,
 				'redirect_data' => ( !empty( $_POST['hpm-scheduler-redirect-data'] ) ? sanitize_url( $_POST['hpm-scheduler-redirect-data'] ) : '' ),
 				'title' => ( !empty( $_POST['hpm-scheduler-title'] ) ? sanitize_text_field( $_POST['hpm-scheduler-title'] ) : '' ),
-				'content' => ( !empty( $_POST['hpm-scheduler-content'] ) ? balanceTags( strip_shortcodes( $_POST['hpm-scheduler-content'] ), true ) : '' ),
+				'content' => ( !empty( $_POST['hpm-scheduler-content'] ) ? balanceTags( $_POST['hpm-scheduler-content'], true ) : '' ),
 				'featured_image' => ( !empty( $_POST['hpm-scheduler-banner-featured-id'] ) ? $_POST['hpm-scheduler-banner-featured-id'] : 0 ),
 				'banners' => [
 					'mobile' => ( !empty( $_POST['hpm-scheduler-banner-mobile-id'] ) ? $_POST['hpm-scheduler-banner-mobile-id'] : 0 ),
@@ -431,10 +431,13 @@ class HPM_Scheduler {
 				if ( empty( $meta['type'] ) ) {
 					continue;
 				}
+				if ( $meta['completed'] === '1' ) {
+					continue;
+				}
 				if ( $meta['type'] === 'redirect' ) {
 					if ( !empty( $meta['redirect_data'] ) && !empty( $meta['id'] ) ) {
 						$result = $wpdb->update( 'wp_redirection_items', [ 'action_data' => $meta['redirect_data'] ], [ 'id' => $meta['id'] ] );
-						if ( !$result ) {
+						if ( $result === false ) {
 							$success = '0';
 						}
 					}
@@ -457,7 +460,7 @@ class HPM_Scheduler {
 							$options = get_post_meta( $meta['id'], 'hpm_page_options', true );
 							$options['banner'] = $meta['banners'];
 							$result = update_post_meta( $meta['id'], 'hpm_page_options', $options );
-							if ( !$result ) {
+							if ( $result === false ) {
 								$success = '0';
 							}
 						} elseif ( $meta['type'] == 'show' ) {
@@ -472,14 +475,14 @@ class HPM_Scheduler {
 							}
 							$options['banners'] = $meta['banners'];
 							$result = update_post_meta( $meta['id'], 'hpm_show_meta', $options );
-							if ( !$result ) {
+							if ( $result === false ) {
 								$success = '0';
 							}
 						}
 					}
 					if ( !empty( $meta['featured_image'] ) ) {
 						$result = update_post_meta( $meta['id'], '_thumbnail_id', $meta['featured_image'] );
-						if ( !$result ) {
+						if ( $result === false ) {
 							$success = '0';
 						}
 					}
