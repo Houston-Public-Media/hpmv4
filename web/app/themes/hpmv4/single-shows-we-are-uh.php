@@ -205,9 +205,9 @@ get_header(); ?>
                 </div>
                 <div>
                     <?php
-                    if ( $cat->found_posts > 15 ) {
+                    /*if ( $cat->found_posts > 15 ) {
                         echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/" . $term->slug . "/page/" );
-                    }
+                    }*/
                     ?>
                     <p>&nbsp;</p>
                 </div>
