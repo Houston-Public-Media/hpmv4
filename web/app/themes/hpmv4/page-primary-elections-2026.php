@@ -205,6 +205,7 @@ if ( $cat->have_posts() ) {
 
                 </div>
             </section>
+
             <section class="section">
                 <div class="row">
                         <?php
@@ -242,7 +243,7 @@ if ( $cat->have_posts() ) {
                 </div>
             </section>
             <?php
-            echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/politics/election-2024/page/" ); ?>
+            echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/politics/election-2026/page/" ); ?>
             <p>&nbsp;</p>
         </main>
     </div>
