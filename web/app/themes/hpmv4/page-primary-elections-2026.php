@@ -149,6 +149,7 @@ $other_ep_args = [
             'operator' => 'NOT IN',
         ],
     ],
+    'post__not_in' => [541368],
     'orderby' => 'date',
     'order'   => 'DESC',
     'posts_per_page' => 16,

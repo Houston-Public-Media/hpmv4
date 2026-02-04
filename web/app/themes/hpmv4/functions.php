@@ -466,6 +466,7 @@ function hpm_ShowElectionTopThreeArticles( ): string {
     $cat_no = [21, 68339];
     $latest_ep_args = [
         'cat' => [21, 68339],
+        'post__not_in' => [541368],
         'tax_query' => [
             [
                 'taxonomy' => 'category',
@@ -509,6 +510,7 @@ function hpm_ShowElectionOtherStories(): array {
     $articles = [];
     $other_ep_args = [
         'cat' => [21, 68339],
+        'post__not_in' => [541368],
         'tax_query' => [
             [
                 'taxonomy' => 'category',
@@ -517,6 +519,7 @@ function hpm_ShowElectionOtherStories(): array {
                 'operator' => 'NOT IN',
             ],
         ],
+
         'orderby' => 'date',
         'order'   => 'DESC',
         'posts_per_page' => 18,
