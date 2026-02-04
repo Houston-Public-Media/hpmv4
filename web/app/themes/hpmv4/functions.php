@@ -466,6 +466,14 @@ function hpm_ShowElectionTopThreeArticles( ): string {
     $cat_no = [21, 68339];
     $latest_ep_args = [
         'cat' => [21, 68339],
+        'tax_query' => [
+            [
+                'taxonomy' => 'category',
+                'field'    => 'term_id',
+                'terms'    => [64721, 64814, 64880, 58, 43214, 13764],
+                'operator' => 'NOT IN',
+            ],
+        ],
         'orderby' => 'date',
         'order'   => 'DESC',
         'posts_per_page' => 4,
@@ -500,7 +508,15 @@ function hpm_ShowElectionTopThreeArticles( ): string {
 function hpm_ShowElectionOtherStories(): array {
     $articles = [];
     $other_ep_args = [
-        'cat' => [21, 60140],
+        'cat' => [21, 68339],
+        'tax_query' => [
+            [
+                'taxonomy' => 'category',
+                'field'    => 'term_id',
+                'terms'    => [64721, 64814, 64880, 58, 43214, 13764],
+                'operator' => 'NOT IN',
+            ],
+        ],
         'orderby' => 'date',
         'order'   => 'DESC',
         'posts_per_page' => 18,

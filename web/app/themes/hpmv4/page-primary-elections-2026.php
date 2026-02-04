@@ -141,6 +141,14 @@ $electionArticles = hpm_ShowElectionOtherStories();
 <?php  }
 $other_ep_args = [
     'cat' => [21, 68339],
+    'tax_query' => [
+        [
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => [64721, 64814, 64880, 58, 43214, 13764],
+            'operator' => 'NOT IN',
+        ],
+    ],
     'orderby' => 'date',
     'order'   => 'DESC',
     'posts_per_page' => 16,
@@ -150,7 +158,7 @@ $other_ep_args = [
     'post_type' => 'post'
 ];
 $cat = new WP_Query( $other_ep_args );
-
+//print_r($cat);
 if ( $cat->have_posts() ) {
     while ($cat->have_posts()) {
         $cat->the_post();
