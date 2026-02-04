@@ -463,9 +463,9 @@ function hpm_ShowElectionTopThreeArticles( ): string {
     wp_reset_postdata();
     $result = "";
     //$cat_no = '21, 60140';
-    $cat_no = [21, 60140];
+    $cat_no = [21, 68339];
     $latest_ep_args = [
-        'cat' => [21, 60140],
+        'cat' => [21, 68339],
         'orderby' => 'date',
         'order'   => 'DESC',
         'posts_per_page' => 4,
