@@ -3,7 +3,7 @@
 Template Name: 2026 Primary Elections Landing Page
 */
 	get_header();
-$electionArticles = hpm_ShowElectionOtherStories();
+$electionArticles = hpm_ShowElectionOtherStories( [21, 68339] );
 ?>
 <style>
     .btncountdown {
@@ -152,14 +152,13 @@ $other_ep_args = [
     'post__not_in' => [541368],
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => 16,
+    'posts_per_page' => 1,
     'offset' => 4,
     'ignore_sticky_posts' => 1,
     'post_status' => 'publish',
     'post_type' => 'post'
 ];
 $cat = new WP_Query( $other_ep_args );
-//print_r($cat);
 if ( $cat->have_posts() ) {
     while ($cat->have_posts()) {
         $cat->the_post();
@@ -196,7 +195,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-12">
                                 <h2 class="title"> <strong><span>Latest Election </span> Coverage</strong> </h2>
                                 <div class="row">
-                                    <?php echo hpm_ShowElectionTopThreeArticles(); ?>
+                                    <?php echo hpm_ShowElectionTopThreeArticles([21, 68339]); ?>
                                 </div>
                             </div>
                         </div>

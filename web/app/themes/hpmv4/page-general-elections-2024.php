@@ -3,7 +3,7 @@
 Template Name: General Elections 2024 Page
 */
 	get_header();
-$electionArticles = hpm_ShowElectionOtherStories();
+$electionArticles = hpm_ShowElectionOtherStories([21, 60140]);
 ?>
 <style>
     .btncountdown {
@@ -187,7 +187,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-12">
                                 <h2 class="title"> <strong><span>Latest Election </span> Coverage</strong> </h2>
                                 <div class="row">
-                                    <?php echo hpm_ShowElectionTopThreeArticles(); ?>
+                                    <?php echo hpm_ShowElectionTopThreeArticles([21, 60140]); ?>
                                 </div>
                             </div>
                         </div>

@@ -459,13 +459,13 @@ function CalculateElectionCountdowndays(): string {
 }
 
 //Show top three news articles under Elections 2024 category on Elections landing page
-function hpm_ShowElectionTopThreeArticles( ): string {
+function hpm_ShowElectionTopThreeArticles(array $cat_in = [] ): string {
     wp_reset_postdata();
     $result = "";
     //$cat_no = '21, 60140';
-    $cat_no = [21, 68339];
+    //$cat_no = $cat_in; //[21, 68339];
     $latest_ep_args = [
-        'cat' => [21, 68339],
+        'cat' => $cat_in,
         'post__not_in' => [541368],
         'tax_query' => [
             [
@@ -506,10 +506,10 @@ function hpm_ShowElectionTopThreeArticles( ): string {
     return $result;
 }
 
-function hpm_ShowElectionOtherStories(): array {
+function hpm_ShowElectionOtherStories( array $cat_in = [] ): array {
     $articles = [];
     $other_ep_args = [
-        'cat' => [21, 68339],
+        'cat' => $cat_in,
         'post__not_in' => [541368],
         'tax_query' => [
             [
