@@ -12,6 +12,7 @@ Template Post Type: shows
  */
 
 get_header(); ?>
+get_header(); ?>
 	<style>
 		body.single-shows #station-social {
 			padding: 1em;

@@ -42,3 +42,4 @@ env.production
 !.elasticbeanstalk/*.global.yml
 
 wp-cli.local.yml
+/web/extra/

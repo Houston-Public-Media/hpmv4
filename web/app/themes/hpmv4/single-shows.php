@@ -11,7 +11,10 @@ Template Post Type: shows
  * @since HPMv4 4.0
  */
 
-get_header(); ?>
+get_header();
+
+
+?>
 	<style>
 		body.single-shows #station-social {
 			padding: 1em;
@@ -120,7 +123,7 @@ get_header(); ?>
 				</div>
 <?php } ?>
 				<div class="episodes-block">
-					<h2 class="title red-bar"> <strong><span>All Stories</span></strong></h2>
+					<h2 class="title blue-bar"> <strong><span>All Stories</span></strong></h2>
 					<div class="row">
 <?php
 	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );

@@ -10,28 +10,19 @@ get_header();
 $file = file_get_contents('https://cdn.houstonpublicmedia.org/projects/elections/results_FLAT_for_ballot_2026.json');
 $json = json_decode($file);
 
-/**
- * Build race structure:
- * $races[office][race_name][] = candidate
- */
 $offices = [];
 $races   = [];
-
 foreach ($json as $j) {
-
     if (!in_array($j->office, $offices, true)) {
         $offices[] = $j->office;
     }
-
     $race_name = $j->division_type;
     if (!empty($j->office_division)) {
         $race_name .= ' ' . $j->office_division;
     }
-
     if (!isset($races[$j->office][$race_name])) {
         $races[$j->office][$race_name] = [];
     }
-
     foreach ($j->candidacies as $candidate) {
         $races[$j->office][$race_name][] = $candidate;
     }
@@ -40,41 +31,30 @@ foreach ($json as $j) {
 
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-
         <?php while (have_posts()) : the_post(); ?>
             <?php echo hpm_head_banners(get_the_ID(), 'page'); ?>
-
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <?php echo hpm_head_banners(get_the_ID(), 'entry'); ?>
-
                 <div class="entry-content">
                     <?php the_content(); ?>
                 </div>
-
                 <section class="section">
                     <div class="row">
-
                         <?php
                         $rowCount = 0;
-
                         foreach ($offices as $office) :
                             foreach ($races[$office] as $race_name => $candidates) :
-
                                 $democrats   = [];
                                 $republicans = [];
-
                                 foreach ($candidates as $candidate) {
                                     $party = $candidate->party;
-
                                     if ($party === 'Democrat') {
-
                                         $democrats[] = $candidate;
                                     } elseif ($party === 'Republican') {
                                         $republicans[] = $candidate;
                                     }
                                 }
                                 ?>
-
                                 <div class="col-lg-6 col-sm-12">
                                     <h3 class="title title-full">
                                         <?php
@@ -83,7 +63,6 @@ foreach ($json as $j) {
                                             : esc_html($office . ' ' . ucwords($race_name));
                                         ?>
                                     </h3>
-
                                     <div class="row">
                                         <!-- Democrats -->
                                         <div class="col-6">
@@ -96,7 +75,6 @@ foreach ($json as $j) {
                                                 <?php endforeach; ?>
                                             </ul>
                                         </div>
-
                                         <!-- Republicans -->
                                         <div class="col-6">
                                             <h4 class="party-title republican">Republicans</h4>
@@ -110,7 +88,6 @@ foreach ($json as $j) {
                                         </div>
                                     </div>
                                 </div>
-
                                 <?php
                                 $rowCount++;
                                 if ($rowCount % 2 === 0) {
@@ -119,18 +96,13 @@ foreach ($json as $j) {
                             endforeach;
                         endforeach;
                         ?>
-
                     </div>
                 </section>
-
                 <footer class="entry-footer">
                     <?php edit_post_link(__('Edit', 'hpmv4'), '<span class="edit-link">', '</span>'); ?>
                 </footer>
-
             </article>
         <?php endwhile; ?>
-
     </main>
 </div>
-
 <?php get_footer(); ?>
