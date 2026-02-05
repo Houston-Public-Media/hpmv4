@@ -221,7 +221,7 @@ $tras = null; ?>
 		</section>
         <section class="section ads-full text-center">
             <div class="page-banner">
-                <a href="/elections-2026/" title="2024 Election">
+                <a href="/elections-2026/" title="2026 Election">
                     <picture>
                     <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
                     <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
