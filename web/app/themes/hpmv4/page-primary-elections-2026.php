@@ -172,7 +172,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-4">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/09/26/501028/voter-guide-2024-election-houston-harris-county/">Voters Guide</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/02/10/542938/how-to-vote-in-march-2026-primary-election-houston-harris-county-texas/">Voters Guide</a>
                                     </div>
                                 </div>
                             </div>
