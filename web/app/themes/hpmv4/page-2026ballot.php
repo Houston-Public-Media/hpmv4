@@ -7,7 +7,7 @@ get_header();
 /**
  * Load statewide races
  */
-$statewide_file = file_get_contents('https://cdn.houstonpublicmedia.org/projects/elections/results_FLAT_for_ballot_2026.json');
+$statewide_file = file_get_contents('https://cdn.houstonpublicmedia.org/projects/elections/2026/statewide-primary-ballot.json');
 $statewide_json = json_decode($statewide_file, true);
 
 /**
@@ -174,7 +174,7 @@ $combined_json['Statewide'] = $statewide_json;
                                 ?>
                                 <div class="col-lg-6 col-sm-12">
                                     <h3 class="title title-full">
-                                        <?php echo esc_html($race['office'] . (!empty($race['division_type']) ? ' - ' . $race['division_type'] : '')); ?>
+                                        <?php echo esc_html($race['office'] . ( !empty($race['division_type'] ) ? ' - ' . $race['division_type'] . ' ' . $race['office_division'] : '' ) ); ?>
                                     </h3>
                                     <div class="row">
                                         <?php if(!empty($democrats)) : ?>
