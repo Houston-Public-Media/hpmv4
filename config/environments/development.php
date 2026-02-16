@@ -6,7 +6,7 @@
 use Roots\WPConfig\Config;
 use function Env\env;
 
-$_SERVER['SERVER_NAME'] = 'localhost';
+$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 Config::define( 'SAVEQUERIES', true );
 Config::define( 'WP_DEBUG', true );
 Config::define( 'WP_DEBUG_DISPLAY', true );

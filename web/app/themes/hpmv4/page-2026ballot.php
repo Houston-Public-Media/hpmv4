@@ -13,10 +13,10 @@ $statewide_json = json_decode($statewide_file, true);
 /**
  * Load county JSONs
  */
-$harris_json     = json_decode(file_get_contents('http://localhost/Harris-county-races.json'), true);
-$fortbend_json   = json_decode(file_get_contents('http://localhost/FortBend-county-races.json'), true);
-$galveston_json  = json_decode(file_get_contents('http://localhost/Galveston-county-races.json'), true);
-$montgomery_json = json_decode(file_get_contents('http://localhost/Montgomery-county-races.json'), true);
+$harris_json     = json_decode(file_get_contents('https://cdn.houstonpublicmedia.org/projects/elections/2026/harris-county-primary-races.json'), true);
+$fortbend_json   = json_decode(file_get_contents('https://cdn.houstonpublicmedia.org/projects/elections/2026/fortbend-county-primary-races.json'), true);
+$galveston_json  = json_decode(file_get_contents('https://cdn.houstonpublicmedia.org/projects/elections/2026/galveston-county-primary-races.json'), true);
+$montgomery_json = json_decode(file_get_contents('https://cdn.houstonpublicmedia.org/projects/elections/2026/montgomery-county-primary-races.json'), true);
 
 /**
  * Normalize county JSONs to unified flat structure
