@@ -11,10 +11,7 @@ Template Post Type: shows
  * @since HPMv4 4.0
  */
 
-get_header();
-
-
-?>
+get_header(); ?>
 	<style>
 		body.single-shows #station-social {
 			padding: 1em;
