@@ -146,10 +146,7 @@ foreach ( $counties as $county_name => &$county_races ) {
 /**
  * Statewide races appended at the end
  */
-$combined_json = [];
-foreach ( $counties as $county_name => $county_races ) {
-	$combined_json[ $county_name ] = $county_races;
-}
+$combined_json = array_map( function( $races ) { return $races; }, $counties );
 $combined_json['Statewide'] = $statewide_json; ?>
 
 <div id="primary" class="content-area">
