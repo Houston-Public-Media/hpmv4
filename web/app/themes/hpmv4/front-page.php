@@ -126,6 +126,7 @@ $tras = null; ?>
 				border-right: 0;
 			}
 		}
+        .VerticalVideoCarousel__header{display: none !important;}
 	</style>
 	<div id="primary" class="content-area home-page">
 <?php
@@ -220,12 +221,12 @@ $tras = null; ?>
 		</section>
         <?php /* ?><section class="section ads-full text-center">
             <div class="page-banner">
-                <a href="/2024election/" title="2024 Election">
+                <a href="/elections-2026/" title="2026 Election">
                     <picture>
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-mobile.png.webp" type="image/webp" media="(max-width: 34em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-tablet.png.webp" type="image/webp" media="(max-width: 52.5em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png.webp" type="image/webp">
-                    <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/General-Election-2024-Homepage-Ad-Desktop.png" alt="2024 Election">
+                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
+                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
+                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">
+                    <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
                     </picture>
                 </a>
             </div>
@@ -264,6 +265,7 @@ $tras = null; ?>
 			</div>
 		</section>
 		<?php get_template_part("content", "localshows") ?>
+        <?php /*get_template_part("content", "verticalvideos") */?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">

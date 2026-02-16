@@ -1,9 +1,9 @@
 <?php
 /*
-Template Name: General Elections 2024 Page
+Template Name: 2026 Primary Elections Landing Page
 */
 	get_header();
-$electionArticles = hpm_ShowElectionOtherStories([21, 60140]);
+$electionArticles = hpm_ShowElectionOtherStories( [21, 68339] );
 ?>
 <style>
     .btncountdown {
@@ -140,17 +140,25 @@ $electionArticles = hpm_ShowElectionOtherStories([21, 60140]);
 	    <?php the_content(); ?>
 <?php  }
 $other_ep_args = [
-    'cat' => [21, 60140],
+    'cat' => [21, 68339],
+    'tax_query' => [
+        [
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => [64721, 64814, 64880, 58, 43214, 13764],
+            'operator' => 'NOT IN',
+        ],
+    ],
+    'post__not_in' => [541368],
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => 16,
+    'posts_per_page' => 1,
     'offset' => 4,
     'ignore_sticky_posts' => 1,
     'post_status' => 'publish',
     'post_type' => 'post'
 ];
 $cat = new WP_Query( $other_ep_args );
-
 if ( $cat->have_posts() ) {
     while ($cat->have_posts()) {
         $cat->the_post();
@@ -159,26 +167,26 @@ if ( $cat->have_posts() ) {
 ?>
             <section class="section">
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2024/2024/09/26/501028/voter-guide-2024-election-houston-harris-county/">Voters Guide</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/02/10/542938/how-to-vote-in-march-2026-primary-election-houston-harris-county-texas/">How to vote</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-ballot-2024-election-harris-county-texas">What's on my Ballot?</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-2026-primary-election-ballot-in-harris-county-and-texas">What's on my ballot?</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/electoral-college-interactive-map-2024-election">Electoral College Map</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/elections/2025/12/10/538080/march-primary-election-2026-candidates-houston-harris-county-texas/">Learn about the candidates</a>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +195,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-12">
                                 <h2 class="title"> <strong><span>Latest Election </span> Coverage</strong> </h2>
                                 <div class="row">
-                                    <?php echo hpm_ShowElectionTopThreeArticles([21, 60140]); ?>
+                                    <?php echo hpm_ShowElectionTopThreeArticles([21, 68339]); ?>
                                 </div>
                             </div>
                         </div>
@@ -202,20 +210,10 @@ if ( $cat->have_posts() ) {
                             } ?>
                         </div>
                     </div>
-                    <div class="col-lg-3">
-                        <?php /* ?><div class="btncountdown">
-                            <?php echo CalculateElectionCountdowndays();?>
-                            <div class="flex-row">
-                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Days</div>
-                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Hrs</div>
-                                <div class="flex-col" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 16px;">Mins</div>
-                            </div>
-                            <span style="font-size:22px;font-family: 'Open Sans', Arial, Helvetica, sans-serif;">to Election Day!</span>
-                        </div><?php */ ?>
-                        <script async src="https://modules.wearehearken.com/america-amplified-elections/embed/11328.js"></script>
-                    </div>
+
                 </div>
             </section>
+
             <section class="section">
                 <div class="row">
                         <?php
@@ -253,7 +251,7 @@ if ( $cat->have_posts() ) {
                 </div>
             </section>
             <?php
-            echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/politics/election-2024/page/" ); ?>
+            echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/politics/election-2026/page/" ); ?>
             <p>&nbsp;</p>
         </main>
     </div>
