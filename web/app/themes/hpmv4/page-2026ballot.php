@@ -13,6 +13,7 @@ $statewide_json = json_decode( $statewide_file, true );
 /**
  * Load county JSONs
  */
+
 $harris_json	 = json_decode( file_get_contents( 'https://cdn.houstonpublicmedia.org/projects/elections/2026/harris-county-primary-races.json'), true );
 $fortbend_json   = json_decode( file_get_contents( 'https://cdn.houstonpublicmedia.org/projects/elections/2026/fortbend-county-primary-races.json'), true );
 $galveston_json  = json_decode( file_get_contents( 'https://cdn.houstonpublicmedia.org/projects/elections/2026/galveston-county-primary-races.json'), true );
@@ -101,6 +102,27 @@ function normalize_county_races( $county_json ) {
 		}
 	}
 
+	$constable = $county_json['constables'] ?? [];
+	foreach ( $constable as $key => $races ) {
+		if ( isset( $races['office'] ) ) { // array of objects
+			$flat[] = [
+				'office' => $races['office'],
+				'division_type' => 'Constable',
+				'office_division' => '',
+				'candidacies' => $races['candidates']
+			];
+		} else { // Harris style nested
+			foreach ( $races as $race_name => $candidates ) {
+				$flat[] = [
+					'office' => ucwords( str_replace( '_', ' ', $race_name ) ),
+					'division_type' => 'Constable',
+					'office_division' => '',
+					'candidacies' => $candidates
+				];
+			}
+		}
+	}
+
 	// Propositions
 	if ( !empty( $county_json['propositions'] ) ) {
 		foreach ( $county_json['propositions'] as $prop ) {
@@ -153,10 +175,11 @@ $combined_json['Statewide'] = $statewide_json; ?>
 	<main id="main" class="site-main" role="main">
 		<?php while ( have_posts() ) { the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<?php echo hpm_head_banners( get_the_ID(), 'entry' ); ?>
 				<div class="entry-content"><?php the_content(); ?></div>
 				<?php foreach ( $combined_json as $county_name => $races ) { ?>
-					<section class="section county-section">
-						<h2 class="county-title"><?php echo esc_html( $county_name ); ?></h2>
+					<details class="section county-section">
+						<summary class="county-title"><?php echo esc_html( $county_name ); ?></summary>
 						<div class="row">
 					<?php
 						$rowCount = 0;
@@ -210,7 +233,7 @@ $combined_json['Statewide'] = $statewide_json; ?>
 						}
 							?>
 						</div>
-					</section>
+					</details>
 				<?php } ?>
 
 			</article>
