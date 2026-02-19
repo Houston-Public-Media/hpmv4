@@ -4,11 +4,6 @@ $chunks = array_chunk($videos, 4);
 ?>
 
 <?php if (!empty($chunks)) : ?>
-    <style>
-        .card
-        {border:none; background-color: #e7e7e8;}
-        .card-title{color:#404040;}
-    </style>
     <section class="section radio-list">
         <h2 class="title mb-4">
             <strong>HPM <span>Shorts</span></strong>
@@ -31,13 +26,12 @@ $chunks = array_chunk($videos, 4);
                                 if (!$hlsSource) continue;
                                 ?>
                                 <div class="col-lg-3 col-md-6 col-12">
-                                    <div class="card h-100">
+                                    <div class="card h-100" style="border:none; background-color: #e7e7e8;">
                                         <img src="<?php echo esc_url($video['poster'] ?? ''); ?>" class="card-img-top thumbnail" data-src="<?php echo esc_url($hlsSource); ?>"
                                              style="cursor:pointer;">
-
                                         <video class="w-100 d-none" controls></video>
                                         <div class="card-body">
-                                            <h6 class="card-title mb-0">
+                                            <h6 class="card-title mb-0" style="color:#404040;">
                                                 <?php echo esc_html($video['name'] ?? ''); ?>
                                             </h6>
                                         </div>
