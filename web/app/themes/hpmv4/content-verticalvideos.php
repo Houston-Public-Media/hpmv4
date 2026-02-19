@@ -1,5 +1,6 @@
 <?php
 $videos = hpm_getBrightcovePlaylist(HPM_BC_ACCOUNT_ID, HPM_BC_PLAYLIST_ID, HPM_BC_POLICY_KEY);
+print_r($videos);
 $chunks = array_chunk($videos, 4);
 ?>
 <style>
