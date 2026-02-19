@@ -161,6 +161,9 @@ Config::define( 'WP_REDIS_SCHEME', env( 'WP_REDIS_SCHEME' ) );
 Config::define( 'BSKY_HANDLE', env( 'BSKY_HANDLE' ) );
 Config::define( 'BSKY_APP_PASSWORD', env( 'BSKY_APP_PASSWORD' ) );
 Config::define( 'THREADS_USER_ID', env( 'THREADS_USER_ID' ) );
+Config::define( 'HPM_BC_PLAYLIST_ID', env( 'BC_PLAYLIST_ID' ) );
+Config::define( 'HPM_BC_ACCOUNT_ID', env( 'BC_ACCOUNT_ID' ) );
+Config::define( 'HPM_BC_POLICY_KEY', env( 'BC_POLICY_KEY' ) );
 
 /**
  * Debugging Settings

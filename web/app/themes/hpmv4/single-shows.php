@@ -120,7 +120,7 @@ get_header(); ?>
 				</div>
 <?php } ?>
 				<div class="episodes-block">
-					<h2 class="title blue-bar"> <strong><span>All Stories</span></strong></h2>
+					<h2 class="title red-bar"> <strong><span>All Stories</span></strong></h2>
 					<div class="row">
 <?php
 	$cat_no = get_post_meta( get_the_ID(), 'hpm_shows_cat', true );
