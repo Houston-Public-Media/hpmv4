@@ -2,15 +2,16 @@
 $videos = hpm_getBrightcovePlaylist(HPM_BC_ACCOUNT_ID, HPM_BC_PLAYLIST_ID, HPM_BC_POLICY_KEY);
 $chunks = array_chunk($videos, 4);
 ?>
-<style>
-    .card
-    {border:none; background-color: #e7e7e8;}
-    .card-title{color:#404040;}
-</style>
+
 <?php if (!empty($chunks)) : ?>
+    <style>
+        .card
+        {border:none; background-color: #e7e7e8;}
+        .card-title{color:#404040;}
+    </style>
     <section class="section radio-list">
         <h2 class="title mb-4">
-            <strong>Houston Public Media <span>Watch</span></strong>
+            <strong>HPM <span>Shorts</span></strong>
         </h2>
         <div id="videoCarousel" class="carousel slide" data-bs-ride="false">
             <div class="carousel-inner">
