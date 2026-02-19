@@ -1,11 +1,6 @@
 <?php
-$accountId  = '6416104539001';
-$playlistId = '1855583205626029691';
-$policyKey  = 'BCpkADawqM0WL-pIoZPka67zjAoGmVP_jf42f361KLeEEDQBFV1cnxiuaRhtNO9fnuUK3zEoDD6YoDzsO9YM8YENOClcJzZB-2_XbvuOhE8K3w1F2FkCoLz6ZMxmw1pCTGrfgfYwuA_WnPIHX6fWPbVJ9TTNynerB-2EINar3M-WI5rBqnIRl4ks57o';
-
 $videos = hpm_getBrightcovePlaylist(HPM_BC_ACCOUNT_ID, HPM_BC_PLAYLIST_ID, HPM_BC_POLICY_KEY);
 $chunks = array_chunk($videos, 4);
-
 ?>
 <style>
     .card
