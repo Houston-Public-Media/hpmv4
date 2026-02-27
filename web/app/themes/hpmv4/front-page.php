@@ -265,7 +265,7 @@ $tras = null; ?>
 			</div>
 		</section>
 		<?php get_template_part("content", "localshows") ?>
-        <?php /*get_template_part("content", "verticalvideos") */?>
+<?php get_template_part("content", "verticalvideos") ?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">

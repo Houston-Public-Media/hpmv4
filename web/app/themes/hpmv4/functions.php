@@ -539,6 +539,47 @@ function hpm_ShowElectionOtherStories( array $cat_in = [] ): array {
 }
 
 
+// Get Brightcove playlist to show on home page after local shows block starts here
+function hpm_getBrightcovePlaylist($accountId, $playlistId, $policyKey, $cache_time = 3600) {
+    if (empty($accountId) || empty($playlistId) || empty($policyKey)) {
+        return [];
+    }
+    $transient_key = 'hpm_playlist_' . md5($accountId . '_' . $playlistId);
+//    $cached_videos = get_transient($transient_key);
+//    if ($cached_videos !== false) {
+//        return $cached_videos;
+//    }
+    $response = wp_remote_get(
+        "https://edge.api.brightcove.com/playback/v1/accounts/{$accountId}/playlists/{$playlistId}",
+        [
+            'headers' => [
+                'Accept'       => "application/json;pk={$policyKey}",
+                'User-Agent'   => 'WordPress/' . get_bloginfo('version'),
+            ],
+            'timeout' => 15,
+        ]
+    );
+
+    if (is_wp_error($response)) {
+        print_r($response->get_error_message());
+        return [];
+    }
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body, true);
+    $videos = $data['videos'] ?? [];
+    set_transient($transient_key, $videos, $cache_time);
+    return $videos;
+}
+
+// Get Brightcove playlist to show on home page after local shows block ends here
+function hpm_enqueue_scripts() {
+    wp_enqueue_script('hls-js', 'https://cdn.jsdelivr.net/npm/hls.js@latest', [], null, true );
+    wp_enqueue_script('hpm-video-script', get_template_directory_uri() . '/js/hpm_bc_videos.js', ['hls-js'], null, true );
+}
+add_action('wp_enqueue_scripts', 'hpm_enqueue_scripts');
+
+
+
 // Generate excerpt outside of the WP Loop
 function get_excerpt_by_id( $post_id ): string {
 	$the_post = get_post( $post_id );
