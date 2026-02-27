@@ -2050,12 +2050,8 @@ body.nav-active-menu #top-mobile-close {
 		grid-template-columns: 1fr 1fr;
 		grid-auto-flow: initial;
 	}
-	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-support > ul > li:nth-child(3) {
+	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-support > ul > li:nth-child(1) {
 		grid-row-end: span 2;
-	}
-	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-support > ul > li:nth-child(5) {
-		grid-column-start: 1;
-		grid-row-start: 2;
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:first-child > ul {
 		transform: rotateX(-90deg) translateX(0);
