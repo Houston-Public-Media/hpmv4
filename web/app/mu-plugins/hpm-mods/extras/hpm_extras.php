@@ -1656,7 +1656,7 @@ function hpm_now_playing_update(): void {
 		'tv8.2' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
 		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
 		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
-		//'tv8.6' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json'
+		'tv8.6' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json'
 	];
 	foreach ( $stations as $k => $v ) {
 		$output = '<h3>';
