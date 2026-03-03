@@ -297,8 +297,10 @@ function hpm_persistent_player_head(): void {
 	global $wp_query;
 	$queried_object = $wp_query->get_queried_object_id();
 	if ( !is_admin() && $queried_object !== 61263 ) {
+		$versions = hpm_versions();
 		echo '<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>' .
-			'<script src="https://assets.houstonpublicmedia.org/app/themes/hpmv4/js/experiments/jppIframe.js?v=20240903"></script>';
+			'<script src="' . get_template_directory_uri() .'/app/themes/hpmv4/js/experiments/jppIframe.js?v=' . $versions['js'] . '"></script>' .
+			'<link rel="stylesheet" id="hpm-jpp-css" href="' . get_template_directory_uri() . '/app/themes/hpmv4/js/experiments/persistent.css?ver=' . $versions['css'] . '" type="text/css" media="all">';
 	}
 }
 
@@ -307,7 +309,7 @@ function hpm_persistent_player_foot(): void {
 	$queried_object = $wp_query->get_queried_object_id();
 	if ( !is_admin() && $queried_object !== 61263 ) {
 		$prefStream = "news";
-		if ( !empty( $_COOKIE ) && !empty( $_COOKIE['prefStream'] ) && preg_match( '/[clasimxtpenw]{4,9}/', $_COOKIE['prefStream'] ) ) {
+		if ( !empty( $_COOKIE ) && !empty( $_COOKIE['prefStream'] ) && preg_match( '/[clasithenwvb]{4,9}/', $_COOKIE['prefStream'] ) ) {
 			$prefStream = $_COOKIE['prefStream'];
 		}
 		?>
@@ -340,5 +342,5 @@ function hpm_persistent_player_foot(): void {
 	}
 }
 
-add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
-add_action( 'wp_head', 'hpm_persistent_player_head', 102 );
+// add_action( 'wp_footer', 'hpm_persistent_player_foot', 200 );
+// add_action( 'wp_head', 'hpm_persistent_player_head', 102 );

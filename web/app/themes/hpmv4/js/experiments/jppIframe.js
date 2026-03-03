@@ -97,15 +97,33 @@ jpp.loadPlayer = () => {
 	hpm.stationIds.classical.obj = 'jpp';
 	hpm.stationIds.thevibe.refresh = true;
 	hpm.stationIds.thevibe.obj = 'jpp';
-	for (let st in hpm.stationIds) {
-		if ( hpm.stationIds[st].refresh ) {
-			fetch(hpm.stationIds[st].feed)
-				.then((response) => response.json())
-				.then((data) => {
-					hpm.npUpdateData(data,st);
-				});
-		}
-	}
+	fetch('https://cdn.houstonpublicmedia.org/assets/nowplay/all.json')
+		.then((response) => response.json())
+		.then((data) => {
+			for (let st in hpm.stationIds) {
+				if ( hpm.stationIds[st].refresh ) {
+					let output = '';
+					let current = data[ hpm.stationIds[st].station.type ][ hpm.stationIds[st].station.id ];
+					if ( hpm.stationIds[st].station.type === 'tv' ) {
+						output += '<h3>' + current.artist + '</h3>';
+					} else {
+						if ( current.artist === current.album ) {
+							output += '<h3>' + current.title + '</h3>';
+						} else {
+							output += '<h3>' + current.artist + ' - ' + current.title + "</h3>";
+						}
+					}
+					if (hpm.stationIds[st].obj === 'jpp') {
+						if ( st === jpp.prefStream ) {
+							jpp.elements.nowPlaying.innerHTML = '<div><p>Houston Public Media ' + st + '</p>' + output + '</div>';
+						}
+						document.getElementById('menu-station-' + st).innerHTML = '<p>Houston Public Media ' + st + '</p>' + output;
+					} else {
+						hpm.stationIds[st].obj.innerHTML = output;
+					}
+				}
+			}
+		});
 };
 jpp.playerCreate = () => {
 	jpp.elements['streams'] = document.getElementById('jpp-streams');
@@ -157,7 +175,7 @@ jpp.buttonManage = () => {
 			if (jpp.elements.stop.classList.contains('hidden')) {
 				jpp.elements.stop.classList.toggle('hidden');
 			}
-			hpm.npUpdateHtml('jpp', station, 'false');
+			hpm.npDataDownload();
 		});
 	});
 };
