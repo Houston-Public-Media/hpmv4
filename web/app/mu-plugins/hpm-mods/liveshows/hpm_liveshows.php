@@ -439,7 +439,7 @@ class HPM_Liveshows {
 						'<div class="col-lg-4 col-sm-12">';
 				} elseif ( $ka == 1 || $ka == 2 ) {
 					$temp = self::get_all();
-					if ( !empty( $talkshow ) && !$talkshow_display && !empty( $temp[ $talkshow ] ) && $temp[ $talkshow ]['recurring'] == 1 ) {
+					if ( !empty( $talkshow ) && !$talkshow_display && !empty( $temp[ $talkshow ] ) /* && $temp[ $talkshow ]['recurring'] == 1 */ ) {
 						$ytlive = get_option( 'hpm_ytlive_talkshows' );
 						$outs = [];
 						if ( !empty( $temp[ $talkshow ]['email'] ) ) {
@@ -458,9 +458,11 @@ class HPM_Liveshows {
 								'<h2><a href="https://www.youtube.com/watch?v=' . $ytlive[ $talkshow ]['id'] .'" rel="bookmark">'. $temp[ $talkshow ]['title'] .'</a></h2>'.
 								'<p class="iframe-embed"><iframe id="' . $ytlive[ $talkshow ]['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $ytlive[ $talkshow ]['id'] . '?enablejsapi=1" title="' . $ytlive[ $talkshow ]['title'] .'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>' .
 								'<p style="text-align: center;">' . implode( ' | ', $outs ) . '</p>' .
-							'</div>' .
-								'<img src="https://cdn.houstonpublicmedia.org/assets/images/icons/' . $talkshow .'-logo.webp" alt="' . $temp[ $talkshow ]['title'] . '" width="256" height="218" class="talkshow-logo" />' .
 							'</div>';
+						if ( $temp[ $talkshow ]['recurring'] == 1 ) {
+							$result .= '<img src="https://cdn.houstonpublicmedia.org/assets/images/icons/' . $talkshow . '-logo.webp" alt="' . $temp[ $talkshow ]['title'] . '" width="256" height="218" class="talkshow-logo" />';
+						}
+						$result .= '</div>';
 						$talkshow_display = true;
 					} elseif ( !$talkshow_display ) {
 						if ( $ka == 1 ) {

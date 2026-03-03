@@ -142,11 +142,14 @@ $tras = null; ?>
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	if ( !empty( $hm_air[ $now['hours'] ] ) ) {
 		foreach ( $temp as $k => $v ) {
-			if ( $v['recurring'] == 1 &&
-					in_array( $now['wday'], $v['recurring_pattern'] ) &&
-					$v['start_hour'] <= $now['hours'] &&
-					$v['end_hour'] > $now['hours'] &&
-					!empty( $ytlive[ $k ]['id'] )
+			if (
+				(
+					( $v['recurring'] == 1 && in_array( $now['wday'], $v['recurring_pattern'] ) ) ||
+					( $v['recurring'] == 0 && $v['once_date'] == date( 'Y-m-d', $now[0] ) )
+				) &&
+				$v['start_hour'] <= $now['hours'] &&
+				$v['end_hour'] > $now['hours'] &&
+				!empty( $ytlive[ $k ]['id'] )
 			) {
 				$talkshow = $k;
 			}
