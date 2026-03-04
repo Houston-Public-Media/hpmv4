@@ -169,24 +169,31 @@ if ( $cat->have_posts() ) {
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/02/10/542938/how-to-vote-in-march-2026-primary-election-houston-harris-county-texas/">How to vote</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <a style="text-decoration: none; color:#fff;" href="/whats-on-my-2026-primary-election-ballot-in-harris-county-and-texas">What's on my ballot?</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/elections/2025/12/10/538080/march-primary-election-2026-candidates-houston-harris-county-texas/">Learn about the candidates</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/2026/03/03/544840/texas-primary-results-2026/">Election Results</a>
                                     </div>
                                 </div>
                             </div>
