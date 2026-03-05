@@ -86,12 +86,12 @@ get_header(); ?>
 						<?php echo apply_filters( 'the_content', $show_content ); ?>
 					</div>
 				</div>
-				<div id="station-social" class="station-social">
-					<div class="badges-box">
-						<span class="badge-title">SUBSCRIBE,  STREAM  &  FOLLOW US ON</span>
-						<?php echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
-					</div>
-				</div>
+<!--				<div id="station-social" class="station-social">-->
+<!--					<div class="badges-box">-->
+<!--						<span class="badge-title">SUBSCRIBE,  STREAM  &  FOLLOW US ON</span>-->
+<!--						--><?php //echo HPM_Podcasts::show_social( $show['podcast'], false, $show_id ); ?>
+<!--					</div>-->
+<!--				</div>-->
 				<div class="row text-content">
 					<div class="col-sm-12 col-lg-8">
 						<div class="the-latest-block">
