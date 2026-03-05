@@ -128,7 +128,7 @@ get_header(); ?>
 											<div class="content-wrapper">
 												<span class="date"><?php echo date( 'F j, Y', $pubtime); ?></span>
 												<h2 class="content-title"><?php echo $yt_title; ?></h2>
-												<div class="desc-wrap"> <p class="desc"><?php echo $yt_desc_trim; ?></p><button type="button" class="yt-readmore">Read More...</button></div>
+												<div class="desc-wrap"> <p class="desc"><?php echo $yt_desc_trim; ?></p></div>
 												<dialog id="yt-dialog">
 													<div class="yt-dialog-content">
 														<h3></h3>
@@ -138,24 +138,8 @@ get_header(); ?>
 														</ul>
 													</div>
 												</dialog>
-												<script>
-													const dialog = document.getElementById("yt-dialog");
-													const readMore = document.querySelector("#youtube-main .yt-readmore");
 
-													readMore.addEventListener("click", ({ target }) => {
-														var desc = document.querySelector("#youtube-main .desc");
-														var title = document.querySelector("#youtube-main h2");
-														dialog.querySelector("p").innerHTML = desc.innerHTML;
-														dialog.querySelector("h3").textContent = title.textContent;
-														dialog.showModal();
-													});
 
-													dialog.addEventListener("click", ({ target }) => {
-														if (target.matches('dialog') || target.matches('[data-action="dismiss"]')) {
-															dialog.close();
-														}
-													});
-												</script>
 											</div>
 										</div>
 										<?php
