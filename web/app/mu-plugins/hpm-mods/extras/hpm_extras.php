@@ -495,7 +495,7 @@ if ( empty( $timestamp ) ) {
 	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
 }
 
-function get_post_id_by_slug( $slug ) {
+function get_post_id_by_slug( $slug ): ?int {
 	$post = get_page_by_path( $slug, null, 'post' );
 	return $post?->ID;
 }
@@ -1422,7 +1422,6 @@ function postscript_class_body( $classes ): array {
 }
 add_filter( 'body_class', 'postscript_class_body' );
 
-
 /**
  * Adds user-entered class(es) to the post class list.
  *
@@ -1649,35 +1648,32 @@ function hpm_now_playing( $station ) {
 
 function hpm_now_playing_update(): void {
 	$stations = [
-		'news887' => 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json',
-		'classical' => 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
-		'thevibe' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/thevibe.json',
-		'tv8.1' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
-		'tv8.2' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
-		'tv8.3' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-		'tv8.4' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
-		//'tv8.6' => 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json'
+		'news887' => 'radio-0',
+		'classical' => 'radio-1',
+		'thevibe' => 'radio-2',
+		'tv8.1' => 'tv-0',
+		'tv8.2' => 'tv-1',
+		'tv8.3' => 'tv-2',
+		'tv8.4' => 'tv-3',
+		'tv8.6' => 'tv-4'
 	];
+	$remote = wp_remote_get( esc_url_raw( 'https://cdn.houstonpublicmedia.org/assets/nowplay/all.json' ) );
+	if ( is_wp_error( $remote ) ) {
+		return;
+	} else {
+		$data = json_decode( wp_remote_retrieve_body( $remote ), true );
+	}
 	foreach ( $stations as $k => $v ) {
 		$output = '<h3>';
-		$remote = wp_remote_get( esc_url_raw( $v ) );
-		if ( is_wp_error( $remote ) ) {
-			continue;
-		} else {
-			$data = json_decode( wp_remote_retrieve_body( $remote ), true );
-		}
+		$pos = explode( '-', $v );
+		$station = $data[ $pos[0] ][ (int)$pos[1] ];
 		if ( str_contains( $k, 'tv' ) ) {
-			$output .= $data['airlist'][0]['version']['series']['series-title'];
-		} elseif ( $k === 'thevibe' ) {
-			$output .= $data['artist'] . ' - ' . $data['song'];
+			$output .= $station['artist'];
 		} else {
-			if ( empty( $data['onNow']['song'] ) ) {
-				$output .= $data['onNow']['program']['name'];
+			if ( $station['artist'] == $station['album'] ) {
+				$output .= $station['title'];
 			} else {
-				if ( !empty( $data['onNow']['song']['composerName'] ) ) {
-					$output .= $data['onNow']['song']['composerName'] . ' - ';
-				}
-				$output .= str_replace( '&', '&amp;', $data['onNow']['song']['trackName'] );
+				$output .= $station['artist'] . ' - ' . $station['title'];
 			}
 		}
 		$output .= '</h3>';

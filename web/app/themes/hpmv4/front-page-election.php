@@ -399,31 +399,35 @@ $tras = null; ?>
 					<div id="station-schedules">
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8</a></h5>
-							<div class="hpm-nowplay" data-station="tv81" data-upnext="false"><?php echo hpm_now_playing( 'tv8.1' ); ?></div>
+							<div class="hpm-nowplay" data-station="tv81"><?php echo hpm_now_playing( 'tv8.1' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
-							<div class="hpm-nowplay" data-station="tv82" data-upnext="false"><?php echo hpm_now_playing( 'tv8.2' ); ?></div>
+							<div class="hpm-nowplay" data-station="tv82"><?php echo hpm_now_playing( 'tv8.2' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
-							<div class="hpm-nowplay" data-station="tv83" data-upnext="false"><?php echo hpm_now_playing( 'tv8.3' ); ?></div>
+							<div class="hpm-nowplay" data-station="tv83"><?php echo hpm_now_playing( 'tv8.3' ); ?></div>
 						</div>
 						<div class="station-now-play">
-							<h5><a href="/tv8">TV 8.4 (NHK)</a></h5>
-							<div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
+							<h5><a href="/tv8">TV 8.4 (NHK World)</a></h5>
+							<div class="hpm-nowplay" data-station="tv84"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
+						</div>
+						<div class="station-now-play">
+							<h5><a href="/tv8">TV 8.6 (ALL ARTS)</a></h5>
+							<div class="hpm-nowplay" data-station="tv86"><?php echo hpm_now_playing( 'tv8.6' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/news887">News 88.7</a></h5>
-							<div class="hpm-nowplay" data-station="news" data-upnext="false"><?php echo hpm_now_playing( 'news887' ); ?></div>
+							<div class="hpm-nowplay" data-station="news"><?php echo hpm_now_playing( 'news887' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/classical">Classical</a></h5>
-							<div class="hpm-nowplay" data-station="classical" data-upnext="false"><?php echo hpm_now_playing( 'classical' ); ?></div>
+							<div class="hpm-nowplay" data-station="classical"><?php echo hpm_now_playing( 'classical' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/thevibe/">The Vibe</a></h5>
-							<div class="hpm-nowplay" data-station="thevibe" data-upnext="false"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
+							<div class="hpm-nowplay" data-station="thevibe"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
 						</div>
 					</div>
 				</div>

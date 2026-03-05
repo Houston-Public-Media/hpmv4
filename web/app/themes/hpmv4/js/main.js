@@ -218,24 +218,6 @@ hpm.localBanners = () => {
 	}
 }
 
-// hpm.donateAB = () => {
-// 	let donateButton = document.querySelector('#top-listen > .btn-donate');
-// 	if (donateButton !== null) {
-// 		let rand = Math.floor(Math.random() * 20);
-// 		var option = "";
-// 		if ( rand > 9 ) {
-// 			donateButton.href = "https://donate.houstonpublicmedia.org/form-name-1?utm_source=donate-button-option-a&utm_content=donate-button-option-a&utm_campaign=website-donate-button-ab&utm_medium=donate-button";
-// 			option = "a";
-// 		} else {
-// 			donateButton.href = "https://donate.houstonpublicmedia.org/form-name-2?utm_source=donate-button-option-b&utm_content=donate-button-option-b&utm_campaign=website-donate-button-ab&utm_medium=donate-button";
-// 			option = "b";
-// 		}
-// 		donateButton.addEventListener('click', () => {
-// 			gtag('event', 'donate_button_test', {'event_label': 'donate_test_' + option,'event_category': 'click'});
-// 		});
-// 	}
-// }
-
 hpm.audioPlayers = () => {
 	let jsPlay = document.querySelectorAll('.js-player');
 	if (jsPlay !== null) {
@@ -255,181 +237,115 @@ hpm.audioPlayers = () => {
 
 hpm.stationIds = {
 	'news': {
-		'feed': 'https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/now?format=json&show_song=true',
-		'nowPlaying': {},
+		'station': {
+			'type': 'radio',
+			'id': 0
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	},
 	'classical': {
-		'feed': 'https://api.composer.nprstations.org/v1/widget/51913211e1c8408134a6d347/now?format=json&show_song=true',
-		'nowPlaying': {},
+		'station': {
+			'type': 'radio',
+			'id': 1
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	},
 	'thevibe': {
-		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/thevibe.json',
-		'nowPlaying': {},
+		'station': {
+			'type': 'radio',
+			'id': 2
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	},
 	'tv81': {
-		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.1.json',
-		'nowPlaying': {},
+		'station': {
+			'type': 'tv',
+			'id': 0
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	},
 	'tv82': {
-		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.2.json',
-		'nowPlaying': {},
+		'station': {
+			'type': 'tv',
+			'id': 1
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	},
 	'tv83': {
-		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.3.json',
-		'nowPlaying': {},
+		'station': {
+			'type': 'tv',
+			'id': 2
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	},
 	'tv84': {
-		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.4.json',
-		'nowPlaying': {},
+		'station': {
+			'type': 'tv',
+			'id': 3
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	},
 	'tv86': {
-		'feed': 'https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/nowplay/tv8.6.json',
-		'nowPlaying': {},
+		'station': {
+			'type': 'tv',
+			'id': 4
+		},
 		'refresh': false,
-		'next': false,
 		'obj': {}
 	}
 };
 hpm.npSearch = () => {
 	let nowPlay = document.querySelectorAll('.hpm-nowplay');
+	let checkNow = false;
 	Array.from(nowPlay).forEach((np) => {
 		let station = np.getAttribute('data-station');
 		if (station !== null ) {
+			checkNow = true;
 			hpm.stationIds[ station ].refresh = true;
-			hpm.stationIds[ station ].next = np.getAttribute('data-upnext');
 			hpm.stationIds[ station ].obj = np;
 		}
 	});
-	if ( document.body.classList.contains('page-template-page-listen') ) {
+	if ( checkNow ) {
 		hpm.npDataDownload();
 	}
 	timeOuts.push(setInterval('hpm.npDataDownload()',60000));
 };
 hpm.npDataDownload = () => {
-	for (let st in hpm.stationIds) {
-		if ( hpm.stationIds[st].refresh ) {
-			if ( hpm.stationIds[st].refresh ) {
-				fetch(hpm.stationIds[st].feed)
-					.then((response) => response.json())
-					.then((data) => {
-						hpm.npUpdateData(data,st);
-					});
-			}
-		}
-	}
-};
-hpm.npUpdateData = (data, station) => {
-	if (JSON.stringify(data) !== JSON.stringify(hpm.stationIds[station]['nowPlaying']) ) {
-		hpm.stationIds[station]['nowPlaying'] = data;
-		let hpmUpdate = new CustomEvent('hpm:npUpdate', {
-			'detail': {
-				'updated': station
+	fetch('https://cdn.houstonpublicmedia.org/assets/nowplay/all.json')
+		.then((response) => response.json())
+		.then((data) => {
+			for (let st in hpm.stationIds) {
+				if ( hpm.stationIds[st].refresh ) {
+					let output = '';
+					let current = data[ hpm.stationIds[st].station.type ][ hpm.stationIds[st].station.id ];
+					if ( hpm.stationIds[st].station.type === 'tv' ) {
+						output += '<h3>' + current.artist + '</h3>';
+					} else {
+						if ( current.artist === current.album ) {
+							output += '<h3>' + current.title + '</h3>';
+						} else {
+							output += '<h3>' + current.artist + ' - ' + current.title + "</h3>";
+						}
+					}
+					if (hpm.stationIds[st].obj === 'jpp') {
+						if ( st === jpp.prefStream ) {
+							jpp.elements.nowPlaying.innerHTML = '<div><p>Houston Public Media ' + st + '</p>' + output + '</div>';
+						}
+						document.getElementById('menu-station-' + st).innerHTML = '<p>Houston Public Media ' + st + '</p>' + output;
+					} else {
+						hpm.stationIds[st].obj.innerHTML = output;
+					}
+				}
 			}
 		});
-		document.dispatchEvent(hpmUpdate);
-	}
 };
-document.addEventListener('hpm:npUpdate', (event) => {
-	let station = event['detail']['updated'];
-	hpm.npUpdateHtml(hpm.stationIds[ station ]['obj'], station, hpm.stationIds[ station ]['next']);
-});
-hpm.npUpdateHtml = (object,station,next) => {
-	let output = '';
-	let data;
-	data = hpm.stationIds[station]['nowPlaying'];
-	if (next === 'true') {
-		output = '<h2>On Now</h2>';
-	}
-	if ( station.startsWith('tv') ) {
-		if (next === 'true') {
-			output += '<ul>';
-			for ( let al = 0; al < data['airlist'].length; al++ ) {
-				if (al === 1) {
-					output += '</ul><h2>Coming Up</h2><ul>'
-				}
-				let airStart = new Date(data['airlist'][al]['air-start']);
-				output += '<li>'+
-					airStart.toLocaleTimeString([],{hour:'numeric',minute: '2-digit' }) +
-					': ' + data['airlist'][al]['version']['series']['series-title'] + '</li>';
-			}
-			output += '</ul>';
-		} else {
-			output += '<h3>'+data['airlist'][0]['version']['series']['series-title']+'</h3>';
-		}
-	} else if ( station === 'thevibe' ) {
-		output += '<h3>'+data.artist+' - '+data.song+'</h3>';
-	} else {
-		if ( typeof data.onNow.song !== 'object') {
-			output += '<h3>'+data.onNow.program.name+'</h3>';
-		} else {
-			output += '<h3>';
-			if (data.onNow.song.composerName.length > 0) {
-				output += data.onNow.song.composerName + ' - ';
-			}
-			output += data.onNow.song.trackName.replace('&','&amp;') + "</h3>";
-		}
-		if (next === 'true') {
-			output += '<p>Up Next</p><ul><li>'+amPm(data.nextUp[0].start_time)+': '+data.nextUp[0].program.name+'</li></ul>';
-		}
-	}
-	if (object === 'jpp') {
-		if ( station === jpp.prefStream ) {
-			jpp.elements.nowPlaying.innerHTML = '<div><p>Houston Public Media ' + station + '</p>' + output + '</div>';
-			if ( station === 'news' ) {
-				jpp.elements.nowPlaying.innerHTML += '<div class="playing-next"><p>Coming up @ ' + amPm(data.nextUp[0].start_time) + '</p><h3>' + data.nextUp[0].program.name + '</h3></div>';
-			}
-		}
-		document.getElementById('menu-station-'+station).innerHTML = '<p>Houston Public Media ' + station + '</p>' + output;
-	}
-	if (object !== 'jpp') {
-		object.innerHTML = output;
-	}
-};
-
-// document.addEventListener("mouseup", (event) => {
-// 	let selection = document.getSelection();
-// 	let selectionText = document.getSelection ? document.getSelection().toString() : document.selection.createRange().toString();
-// 	if ( selectionText.length > 0 ) {
-// 		let copyLink = document.querySelector('#copyLink-container');
-// 		if ( copyLink !== null ) {
-// 			copyLink.remove();
-// 		}
-// 		let parent = selection.baseNode.parentElement;
-// 		parent.insertAdjacentHTML( 'beforebegin', '<div id="copyLink-container"><span id="copyLink" data-text="' + encodeURIComponent( selectionText ) + '" onclick="copyToClip()">Copy 🔗 to Clipboard</span></div>' );
-// 	}
-// });
-// let copyToClip = () => {
-// 	let copyLink = document.querySelector('#copyLink');
-// 	let copyLinkContain = document.querySelector('#copyLink-container');
-// 	let selectionText = copyLink.getAttribute('data-text');
-// 	let currentLink = window.location.href + "#:~:text=" + selectionText;
-// 	console.log('Copied to clipboard: ' + currentLink);
-// 	navigator.clipboard.writeText(currentLink);
-// 	copyLink.innerHTML = "Copied!";
-// 	copyLinkContain.classList.add('fadeout');
-// 	setTimeout(function(){ document.querySelector('#copyLink-container').remove() }, 5000);
-// }
 
 document.addEventListener('DOMContentLoaded', () => {
 	hpm.navHandlers();
@@ -439,7 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	hpm.npSearch();
 	hpm.audioPlayers();
 	hpm.localBanners();
-	// hpm.donateAB();
 	let navWrap = document.querySelector('.navigation-wrap');
 	if ( navWrap !== null ) {
 		let headerHeight = navWrap.getBoundingClientRect().height;
