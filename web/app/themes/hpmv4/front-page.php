@@ -8,73 +8,73 @@ get_header();
 $articles = hpm_homepage_articles();
 $indepthArtcle[] = null;
 $tras = null; ?>
-	<style>
-		#station-schedules {
-			background-color: var(--main-element-background);
-		}
-		#station-schedules h4 {
-			border-bottom: 0.125em solid var(--main-blue);
-			padding: 0.25em 1em;
-			margin: 0;
-			font: 400 2rem var(--hpm-font-condensed);
-		}
-		#station-schedules .station-now-play {
-			padding: 0.5em;
-			border-bottom: 0.125em solid var(--main-background);
-			min-height: 3.5rem;
-			display: grid;
-			grid-template-columns: 3fr 7fr;
-			align-items: center;
-			gap: 1rem;
-			border-bottom: dotted 2px #000 !important;
-		}
-		#station-schedules .station-now-play:last-child {
-			border: 0;
-		}
-		#station-schedules .station-now-play > * {
-			width: 100%;
-		}
-		#station-schedules .station-now-play h5 {
-			padding: 0;
-			margin: 0;
-			font-size: 1rem;
-			text-align: right;
-		}
-		#station-schedules .station-now-play h5 a {
-			font-weight: 700;
-			text-transform: uppercase;
-		}
-		#station-schedules .station-now-play h3 {
-			font-size: 0.825rem;
-			font-family: var(--hpm-font-condensed);
-			padding: 0 0.5rem 0 0;
-			margin: 0;
-			color: var(--main-headline);
-			text-decoration: none;
-		}
-		.text-light-gray a {
-			color:#237bbd;
-			font-weight: bold;
-			text-decoration: none;
-		}
-		.news-listing h4 a {
-			color:#237bbd;
-			font-size: 15px;
-			text-decoration: none;
-		}
-		.news-listing p {
-			font-size: 0.9em;
-		}
-		.news-main {
-			padding-bottom: 1rem;
-		}
-		.news-main p {
-			font-size: 0.9em;
-		}
-		.flex-row {
-			display: flex;
-			justify-content: center;
-		}
+    <style>
+        #station-schedules {
+            background-color: var(--main-element-background);
+        }
+        #station-schedules h4 {
+            border-bottom: 0.125em solid var(--main-blue);
+            padding: 0.25em 1em;
+            margin: 0;
+            font: 400 2rem var(--hpm-font-condensed);
+        }
+        #station-schedules .station-now-play {
+            padding: 0.5em;
+            border-bottom: 0.125em solid var(--main-background);
+            min-height: 3.5rem;
+            display: grid;
+            grid-template-columns: 3fr 7fr;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: dotted 2px #000 !important;
+        }
+        #station-schedules .station-now-play:last-child {
+            border: 0;
+        }
+        #station-schedules .station-now-play > * {
+            width: 100%;
+        }
+        #station-schedules .station-now-play h5 {
+            padding: 0;
+            margin: 0;
+            font-size: 1rem;
+            text-align: right;
+        }
+        #station-schedules .station-now-play h5 a {
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        #station-schedules .station-now-play h3 {
+            font-size: 0.825rem;
+            font-family: var(--hpm-font-condensed);
+            padding: 0 0.5rem 0 0;
+            margin: 0;
+            color: var(--main-headline);
+            text-decoration: none;
+        }
+        .text-light-gray a {
+            color:#237bbd;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .news-listing h4 a {
+            color:#237bbd;
+            font-size: 15px;
+            text-decoration: none;
+        }
+        .news-listing p {
+            font-size: 0.9em;
+        }
+        .news-main {
+            padding-bottom: 1rem;
+        }
+        .news-main p {
+            font-size: 0.9em;
+        }
+        .flex-row {
+            display: flex;
+            justify-content: center;
+        }
         .card {
             border-radius: 0;
             border-color: #237bbd;
@@ -97,253 +97,260 @@ $tras = null; ?>
         .card-body {
             padding-top: 5px;
         }
-		.page-banner {
-			display: grid;
-			justify-content: center;
-		}
-		@media screen and (min-width: 34rem) {
-			#station-schedules {
-				display: grid;
-				grid-template-columns: 50% 50%;
-				width: 100%;
-			}
-			#station-schedules h4 {
-				grid-column: 1/-1;
-			}
-			#station-schedules .station-now-play:nth-child(even) {
-				border-right: 1px solid #808080;
-			}
-			#hm-top.livestream-show {
-				display: none;
-			}
-		}
-		@media screen and (min-width: 52.5rem) {
-			#station-schedules {
-				display: block;
-				width: 100%;
-			}
-			#station-schedules .station-now-play:nth-child(even) {
-				border-right: 0;
-			}
-		}
+        .page-banner {
+            display: grid;
+            justify-content: center;
+        }
+        @media screen and (min-width: 34rem) {
+            #station-schedules {
+                display: grid;
+                grid-template-columns: 50% 50%;
+                width: 100%;
+            }
+            #station-schedules h4 {
+                grid-column: 1/-1;
+            }
+            #station-schedules .station-now-play:nth-child(even) {
+                border-right: 1px solid #808080;
+            }
+            #hm-top.livestream-show {
+                display: none;
+            }
+        }
+        @media screen and (min-width: 52.5rem) {
+            #station-schedules {
+                display: block;
+                width: 100%;
+            }
+            #station-schedules .station-now-play:nth-child(even) {
+                border-right: 0;
+            }
+        }
         .VerticalVideoCarousel__header{display: none !important;}
-	</style>
-	<div id="primary" class="content-area home-page">
-<?php
-	$t = time();
-	$offset = get_option( 'gmt_offset' ) * 3600;
-	$t = $t + $offset;
-	$now = getdate( $t );
-	$hm_air = HPM_Liveshows::liveshow_check();
-	$temp = HPM_Liveshows::get_all();
-	$talkshow = '';
-	$priority_start = 3;
-	$priority_end = 8;
-	$ytlive = get_option( 'hpm_ytlive_talkshows' );
-	if ( !empty( $hm_air[ $now['hours'] ] ) ) {
-		foreach ( $temp as $k => $v ) {
-			if ( $v['recurring'] == 1 &&
-					in_array( $now['wday'], $v['recurring_pattern'] ) &&
-					$v['start_hour'] <= $now['hours'] &&
-					$v['end_hour'] > $now['hours'] &&
-					!empty( $ytlive[ $k ]['id'] )
-			) {
-				$talkshow = $k;
-			}
-		}
-	}
-	if ( WP_ENV !== 'production' ) {
-		$streamtest = '';
-		if ( !empty( $_GET['streamtest'] ) ) {
-			$streamtest = esc_html( $_GET['streamtest'] );
-		}
-		if ( !empty( $streamtest ) ) {
-			$talkshow = $streamtest;
-		}
-	}
-	if ( !empty( $talkshow ) ) {
-		$priority_start = 1;
-		$priority_end = 6;
-	} ?>
-		<section class="section breaking-news container-fluid" style="padding-bottom: 0 !important;">
-			<div class="row">
-				<?php echo HPM_Liveshows::show_top_articles( $articles, $talkshow ); ?>
-			</div>
-		</section>
-		<section class="section short-news" style="padding-top: 0 !important;">
-			<ul class="list-none d-flex">
-			<?php
-				foreach ( $articles as $ka => $va ) {
-					$post = $va;
-					if ( $ka >= $priority_start && $ka < $priority_end ) { ?>
-						<li>
-							<h4 class="text-light-gray text-center" style="color:#237bbd;"><?php echo hpm_top_cat( $va->ID ); ?></h4>
-							<h3><a href="<?php echo get_the_permalink( $va->ID );?>"><?php echo get_the_title( $va->ID ); ?></a></h3>
-						</li>
-						<?php
-					}
-					if ( $ka == $priority_end ) {
-						$indepthArtcle = $post;
-					}
-				} ?>
-			</ul>
-		</section>
-		<!-- /.short-news -->
-		<section class="section ads-full">
-			<?php
-			if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
-				<!-- /9147267/HPM_Under_Nav -->
-				<div id='div-gpt-ad-1488818411584-0'>
-					<script>
-						googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
-					</script>
-				</div>
-				<?php
-			} ?>
-		</section>
-		<section class="section">
-			<div class="row">
-				<?php get_template_part("content", "indepth"); ?>
-				<aside class="col-lg-3 indepth-sidebar">
-					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
-				</aside>
-				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
-					<h2 class="title title-full">
-						<strong>Support Comes <span>From</span></strong>
-					</h2>
-					<div class="sidebar-ad">
-						<div id="div-gpt-ad-1394579228932-3">
-							<script>if (window.innerWidth < 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-3'); });}</script>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    </style>
+    <div id="primary" class="content-area home-page">
+        <?php
+        $t = time();
+        $offset = get_option( 'gmt_offset' ) * 3600;
+        $t = $t + $offset;
+        $now = getdate( $t );
+        $hm_air = HPM_Liveshows::liveshow_check();
+        $temp = HPM_Liveshows::get_all();
+        $talkshow = '';
+        $priority_start = 3;
+        $priority_end = 8;
+        $ytlive = get_option( 'hpm_ytlive_talkshows' );
+        if ( !empty( $hm_air[ $now['hours'] ] ) ) {
+            foreach ( $temp as $k => $v ) {
+                if (
+                    (
+                        ( $v['recurring'] == 1 && in_array( $now['wday'], $v['recurring_pattern'] ) ) ||
+                        ( $v['recurring'] == 0 && $v['once_date'] == date( 'Y-m-d', $now[0] ) )
+                    ) &&
+                    $v['start_hour'] <= $now['hours'] &&
+                    $v['end_hour'] > $now['hours'] &&
+                    !empty( $ytlive[ $k ]['id'] )
+                ) {
+                    $talkshow = $k;
+                }
+            }
+        }
+        if ( WP_ENV !== 'production' ) {
+            $streamtest = '';
+            if ( !empty( $_GET['streamtest'] ) ) {
+                $streamtest = esc_html( $_GET['streamtest'] );
+            }
+            if ( !empty( $streamtest ) ) {
+                $talkshow = $streamtest;
+            }
+        }
+        if ( !empty( $talkshow ) ) {
+            $priority_start = 1;
+            $priority_end = 6;
+        } ?>
+        <section class="section breaking-news container-fluid" style="padding-bottom: 0 !important;">
+            <div class="row">
+                <?php echo HPM_Liveshows::show_top_articles( $articles, $talkshow ); ?>
+            </div>
+        </section>
+        <section class="section short-news" style="padding-top: 0 !important;">
+            <ul class="list-none d-flex">
+                <?php
+                foreach ( $articles as $ka => $va ) {
+                    $post = $va;
+                    if ( $ka >= $priority_start && $ka < $priority_end ) { ?>
+                        <li>
+                            <h4 class="text-light-gray text-center" style="color:#237bbd;"><?php echo hpm_top_cat( $va->ID ); ?></h4>
+                            <h3><a href="<?php echo get_the_permalink( $va->ID );?>"><?php echo get_the_title( $va->ID ); ?></a></h3>
+                        </li>
+                        <?php
+                    }
+                    if ( $ka == $priority_end ) {
+                        $indepthArtcle = $post;
+                    }
+                } ?>
+            </ul>
+        </section>
+        <!-- /.short-news -->
+        <section class="section ads-full">
+            <?php
+            if ( !is_page_template( 'page-listen.php' ) && !is_page_template( 'page-blank.php' ) ) { ?>
+                <!-- /9147267/HPM_Under_Nav -->
+                <div id='div-gpt-ad-1488818411584-0'>
+                    <script>
+                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1488818411584-0'); });
+                    </script>
+                </div>
+                <?php
+            } ?>
+        </section>
+        <section class="section">
+            <div class="row">
+                <?php get_template_part("content", "indepth"); ?>
+                <aside class="col-lg-3 indepth-sidebar">
+                    <?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
+                </aside>
+                <div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
+                    <h2 class="title title-full">
+                        <strong>Support Comes <span>From</span></strong>
+                    </h2>
+                    <div class="sidebar-ad">
+                        <div id="div-gpt-ad-1394579228932-3">
+                            <script>if (window.innerWidth < 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-3'); });}</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="section ads-full text-center">
             <div class="page-banner">
                 <a href="/elections-2026/" title="2026 Election">
                     <picture>
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">
-                    <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
+                        <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
+                        <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
+                        <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">
+                        <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
                     </picture>
                 </a>
             </div>
         </section>
-		<section class="section news-list">
-			<div class="row">
-				<div class="col-sm-12 col-lg-8 news-list-left">
-					<div class="row">
-						<?php get_template_part( "content", "localnews" ); ?>
-					</div>
-				</div>
-				<div class="col-sm-12 col-lg-4 news-list-right most-view">
-					<h2 class="title title-full">
-						<strong>Most <span>Viewed</span></strong>
-					</h2>
-					<div class="news-links list-dashed">
-						<?php hpm_top_posts(); ?>
-					</div>
+        <section class="section news-list">
+            <div class="row">
+                <div class="col-sm-12 col-lg-8 news-list-left">
+                    <div class="row">
+                        <?php get_template_part( "content", "localnews" ); ?>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-4 news-list-right most-view">
+                    <h2 class="title title-full">
+                        <strong>Most <span>Viewed</span></strong>
+                    </h2>
+                    <div class="news-links list-dashed">
+                        <?php hpm_top_posts(); ?>
+                    </div>
                     <div style="padding-top: 15px;">
                         <h2 class="title title-full">
                             <strong>Contact Us</strong>
                         </h2>
                         <p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/newstips">Tell Houston Public Media</a></p>
                     </div>
-				</div>
-				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
-					<h2 class="title title-full">
-						<strong>Support Comes <span>From</span></strong>
-					</h2>
-					<div class="sidebar-ad">
-						<div id="div-gpt-ad-1394579228932-4">
-							<script>if (window.innerWidth < 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-4'); });}</script>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<?php get_template_part("content", "localshows") ?>
-<?php get_template_part("content", "verticalvideos") ?>
-		<section class="section news-list">
-			<div class="row">
-				<div class="col-sm-12 col-lg-8 news-list-left">
-					<div class="row">
-						<?php get_template_part("content", "localnewsbottom") ?>
-					</div>
-				</div>
-				<div class="col-sm-12 col-lg-4 news-list-right news-schedule">
-					<h2 class="title title-full">
-						<strong>ON-AIR <span>SCHEDULE</span></strong>
-					</h2>
-					<div id="station-schedules">
-						<div class="station-now-play">
-							<h5><a href="/tv8">TV 8</a></h5>
-							<div class="hpm-nowplay" data-station="tv81" data-upnext="false"><?php echo hpm_now_playing( 'tv8.1' ); ?></div>
-						</div>
-						<div class="station-now-play">
-							<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
-							<div class="hpm-nowplay" data-station="tv82" data-upnext="false"><?php echo hpm_now_playing( 'tv8.2' ); ?></div>
-						</div>
-						<div class="station-now-play">
-							<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
-							<div class="hpm-nowplay" data-station="tv83" data-upnext="false"><?php echo hpm_now_playing( 'tv8.3' ); ?></div>
-						</div>
-						<div class="station-now-play">
-							<h5><a href="/tv8">TV 8.4 (NHK)</a></h5>
-							<div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
-						</div>
-						<div class="station-now-play">
-							<h5><a href="/news887">News 88.7</a></h5>
-							<div class="hpm-nowplay" data-station="news" data-upnext="false"><?php echo hpm_now_playing( 'news887' ); ?></div>
-						</div>
-						<div class="station-now-play">
-							<h5><a href="/classical">Classical</a></h5>
-							<div class="hpm-nowplay" data-station="classical" data-upnext="false"><?php echo hpm_now_playing( 'classical' ); ?></div>
-						</div>
-						<div class="station-now-play">
-							<h5><a href="/thevibe/">The Vibe</a></h5>
-							<div class="hpm-nowplay" data-station="thevibe" data-upnext="false"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
-						</div>
-					</div>
-				</div>
-		</section>
-		<section class="section news-list news-list-full">
-			<div class="row">
-				<div class="col-sm-12 col-lg-8 news-list-left">
-					<h2 class="title">
-						<strong>News from <span>NPR</span></strong>
-					</h2>
-					<?php echo hpm_nprapi_output( 1002, 4 ); ?>
+                </div>
+                <div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
+                    <h2 class="title title-full">
+                        <strong>Support Comes <span>From</span></strong>
+                    </h2>
+                    <div class="sidebar-ad">
+                        <div id="div-gpt-ad-1394579228932-4">
+                            <script>if (window.innerWidth < 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-4'); });}</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <?php get_template_part("content", "localshows") ?>
+        <?php get_template_part("content", "verticalvideos") ?>
+        <section class="section news-list">
+            <div class="row">
+                <div class="col-sm-12 col-lg-8 news-list-left">
+                    <div class="row">
+                        <?php get_template_part("content", "localnewsbottom") ?>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-4 news-list-right news-schedule">
+                    <h2 class="title title-full">
+                        <strong>ON-AIR <span>SCHEDULE</span></strong>
+                    </h2>
+                    <div id="station-schedules">
+                        <div class="station-now-play">
+                            <h5><a href="/tv8">TV 8</a></h5>
+                            <div class="hpm-nowplay" data-station="tv81"><?php echo hpm_now_playing( 'tv8.1' ); ?></div>
+                        </div>
+                        <div class="station-now-play">
+                            <h5><a href="/tv8">TV 8.2 (Create)</a></h5>
+                            <div class="hpm-nowplay" data-station="tv82"><?php echo hpm_now_playing( 'tv8.2' ); ?></div>
+                        </div>
+                        <div class="station-now-play">
+                            <h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
+                            <div class="hpm-nowplay" data-station="tv83"><?php echo hpm_now_playing( 'tv8.3' ); ?></div>
+                        </div>
+                        <div class="station-now-play">
+                            <h5><a href="/tv8">TV 8.4 (NHK World)</a></h5>
+                            <div class="hpm-nowplay" data-station="tv84"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
+                        </div>
+                        <div class="station-now-play">
+                            <h5><a href="/tv8">TV 8.6 (ALL ARTS)</a></h5>
+                            <div class="hpm-nowplay" data-station="tv86"><?php echo hpm_now_playing( 'tv8.6' ); ?></div>
+                        </div>
+                        <div class="station-now-play">
+                            <h5><a href="/news887">News 88.7</a></h5>
+                            <div class="hpm-nowplay" data-station="news"><?php echo hpm_now_playing( 'news887' ); ?></div>
+                        </div>
+                        <div class="station-now-play">
+                            <h5><a href="/classical">Classical</a></h5>
+                            <div class="hpm-nowplay" data-station="classical"><?php echo hpm_now_playing( 'classical' ); ?></div>
+                        </div>
+                        <div class="station-now-play">
+                            <h5><a href="/thevibe/">The Vibe</a></h5>
+                            <div class="hpm-nowplay" data-station="thevibe"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section class="section news-list news-list-full">
+            <div class="row">
+                <div class="col-sm-12 col-lg-8 news-list-left">
+                    <h2 class="title">
+                        <strong>News from <span>NPR</span></strong>
+                    </h2>
+                    <?php echo hpm_nprapi_output( 1002, 4 ); ?>
                     <div style="text-align: right;"><a href="/npr-news" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all NPR stories</a></div>
-				</div>
-				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
-					<h2 class="title title-full">
-						<strong>Support Comes <span>From</span></strong>
-					</h2>
-					<div class="sidebar-ad">
-						<div id="div-gpt-ad-1394579228932-1">
-							<script>if (window.innerWidth >= 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });}</script>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 col-lg-8 news-list-left">
-					<div class="row">
-						<?php get_template_part( "content", "localnewsfooter" ); ?>
-					</div>
-				</div>
-				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
-					<div class="sidebar-ad">
-						<div id="div-gpt-ad-1394579228932-2">
-							<script>if (window.innerWidth >= 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); }); }</script>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+                </div>
+                <div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
+                    <h2 class="title title-full">
+                        <strong>Support Comes <span>From</span></strong>
+                    </h2>
+                    <div class="sidebar-ad">
+                        <div id="div-gpt-ad-1394579228932-1">
+                            <script>if (window.innerWidth >= 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });}</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-8 news-list-left">
+                    <div class="row">
+                        <?php get_template_part( "content", "localnewsfooter" ); ?>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
+                    <div class="sidebar-ad">
+                        <div id="div-gpt-ad-1394579228932-2">
+                            <script>if (window.innerWidth >= 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); }); }</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <?php get_template_part("content", "interactives"); ?>
-	</div>
+    </div>
 <?php get_footer(); ?>
