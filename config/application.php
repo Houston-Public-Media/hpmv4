@@ -164,6 +164,8 @@ Config::define( 'THREADS_USER_ID', env( 'THREADS_USER_ID' ) );
 Config::define( 'HPM_BC_PLAYLIST_ID', env( 'BC_PLAYLIST_ID' ) );
 Config::define( 'HPM_BC_ACCOUNT_ID', env( 'BC_ACCOUNT_ID' ) );
 Config::define( 'HPM_BC_POLICY_KEY', env( 'BC_POLICY_KEY' ) );
+Config::define( 'HPM_BC_PLAYER_ID', env( 'BC_PLAYER_ID' ) );
+Config::define( 'HPM_BC_PAGING_LIMIT', env( 'BC_PAGING_LIMIT' ) );
 
 /**
  * Debugging Settings
