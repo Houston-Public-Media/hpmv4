@@ -545,12 +545,7 @@ function hpm_getBrightcovePlaylist($accountId, $playlistId, $policyKey, $cache_t
         return [];
     }
     $transient_key = 'hpm_playlist_' . md5($accountId . '_' . $playlistId);
-//    $cached_videos = get_transient($transient_key);
-//    if ($cached_videos !== false) {
-//        return $cached_videos;
-//    }
-    $response = wp_remote_get(
-        "https://edge.api.brightcove.com/playback/v1/accounts/{$accountId}/playlists/{$playlistId}",
+    $response = wp_remote_get("https://edge.api.brightcove.com/playback/v1/accounts/{$accountId}/playlists/{$playlistId}",
         [
             'headers' => [
                 'Accept'       => "application/json;pk={$policyKey}",
@@ -559,7 +554,6 @@ function hpm_getBrightcovePlaylist($accountId, $playlistId, $policyKey, $cache_t
             'timeout' => 15,
         ]
     );
-
     if (is_wp_error($response)) {
         print_r($response->get_error_message());
         return [];
@@ -573,10 +567,42 @@ function hpm_getBrightcovePlaylist($accountId, $playlistId, $policyKey, $cache_t
 
 // Get Brightcove playlist to show on home page after local shows block ends here
 function hpm_enqueue_scripts() {
-    wp_enqueue_script('hls-js', 'https://cdn.jsdelivr.net/npm/hls.js@latest', [], null, true );
-    wp_enqueue_script('hpm-video-script', get_template_directory_uri() . '/js/hpm_bc_videos.js', ['hls-js'], null, true );
+    wp_enqueue_script('hls-js','https://cdn.jsdelivr.net/npm/hls.js@latest', [],null,true );
+    wp_enqueue_script('hpm-video-script',get_template_directory_uri() . '/js/hpm_bc_videos.js', ['hls-js'],null,true );
+    wp_localize_script('hpm-video-script','hpm_ajax', ['ajax_url' => admin_url('admin-ajax.php')] );
 }
 add_action('wp_enqueue_scripts', 'hpm_enqueue_scripts');
+add_action('wp_ajax_hpm_track_bc_event', 'hpm_track_bc_event');
+add_action('wp_ajax_nopriv_hpm_track_bc_event', 'hpm_track_bc_event');
+
+function hpm_track_bc_event() {
+    $video_id = sanitize_text_field($_POST['video_id'] ?? '');
+    $event = sanitize_text_field($_POST['event'] ?? '');
+    $account = HPM_BC_ACCOUNT_ID;
+
+    if (empty($video_id) || empty($event)) {
+        wp_send_json_error('Missing video_id or event');
+    }
+
+    $body = json_encode([
+        'event' => $event, //'video_view', //$event,
+        'video' => $video_id,//6388443555112, //$video_id,
+        'account' => $account
+    ]);
+
+    $response = wp_remote_post('https://metrics.brightcove.com/v2/tracker', [
+        'body'    => $body,
+        'headers' => ['Content-Type' => 'application/json'],
+        'timeout' => 10
+    ]);
+
+    if (is_wp_error($response)) {
+        wp_send_json_error($response->get_error_message());
+    } else {
+        //echo "tracked";
+        wp_send_json_success('Event tracked');
+    }
+}
 
 
 

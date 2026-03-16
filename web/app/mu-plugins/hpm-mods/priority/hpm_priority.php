@@ -47,7 +47,8 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			'type' => '',
 			'link' => ''
 		],
-		'talkshow' => []
+		'talkshow' => [],
+        'bcvideos' => []
 	];
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
@@ -102,6 +103,42 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			}
 		}
 	}
+
+    /*Brightcove Video Loop starts here*/
+    $bcVideos = hpm_getBrightcovePlaylist(HPM_BC_ACCOUNT_ID, HPM_BC_PLAYLIST_ID, HPM_BC_POLICY_KEY);
+
+    /*if ( !empty($bcVideos) && is_array($bcVideos) ) {
+
+        foreach ( $bcVideos as $video ) {
+
+            $video_url = '';
+
+            if ( !empty($video['sources']) ) {
+                foreach ( $video['sources'] as $source ) {
+
+                    if (
+                        isset($source['container']) &&
+                        $source['container'] === 'MP4' &&
+                        strpos($source['src'], 'https://') === 0
+                    ) {
+                        $video_url = $source['src'];
+                        break;
+                    }
+                }
+            }
+
+            $output['bcvideos'][] = [
+                'id'        => isset($video['id']) ? (string)$video['id'] : '',
+                'title'     => $video['name'] ?? '',
+                'duration'  => isset($video['duration']) ? (int)$video['duration'] : 0,
+                'poster'    => $video['poster'] ?? '',
+                'published' => $video['published_at'] ?? '',
+                'videoUrl'  => $video_url
+            ];
+        }
+    }*/
+    /*Brightcove Video Loop ends here*/
+    $output['bcvideos'][] = $bcVideos;
 	$hpm_breakingnews = get_option( 'hpm_breakingnews' );
 	if ( !empty( $hpm_breakingnews['homepage'] ) ) {
 		$ptime = get_the_time('U', $hpm_breakingnews['homepage'][0] ) + ( (int)$hpm_breakingnews['expirationdate'][0] * 3600 );
@@ -152,6 +189,7 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		}
 	}
 
+    //print_r($output['bcvideos']);
 	$weather = get_transient( 'hpm_weather_api' );
 	if ( empty( $weather ) ) {
 		hpm_weather();
@@ -159,7 +197,7 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	}
 
 	if ( $output ) {
-		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Priority Homepage Story List', 'hpm-priority' ), 'data' => [ 'articles' => $output['articles'], 'breaking' => $output['breaking'], 'talkshow' => $output['talkshow'], 'weather' => $weather, 'status' => 200 ] ] );
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Priority Homepage Story List', 'hpm-priority' ), 'data' => [ 'articles' => $output['articles'], 'breaking' => $output['breaking'], 'talkshow' => $output['talkshow'], 'weather' => $weather, 'bcvideos' => $output['bcvideos'], 'status' => 200 ] ] );
 	} else {
 		return new WP_Error( 'rest_api_sad', esc_html__( 'There has been an error, please try again later.', 'hpm-priority' ), [ 'status' => 500 ] );
 	}

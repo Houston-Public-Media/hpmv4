@@ -1,0 +1,101 @@
+<?php
+/*
+Template Name: HPM Shorts
+*/
+get_header();
+
+$perPage = HPM_BC_PAGING_LIMIT;
+$currentPage = isset($_GET['vpage']) ? max(1, intval($_GET['vpage'])) : 1;
+$offset = ($currentPage - 1) * $perPage;
+$apiUrl = "https://edge.api.brightcove.com/playback/v1/accounts/". HPM_BC_ACCOUNT_ID. "/videos?limit={$perPage}&offset={$offset}&sort=-created_at";
+$response = wp_remote_get($apiUrl, [
+    'headers' => [ 'Accept' => 'application/json;pk=' . HPM_BC_POLICY_KEY ]
+]);
+if (is_wp_error($response)) {
+    echo '<p>Error fetching videos: ' . esc_html($response->get_error_message()) . '</p>';
+    return;
+}
+
+$data = json_decode(wp_remote_retrieve_body($response), true);
+$videos = [];
+if (isset($data['videos']) && is_array($data['videos'])) {
+    $videos = $data['videos'];
+} elseif (is_array($data)) {
+    $videos = $data;
+}
+$hasNextPage = count($videos) === $perPage;
+?>
+<style>
+    .btn-primary{background-color: #237bbd; !important;}
+</style>
+
+    <script src="//players.brightcove.net/<?php echo esc_attr(HPM_BC_ACCOUNT_ID); ?>/<?php echo esc_attr(HPM_BC_PLAYER_ID); ?>_default/index.min.js"></script>
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <header class="page-header banner">
+                <h1 class="page-title"><?php echo get_the_title(); ?></h1>
+            </header>
+            <div class="page-content">
+                <?php the_content(); ?>
+            </div>
+            <?php if (!empty($videos)) : ?>
+                <section class="video-grid-section">
+                    <div class="row g-4">
+                        <?php foreach ($videos as $video) :
+                            $poster = $video['poster'] ?? $video['images']['poster']['src'] ?? '';
+                            $hlsSource = '';
+                            if (!empty($video['sources'])) {
+                                foreach ($video['sources'] as $source) {
+                                    if (isset($source['type']) && $source['type'] === 'application/x-mpegURL') {
+                                        $hlsSource = $source['src'];
+                                        break;
+                                    }
+                                }
+                            }
+                            ?>
+                            <div class="col-lg-3 col-md-6 col-12">
+                            <div class="card h-100" style="border:none;background:#237bbd;">
+                            <img src="<?php echo esc_url($poster); ?>"class="card-img-top thumbnail" data-src="<?php echo esc_url($hlsSource); ?>"style="cursor:pointer;">
+                            <video class="w-100 d-none" controls playsinline preload="none"></video>
+                                    <div class="card-body">
+                                        <h6 class="card-title mb-0 text-white">
+                                            <?php echo esc_html($video['name'] ?? ''); ?>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <nav class="mt-5 d-flex justify-content-between">
+                        <?php if ($currentPage > 1): ?>
+                            <a class="btn btn-primary" href="<?php echo esc_url(add_query_arg('vpage', $currentPage - 1)); ?>">
+                                Previous
+                            </a>
+                        <?php endif; ?>
+                        <?php if ($hasNextPage): ?>
+                            <a class="btn btn-primary ms-auto" href="<?php echo esc_url(add_query_arg('vpage', $currentPage + 1)); ?>">
+                                Next
+                            </a>
+                        <?php endif; ?>
+                    </nav>
+                </section>
+            <?php endif; ?>
+        </main>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            const thumbnails = document.querySelectorAll(".thumbnail");
+            thumbnails.forEach(function(img){
+                img.addEventListener("click", function(){
+                    const video = this.nextElementSibling;
+                    const src = this.dataset.src;
+                    if(!src) return;
+                    video.src = src;
+                    this.classList.add("d-none");
+                    video.classList.remove("d-none");
+                    video.play();
+                });
+            });
+        });
+    </script>
+<?php get_footer(); ?>
