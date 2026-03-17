@@ -1,4 +1,4 @@
-<script src="https://players.brightcove.net/<?php echo HPM_BC_ACCOUNT_ID; ?>/gZ3ifBJ4r8_default/index.min.js"></script>
+<script src="https://players.brightcove.net/<?php echo HPM_BC_ACCOUNT_ID . '/' . HPM_BC_PLAYER_ID; ?>_default/index.min.js"></script>
 <style>
     .carousel-control-next, .carousel-control-prev{ width: unset; }
 </style>
