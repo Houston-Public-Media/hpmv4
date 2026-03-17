@@ -142,11 +142,14 @@ $tras = null; ?>
 	$ytlive = get_option( 'hpm_ytlive_talkshows' );
 	if ( !empty( $hm_air[ $now['hours'] ] ) ) {
 		foreach ( $temp as $k => $v ) {
-			if ( $v['recurring'] == 1 &&
-					in_array( $now['wday'], $v['recurring_pattern'] ) &&
-					$v['start_hour'] <= $now['hours'] &&
-					$v['end_hour'] > $now['hours'] &&
-					!empty( $ytlive[ $k ]['id'] )
+			if (
+				(
+					( $v['recurring'] == 1 && in_array( $now['wday'], $v['recurring_pattern'] ) ) ||
+					( $v['recurring'] == 0 && $v['once_date'] == date( 'Y-m-d', $now[0] ) )
+				) &&
+				$v['start_hour'] <= $now['hours'] &&
+				$v['end_hour'] > $now['hours'] &&
+				!empty( $ytlive[ $k ]['id'] )
 			) {
 				$talkshow = $k;
 			}
@@ -264,8 +267,9 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-		<?php get_template_part("content", "localshows") ?>
-<?php get_template_part("content", "verticalvideos") ?>
+		<?php
+			get_template_part("content", "localshows");
+			get_template_part("content", "verticalvideos"); ?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
@@ -280,31 +284,35 @@ $tras = null; ?>
 					<div id="station-schedules">
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8</a></h5>
-							<div class="hpm-nowplay" data-station="tv81" data-upnext="false"><?php echo hpm_now_playing( 'tv8.1' ); ?></div>
+							<div class="hpm-nowplay" data-station="tv81"><?php echo hpm_now_playing( 'tv8.1' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8.2 (Create)</a></h5>
-							<div class="hpm-nowplay" data-station="tv82" data-upnext="false"><?php echo hpm_now_playing( 'tv8.2' ); ?></div>
+							<div class="hpm-nowplay" data-station="tv82"><?php echo hpm_now_playing( 'tv8.2' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/tv8">TV 8.3 (PBS Kids)</a></h5>
-							<div class="hpm-nowplay" data-station="tv83" data-upnext="false"><?php echo hpm_now_playing( 'tv8.3' ); ?></div>
+							<div class="hpm-nowplay" data-station="tv83"><?php echo hpm_now_playing( 'tv8.3' ); ?></div>
 						</div>
 						<div class="station-now-play">
-							<h5><a href="/tv8">TV 8.4 (NHK)</a></h5>
-							<div class="hpm-nowplay" data-station="tv84" data-upnext="false"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
+							<h5><a href="/tv8">TV 8.4 (NHK World)</a></h5>
+							<div class="hpm-nowplay" data-station="tv84"><?php echo hpm_now_playing( 'tv8.4' ); ?></div>
+						</div>
+						<div class="station-now-play">
+							<h5><a href="/tv8">TV 8.6 (ALL ARTS)</a></h5>
+							<div class="hpm-nowplay" data-station="tv86"><?php echo hpm_now_playing( 'tv8.6' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/news887">News 88.7</a></h5>
-							<div class="hpm-nowplay" data-station="news" data-upnext="false"><?php echo hpm_now_playing( 'news887' ); ?></div>
+							<div class="hpm-nowplay" data-station="news"><?php echo hpm_now_playing( 'news887' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/classical">Classical</a></h5>
-							<div class="hpm-nowplay" data-station="classical" data-upnext="false"><?php echo hpm_now_playing( 'classical' ); ?></div>
+							<div class="hpm-nowplay" data-station="classical"><?php echo hpm_now_playing( 'classical' ); ?></div>
 						</div>
 						<div class="station-now-play">
 							<h5><a href="/thevibe/">The Vibe</a></h5>
-							<div class="hpm-nowplay" data-station="thevibe" data-upnext="false"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
+							<div class="hpm-nowplay" data-station="thevibe"><?php echo hpm_now_playing( 'thevibe' ); ?></div>
 						</div>
 					</div>
 				</div>
