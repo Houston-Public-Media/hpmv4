@@ -3,7 +3,7 @@
     .carousel-control-next, .carousel-control-prev{ width: unset; }
 </style>
 <?php
-	$videos = hpm_getBrightcovePlaylist( '' );
+	$videos = hpm_brightcove_get( '' );
 	$perSlide = 4;
 	$total = count( $videos );
 	$slides = ceil( $total / $perSlide );
@@ -28,6 +28,7 @@
 									class="card-img-top thumbnail"
 									data-src="<?php echo esc_url( $video['source'] ); ?>"
 									data-video-id="<?php echo esc_attr( $video['id'] ); ?>"
+									alt="<?php echo esc_html( $video['name'] ) ?? ''; ?>"
 									style="cursor:pointer;">
 								<video class="w-100 d-none" controls playsinline preload="none"></video>
 								<div class="card-body">
