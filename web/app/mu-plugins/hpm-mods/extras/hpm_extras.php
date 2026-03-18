@@ -1716,7 +1716,7 @@ function hpm_weather(): string {
 
 
 // Get Brightcove playlist to show on home page after local shows block starts here
-function hpm_brightcove_get( $playlistId, $limit = 8, $offset = 0 ): array {
+function hpm_brightcove_get( $playlistId, $limit = HPM_BC_PAGING_LIMIT, $offset = 0 ): array {
 	$url = "https://edge.api.brightcove.com/playback/v1/accounts/" . HPM_BC_ACCOUNT_ID;
 	if ( empty( $playlistId ) ) {
 		$url .= "/videos";
