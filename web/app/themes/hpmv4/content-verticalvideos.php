@@ -28,6 +28,7 @@
 									class="card-img-top thumbnail"
 									data-src="<?php echo esc_url( $video['source'] ); ?>"
 									data-video-id="<?php echo esc_attr( $video['id'] ); ?>"
+									alt="<?php echo esc_html( $video['name'] ) ?? ''; ?>"
 									style="cursor:pointer;">
 								<video class="w-100 d-none" controls playsinline preload="none"></video>
 								<div class="card-body">
