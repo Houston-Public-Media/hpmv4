@@ -222,18 +222,18 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-        <section class="section ads-full text-center">
-            <div class="page-banner">
-                <a href="/elections-2026/" title="2026 Election">
-                    <picture>
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
-                    <source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">
-                    <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
-                    </picture>
-                </a>
-            </div>
-        </section>
+		<section class="section ads-full text-center">
+			<div class="page-banner">
+				<a href="/elections-2026/" title="2026 Election">
+					<picture>
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
+					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">
+					<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
+					</picture>
+				</a>
+			</div>
+		</section>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
@@ -248,12 +248,12 @@ $tras = null; ?>
 					<div class="news-links list-dashed">
 						<?php hpm_top_posts(); ?>
 					</div>
-                    <div style="padding-top: 15px;">
-                        <h2 class="title title-full">
-                            <strong>Contact Us</strong>
-                        </h2>
-                        <p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/newstips">Tell Houston Public Media</a></p>
-                    </div>
+					<div style="padding-top: 15px;">
+						<h2 class="title title-full">
+							<strong>Contact Us</strong>
+						</h2>
+						<p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/newstips">Tell Houston Public Media</a></p>
+					</div>
 				</div>
 				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
 					<h2 class="title title-full">
