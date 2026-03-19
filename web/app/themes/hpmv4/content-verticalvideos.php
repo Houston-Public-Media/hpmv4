@@ -1,4 +1,5 @@
-<script src="https://players.brightcove.net/<?php echo HPM_BC_ACCOUNT_ID . '/' . HPM_BC_PLAYER_ID; ?>_default/index.min.js"></script>
+<?php $options = get_option( 'hpm_videos' ); ?>
+<script src="https://players.brightcove.net/<?php echo $options['account_id'] . '/' . $options['player_id']; ?>_default/index.min.js"></script>
 <style>
     .carousel-control-next, .carousel-control-prev{ width: unset; }
 </style>
