@@ -1750,16 +1750,16 @@ function hpm_brightcove_get( $playlistId, $limit = HPM_BC_PAGING_LIMIT, $offset 
 	if ( !empty( $data['videos'] ) ) {
 		foreach ( $data['videos'] as $video ) {
 			$temp = [
-					'id' => $video['id'],
-					'poster' => $video['poster'],
-					'thumbnail' => $video['thumbnail'],
-					'name' => $video['name'],
-					'description' => $video['description'],
-					'duration' => $video['duration'],
-					'published' => $video['published_at'],
-					'source' => '',
-					'type' => '',
-					'playerUrl' => 'https://players.brightcove.net/' . HPM_BC_ACCOUNT_ID . '/' . HPM_BC_PLAYER_ID . '_default/index.html?videoId=' . $video['id']
+				'id' => (int)$video['id'],
+				'poster' => $video['poster'],
+				'thumbnail' => $video['thumbnail'],
+				'name' => $video['name'],
+				'description' => ( !empty( $video['description'] ) ? $video['description'] : '' ),
+				'duration' => $video['duration'],
+				'published' => $video['published_at'],
+				'source' => '',
+				'type' => '',
+				'playerUrl' => 'https://players.brightcove.net/' . HPM_BC_ACCOUNT_ID . '/' . HPM_BC_PLAYER_ID . '_default/index.html?videoId=' . $video['id']
 			];
 			$ext_ver = 0;
 			$hls = $mp4 = '';
