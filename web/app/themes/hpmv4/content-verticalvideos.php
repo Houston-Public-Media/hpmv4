@@ -1,9 +1,10 @@
-<script src="https://players.brightcove.net/<?php echo HPM_BC_ACCOUNT_ID . '/' . HPM_BC_PLAYER_ID; ?>_default/index.min.js"></script>
+<?php $options = get_option( 'hpm_videos' ); ?>
+<script src="https://players.brightcove.net/<?php echo $options['account_id'] . '/' . $options['player_id']; ?>_default/index.min.js"></script>
 <style>
     .carousel-control-next, .carousel-control-prev{ width: unset; }
 </style>
 <?php
-	$videos = HPM_Videos::get( HPM_BC_PLAYLIST_ID );
+	$videos = HPM_Videos::get( true );
 	$perSlide = 4;
 	$total = count( $videos );
 	$slides = ceil( $total / $perSlide );

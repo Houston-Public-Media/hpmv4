@@ -3,17 +3,17 @@
 Template Name: HPM Shorts
 */
 get_header();
-
-$perPage = HPM_BC_PAGING_LIMIT;
+$options = get_option( 'hpm_videos' );
+$perPage = $options['paging_limit'];
 $currentPage = isset( $_GET['vpage'] ) ? max( 1, intval( $_GET['vpage'] ) ) : 1;
 $offset = ( $currentPage - 1 ) * $perPage;
-$videos = HPM_Videos::get( '', $perPage, $offset );
+$videos = HPM_Videos::get( true, $perPage, $offset );
 $hasNextPage = count( $videos ) === $perPage; ?>
 <style>
 	.btn-primary{background-color: #237bbd; !important;}
 </style>
 
-	<script src="//players.brightcove.net/<?php echo esc_attr( HPM_BC_ACCOUNT_ID ); ?>/<?php echo esc_attr( HPM_BC_PLAYER_ID ); ?>_default/index.min.js"></script>
+	<script src="https://players.brightcove.net/<?php echo $options['account_id']; ?>/<?php echo $options['player_id']; ?>_default/index.min.js"></script>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 			<header class="page-header banner">
@@ -22,39 +22,40 @@ $hasNextPage = count( $videos ) === $perPage; ?>
 			<div class="page-content">
 				<?php the_content(); ?>
 			</div>
-			<?php if (!empty($videos)) : ?>
-				<section class="video-grid-section">
-					<div class="row g-4">
-						<?php foreach ($videos as $video) :
-							$poster = $video['poster'] ?? $video['thumbnail'] ?? '';
-							$hlsSource = $video['source']; ?>
-							<div class="col-lg-3 col-md-6 col-12">
-							<div class="card h-100" style="border:none;background:#237bbd;">
+			<?php if ( !empty( $videos ) ) { ?>
+			<section class="video-grid-section">
+				<div class="row g-4">
+				<?php foreach ($videos as $video) {
+					$poster = $video['poster'] ?? $video['thumbnail'] ?? '';
+					$hlsSource = $video['source']; ?>
+					<div class="col-lg-3 col-md-6 col-12">
+						<div class="card h-100" style="border:none;background:#237bbd;">
 							<img src="<?php echo esc_url( $poster ); ?>" class="card-img-top thumbnail" data-src="<?php echo esc_url( $hlsSource ); ?>" alt="<?php echo esc_html($video['name'] ?? ''); ?>" style="cursor:pointer;">
 							<video class="w-100 d-none" controls playsinline preload="none"></video>
-									<div class="card-body">
-										<h6 class="card-title mb-0 text-white">
-											<?php echo esc_html($video['name'] ?? ''); ?>
-										</h6>
-									</div>
-								</div>
+							<div class="card-body">
+								<h6 class="card-title mb-0 text-white">
+									<?php echo esc_html($video['name'] ?? ''); ?>
+								</h6>
 							</div>
-						<?php endforeach; ?>
+						</div>
 					</div>
-					<nav class="mt-5 d-flex justify-content-between">
-						<?php if ($currentPage > 1): ?>
-							<a class="btn btn-primary" href="<?php echo esc_url(add_query_arg('vpage', $currentPage - 1)); ?>">
-								Previous
-							</a>
-						<?php endif; ?>
-						<?php if ($hasNextPage): ?>
-							<a class="btn btn-primary ms-auto" href="<?php echo esc_url(add_query_arg('vpage', $currentPage + 1)); ?>">
-								Next
-							</a>
-						<?php endif; ?>
-					</nav>
-				</section>
-			<?php endif; ?>
+				<?php } ?>
+				</div>
+				<nav class="mt-5 d-flex justify-content-between">
+				<?php if ( $currentPage > 1 ) { ?>
+					<a class="btn btn-primary" href="<?php echo esc_url(add_query_arg('vpage', $currentPage - 1)); ?>">
+						Previous
+					</a>
+				<?php
+					}
+					if ( $hasNextPage ) { ?>
+					<a class="btn btn-primary ms-auto" href="<?php echo esc_url(add_query_arg('vpage', $currentPage + 1)); ?>">
+						Next
+					</a>
+				<?php } ?>
+				</nav>
+			</section>
+			<?php } ?>
 		</main>
 	</div>
 	<script>
