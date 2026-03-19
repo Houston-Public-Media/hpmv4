@@ -7,7 +7,7 @@ get_header();
 $perPage = HPM_BC_PAGING_LIMIT;
 $currentPage = isset( $_GET['vpage'] ) ? max( 1, intval( $_GET['vpage'] ) ) : 1;
 $offset = ( $currentPage - 1 ) * $perPage;
-$videos = hpm_brightcove_get( '', $perPage, $offset );
+$videos = HPM_Videos::get( '', $perPage, $offset );
 $hasNextPage = count( $videos ) === $perPage; ?>
 <style>
 	.btn-primary{background-color: #237bbd; !important;}

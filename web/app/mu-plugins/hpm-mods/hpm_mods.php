@@ -18,6 +18,7 @@ require( HPM_MODS_DIR . 'embeds/hpm_embeds.php' );
 require( HPM_MODS_DIR . 'social/social_post.php' );
 require( HPM_MODS_DIR . 'liveshows/hpm_liveshows.php' );
 require( HPM_MODS_DIR . 'scheduler/hpm_scheduler.php' );
+require( HPM_MODS_DIR . 'videos/hpm_videos.php' );
 
 register_activation_hook( __FILE__, 'hpm_mods_activate' );
 register_deactivation_hook( __FILE__, 'hpm_mods_deactivate' );
