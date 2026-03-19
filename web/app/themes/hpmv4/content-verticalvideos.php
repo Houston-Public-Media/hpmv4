@@ -3,7 +3,7 @@
     .carousel-control-next, .carousel-control-prev{ width: unset; }
 </style>
 <?php
-	$videos = hpm_brightcove_get( '' );
+	$videos = HPM_Videos::get( HPM_BC_PLAYLIST_ID );
 	$perSlide = 4;
 	$total = count( $videos );
 	$slides = ceil( $total / $perSlide );

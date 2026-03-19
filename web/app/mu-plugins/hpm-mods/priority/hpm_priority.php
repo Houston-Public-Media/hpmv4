@@ -48,8 +48,7 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			'link' => ''
 		],
 		'talkshow' => [],
-		'weather' => get_transient( 'hpm_weather_api' ),
-		'bcvideos' => hpm_brightcove_get( '' )
+		'weather' => get_transient( 'hpm_weather_api' )
 	];
 	$indepth_slot = (int)$hpm_priority['inDepthnumber'] - 1;
 	if ( !empty( $hpm_priority['homepage'] ) ) {
