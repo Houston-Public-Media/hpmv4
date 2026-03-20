@@ -105,7 +105,7 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 	}
 	$hpm_breakingnews = get_option( 'hpm_breakingnews' );
 	if ( !empty( $hpm_breakingnews['homepage'] ) ) {
-		$ptime = get_the_time('U', $hpm_breakingnews['homepage'][0] ) + ( (int)$hpm_breakingnews['expirationdate'][0] * 3600 );
+		$ptime = get_the_modified_time('U', $hpm_breakingnews['homepage'][0] ) + ( (int)$hpm_breakingnews['expirationdate'][0] * 3600 );
 		if ( $now[0] < $ptime && !empty( $hpm_breakingnews['type'] ) ) {
 			$output['breaking']['id'] = (int)$hpm_breakingnews['homepage'][0];
 			$output['breaking']['title'] = get_the_title( $hpm_breakingnews['homepage'][0] );

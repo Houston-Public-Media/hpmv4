@@ -1,5 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
+
 add_action( 'pre_update_option_hpm_breakingnews', function( $old_value, $value ) {
 	$number = $old_value['number'];
 	if ( $number !== count( $old_value['homepage'] ) ) {
@@ -15,6 +16,7 @@ add_action( 'pre_update_option_hpm_breakingnews', function( $old_value, $value )
 	}
 	return $old_value;
 }, 10, 2 );
+
 // create custom plugin settings menu
 add_action('admin_menu', 'hpm_breakingnews_create_menu');
 function hpm_breakingnews_create_menu(): void {
@@ -27,9 +29,11 @@ function hpm_breakingnews_create_menu(): void {
 function hpm_breakingnews_register_settings(): void {
 	register_setting( 'hpm-breakingnews-settings-group', 'hpm_breakingnews' );
 }
+
 add_action( 'update_option_hpm_breakingnews', function( $old_value, $value ) {
 	wp_cache_delete( 'hpm_breakingnews', 'options' );
 }, 10, 2 );
+
 function hpm_breakingnews_settings_page(): void {
 	$brekingnews = get_option( 'hpm_breakingnews', [
 		'homepage' => [ '' ],
