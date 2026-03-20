@@ -455,24 +455,17 @@ function hpm_breaking_banner(): string {
 	$t = $t + $offset;
 	$now = getdate( $t );
 	$output = '';
-	$hpm_priority = get_option( 'hpm_priority' );
 	$hpm_breakingnews = get_option( 'hpm_breakingnews' );
 	if ( !empty( $hpm_breakingnews['homepage'] ) ) {
-		$publish = get_the_date( 'U', $hpm_breakingnews['homepage'][0]);
-		
-		$date = date( 'U', $publish + (int)$hpm_breakingnews['expirationdate'][0] * 3600);
-		
-		$ptime = get_the_time('U', $hpm_breakingnews['homepage'][0]);
+		$ptime = get_the_modified_time('U', $hpm_breakingnews['homepage'][0]);
 		$diff = $now[0] - $ptime;
 		$expirationtime = (int)$hpm_breakingnews['expirationdate'][0] * 3600;
 		$newstype = $hpm_breakingnews['type'];
-		if ( $newstype != "" ) {
+		if ( !empty( $newstype ) && $diff < $expirationtime ) {
 			$newsclasstype = ( $newstype == "Breaking News" ? "breakingnews" : "developingstory" );
 			$newclassheading = ( $newstype == "Breaking News" ? '<span class="breakingnews-header" style="background-color: #ee1812;"><strong>Breaking News</strong></span>' : '<span class="developingstory-header"><strong>Developing Story</strong></span>' );
-			if ( $diff < $expirationtime ) {
-				$output .= '<div id="hm-top" class="'.$newsclasstype.'"><p>'.$newclassheading.' <a href="' . get_the_permalink( $hpm_breakingnews['homepage'][0] ) . '">' . get_the_title( $hpm_breakingnews['homepage'][0] ) . '</a></p></div>';
-				return $output;
-			}
+			$output .= '<div id="hm-top" class="'.$newsclasstype.'"><p>'.$newclassheading.' <a href="' . get_the_permalink( $hpm_breakingnews['homepage'][0] ) . '">' . get_the_title( $hpm_breakingnews['homepage'][0] ) . '</a></p></div>';
+			return $output;
 		}
 	}
 	return $output;
