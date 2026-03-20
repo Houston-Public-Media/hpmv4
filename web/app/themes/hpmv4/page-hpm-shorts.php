@@ -2,8 +2,6 @@
 /*
 Template Name: HPM Shorts
 */
-global $wp_query;
-$obj = $wp_query->get_queried_object();
 get_header();
 $options = get_option( 'hpm_videos' );
 $perPage = $options['paging_limit'];
@@ -24,7 +22,7 @@ $hasNextPage = count( $videos ) === $perPage; ?>
 			<div class="page-content">
 				<?php the_content(); ?>
 			</div>
-			<?php if ( !empty( $videos ) && empty( $obj->post_password ) ) { ?>
+			<?php if ( !empty( $videos ) && post_password_required() === false ) { ?>
 			<section class="video-grid-section">
 				<div class="row g-4">
 				<?php foreach ($videos as $video) {
