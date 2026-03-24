@@ -48,7 +48,10 @@ class HPM_Videos {
 			'paging_limit' => 8
 		] );
 		if ( empty( $options['account_id'] ) ) {
-			return [];
+			return [
+				'videos' => [],
+				'count' => 0
+			];
 		}
 		$url = "https://edge.api.brightcove.com/playback/v1/accounts/" . $options['account_id'];
 		if ( $playlist === false ) {
@@ -63,7 +66,10 @@ class HPM_Videos {
 		if ( !empty( $videos ) ) {
 			return $videos;
 		} else {
-			$videos = [];
+			$videos = [
+				'videos' => [],
+				'count' => 0
+			];
 		}
 		$response = wp_remote_get( $url,
 			[
@@ -117,7 +123,12 @@ class HPM_Videos {
 				} else {
 					continue;
 				}
-				$videos[] = $temp;
+				$videos['videos'][] = $temp;
+			}
+			if ( empty( $data['count'] ) ) {
+				$videos['count'] = count( $videos['videos'] );
+			} else {
+				$videos['count'] = $data['count'];
 			}
 		}
 		set_transient( $transient_key, $videos, 300 );
@@ -133,7 +144,8 @@ class HPM_Videos {
 			$playlist = false;
 		}
 		$videos = $this->get( $playlist, $request['limit'], $request['offset'] );
-		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( $message, 'hpm-videos' ), 'data' => [ 'videos' => $videos, 'status' => 200 ] ] );
+		$videos['status'] = 200;
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( $message, 'hpm-videos' ), 'data' => $videos ] );
 	}
 
 	function create_menu(): void {

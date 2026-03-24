@@ -1,15 +1,14 @@
-<?php $options = get_option( 'hpm_videos' ); ?>
-<script src="https://players.brightcove.net/<?php echo $options['account_id'] . '/' . $options['player_id']; ?>_default/index.min.js"></script>
-<style>
-    .carousel-control-next, .carousel-control-prev{ width: unset; }
-</style>
 <?php
 	$videos = HPM_Videos::get( true );
 	$perSlide = 4;
-	$total = count( $videos );
+	$total = $videos['count'];
 	$slides = ceil( $total / $perSlide );
-	if ( !empty( $videos ) ) { ?>
+	if ( !empty( $videos['videos'] ) ) { ?>
 	<section class="section radio-list">
+		<script src="https://players.brightcove.net/<?php echo $options['account_id'] . '/' . $options['player_id']; ?>_default/index.min.js"></script>
+		<style>
+			.carousel-control-next, .carousel-control-prev{ width: unset; }
+		</style>
 		<h2 class="title mb-4">
 			<strong>HPM <span>Shorts</span></strong>
 		</h2>
@@ -20,7 +19,7 @@
 					<div class="row g-4">
 					<?php
 						$start = $i * $perSlide;
-						$chunk = array_slice( $videos, $start, $perSlide );
+						$chunk = array_slice( $videos['videos'], $start, $perSlide );
 						foreach ( $chunk as $video ) { ?>
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="card h-100" style="border:none; background:#237bbd;">
@@ -51,5 +50,21 @@
 				<span class="carousel-control-next-icon"></span>
 			</button>
 		</div>
+		<script>
+			document.addEventListener("DOMContentLoaded", function(){
+				const thumbnails = document.querySelectorAll(".thumbnail");
+				thumbnails.forEach(function(img){
+					img.addEventListener("click", function(){
+						const video = this.nextElementSibling;
+						const src = this.dataset.src;
+						if(!src) return;
+						video.src = src;
+						this.classList.add("d-none");
+						video.classList.remove("d-none");
+						video.play();
+					});
+				});
+			});
+		</script>
 	</section>
 <?php } ?>

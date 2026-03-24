@@ -8,7 +8,7 @@ $perPage = $options['paging_limit'];
 $currentPage = isset( $_GET['vpage'] ) ? max( 1, intval( $_GET['vpage'] ) ) : 1;
 $offset = ( $currentPage - 1 ) * $perPage;
 $videos = HPM_Videos::get( false, $perPage, $offset );
-$hasNextPage = count( $videos ) === $perPage; ?>
+$hasNextPage = ( $offset + $perPage ) < $videos['count']; ?>
 <style>
 	.btn-primary{background-color: #237bbd; !important;}
 </style>
@@ -22,10 +22,10 @@ $hasNextPage = count( $videos ) === $perPage; ?>
 			<div class="page-content">
 				<?php the_content(); ?>
 			</div>
-			<?php if ( !empty( $videos ) && post_password_required() === false ) { ?>
+			<?php if ( !empty( $videos['videos'] ) && post_password_required() === false ) { ?>
 			<section class="video-grid-section">
 				<div class="row g-4">
-				<?php foreach ($videos as $video) {
+				<?php foreach ( $videos['videos'] as $video ) {
 					$poster = $video['poster'] ?? $video['thumbnail'] ?? '';
 					$hlsSource = $video['source']; ?>
 					<div class="col-lg-3 col-md-6 col-12">
