@@ -59,19 +59,28 @@ $hasNextPage = ( $offset + $perPage ) < $videos['count']; ?>
 		</main>
 	</div>
 	<script>
-		document.addEventListener("DOMContentLoaded", function(){
-			const thumbnails = document.querySelectorAll(".thumbnail");
-			thumbnails.forEach(function(img){
-				img.addEventListener("click", function(){
-					const video = this.nextElementSibling;
-					const src = this.dataset.src;
-					if(!src) return;
-					video.src = src;
-					this.classList.add("d-none");
-					video.classList.remove("d-none");
-					video.play();
-				});
-			});
-		});
+        document.addEventListener("DOMContentLoaded", function(){
+            const thumbnails = document.querySelectorAll(".thumbnail");
+            thumbnails.forEach(function(img){
+                img.addEventListener("click", function(){
+                    document.querySelectorAll("video").forEach(function(v){
+                        v.pause();
+                        v.currentTime = 0;
+                        v.classList.add("d-none");
+                        if (v.previousElementSibling) {
+                            v.previousElementSibling.classList.remove("d-none");
+                        }
+                    });
+                    const video = this.nextElementSibling;
+                    const src = this.dataset.src;
+                    if(!src) return;
+                    video.src = src;
+                    this.classList.add("d-none");
+                    video.classList.remove("d-none");
+                    video.play();
+                });
+            });
+        });
+    </script>
 	</script>
 <?php get_footer(); ?>
