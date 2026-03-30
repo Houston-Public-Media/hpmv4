@@ -179,7 +179,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-2026-primary-election-ballot-in-harris-county-and-texas">NASA's Latest News & Events</a>
+                                        <a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/2026-news-releases/">NASA's Latest News & Events</a>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +268,7 @@ if ( $cat->have_posts() ) {
                 </div>
             </section>
             <?php
-            echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/politics/election-2026/page/" ); ?>
+            echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/nasa/space/page/" ); ?>
             <p>&nbsp;</p>
         </main>
     </div>
