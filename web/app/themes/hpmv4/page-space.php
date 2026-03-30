@@ -175,7 +175,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/missions/artemis/artemis-2/nasa-sets-coverage-for-artemis-ii-moon-mission/">Nasa's Artemis II Coverage</a>
+                                        <a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/missions/artemis/artemis-2/nasa-sets-coverage-for-artemis-ii-moon-mission/">NASA's Artemis II Coverage</a>
                                     </div>
                                 </div>
                             </div>
