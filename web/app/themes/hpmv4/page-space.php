@@ -133,6 +133,9 @@ $latestArticles = hpm_ShowElectionOtherStories( [33340, 59555] );
 </style>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
+            <header class="page-header banner">
+                <h1 class="page-title"><?php echo get_the_title(); ?></h1>
+            </header>
 <?PHP
 	while ( have_posts() ) {
     	the_post();
