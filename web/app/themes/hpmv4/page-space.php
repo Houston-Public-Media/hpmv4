@@ -189,7 +189,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/gallery/artemis-ii-astronauts/">Artimiss II Astronauts</a>
+                                        <a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/gallery/artemis-ii-astronauts/">Artemis II Astronauts</a>
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +203,7 @@ if ( $cat->have_posts() ) {
                         </div>
                         <div class="row elections-main">
                             <div class="col-sm-12">
-                                <h2 class="title"> <strong><span>Latest ARTIMISS II </span> Coverage</strong> </h2>
+                                <h2 class="title"> <strong><span>Space </span> Coverage</strong> </h2>
                                 <div class="row">
                                     <?php echo hpm_ShowElectionTopThreeArticles([33340, 59555]); ?>
                                 </div>
@@ -212,7 +212,7 @@ if ( $cat->have_posts() ) {
 
                         <div class="row section" style="padding-top: 25px;">
                             <div class="col-sm-12">
-                                <h2 class="title"> <strong><span>ARTIMISS II </span> Live</strong> </h2>
+                                <h2 class="title"> <strong><span>ARTEMIS II </span> Live</strong> </h2>
                                 <div class="iframe-embed">
 
                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/Tf_UjBMIzNo?si=1PSrPyfdjfygJYpn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
