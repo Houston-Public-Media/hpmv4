@@ -489,10 +489,12 @@ function analyticsPull() {
 	return get_option( 'hpm_most_popular' );
 }
 
-add_action( 'hpm_analytics', 'analyticsPull_update' );
-$timestamp = wp_next_scheduled( 'hpm_analytics' );
-if ( empty( $timestamp ) ) {
-	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
+if ( WP_ENV == 'production' ) {
+	add_action( 'hpm_analytics', 'analyticsPull_update' );
+	$timestamp = wp_next_scheduled( 'hpm_analytics' );
+	if ( empty( $timestamp ) ) {
+		wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
+	}
 }
 
 function get_post_id_by_slug( $slug ): ?int {
