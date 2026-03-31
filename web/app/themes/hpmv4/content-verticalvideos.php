@@ -1,4 +1,5 @@
 <?php
+	$options = get_option( 'hpm_videos' );
 	$videos = HPM_Videos::get( true );
 	$perSlide = 4;
 	$total = $videos['count'];

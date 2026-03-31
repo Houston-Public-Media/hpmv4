@@ -226,6 +226,9 @@ body {
 	min-height: 100vh;
 	accent-color: var(--main-red);
 }
+* {
+	scroll-margin-top: 7.5rem;
+}
 input[type=search] {
 	-webkit-appearance: none;
 }
