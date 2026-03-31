@@ -1,0 +1,247 @@
+<?php
+/*
+Template Name: Space Landing Page
+*/
+get_header();
+$latestArticles = hpm_ShowElectionOtherStories( [ 33340, 59555 ] ); ?>
+<style>
+	.btncountdown {
+		border: solid .1em #222054;
+		padding: .1em;
+		background: #237bbd content-box;
+		margin: 0 auto 10px;
+		width: 100%;
+		height: 4.2em;
+		color: #fff;
+		font: 700 1.6em / 1.6em "watch-mn", sans serif;
+		text-align: center;
+		font-weight: bold;
+		font-family: "watch-mn" !important;
+	}
+	.card {
+		border-radius: 0;
+		border-color: #237bbd;
+	}
+	.card-header {
+		background-color: #237bbd;
+		color: #fff;
+		font-weight: bold;
+		border-radius: 0;
+		text-align: center;
+	}
+	.card-header:first-child {
+		border-radius: 0;
+	}
+	.demspan {
+		color:#0044c9;
+		font-weight: bold;
+	}
+	.repspan {
+		color: #C8102E;
+		font-weight: bold;
+	}
+	.latest-news-img {
+		padding: 0;
+		height: 100%;
+		max-height: 350px;
+		position: relative;
+	}
+	.elections-main .latest-news-img {
+		min-height: 340px;
+	}
+	.electionnews-listing {
+		padding: 0;
+		list-style: none;
+	}
+	.electionnews-listing ul {
+		list-style: none;
+	}
+	.electionnews-listing li {
+		border-bottom: solid 1px var(--black);
+		padding: 1rem 0 1rem 0;
+	}
+	.electionnews-listing li:first-child {
+		padding-right: 1rem;
+	}
+	.electionnews-listing a {
+		text-decoration: none;
+		color:#404040;
+	}
+	.elections-main h1 a {
+		text-decoration: none;
+		padding-top: 10px;
+	}
+	.sup {
+		vertical-align: super;
+	}
+	.sub {
+		vertical-align: sub;
+	}
+	.flex-row {
+		display: flex;
+		flex: 1;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	.flex-col {
+		padding: 12px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+		flex-direction: column;
+		color: white;
+		box-sizing:border-box;
+		max-height: 24px;
+	}
+	section.section {
+		padding: 1rem;
+	}
+	.title::before {
+		left: unset;
+		width: 95%;
+	}
+</style>
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		<header class="page-header banner">
+			<h1 class="page-title"><?php echo get_the_title(); ?></h1>
+		</header>
+<?php
+	while ( have_posts() ) {
+		the_post();
+		the_content();
+	}
+	$other_ep_args = [
+		'cat' => [ 33340, 59555 ],
+		'tax_query' => [[
+			'taxonomy' => 'category',
+			'field'    => 'term_id',
+			'terms'    => [ 64721, 64814, 64880, 58, 43214, 13764 ],
+			'operator' => 'NOT IN',
+		]],
+		'post__not_in' => [ 541368 ],
+		'orderby' => 'date',
+		'order' => 'DESC',
+		'posts_per_page' => 1,
+		'offset' => 4,
+		'ignore_sticky_posts' => 1,
+		'post_status' => 'publish',
+		'post_type' => 'post'
+	];
+	$cat = new WP_Query( $other_ep_args ); ?>
+		<section class="section">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="card mb-3">
+								<div class="card-header">
+									<a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/missions/artemis/artemis-2/nasa-sets-coverage-for-artemis-ii-moon-mission/">NASA's Artemis II Coverage</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="card mb-3">
+								<div class="card-header">
+									<a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/2026-news-releases/">NASA's Latest News &amp; Events</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="card mb-3">
+								<div class="card-header">
+									<a style="text-decoration: none; color:#fff;" href="https://www.nasa.gov/gallery/artemis-ii-astronauts/">Artemis II Astronauts</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="card mb-3">
+								<div class="card-header">
+									<a style="text-decoration: none; color:#fff;" href="https://science.nasa.gov/moon/">The Moon Mission</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row elections-main">
+						<div class="col-sm-12">
+							<h2 class="title"> <strong><span>Space</span> Coverage</strong></h2>
+							<div class="row">
+								<?php echo hpm_ShowElectionTopThreeArticles( [ 33340, 59555 ] ); ?>
+							</div>
+						</div>
+					</div>
+					<div class="row section" style="padding-top: 25px;">
+						<div class="col-sm-12">
+							<h2 class="title"> <strong><span>ARTEMIS II</span> Live</strong></h2>
+							<div class="iframe-embed">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/Tf_UjBMIzNo?si=1PSrPyfdjfygJYpn" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							</div>
+						</div>
+					</div>
+					<div class="row section" style="padding-top: 25px;">
+						<h2 class="title"><strong><span>Other</span> Stories</strong></h2>
+					<?php
+						foreach ( $latestArticles as $eka => $eva ) {
+							$post = $eva;
+							if ( $eka > 0 && $eka < 4 ) { ?>
+						<div class="col-sm-6 col-md-4 mb-4">
+							<div class="episodes-content">
+								<?php if ( has_post_thumbnail() ) { ?>
+									<a class="post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
+								<?php } ?>
+								<div class="content-wrapper">
+									<h4 class="content-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h4>
+									<p><?php echo get_excerpt_by_id_ShowPages( get_the_ID() ); ?></p>
+								</div>
+							</div>
+						</div>
+						<?php
+							}
+						} ?>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="section">
+			<div class="row">
+				<?php
+					foreach ( $latestArticles as $eka => $eva ) {
+						$post = $eva;
+						$gpt_ad_id = 1;
+						if ( $eka > 4 ) {
+							if ( $eka == 7 || $eka == 12 ) { ?>
+				<div class="col-sm-6 col-md-4 mb-4">
+					<div class="sidebar-ad">
+						<h4>Support Comes From</h4>
+						<div id="div-gpt-ad-1394579228932-<?php echo $gpt_ad_id; ?>">
+							<script type='text/javascript'>
+								googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-<?php echo $gpt_ad_id; ?>'); });
+							</script>
+						</div>
+					</div>
+				</div>
+				<?php
+								$gpt_ad_id++;
+							} ?>
+				<div class="col-sm-6 col-md-4 mb-4">
+					<div class="episodes-content">
+						<?php if ( has_post_thumbnail() ) { ?>
+							<a class="post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'thumbnail' ) ?></a>
+						<?php } ?>
+						<div class="content-wrapper">
+							<h4 class="content-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h4>
+							<p><?php echo get_excerpt_by_id_ShowPages( get_the_ID() ); ?></p>
+						</div>
+					</div>
+				</div>
+				<?php
+						}
+					} ?>
+			</div>
+		</section>
+		<?php echo hpm_custom_pagination( $cat->max_num_pages, 4, "/topics/news/nasa/space/page/" ); ?>
+		<p>&nbsp;</p>
+	</main>
+</div>
+<?php get_footer(); ?>
