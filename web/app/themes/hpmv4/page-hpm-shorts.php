@@ -9,10 +9,9 @@ $currentPage = isset( $_GET['vpage'] ) ? max( 1, intval( $_GET['vpage'] ) ) : 1;
 $offset = ( $currentPage - 1 ) * $perPage;
 $videos = HPM_Videos::get( false, $perPage, $offset );
 $hasNextPage = ( $offset + $perPage ) < $videos['count']; ?>
-<style>
-	.btn-primary{background-color: #237bbd; !important;}
-</style>
-
+	<style>
+		.btn-primary{ background-color: #237bbd; !important; }
+	</style>
 	<script src="https://players.brightcove.net/<?php echo $options['account_id']; ?>/<?php echo $options['player_id']; ?>_default/index.min.js"></script>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
@@ -59,28 +58,27 @@ $hasNextPage = ( $offset + $perPage ) < $videos['count']; ?>
 		</main>
 	</div>
 	<script>
-        document.addEventListener("DOMContentLoaded", function(){
-            const thumbnails = document.querySelectorAll(".thumbnail");
-            thumbnails.forEach(function(img){
-                img.addEventListener("click", function(){
-                    document.querySelectorAll("video").forEach(function(v){
-                        v.pause();
-                        v.currentTime = 0;
-                        v.classList.add("d-none");
-                        if (v.previousElementSibling) {
-                            v.previousElementSibling.classList.remove("d-none");
-                        }
-                    });
-                    const video = this.nextElementSibling;
-                    const src = this.dataset.src;
-                    if(!src) return;
-                    video.src = src;
-                    this.classList.add("d-none");
-                    video.classList.remove("d-none");
-                    video.play();
-                });
-            });
-        });
-    </script>
+		document.addEventListener("DOMContentLoaded", function(){
+			const thumbnails = document.querySelectorAll(".thumbnail");
+			thumbnails.forEach(function(img){
+				img.addEventListener("click", function(){
+					document.querySelectorAll("video").forEach(function(v){
+						v.pause();
+						v.currentTime = 0;
+						v.classList.add("d-none");
+						if (v.previousElementSibling) {
+							v.previousElementSibling.classList.remove("d-none");
+						}
+					});
+					const video = this.nextElementSibling;
+					const src = this.dataset.src;
+					if (!src) return;
+					video.src = src;
+					this.classList.add("d-none");
+					video.classList.remove("d-none");
+					video.play();
+				});
+			});
+		});
 	</script>
 <?php get_footer(); ?>
