@@ -84,7 +84,8 @@ $tras = null; ?>
             color:#fff;
             font-weight: bold;
             border-radius: 0;
-            min-height: 56px;
+            min-height: 40px;
+            text-align: center;
         }
         .card-header:first-child {
             border-radius: 0;
@@ -208,6 +209,7 @@ $tras = null; ?>
 			<div class="row">
 				<?php get_template_part("content", "indepth"); ?>
 				<aside class="col-lg-3 indepth-sidebar">
+
 					<?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
 				</aside>
 				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
@@ -223,16 +225,28 @@ $tras = null; ?>
 			</div>
 		</section>
 		<section class="section ads-full text-center">
-			<div class="page-banner">
-				<a href="/elections-2026/" title="2026 Election">
-					<picture>
-					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
-					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
-					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">
-					<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
-					</picture>
-				</a>
-			</div>
+
+            <div class="page-banner">
+                <a href="/space/" title="Artemis II Moon MIssion">
+                    <picture>
+                        <source srcset="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Mobile.png.webp" type="image/webp" media="(max-width: 34em)">
+                        <source srcset="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Tablet.png.webp" type="image/webp" media="(max-width: 52.5em)">
+                        <source srcset="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Desktop.png.webp" type="image/webp">
+                        <img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Desktop.png" alt="Artemis II Moon MIssion">
+                    </picture>
+                </a>
+            </div>
+
+<!--			<div class="page-banner">-->
+<!--				<a href="/elections-2026/" title="2026 Election">-->
+<!--					<picture>-->
+<!--					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">-->
+<!--					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">-->
+<!--					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">-->
+<!--					<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">-->
+<!--					</picture>-->
+<!--				</a>-->
+<!--			</div>-->
 		</section>
 		<section class="section news-list">
 			<div class="row">
