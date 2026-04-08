@@ -49,7 +49,7 @@
 		"roots/wordpress": "6.9.4",
 		"roots/wp-config": "1.0.0",
 		"google/apiclient": "^2.0",
-		"google/analytics-data": "^0.9.4",
+		"google/analytics-data": ">0.9.4",
 		"wp-plugin/admin-category-filter": "1.7.3",
 		"wp-plugin/amp": "2.5.5",
 		"wp-plugin/classic-editor": "1.6.7",
