@@ -28,7 +28,7 @@
 						</div>
 					</div>
 					<div class="footer-section footer-middle">
-						<h2>Programs & podcasts</h2>
+						<h2>Programs &amp; Podcasts</h2>
 						<div class="row">
 							<div class="col-sm-6 col-md-4 col-lg-3 pb-4">
 								<h3>Local Programs</h3>

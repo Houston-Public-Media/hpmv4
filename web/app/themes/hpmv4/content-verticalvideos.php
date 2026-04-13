@@ -1,6 +1,6 @@
 <?php
 	$options = get_option( 'hpm_videos' );
-	$videos = HPM_Videos::get( true );
+	$videos = HPM_Videos::get( false, 12 );
 	$perSlide = 4;
 	$total = $videos['count'];
 	$slides = ceil( $total / $perSlide );

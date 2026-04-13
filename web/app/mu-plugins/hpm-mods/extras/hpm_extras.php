@@ -4,12 +4,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Functions or modifications related to plugins or things that aren't directly theme-related
  */
 require SITE_ROOT . '/vendor/autoload.php';
-use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use Google\Analytics\Data\V1beta\Client\BetaAnalyticsDataClient;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\FilterExpression;
 use Google\Analytics\Data\V1beta\Filter;
+use Google\Analytics\Data\V1beta\RunReportRequest;
+use Google\ApiCore\ApiException;
+
 /**
  * Adds ability for anyone who can edit others' posts to be able to create and manage guest authors
  */
@@ -440,31 +443,34 @@ function analyticsPull_update(): void {
 	$now = getdate( $t );
 	$then = $now[0] - 172800;
 	$match = [];
-	$result = $analytics->runReport([
-		'property' => 'properties/253228385',
-		'dateRanges' => [
-			new DateRange([
-				'start_date' => date( "Y-m-d", $then ),
-				'end_date' => date( "Y-m-d", $now[0] ),
-			]),
-		],
-		'dimensions' => [
-			new Dimension([ 'name' => 'pagePath' ])
-		],
-		'metrics' => [
-			new Metric([ 'name' => 'screenPageViews' ])
-		],
-		'dimensionFilter' => new FilterExpression([
-			'filter' => new Filter([
-				'field_name' => 'pagePath',
-				'string_filter' => new Filter\StringFilter([
-					'match_type' => Filter\StringFilter\MatchType::BEGINS_WITH,
-					'value' => '/articles/'
-				])
+	try {
+		$request = ( new RunReportRequest() )
+			->setProperty( 'properties/253228385' )
+			->setDateRanges([
+				new DateRange([
+					'start_date' => date( "Y-m-d", $then ),
+					'end_date' => date( "Y-m-d", $now[0] )
+				]),
 			])
-		]),
-		'limit' => 5
-	]);
+			->setDimensions( [ new Dimension( [ 'name' => 'pagePath' ] ) ] )
+			->setMetrics([
+				new Metric( [ 'name' => 'screenPageViews' ] )
+			])
+			->setDimensionFilter( new FilterExpression( [
+				'filter' => new Filter( [
+					'field_name'    => 'pagePath',
+					'string_filter' => new Filter\StringFilter( [
+						'match_type' => Filter\StringFilter\MatchType::BEGINS_WITH,
+						'value'      => '/articles/'
+					] )
+				] )
+			]))
+			->setLimit( 5 );
+		$result = $analytics->runReport( $request );
+	} catch ( ApiException $e ) {
+		echo $e->getMessage() . PHP_EOL;
+		die;
+	}
 	$output = '<ul class="list-none news-links list-dashed">';
 	foreach ( $result->getRows() as $row ) {
 		preg_match( '/\/articles\/[a-z0-9\-\/]+\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/([0-9]+)\/(.+)/', $row->getDimensionValues()[0]->getValue(), $match );
@@ -489,10 +495,12 @@ function analyticsPull() {
 	return get_option( 'hpm_most_popular' );
 }
 
-add_action( 'hpm_analytics', 'analyticsPull_update' );
-$timestamp = wp_next_scheduled( 'hpm_analytics' );
-if ( empty( $timestamp ) ) {
-	wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
+if ( WP_ENV == 'production' ) {
+	add_action( 'hpm_analytics', 'analyticsPull_update' );
+	$timestamp = wp_next_scheduled( 'hpm_analytics' );
+	if ( empty( $timestamp ) ) {
+		wp_schedule_event( time(), 'hourly', 'hpm_analytics' );
+	}
 }
 
 function get_post_id_by_slug( $slug ): ?int {

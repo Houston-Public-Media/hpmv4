@@ -5,3 +5,4 @@ chmod -R 777 /var/app/current/web/app/uploads
 rm -rf /var/app/current/web/wp/wp-content/themes/twenty*
 cp /var/app/.env /var/app/current/.env
 sed -i 's/if ( empty( \$author_text ) ) {/if ( empty( $author_text ) \&\& $i->current_author !== null \&\& !is_bool( $i->current_author ) ) {/' /var/app/current/web/app/plugins/co-authors-plus/template-tags.php
+sed -i "s/'\/wp-load.php'/'\/wp\/wp-load.php'/" /var/app/current/web/app/plugins/pdfjs-viewer-shortcode/pdfjs/web/pdf-proxy.php

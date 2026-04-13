@@ -19,6 +19,7 @@ web/app/ewww/lazy
 !.ddev/config.yaml
 !.ddev/docker-compose.redis.yaml
 package.xml
+/scripts
 
 # WordPress
 web/wp
