@@ -8,7 +8,7 @@ $perPage = $options['paging_limit'];
 $currentPage = isset( $_GET['vpage'] ) ? max( 1, intval( $_GET['vpage'] ) ) : 1;
 $offset = ( $currentPage - 1 ) * $perPage;
 $videos = HPM_Videos::get( false, $perPage, $offset );
-$hasNextPage = ( $offset + $perPage ) < $videos['count']; ?>
+$hasNextPage = ( $offset + $perPage ) < $videos['total']; ?>
 	<style>
 		.btn-primary{ background-color: #237bbd; !important; }
 	</style>
