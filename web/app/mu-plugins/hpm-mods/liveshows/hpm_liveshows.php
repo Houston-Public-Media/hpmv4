@@ -266,7 +266,7 @@ class HPM_Liveshows {
 	}
 
 	/**
-	 * Return list of active podcast feeds with feed URLs and most recent files
+	 * Return list of active live shows for the day
 	 *
 	 * @return WP_Error|WP_HTTP_Response|WP_REST_Response
 	 */
@@ -277,7 +277,7 @@ class HPM_Liveshows {
 		}
 		$_SERVER['HTTPS'] = 'on';
 		$list = self::get_all();
-		set_transient( 'hpm_liveshows_list', $list, 86400 );
+		set_transient( 'hpm_liveshows_list', $list, 3600 );
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Live Shows list', 'hpm-liveshows' ), 'data' => [ 'list' => $list, 'status' => 200 ] ] );
 	}
 
@@ -288,13 +288,23 @@ class HPM_Liveshows {
 			'post_status' => 'publish',
 			'posts_per_page' => -1
 		]);
+		$t = time();
+		$offset = get_option( 'gmt_offset' ) * 3600;
+		$t = $t + $offset;
+		$now = getdate( $t );
+		$today = date( 'Y-m-d', $t );
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				$id = get_the_ID();
 				$liveshow = get_post_meta( $id, 'hpm_liveshow', true );
-				$temp[ $query->post->post_name ] = $liveshow;
-				$temp[ $query->post->post_name ]['title'] = get_the_title();
+				if (
+					( $liveshow['recurring'] == 0 && $liveshow['once_date'] === $today ) ||
+					( $liveshow['recurring'] == 1 && in_array( $now['wday'], $liveshow['recurring_pattern'] ) )
+				) {
+					$temp[ $query->post->post_name ] = $liveshow;
+					$temp[ $query->post->post_name ]['title'] = get_the_title();
+				}
 			}
 		}
 		return $temp;
