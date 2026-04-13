@@ -50,7 +50,8 @@ class HPM_Videos {
 		if ( empty( $options['account_id'] ) ) {
 			return [
 				'videos' => [],
-				'count' => 0
+				'count' => 0,
+				'total' => 0
 			];
 		}
 		$url = "https://edge.api.brightcove.com/playback/v1/accounts/" . $options['account_id'];
@@ -68,7 +69,8 @@ class HPM_Videos {
 		} else {
 			$videos = [
 				'videos' => [],
-				'count' => 0
+				'count' => 0,
+				'total' => 0
 			];
 		}
 		$response = wp_remote_get( $url,
@@ -125,10 +127,11 @@ class HPM_Videos {
 				}
 				$videos['videos'][] = $temp;
 			}
+			$videos['count'] = count( $videos['videos'] );
 			if ( empty( $data['count'] ) ) {
-				$videos['count'] = count( $videos['videos'] );
+				$videos['total'] = count( $videos['videos'] );
 			} else {
-				$videos['count'] = $data['count'];
+				$videos['total'] = $data['count'];
 			}
 		}
 		set_transient( $transient_key, $videos, 300 );
