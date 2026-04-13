@@ -53,17 +53,42 @@
 		</div>
         <div style="text-align: right;"><a href="/hpm-shorts" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all Videos</a></div>
 		<script>
-			document.addEventListener("DOMContentLoaded", function(){
+			document.addEventListener("DOMContentLoaded", function () {
 				const thumbnails = document.querySelectorAll(".thumbnail");
-				thumbnails.forEach(function(img){
-					img.addEventListener("click", function(){
+
+				thumbnails.forEach(function (img) {
+					img.addEventListener("click", function () {
+
 						const video = this.nextElementSibling;
 						const src = this.dataset.src;
-						if(!src) return;
-						video.src = src;
+
+						if (!video || !src) return;
+
+						// 🔴 Pause ALL videos first
+						document.querySelectorAll("#videoCarousel video").forEach(function (v) {
+							v.pause();
+						});
+
+						// 🟡 Hide all videos & show thumbnails again
+						document.querySelectorAll("#videoCarousel video").forEach(function (v) {
+							v.classList.add("d-none");
+							if (v.previousElementSibling) {
+								v.previousElementSibling.classList.remove("d-none");
+							}
+						});
+
+						// 🟢 Load source only once
+						if (!video.src) {
+							video.src = src;
+						}
+
+						// 🟢 Show and play selected video
 						this.classList.add("d-none");
 						video.classList.remove("d-none");
-						video.play();
+
+						video.play().catch(err => {
+							console.log("Playback error:", err);
+						});
 					});
 				});
 			});
