@@ -332,7 +332,7 @@ function hpm_careers_trans(): string {
 		return $output;
 	}
 
-	$url = "https://careers.uh.edu/jobs/search/uh-postings?page=1&dropdown_field_2_uids%5B%5D=f2d13182c939a778b2fd045147bbbe2b&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece&dropdown_field_2_uids%5B%5D=20264fadd8ae3803c97c7de243171417";
+	$url = "https://careers.uh.edu/jobs/search/uh-postings?page=1&dropdown_field_2_uids%5B%5D=f2d13182c939a778b2fd045147bbbe2b&dropdown_field_2_uids%5B%5D=018ef7af11e0d2f24a1e032e9be0bece&dropdown_field_2_uids%5B%5D=20264fadd8ae3803c97c7de243171417&dropdown_field_2_uids%5B%5D=2f245c739de714a834953b15fe151365";
 
 	$options = [
 		'user-agent' => 'Houston Public Media Job Scraper/1.0'
