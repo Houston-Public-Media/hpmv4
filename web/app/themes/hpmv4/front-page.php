@@ -256,7 +256,7 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-		<section class="section ads-full text-center">
+		<?php /* ?><section class="section ads-full text-center">
 			<div class="page-banner">
 				<a href="/space/" title="Artemis II Moon MIssion">
 					<picture>
@@ -267,7 +267,6 @@ $tras = null; ?>
 					</picture>
 				</a>
 			</div>
-<?php /* ?>
  			<div class="page-banner">
 				<a href="/elections-2026/" title="2026 Election">
 					<picture>
@@ -277,8 +276,8 @@ $tras = null; ?>
 					<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
 					</picture>
 				</a>
-			</div><?php */ ?>
-		</section>
+			</div>
+		</section><?php */ ?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
