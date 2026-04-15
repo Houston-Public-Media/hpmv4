@@ -13,7 +13,7 @@
 		<h2 class="title mb-4">
 			<strong>HPM <span>Shorts</span></strong>
 		</h2>
-		<div id="videoCarousel" class="carousel slide" data-bs-ride="false">
+        <div id="videoCarousel"  class="carousel slide"  data-bs-ride="false" data-bs-touch="true" data-bs-interval="false">
 			<div class="carousel-inner">
 			<?php for ($i = 0; $i < $slides; $i++) { ?>
 				<div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
@@ -83,6 +83,16 @@
                         });
                     });
                 });
+
+                const carouselEl = document.querySelector("#videoCarousel");
+
+                if (carouselEl) {
+                    new bootstrap.Carousel(carouselEl, {
+                        interval: false,
+                        touch: true,
+                        wrap: true
+                    });
+                }
             });
 		</script>
 	</section>
