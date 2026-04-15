@@ -13,7 +13,7 @@
 		<h2 class="title mb-4">
 			<strong>HPM <span>Shorts</span></strong>
 		</h2>
-		<div id="videoCarousel" class="carousel slide" data-bs-ride="false">
+        <div id="videoCarousel" class="carousel slide" data-bs-ride="false" data-bs-touch="true" data-bs-interval="false">
 			<div class="carousel-inner">
 			<?php for ($i = 0; $i < $slides; $i++) { ?>
 				<div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
@@ -58,39 +58,36 @@
 
 				thumbnails.forEach(function (img) {
 					img.addEventListener("click", function () {
-
 						const video = this.nextElementSibling;
 						const src = this.dataset.src;
-
 						if (!video || !src) return;
-
-						// 🔴 Pause ALL videos first
 						document.querySelectorAll("#videoCarousel video").forEach(function (v) {
 							v.pause();
 						});
-
-						// 🟡 Hide all videos & show thumbnails again
 						document.querySelectorAll("#videoCarousel video").forEach(function (v) {
 							v.classList.add("d-none");
 							if (v.previousElementSibling) {
 								v.previousElementSibling.classList.remove("d-none");
 							}
 						});
-
-						// 🟢 Load source only once
 						if (!video.src) {
 							video.src = src;
 						}
-
-						// 🟢 Show and play selected video
 						this.classList.add("d-none");
 						video.classList.remove("d-none");
-
 						video.play().catch(err => {
 							console.log("Playback error:", err);
 						});
 					});
 				});
+				const carouselEl = document.querySelector("#videoCarousel");
+				if (carouselEl) {
+					new bootstrap.Carousel(carouselEl, {
+						interval: false,
+						touch: true,
+						wrap: true
+					});
+				}
 			});
 		</script>
 	</section>
