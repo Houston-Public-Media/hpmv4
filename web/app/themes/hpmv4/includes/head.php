@@ -9,7 +9,7 @@ function hpm_site_header(): void { ?>
 				</a>
 			</div>
 			<div class="header-highlight-text">
-				<a href="/tv8/">TV 8</a> | <a href="/news887/">News 88.7</a> | <a href="/classical/">Classical</a> | <a href="/thevibe/">The Vibe</a>
+				<a href="/tv8/">TV 8</a> | <a href="/news887/">News 88.7</a> | <a href="/classical/">Classical</a> | <a href="/thevibe/">The Vibe</a> | <a href="/support/hpm-plus/">HPM+</a>
 			</div>
 			<div class="header-weather">
 				<?php echo hpm_weather(); ?>
