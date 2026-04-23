@@ -4,6 +4,7 @@
  * @subpackage hpmv4
  * @since hpmv4 1.0
  */
+$pod_id = 0;
 if ( is_category() ) {
 	$cat = get_term_by( 'name', single_cat_title( '', false ), 'category' );
 	if ( empty( $wp_query->query_vars['paged'] ) && $cat !== false ) {
@@ -48,6 +49,11 @@ if ( is_category() ) {
 			exit;
 		}
 	}
+	global $wpdb;
+	$podcast = $wpdb->get_results( "SELECT post_id FROM wp_postmeta WHERE meta_key = 'hpm_pod_cat' AND meta_value = {$cat->term_id}" );
+	if ( !empty( $podcast ) ) {
+		$pod_id = $podcast[0]->post_id;
+	}
 }
 get_header(); ?>
 	<div id="primary" class="content-area">
@@ -57,6 +63,15 @@ get_header(); ?>
 				<?php
 					if ( is_post_type_archive( [ 'podcasts', 'shows' ] ) ) { ?>
 					<h1 class="page-title"><?PHP echo ucwords( get_post_type() ); ?></h1>
+				<?php
+					} elseif ( !empty( $pod_id ) ) { ?>
+					<h1 class="page-title">Podcast: <?PHP echo get_the_title( $pod_id ); ?></h1>
+					<div class="station-social" style="margin-block-start: 1rem;">
+						<div class="badges-box" style="width: max-content; padding: 1rem;">
+							<h3 style="color: white;"><?php echo get_the_content( '', false, $pod_id ); ?></h3>
+							<?php echo HPM_Podcasts::show_social( $pod_id, false, '', true ); ?>
+						</div>
+					</div>
 				<?php
 					} else {
 						the_archive_title( '<h1 class="page-title">', '</h1>' );

@@ -2052,9 +2052,18 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-support > ul {
 		grid-template-columns: 1fr 1fr;
 		grid-auto-flow: initial;
+		> li:nth-child(1) {
+			grid-row-end: span 2;
+		}
 	}
-	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-support > ul > li:nth-child(1) {
-		grid-row-end: span 2;
+	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-news > ul {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-auto-flow: initial;
+		> li:nth-child(1),
+		> li:nth-child(2),
+		> li:nth-child(3) {
+			grid-row-end: span 2;
+		}
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:first-child > ul {
 		transform: rotateX(-90deg) translateX(0);
@@ -2069,9 +2078,6 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:focus-within {
 		cursor: pointer;
 		background-color: var(--nav-background-open);
-	}
-	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-active {
-		/* background-color: transparent; */
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:hover > ul,
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:focus-within > ul {
