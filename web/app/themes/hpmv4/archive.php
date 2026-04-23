@@ -67,7 +67,7 @@ get_header(); ?>
 					} elseif ( !empty( $pod_id ) ) { ?>
 					<h1 class="page-title">Podcast: <?PHP echo get_the_title( $pod_id ); ?></h1>
 					<div class="station-social" style="margin-block-start: 1rem;">
-						<div class="badges-box" style="width: max-content; padding: 1rem;">
+						<div class="badges-box" style="width: fit-content; padding: 1rem; max-width: 95%;">
 							<h3 style="color: white;"><?php echo get_the_content( '', false, $pod_id ); ?></h3>
 							<?php echo HPM_Podcasts::show_social( $pod_id, false, '', true ); ?>
 						</div>
