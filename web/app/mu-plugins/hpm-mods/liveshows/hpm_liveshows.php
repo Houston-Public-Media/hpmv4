@@ -107,7 +107,9 @@ class HPM_Liveshows {
 				'recurring_pattern' => [],
 				'accent_color' => '',
 				'background_color' => '',
-				'text_color' => ''
+				'text_color' => '',
+				'logo' => '',
+				'background_image' => ''
 			];
 		} ?>
 		<p>
@@ -131,6 +133,8 @@ class HPM_Liveshows {
 		<p><label for="hpm-liveshow-accent-color"><?php _e( "Show Accent Color:", 'hpm-liveshow' ); ?></label> <input type="color" id="hpm-liveshow-accent-color" name="hpm-liveshow-accent-color" value="<?php echo ( !empty( $hpm_liveshow['accent_color'] ) ? $hpm_liveshow['accent_color'] : '#FFFFFF' ); ?>" placeholder="#FF0000" /></p>
 		<p><label for="hpm-liveshow-background-color"><?php _e( "Show Background Color:", 'hpm-liveshow' ); ?></label> <input type="color" id="hpm-liveshow-background-color" name="hpm-liveshow-background-color" value="<?php echo ( !empty( $hpm_liveshow['background_color'] ) ? $hpm_liveshow['background_color'] : '#000000' ); ?>" placeholder="#00FF00" /></p>
 		<p><label for="hpm-liveshow-text-color"><?php _e( "Show Text Color:", 'hpm-liveshow' ); ?></label> <input type="color" id="hpm-liveshow-text-color" name="hpm-liveshow-text-color" value="<?php echo ( !empty( $hpm_liveshow['text_color'] ) ? $hpm_liveshow['text_color'] : '#000000' ); ?>" placeholder="#000000" /></p>
+		<p><label for="hpm-liveshow-logo"><?php _e( "Show Logo URL:", 'hpm-liveshow' ); ?></label> <input type="url" id="hpm-liveshow-logo" name="hpm-liveshow-logo" value="<?php echo ( !empty( $hpm_liveshow['logo'] ) ? $hpm_liveshow['logo'] : '' ); ?>" placeholder="https://site.com/image.jpg" style="width: 60%;" /></p>
+		<p><label for="hpm-liveshow-background-image"><?php _e( "Show Background Image:", 'hpm-liveshow' ); ?></label> <input type="url" id="hpm-liveshow-background-image" name="hpm-liveshow-background-image" value="<?php echo ( !empty( $hpm_liveshow['background_image'] ) ? $hpm_liveshow['background_image'] : '' ); ?>" placeholder="https://site.com/image.jpg" style="width: 60%;" /></p>
 		<p><strong><label for="hpm-liveshow-recurring"><?PHP _e( "Is this an ongoing show?", 'hpm-liveshows' ); ?></label></strong> <select name="hpm-liveshow-recurring" id="hpm-liveshow-recurring">
 				<option value="0"<?PHP selected( $hpm_liveshow['recurring'], 0, TRUE ); ?>><?PHP _e( "No", 'hpm-liveshows' ); ?></option>
 				<option value="1"<?PHP selected( $hpm_liveshow['recurring'], 1, TRUE ); ?>><?PHP _e( "Yes", 'hpm-liveshows' ); ?></option>
@@ -201,7 +205,9 @@ class HPM_Liveshows {
 				'recurring_pattern' => ( !empty( $_POST['hpm-liveshow-recur'] ) ? $_POST['hpm-liveshow-recur'] : [] ),
 				'accent_color' => $_POST['hpm-liveshow-accent-color'],
 				'background_color' => $_POST['hpm-liveshow-background-color'],
-				'text_color' => $_POST['hpm-liveshow-text-color']
+				'text_color' => $_POST['hpm-liveshow-text-color'],
+				'logo' => $_POST['hpm-liveshow-logo'],
+				'background_image' => $_POST['hpm-liveshow-background-image']
 			];
 
 			update_post_meta( $post_id, 'hpm_liveshow', $hpm_liveshow );
@@ -469,8 +475,8 @@ class HPM_Liveshows {
 								'<p class="iframe-embed"><iframe id="' . $ytlive[ $talkshow ]['id'] . '" width="560" height="315" src="https://www.youtube.com/embed/' . $ytlive[ $talkshow ]['id'] . '?enablejsapi=1" title="' . $ytlive[ $talkshow ]['title'] .'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>' .
 								'<p style="text-align: center;">' . implode( ' | ', $outs ) . '</p>' .
 							'</div>';
-						if ( $temp[ $talkshow ]['recurring'] == 1 ) {
-							$result .= '<img src="https://cdn.houstonpublicmedia.org/assets/images/icons/' . $talkshow . '-logo.webp" alt="' . $temp[ $talkshow ]['title'] . '" width="256" height="218" class="talkshow-logo" />';
+						if ( !empty( $temp[ $talkshow ]['logo'] ) ) {
+							$result .= '<img src="' . $temp[ $talkshow ]['logo'] . '" alt="' . $temp[ $talkshow ]['title'] . '" width="256" height="218" class="talkshow-logo" />';
 						}
 						$result .= '</div>';
 						$talkshow_display = true;
