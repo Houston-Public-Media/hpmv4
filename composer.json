@@ -64,7 +64,7 @@
 		"wp-plugin/tinymce-advanced": "5.9.2",
 		"wp-plugin/redis-cache": ">2.0.17",
 		"wp-plugin/wp-ses": "*",
-		"wp-plugin/pdfjs-viewer-shortcode": "*",
+		"wp-plugin/pdfjs-viewer-shortcode": "3.0.4",
 		"deliciousbrains-plugin/wp-offload-media": "*",
 		"jwcounts/twitter-api-v2-php": "*",
 		"ext-zlib": "*",
