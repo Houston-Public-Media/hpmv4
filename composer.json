@@ -71,8 +71,7 @@
 		"ext-dom": "*",
 		"ext-curl": "*",
 		"ext-ftp": "*",
-		"ext-simplexml": "*",
-		"wp-plugin/dark-visitors": "^1.30"
+		"ext-simplexml": "*"
 	},
 	"require-dev": {
 		"laravel/pint": "^1.18"
