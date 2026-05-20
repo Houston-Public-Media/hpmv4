@@ -5851,7 +5851,8 @@ article .entry-content .adv-contact p a {
 /* party-politics */
 
 .party-politics-page {
-	padding: 1em;
+	padding: 1rem;
+	max-width: 100%;
 }
 body.single-shows #station-social.station-social {
 	grid-template-columns: unset;
@@ -5926,6 +5927,7 @@ body.single-shows #station-social.station-social {
 	width: 100%;
 	aspect-ratio: 16/9;
 	align-self: center;
+	max-width: 100%;
 }
 .the-latest-block .image-wrapper > div {
 	display: flex;
@@ -5934,6 +5936,8 @@ body.single-shows #station-social.station-social {
 	background-size: cover;
 	background-position: center;
 	aspect-ratio: 16/9;
+	width: 100%;
+	max-width: 100%;
 }
 .the-latest-block .image-wrapper svg {
 	width: 50px;
