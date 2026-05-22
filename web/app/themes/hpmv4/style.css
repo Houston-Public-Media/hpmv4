@@ -2052,9 +2052,18 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-support > ul {
 		grid-template-columns: 1fr 1fr;
 		grid-auto-flow: initial;
+		> li:nth-child(1) {
+			grid-row-end: span 2;
+		}
 	}
-	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-support > ul > li:nth-child(1) {
-		grid-row-end: span 2;
+	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-news > ul {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-auto-flow: initial;
+		> li:nth-child(1),
+		> li:nth-child(2),
+		> li:nth-child(3) {
+			grid-row-end: span 2;
+		}
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:first-child > ul {
 		transform: rotateX(-90deg) translateX(0);
@@ -2069,9 +2078,6 @@ body.nav-active-menu #top-mobile-close {
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:focus-within {
 		cursor: pointer;
 		background-color: var(--nav-background-open);
-	}
-	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li.nav-active {
-		/* background-color: transparent; */
 	}
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:hover > ul,
 	body:not(.page-template-page-listen) nav#site-navigation > div.nav-wrap > div > ul > li:focus-within > ul {
@@ -5845,7 +5851,8 @@ article .entry-content .adv-contact p a {
 /* party-politics */
 
 .party-politics-page {
-	padding: 1em;
+	padding: 1rem;
+	max-width: 100%;
 }
 body.single-shows #station-social.station-social {
 	grid-template-columns: unset;
@@ -5920,6 +5927,7 @@ body.single-shows #station-social.station-social {
 	width: 100%;
 	aspect-ratio: 16/9;
 	align-self: center;
+	max-width: 100%;
 }
 .the-latest-block .image-wrapper > div {
 	display: flex;
@@ -5928,6 +5936,8 @@ body.single-shows #station-social.station-social {
 	background-size: cover;
 	background-position: center;
 	aspect-ratio: 16/9;
+	width: 100%;
+	max-width: 100%;
 }
 .the-latest-block .image-wrapper svg {
 	width: 50px;
@@ -5964,7 +5974,8 @@ body.single-shows #station-social.station-social {
 /* houston-matters-page */
 
 .houston-matters-page {
-	padding: 1em;
+	padding: 1rem;
+	max-width: 100%;
 }
 .episodes-block.red-line .episodes-content .content-wrapper {
 	border-bottom: 2px solid var(--main-red);

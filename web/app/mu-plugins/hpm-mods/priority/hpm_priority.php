@@ -129,7 +129,9 @@ function hpm_priority_json_list(): WP_HTTP_Response|WP_REST_Response|WP_Error {
 			'phone' => $v['phone'],
 			'accentColor' => $v['accent_color'],
 			'backgroundColor' => $v['background_color'],
-			'textColor' => $v['text_color']
+			'textColor' => $v['text_color'],
+			'logo' => $v['logo'],
+			'backgroundImage' => $v['background_image']
 		];
 		if ( $v['recurring'] == 1 &&
 				in_array( $now['wday'], $v['recurring_pattern'] ) &&
