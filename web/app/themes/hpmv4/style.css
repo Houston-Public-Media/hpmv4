@@ -5974,7 +5974,8 @@ body.single-shows #station-social.station-social {
 /* houston-matters-page */
 
 .houston-matters-page {
-	padding: 1em;
+	padding: 1rem;
+	max-width: 100%;
 }
 .episodes-block.red-line .episodes-content .content-wrapper {
 	border-bottom: 2px solid var(--main-red);
