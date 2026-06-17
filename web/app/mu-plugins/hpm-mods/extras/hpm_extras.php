@@ -169,7 +169,7 @@ function hpm_schedules( $station, $date ) {
 	if ( !empty( $api ) ) {
 		return $api;
 	}
-	$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/" . $station . "/day?date=" . $date . "&format=json" ) );
+	$remote = wp_remote_get( "https://cadence.nprstations.org/api/cadence/widget/" . $station . "/day?date=" . $date . "&callback=callback" );
 	if ( is_wp_error( $remote ) ) {
 		return false;
 	} else {
