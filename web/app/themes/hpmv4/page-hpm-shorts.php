@@ -30,7 +30,7 @@ $hasNextPage = ( $offset + $perPage ) < $videos['total']; ?>
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="card h-100" style="border:none;background:#237bbd;">
 							<img src="<?php echo esc_url( $poster ); ?>" class="card-img-top thumbnail" data-src="<?php echo esc_url( $hlsSource ); ?>" alt="<?php echo esc_html($video['name'] ?? ''); ?>" style="cursor:pointer;">
-							<video class="w-100 d-none" controls playsinline preload="none"></video>
+							<video class="w-100 d-none" controls playsinline preload="auto"></video>
 							<div class="card-body">
 								<h6 class="card-title mb-0 text-white">
 									<?php echo esc_html($video['name'] ?? ''); ?>

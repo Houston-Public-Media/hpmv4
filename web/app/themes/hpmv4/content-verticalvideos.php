@@ -31,7 +31,7 @@
 									data-video-id="<?php echo esc_attr( $video['id'] ); ?>"
 									alt="<?php echo esc_html( $video['name'] ) ?? ''; ?>"
 									style="cursor:pointer;">
-								<video class="w-100 d-none" controls playsinline preload="none"></video>
+								<video class="w-100 d-none" controls playsinline preload="metadata"></video>
 								<div class="card-body">
 									<h6 class="card-title mb-0 text-white">
 									<?php echo esc_html($video['name'] ?? ''); ?>
@@ -83,7 +83,6 @@
                         });
                     });
                 });
-
                 const carouselEl = document.querySelector("#videoCarousel");
 
                 if (carouselEl) {
