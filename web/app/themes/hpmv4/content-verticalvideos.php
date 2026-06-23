@@ -1,3 +1,4 @@
+<section>
 <iframe
         id="site-78734206"
         width="100%"
@@ -14,3 +15,5 @@
         data-resize-profile="vertical_videos_ipx"
         defer="defer"
 ></script>
+    <div style="text-align: right;"><a href="/hpm-shorts" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all Videos</a></div>
+</section>
