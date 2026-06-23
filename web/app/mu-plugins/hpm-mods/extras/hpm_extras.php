@@ -868,7 +868,11 @@ function custom_get_featured_media( $object, $field_name, $request ): string {
 	if ( $media === false ) {
 		return '';
 	} else {
-		return $media . '.webp';
+		if ( str_contains( $media, '.webp' ) ) {
+			return $media;
+		} else {
+			return $media . '.webp';
+		}
 	}
 }
 

@@ -96,6 +96,9 @@ function hpm_google_tracker(): void {
 		}
 	} elseif ( get_post_type() == 'show' ) {
 		echo "\t\t\t\tgoogletag.pubads().setTargeting('category', '" . $wp_query->query_vars['category_name'] . "');\n";
+	} elseif ( get_post_type() == 'page' ) {
+		$path = parse_url( get_permalink(), PHP_URL_PATH );
+		echo "\t\t\t\tgoogletag.pubads().setTargeting('section', '" . $path . "');\n";
 	}?>
 				googletag.enableServices();
 			});
