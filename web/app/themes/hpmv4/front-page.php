@@ -257,16 +257,6 @@ $tras = null; ?>
 			</div>
 		</section>
 		<?php /* ?><section class="section ads-full text-center">
-			<div class="page-banner">
-				<a href="/space/" title="Artemis II Moon MIssion">
-					<picture>
-						<source srcset="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Mobile.png.webp" type="image/webp" media="(max-width: 34em)">
-						<source srcset="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Tablet.png.webp" type="image/webp" media="(max-width: 52.5em)">
-						<source srcset="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Desktop.png.webp" type="image/webp">
-						<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/Artemis-II-moon-mission-Desktop.png" alt="Artemis II Moon MIssion">
-					</picture>
-				</a>
-			</div>
  			<div class="page-banner">
 				<a href="/elections-2026/" title="2026 Election">
 					<picture>
@@ -278,6 +268,7 @@ $tras = null; ?>
 				</a>
 			</div>
 		</section><?php */ ?>
+        <?php get_template_part("content", "verticalvideos"); ?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
@@ -419,7 +410,6 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-		<?php get_template_part("content", "verticalvideos"); ?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
