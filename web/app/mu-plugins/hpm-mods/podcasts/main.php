@@ -276,6 +276,7 @@ class HPM_Podcasts {
 				$hpm_podcast_link = [
 					'page'         => '',
 					'limit'        => 0,
+                    'email'        => '',
 					'itunes'       => '',
 					'youtube'      => '',
 					'npr'          => '',
@@ -296,6 +297,7 @@ class HPM_Podcasts {
 			$hpm_podcast_link = [
 				'page'         => '',
 				'limit'        => 0,
+                'email'        => '',
 				'itunes'       => '',
 				'npr'          => '',
 				'youtube'      => '',
@@ -366,6 +368,7 @@ class HPM_Podcasts {
 				'pandora' => ( !empty( $_POST['hpm-podcast-link-pandora'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-pandora'] ) : '' ),
 				'iheart' => ( !empty( $_POST['hpm-podcast-link-iheart'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-iheart'] ) : '' ),
 				'podping' => ( !empty( $_POST['hpm-podcast-link-podping'] ) ? sanitize_text_field( $_POST['hpm-podcast-link-podping'] ) : '' ),
+                'email' => ( !empty( $_POST['hpm-podcast-email'] ) ? sanitize_text_field( $_POST['hpm-podcast-email'] ) : '' ),
 				'limit' => ( !empty( $_POST['hpm-podcast-limit'] ) ? sanitize_text_field( $_POST['hpm-podcast-limit'] ) : 0 ),
 				'categories' => [
 					'first' => ( !empty( $_POST['hpm-podcast-icat-first'] ) ? $_POST['hpm-podcast-icat-first'] : '' ),
@@ -746,6 +749,7 @@ class HPM_Podcasts {
 				$podlink = get_post_meta( $pod_id, 'hpm_pod_link', true );
 				$last_id = get_post_meta( $pod_id, 'hpm_pod_last_id', true );
 				$current_post = $post;
+                $pod_email = $podlink['email'] ?? $pods['owner']['email'];
 				$podcast_title = $podcasts->post->post_name;
 				$perpage = -1;
 				if ( !empty( $podlink['limit'] ) && $podlink['limit'] != 0 && is_numeric( $podlink['limit'] ) ) {
@@ -836,7 +840,7 @@ class HPM_Podcasts {
 		<itunes:summary><![CDATA[<?php the_content_feed(); ?>]]></itunes:summary>
 		<itunes:owner>
 			<itunes:name><![CDATA[<?php echo $pods['owner']['name']; ?>]]></itunes:name>
-			<itunes:email><?php echo $pods['owner']['email']; ?></itunes:email>
+			<itunes:email><?php echo $pod_email; ?></itunes:email>
 		</itunes:owner>
 		<itunes:keywords><![CDATA[<?php echo implode( ', ', $pod_tag_array ); ?>]]></itunes:keywords>
 		<itunes:subtitle><![CDATA[<?PHP echo get_the_excerpt(); ?>]]></itunes:subtitle>
@@ -954,7 +958,7 @@ class HPM_Podcasts {
 				if ( WP_ENV === 'production' ) {
 					$feed_updates = [];
 					try {
-						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '' ], $getContent ) );
+						$s3->put( 'podcasts/' . $podcast_title . '.xml', 'application/xml', 'public-read', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '', '' ], $getContent ) );
 						$feed_updates[] = $cdn . $podcast_title . '.xml';
 						wp_remote_get( esc_url_raw( 'https://overcast.fm/ping?urlprefix=' . $cdn . $podcast_title ) );
 						if ( !empty( $podlink['podping'] ) ) {
@@ -998,7 +1002,9 @@ class HPM_Podcasts {
 					if ( !empty( $feed_updates ) ) {
 						HPM_Podcasts::websub_update( $feed_updates );
 					}
-				}
+				} else {
+                    file_put_contents( $podcast_title . '.xml', str_replace( [ '?{{REPLACE}}{{AGGREGATE_FEED}}', '?{{REPLACE}}', '{{YOUTUBE_BOILERPLATE}}' ], [ '', '', '' ], $getContent ) );
+                }
 			}
 			$t = time();
 			$offset = get_option( 'gmt_offset' ) * 3600;

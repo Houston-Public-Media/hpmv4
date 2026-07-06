@@ -224,6 +224,8 @@
 			<option value="serial"<?php selected( $hpm_podcast_link['type'], 'serial' ); ?>><?php _e( "Serialized", 'hpm-podcasts' ); ?></option>
 		</select>
 	</p>
+    <p><strong><?php _e( "Does this podcast have an email?", 'hpm-podcasts' ); ?></strong><br />
+        <label for="hpm-podcast-email"><?php _e( "Email:", 'hpm-podcasts' ); ?></label> <input type="email" id="hpm-podcast-email" name="hpm-podcast-email" value="<?php echo $hpm_podcast_link['email'] ?? ''; ?>" placeholder="Leave empty if not" style="width: 30%;" /></p>
 </div>
 <p>&nbsp;</p>
 
