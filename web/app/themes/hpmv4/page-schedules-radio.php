@@ -3,7 +3,7 @@
 Template Name: Radio Schedules
 */
 	$t = time();
-	$offset = get_option( 'gmt_offset' ) * 3600;
+	$offset = (int)get_option( 'gmt_offset' ) * 3600;
 	$t = $t + $offset;
 
 	if ( isset( $wp_query->query_vars['sched_station'] ) ) {
@@ -47,12 +47,12 @@ Template Name: Radio Schedules
 		.date-select .date-pick-right {
 			text-transform: uppercase;
 			float: right;
-            font-weight: bold;
+			font-weight: bold;
 		}
 		.date-select .date-pick-left {
 			text-transform: uppercase;
 			float: left;
-            font-weight: bold;
+			font-weight: bold;
 		}
 		#station-schedule-display {
 			width: 96%;
@@ -256,10 +256,10 @@ Template Name: Radio Schedules
 				</div>
 			</header>
 <?php
-		if ( $sched_station == 'news887' ) {
-			$station = "519131dee1c8f40813e79115";
-		} elseif ( $sched_station == 'classical' ) {
-			$station = "51913211e1c8408134a6d347";
+
+		$station = "be40a578-d4d8-4625-9729-e50b58c816c6";
+		if ( $sched_station == 'classical' ) {
+			$station = "98c1232d-c559-465a-978a-56d98f72bbb1";
 		}
 
 		$date_unix = mktime( 0, 0, 0, $sched_month, $sched_day, $sched_year );
@@ -273,60 +273,48 @@ Template Name: Radio Schedules
 <p>&nbsp;</p>
 <?PHP
 		$today = date( 'l, F j, Y', $date_unix );
-		$api = file_get_contents( "https://api.composer.nprstations.org/v1/widget/" . $station . "/day?date=" . $date . "&format=json" );
-		if ( preg_match( '~HTTP/1\.1 400 Bad Request~i', $api ) && $today_date == $date ) {
-			$api = file_get_contents( "https://s3-us-west-2.amazonaws.com/hpmwebv2/assets/ytjson/" . $sched_station . ".json" );
-		} elseif ( preg_match( '~HTTP/1\.1 400 Bad Request~i', $api ) && $today_date !== $date ) { ?>
-				<h3>Playlist Error</h3>
-				<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="/<?php echo $sched_station; ?>/">return to today&#39;s playlist</a>.</p>
-<?PHP
+		$remote = wp_remote_get( "https://cadence.nprstations.org/api/cadence/widget/" . $station . "/day?date=" . $date . "&callback=callback" );
+		if ( is_wp_error( $remote ) ) { ?>
+			<h3>Playlist Error</h3>
+			<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="/<?php echo $sched_station; ?>/">return to today&#39;s playlist</a>.</p><?php
 		} else {
+			$api = wp_remote_retrieve_body( $remote );
 			$json = json_decode( $api, TRUE );
-			if ( empty( $json['onToday'] ) ) { ?>
+			if ( empty( $json['episodes'] ) ) { ?>
 				<h3>Playlist Error</h3>
 				<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="/<?php echo $sched_station; ?>/">return to today&#39;s playlist</a>.</p>
 <?PHP
 			} else {
-				$current = [
-					'name' => '',
-					'time' => '',
-					'index' => ''
-				];
 				$progs = [];
+                $current = '';
 
-				foreach ( $json['onToday'] as $k => $v ) {
-					$fullend = strtotime( $v['fullend'] );
-					$fullstart = strtotime( $v['fullstart'] );
+				foreach ( $json['episodes'] as $k => $v ) {
+					$fullend = strtotime( $v['episode']['end']['utc'] ) + $offset;
+					$fullstart = strtotime( $v['episode']['start']['utc'] ) + $offset;
 					$duration = $fullend - $fullstart;
-					$name = $v['program']['name'];
-					if ( $duration > 600 ) {
-						if (
-							( empty( $current['name'] ) && empty( $current['time'] ) ) ||
-							( $name !== $current['name'] && $fullstart !== $current['time'] )
-						) {
-							$current = [
-								'name' => $name,
-								'time' => $fullstart,
-								'index' => $k
-							];
-							$progs[$k] = [
-								'name' => $name,
-								'time' => date( 'g:i a', $fullstart ),
-								'link' => ( !empty( $v['program']['program_link'] ) ? $v['program']['program_link'] : '' ),
-								'desc' => ( !empty( $v['program']['program_desc'] ) ? $v['program']['program_desc'] : '' ),
-								'playlist' => ( !empty( $v['playlist'] ) ? $v['playlist'] : [] ),
-								'sub' => []
-							];
-						}
+					$name = $v['episode']['programName'];
+					if (
+						$duration > 600 ||
+						!empty( $progs[ $v['episode']['episodeId'] ] ) ||
+						( !empty( $json['episodes'][ $k + 2 ] ) && $json['episodes'][ $k + 2 ]['episode']['episodeId'] === $v['episode']['episodeId'] )
+					) {
+                        if ( empty( $progs[ $v['episode']['episodeId'] ] ) ) {
+                            $progs[ $v['episode']['episodeId'] ] = [
+                                'name' => $name,
+                                'time' => date( 'g:i a', $fullstart ),
+                                'link' => ( !empty( $v['programLink'] ) ? $v['programLink'] : '' ),
+                                'desc' => ( !empty( $v['episode']['notes'] ) ? $v['episode']['notes'] : '' ),
+                                'playlist' => ( !empty( $v['episode']['songs'] ) ? $v['episode']['songs'] : [] ),
+                                'sub' => []
+                            ];
+                            $current = $v['episode']['episodeId'];
+                        }
 					} else {
-						if ( $name !== $current['name'] && $fullstart !== $current['time'] ) {
-							$index = $current['index'];
-							$progs[ $index ]['sub'][] = [
-								'name' => $name,
-								'time' => date( 'g:i a', $fullstart ),
-								'link' => $v['program']['program_link']
-							];
-						}
+                        $progs[ $current ]['sub'][] = [
+                            'name' => $name,
+                            'time' => date( 'g:i a', $fullstart ),
+                            'link' =>  ( !empty( $v['programLink'] ) ? $v['programLink'] : '' )
+                        ];
 					}
 				} ?>
 				<h3>Playlist for <?PHP echo $today; ?></h3>
@@ -335,7 +323,7 @@ Template Name: Radio Schedules
 				foreach ( $progs as $prog ) { ?>
 					<li>
 						<h2><strong><?PHP echo $prog['time']; ?>:</strong> <?php echo ( !empty( $prog['link'] ) ? '<a href="'.$prog['link'].'">' : '' ) . $prog['name'] . ( !empty( $prog['link'] ) ? '</a>' : '' ); ?></h2>
-						<p><?PHP echo $prog['desc']; ?></p>
+						<?PHP echo ( !empty( $prog['desc'] ) ? "<p>" . $prog['desc'] . "</p>" : '' ); ?>
 <?PHP
 					echo hpm_segments( $prog['name'], $date );
 					if ( !empty( $prog['sub'] ) ) { ?>
@@ -360,27 +348,31 @@ Template Name: Radio Schedules
 <?PHP
 						foreach( $prog['playlist'] as $ks => $song ) {
 							$song_info = [];
-							$song_start = explode(' ', $song['_start_time'] );
-							$song_start_date = explode( '-', $song_start[0] );
-							$song_start_time = explode( ':', $song_start[1] );
-							$song_start_string = date( 'g:i a', mktime( $song_start_time[0], $song_start_time[1], $song_start_time[2], $song_start_date[0], $song_start_date[1], $song_start_date[2] ) );
-							if ( !empty( $song['composerName'] ) ) {
-								$song_info[] = "<em>Composer</em>: " . trim( $song['composerName'] );
+							$song_start = strtotime( $song['start']['utc'] ) + $offset;
+							$song_start_string = date( 'g:i a', $song_start );
+							if ( !empty( $song['composer'] ) ) {
+								$song_info[] = "<em>Composer</em>: " . trim( $song['composer'] );
 							}
-							if ( !empty( $song['ensembles'] ) ) {
-								$song_info[] = "<em>Ensembles</em>: " . trim( $song['ensembles'] );
+							if ( !empty( $song['ensemble'] ) ) {
+								$ensemble = implode( ', ', $song['ensemble'] );
+								if ( !empty( $ensemble ) ) {
+									$song_info[] = "<em>Ensembles</em>: " . $ensemble;
+								}
 							}
-							if ( !empty( $song['artistName'] ) ) {
-								$song_info[] = "<em>Performer</em>: " . trim( $song['artistName'] );
+							if ( !empty( $song['artist'] ) ) {
+								$artist = implode( ', ', $song['artist'] );
+								if ( !empty( $artist ) ) {
+									$song_info[] = "<em>Performer</em>: " . $artist;
+								}
 							}
 							if ( !empty( $song['conductor'] ) ) {
-								$song_info[] = "<em>Conductor</em>: " . trim( $song['conductor'] );
+								$song_info[] = "<em>Conductor</em>: " . implode( ', ', $song['conductor'] );
 							}
-							if ( !empty( $song['copyright'] ) ) {
+							if ( !empty( $song['label'] ) ) {
 								if ( !empty( $song['catalogNumber'] ) ) {
-									$song_info[] = "<em>Catalog Information</em>: " . trim( $song['copyright'] ) . " " . trim( $song['catalogNumber'] );
+									$song_info[] = "<em>Catalog Information</em>: " . trim( $song['label'] ) . " " . trim( $song['catalogNumber'] );
 								} else {
-									$song_info[] = "<em>Label</em>: " . trim( $song['copyright'] );
+									$song_info[] = "<em>Label</em>: " . trim( $song['label'] );
 								}
 							}
 							if ( ( $ks + 1 ) & 1 ) { ?>
@@ -390,7 +382,7 @@ Template Name: Radio Schedules
 								<li class="shade">
 <?PHP
 							} ?>
-									<h2><?PHP echo $song_start_string; ?>: <b><?php echo trim( $song['trackName'] ); ?></b></h2>
+									<h2><?PHP echo $song_start_string; ?>: <b><?php echo trim( $song['title'] ); ?></b></h2>
 									<?php echo implode( '<br />', $song_info ); ?>
 								</li>
 <?PHP

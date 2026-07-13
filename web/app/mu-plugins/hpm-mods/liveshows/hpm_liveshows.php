@@ -334,18 +334,17 @@ class HPM_Liveshows {
 		$t = $t + $offset;
 		$date = date( 'Y-m-d', $t );
 
-		$remote = wp_remote_get( esc_url_raw( "https://api.composer.nprstations.org/v1/widget/519131dee1c8f40813e79115/day?date=" . $date . "&format=json" ) );
+		$remote = wp_remote_get( esc_url_raw( "https://cadence.nprstations.org/api/cadence/widget/be40a578-d4d8-4625-9729-e50b58c816c6/day?date=" . $date . "&callback=callback" ) );
 		if ( is_wp_error( $remote ) ) {
 			return $hm_airtimes;
 		} else {
 			$api = wp_remote_retrieve_body( $remote );
 			$json = json_decode( $api, TRUE );
-			foreach ( $json['onToday'] as $j ) {
+			foreach ( $json['episodes'] as $j ) {
 				foreach ( $temp as $show ) {
-					if ( str_contains( $j['program']['name'], $show['title'] ) ) {
-						$starttime = explode( ';', $j['start_time'] );
-						$startint = intval( $starttime[0] );
-						if ( $startint == $show['start_hour'] ) {
+					if ( str_contains( $j['episode']['programName'], $show['title'] ) ) {
+						$starttime = getdate( strtotime( $j['episode']['start']['utc'] ) + $offset );
+						if ( $starttime['hours'] == $show['start_hour'] ) {
 							for ( $i = $show['start_hour']; $i < $show['end_hour']; $i++ ) {
 								$hm_airtimes[ $i ] = true;
 							}
