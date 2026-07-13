@@ -11,6 +11,7 @@ class HPM_Videos {
             'playlist_id' => '',
             'policy_key' => '',
             'player_id' => '',
+            'homepage_videoURL' => '',
             'paging_limit' => 8
         ] );
     }
@@ -45,6 +46,7 @@ class HPM_Videos {
             'playlist_id' => '',
             'policy_key' => '',
             'player_id' => '',
+            'homepage_videoURL' =>'',
             'paging_limit' => 8
         ] );
         if ( empty( $options['account_id'] ) ) {
@@ -179,6 +181,7 @@ class HPM_Videos {
                 'playlist_id' => '',
                 'policy_key' => '',
                 'player_id' => '',
+                'homepage_videoURL' => '',
                 'paging_limit' => 8
             ];
         } ?>
@@ -212,6 +215,10 @@ class HPM_Videos {
                                             <tr>
                                                 <th scope="row"><label for="hpm_videos[player_id]"><?php _e('Player ID', 'hpmv4' ); ?></label></th>
                                                 <td><input type="text" name="hpm_videos[player_id]" id="hpm_videos[player_id]" value="<?php echo $videos['player_id']; ?>" class="regular-text" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><label for="hpm_videos[homepage_videoURL]"><?php _e('Homepage video URL', 'hpmv4' ); ?></label></th>
+                                                <td><input type="text" name="hpm_videos[homepage_videoURL]" id="hpm_videos[homepage_videoURL]" value="<?php echo $videos['homepage_videoURL']; ?>" class="regular-text" /></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><label for="hpm_videos[paging_limit]"><?php _e('Default Paging Limit', 'hpmv4' ); ?></label></th>
