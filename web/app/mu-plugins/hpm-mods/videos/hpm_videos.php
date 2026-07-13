@@ -11,6 +11,7 @@ class HPM_Videos {
 			'playlist_id' => '',
 			'policy_key' => '',
 			'player_id' => '',
+			'homepage_video_url' => '',
 			'paging_limit' => 8
 		] );
 	}
@@ -19,7 +20,7 @@ class HPM_Videos {
 		register_rest_route( 'hpm-video/v1', '/list', [
 			'methods'  => 'GET',
 			'callback' => [ $this, 'get_api' ],
-			'args'     => [
+			'args'	 => [
 				'playlist' => [
 					'default' => false,
 					'sanitize_callback' => 'sanitize_text_field'
@@ -37,6 +38,15 @@ class HPM_Videos {
 				return true;
 			}
 		] );
+
+		register_rest_route( 'hpm-video/v1', '/options', [
+			'methods'  => 'GET',
+			'callback' => [ $this, 'get_options' ],
+			'args'	 => [],
+			'permission_callback' => function() {
+				return true;
+			}
+		] );
 	}
 	// Get Brightcove playlist to show on home page after local shows block starts here
 	public static function get( bool $playlist = false, int $limit = 10, int $offset = 0 ): array {
@@ -45,6 +55,7 @@ class HPM_Videos {
 			'playlist_id' => '',
 			'policy_key' => '',
 			'player_id' => '',
+			'homepage_video_url' => '',
 			'paging_limit' => 8
 		] );
 		if ( empty( $options['account_id'] ) ) {
@@ -76,7 +87,7 @@ class HPM_Videos {
 		$response = wp_remote_get( $url,
 			[
 				'headers' => [
-					'Accept'       => "application/json;pk=" . $options['policy_key'],
+					'Accept'	   => "application/json;pk=" . $options['policy_key'],
 					'User-Agent'   => 'WordPress/' . get_bloginfo('version'),
 				],
 				'timeout' => 15,
@@ -140,15 +151,28 @@ class HPM_Videos {
 
 	public function get_api( WP_REST_Request $request ): WP_REST_Response {
 		if ( !empty( $request['playlist'] ) && strtolower( $request['playlist'] ) === 'true' ) {
-			$message = 'HPM Videos Playlist Output';
+			$message = 'HPM Video Playlist Output';
 			$playlist = true;
 		} else {
-			$message = 'HPM Videos Output';
+			$message = 'HPM Video Output';
 			$playlist = false;
 		}
 		$videos = $this->get( $playlist, $request['limit'], $request['offset'] );
 		$videos['status'] = 200;
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( $message, 'hpm-videos' ), 'data' => $videos ] );
+	}
+
+	public function get_options( WP_REST_Request $request ): WP_REST_Response {
+		$options = get_option( 'hpm_videos', [
+			'account_id' => '',
+			'playlist_id' => '',
+			'policy_key' => '',
+			'player_id' => '',
+			'homepage_video_url' => '',
+			'paging_limit' => 8
+		] );
+		$options['status'] = 200;
+		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'HPM Video Options', 'hpm-videos' ), 'data' => $options ] );
 	}
 
 	function create_menu(): void {
@@ -179,6 +203,7 @@ class HPM_Videos {
 				'playlist_id' => '',
 				'policy_key' => '',
 				'player_id' => '',
+				'homepage_video_url' => '',
 				'paging_limit' => 8
 			];
 		} ?>
@@ -212,6 +237,10 @@ class HPM_Videos {
 											<tr>
 												<th scope="row"><label for="hpm_videos[player_id]"><?php _e('Player ID', 'hpmv4' ); ?></label></th>
 												<td><input type="text" name="hpm_videos[player_id]" id="hpm_videos[player_id]" value="<?php echo $videos['player_id']; ?>" class="regular-text" /></td>
+											</tr>
+											<tr>
+												<th scope="row"><label for="hpm_videos[homepage_video_url]"><?php _e('Homepage Video URL', 'hpmv4' ); ?></label></th>
+												<td><input type="text" name="hpm_videos[homepage_video_url]" id="hpm_videos[homepage_video_url]" value="<?php echo $videos['homepage_video_url'] ?? ''; ?>" class="regular-text" /></td>
 											</tr>
 											<tr>
 												<th scope="row"><label for="hpm_videos[paging_limit]"><?php _e('Default Paging Limit', 'hpmv4' ); ?></label></th>
