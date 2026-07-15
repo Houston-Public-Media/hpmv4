@@ -2136,7 +2136,7 @@ body.nav-active-menu #top-mobile-close {
 	}
 	body:not(.page-template-page-listen) #masthead #top-search form {
 		top: -0.5rem;
-		right: 1.5rem;
+		right: 2.25rem;
 		transform: rotateX(-90deg);
 		transform-origin: top center;
 		opacity: 0.3;
@@ -4263,7 +4263,6 @@ section {
 		display: none;
 	}
 	#masthead #top-search svg {
-		width: 1rem;
 		fill: var(--white);
 	}
 }
@@ -5363,11 +5362,12 @@ select#hpm-staff-cat {
 	justify-content: flex-end;
 	position: absolute;
 	right: 0;
-	bottom: -0.5rem;
+	bottom: 0;
 }
 .quick-access ul {
 	display: flex;
 	align-items: center;
+	margin-block: 0.5rem;
 }
 .quick-access li {
 	display: inline-block;
