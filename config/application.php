@@ -125,6 +125,10 @@ if ( WP_ENV == 'development' ) {
 	Config::define( 'FORCE_SSL_ADMIN', false );
 } else {
 	Config::define( 'FORCE_SSL_ADMIN', true );
+	Config::define( 'WP_REDIS_SSL_CONTEXT', [
+		'verify_peer' => true,
+		'verify_peer_name' => false,
+	]);
 }
 Config::define( 'WP_AUTO_UPDATE_CORE', false );
 Config::define( 'AUTOMATIC_UPDATER_DISABLED', true );
