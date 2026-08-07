@@ -276,7 +276,7 @@ class HPM_Liveshows {
 	 *
 	 * @return WP_Error|WP_HTTP_Response|WP_REST_Response
 	 */
-	public function list( WP_REST_Request $request = null ): WP_Error|WP_HTTP_Response|WP_REST_Response {
+	public function list(): WP_Error|WP_HTTP_Response|WP_REST_Response {
 		$list = get_transient( 'hpm_liveshows_list' );
 		if ( !empty( $list ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Live Shows list', 'hpm-liveshows' ), 'data' => [ 'list' => $list, 'status' =>	200 ] ] );

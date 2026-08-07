@@ -705,7 +705,7 @@ class HPM_Podcasts {
 	 *
 	 * @return WP_HTTP_Response|WP_REST_Response|WP_Error
 	 */
-	static public function generate( WP_REST_Request $request = null ): WP_HTTP_Response|WP_REST_Response|WP_Error {
+	static public function generate( ?WP_REST_Request $request = null ): WP_HTTP_Response|WP_REST_Response|WP_Error {
 		global $post;
 		require HPM_PODCAST_PLUGIN_DIR . 'inc' . DIRECTORY_SEPARATOR . 'marco_s3.php';
 		$s3 = new S3( AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_S3_BUCKET_NAME, AWS_REGION, '' );
@@ -1330,11 +1330,9 @@ class HPM_Podcasts {
 	/**
 	 * Return list of active podcast feeds with feed URLs and most recent files
 	 *
-	 * @param WP_REST_Request|null $request
-	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
-	public function list( WP_REST_Request $request = null ): WP_Error|WP_REST_Response {
+	public function list(): WP_Error|WP_REST_Response {
 		$list = get_transient( 'hpm_podcasts_list' );
 		if ( !empty( $list ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Podcast feed list', 'hpm-podcasts' ), 'data' => [ 'list' => $list, 'status' => 200 ] ] );
