@@ -129,7 +129,7 @@ function hpm_staff_meta_box( $object, $box ): void {
 
 	$hpm_staff_meta = get_post_meta( $object->ID, 'hpm_staff_meta', true );
 	if ( empty( $hpm_staff_meta ) ) {
-		$hpm_staff_meta = [ 'pronouns' => '', 'title' => '', 'email' => '', 'twitter' => '', 'facebook' => '', 'linkedin' => '', 'phone' => '', 'fediverse' => '', 'bluesky' => '' ];
+		$hpm_staff_meta = [ 'pronouns' => '', 'title' => '', 'email' => '', 'twitter' => '', 'instagram' => '', 'facebook' => '', 'linkedin' => '', 'phone' => '', 'fediverse' => '', 'bluesky' => '' ];
 	}
 
 	$hpm_staff_alpha = get_post_meta( $object->ID, 'hpm_staff_alpha', true );
@@ -148,7 +148,8 @@ function hpm_staff_meta_box( $object, $box ): void {
 		<li><label for="hpm-staff-title"><?php _e( "Job Title: ", 'example' ); ?></label> <input type="text" id="hpm-staff-title" name="hpm-staff-title" value="<?PHP echo ( !empty( $hpm_staff_meta['title'] ) ? $hpm_staff_meta['title'] : '' ); ?>" placeholder="Top Gun" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-email"><?php _e( "Email: ", 'example' ); ?></label> <input type="text" id="hpm-staff-email" name="hpm-staff-email" value="<?PHP echo ( !empty( $hpm_staff_meta['email'] ) ? $hpm_staff_meta['email'] : '' ); ?>" placeholder="highway@thedanger.zone" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-fb"><?php _e( "Facebook: ", 'example' ); ?></label> <input type="text" id="hpm-staff-fb" name="hpm-staff-fb" value="<?PHP echo ( !empty( $hpm_staff_meta['facebook'] ) ? $hpm_staff_meta['facebook'] : '' ); ?>" placeholder="https://facebook.com/first.last" style="width: 60%;" /></li>
-		<li><label for="hpm-staff-twitter"><?php _e( "Twitter: ", 'example' ); ?></label> <input type="text" id="hpm-staff-twitter" name="hpm-staff-twitter" value="<?PHP echo ( !empty( $hpm_staff_meta['twitter'] ) ? $hpm_staff_meta['twitter'] : '' ); ?>" placeholder="https://twitter.com/houpubmedia" style="width: 60%;" /></li>
+		<li><label for="hpm-staff-twitter"><?php _e( "X/Twitter: ", 'example' ); ?></label> <input type="text" id="hpm-staff-twitter" name="hpm-staff-twitter" value="<?PHP echo ( !empty( $hpm_staff_meta['twitter'] ) ? $hpm_staff_meta['twitter'] : '' ); ?>" placeholder="https://twitter.com/houpubmedia" style="width: 60%;" /></li>
+		<li><label for="hpm-staff-instagram"><?php _e( "Instagram: ", 'example' ); ?></label> <input type="text" id="hpm-staff-instagram" name="hpm-staff-instagram" value="<?PHP echo ( !empty( $hpm_staff_meta['instagram'] ) ? $hpm_staff_meta['instagram'] : '' ); ?>" placeholder="https://instagram.com/houpubmedia" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-linkedin"><?php _e( "LinkedIn: ", 'example' ); ?></label> <input type="text" id="hpm-staff-linkedin" name="hpm-staff-linkedin" value="<?PHP echo ( !empty( $hpm_staff_meta['linkedin'] ) ? $hpm_staff_meta['linkedin'] : '' ); ?>" placeholder="https://linkedin.com/in/example" style="width: 60%;" /></li>
 		<li><label for="hpm-staff-fediverse"><?php _e( "Fediverse: ", 'example' ); ?></label> <input type="text" id="hpm-staff-fediverse" name="hpm-staff-fediverse" value="<?PHP echo ( !empty( $hpm_staff_meta['fediverse'] ) ? $hpm_staff_meta['fediverse'] : '' ); ?>" placeholder="Mastodon, Threads, ActivityPub, etc." style="width: 60%;" /></li>
 		<li><label for="hpm-staff-bluesky"><?php _e( "Bluesky: ", 'example' ); ?></label> <input type="text" id="hpm-staff-bluesky" name="hpm-staff-bluesky" value="<?PHP echo ( !empty( $hpm_staff_meta['bluesky'] ) ? $hpm_staff_meta['bluesky'] : '' ); ?>" placeholder="Bluesky, ATProto, etc." style="width: 60%;" /></li>
@@ -188,6 +189,7 @@ function hpm_staff_save_meta( $post_id, $post ) {
 			'email'		=> ( isset( $_POST['hpm-staff-email'] ) ? sanitize_text_field( $_POST['hpm-staff-email'] ) : '' ),
 			'facebook'	=> ( isset( $_POST['hpm-staff-fb'] ) ? sanitize_text_field( $_POST['hpm-staff-fb'] ) : '' ),
 			'twitter'	=> ( isset( $_POST['hpm-staff-twitter'] ) ? sanitize_text_field( $_POST['hpm-staff-twitter'] ) : '' ),
+			'instagram'	=> ( isset( $_POST['hpm-staff-instagram'] ) ? sanitize_text_field( $_POST['hpm-staff-instagram'] ) : '' ),
 			'linkedin'	=> ( isset( $_POST['hpm-staff-linkedin'] ) ? sanitize_text_field( $_POST['hpm-staff-linkedin'] ) : '' ),
 			'phone'	=> ( isset( $_POST['hpm-staff-phone'] ) ? sanitize_text_field( $_POST['hpm-staff-phone'] ) : ''),
 			'fediverse'	=> ( isset( $_POST['hpm-staff-fediverse'] ) ? sanitize_text_field( $_POST['hpm-staff-fediverse'] ) : ''),
