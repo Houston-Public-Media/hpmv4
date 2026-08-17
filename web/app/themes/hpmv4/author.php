@@ -56,6 +56,7 @@
 						if (
 							!empty( $author['phone'] ) ||
 							!empty( $author['facebook'] ) ||
+							!empty( $author['instagram'] ) ||
 							!empty( $author['twitter'] ) ||
 							!empty( $author['linkedin'] ) ||
 							!empty( $author['email'] ) ||
@@ -66,6 +67,7 @@
 						<?php
 							echo ( !empty( $author['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $author['phone'] ) . '" title="Call ' . $curauth->display_name . ' at ' . $author['phone'] . '" data-phone="' . $author['phone'] . '">' . hpm_svg_output( 'phone' ) . '<span class="screen-reader-text">Call ' . $curauth->display_name . '</span></a></div>' : '' );
 							echo ( !empty( $author['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $author['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text">Facebook</span></a></div>' : '' );
+							echo ( !empty( $author['instagram'] ) ? '<div class="service-icon instagram"><a href="' . $author['instagram'] . '" target="_blank">' . hpm_svg_output( 'instagram' ) . '<span class="screen-reader-text">Instagram</span></a></div>' : '' );
 							echo ( !empty( $author['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $author['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) . '<span class="screen-reader-text">Twitter/X</span></a></div>' : '' );
 							echo ( !empty( $author['linkedin'] ) ? '<div class="service-icon linkedin"><a href="' . $author['linkedin'] . '" target="_blank">' . hpm_svg_output( 'linkedin' ) . '<span class="screen-reader-text">LinkedIn</span></a></div>' : '' );
 							if ( !empty( $author['fediverse'] ) ) {

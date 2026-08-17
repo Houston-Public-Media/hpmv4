@@ -45,6 +45,9 @@ function author_footer( $id ): string {
 			if ( !empty( $meta[ 'facebook' ] ) ) {
 				$icon_wrap .= '<div class="service-icon facebook"><a href="' . $meta[ 'facebook' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Facebook" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text" >Facebook</span></a></div>';
 			}
+			if ( !empty( $meta[ 'instagram' ] ) ) {
+				$icon_wrap .= '<div class="service-icon instagram"><a href="' . $meta[ 'instagram' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Instagram" target="_blank">' . hpm_svg_output( 'instagram' ) . '<span class="screen-reader-text">Instagram</span></a></div>';
+			}
 			if ( !empty( $meta[ 'twitter' ] ) ) {
 				$icon_wrap .= '<div class="service-icon twitter"><a href="' . $meta[ 'twitter' ] . '" rel="noopener" title="' . ( $author->post->post_title ?? $coa->display_name ) . ' on Twitter" target="_blank">' . hpm_svg_output( 'twitter' ) . '<span class="screen-reader-text" >Twitter</span></a></div>';
 			}
