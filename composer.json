@@ -57,7 +57,7 @@
 		"wp-plugin/npr-content-distribution-service": "*",
 		"wp-plugin/publish-to-apple-news": ">2.6",
 		"wp-plugin/redirection": "5.9.0",
-		"wp-plugin/tinymce-advanced": "5.9.2",
+		"wp-plugin/tinymce-advanced": "5.10.1",
 		"wp-plugin/redis-cache": ">2.0.17",
 		"wp-plugin/wp-ses": "*",
 		"wp-plugin/pdfjs-viewer-shortcode": "3.1.1",
