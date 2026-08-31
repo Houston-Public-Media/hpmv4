@@ -210,7 +210,7 @@ class HPM_Embeds {
 	 *
 	 * @return WP_Error|WP_HTTP_Response|WP_REST_Response
 	 */
-	public function list( WP_REST_Request $request = null ): WP_Error|WP_HTTP_Response|WP_REST_Response {
+	public function list(): WP_Error|WP_HTTP_Response|WP_REST_Response {
 		$list = get_transient( 'hpm_embeds_list' );
 		if ( !empty( $list ) ) {
 			return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Embeds list', 'hpm-embeds' ), 'data' => [ 'list' => $list, 'status' =>	200 ] ] );

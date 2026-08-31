@@ -125,6 +125,10 @@ if ( WP_ENV == 'development' ) {
 	Config::define( 'FORCE_SSL_ADMIN', false );
 } else {
 	Config::define( 'FORCE_SSL_ADMIN', true );
+	Config::define( 'WP_REDIS_SSL_CONTEXT', [
+		'verify_peer' => true,
+		'verify_peer_name' => false,
+	]);
 }
 Config::define( 'WP_AUTO_UPDATE_CORE', false );
 Config::define( 'AUTOMATIC_UPDATER_DISABLED', true );
@@ -158,6 +162,7 @@ Config::define( 'EWWW_IMAGE_OPTIMIZER_DEFER_S3', true );
 Config::define( 'WP_REDIS_HOST', env( 'WP_REDIS_HOST' ) );
 Config::define( 'WP_REDIS_PORT', env( 'WP_REDIS_PORT' ) );
 Config::define( 'WP_REDIS_SCHEME', env( 'WP_REDIS_SCHEME' ) );
+Config::define( 'WP_REDIS_CLIENT', env( 'WP_REDIS_CLIENT' ) );
 Config::define( 'BSKY_HANDLE', env( 'BSKY_HANDLE' ) );
 Config::define( 'BSKY_APP_PASSWORD', env( 'BSKY_APP_PASSWORD' ) );
 Config::define( 'THREADS_USER_ID', env( 'THREADS_USER_ID' ) );

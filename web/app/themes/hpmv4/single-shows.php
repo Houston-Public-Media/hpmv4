@@ -92,6 +92,8 @@ get_header(); ?>
 						<div class="sidebar-ad">
 <?php if ( $show_id === 503298 ) { ?>
 							<div><a href="https://uh.edu/energy/eti/"><img src="https://cdn.houstonpublicmedia.org/assets/images/UH-Secondary-Extensions-Energy-Transition-Institute-rgb_vertical_.png.webp" alt="University of Houston Energy Transition Institute" /></a></div>
+<?php } elseif ( $show_id === 166994 ) { ?>
+							<div><a href="https://www.law.uh.edu/" target="_blank" rel="noopener noreferrer"><img style="width: 100%;" src="https://cdn.houstonpublicmedia.org/wp-content/uploads/2016/09/06092720/LBC_285x240-2.png" alt="University of Houston Law Center" /></a></div>
 <?php } elseif ( $show_id === 61330 ) { ?>
 							<!-- /9147267/HPM_Bauer_Business_Focus -->
 							<h4>Bauer Business Focus Sponsor</h4>

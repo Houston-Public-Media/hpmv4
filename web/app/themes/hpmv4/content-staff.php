@@ -35,6 +35,7 @@ if ( ( $author_bio == "<p>Biography pending.</p>" || $author_bio == "<p>Biograph
 			<?php
 				echo ( !empty( $staff['phone'] ) ? '<div class="service-icon phone"><a href="tel://+1' . str_replace( [ '(', ')', ' ', '-', '.' ], [ '', '', '', '', '' ], $staff['phone'] ) . '" title="Call ' . get_the_title() . ' at ' . $staff['phone'] . '" data-phone="' . $staff['phone'] . '">' . hpm_svg_output( 'phone' ) . '</a><span class="screen-reader-text">Call ' . get_the_title() . '</span></div>' : '' );
 				echo ( !empty( $staff['facebook'] ) ? '<div class="service-icon facebook"><a href="' . $staff['facebook'] . '" target="_blank">' . hpm_svg_output( 'facebook' ) . '<span class="screen-reader-text">Facebook</span></a></div>' : '' );
+				echo ( !empty( $staff['instagram'] ) ? '<div class="service-icon instagram"><a href="' . $staff['instagram'] . '" target="_blank">' . hpm_svg_output( 'instagram' ) . '<span class="screen-reader-text">Instagram</span></a></div>' : '' );
 				echo ( !empty( $staff['twitter'] ) ? '<div class="service-icon twitter"><a href="' . $staff['twitter'] . '" target="_blank">' . hpm_svg_output( 'twitter' ) .'<span class="screen-reader-text">Twitter</span></a></div>' : '' );
 				if ( !empty( $staff['fediverse'] ) ) {
 					if ( str_contains( $staff['fediverse'], 'threads.net' ) ) {

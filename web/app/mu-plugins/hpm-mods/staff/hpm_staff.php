@@ -129,7 +129,7 @@ function hpm_staff_meta_box( $object, $box ): void {
 
 	$hpm_staff_meta = get_post_meta( $object->ID, 'hpm_staff_meta', true );
 	if ( empty( $hpm_staff_meta ) ) {
-		$hpm_staff_meta = [ 'pronouns' => '', 'title' => '', 'email' => '', 'twitter' => '', 'facebook' => '', 'linkedin' => '', 'phone' => '', 'fediverse' => '', 'bluesky' => '' ];
+		$hpm_staff_meta = [ 'pronouns' => '', 'title' => '', 'email' => '', 'twitter' => '', 'instagram' => '', 'facebook' => '', 'linkedin' => '', 'phone' => '', 'fediverse' => '', 'bluesky' => '' ];
 	}
 
 	$hpm_staff_alpha = get_post_meta( $object->ID, 'hpm_staff_alpha', true );

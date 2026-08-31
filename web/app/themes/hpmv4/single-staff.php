@@ -45,19 +45,25 @@ get_header(); ?>
 			}
 			if ( !empty( $staff['facebook'] ) ) { ?>
 									<div class="service-icon facebook">
-										<a href="<?php echo $staff['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text" >Facebook</span></a>
+										<a href="<?php echo $staff['facebook']; ?>" target="_blank"><?php echo hpm_svg_output( 'facebook' ); ?><span class="screen-reader-text">Facebook</span></a>
 									</div>
 <?php
 			}
+			if ( !empty( $staff['instagram'] ) ) { ?>
+									<div class="service-icon instagram">
+										<a href="<?php echo $staff['instagram']; ?>" target="_blank"><?php echo hpm_svg_output( 'instagram' ); ?><span class="screen-reader-text">Instagram</span></a>
+									</div>
+				<?php
+			}
 			if ( !empty( $staff['twitter'] ) ) { ?>
 									<div class="service-icon twitter">
-										<a href="<?php echo $staff['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text" >Twitter</span></a>
+										<a href="<?php echo $staff['twitter']; ?>" target="_blank"><?php echo hpm_svg_output( 'twitter' ); ?><span class="screen-reader-text">X/Twitter</span></a>
 									</div>
 <?php
 			}
 			if ( !empty( $staff['linkedin'] ) ) { ?>
 									<div class="service-icon linkedin">
-										<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text" >Linkedln</span></a>
+										<a href="<?php echo $staff['linkedin']; ?>" target="_blank"><?php echo hpm_svg_output( 'linkedin' ); ?><span class="screen-reader-text">Linkedln</span></a>
 									</div>
 <?php
 			}
