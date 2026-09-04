@@ -320,7 +320,10 @@ Template Name: Radio Schedules
 				<h3>Playlist for <?PHP echo $today; ?></h3>
 				<ul class="proglist">
 <?PHP
-				foreach ( $progs as $prog ) { ?>
+				foreach ( $progs as $prog ) {
+					if ( empty( $prog['time'] ) && empty( $prog['name'] ) ) {
+						continue;
+					} ?>
 					<li>
 						<h2><strong><?PHP echo $prog['time']; ?>:</strong> <?php echo ( !empty( $prog['link'] ) ? '<a href="'.$prog['link'].'">' : '' ) . $prog['name'] . ( !empty( $prog['link'] ) ? '</a>' : '' ); ?></h2>
 						<?PHP echo ( !empty( $prog['desc'] ) ? "<p>" . $prog['desc'] . "</p>" : '' ); ?>

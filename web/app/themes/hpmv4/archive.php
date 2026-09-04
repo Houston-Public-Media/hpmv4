@@ -7,7 +7,7 @@
 $pod_id = 0;
 if ( is_category() ) {
 	$cat = get_term_by( 'name', single_cat_title( '', false ), 'category' );
-	if ( empty( $wp_query->query_vars['paged'] ) && $cat !== false ) {
+	if ( empty( $wp_query->query_vars['paged'] ) && $cat !== false && $cat !== null && !is_wp_error( $cat ) ) {
 		if ( $cat->parent == 9 ) {
 			$args = [
 				'post_type' => 'page',
@@ -48,11 +48,11 @@ if ( is_category() ) {
 			header( 'Location: /news/indepth/' );
 			exit;
 		}
-	}
-	global $wpdb;
-	$podcast = $wpdb->get_results( "SELECT post_id FROM wp_postmeta WHERE meta_key = 'hpm_pod_cat' AND meta_value = {$cat->term_id}" );
-	if ( !empty( $podcast ) ) {
-		$pod_id = $podcast[0]->post_id;
+		global $wpdb;
+		$podcast = $wpdb->get_results( "SELECT post_id FROM wp_postmeta WHERE meta_key = 'hpm_pod_cat' AND meta_value = {$cat->term_id}" );
+		if ( !empty( $podcast ) ) {
+			$pod_id = $podcast[0]->post_id;
+		}
 	}
 }
 get_header(); ?>

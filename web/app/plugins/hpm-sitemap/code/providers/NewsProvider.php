@@ -39,7 +39,7 @@ class NewsProvider extends ProviderCore implements ISitemapProvider {
 		}
 
 		if ( $this->globalSettings->enableImages ) {
-			$cmdSelect .= " , images.guid as imageUrl, images.post_title as imageTitle, images.post_excerpt as imageCaption, images.post_content as imageDescription";
+			$cmdSelect .= " , images.guid as imageUrl, images.post_title as imageTitle, images.post_excerpt as imageCaption, images.post_content as imageDescription ";
 			$cmdFrom .= " LEFT JOIN {$wpdb->postmeta} as pm 
 				ON posts.id = pm.post_id AND pm.meta_key = '_thumbnail_id'
 				LEFT JOIN {$wpdb->posts} as images
