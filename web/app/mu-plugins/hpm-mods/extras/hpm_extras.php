@@ -592,7 +592,8 @@ function hpmnpr_nprapi_output( $api_id = 1001, $num = 50, $per_page = 10 ): mixe
             $output .='<article>' .
                 ( !empty( $image_url['url'] ) ? '<img class="post-thumbnail" src="' . $image_url['url'] . '" alt="' .
                     ( !empty( $story->teaser ) ? strip_tags( $story->teaser ) : $story->title ) .
-                    '" loading="lazy" />' : '' ) . '<div class="card-content"><header class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span></a></h2></header><div class="entry-summary"><p>' . $story->teaser . '</p></div></div></article>';
+                    '" loading="lazy" />' : '' ) . '<div class="card-content"><header class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span></a></h2></header><div class="entry-summary"><p>' .
+					( !empty( $story->teaser ) ? strip_tags( $story->teaser ) : "Read Now" ) . '</p></div></div></article>';
 
         }
     } else {
