@@ -1101,10 +1101,15 @@ function hpm_radio_schedule_shortcode( $atts ): string {
 			{$css_stuff}
 		}
 	</style>
-	<header class="page-header">
-		<h1 class="page-title entry-title">{$station_name}</h1>
-	</header>
+EOT;
+if ( !$embed ) {
+	$output .= <<<EOT
+		<header class="page-header">
+			<h1 class="page-title entry-title">{$station_name}</h1>
+		</header>
 	EOT;
+}
+
 
 
 	$date_unix = mktime( 0, 0, 0, $sched_month, $sched_day, $sched_year );
@@ -1116,7 +1121,7 @@ function hpm_radio_schedule_shortcode( $atts ): string {
 				<div class="date-select">
 					<a class="date-pick-left" href="?sched_station={$sched_station}&datepicker={$yesterday}" aria-label="Navigate to Previous Day">&lt;&lt;</a>
 					<div id="schedule-search">
-						<form role="form" method="" action="">
+						<form role="form" method="get" action="">
 							<label for="datepicker">Select a Day</label>
 							<input type="date" id="datepicker" name="datepicker" value="{$date}" />
 						</form>
