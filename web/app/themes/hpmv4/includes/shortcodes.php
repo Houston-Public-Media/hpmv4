@@ -1303,6 +1303,9 @@ function hpm_radio_schedule_shortcode( $atts ): string {
 								<ul class="progplay">
 				EOT;
 				foreach ( $json as $ks => $song ) {
+					if ( empty( $song['artist'] ) && empty( $song['song'] ) ) {
+						continue;
+					}
 					if ( ( $ks + 1 ) & 1 ) {
 						$output .= "<li>";
 					} else {
