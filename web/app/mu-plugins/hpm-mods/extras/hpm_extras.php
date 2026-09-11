@@ -109,11 +109,11 @@ add_filter( 'query_vars', 'add_query_vars' );
  */
 function add_rewrite_rules( $aRules ): array {
 	$aNewRules = [
-		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=$matches[4]',
-		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=01',
-		'^(news887|classical)/schedule/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=01&sched_day=01',
-		'^(news887|classical)/schedule/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
-		'^(news887|classical)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
+		'^(news887|classical|thevibe)/schedule/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=$matches[4]',
+		'^(news887|classical|thevibe)/schedule/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=01',
+		'^(news887|classical|thevibe)/schedule/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=01&sched_day=01',
+		'^(news887|classical|thevibe)/schedule/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
+		'^(news887|classical|thevibe)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
 		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([a-z\-0-9]+)/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]'
 	];
 	return $aNewRules + $aRules;
