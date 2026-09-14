@@ -889,6 +889,7 @@ function hpm_radio_schedule_shortcode( $atts ): string {
 	if ( !empty( $wp_query->query_vars['sched_station'] ) ) {
 		$sched_station = urldecode( $wp_query->query_vars['sched_station'] );
 	}
+	$permalink = get_the_permalink();
 	if ( !empty( $_GET['datepicker'] ) ) {
 		$date_xp = explode( '-', $_GET['datepicker'] );
 		$sched_year = $date_xp[0];
@@ -1119,14 +1120,14 @@ if ( !$embed ) {
 		$output .= <<<EOT
 			<section id="station-schedule-display" class="column-left">
 				<div class="date-select">
-					<a class="date-pick-left" href="?sched_station={$sched_station}&datepicker={$yesterday}" aria-label="Navigate to Previous Day">&lt;&lt;</a>
+					<a class="date-pick-left" href="{$permalink}?sched_station={$sched_station}&datepicker={$yesterday}" aria-label="Navigate to Previous Day">&lt;&lt;</a>
 					<div id="schedule-search">
 						<form role="form" method="get" action="">
 							<label for="datepicker">Select a Day</label>
 							<input type="date" id="datepicker" name="datepicker" value="{$date}" />
 						</form>
 					</div>
-					<a class="date-pick-right" href="?sched_station={$sched_station}&datepicker={$tomorrow}" aria-label="Navigate to Next Day">&gt;&gt;</a>
+					<a class="date-pick-right" href="{$permalink}?sched_station={$sched_station}&datepicker={$tomorrow}" aria-label="Navigate to Next Day">&gt;&gt;</a>
 				</div>
 		EOT;
 	} else {
@@ -1135,14 +1136,14 @@ if ( !$embed ) {
 		$output .= <<<EOT
 			<section id="station-schedule-display" class="column-left">
 				<div class="date-select">
-					<a class="date-pick-left" href="/{$sched_station}/schedule/{$yesterday}/" aria-label="Navigate to Previous Day">&lt;&lt;</a>
+					<a class="date-pick-left" href="{$permalink}schedule/{$yesterday}/" aria-label="Navigate to Previous Day">&lt;&lt;</a>
 					<div id="schedule-search">
 						<form role="form" method="" action="">
 							<label for="datepicker">Select a Day</label>
 							<input type="date" id="datepicker" name="datepicker" value="{$date}" />
 						</form>
 					</div>
-					<a class="date-pick-right" href="/{$sched_station}/schedule/{$tomorrow}/" aria-label="Navigate to Next Day">&gt;&gt;</a>
+					<a class="date-pick-right" href="{$permalink}schedule/{$tomorrow}/" aria-label="Navigate to Next Day">&gt;&gt;</a>
 				</div>
 		EOT;
 	}
@@ -1157,12 +1158,12 @@ if ( !$embed ) {
 			if ( $embed ) {
 				$output .= <<<EOT
 					<h3>Playlist Error</h3>
-					<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+					<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
 				EOT;
 			} else {
 				$output .= <<<EOT
 					<h3>Playlist Error</h3>
-					<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="/{$sched_station}/">return to today&#39;s playlist</a>.</p>
+					<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
 				EOT;
 			}
 		} else {
@@ -1172,12 +1173,12 @@ if ( !$embed ) {
 				if ( $embed ) {
 					$output .= <<<EOT
 					<h3>Playlist Error</h3>
-					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
 					EOT;
 				} else {
 					$output .= <<<EOT
 					<h3>Playlist Error</h3>
-					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="/{$sched_station}/">return to today&#39;s playlist</a>.</p>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
 					EOT;
 				}
 			} else {
@@ -1282,18 +1283,32 @@ if ( !$embed ) {
 	} else {
 		$remote = wp_remote_get( "https://cdn.houstonpublicmedia.org/assets/nowplay/the-vibe/" . $date . ".json" );
 		if ( is_wp_error( $remote ) ) {
-			$output .= <<<EOT
-				<h3>Playlist Error</h3>
-				<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="/{$sched_station}/">return to today&#39;s playlist</a>.</p>
-			EOT;
+			if ( $embed ) {
+				$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+					EOT;
+			} else {
+				$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
+					EOT;
+			}
 		} else {
 			$api = wp_remote_retrieve_body( $remote );
 			$json = json_decode( $api, true );
 			if ( empty( $json ) ) {
-				$output .= <<<EOT
-				<h3>Playlist Error</h3>
-				<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="/{$sched_station}/">return to today&#39;s playlist</a>.</p>
-				EOT;
+				if ( $embed ) {
+					$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+					EOT;
+				} else {
+					$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
+					EOT;
+				}
 			} else {
 				$output .= <<<EOT
 					<div class="playlist-schedule-printable">
@@ -1339,9 +1354,9 @@ if ( !$embed ) {
 					let picker = document.getElementById('datepicker');
 						picker.addEventListener( 'change', () => {
 						let date = picker.value.replaceAll('-','/');
-							location.href = '/{$sched_station}/schedule/' + date;
-						});
+						location.href = '{$permalink}schedule/' + date;
 					});
+				});
 			</script>
 		EOT;
 	} else {
@@ -1350,9 +1365,9 @@ if ( !$embed ) {
 				document.addEventListener('DOMContentLoaded', () => {
 					let picker = document.getElementById('datepicker');
 						picker.addEventListener( 'change', () => {
-							location.href = '?sched_station={$sched_station}&datepicker=' + date;
-						});
+						location.href = '{$permalink}?sched_station={$sched_station}&datepicker=' + picker.value;
 					});
+				});
 			</script>
 		EOT;
 	}
