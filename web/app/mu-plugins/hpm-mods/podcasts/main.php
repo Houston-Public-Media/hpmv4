@@ -1430,6 +1430,21 @@ class HPM_Podcasts {
 		return rest_ensure_response( [ 'code' => 'rest_api_success', 'message' => esc_html__( 'Podcast feed list', 'hpm-podcasts' ), 'data' => [ 'list' => $list, 'status' => 200 ] ] );
 	}
 
+	public function return_seconds( string $time ): int {
+		$output = 0;
+		if ( !empty( $time ) ) {
+			$time_xp = explode( ":", $time );
+			if ( count( $time_xp ) === 1 ) {
+				$output += intval( $time_xp[0] );
+			} elseif ( count( $time_xp ) === 2 ) {
+				$output += intval( $time_xp[1] ) + ( intval( $time_xp[0] ) * 60 );
+			} elseif ( count( $time_xp ) === 3 ) {
+				$output += intval( $time_xp[2] ) + ( intval( $time_xp[1] ) * 60 ) + ( intval( $time_xp[0] ) * 60 * 60 );
+			}
+		}
+		return $output;
+	}
+
 	/**
 	 * JSON version of requested podcast feed
 	 *
@@ -1609,7 +1624,7 @@ class HPM_Podcasts {
 									'url' => $media_file,
 									'mime_type' => $a_meta['mime'],
 									'filesize' => $a_meta['filesize'],
-									'duration_in_seconds' => $a_meta['length']
+									'duration_in_seconds' => $this->return_seconds( $a_meta['length'] )
 								],
 								'season' => ( !empty( $pod_desc['season'] ) ? $pod_desc['season'] : '' ),
 								'episode' => ( !empty( $pod_desc['episode'] ) ? $pod_desc['episode'] : '' ),
