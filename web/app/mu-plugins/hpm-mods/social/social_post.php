@@ -1,6 +1,5 @@
 <?php
 	if ( ! defined( 'ABSPATH' ) ) exit;
-//	use Jwcounts\TwitterApi\Client;
 
 	add_action( 'load-post.php', 'hpm_social_post_setup' );
 	add_action( 'load-post-new.php', 'hpm_social_post_setup' );
@@ -27,14 +26,10 @@
 		wp_nonce_field( basename( __FILE__ ), 'hpm_social_post_class_nonce' );
 		$social_post = get_post_meta( $object->ID, 'hpm_social_post', true );
 		$social_facebook_sent = get_post_meta( $object->ID, 'hpm_social_facebook_sent', true );
-//		$social_twitter_sent = get_post_meta( $object->ID, 'hpm_social_twitter_sent', true );
 		$social_mastodon_sent = get_post_meta( $object->ID, 'hpm_social_mastodon_sent', true );
 		$social_bluesky_sent = get_post_meta( $object->ID, 'hpm_social_bluesky_sent', true );
 		$social_threads_sent = get_post_meta( $object->ID, 'hpm_social_threads_sent', true );
 		$twitter_sent = [];
-//		if ( $social_twitter_sent == 1 ) {
-//			$twitter_sent[] = 'Twitter/X';
-//		}
 		if ( $social_mastodon_sent == 1 ) {
 			$twitter_sent[] = 'Mastodon';
 		}
@@ -109,11 +104,7 @@
 			return $post_id;
 		}
 		$social_post = get_post_meta( $post_id, 'hpm_social_post', true );
-		$social_facebook_sent = get_post_meta( $post_id, 'hpm_social_facebook_sent', true );
-		//$social_twitter_sent = get_post_meta( $post_id, 'hpm_social_twitter_sent', true );
-		$social_mastodon_sent = get_post_meta( $post_id, 'hpm_social_mastodon_sent', true );
-		$social_bluesky_sent = get_post_meta( $post_id, 'hpm_social_bluesky_sent', true );
-		$social_threads_sent = get_post_meta( $post_id, 'hpm_social_threads_sent', true );
+
 		if ( empty( $social_post ) ) {
 			return $post_id;
 		}
@@ -122,24 +113,8 @@
 		}
 		if ( !empty( $social_post['twitter']['data'] ) ) {
 			$post_body = $social_post['twitter']['data'] . "\n\n" . get_the_permalink( $post_id );
-//			if ( empty( $social_twitter_sent ) && !empty( HPM_TW_BEARER_TOKEN ) ) {
-//				$account_id = explode( '-', HPM_TW_ACCESS_TOKEN );
-//				$settings = [
-//					'account_id' => $account_id[0],
-//					'consumer_key' => HPM_TW_CONSUMER_KEY,
-//					'consumer_secret' => HPM_TW_CONSUMER_SECRET,
-//					'bearer_token' => HPM_TW_BEARER_TOKEN,
-//					'access_token' => HPM_TW_ACCESS_TOKEN,
-//					'access_token_secret' => HPM_TW_ACCESS_TOKEN_SECRET
-//				];
-//				try {
-//					$client = new Client( $settings );
-//					$return = $client->tweet()->create()->performRequest( [ 'text' => $post_body ] );
-//					update_post_meta( $post_id, 'hpm_social_twitter_sent', 1 );
-//				} catch (Exception|\GuzzleHttp\Exception\GuzzleException $e) {
-//					log_it( "X (" . $post_id . "): " . print_r( $e->getMessage(), true ) );
-//				}
-//			}
+
+			$social_mastodon_sent = get_post_meta( $post_id, 'hpm_social_mastodon_sent', true );
 			if ( empty( $social_mastodon_sent ) && !empty( HPM_MASTODON_BEARER ) ) {
 				$payload = [
 					'body' => [
@@ -165,6 +140,8 @@
 					log_it( "Mastodon (" . $post_id . "): " . print_r( $masto_result->get_error_message(), true ) );
 				}
 			}
+
+			$social_bluesky_sent = get_post_meta( $post_id, 'hpm_social_bluesky_sent', true );
 			if ( empty( $social_bluesky_sent ) && !empty( BSKY_HANDLE ) ) {
 				$bsky_options = [
 					'headers' => [
@@ -245,6 +222,8 @@
 					log_it( "Bluesky (" . $post_id . "): " . print_r( $bsky_auth_result->get_error_message(), true ) );
 				}
 			}
+
+			$social_threads_sent = get_post_meta( $post_id, 'hpm_social_threads_sent', true );
 			if ( empty( $social_threads_sent ) && !empty( THREADS_USER_ID ) ) {
 				$token = hpm_social_threads_token();
 				if ( $token !== false ) {
@@ -287,6 +266,7 @@
 			}
 		}
 
+		$social_facebook_sent = get_post_meta( $post_id, 'hpm_social_facebook_sent', true );
 		if ( !empty( $social_post['facebook']['data'] ) ) {
 			if ( empty( $social_facebook_sent ) && !empty( HPM_FB_ACCESS_TOKEN ) ) {
 				$fb_url = add_query_arg([

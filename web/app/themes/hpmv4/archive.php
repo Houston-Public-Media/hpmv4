@@ -7,7 +7,7 @@
 $pod_id = 0;
 if ( is_category() ) {
 	$cat = get_term_by( 'name', single_cat_title( '', false ), 'category' );
-	if ( empty( $wp_query->query_vars['paged'] ) && $cat !== false ) {
+	if ( empty( $wp_query->query_vars['paged'] ) && $cat !== false && $cat !== null && !is_wp_error( $cat ) ) {
 		if ( $cat->parent == 9 ) {
 			$args = [
 				'post_type' => 'page',
@@ -48,11 +48,11 @@ if ( is_category() ) {
 			header( 'Location: /news/indepth/' );
 			exit;
 		}
-	}
-	global $wpdb;
-	$podcast = $wpdb->get_results( "SELECT post_id FROM wp_postmeta WHERE meta_key = 'hpm_pod_cat' AND meta_value = {$cat->term_id}" );
-	if ( !empty( $podcast ) ) {
-		$pod_id = $podcast[0]->post_id;
+		global $wpdb;
+		$podcast = $wpdb->get_results( "SELECT post_id FROM wp_postmeta WHERE meta_key = 'hpm_pod_cat' AND meta_value = {$cat->term_id}" );
+		if ( !empty( $podcast ) ) {
+			$pod_id = $podcast[0]->post_id;
+		}
 	}
 }
 get_header(); ?>
@@ -80,7 +80,7 @@ get_header(); ?>
 				?>
 			</header>
 <?php
-	if ( is_category() && $cat->term_id === 13766 ) {
+	if ( is_category() && !empty( $cat ) &&$cat->term_id === 13766 ) {
 		// Full Menu Sponsor ?>
 		<aside class="column-right">
 			<div class="hpm-promo-wrap"><div id="full-menu-sponsor" class="top-banner"><h4>The Full Menu is sponsored by</h4><a href="https://www.centralmarket.com/?utm_medium=display&utm_source=npr&utm_campaign=fullmenu&utm_content=npr_banner"><img src="https://cdn.houstonpublicmedia.org/assets/images/CM-Logo-300x25016.jpg.webp" alt="Support for the Full Menu comes from Central Market"></a></div></div>

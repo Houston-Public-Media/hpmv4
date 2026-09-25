@@ -109,11 +109,11 @@ add_filter( 'query_vars', 'add_query_vars' );
  */
 function add_rewrite_rules( $aRules ): array {
 	$aNewRules = [
-		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=$matches[4]',
-		'^(news887|classical)/schedule/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=01',
-		'^(news887|classical)/schedule/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=01&sched_day=01',
-		'^(news887|classical)/schedule/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
-		'^(news887|classical)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
+		'^(news887|classical|thevibe)/schedule/([0-9]{4})/([0-9]{2})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=$matches[4]',
+		'^(news887|classical|thevibe)/schedule/([0-9]{4})/([0-9]{2})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=$matches[3]&sched_day=01',
+		'^(news887|classical|thevibe)/schedule/([0-9]{4})/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]&sched_year=$matches[2]&sched_month=01&sched_day=01',
+		'^(news887|classical|thevibe)/schedule/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
+		'^(news887|classical|thevibe)/?$' => 'index.php?pagename=$matches[1]&sched_station=$matches[1]',
 		'^npr/([0-9]{4})/([0-9]{2})/([0-9]{2})/([a-z\-0-9]+)/([a-z0-9\-]+)/?' => 'index.php?pagename=npr-articles&npr_id=$matches[4]'
 	];
 	return $aNewRules + $aRules;
@@ -592,7 +592,8 @@ function hpmnpr_nprapi_output( $api_id = 1001, $num = 50, $per_page = 10 ): mixe
             $output .='<article>' .
                 ( !empty( $image_url['url'] ) ? '<img class="post-thumbnail" src="' . $image_url['url'] . '" alt="' .
                     ( !empty( $story->teaser ) ? strip_tags( $story->teaser ) : $story->title ) .
-                    '" loading="lazy" />' : '' ) . '<div class="card-content"><header class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span></a></h2></header><div class="entry-summary"><p>' . $story->teaser . '</p></div></div></article>';
+                    '" loading="lazy" />' : '' ) . '<div class="card-content"><header class="entry-header"><h2 class="entry-title"><a href="/npr/' . date( 'Y/m/d/', $npr_date ) . $story->id . '/' . sanitize_title( $story->title ) . '/" rel="bookmark"><span>' . $story->title . '</span></a></h2></header><div class="entry-summary"><p>' .
+					( !empty( $story->teaser ) ? strip_tags( $story->teaser ) : "Read Now" ) . '</p></div></div></article>';
 
         }
     } else {

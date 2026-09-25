@@ -389,9 +389,12 @@ class HPM_Liveshows {
 					if ( !empty( $ytlive[ $k ]['id'] ) ) {
 						$outs[] = '<a href="https://www.youtube.com/watch?v=' . $ytlive[ $k ]['id'] . '">Watch</a>';
 						$class .= " livestream-show";
+						$yt_title = '<p><span><a href="https://www.youtube.com/watch?v=' . $ytlive[ $k ]['id'] . '"><strong>' . $v['title'] . '</strong> is live!</a>';
+					} else {
+						$yt_title = '<p><span><strong>' . $v['title'] . '</strong> is live!';
 					}
 					$outs[] = '<a href="/listen-live/">Listen</a>';
-					$output .= '<div id="hm-top" class="' . $class . '"><p><span><a href="https://www.youtube.com/watch?v=' . $ytlive[ $k ]['id'] . '"><strong>' . $v['title'] . '</strong> is live!</a> Join the conversation:</span> ' . implode( ' | ', $outs ) . '</p></div>';
+					$output .= '<div id="hm-top" class="' . $class . '">' . $yt_title . ' Join the conversation:</span> ' . implode( ' | ', $outs ) . '</p></div>';
 				} elseif ( $v['recurring'] == 0 &&
 					$v['start_hour'] <= $now['hours'] &&
 					$v['end_hour'] > $now['hours'] &&

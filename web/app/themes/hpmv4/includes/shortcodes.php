@@ -776,7 +776,6 @@ function hpm_donation_events_shortcode(): string {
 }
 add_shortcode( 'hpm_donation_events', 'hpm_donation_events_shortcode' );
 
-
 function hpm_staff_shortcode( $atts ): string {
 	extract( shortcode_atts( [
 		'name' => ''
@@ -872,3 +871,506 @@ function hpm_liveblog_embed_shortcode( $atts ): string {
 	return $out;
 }
 add_shortcode( 'hpm_liveblog_embed', 'hpm_liveblog_embed_shortcode' );
+
+function hpm_radio_schedule_shortcode( $atts ): string {
+	extract( shortcode_atts( [
+		'embed' => false
+	], $atts, 'multilink' ) );
+	global $wp_query;
+	$t = time();
+	$offset = (int)get_option( 'gmt_offset' ) * 3600;
+	$t = $t + $offset;
+
+	$sched_station = 'news887';
+	$station_name = "News 88.7";
+	$sched_year = date( 'Y', $t );
+	$sched_month = date( 'm', $t );
+	$sched_day = date( 'd', $t );
+	if ( !empty( $wp_query->query_vars['sched_station'] ) ) {
+		$sched_station = urldecode( $wp_query->query_vars['sched_station'] );
+	}
+	$permalink = get_the_permalink();
+	if ( !empty( $_GET['datepicker'] ) ) {
+		$date_xp = explode( '-', $_GET['datepicker'] );
+		$sched_year = $date_xp[0];
+		$sched_month = $date_xp[1];
+		$sched_day = $date_xp[2];
+	} else {
+		if ( !empty( $wp_query->query_vars['sched_year'] ) ) {
+			$sched_year = urldecode( $wp_query->query_vars['sched_year'] );
+		}
+
+		if ( !empty( $wp_query->query_vars['sched_month'] ) ) {
+			$sched_month = urldecode( $wp_query->query_vars['sched_month'] );
+		}
+
+		if ( !empty( $wp_query->query_vars['sched_day'] ) ) {
+			$sched_day = urldecode( $wp_query->query_vars['sched_day'] );
+		}
+	}
+	if ( $sched_station === 'classical' ) {
+		$station_name = "Classical";
+	} elseif ( $sched_station === 'thevibe' ) {
+		$station_name = "The Vibe";
+	}
+	$date = $sched_year . "-" . $sched_month . "-" . $sched_day;
+	$css_stuff = <<<EOT
+			#station-schedule-display.column-left {
+				width: 66%;
+				margin: 0 0 1em;
+			}
+			body.page.page-template-page-schedules-radio .column-right article {
+				width: 100%;
+				padding: 0;
+				background-color: var(--main-element-background);
+			}
+	EOT;
+	if ( $embed ) {
+		$css_stuff = '';
+	}
+
+	$output = <<<EOT
+	<style>
+		.proglist {
+			list-style: none;
+			 li {
+				overflow: hidden;
+				list-style: none;
+			}
+			.progsegment {
+				padding: 0;
+			}
+			li > * + * {
+				margin-top: 1rem;
+			}
+			details.progsegment summary::marker {
+				color: white;
+				padding-right: 0.25rem;
+			}
+			details.progsegment summary {
+				background-color: var(--main-blue);
+				color: white;
+				padding: 0.75em;
+				margin: 0;
+				position: relative;
+				font-style: normal;
+			}
+		}
+		.date-select {
+			padding: 1em 0;
+			display: grid;
+			align-items: center;
+			width: 100%;
+			gap: 1rem;
+			grid-template-columns: 1fr 2fr 1fr;
+			.date-pick-right {
+				justify-self: end;
+				@media (width >= 38.5em) {
+					&:before {
+						content: "NEXT "
+					}
+				}
+			}
+			.date-pick-left {
+				justify-self: start;
+				@media (width >= 38.5em) {
+					&:after {
+						content: " PREVIOUS"
+					}
+				}
+			}
+			a {
+				padding: 0.5rem 1rem;
+				background-color: var(--main-blue);
+				border-radius: 1rem;
+				color: white;
+				font-weight: bolder;
+				text-decoration: none !important;
+				margin-top: 0 !important;
+			}
+		}
+		#station-schedule-display {
+			padding: 0;
+			ul {
+				list-style: disc outside none;
+				margin: 0;
+				padding: 0;
+			}
+			iframe {
+				height: 1000px;
+				overflow: scroll;
+				width: 100%;
+			}
+			> ul > li {
+				padding: 1em;
+				background-color: var(--main-element-background);
+				border: 1px solid rgba(0,0,0,0.25);
+				margin: 0 0 1em 0;
+			}
+			ul li p {
+				font-size: 90%;
+			}
+			.progsegment li {
+				overflow: visible;
+				padding: 0.5em 0;
+				list-style: disc;
+				margin: 0 0 0 2em;
+			}
+			.proglist .progsegment ul.progplay li {
+				list-style: none;
+				margin: 0;
+				padding: 1em;
+				background-color: var(--main-element-background);
+				&:nth-child(even) {
+					background-color: #F5F5F5;
+				}
+				em {
+					color: var(--secondary-text);
+				}
+			}
+		}
+		.embeds #station-schedule-display {
+			float: none;
+			margin: 0 !important;
+			width: 100%;
+		}
+		#schedule-search {
+			justify-self: center;
+			margin: 0 !important;
+			width: 100%;
+			form {
+				display: grid;
+				gap: 0.5rem;
+				grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+				label {
+					color: var(--main-text);
+					font-weight: bolder;
+					@media (width >= 32em){
+						justify-self: end;
+					}
+				}
+				input {
+					border: 0;
+					outline: 0;
+					-webkit-appearance: none;
+					border-bottom: 0.125em solid var(--main-text);
+					background-color: transparent;
+					padding: 0 0.25em;
+					width: 100%;
+					text-transform: lowercase;
+				}
+			}
+		}
+		.page-header {
+			display: grid;
+			align-content: center;
+			align-items: center;
+			.page-title {
+				text-transform: uppercase;
+			}
+		}
+		.single-embeds .embeds .page-header {
+			padding: 1rem 0;
+			margin: 0 !important;
+		}
+		.playlist-schedule-printable {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			align-items: center;
+			padding-bottom: 1rem;
+			.station-printable {
+				justify-self: end;
+				margin-top: 0 !important;
+				a {
+					background-color: var(--main-blue);
+					color: white;
+					text-decoration: none;
+					padding: 0.5rem 1rem;
+					border-radius: 1rem;
+					font-weight: bolder;
+					text-transform: uppercase;
+				}
+			}
+		}
+		.embeds .playlist-schedule-printable {
+			grid-template-columns: 1fr;
+		}
+		@media (width >= 64.25rem) {
+			.page-header {
+				padding: 1rem 0;
+			}
+			{$css_stuff}
+		}
+	</style>
+EOT;
+if ( !$embed ) {
+	$output .= <<<EOT
+		<header class="page-header">
+			<h1 class="page-title entry-title">{$station_name}</h1>
+		</header>
+	EOT;
+}
+
+
+
+	$date_unix = mktime( 0, 0, 0, $sched_month, $sched_day, $sched_year );
+	if ( $embed ) {
+		$tomorrow = date( 'Y-m-d', $date_unix + 86400 );
+		$yesterday = date( 'Y-m-d', $date_unix - 86400 );
+		$output .= <<<EOT
+			<section id="station-schedule-display" class="column-left">
+				<div class="date-select">
+					<a class="date-pick-left" href="{$permalink}?sched_station={$sched_station}&datepicker={$yesterday}" aria-label="Navigate to Previous Day">&lt;&lt;</a>
+					<div id="schedule-search">
+						<form role="form" method="get" action="">
+							<label for="datepicker">Select a Day</label>
+							<input type="date" id="datepicker" name="datepicker" value="{$date}" />
+						</form>
+					</div>
+					<a class="date-pick-right" href="{$permalink}?sched_station={$sched_station}&datepicker={$tomorrow}" aria-label="Navigate to Next Day">&gt;&gt;</a>
+				</div>
+		EOT;
+	} else {
+		$tomorrow = date( 'Y/m/d', $date_unix + 86400 );
+		$yesterday = date( 'Y/m/d', $date_unix - 86400 );
+		$output .= <<<EOT
+			<section id="station-schedule-display" class="column-left">
+				<div class="date-select">
+					<a class="date-pick-left" href="{$permalink}schedule/{$yesterday}/" aria-label="Navigate to Previous Day">&lt;&lt;</a>
+					<div id="schedule-search">
+						<form role="form" method="" action="">
+							<label for="datepicker">Select a Day</label>
+							<input type="date" id="datepicker" name="datepicker" value="{$date}" />
+						</form>
+					</div>
+					<a class="date-pick-right" href="{$permalink}schedule/{$tomorrow}/" aria-label="Navigate to Next Day">&gt;&gt;</a>
+				</div>
+		EOT;
+	}
+	$today = date( 'l, F j, Y', $date_unix );
+	if ( $sched_station === 'news887' || $sched_station === 'classical' ) {
+		$station = "be40a578-d4d8-4625-9729-e50b58c816c6";
+		if ( $sched_station == 'classical' ) {
+			$station = "98c1232d-c559-465a-978a-56d98f72bbb1";
+		}
+		$remote = wp_remote_get( "https://cadence.nprstations.org/api/cadence/widget/" . $station . "/day?date=" . $date . "&callback=callback" );
+		if ( is_wp_error( $remote ) ) {
+			if ( $embed ) {
+				$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+				EOT;
+			} else {
+				$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there was an error in loading the playlist data.  Please try again shortly, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
+				EOT;
+			}
+		} else {
+			$api = wp_remote_retrieve_body( $remote );
+			$json = json_decode( $api, true );
+			if ( empty( $json['episodes'] ) ) {
+				if ( $embed ) {
+					$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+					EOT;
+				} else {
+					$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date.  Please choose another date from the calendar, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
+					EOT;
+				}
+			} else {
+				$progs = [];
+				$current = '';
+
+				foreach ( $json['episodes'] as $k => $v ) {
+					$fullend = strtotime( $v['episode']['end']['utc'] ) + $offset;
+					$fullstart = strtotime( $v['episode']['start']['utc'] ) + $offset;
+					$duration = $fullend - $fullstart;
+					$name = $v['episode']['programName'];
+					if ( $duration > 600 || !empty( $progs[ $v['episode']['episodeId'] ] ) || ( !empty( $json['episodes'][ $k + 2 ] ) && $json['episodes'][ $k + 2 ]['episode']['episodeId'] === $v['episode']['episodeId'] ) ) {
+						if ( empty( $progs[ $v['episode']['episodeId'] ] ) ) {
+							$progs[ $v['episode']['episodeId'] ] = [ 'name' => $name, 'time' => date( 'g:i a', $fullstart ), 'link' => ( !empty( $v['programLink'] ) ? $v['programLink'] : '' ), 'desc' => ( !empty( $v['episode']['notes'] ) ? $v['episode']['notes'] : '' ), 'playlist' => ( !empty( $v['episode']['songs'] ) ? $v['episode']['songs'] : [] ), 'sub' => [] ];
+							$current = $v['episode']['episodeId'];
+						}
+					} else {
+						$progs[ $current ]['sub'][] = [ 'name' => $name, 'time' => date( 'g:i a', $fullstart ), 'link' => ( !empty( $v['programLink'] ) ? $v['programLink'] : '' ) ];
+					}
+				}
+				$output .= <<<EOT
+					<div class="playlist-schedule-printable">
+						<h3>Playlist for {$today}</h3>
+						<div class="station-printable">
+				EOT;
+
+				if ( $sched_station == 'news887' && !$embed ) {
+					$output .= '<a href="https://www.houstonpublicmedia.org/news887/weekly/">Printable Schedule</a>';
+				}
+				$output .= <<<EOT
+						</div>
+					</div>
+					<ul class="proglist">
+				EOT;
+				foreach ( $progs as $prog ) {
+					if ( empty( $prog['time'] ) && empty( $prog['name'] ) ) {
+						continue;
+					}
+					$output .= "<li><h2><strong>" . $prog['time'] . ":</strong> " . ( !empty( $prog['link'] ) ? '<a href="' . $prog['link'] . '">' : '' ) . $prog['name'] . ( !empty( $prog['link'] ) ? '</a>' : '' ) . "</h2>";
+					$output .= ( !empty( $prog['desc'] ) ? "<p>" . $prog['desc'] . "</p>" : '' );
+					$output .= hpm_segments( $prog['name'], $date );
+					if ( !empty( $prog['sub'] ) ) {
+						$output .= <<<EOT
+						<details class="progsegment">
+							<summary>Interstitials</summary>
+							<ul>
+						EOT;
+						foreach ( $prog['sub'] as $ksu => $vsu ) {
+							$output .= "<li><strong>" . $vsu['time'] . ":</strong> " . ( !empty( $vsu['link'] ) ? '<a href="' . $vsu['link'] . '">' : '' ) . $vsu['name'] . ( !empty( $vsu['link'] ) ? '</a>' : '' ) . "</li>";
+						}
+						$output .= "</ul></details>";
+					}
+					if ( !empty( $prog['playlist'] ) ) {
+						$output .= <<<EOT
+						<details class="progsegment" open>
+							<summary>Program Playlist</summary>
+							<ul class="progplay">
+						EOT;
+						foreach ( $prog['playlist'] as $ks => $song ) {
+							$song_info = [];
+							$song_start = strtotime( $song['start']['utc'] ) + $offset;
+							$song_start_string = date( 'g:i a', $song_start );
+							if ( !empty( $song['composer'] ) ) {
+								$song_info[] = "<em>Composer</em>: " . trim( $song['composer'] );
+							}
+							if ( !empty( $song['ensemble'] ) ) {
+								$ensemble = implode( ', ', $song['ensemble'] );
+								if ( !empty( $ensemble ) ) {
+									$song_info[] = "<em>Ensembles</em>: " . $ensemble;
+								}
+							}
+							if ( !empty( $song['artist'] ) ) {
+								$artist = implode( ', ', $song['artist'] );
+								if ( !empty( $artist ) ) {
+									$song_info[] = "<em>Performer</em>: " . $artist;
+								}
+							}
+							if ( !empty( $song['conductor'] ) ) {
+								$song_info[] = "<em>Conductor</em>: " . implode( ', ', $song['conductor'] );
+							}
+							if ( !empty( $song['label'] ) ) {
+								if ( !empty( $song['catalogNumber'] ) ) {
+									$song_info[] = "<em>Catalog Information</em>: " . trim( $song['label'] ) . " " . trim( $song['catalogNumber'] );
+								} else {
+									$song_info[] = "<em>Label</em>: " . trim( $song['label'] );
+								}
+							}
+							if ( ( $ks + 1 ) & 1 ) {
+								$output .= "<li>";
+							} else {
+								$output .= '<li class="shade">';
+							}
+							$output .= "<h2>" . $song_start_string . ": " . trim( $song['title'] ) . "</h2>" . implode( '<br />', $song_info ) . "</li>";
+						}
+						$output .= "</ul></details>";
+					}
+					$output .= "</li>";
+				}
+				$output .= "</ul>";
+			}
+		}
+	} else {
+		$remote = wp_remote_get( "https://cdn.houstonpublicmedia.org/assets/nowplay/the-vibe/" . $date . ".json" );
+		if ( is_wp_error( $remote ) ) {
+			if ( $embed ) {
+				$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+					EOT;
+			} else {
+				$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
+					EOT;
+			}
+		} else {
+			$api = wp_remote_retrieve_body( $remote );
+			$json = json_decode( $api, true );
+			if ( empty( $json ) ) {
+				if ( $embed ) {
+					$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}?sched_station={$sched_station}">return to today&#39;s playlist</a>.</p>
+					EOT;
+				} else {
+					$output .= <<<EOT
+					<h3>Playlist Error</h3>
+					<p>We&#39;re sorry, but there isn&#39;t any playlist data for the selected date. Please choose another date from the calendar, or <a href="{$permalink}">return to today&#39;s playlist</a>.</p>
+					EOT;
+				}
+			} else {
+				$output .= <<<EOT
+					<div class="playlist-schedule-printable">
+						<h3>Playlist for {$today}</h3>
+						<div class="station-printable"></div>
+					</div>
+					<ul class="proglist">
+						<li>
+							<h2><strong>12:00 am:</strong> Music from KTSU's The Vibe</h2>
+							<details class="progsegment" open>
+								<summary>Program Playlist</summary>
+								<ul class="progplay">
+				EOT;
+				foreach ( $json as $ks => $song ) {
+					if ( empty( $song['artist'] ) && empty( $song['song'] ) ) {
+						continue;
+					}
+					if ( ( $ks + 1 ) & 1 ) {
+						$output .= "<li>";
+					} else {
+						$output .= '<li class="shade">';
+					}
+					$song_start = strtotime( $song['startTime'] ) + $offset;
+					$song_start_string = date( 'g:i a', $song_start );
+					$song_title =  ( !empty( $song['artist'] ) ? $song['artist'] . " - " : '' ) . $song['song'];
+					$album = ( !empty( $song['album'] ) ? "<em>Album:</em> " . $song['album'] . "</em>" : '' );
+					$output .= "<h2>" . $song_start_string . ": " . $song_title . "</h2>" . $album . "</li>";
+				}
+				$output .= <<<EOT
+								</ul>
+							</details>
+						</li>
+					</ul>
+				EOT;
+			}
+		}
+	}
+	$output .= "</section>";
+	if ( !$embed ) {
+		$output .= <<<EOT
+			<script>
+				document.addEventListener('DOMContentLoaded', () => {
+					let picker = document.getElementById('datepicker');
+						picker.addEventListener( 'change', () => {
+						let date = picker.value.replaceAll('-','/');
+						location.href = '{$permalink}schedule/' + date;
+					});
+				});
+			</script>
+		EOT;
+	} else {
+		$output .= <<<EOT
+			<script>
+				document.addEventListener('DOMContentLoaded', () => {
+					let picker = document.getElementById('datepicker');
+						picker.addEventListener( 'change', () => {
+						location.href = '{$permalink}?sched_station={$sched_station}&datepicker=' + picker.value;
+					});
+				});
+			</script>
+		EOT;
+	}
+	return $output;
+}
+add_shortcode( 'hpm_radio_schedule', 'hpm_radio_schedule_shortcode' );
