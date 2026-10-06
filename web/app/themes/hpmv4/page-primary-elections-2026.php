@@ -186,7 +186,7 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/2026/10/06/553383/general-elections-voters-guide-2026/">Learn about the candidates</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/2026/09/25/561865/general-elections-voters-guide-2026/">Learn about the candidates</a>
                                     </div>
                                 </div>
                             </div>
