@@ -208,23 +208,14 @@ if ( $cat->have_posts() ) {
                         </div>
 
 
-                        <div class="row section" style="padding-top: 25px;">
-                            <h2 class="title"><strong><span>Other </span> Stories</strong> </h2>
-                            <?php
-                            foreach ( $electionArticles as $eka => $eva ) {
-                                $post = $eva;
-                                if ( $eka > 0 && $eka < 4 ) {
-                                    get_template_part("content", "elections");
-                                }
-                            } ?>
-                        </div>
+
                     </div>
 
                 </div>
             </section>
 
             <section class="section">
-                <h2 class="title"><strong><span>Related </span> Videos</strong> </h2>
+                <h2 class="title"><strong><span>Election 2026 </span> Videos</strong> </h2>
                 <iframe
                         id="site-17936268"
                         width="100%"
@@ -246,11 +237,12 @@ if ( $cat->have_posts() ) {
 
             <section class="section">
                 <div class="row">
+                    <h2 class="title"><strong><span>More </span> Stories</strong> </h2>
                         <?php
                         foreach ( $electionArticles as $eka => $eva ) {
                             $post = $eva;
-                            if ( $eka > 4) {
-                                if ( $eka == 7 ) { ?>
+                            if ( $eka > 0) {
+                                if ( $eka == 3 ) { ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
                                             <h4>Support Comes From</h4>
@@ -262,7 +254,7 @@ if ( $cat->have_posts() ) {
                                         </div>
                                     </div>
                                     <?php
-                                } else if ( $eka == 12 ) { ?>
+                                } else if ( $eka == 8 ) { ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
                                             <h4>Support Comes From</h4>
