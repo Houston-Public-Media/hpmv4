@@ -206,6 +206,8 @@ if ( $cat->have_posts() ) {
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="row section" style="padding-top: 25px;">
                             <h2 class="title"><strong><span>Other </span> Stories</strong> </h2>
                             <?php
@@ -219,6 +221,27 @@ if ( $cat->have_posts() ) {
                     </div>
 
                 </div>
+            </section>
+
+            <section class="section">
+                <h2 class="title"><strong><span>Related </span> Videos</strong> </h2>
+                <iframe
+                        id="site-17936268"
+                        width="100%"
+                        style="display:block;border:none;margin-left:auto;margin-right:auto;"
+                        src="https://site-17936268.ipx.bcvp0rtal.com"
+                        allow="autoplay; fullscreen; geolocation; encrypted-media"
+                        allowFullScreen
+                        webkitallowfullscreen
+                        mozallowfullscreen
+                ></iframe>
+                <script
+                        src="https://site-17936268.ipx.bcvp0rtal.com/common-assets/in-page-manager.min.js"
+                        data-site-slug="site-17936268"
+                        data-resize-profile="vertical_videos_ipx"
+                        defer="defer"
+                ></script>
+                <div style="text-align: right;"><a href="/hpm-shorts" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all Videos</a></div>
             </section>
 
             <section class="section">
