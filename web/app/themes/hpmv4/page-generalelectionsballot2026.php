@@ -268,6 +268,7 @@ $combined_json['Statewide'] = array_map(
                             <?php
                             $row_count = 0;
                             foreach ( $races as $race ) {
+                                //print_r($races);
                                 $race_name  = $race['race'] ?? '';
                                 $candidates = $race['candidates'] ?? [];
                                 $row_count++;
@@ -278,11 +279,25 @@ $combined_json['Statewide'] = array_map(
                                     </h3>
                                     <ul class="list-group">
                                         <?php foreach ( $candidates as $candidate ) {
-                                            $party = strtolower( trim( $candidate['party'] ?? '' ) );
+                                            //print_r($candidates);
+                                            //$party = strtolower( trim( $candidate['party'] ?? '' ) );
+
+                                            //$classes = [ 'list-group-item' ];
                                             $classes = [ 'list-group-item' ];
+                                            /*if ( $party === 'democratic' ) {
+                                                $classes[] = 'democrat';
+                                            } elseif ( $party === 'republican' ) {
+                                                $classes[] = 'republican';
+                                            }
+
+                                            if ( ! empty( $candidate['is_incumbent'] ) ) {
+                                                $classes[] = 'Incumbent';
+                                            }*/
+
+                                            $incumbent = $candidate['is_incumbent'] ?? false;
                                             ?>
                                             <li class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-                                                <?php echo esc_html( $candidate['name'] ?? '' ); ?>
+                                                <?php echo esc_html( $candidate['name'] ?? '' ); echo " - <span style='font-size: 12px;'><i>".$candidate['party'] . ( $incumbent ? ' Incumbent' : '' )."</i></span>"; ?>
                                             </li>
                                         <?php } ?>
                                     </ul>
