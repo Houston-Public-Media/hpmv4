@@ -75,6 +75,7 @@ $electionArticles = hpm_ShowElectionOtherStories( [21, 68339] );
     }
     .electionnews-listing li:first-child {
         padding-right: 1rem;
+        border-top: solid 1px var(--black);
     }
     .electionnews-listing a{
         text-decoration: none;
@@ -169,34 +170,38 @@ if ( $cat->have_posts() ) {
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
-                            <div class="col-sm-3">
-                                <div class="card mb-3">
+                            <div class="col-sm-4">
+                                <div class="card mb-4">
                                     <div class="card-header">
                                         <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/02/10/542938/how-to-vote-in-march-2026-primary-election-houston-harris-county-texas/">How to vote</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <div class="card mb-3">
+                            <div class="col-sm-4">
+                                <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-2026-primary-election-ballot-in-harris-county-and-texas">What's on my ballot?</a>
+                                        <a style="text-decoration: none; color:#fff;" href="#">What's on my ballot?</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <div class="card mb-3">
+                            <div class="col-sm-4">
+                                <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/elections/2025/12/10/538080/march-primary-election-2026-candidates-houston-harris-county-texas/">Learn about the candidates</a>
+                                        <a style="text-decoration: none; color:#fff;" href="#">Learn about the candidates</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/2026/03/03/544840/texas-primary-results-2026/">Election Results</a>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="col-sm-3"> /articles/news/politics/2026/10/08/563920/general-elections-voters-guide-2026/
+whats-on-my-2026-general-election-ballot-in-harris-county-and-texas/
+-->
+
+
+<!--                                <div class="card mb-3">-->
+<!--                                    <div class="card-header">-->
+<!--                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/2026/03/03/544840/texas-primary-results-2026/">Election Results</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                         <div class="row elections-main">
                             <div class="col-sm-12">
@@ -206,28 +211,39 @@ if ( $cat->have_posts() ) {
                                 </div>
                             </div>
                         </div>
-                        <div class="row section" style="padding-top: 25px;">
-                            <h2 class="title"><strong><span>Other </span> Stories</strong> </h2>
-                            <?php
-                            foreach ( $electionArticles as $eka => $eva ) {
-                                $post = $eva;
-                                if ( $eka > 0 && $eka < 4 ) {
-                                    get_template_part("content", "elections");
-                                }
-                            } ?>
-                        </div>
                     </div>
-
                 </div>
             </section>
 
             <section class="section">
+                <h2 class="title"><strong><span>Election 2026 </span> Videos</strong> </h2>
+                <iframe
+                        id="site-59653178"
+                        width="100%"
+                        style="display:block;border:none;margin-left:auto;margin-right:auto;"
+                        src="https://site-59653178.ipx.bcvp0rtal.com"
+                        allow="autoplay; fullscreen; geolocation; encrypted-media"
+                        allowFullScreen
+                        webkitallowfullscreen
+                        mozallowfullscreen
+                ></iframe>
+                <script
+                        src="https://site-59653178.ipx.bcvp0rtal.com/common-assets/in-page-manager.min.js"
+                        data-site-slug="site-59653178"
+                        data-resize-profile="vertical_videos_ipx"
+                        defer="defer"
+                ></script>
+                <div style="text-align: right;"><a href="/hpm-shorts" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all Videos</a></div>
+            </section>
+
+            <section class="section">
                 <div class="row">
+                    <h2 class="title"><strong><span>More </span> Stories</strong> </h2>
                         <?php
                         foreach ( $electionArticles as $eka => $eva ) {
                             $post = $eva;
-                            if ( $eka > 4) {
-                                if ( $eka == 7 ) { ?>
+                            if ( $eka > 0) {
+                                if ( $eka == 3 ) { ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
                                             <h4>Support Comes From</h4>
@@ -239,7 +255,7 @@ if ( $cat->have_posts() ) {
                                         </div>
                                     </div>
                                     <?php
-                                } else if ( $eka == 12 ) { ?>
+                                } else if ( $eka == 8 ) { ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
                                             <h4>Support Comes From</h4>
