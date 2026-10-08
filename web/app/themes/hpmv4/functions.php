@@ -38,14 +38,14 @@ add_action( 'init', 'wpcodex_add_excerpt_support_for_pages' );
 function hpm_scripts(): void {
 	$versions = hpm_versions();
 
-	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], $versions['js'], true );
-	wp_register_script( 'hpm-splide', 'https://cdn.houstonpublicmedia.org/assets/js/splide-settings.js', [ 'hpm-splide-js' ], $versions['js'], true );
-	wp_register_script( 'hpm-splide-js', 'https://cdn.houstonpublicmedia.org/assets/js/splide.min.js', [], $versions['js'], true );
-	wp_enqueue_script( 'bootstrap-js', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/js/bootstrap.min.js', [ 'jquery' ], '5.3.2', true);
-	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], $versions['css'] );
+	wp_register_script( 'hpm-plyr', 'https://cdn.houstonpublicmedia.org/assets/js/plyr/plyr.js', [], @$versions['js'], true );
+	wp_register_script( 'hpm-splide', 'https://cdn.houstonpublicmedia.org/assets/js/splide-settings.js', [ 'hpm-splide-js' ], @$versions['js'], true );
+	wp_register_script( 'hpm-splide-js', 'https://cdn.houstonpublicmedia.org/assets/js/splide.min.js', [], @$versions['js'], true );
+	wp_enqueue_script( 'bootstrap-js', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/js/bootstrap.min.js', @[ 'jquery' ], '5.3.2', true);
+	wp_register_style( 'hpm-splide-css', 'https://cdn.houstonpublicmedia.org/assets/css/splide.min.css', [], @$versions['css'] );
 	wp_enqueue_style( 'bootstrap-css', 'https://cdn.houstonpublicmedia.org/assets/bootstrap/css/bootstrap.min.css', false, '5.3.2' );
-	wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [ 'bootstrap-css' ], $versions['css'] );
-	wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], $versions['js'], true );
+	wp_enqueue_style( 'hpm-css', get_template_directory_uri() . '/style.css', [ 'bootstrap-css' ], @$versions['css'] );
+	wp_enqueue_script( 'hpm-js', get_template_directory_uri() . '/js/main.js', [], @$versions['js'], true );
 
 	wp_deregister_script( 'wp-embed' );
 	wp_deregister_style( 'gutenberg-pdfjs' );
@@ -491,7 +491,7 @@ function hpm_ShowElectionTopThreeArticles(array $cat_in = [] ): string {
             $post_title = get_the_title();
             if ( $ka == 0 ) {
 
-                $result .='<div class="col-lg-12 col-xl-8"><div class="box-img latest-news-img"><a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_post_thumbnail() . ' </a></div><h1 style="font-size:1.6rem;"><a href="' . get_the_permalink() . '" rel="bookmark">' . $post_title . '</a></h1></div><div class="col-lg-4 col-xl-4"><ul class="electionnews-listing">';
+                $result .='<div class="col-lg-12 col-xl-8"><div class="box-img latest-news-img"><a href="' . get_the_permalink() . '" rel="bookmark">' . get_the_post_thumbnail() . ' </a></div><h1 style="font-size:1.6rem;padding-top: 10px;"><a href="' . get_the_permalink() . '" rel="bookmark">' . $post_title . '</a></h1></div><div class="col-lg-4 col-xl-4"><ul class="electionnews-listing">';
 
             } elseif ( $ka > 0 && $ka < 4) {
                 $result .= '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a> </li>';

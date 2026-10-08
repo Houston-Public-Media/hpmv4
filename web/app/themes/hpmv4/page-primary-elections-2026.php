@@ -75,7 +75,7 @@ $electionArticles = hpm_ShowElectionOtherStories( [21, 68339] );
     }
     .electionnews-listing li:first-child {
         padding-right: 1rem;
-        padding-top: 10px;
+        border-top: solid 1px var(--black);
     }
     .electionnews-listing a{
         text-decoration: none;
