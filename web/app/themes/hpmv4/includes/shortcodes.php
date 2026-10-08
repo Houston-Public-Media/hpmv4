@@ -892,9 +892,9 @@ function hpm_radio_schedule_shortcode( $atts ): string {
 	$permalink = get_the_permalink();
 	if ( !empty( $_GET['datepicker'] ) ) {
 		$date_xp = explode( '-', $_GET['datepicker'] );
-		$sched_year = $date_xp[0];
-		$sched_month = $date_xp[1];
-		$sched_day = $date_xp[2];
+		$sched_year = intval( $date_xp[0] );
+		$sched_month = intval( $date_xp[1] );
+		$sched_day = intval( $date_xp[2] );
 	} else {
 		if ( !empty( $wp_query->query_vars['sched_year'] ) ) {
 			$sched_year = urldecode( $wp_query->query_vars['sched_year'] );
