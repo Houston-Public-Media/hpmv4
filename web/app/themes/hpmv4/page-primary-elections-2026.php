@@ -217,18 +217,18 @@ if ( $cat->have_posts() ) {
             <section class="section">
                 <h2 class="title"><strong><span>Election 2026 </span> Videos</strong> </h2>
                 <iframe
-                        id="site-17936268"
+                        id="site-59653178"
                         width="100%"
                         style="display:block;border:none;margin-left:auto;margin-right:auto;"
-                        src="https://site-17936268.ipx.bcvp0rtal.com"
+                        src="https://site-59653178.ipx.bcvp0rtal.com"
                         allow="autoplay; fullscreen; geolocation; encrypted-media"
                         allowFullScreen
                         webkitallowfullscreen
                         mozallowfullscreen
                 ></iframe>
                 <script
-                        src="https://site-17936268.ipx.bcvp0rtal.com/common-assets/in-page-manager.min.js"
-                        data-site-slug="site-17936268"
+                        src="https://site-59653178.ipx.bcvp0rtal.com/common-assets/in-page-manager.min.js"
+                        data-site-slug="site-59653178"
                         data-resize-profile="vertical_videos_ipx"
                         defer="defer"
                 ></script>
