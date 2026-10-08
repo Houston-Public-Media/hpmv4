@@ -75,6 +75,7 @@ $electionArticles = hpm_ShowElectionOtherStories( [21, 68339] );
     }
     .electionnews-listing li:first-child {
         padding-right: 1rem;
+        padding-top: 10px;
     }
     .electionnews-listing a{
         text-decoration: none;
@@ -206,11 +207,7 @@ if ( $cat->have_posts() ) {
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
-
                 </div>
             </section>
 

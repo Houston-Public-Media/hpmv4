@@ -40,7 +40,6 @@ function normalize_county_races( $county_json ) {
         if ( ! is_array( $data ) ) {
             return $all_candidates;
         }
-
         foreach ( $data as $key => $value ) {
             if ( ! is_array( $value ) ) {
                 continue;
@@ -66,7 +65,6 @@ function normalize_county_races( $county_json ) {
                     $all_candidates,
                     $normalize_candidates( $value, $key )
                 );
-
                 continue;
             }
             if ( isset( $value['name'] ) ) {
@@ -77,18 +75,15 @@ function normalize_county_races( $county_json ) {
                 );
             }
         }
-
         return $all_candidates;
     };
     $add_race = function( $race_name, $candidates ) use ( &$flat ) {
         if ( empty( $race_name ) ) {
             return;
         }
-
         if ( ! is_array( $candidates ) ) {
             $candidates = [];
         }
-
         $flat[] = [
             'race'       => $race_name,
             'candidates' => array_values( $candidates ),
@@ -106,35 +101,27 @@ function normalize_county_races( $county_json ) {
             isset( $office_data['democrat'] ) ||
             isset( $office_data['republican'] )
         ) {
-
             $add_race(
                 ucwords( str_replace( '_', ' ', $office_name ) ),
                 $flatten_candidates( $office_data )
             );
-
             continue;
         }
         if ( isset( $office_data['candidates'] ) ) {
-
             $add_race(
                 $office_data['office'] ?? $office_name,
                 $normalize_candidates( $office_data['candidates'] )
             );
-
             continue;
         }
         foreach ( $office_data as $precinct => $precinct_data ) {
-
             if ( ! is_array( $precinct_data ) ) {
                 continue;
             }
-
             $candidates = $flatten_candidates( $precinct_data );
-
             if ( empty( $candidates ) ) {
                 continue;
             }
-
             $add_race(
                 ucwords(
                     str_replace(
@@ -156,14 +143,12 @@ function normalize_county_races( $county_json ) {
             continue;
         }
         if ( isset( $races['office'] ) ) {
-
             $add_race(
                 $races['office'],
                 $normalize_candidates(
                     $races['candidates'] ?? []
                 )
             );
-
             continue;
         }
         foreach ( $races as $race_name => $race_data ) {
@@ -189,27 +174,23 @@ function normalize_county_races( $county_json ) {
             continue;
         }
         if ( isset( $races['office'] ) ) {
-
             $add_race(
                 $races['office'],
                 $normalize_candidates(
                     $races['candidates'] ?? []
                 )
             );
-
             continue;
         }
         foreach ( $races as $race_name => $race_data ) {
             if ( ! is_array( $race_data ) ) {
                 continue;
             }
-
             $candidates = $flatten_candidates( $race_data );
 
             if ( empty( $candidates ) ) {
                 continue;
             }
-
             $add_race(
                 ucwords(
                     str_replace( '_', ' ', $race_name )
@@ -227,14 +208,11 @@ function normalize_county_races( $county_json ) {
                 'is_incumbent' => false,
             ];
         }
-
         $add_race(
             $prop['title'] ?? 'Proposition',
             $options
         );
     }
-
-
     return $flat;
 }
 /**
@@ -321,7 +299,6 @@ $combined_json['Statewide'] = array_map(
                         </div>
                     </details>
                 <?php } ?>
-
 			</article>
 		<?php } ?>
 	</main>
