@@ -85,6 +85,7 @@ $electionArticles = hpm_ShowElectionOtherStories( [21, 68339] );
     {
         text-decoration: none;
         padding-top: 10px;
+
     }
     .sup{
         vertical-align: super ;
@@ -191,8 +192,8 @@ if ( $cat->have_posts() ) {
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="col-sm-3"> /articles/news/politics/2026/10/08/563920/general-elections-voters-guide-2026/
-whats-on-my-2026-general-election-ballot-in-harris-county-and-texas/
+<!--                            <div class="col-sm-3"> /articles/news/politics/2026/10/08/563920/voters-guide-texas-2026-midterm-elections/
+whats-on-my-2026-midterms-ballot-in-texas//
 -->
 
 
