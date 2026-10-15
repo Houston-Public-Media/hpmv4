@@ -85,6 +85,7 @@ $electionArticles = hpm_ShowElectionOtherStories( [21, 68339] );
     {
         text-decoration: none;
         padding-top: 10px;
+
     }
     .sup{
         vertical-align: super ;
@@ -173,26 +174,26 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/02/10/542938/how-to-vote-in-march-2026-primary-election-houston-harris-county-texas/">How to vote</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/10/15/564456/how-to-vote-in-november-2026-midterm-election-houston-harris-county-texas/">How to vote</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="#">What's on my ballot?</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-2026-midterms-ballot-in-texas">What's on my ballot?</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="#">Learn about the candidates</a>
+                                        <a style="text-decoration: none; color:#fff;" href="#">Early voting information</a>
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="col-sm-3"> /articles/news/politics/2026/10/08/563920/general-elections-voters-guide-2026/
-whats-on-my-2026-general-election-ballot-in-harris-county-and-texas/
+<!--                            <div class="col-sm-3"> /articles/news/politics/2026/10/08/563920/voters-guide-texas-2026-midterm-elections/
+whats-on-my-2026-midterms-ballot-in-texas//
 -->
 
 
