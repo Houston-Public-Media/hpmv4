@@ -174,21 +174,21 @@ if ( $cat->have_posts() ) {
                             <div class="col-sm-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/02/10/542938/how-to-vote-in-march-2026-primary-election-houston-harris-county-texas/">How to vote</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/articles/news/politics/election-2026/2026/10/15/564456/how-to-vote-in-november-2026-midterm-election-houston-harris-county-texas/">How to vote</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="#">What's on my ballot?</a>
+                                        <a style="text-decoration: none; color:#fff;" href="/whats-on-my-2026-midterms-ballot-in-texas">What's on my ballot?</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <a style="text-decoration: none; color:#fff;" href="#">Learn about the candidates</a>
+                                        <a style="text-decoration: none; color:#fff;" href="#">Early voting information</a>
                                     </div>
                                 </div>
                             </div>
