@@ -256,19 +256,19 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-		<?php /* ?><section class="section ads-full text-center">
+		<section class="section ads-full text-center">
  			<div class="page-banner">
 				<a href="/elections-2026/" title="2026 Election">
 					<picture>
 					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_MOBILE_1200x400.png.webp" type="image/webp" media="(max-width: 34em)">
 					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_TABLET_1600x200-1.png.webp" type="image/webp" media="(max-width: 52.5em)">
 					<source srcset="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png.webp" type="image/webp">
-					<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Election">
+					<img decoding="async" src="https://cdn.houstonpublicmedia.org/assets/images/ELECTION-2026-PENCIL-AD-BANNER_DESKTOP_1800x94-opt-1.png" alt="2026 Texas Midterm Elections">
 					</picture>
 				</a>
 			</div>
-		</section><?php */ ?>
-        <?php get_template_part("content", "verticalvideos"); ?>
+		</section>
+		<?php get_template_part("content", "verticalvideos"); ?>
 		<section class="section news-list">
 			<div class="row">
 				<div class="col-sm-12 col-lg-8 news-list-left">
@@ -327,9 +327,9 @@ $tras = null; ?>
 					</div>
 					<div style="padding-top: 15px;">
 						<h2 class="title title-full">
-							<strong>Election 2026</strong>
+							<strong>Contact Us</strong>
 						</h2>
-                        <p style="font-weight: bold; font-size: 16px;"><a href="/articles/news/politics/election-2026/2026/08/14/559390/election-2026-make-your-voice-heard/">Take our survey</a> and make your voice heard</p>
+						<p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/share-your-voice-with-houston-public-media/">Tell Houston Public Media</a></p>
 					</div>
 				</div>
 				<div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
@@ -499,7 +499,7 @@ $tras = null; ?>
 						<strong>News from <span>NPR</span></strong>
 					</h2>
 					<?php echo hpm_nprapi_output( 1002 ); ?>
-                    <div style="text-align: right;"><a href="/npr-news" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all NPR stories</a></div>
+					<div style="text-align: right;"><a href="/npr-news" style="font-weight: bold; color:#237bbd; font-size: 13px; text-decoration: none;">View all NPR stories</a></div>
 				</div>
 				<div class="col-sm-12 col-lg-4 news-list-right most-view homepage-desktop-gdc hidden">
 					<h2 class="title title-full">
