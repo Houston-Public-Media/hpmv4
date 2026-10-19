@@ -1364,7 +1364,8 @@ class HPM_Podcasts {
 					'latest_episode' => [
 						'audio' => '',
 						'title' => '',
-						'link' => ''
+						'link' => '',
+						'duration' => ''
 					]
 				];
 				$inactive = false;
@@ -1404,9 +1405,10 @@ class HPM_Podcasts {
 				$temp['id'] = $pod_id;
 				if ( is_array( $last_id ) ) {
 					$a_meta = get_post_meta( $last_id[ 'id' ], 'hpm_podcast_enclosure', true );
-					$temp[ 'latest_episode' ][ 'audio' ] = str_replace( 'http://', $protocol, $a_meta[ 'url' ] );
-					$temp[ 'latest_episode' ][ 'title' ] = get_the_title( $last_id[ 'id' ] );
-					$temp[ 'latest_episode' ][ 'link' ] = get_the_permalink( $last_id[ 'id' ] );
+					$temp['latest_episode']['audio'] = str_replace( 'http://', $protocol, $a_meta[ 'url' ] );
+					$temp['latest_episode']['title'] = get_the_title( $last_id[ 'id' ] );
+					$temp['latest_episode']['link'] = get_the_permalink( $last_id[ 'id' ] );
+					$temp['latest_episode']['duration'] = $this->return_seconds( $a_meta['length'] );
 				}
 				$temp['feed_json'] = WP_HOME . '/wp-json/hpm-podcast/v1/list/' . $post->post_name;
 				$tags = wp_get_post_tags( $post->ID );
