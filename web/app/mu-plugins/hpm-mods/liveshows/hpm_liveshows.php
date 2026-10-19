@@ -384,7 +384,11 @@ class HPM_Liveshows {
 						$outs[] = '<a href="mailto:' . $v['email'] . '">Email</a>';
 					}
 					if ( !empty( $v['phone'] ) ) {
-						$outs[] = '<a href="tel://+1' . $v['phone'] . '">Call/Text</a>';
+						$phone = $v['phone'];
+						if ( preg_match( '#[0-9]{10}#', $v['phone'] ) ) {
+							$phone = substr( $v['phone'], 0, 3 ) . '.' . substr( $v['phone'], 3, 3 ) . "." . substr( $v['phone'], 6, 4 );
+						}
+						$outs[] = '<a class="talk-show-phone" href="tel://+1' . $v['phone'] . '" data-phone="'. $phone .'">Call/Text</a>';
 					}
 					if ( !empty( $ytlive[ $k ]['id'] ) ) {
 						$outs[] = '<a href="https://www.youtube.com/watch?v=' . $ytlive[ $k ]['id'] . '">Watch</a>';
@@ -406,7 +410,11 @@ class HPM_Liveshows {
 						$outs[] = '<a href="mailto:' . $v['email'] . '">Email</a>';
 					}
 					if ( !empty( $v['phone'] ) ) {
-						$outs[] = '<a href="tel://+1' . $v['phone'] . '">Call/Text</a>';
+						$phone = $v['phone'];
+						if ( is_int( $v['phone'] ) ) {
+							$phone = substr( $v['phone'], 0, 3 ) . '.' . substr( $v['phone'], 3, 3 ) . "." . substr( $v['phone'], 6, 4 );
+						}
+						$outs[] = '<a class="talk-show-phone" href="tel://+1' . $v['phone'] . '" data-phone="'. $phone .'">Call/Text</a>';
 					}
 					if ( !empty( $ytlive[ $k ]['id'] ) ) {
 						$outs[] = '<a href="https://www.youtube.com/watch?v=' . $ytlive[ $k ]['id'] . '">Watch</a>';

@@ -863,7 +863,6 @@ svg:not(:root) {
 .news-slider.houston-matters {
 	background: #7FFBAD;
 	position: relative;
-	overflow: hidden;
 	h2 > a, p, p a {
 		color: black;
 		font-weight: bolder;
@@ -885,7 +884,6 @@ svg:not(:root) {
 	background-size: cover;
 	background-position: center;
 	position: relative;
-	overflow: hidden;
 	p a {
 		color: white;
 		font-weight: bolder;
@@ -917,32 +915,68 @@ svg:not(:root) {
 #hm-top.election,
 #hm-top.special-election-coverage {
 	background: #e7e7e8;
-}
-#hm-top.election p,
-#hm-top.special-election-coverage p {
-	color: rgb(47, 47, 47);
-}
-#hm-top.election p a,
-#hm-top.special-election-coverage p a {
-	color: var(--main-red);
+	p {
+		color: rgb(47, 47, 47);
+		a {
+			color: var(--main-red);
+		}
+	}
 }
 #hm-top p {
 	padding: 0.5rem;
 	font-size: 1.125rem;
 	color: rgb(236, 246, 251);
 	text-align: center;
+	span::after {
+		content: "\a";
+		display: block;
+	}
+	strong {
+		font-weight: 700;
+	}
+	a {
+		text-decoration: underline;
+		color: #7FFBAD;
+		font-weight: 700;
+		&.talk-show-phone {
+			position: relative;
+			&::before {
+				content: attr(data-phone);
+				opacity: 0;
+				position: absolute;
+				top: 105%;
+				width: min-content;
+				left: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 0.5rem;
+				padding: 0.5rem;
+			}
+			&:hover {
+				opacity: 1;
+				&::before {
+					animation-name: fadeIn;
+					animation-duration: 0.5s;
+					animation-delay: 0s;
+					animation-fill-mode: both;
+				}
+			}
+		}
+	}
 }
-#hm-top p span::after {
-	content: "\a";
-	display: block;
+#hm-top.houston-matters p a.talk-show-phone::before {
+	color: black;
+	background: #7FFBAD;
 }
-#hm-top p strong {
-	font-weight: 700;
+#hm-top.hello-houston p a.talk-show-phone::before {
+	background-color: #7787f7;
+	color: white;
 }
-#hm-top p a {
-	text-decoration: underline;
-	color: #7FFBAD;
-	font-weight: 700;
+#hm-top.election p a.talk-show-phone::before,
+#hm-top.special-election-coverage p a.talk-show-phone::before{
+	color: var(--main-red);
+	background: #e7e7e8;
 }
 
 /* Emergency Bar */
