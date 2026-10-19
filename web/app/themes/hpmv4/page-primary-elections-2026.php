@@ -247,26 +247,27 @@ whats-on-my-2026-midterms-ballot-in-texas//
                                 if ( $eka == 3 ) { ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
-                                            <h4>Support Comes From</h4>
+                                            <a href="/articles/news/harris-county/2026/09/15/561844/houston-public-media-to-host-october-harris-county-judge-debate/"> <img src="https://cdn.houstonpublicmedia.org/assets/images/HCJD_Web-Main_1211x1200.jpg.webp" title="The Harris cou ty judge debate 2026" />
+                                            </a>
+                                            <!--<h4>Support Comes From</h4>
                                             <div id="div-gpt-ad-1394579228932-1">
                                                 <script type='text/javascript'>
                                                     googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-1'); });
                                                 </script>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                     <?php
                                 } else if ( $eka == 8 ) { ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="sidebar-ad">
-                                           <a href="/articles/news/harris-county/2026/09/15/561844/houston-public-media-to-host-october-harris-county-judge-debate/"> <img src="https://cdn.houstonpublicmedia.org/assets/images/HCJD_Web-Main_1211x1200.jpg.webp" title="The Harris cou ty judge debate 2026" />
-                                           </a>
-                                               <!-- <h4>Support Comes From</h4>
+
+                                                <h4>Support Comes From</h4>
                                             <div id="div-gpt-ad-1394579228932-2">
                                                 <script type='text/javascript'>
                                                     googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-2'); });
                                                 </script>
-                                            </div>-->
+                                            </div>
                                         </div>
                                     </div>
                                     <?php
