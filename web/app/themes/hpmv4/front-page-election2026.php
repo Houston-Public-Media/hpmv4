@@ -1,9 +1,7 @@
 <?php
-/**
- * @package WordPress
- * @subpackage HPMv4
- * @since HPMv4 4.0
- */
+/*
+Template Name: Bespoke Home page for 2026 Elections
+*/
 get_header();
 $articles = hpm_homepage_articles();
 $indepthArtcle[] = null;
