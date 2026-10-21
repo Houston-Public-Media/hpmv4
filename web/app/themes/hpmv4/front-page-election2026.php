@@ -204,7 +204,7 @@ $tras = null; ?>
 
                 <div class="election-btn-wrapper">
                     <a href="#" class="btn election-btn">
-                        Election 2026
+                        Election 2026 stories
                     </a>
                 </div>
 
