@@ -61,7 +61,7 @@
 		"wp-plugin/redis-cache": ">2.0.17",
 		"wp-plugin/wp-ses": "*",
 		"wp-plugin/pdfjs-viewer-shortcode": "3.2.0",
-		"deliciousbrains-plugin/wp-offload-media": "3.4.3",
+		"deliciousbrains-plugin/wp-offload-media": "^3.4.3",
 		"ext-zlib": "*",
 		"ext-dom": "*",
 		"ext-curl": "*",
