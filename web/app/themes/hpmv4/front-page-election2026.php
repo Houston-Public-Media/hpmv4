@@ -209,13 +209,13 @@ $tras = null; ?>
                 </div>
 
                 <div class="election-btn-wrapper">
-                    <a href="#" class="btn election-btn">
+                    <a href="articles/news/politics/election-2026/2026/10/27/563991/texas-general-election-results-2026/" class="btn election-btn">
                         2026 Election Results
                     </a>
                 </div>
 
                 <div class="election-btn-wrapper">
-                    <a href="#" class="btn election-btn">
+                    <a href="articles/news/politics/2026/10/26/563976/2026-election-results-interactives-of-harris-county-texas-u-s-senate-and-u-s-house/" class="btn election-btn">
                         Election results interactives
                     </a>
                 </div>
