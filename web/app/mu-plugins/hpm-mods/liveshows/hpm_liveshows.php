@@ -52,6 +52,8 @@ class HPM_Liveshows {
 				foreach ( $names as $name_slug => $name ) {
 					if ( str_contains( $item['title'], $name['title'] ) ) {
 						$temp[ $name_slug ][ $date ] = $item;
+					} elseif ( !empty ( $name['youtube_id'] ) && $item['id'] == $name['youtube_id'] ) {
+						$temp[ $name_slug ][ $date ] = $item;
 					}
 				}
 			}
@@ -109,7 +111,8 @@ class HPM_Liveshows {
 				'background_color' => '',
 				'text_color' => '',
 				'logo' => '',
-				'background_image' => ''
+				'background_image' => '',
+				'youtube_id' => ''
 			];
 		} ?>
 		<p>
@@ -154,6 +157,7 @@ class HPM_Liveshows {
 		</div>
 		<div id="hpm-liveshow-is-not-recurring" class="hpm-liveshow-recur<?php echo ( $hpm_liveshow['recurring'] == 1 ? ' hidden' : '' ); ?>">
 			<p><label for="hpm-liveshow-once-date"><?php _e( "What day will this air?", 'hpm-liveshow' ); ?></label> <input type="date" id="hpm-liveshow-once-date" name="hpm-liveshow-once-date" value="<?php echo $hpm_liveshow['once_date']; ?>" /></p>
+			<p><label for="hpm-liveshow-once-ytid"><?php _e( "Livestream YouTube ID?", 'hpm-liveshow' ); ?></label> <input type="text" id="hpm-liveshow-once-ytid" name="hpm-liveshow-once-ytid" value="<?php echo ( !empty( $hpm_liveshow['youtube_id'] ) ? $hpm_liveshow['youtube_id'] : '' ); ?>" /></p>
 		</div>
 		<script>
 			document.addEventListener('DOMContentLoaded', () => {
@@ -207,7 +211,8 @@ class HPM_Liveshows {
 				'background_color' => $_POST['hpm-liveshow-background-color'],
 				'text_color' => $_POST['hpm-liveshow-text-color'],
 				'logo' => $_POST['hpm-liveshow-logo'],
-				'background_image' => $_POST['hpm-liveshow-background-image']
+				'background_image' => $_POST['hpm-liveshow-background-image'],
+				'youtube_id' => ( !empty( $_POST['hpm-liveshow-once-ytid'] ) ? sanitize_text_field( $_POST['hpm-liveshow-once-ytid'] ) : '' )
 			];
 
 			update_post_meta( $post_id, 'hpm_liveshow', $hpm_liveshow );
