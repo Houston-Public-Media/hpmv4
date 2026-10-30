@@ -305,10 +305,20 @@ $tras = null; ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-lg-3">
-                    <a href="/articles/news/harris-county/2026/09/15/561844/houston-public-media-to-host-october-harris-county-judge-debate/"> <img src="https://cdn.houstonpublicmedia.org/assets/images/HCJD_Web-Main_1211x1200.jpg.webp" title="The Harris cou ty judge debate 2026" />
-                    </a>
-
+                <div class="col-sm-12 col-lg-3 indepth-sidebar">
+                    <aside>
+                        <?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
+                    </aside>
+                    <div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
+                        <h2 class="title title-full">
+                            <strong>Support Comes <span>From</span></strong>
+                        </h2>
+                        <div class="sidebar-ad">
+                            <div id="div-gpt-ad-1394579228932-3">
+                                <script>if (window.innerWidth < 1000) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1394579228932-3'); });}</script>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
