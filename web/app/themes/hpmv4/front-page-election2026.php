@@ -305,10 +305,10 @@ $tras = null; ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-lg-3 indepth-sidebar">
-                    <aside>
+                <aside class="col-sm-12 col-lg-3 indepth-sidebar">
+
                         <?PHP echo HPM_Promos::generate_static( 'sidebar' ); ?>
-                    </aside>
+
                     <div class="news-list-right most-view homepage-mobile-gdc pb-4 pt-4 hidden">
                         <h2 class="title title-full">
                             <strong>Support Comes <span>From</span></strong>
@@ -319,7 +319,7 @@ $tras = null; ?>
                             </div>
                         </div>
                     </div>
-                </div>
+                </aside>
             </div>
 
         </section>
