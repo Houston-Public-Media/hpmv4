@@ -203,7 +203,7 @@ $tras = null; ?>
             <div class="d-flex flex-wrap justify-content-center gap-2">
 
                 <div class="election-btn-wrapper">
-                    <a href="#" class="btn election-btn">
+                    <a href="/election2026/" class="btn election-btn">
                         Election 2026 stories
                     </a>
                 </div>
