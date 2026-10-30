@@ -195,7 +195,7 @@ $tras = null; ?>
 
         <section class="section">
             <div style="border: 1px solid #292929;">
-                <p data-pym-loader data-child-src="https://apps.npr.org/2024-election-results/bop.html?embedded=true&races=president" id="responsive-embed-bop"> Loading... </p> <script src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"></script>
+                <p data-pym-loader data-child-src="https://apps.npr.org/2026-election-results/bop.html?embedded=true&races=senate%2Chouse" id="responsive-embed-bop"> Loading... </p> <script src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"></script>
             </div>
         </section>
 
@@ -264,8 +264,8 @@ $tras = null; ?>
             <div class="row">
                 <div class="col-sm-12 col-lg-9">
                     <div class="row">
-                        <div class="col-sm-6"><p data-pym-loader data-child-src="https://apps.npr.org/2024-election-results/race-embed.html?embedded=true&stateAbbrev=TX&race=0" id="responsive-embed-TX-0"> Loading... </p> <script src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"></script></div>
-                        <div class="col-sm-6"><p data-pym-loader data-child-src="https://apps.npr.org/2024-election-results/race-embed.html?embedded=true&stateAbbrev=TX&race=45870" id="responsive-embed-TX-45870"> Loading... </p> <script src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"></script></div>
+                        <div class="col-sm-6"><p data-pym-loader data-child-src="https://apps.npr.org/2026-election-results/race-embed.html?embedded=true&stateAbbrev=TX&race=46643" id="responsive-embed-TX-46643"> Loading... </p> <script src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"></script></div>
+                        <div class="col-sm-6"><p data-pym-loader data-child-src="https://apps.npr.org/2026-election-results/race-embed.html?embedded=true&stateAbbrev=TX&race=45901" id="responsive-embed-TX-45901"> Loading... </p> <script src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"></script></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
