@@ -256,7 +256,7 @@ $tras = null; ?>
 				</div>
 			</div>
 		</section>
-		<section class="section ads-full text-center">
+		<?php /* ?><section class="section ads-full text-center">
 			<div class="page-banner">
 				<a href="/elections-2026/" title="2026 Election">
 					<picture>
@@ -267,7 +267,7 @@ $tras = null; ?>
 					</picture>
 				</a>
 			</div>
-		</section>
+		</section><?php */ ?>
 		<?php get_template_part("content", "verticalvideos"); ?>
 		<section class="section news-list">
 			<div class="row">
