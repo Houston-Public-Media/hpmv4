@@ -28,12 +28,10 @@
 <section>
     <div class="row">
         <div class="col-12 news-list-right most-view">
-            <h2 class="title title-full">
-<!--                <strong>Contact Us</strong>-->
-                <strong>Election 2026</strong>
-            </h2>
-<!--            <p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/newstips">Tell Houston Public Media</a></p>-->
-            <p style="font-weight: bold; font-size: 16px;"><a href="/articles/news/politics/election-2026/2026/08/14/559390/election-2026-make-your-voice-heard/">Take our survey</a> and make your voice heard</p>
+			<h2 class="title title-full">
+				<strong>Contact Us</strong>
+			</h2>
+			<p style="font-weight: bold; font-size: 16px;">Have a News Tip? <a href="/newstips">Tell Houston Public Media</a></p>
         </div>
     </div>
 </section>
